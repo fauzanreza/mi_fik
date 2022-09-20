@@ -24,6 +24,8 @@ double textLG = 22;
 double textMD = 16;
 double textSM = 13;
 
+double marginMD = 25; //For home content (MB)
+
 double iconLG = 32; //For floating add btn, ...
 
 class MyApp extends StatelessWidget {
