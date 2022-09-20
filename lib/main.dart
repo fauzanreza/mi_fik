@@ -14,9 +14,19 @@ void main() {
 var primaryColor = const Color(0xFFFB8C00);
 var mainbg = const Color(0xFFD9D9D9);
 var whitebg = const Color(0xFFFFFFFF);
+var blackbg = const Color(0xFF414141);
 
 var roundedLG = const Radius.circular(18); //For navbar, ...
 var roundedMd = const Radius.circular(10); //For container, ...
+
+double textXL = 32;
+double textLG = 22;
+double textMD = 16;
+double textSM = 13;
+
+double marginMD = 25; //For home content (MB)
+
+double iconLG = 32; //For floating add btn, ...
 
 class MyApp extends StatelessWidget {
   const MyApp({key}) : super(key: key);
