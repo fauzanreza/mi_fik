@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mi_fik/Home/addPost.dart';
 import 'package:mi_fik/Others/custombg.dart';
 import 'package:mi_fik/main.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -371,13 +373,37 @@ class HomePage extends StatelessWidget {
                   ))
                 ]),
           )),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Add your onPressed code here!
-        },
-        backgroundColor: primaryColor,
-        child: Icon(Icons.add, size: iconLG),
-      ),
+      floatingActionButton: SpeedDial(
+          child: Icon(Icons.add, size: iconLG), 
+          activeIcon: Icons.close,
+          backgroundColor: primaryColor,
+          overlayColor: primaryColor,
+          overlayOpacity: 0.4,
+          children: [
+            SpeedDialChild(
+              child: const Icon(Icons.post_add_outlined),
+              label: 'New Task',
+              backgroundColor: primaryColor,
+              foregroundColor: Colors.white,
+              onTap: () {
+                
+              },
+            ),
+            SpeedDialChild(
+              child: const Icon(Icons.note_add_outlined),
+              label: 'New Post',
+              backgroundColor: primaryColor,
+              foregroundColor: Colors.white,
+              onTap: () {
+                Navigator.push(
+                context,
+                MaterialPageRoute(
+                builder: (context) => const addPost()),
+                );
+              },
+            ),
+           
+          ]),
     );
   }
 }
