@@ -18,13 +18,18 @@ var blackbg = const Color(0xFF414141);
 
 var roundedLG = const Radius.circular(18); //For navbar, ...
 var roundedMd = const Radius.circular(10); //For container, ...
+double roundedMd2 = 10; //For container, ...
+double roundedLG2 = 14; //For container, ...
 
 double textXL = 32;
 double textLG = 22;
 double textMD = 16;
 double textSM = 13;
+double textXSM = 11.5;
 
 double marginMD = 25; //For home content (MB)
+double marginMT = 12; //For detail content (MT)
+double paddingMD = 20;
 
 double iconLG = 32; //For floating add btn, ...
 
@@ -52,7 +57,7 @@ class _NavBarState extends State<NavBar> {
 
   final List<Widget> _widgetOptions = <Widget>[
     const SchedulePage(),
-    HomePage(),
+    const HomePage(),
     const CalendarPage(),
   ];
 
