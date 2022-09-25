@@ -15,7 +15,8 @@ class CirclePainter extends CustomPainter {
 
     //Color attribute
     var paint1 = Paint()..color = primaryColor; //Main color
-    var paint2 = Paint()..color = Color.fromARGB(255, 192, 115, 0); //Border
+    var paint2 = Paint()
+      ..color = const Color.fromARGB(255, 192, 115, 0); //Border
 
     //Right circle
     canvas.drawCircle(
