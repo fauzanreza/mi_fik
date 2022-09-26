@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/DB/Database.dart';
 import 'package:mi_fik/DB/Model/Content_M.dart';
+import 'package:mi_fik/Home/Detail/index.dart';
 import 'package:mi_fik/main.dart';
 
 class GetContent extends StatefulWidget {
@@ -85,7 +86,12 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
                     //Open content w/ full container
                     GestureDetector(
                       onTap: () {
-                        //Action here....
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DetailPage(
+                                  passIdContent: _contentList[index].id)),
+                        );
                       },
                       child: Container(
                           width: fullWidth * 0.82,
@@ -166,7 +172,13 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
                                   width: fullWidth,
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      //Action here....
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => DetailPage(
+                                                passIdContent:
+                                                    _contentList[index].id)),
+                                      );
                                     },
                                     style: ButtonStyle(
                                       shape: MaterialStateProperty.all<
