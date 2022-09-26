@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/DB/Database.dart';
@@ -15,6 +17,7 @@ class _DetailPage extends State<DetailPage> {
   //Initial variable.
   var db = Mysql();
   var content_title = "";
+  var content_subtitle = "";
   var content_desc = "";
   var content_attach;
   var content_tag;
@@ -32,6 +35,9 @@ class _DetailPage extends State<DetailPage> {
           setState(() {
             //Mapping.
             content_title = row['content_title'];
+            if (row['content_subtitle'] != null) {
+              content_subtitle = row['content_subtitle'].toString();
+            }
             content_desc = row['content_desc'].toString();
             content_attach = row['content_attach'];
             content_tag = row['content_tag'];
@@ -82,31 +88,79 @@ class _DetailPage extends State<DetailPage> {
             fontWeight: FontWeight.w500));
   }
 
-  Widget GetTag(tag) {
-    return Container(
-      margin: const EdgeInsets.only(right: 5, left: 5),
-      child: ElevatedButton.icon(
+  //Get location name.
+  Widget GetLocation(loc) {
+    var location = "";
+    if (loc != null) {
+      final jsonLoc = json.decode(loc.toString());
+      location = jsonLoc[0]['detail'];
+      return TextButton.icon(
         onPressed: () {
           // Respond to button press
         },
-        icon: Icon(
-          Icons.circle,
-          size: textSM,
-          color: Colors.green,
-        ),
-        label: Text("DKV", style: TextStyle(fontSize: textXSM)),
-        style: ButtonStyle(
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(roundedLG2),
-          )),
-          backgroundColor: MaterialStatePropertyAll<Color>(primaryColor),
-        ),
-      ),
-    );
+        icon: Icon(Icons.location_on_outlined, size: 22, color: primaryColor),
+        label: Text(location,
+            style: TextStyle(fontSize: textMD, color: primaryColor)),
+      );
+    } else {
+      return SizedBox();
+    }
   }
 
-  GetLocation(loc) {}
+  //Get content subtitle.
+  Widget GetSubtitle(sub) {
+    if (sub != "") {
+      return Container(
+        margin: EdgeInsets.only(left: marginMD, bottom: marginMT),
+        child: Text(content_subtitle,
+            style: TextStyle(
+                fontSize: textSM, fontWeight: FontWeight.w500, color: blackbg)),
+      );
+    } else {
+      return SizedBox();
+    }
+  }
+
+  //Get content tag.
+  Widget GetTag(tag) {
+    var result = "";
+    if (tag != null) {
+      final jsonLoc = json.decode(tag.toString());
+      return SizedBox(
+          height: 40,
+          child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              padding: EdgeInsets.symmetric(vertical: marginHZ),
+              itemCount: jsonLoc.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  margin: const EdgeInsets.only(right: 5, left: 5),
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      // Respond to button press
+                    },
+                    icon: Icon(
+                      Icons.circle,
+                      size: textSM,
+                      color: Colors.green,
+                    ),
+                    label: Text(jsonLoc[index]['tag_name'],
+                        style: TextStyle(fontSize: textXSM)),
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(roundedLG2),
+                      )),
+                      backgroundColor:
+                          MaterialStatePropertyAll<Color>(primaryColor),
+                    ),
+                  ),
+                );
+              }));
+    } else {
+      return SizedBox();
+    }
+  }
 
   @override
   void initState() {
@@ -136,8 +190,7 @@ class _DetailPage extends State<DetailPage> {
             margin: EdgeInsets.only(top: fullHeight * 0.28),
             height: fullHeight * 0.8,
             width: fullWidth,
-            padding: EdgeInsets.only(
-                top: paddingMD, left: paddingMD, right: paddingMD),
+            padding: EdgeInsets.only(top: paddingMD),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(roundedLG2),
               color: Colors.white,
@@ -146,57 +199,52 @@ class _DetailPage extends State<DetailPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(content_title,
-                      style: TextStyle(
-                          fontSize: textMD, fontWeight: FontWeight.bold)),
-                  Text("Desain Komunikasi Visual - FIK",
-                      style: TextStyle(
-                          fontSize: textSM,
-                          fontWeight: FontWeight.w500,
-                          color: blackbg)),
+                  Container(
+                      margin: EdgeInsets.only(left: marginMD),
+                      child: Text(content_title,
+                          style: TextStyle(
+                              fontSize: textMD, fontWeight: FontWeight.bold))),
+                  //Check this...
+                  GetSubtitle(content_subtitle),
                   Expanded(
                     child: ListView(padding: EdgeInsets.zero, children: [
                       //Tag holder.
                       Container(
-                        margin: EdgeInsets.only(top: marginMT),
-                        child: Wrap(children: <Widget>[GetTag(content_tag)]),
+                        margin: EdgeInsets.only(
+                            top: marginMT, left: marginMD, right: marginMD),
+                        child: GetTag(content_tag),
                       ),
                       Container(
-                          margin: EdgeInsets.only(top: marginMT),
+                          margin: EdgeInsets.only(
+                              top: marginMT, left: marginMD, right: marginMD),
                           child: Text(content_desc,
                               style:
                                   TextStyle(color: blackbg, fontSize: textSM)))
                     ]),
                   ),
                   Container(
-                      margin: EdgeInsets.all(marginMT),
+                      margin: EdgeInsets.only(
+                          left: marginMD, right: marginMD, bottom: marginMD),
                       child: Column(
                         children: [
-                          Row(children: [
-                            TextButton.icon(
-                              onPressed: () {
-                                // Respond to button press
-                              },
-                              icon: Icon(Icons.location_on_outlined,
-                                  size: 22, color: primaryColor),
-                              label: Text(GetLocation(content_loc).toString(),
-                                  style: TextStyle(
-                                      fontSize: textMD, color: primaryColor)),
-                            ),
-                            const Spacer(),
-                            RichText(
-                              text: TextSpan(
-                                children: [
-                                  WidgetSpan(
-                                    child: Icon(Icons.calendar_month,
-                                        size: 22, color: primaryColor),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                GetLocation(content_loc),
+                                const Spacer(),
+                                RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      WidgetSpan(
+                                        child: Icon(Icons.calendar_month,
+                                            size: 22, color: primaryColor),
+                                      ),
+                                      GetContentDate(
+                                          content_date_start, content_date_end)
+                                    ],
                                   ),
-                                  GetContentDate(
-                                      content_date_start, content_date_end)
-                                ],
-                              ),
-                            )
-                          ]),
+                                )
+                              ]),
                           RichText(
                             text: TextSpan(
                               children: [
@@ -216,23 +264,41 @@ class _DetailPage extends State<DetailPage> {
                           )
                         ],
                       )),
-                  SizedBox(
+
+                  //Full save button.
+                  Container(
                       width: fullWidth,
+                      height: 55,
                       child: ElevatedButton(
                         onPressed: () {
                           // Respond to button press
                         },
                         style: ButtonStyle(
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(roundedLG2),
-                          )),
                           backgroundColor:
                               MaterialStatePropertyAll<Color>(primaryColor),
                         ),
                         child: const Text('Save Event'),
-                      ))
+                      )),
+
+                  //Normal save button.
+                  // Container(
+                  //     width: fullWidth,
+                  //     margin: EdgeInsets.symmetric(horizontal: marginMT),
+                  //     child: ElevatedButton(
+                  //       onPressed: () {
+                  //         // Respond to button press
+                  //       },
+                  //       style: ButtonStyle(
+                  //         shape:
+                  //             MaterialStateProperty.all<RoundedRectangleBorder>(
+                  //                 RoundedRectangleBorder(
+                  //           borderRadius: BorderRadius.circular(roundedLG2),
+                  //         )),
+                  //         backgroundColor:
+                  //             MaterialStatePropertyAll<Color>(primaryColor),
+                  //       ),
+                  //       child: const Text('Save Event'),
+                  //     ))
                 ]),
           )
         ],
