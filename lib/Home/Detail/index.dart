@@ -3,10 +3,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/DB/Database.dart';
+import 'package:mi_fik/Home/Detail/Attach.dart';
+import 'package:mi_fik/Home/Detail/Location.dart';
 import 'package:mi_fik/main.dart';
 
 class DetailPage extends StatefulWidget {
-  const DetailPage({super.key, required this.passIdContent});
+  const DetailPage({Key key, this.passIdContent}) : super(key: key);
   final int passIdContent;
 
   @override
@@ -16,14 +18,15 @@ class DetailPage extends StatefulWidget {
 class _DetailPage extends State<DetailPage> {
   //Initial variable.
   var db = Mysql();
-  var content_title = "";
-  var content_subtitle = "";
-  var content_desc = "";
-  var content_attach;
-  var content_tag;
-  var content_loc;
-  DateTime content_date_start = DateTime.now();
-  DateTime content_date_end = DateTime.now();
+  int contentId = 0;
+  var contentTitle = "";
+  var contentSubtitle = "";
+  var contentDesc = "";
+  var contentAttach;
+  var contentTag;
+  var contentLoc;
+  DateTime contentDateStart = DateTime.now();
+  DateTime contentDateEnd = DateTime.now();
 
   //Controller.
   Future getContent() async {
@@ -34,16 +37,17 @@ class _DetailPage extends State<DetailPage> {
         for (var row in results) {
           setState(() {
             //Mapping.
-            content_title = row['content_title'];
+            contentId = row['id'];
+            contentTitle = row['content_title'];
             if (row['content_subtitle'] != null) {
-              content_subtitle = row['content_subtitle'].toString();
+              contentSubtitle = row['content_subtitle'].toString();
             }
-            content_desc = row['content_desc'].toString();
-            content_attach = row['content_attach'];
-            content_tag = row['content_tag'];
-            content_loc = row['content_loc'];
-            content_date_start = row['content_date_start'];
-            content_date_end = row['content_date_end'];
+            contentDesc = row['content_desc'].toString();
+            contentAttach = row['content_attach'];
+            contentTag = row['content_tag'];
+            contentLoc = row['content_loc'];
+            contentDateStart = row['content_date_start'];
+            contentDateEnd = row['content_date_end'];
           });
         }
       });
@@ -52,7 +56,7 @@ class _DetailPage extends State<DetailPage> {
   }
 
   //Convert date.
-  GetContentDate(dateStart, dateEnd) {
+  getContentDate(dateStart, dateEnd) {
     //Initial variable.
     var monthStart = DateFormat("MM").format(dateStart).toString();
     var dayStart = DateFormat("dd").format(dateStart).toString();
@@ -89,41 +93,39 @@ class _DetailPage extends State<DetailPage> {
   }
 
   //Get location name.
-  Widget GetLocation(loc) {
-    var location = "";
+  Widget getLocation(loc, id) {
     if (loc != null) {
-      final jsonLoc = json.decode(loc.toString());
-      location = jsonLoc[0]['detail'];
-      return TextButton.icon(
-        onPressed: () {
-          // Respond to button press
-        },
-        icon: Icon(Icons.location_on_outlined, size: 22, color: primaryColor),
-        label: Text(location,
-            style: TextStyle(fontSize: textMD, color: primaryColor)),
-      );
+      return LocationButton(passLocation: loc.toString(), passId: id);
     } else {
-      return SizedBox();
+      return const SizedBox();
+    }
+  }
+
+  //Get attachment file or link.
+  Widget getAttach(attach) {
+    if (attach != null) {
+      return AttachButton(passAttach: attach.toString());
+    } else {
+      return const SizedBox();
     }
   }
 
   //Get content subtitle.
-  Widget GetSubtitle(sub) {
+  Widget getSubtitle(sub) {
     if (sub != "") {
       return Container(
         margin: EdgeInsets.only(left: marginMD, bottom: marginMT),
-        child: Text(content_subtitle,
+        child: Text(contentSubtitle,
             style: TextStyle(
                 fontSize: textSM, fontWeight: FontWeight.w500, color: blackbg)),
       );
     } else {
-      return SizedBox();
+      return const SizedBox();
     }
   }
 
   //Get content tag.
-  Widget GetTag(tag) {
-    var result = "";
+  Widget getTag(tag) {
     if (tag != null) {
       final jsonLoc = json.decode(tag.toString());
       return SizedBox(
@@ -158,7 +160,7 @@ class _DetailPage extends State<DetailPage> {
                 );
               }));
     } else {
-      return SizedBox();
+      return const SizedBox();
     }
   }
 
@@ -201,27 +203,29 @@ class _DetailPage extends State<DetailPage> {
                 children: [
                   Container(
                       margin: EdgeInsets.only(left: marginMD),
-                      child: Text(content_title,
+                      child: Text(contentTitle,
                           style: TextStyle(
                               fontSize: textMD, fontWeight: FontWeight.bold))),
                   //Check this...
-                  GetSubtitle(content_subtitle),
+                  getSubtitle(contentSubtitle),
                   Expanded(
-                    child: ListView(padding: EdgeInsets.zero, children: [
-                      //Tag holder.
-                      Container(
+                      child: ListView(padding: EdgeInsets.zero, children: [
+                    //Tag holder.
+                    Container(
+                      margin: EdgeInsets.only(
+                          top: marginMT, left: marginMD, right: marginMD),
+                      child: getTag(contentTag),
+                    ),
+                    //Content Description.
+                    Container(
                         margin: EdgeInsets.only(
                             top: marginMT, left: marginMD, right: marginMD),
-                        child: GetTag(content_tag),
-                      ),
-                      Container(
-                          margin: EdgeInsets.only(
-                              top: marginMT, left: marginMD, right: marginMD),
-                          child: Text(content_desc,
-                              style:
-                                  TextStyle(color: blackbg, fontSize: textSM)))
-                    ]),
-                  ),
+                        child: Text(contentDesc,
+                            style:
+                                TextStyle(color: blackbg, fontSize: textSM))),
+                    //Attached file or link.
+                    getAttach(contentAttach)
+                  ])),
                   Container(
                       margin: EdgeInsets.only(
                           left: marginMD, right: marginMD, bottom: marginMD),
@@ -230,7 +234,7 @@ class _DetailPage extends State<DetailPage> {
                           Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                GetLocation(content_loc),
+                                getLocation(contentLoc, contentId),
                                 const Spacer(),
                                 RichText(
                                   text: TextSpan(
@@ -239,8 +243,8 @@ class _DetailPage extends State<DetailPage> {
                                         child: Icon(Icons.calendar_month,
                                             size: 22, color: primaryColor),
                                       ),
-                                      GetContentDate(
-                                          content_date_start, content_date_end)
+                                      getContentDate(
+                                          contentDateStart, contentDateEnd)
                                     ],
                                   ),
                                 )
@@ -254,7 +258,7 @@ class _DetailPage extends State<DetailPage> {
                                 ),
                                 TextSpan(
                                     text:
-                                        " ${DateFormat("HH:mm a").format(content_date_start).toString()} - ${DateFormat("HH:mm a").format(content_date_end).toString()} WIB",
+                                        " ${DateFormat("HH:mm a").format(contentDateStart).toString()} - ${DateFormat("HH:mm a").format(contentDateEnd).toString()} WIB",
                                     style: TextStyle(
                                         color: primaryColor,
                                         fontSize: textMD,
@@ -266,9 +270,9 @@ class _DetailPage extends State<DetailPage> {
                       )),
 
                   //Full save button.
-                  Container(
+                  SizedBox(
                       width: fullWidth,
-                      height: 55,
+                      height: btnHeightMD,
                       child: ElevatedButton(
                         onPressed: () {
                           // Respond to button press

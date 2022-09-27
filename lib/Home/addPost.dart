@@ -5,7 +5,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:file_picker/file_picker.dart';
 
 class addPost extends StatelessWidget {
-  const addPost({super.key});
+  const addPost({key});
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +125,7 @@ class addPost extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(10.0)),
                             ),
                             onPressed: () async {
-                              FilePickerResult? result = await FilePicker
+                              FilePickerResult result = await FilePicker
                                   .platform
                                   .pickFiles(allowMultiple: true);
                             },

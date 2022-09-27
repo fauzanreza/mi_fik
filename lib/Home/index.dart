@@ -8,7 +8,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:intl/intl.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  const HomePage({key});
 
   @override
   Widget build(BuildContext context) {
@@ -55,30 +55,30 @@ class HomePage extends StatelessWidget {
                             style: TextStyle(color: whitebg, fontSize: textMD)),
                       ]),
                 ),
-                Expanded(
-                    child: Container(
-                  height: fullHeight * 0.84,
-                  margin: const EdgeInsets.only(top: 10.0),
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  decoration: BoxDecoration(
-                    color: mainbg,
-                    borderRadius: BorderRadius.only(
-                        topLeft: roundedLG, topRight: roundedLG),
-                  ),
-                  child: Column(children: [
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.all(10),
-                      child: Text("What's New ?",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: textLG,
-                              fontWeight: FontWeight.w500)),
+                Container(
+                    //height: double.infinity,
+                    margin: const EdgeInsets.only(top: 10.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                      color: mainbg,
+                      borderRadius: BorderRadius.only(
+                          topLeft: roundedLG, topRight: roundedLG),
                     ),
-                    const Flexible(child: GetContent())
-                  ]),
-                ))
+                    child: IntrinsicHeight(
+                      child: Column(children: [
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          padding: const EdgeInsets.all(10),
+                          child: Text("What's New ?",
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: textLG,
+                                  fontWeight: FontWeight.w500)),
+                        ),
+                        const Flexible(child: GetContent())
+                      ]),
+                    ))
               ])),
       floatingActionButton: SpeedDial(
           activeIcon: Icons.close,
