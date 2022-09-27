@@ -3,11 +3,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/DB/Database.dart';
+import 'package:mi_fik/Home/Detail/Attach.dart';
 import 'package:mi_fik/Home/Detail/Location.dart';
 import 'package:mi_fik/main.dart';
 
 class DetailPage extends StatefulWidget {
-  const DetailPage({key, this.passIdContent});
+  const DetailPage({Key key, this.passIdContent}) : super(key: key);
   final int passIdContent;
 
   @override
@@ -95,6 +96,15 @@ class _DetailPage extends State<DetailPage> {
   Widget getLocation(loc, id) {
     if (loc != null) {
       return LocationButton(passLocation: loc.toString(), passId: id);
+    } else {
+      return const SizedBox();
+    }
+  }
+
+  //Get attachment file or link.
+  Widget getAttach(attach) {
+    if (attach != null) {
+      return AttachButton(passAttach: attach.toString());
     } else {
       return const SizedBox();
     }
@@ -206,12 +216,15 @@ class _DetailPage extends State<DetailPage> {
                           top: marginMT, left: marginMD, right: marginMD),
                       child: getTag(contentTag),
                     ),
+                    //Content Description.
                     Container(
                         margin: EdgeInsets.only(
                             top: marginMT, left: marginMD, right: marginMD),
                         child: Text(contentDesc,
                             style:
                                 TextStyle(color: blackbg, fontSize: textSM))),
+                    //Attached file or link.
+                    getAttach(contentAttach)
                   ])),
                   Container(
                       margin: EdgeInsets.only(

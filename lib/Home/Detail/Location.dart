@@ -5,7 +5,8 @@ import 'package:mi_fik/main.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class LocationButton extends StatefulWidget {
-  const LocationButton({key, this.passLocation, this.passId});
+  const LocationButton({Key key, this.passLocation, this.passId})
+      : super(key: key);
   final String passLocation;
   final int passId;
 
@@ -19,12 +20,6 @@ class _LocationButton extends State<LocationButton>
   GoogleMapController _googleMapController;
   Marker _origin;
   Marker _destination;
-
-  @override
-  void dispose() {
-    _googleMapController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +43,7 @@ class _LocationButton extends State<LocationButton>
           context: context,
           builder: (BuildContext context) => AlertDialog(
               contentPadding: EdgeInsets.all(paddingMD),
-              content: Container(
+              content: SizedBox(
                 height: fullWidth *
                     0.8, //Pop up height based on fullwidth (Square maps).
                 child: Column(children: [
@@ -97,5 +92,12 @@ class _LocationButton extends State<LocationButton>
       label: Text(location,
           style: TextStyle(fontSize: textMD, color: primaryColor)),
     );
+  }
+
+  //Check this!!!!
+  @override
+  void dispose() {
+    //_googleMapController.dispose();
+    super.dispose();
   }
 }
