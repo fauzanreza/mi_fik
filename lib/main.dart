@@ -27,6 +27,8 @@ double textMD = 16;
 double textSM = 13;
 double textXSM = 11.5;
 
+double btnHeightMD = 55;
+
 double marginMD = 25; //For home content (MB)
 double marginMT = 12; //For detail content (MT)
 double paddingMD = 20;
