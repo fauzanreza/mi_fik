@@ -1,11 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:mi_fik/DB/Database.dart';
+import 'package:mi_fik/DB/Model/Tag_M.dart';
 import 'package:mi_fik/Others/custombg.dart';
 import 'package:mi_fik/main.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:file_picker/file_picker.dart';
 
-class addPost extends StatelessWidget {
-  const addPost({key});
+
+class addPost extends StatefulWidget {
+  const addPost({super.key});
+
+  @override
+  _addPost createState() => _addPost();
+}
+
+class _addPost extends State<addPost>{
+
+  //Initial variable
+  var db = Mysql();
+  final List<TagModel> _tagList = <TagModel>[];
+
+  //Controller
+  Future getTag() async {
+    db.getConnection().then((conn) {
+      String sql = 'SELECT * FROM tag';
+      conn.query(sql).then((results) {
+        for (var row in results) {
+          setState(() {
+            //Mapping
+            var tagModels = TagModel();
+
+            tagModels.id = row['id'];
+            tagModels.tagName = row['tag_name'];
+
+            _tagList.add(tagModels);
+          });
+        }
+      });
+      conn.close();
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getTag();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +100,7 @@ class addPost extends StatelessWidget {
                 ),
                 child: LayoutBuilder(
                   builder: (context, constraints) => ListView(
-                    physics: const AlwaysScrollableScrollPhysics(),
+                  physics: BouncingScrollPhysics(),
                     padding: EdgeInsets.only(top: fullHeight * 0.04),
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
@@ -111,8 +151,8 @@ class addPost extends StatelessWidget {
                         alignment: Alignment.centerLeft,
                         padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
                         child: SizedBox(
-                          width: 200, // <-- Your width
-                          height: 50,
+                          width: 180, // <-- Your width
+                          height: 40,
                           child: ElevatedButton.icon(
                             style: ElevatedButton.styleFrom(
                               primary: Colors.white,
@@ -148,12 +188,17 @@ class addPost extends StatelessWidget {
                             )),
                       ),
                       Container(
-                        child: Row(children: <Widget>[
-                          Container(
+                        height:34,
+                        child: ListView.builder(
+                        physics: BouncingScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        padding: EdgeInsets.zero,
+                        itemCount: _tagList.length,
+                        itemBuilder: (context, index) {
+                          return Container(
                             alignment: Alignment.centerLeft,
-                            padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
+                            padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
                             child: SizedBox(
-                              width: 105, // <-- Your width
                               height: 30,
                               child: ElevatedButton.icon(
                                 style: ElevatedButton.styleFrom(
@@ -167,67 +212,15 @@ class addPost extends StatelessWidget {
                                 icon: Icon(Icons.circle,
                                     color: Colors
                                         .yellow), //icon data for elevated button
-                                label: const Text(
-                                  'Studio 4',
+                                label: Text(
+                                  _tagList[index].tagName,
                                   style: TextStyle(fontSize: 12),
                                 ),
                                 //label text
                               ),
                             ),
-                          ),
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
-                            child: SizedBox(
-                              width: 85, // <-- Your width
-                              height: 30,
-                              child: ElevatedButton.icon(
-                                style: ElevatedButton.styleFrom(
-                                  primary: Colors.white,
-                                  onPrimary: primaryColor,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(50.0)),
-                                ),
-                                onPressed: () async {},
-                                icon: Icon(Icons.circle,
-                                    color:
-                                        primaryColor), //icon data for elevated button
-                                label: const Text(
-                                  'DKV',
-                                  style: TextStyle(fontSize: 12),
-                                ),
-                                //label text
-                              ),
-                            ),
-                          ),
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
-                            child: SizedBox(
-                              width: 140, // <-- Your width
-                              height: 30,
-                              child: ElevatedButton.icon(
-                                style: ElevatedButton.styleFrom(
-                                  primary: Colors.white,
-                                  onPrimary: primaryColor,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(50.0)),
-                                ),
-                                onPressed: () async {},
-                                icon: Icon(Icons.circle,
-                                    color: Colors
-                                        .blueAccent), //icon data for elevated button
-                                label: const Text(
-                                  'Designpreneur',
-                                  style: TextStyle(fontSize: 12),
-                                ),
-                                //label text
-                              ),
-                            ),
-                          )
-                        ]),
+                          );
+                        }),
                       ),
                       Container(
                         child: Row(children: <Widget>[
