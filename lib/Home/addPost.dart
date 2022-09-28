@@ -6,6 +6,7 @@ import 'package:mi_fik/main.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:file_picker/file_picker.dart';
 
+
 class addPost extends StatefulWidget {
   const addPost({super.key});
 
@@ -164,7 +165,7 @@ class _addPost extends State<addPost>{
                                   borderRadius: BorderRadius.circular(10.0)),
                             ),
                             onPressed: () async {
-                              FilePickerResult? result = await FilePicker
+                              FilePickerResult result = await FilePicker
                                   .platform
                                   .pickFiles(allowMultiple: true);
                             },

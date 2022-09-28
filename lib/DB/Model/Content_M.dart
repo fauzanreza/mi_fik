@@ -1,13 +1,13 @@
 class ContentModel {
   //Key
-  late int id; //Primary
-  late int idUser; //Foreign->user
+  int id; //Primary
+  int idUser; //Foreign->user
 
-  late String contentTitle;
-  late String contentDesc;
+  String contentTitle;
+  String contentDesc;
 
-  late DateTime createdAt;
-  late DateTime updatedAt;
+  DateTime createdAt;
+  DateTime updatedAt;
 
   contentMap() {
     var mapping = <String, dynamic>{};

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SchedulePage extends StatelessWidget {
-  const SchedulePage({super.key});
+  const SchedulePage({key});
 
   @override
   Widget build(BuildContext context) {
