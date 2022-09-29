@@ -26,6 +26,7 @@ double textLG = 22;
 double textMD = 16;
 double textSM = 13;
 double textXSM = 11.5;
+double textXXSM = 9.5;
 
 double btnHeightMD = 55;
 

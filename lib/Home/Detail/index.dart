@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:mi_fik/DB/Database.dart';
 import 'package:mi_fik/Home/Detail/Attach.dart';
 import 'package:mi_fik/Home/Detail/Location.dart';
+import 'package:mi_fik/Home/Detail/Save.dart';
 import 'package:mi_fik/main.dart';
 
 class DetailPage extends StatefulWidget {
@@ -269,40 +270,8 @@ class _DetailPage extends State<DetailPage> {
                         ],
                       )),
 
-                  //Full save button.
-                  SizedBox(
-                      width: fullWidth,
-                      height: btnHeightMD,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Respond to button press
-                        },
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStatePropertyAll<Color>(primaryColor),
-                        ),
-                        child: const Text('Save Event'),
-                      )),
-
-                  //Normal save button.
-                  // Container(
-                  //     width: fullWidth,
-                  //     margin: EdgeInsets.symmetric(horizontal: marginMT),
-                  //     child: ElevatedButton(
-                  //       onPressed: () {
-                  //         // Respond to button press
-                  //       },
-                  //       style: ButtonStyle(
-                  //         shape:
-                  //             MaterialStateProperty.all<RoundedRectangleBorder>(
-                  //                 RoundedRectangleBorder(
-                  //           borderRadius: BorderRadius.circular(roundedLG2),
-                  //         )),
-                  //         backgroundColor:
-                  //             MaterialStatePropertyAll<Color>(primaryColor),
-                  //       ),
-                  //       child: const Text('Save Event'),
-                  //     ))
+                  //Save content to archieve.
+                  SaveButton(passId: contentId)
                 ]),
           )
         ],

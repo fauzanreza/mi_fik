@@ -6,16 +6,14 @@ import 'package:mi_fik/main.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:file_picker/file_picker.dart';
 
-
 class addPost extends StatefulWidget {
-  const addPost({super.key});
+  const addPost({Key key}) : super(key: key);
 
   @override
   _addPost createState() => _addPost();
 }
 
-class _addPost extends State<addPost>{
-
+class _addPost extends State<addPost> {
   //Initial variable
   var db = Mysql();
   final List<TagModel> _tagList = <TagModel>[];
@@ -100,7 +98,7 @@ class _addPost extends State<addPost>{
                 ),
                 child: LayoutBuilder(
                   builder: (context, constraints) => ListView(
-                  physics: BouncingScrollPhysics(),
+                    physics: BouncingScrollPhysics(),
                     padding: EdgeInsets.only(top: fullHeight * 0.04),
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
@@ -188,39 +186,40 @@ class _addPost extends State<addPost>{
                             )),
                       ),
                       Container(
-                        height:34,
+                        height: 34,
                         child: ListView.builder(
-                        physics: BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        padding: EdgeInsets.zero,
-                        itemCount: _tagList.length,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            alignment: Alignment.centerLeft,
-                            padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
-                            child: SizedBox(
-                              height: 30,
-                              child: ElevatedButton.icon(
-                                style: ElevatedButton.styleFrom(
-                                  primary: Colors.white,
-                                  onPrimary: primaryColor,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(50.0)),
+                            physics: BouncingScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            padding: EdgeInsets.zero,
+                            itemCount: _tagList.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                alignment: Alignment.centerLeft,
+                                padding:
+                                    const EdgeInsets.fromLTRB(20, 10, 0, 0),
+                                child: SizedBox(
+                                  height: 30,
+                                  child: ElevatedButton.icon(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.white,
+                                      onPrimary: primaryColor,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(50.0)),
+                                    ),
+                                    onPressed: () async {},
+                                    icon: Icon(Icons.circle,
+                                        color: Colors
+                                            .yellow), //icon data for elevated button
+                                    label: Text(
+                                      _tagList[index].tagName,
+                                      style: TextStyle(fontSize: 12),
+                                    ),
+                                    //label text
+                                  ),
                                 ),
-                                onPressed: () async {},
-                                icon: Icon(Icons.circle,
-                                    color: Colors
-                                        .yellow), //icon data for elevated button
-                                label: Text(
-                                  _tagList[index].tagName,
-                                  style: TextStyle(fontSize: 12),
-                                ),
-                                //label text
-                              ),
-                            ),
-                          );
-                        }),
+                              );
+                            }),
                       ),
                       Container(
                         child: Row(children: <Widget>[

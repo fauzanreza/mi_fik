@@ -5,7 +5,7 @@ import 'package:mi_fik/Home/Detail/index.dart';
 import 'package:mi_fik/main.dart';
 
 class GetContent extends StatefulWidget {
-  const GetContent({key});
+  const GetContent({Key key}) : super(key: key);
 
   @override
   _GetContent createState() => _GetContent();
