@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:mi_fik/DB/Database.dart';
 import 'package:mi_fik/Home/Detail/Attach.dart';
 import 'package:mi_fik/Home/Detail/Location.dart';
+import 'package:mi_fik/Home/Detail/Save.dart';
 import 'package:mi_fik/main.dart';
 
 class DetailPage extends StatefulWidget {
@@ -128,37 +129,31 @@ class _DetailPage extends State<DetailPage> {
   Widget getTag(tag) {
     if (tag != null) {
       final jsonLoc = json.decode(tag.toString());
-      return SizedBox(
-          height: 40,
-          child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              padding: EdgeInsets.symmetric(vertical: marginHZ),
-              itemCount: jsonLoc.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  margin: const EdgeInsets.only(right: 5, left: 5),
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      // Respond to button press
-                    },
-                    icon: Icon(
-                      Icons.circle,
-                      size: textSM,
-                      color: Colors.green,
-                    ),
-                    label: Text(jsonLoc[index]['tag_name'],
-                        style: TextStyle(fontSize: textXSM)),
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(roundedLG2),
-                      )),
-                      backgroundColor:
-                          MaterialStatePropertyAll<Color>(primaryColor),
-                    ),
-                  ),
-                );
-              }));
+      return Wrap(
+          children: jsonLoc.map<Widget>((content) {
+        return Container(
+          margin: const EdgeInsets.only(right: 5),
+          child: ElevatedButton.icon(
+            onPressed: () {
+              // Respond to button press
+            },
+            icon: Icon(
+              Icons.circle,
+              size: textSM,
+              color: Colors.green,
+            ),
+            label:
+                Text(content['tag_name'], style: TextStyle(fontSize: textXSM)),
+            style: ButtonStyle(
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(roundedLG2),
+              )),
+              backgroundColor: MaterialStatePropertyAll<Color>(primaryColor),
+            ),
+          ),
+        );
+      }).toList());
     } else {
       return const SizedBox();
     }
@@ -269,40 +264,8 @@ class _DetailPage extends State<DetailPage> {
                         ],
                       )),
 
-                  //Full save button.
-                  SizedBox(
-                      width: fullWidth,
-                      height: btnHeightMD,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Respond to button press
-                        },
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStatePropertyAll<Color>(primaryColor),
-                        ),
-                        child: const Text('Save Event'),
-                      )),
-
-                  //Normal save button.
-                  // Container(
-                  //     width: fullWidth,
-                  //     margin: EdgeInsets.symmetric(horizontal: marginMT),
-                  //     child: ElevatedButton(
-                  //       onPressed: () {
-                  //         // Respond to button press
-                  //       },
-                  //       style: ButtonStyle(
-                  //         shape:
-                  //             MaterialStateProperty.all<RoundedRectangleBorder>(
-                  //                 RoundedRectangleBorder(
-                  //           borderRadius: BorderRadius.circular(roundedLG2),
-                  //         )),
-                  //         backgroundColor:
-                  //             MaterialStatePropertyAll<Color>(primaryColor),
-                  //       ),
-                  //       child: const Text('Save Event'),
-                  //     ))
+                  //Save content to archieve.
+                  SaveButton(passId: contentId)
                 ]),
           )
         ],

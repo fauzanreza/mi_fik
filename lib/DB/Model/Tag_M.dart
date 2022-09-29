@@ -1,11 +1,11 @@
 class TagModel {
   //Key
-  late int id; //Primary
+  int id; //Primary
 
-  late String tagName;
+  String tagName;
 
-  late DateTime createdAt;
-  late DateTime updatedAt;
+  DateTime createdAt;
+  DateTime updatedAt;
 
   tagMap() {
     var mapping = <String, dynamic>{};

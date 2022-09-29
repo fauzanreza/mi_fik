@@ -5,18 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:mi_fik/main.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class AttachButton extends StatefulWidget {
-  AttachButton({key, this.passAttach});
+class AttachButton extends StatelessWidget {
+  AttachButton({Key key, this.passAttach}) : super(key: key);
   String passAttach;
 
   @override
-  _AttachButton createState() => _AttachButton();
-}
-
-class _AttachButton extends State<AttachButton> {
-  @override
   Widget build(BuildContext context) {
-    final jsonAtt = json.decode(widget.passAttach);
+    final jsonAtt = json.decode(passAttach);
     //final jsonAtt = json.encode(widget.passAttach);
 
     return Column(
@@ -45,7 +40,7 @@ class _AttachButton extends State<AttachButton> {
                 ),
                 TextSpan(
                     text: getButtonText(attach),
-                    recognizer: new TapGestureRecognizer()
+                    recognizer: TapGestureRecognizer()
                       ..onTap = () {
                         launchUrl(Uri.parse(attach['attach_url'].toString()));
                       },
@@ -66,7 +61,7 @@ class _AttachButton extends State<AttachButton> {
                 ),
                 TextSpan(
                     text: getButtonText(attach),
-                    recognizer: new TapGestureRecognizer()
+                    recognizer: TapGestureRecognizer()
                       ..onTap = () {
                         launchUrl(Uri.parse(attach['attach_url'].toString()));
                       },
@@ -91,10 +86,5 @@ class _AttachButton extends State<AttachButton> {
           alignment: Alignment.centerLeft,
           child: getButton());
     }).toList());
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 }

@@ -8,7 +8,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:intl/intl.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({key});
+  const HomePage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -46,6 +46,7 @@ class _LocationButton extends State<LocationButton>
               content: SizedBox(
                 height: fullWidth *
                     0.8, //Pop up height based on fullwidth (Square maps).
+                width: fullWidth,
                 child: Column(children: [
                   Flexible(
                     child: GoogleMap(
