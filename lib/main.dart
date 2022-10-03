@@ -63,7 +63,7 @@ class _NavBarState extends State<NavBar> {
   final List<Widget> _widgetOptions = <Widget>[
     const SchedulePage(),
     const HomePage(),
-    const CalendarPage(),
+    CalendarPage(),
   ];
 
   @override
