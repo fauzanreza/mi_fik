@@ -11,6 +11,7 @@ class AttachButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double fullWidth = MediaQuery.of(context).size.width;
     final jsonAtt = json.decode(passAttach);
     //final jsonAtt = json.encode(widget.passAttach);
 
@@ -73,7 +74,23 @@ class AttachButton extends StatelessWidget {
             ),
           );
         } else if (attach['type'] == "image") {
-          //Do something
+          return SizedBox(
+            width: fullWidth * 0.8,
+            child: Column(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(roundedMd2),
+                  child: Image.network(attach['attach_url'].toString()),
+                ),
+                SizedBox(height: 5),
+                Text(attach['attach_name'].toString(),
+                    style: TextStyle(
+                        fontSize: textSM,
+                        fontWeight: FontWeight.w500,
+                        fontStyle: FontStyle.italic))
+              ],
+            ),
+          );
         } else if (attach['type'] == "video") {
           //Do something.
         } else if (attach['type'] == "undefined") {

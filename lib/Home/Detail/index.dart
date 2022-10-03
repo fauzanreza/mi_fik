@@ -26,6 +26,7 @@ class _DetailPage extends State<DetailPage> {
   var contentAttach;
   var contentTag;
   var contentLoc;
+
   DateTime contentDateStart = DateTime.now();
   DateTime contentDateEnd = DateTime.now();
 

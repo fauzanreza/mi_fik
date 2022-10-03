@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mi_fik/DB/Database.dart';
 import 'package:mi_fik/DB/Model/Archieve_M.dart';
 import 'package:mi_fik/Others/checkbox.dart';
@@ -36,6 +37,19 @@ class _SaveButton extends State<SaveButton> {
             _archieveList.add(archieveModels);
           });
         }
+      });
+      conn.close();
+    });
+  }
+
+  Future postArchieveRel(archieveId, contentId) async {
+    var date = DateFormat("yyyy-MM-dd h:i:s").format(DateTime.now()).toString();
+
+    db.getConnection().then((conn) {
+      String sql =
+          "INSERT INTO `archieve_relation`(`id`, `archieve_id`, `content_id`, `user_id`, `created_at`, `updated_at`) VALUES (null,'${archieveId}','${contentId}',1, '${date}','${date}')";
+      conn.query(sql).then((results) {
+        print("success");
       });
       conn.close();
     });
@@ -124,7 +138,10 @@ class _SaveButton extends State<SaveButton> {
                                                 fontSize: textXXSM,
                                               )),
                                           const Spacer(),
-                                          const MyStatefulWidget(),
+                                          MyStatefulWidget(
+                                              idArchieve:
+                                                  _archieveList[index].id,
+                                              idContent: widget.passId),
                                         ]),
                                       );
                                     })),
@@ -137,8 +154,16 @@ class _SaveButton extends State<SaveButton> {
                                     right: marginMT,
                                     bottom: btnHeightMD),
                                 child: ElevatedButton(
-                                  onPressed: () {
-                                    // Respond to button press
+                                  onPressed: () async {
+                                    //print(archieve.length.toString());
+                                    for (int i = 0; i < archieve.length; i++) {
+                                      //print("Data");
+                                      archieve.forEach((element) {
+                                        postArchieveRel(element.idContent,
+                                            element.idArchieve);
+                                      });
+                                    }
+                                    archieve.clear();
                                   },
                                   style: ButtonStyle(
                                     shape: MaterialStateProperty.all<

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:mi_fik/DB/Model/Archieve_Rel_M.dart';
 import 'package:mi_fik/main.dart';
 
 class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({Key key}) : super(key: key);
+  MyStatefulWidget({Key key, this.idArchieve, this.idContent})
+      : super(key: key);
+  int idArchieve;
+  int idContent;
 
   @override
   State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
@@ -32,6 +36,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       onChanged: (bool value) {
         setState(() {
           isChecked = value;
+
+          archieve.add(ArchieveRel({widget.idArchieve, widget.idContent}));
         });
       },
     );

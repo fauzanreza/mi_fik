@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 //Main Menu.
 import 'package:mi_fik/Calendar/index.dart';
+import 'package:mi_fik/DB/Model/Archieve_Rel_M.dart';
 import 'package:mi_fik/Home/index.dart';
 import 'package:mi_fik/Schedule/index.dart';
 
@@ -37,6 +38,11 @@ double marginHZ = 4; //For horizontal listview
 
 double iconLG = 32; //For floating add btn, ...
 double iconMD = 26; //For link or file btn, ...
+
+List archieveVal = [];
+List<ArchieveRel> archieve = [
+  //ArchieveRel(idArchieve: 1, idContent: 23),
+];
 
 class MyApp extends StatelessWidget {
   const MyApp({key}) : super(key: key);
