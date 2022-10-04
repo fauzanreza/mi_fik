@@ -26,6 +26,7 @@ class _DetailPage extends State<DetailPage> {
   var contentAttach;
   var contentTag;
   var contentLoc;
+
   DateTime contentDateStart = DateTime.now();
   DateTime contentDateEnd = DateTime.now();
 
@@ -181,6 +182,16 @@ class _DetailPage extends State<DetailPage> {
                 image: AssetImage("assets/content/content-2.jpg"),
                 fit: BoxFit.cover,
               ),
+            ),
+          ),
+          Container(
+            transform: Matrix4.translationValues(0.0, fullHeight * 0.03, 0.0),
+            child: IconButton(
+              icon: Icon(Icons.arrow_back, size: iconLG),
+              color: Colors.white,
+              onPressed: () {
+                Navigator.pop(context);
+              },
             ),
           ),
           Container(

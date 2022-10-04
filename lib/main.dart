@@ -38,6 +38,8 @@ double marginHZ = 4; //For horizontal listview
 double iconLG = 32; //For floating add btn, ...
 double iconMD = 26; //For link or file btn, ...
 
+List archieveVal = [];
+
 class MyApp extends StatelessWidget {
   const MyApp({key}) : super(key: key);
   @override
