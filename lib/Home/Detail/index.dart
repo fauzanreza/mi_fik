@@ -185,6 +185,16 @@ class _DetailPage extends State<DetailPage> {
             ),
           ),
           Container(
+            transform: Matrix4.translationValues(0.0, fullHeight * 0.03, 0.0),
+            child: IconButton(
+              icon: Icon(Icons.arrow_back, size: iconLG),
+              color: Colors.white,
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ),
+          Container(
             margin: EdgeInsets.only(top: fullHeight * 0.28),
             height: fullHeight * 0.8,
             width: fullWidth,

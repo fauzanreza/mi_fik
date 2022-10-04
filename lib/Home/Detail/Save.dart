@@ -22,7 +22,7 @@ class _SaveButton extends State<SaveButton> {
   Future getArchieve() async {
     db.getConnection().then((conn) {
       String sql =
-          "SELECT archieve.archieve_name,  CASE WHEN content.content_type = 'event' THEN COUNT(content.id) ELSE 0 END AS event, CASE WHEN content.content_type = 'task' THEN COUNT(content.id) ELSE 0 END AS task FROM archieve JOIN archieve_relation ON archieve.id = archieve_relation.archieve_id join content on content.id = archieve_relation.content_id WHERE archieve.id_user = 1 GROUP by archieve.id ORDER BY archieve.created_at";
+          "SELECT archieve.id, archieve.archieve_name,  CASE WHEN content.content_type = 'event' THEN COUNT(content.id) ELSE 0 END AS event, CASE WHEN content.content_type = 'task' THEN COUNT(content.id) ELSE 0 END AS task FROM archieve JOIN archieve_relation ON archieve.id = archieve_relation.archieve_id join content on content.id = archieve_relation.content_id WHERE archieve.id_user = 1 GROUP by archieve.id ORDER BY archieve.created_at";
       conn.query(sql).then((results) {
         for (var row in results) {
           setState(() {
@@ -42,12 +42,12 @@ class _SaveButton extends State<SaveButton> {
     });
   }
 
-  Future postArchieveRel(archieveId, contentId) async {
+  Future postArchieveRel(archieveId) async {
     var date = DateFormat("yyyy-MM-dd h:i:s").format(DateTime.now()).toString();
 
     db.getConnection().then((conn) {
       String sql =
-          "INSERT INTO `archieve_relation`(`id`, `archieve_id`, `content_id`, `user_id`, `created_at`, `updated_at`) VALUES (null,'${archieveId}','${contentId}',1, '${date}','${date}')";
+          "INSERT INTO `archieve_relation`(`id`, `archieve_id`, `content_id`, `user_id`, `created_at`, `updated_at`) VALUES (null,'${archieveId}','${widget.passId}',1, '${date}','${date}')";
       conn.query(sql).then((results) {
         print("success");
       });
@@ -83,6 +83,7 @@ class _SaveButton extends State<SaveButton> {
             child: ElevatedButton(
               onPressed: () => showDialog<String>(
                   context: context,
+                  barrierColor: primaryColor.withOpacity(0.5),
                   builder: (BuildContext context) => AlertDialog(
                       contentPadding: EdgeInsets.zero,
                       elevation: 0, //Remove shadow.
@@ -118,7 +119,8 @@ class _SaveButton extends State<SaveButton> {
                                             width: fullWidth * 0.35,
                                             child: Text(
                                                 _archieveList[index]
-                                                    .archieveName,
+                                                    .archieveName
+                                                    .toString(),
                                                 maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
                                                 style: TextStyle(
@@ -155,15 +157,56 @@ class _SaveButton extends State<SaveButton> {
                                     bottom: btnHeightMD),
                                 child: ElevatedButton(
                                   onPressed: () async {
-                                    //print(archieve.length.toString());
-                                    for (int i = 0; i < archieve.length; i++) {
-                                      //print("Data");
-                                      archieve.forEach((element) {
-                                        postArchieveRel(element.idContent,
-                                            element.idArchieve);
-                                      });
+                                    //Insert multiple archive relation.
+                                    for (int i = 0;
+                                        i < archieveVal.length;
+                                        i++) {
+                                      postArchieveRel(archieveVal[i]);
                                     }
-                                    archieve.clear();
+                                    archieveVal.clear();
+                                    Navigator.pop(context);
+                                    showDialog<String>(
+                                        barrierDismissible: true,
+                                        barrierColor:
+                                            primaryColor.withOpacity(0.5),
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            AlertDialog(
+                                                contentPadding: EdgeInsets.zero,
+                                                elevation: 0, //Remove shadow.
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                content: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Container(
+                                                        width: fullWidth * 0.45,
+                                                        padding: EdgeInsets.all(
+                                                            fullWidth * 0.1),
+                                                        margin: EdgeInsets.only(
+                                                            bottom: marginMT),
+                                                        child: ClipRRect(
+                                                          child: Image.asset(
+                                                              'assets/icon/checklist.png'),
+                                                        ),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: whitebg,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                        ),
+                                                      ),
+                                                      Text("Post Saved",
+                                                          style: TextStyle(
+                                                              color: whitebg,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              fontSize: textLG))
+                                                    ])));
                                   },
                                   style: ButtonStyle(
                                     shape: MaterialStateProperty.all<
