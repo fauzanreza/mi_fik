@@ -82,7 +82,7 @@ class AttachButton extends StatelessWidget {
                   borderRadius: BorderRadius.circular(roundedMd2),
                   child: Image.network(attach['attach_url'].toString()),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 Text(attach['attach_name'].toString(),
                     style: TextStyle(
                         fontSize: textSM,

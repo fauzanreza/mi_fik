@@ -115,11 +115,9 @@ class _DetailPage extends State<DetailPage> {
   //Get content subtitle.
   Widget getSubtitle(sub) {
     if (sub != "") {
-      return Container(
-        margin: EdgeInsets.only(left: marginMD, bottom: marginMT),
-        child: Text(contentSubtitle,
-            style: TextStyle(
-                fontSize: textSM, fontWeight: FontWeight.w500, color: blackbg)),
+      return Text(
+        sub,
+        style: TextStyle(fontSize: textSM, color: blackbg),
       );
     } else {
       return const SizedBox();
@@ -127,34 +125,94 @@ class _DetailPage extends State<DetailPage> {
   }
 
   //Get content tag.
-  Widget getTag(tag) {
+  Widget getTag(tag, height) {
+    int i = 0;
+    int max = 10; //Maximum tag
+
     if (tag != null) {
       final jsonLoc = json.decode(tag.toString());
+
       return Wrap(
+          runSpacing: -5,
+          spacing: 5,
           children: jsonLoc.map<Widget>((content) {
-        return Container(
-          margin: const EdgeInsets.only(right: 5),
-          child: ElevatedButton.icon(
-            onPressed: () {
-              // Respond to button press
-            },
-            icon: Icon(
-              Icons.circle,
-              size: textSM,
-              color: Colors.green,
-            ),
-            label:
-                Text(content['tag_name'], style: TextStyle(fontSize: textXSM)),
-            style: ButtonStyle(
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(roundedLG2),
-              )),
-              backgroundColor: MaterialStatePropertyAll<Color>(primaryColor),
-            ),
-          ),
-        );
-      }).toList());
+            if (i < max) {
+              i++;
+              return ElevatedButton.icon(
+                onPressed: () {
+                  // Respond to button press
+                },
+                icon: Icon(
+                  Icons.circle,
+                  size: textSM,
+                  color: Colors.green,
+                ),
+                label: Text(content['tag_name'],
+                    style: TextStyle(fontSize: textXSM)),
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(roundedLG2),
+                  )),
+                  backgroundColor:
+                      MaterialStatePropertyAll<Color>(primaryColor),
+                ),
+              );
+            } else if (i == max) {
+              i++;
+              return Container(
+                  margin: const EdgeInsets.only(right: 5),
+                  child: TextButton(
+                    onPressed: () => showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        contentPadding: EdgeInsets.all(paddingMD),
+                        title: Text(
+                          'All Tag',
+                          style:
+                              TextStyle(color: primaryColor, fontSize: textMD),
+                        ),
+                        content: Container(
+                            width: height,
+                            child: Wrap(
+                                runSpacing: -5,
+                                spacing: 5,
+                                children: jsonLoc.map<Widget>((content) {
+                                  return ElevatedButton.icon(
+                                    onPressed: () {
+                                      // Respond to button press
+                                    },
+                                    icon: Icon(
+                                      Icons.circle,
+                                      size: textSM,
+                                      color: Colors.green,
+                                    ),
+                                    label: Text(content['tag_name'],
+                                        style: TextStyle(fontSize: textXSM)),
+                                    style: ButtonStyle(
+                                      shape: MaterialStateProperty.all<
+                                              RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(roundedLG2),
+                                      )),
+                                      backgroundColor:
+                                          MaterialStatePropertyAll<Color>(
+                                              primaryColor),
+                                    ),
+                                  );
+                                }).toList())),
+                      ),
+                    ),
+                    child: Text(
+                      "See ${jsonLoc.length - max} More",
+                      style: TextStyle(color: primaryColor),
+                    ),
+                  ));
+            } else {
+              return SizedBox();
+            }
+          }).toList());
     } else {
       return const SizedBox();
     }
@@ -175,12 +233,33 @@ class _DetailPage extends State<DetailPage> {
       body: Stack(
         //crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            height: fullHeight * 0.3,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/content/content-2.jpg"),
-                fit: BoxFit.cover,
+          GestureDetector(
+            onTap: () => showDialog<String>(
+              context: context,
+              barrierColor: primaryColor.withOpacity(0.5),
+              builder: (BuildContext context) => AlertDialog(
+                  contentPadding: EdgeInsets.zero,
+                  elevation: 0, //Remove shadow.
+                  backgroundColor: Colors.transparent,
+                  content: Container(
+                    height: fullHeight * 0.45,
+                    width: fullWidth,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage("assets/content/content-2.jpg"),
+                        fit: BoxFit.cover,
+                      ),
+                      borderRadius: BorderRadius.circular(roundedLG2),
+                    ),
+                  )),
+            ),
+            child: Container(
+              height: fullHeight * 0.3,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/content/content-2.jpg"),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
@@ -208,20 +287,35 @@ class _DetailPage extends State<DetailPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
-                      margin: EdgeInsets.only(left: marginMD),
-                      child: Text(contentTitle,
-                          style: TextStyle(
-                              fontSize: textMD, fontWeight: FontWeight.bold))),
-                  //Check this...
-                  getSubtitle(contentSubtitle),
+                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    padding: EdgeInsets.only(bottom: 5),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                          width: iconLG,
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.circular(25),
+                              child: Image.network(
+                                  "https://sci.telkomuniversity.ac.id/wp-content/uploads/2022/02/13.jpg")), //For now.
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(contentTitle,
+                                style: TextStyle(
+                                    fontSize: textMD,
+                                    fontWeight: FontWeight.bold)),
+                            //Check this...
+                            getSubtitle(contentSubtitle),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
                   Expanded(
                       child: ListView(padding: EdgeInsets.zero, children: [
-                    //Tag holder.
-                    Container(
-                      margin: EdgeInsets.only(
-                          top: marginMT, left: marginMD, right: marginMD),
-                      child: getTag(contentTag),
-                    ),
                     //Content Description.
                     Container(
                         margin: EdgeInsets.only(
@@ -230,7 +324,13 @@ class _DetailPage extends State<DetailPage> {
                             style:
                                 TextStyle(color: blackbg, fontSize: textSM))),
                     //Attached file or link.
-                    getAttach(contentAttach)
+                    getAttach(contentAttach),
+                    //Tag holder.
+                    Container(
+                      margin: EdgeInsets.symmetric(
+                          vertical: marginMT, horizontal: marginMD),
+                      child: getTag(contentTag, fullHeight),
+                    ),
                   ])),
                   Container(
                       margin: EdgeInsets.only(
