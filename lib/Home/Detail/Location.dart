@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:mi_fik/main.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LocationButton extends StatefulWidget {
   const LocationButton({Key key, this.passLocation, this.passId})
@@ -59,9 +60,7 @@ class _LocationButton extends State<LocationButton>
       }
 
       if (haspermission) {
-        setState(() {
-          //refresh the UI
-        });
+        setState(() {});
 
         getLocation();
       }
@@ -69,16 +68,12 @@ class _LocationButton extends State<LocationButton>
       print("GPS Service is not enabled, turn on GPS location");
     }
 
-    setState(() {
-      //refresh the UI
-    });
+    setState(() {});
   }
 
   getLocation() async {
     position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
-    print(position.longitude); //Output: 80.24599079
-    print(position.latitude); //Output: 29.6593457
 
     my_long = position.longitude.toString();
     my_lat = position.latitude.toString();
@@ -87,24 +82,18 @@ class _LocationButton extends State<LocationButton>
       //refresh UI
     });
 
-    LocationSettings locationSettings = const LocationSettings(
-      accuracy: LocationAccuracy.high, //accuracy of the location data
-      distanceFilter: 100, //minimum distance (measured in meters) a
-      //device must move horizontally before an update event is generated;
+    LocationSettings locationSettings = LocationSettings(
+      accuracy: LocationAccuracy.high,
+      distanceFilter: 100,
     );
 
     StreamSubscription<Position> positionStream =
         Geolocator.getPositionStream(locationSettings: locationSettings)
             .listen((Position position) {
-      print(position.longitude); //Output: 80.24599079
-      print(position.latitude); //Output: 29.6593457
-
       my_long = position.longitude.toString();
       my_lat = position.latitude.toString();
 
-      setState(() {
-        //refresh UI on update
-      });
+      setState(() {});
     });
 
     String imgurl =
@@ -159,14 +148,12 @@ class _LocationButton extends State<LocationButton>
                           position: LatLng(lat, lng),
                         ),
                         Marker(
-                          markerId: const MarkerId("0"),
-                          infoWindow: const InfoWindow(title: "You"),
+                          markerId: MarkerId("0"),
+                          infoWindow: InfoWindow(title: "You"),
 
                           // icon: BitmapDescriptor.defaultMarkerWithHue(
                           //     BitmapDescriptor.hueRed),
-
-                          icon: BitmapDescriptor.fromBytes(bytes,
-                              size: Size.zero),
+                          icon: BitmapDescriptor.fromBytes(bytes),
                           position: LatLng(
                               double.parse(my_lat), double.parse(my_long)),
                         )
@@ -179,8 +166,16 @@ class _LocationButton extends State<LocationButton>
                       width: fullWidth,
                       height: btnHeightMD - 10,
                       child: ElevatedButton(
-                        onPressed: () {
-                          //
+                        onPressed: () async {
+                          //Navigate through google maps w/ direction.
+                          String googleUrl =
+                              //'https://www.google.com/maps/dir/Current+Location/?api=1&query=${lat},${lng}';
+                              'https://www.google.com/maps/dir/Current+Location/${lat},${lng}';
+                          if (await canLaunch(googleUrl)) {
+                            await launch(googleUrl);
+                          } else {
+                            throw 'Could not open the map.';
+                          }
                         },
                         style: ButtonStyle(
                           shape:
