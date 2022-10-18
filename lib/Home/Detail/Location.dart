@@ -1,7 +1,11 @@
 import 'dart:convert';
+import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mi_fik/main.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class LocationButton extends StatefulWidget {
@@ -16,10 +20,99 @@ class LocationButton extends StatefulWidget {
 
 class _LocationButton extends State<LocationButton>
     with SingleTickerProviderStateMixin {
+  //Initial variable.
   //_MapsPageState(passIdFakses);
   GoogleMapController _googleMapController;
   Marker _origin;
   Marker _destination;
+  bool servicestatus = false;
+  bool haspermission = false;
+  LocationPermission permission;
+  Position position;
+  String my_long = "", my_lat = "";
+  StreamSubscription<Position> positionStream;
+  Uint8List bytes;
+
+  @override
+  void initState() {
+    checkGps();
+    super.initState();
+  }
+
+  //Get my location.
+  checkGps() async {
+    servicestatus = await Geolocator.isLocationServiceEnabled();
+    if (servicestatus) {
+      permission = await Geolocator.checkPermission();
+
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          print('Location permissions are denied');
+        } else if (permission == LocationPermission.deniedForever) {
+          print("'Location permissions are permanently denied");
+        } else {
+          haspermission = true;
+        }
+      } else {
+        haspermission = true;
+      }
+
+      if (haspermission) {
+        setState(() {
+          //refresh the UI
+        });
+
+        getLocation();
+      }
+    } else {
+      print("GPS Service is not enabled, turn on GPS location");
+    }
+
+    setState(() {
+      //refresh the UI
+    });
+  }
+
+  getLocation() async {
+    position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    print(position.longitude); //Output: 80.24599079
+    print(position.latitude); //Output: 29.6593457
+
+    my_long = position.longitude.toString();
+    my_lat = position.latitude.toString();
+
+    setState(() {
+      //refresh UI
+    });
+
+    LocationSettings locationSettings = const LocationSettings(
+      accuracy: LocationAccuracy.high, //accuracy of the location data
+      distanceFilter: 100, //minimum distance (measured in meters) a
+      //device must move horizontally before an update event is generated;
+    );
+
+    StreamSubscription<Position> positionStream =
+        Geolocator.getPositionStream(locationSettings: locationSettings)
+            .listen((Position position) {
+      print(position.longitude); //Output: 80.24599079
+      print(position.latitude); //Output: 29.6593457
+
+      my_long = position.longitude.toString();
+      my_lat = position.latitude.toString();
+
+      setState(() {
+        //refresh UI on update
+      });
+    });
+
+    String imgurl =
+        "https://leonardhors.site/public/assets/img/87409344219_PAS_FOTO_2.jpg";
+    bytes = (await NetworkAssetBundle(Uri.parse(imgurl)).load(imgurl))
+        .buffer
+        .asUint8List();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,12 +150,25 @@ class _LocationButton extends State<LocationButton>
                           _googleMapController = controller,
                       markers: {
                         if (_origin != null) _origin,
+                        if (_destination != null) _destination,
                         Marker(
                           markerId: MarkerId(widget.passId.toString()),
                           infoWindow: InfoWindow(title: location),
                           icon: BitmapDescriptor.defaultMarkerWithHue(
-                              BitmapDescriptor.hueRed),
+                              BitmapDescriptor.hueOrange),
                           position: LatLng(lat, lng),
+                        ),
+                        Marker(
+                          markerId: const MarkerId("0"),
+                          infoWindow: const InfoWindow(title: "You"),
+
+                          // icon: BitmapDescriptor.defaultMarkerWithHue(
+                          //     BitmapDescriptor.hueRed),
+
+                          icon: BitmapDescriptor.fromBytes(bytes,
+                              size: Size.zero),
+                          position: LatLng(
+                              double.parse(my_lat), double.parse(my_long)),
                         )
                       },
                     ),

@@ -7,9 +7,14 @@ import 'package:mi_fik/main.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:intl/intl.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
 
+  @override
+  _HomePage createState() => _HomePage();
+}
+
+class _HomePage extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     double fullHeight = MediaQuery.of(context).size.height;
@@ -51,8 +56,33 @@ class HomePage extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                                 fontSize: textXL)),
                         SizedBox(height: fullHeight * 0.05),
-                        Text(DateFormat("dd MMM yyyy").format(DateTime.now()),
-                            style: TextStyle(color: whitebg, fontSize: textMD)),
+                        Row(
+                          children: [
+                            Text(
+                                DateFormat("dd MMM yyyy")
+                                    .format(DateTime.now()),
+                                style: TextStyle(
+                                    color: whitebg, fontSize: textMD)),
+                            Spacer(),
+                            RichText(
+                              text: TextSpan(
+                                children: [
+                                  WidgetSpan(
+                                    child: Icon(
+                                      Icons.location_on_outlined,
+                                      size: 20,
+                                      color: whitebg,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: " :",
+                                    style: TextStyle(color: whitebg),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        )
                       ]),
                 ),
                 Container(

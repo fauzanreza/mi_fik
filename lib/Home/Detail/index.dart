@@ -175,12 +175,33 @@ class _DetailPage extends State<DetailPage> {
       body: Stack(
         //crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            height: fullHeight * 0.3,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/content/content-2.jpg"),
-                fit: BoxFit.cover,
+          GestureDetector(
+            onTap: () => showDialog<String>(
+              context: context,
+              barrierColor: primaryColor.withOpacity(0.5),
+              builder: (BuildContext context) => AlertDialog(
+                  contentPadding: EdgeInsets.zero,
+                  elevation: 0, //Remove shadow.
+                  backgroundColor: Colors.transparent,
+                  content: Container(
+                    height: fullHeight * 0.45,
+                    width: fullWidth,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage("assets/content/content-2.jpg"),
+                        fit: BoxFit.cover,
+                      ),
+                      borderRadius: BorderRadius.circular(roundedLG2),
+                    ),
+                  )),
+            ),
+            child: Container(
+              height: fullHeight * 0.3,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/content/content-2.jpg"),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
@@ -216,12 +237,6 @@ class _DetailPage extends State<DetailPage> {
                   getSubtitle(contentSubtitle),
                   Expanded(
                       child: ListView(padding: EdgeInsets.zero, children: [
-                    //Tag holder.
-                    Container(
-                      margin: EdgeInsets.only(
-                          top: marginMT, left: marginMD, right: marginMD),
-                      child: getTag(contentTag),
-                    ),
                     //Content Description.
                     Container(
                         margin: EdgeInsets.only(
@@ -230,7 +245,13 @@ class _DetailPage extends State<DetailPage> {
                             style:
                                 TextStyle(color: blackbg, fontSize: textSM))),
                     //Attached file or link.
-                    getAttach(contentAttach)
+                    getAttach(contentAttach),
+                    //Tag holder.
+                    Container(
+                      margin: EdgeInsets.symmetric(
+                          vertical: marginMT, horizontal: marginMD),
+                      child: getTag(contentTag),
+                    ),
                   ])),
                   Container(
                       margin: EdgeInsets.only(
