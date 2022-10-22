@@ -99,6 +99,13 @@ class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
                                 slctSchedule.add(Duration(days: index));
                           },
                         );
+
+                        //For now. need to be fixed soon!!!
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const NavBar()),
+                        );
                       },
                       child: Container(
                         width: 56,
@@ -143,7 +150,7 @@ class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
                 }),
           ),
           Container(
-            margin: EdgeInsets.only(top: 10),
+            margin: const EdgeInsets.only(top: 10),
             child: TabBar(
               controller: _tabController,
               labelColor: greybg,
@@ -162,11 +169,11 @@ class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
               ],
             ),
           ),
-          Container(
+          SizedBox(
             height: fullHeight * 0.7,
             child: TabBarView(
               controller: _tabController,
-              children: [MySchedulePage(), ArchievePage()],
+              children: const [MySchedulePage(), ArchievePage()],
             ),
           )
         ]));

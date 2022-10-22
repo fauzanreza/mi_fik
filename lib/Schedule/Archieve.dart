@@ -13,7 +13,6 @@ class ArchievePage extends StatefulWidget {
 class _ArchievePage extends State<ArchievePage> {
   //Initial variable
   var db = Mysql();
-  int i = 0;
   final List<ArchieveModel> _archieveList = <ArchieveModel>[];
 
   //Controller
@@ -64,7 +63,6 @@ class _ArchievePage extends State<ArchievePage> {
 
     return Column(
         children: _archieveList.map((content) {
-      i++;
       return SizedBox(
           width: fullWidth,
           child: IntrinsicHeight(

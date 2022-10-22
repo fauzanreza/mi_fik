@@ -36,6 +36,7 @@ double marginMD = 25; //For home content (MB)
 double marginMT = 12; //For detail content (MT)
 double paddingMD = 20;
 double paddingSM = 15;
+double paddingXSM = 10;
 double marginHZ = 4; //For horizontal listview
 
 double iconLG = 32; //For floating add btn, ...
