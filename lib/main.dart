@@ -15,6 +15,7 @@ var primaryColor = const Color(0xFFFB8C00);
 var mainbg = const Color(0xFFD9D9D9);
 var whitebg = const Color(0xFFFFFFFF);
 var blackbg = const Color(0xFF414141);
+var greybg = Color.fromARGB(255, 118, 118, 118);
 
 var roundedLG = const Radius.circular(18); //For navbar, ...
 var roundedMd = const Radius.circular(10); //For container, ...
@@ -22,6 +23,7 @@ double roundedMd2 = 10; //For container, ...
 double roundedLG2 = 14; //For container, ...
 
 double textXL = 32;
+double textXLG = 25;
 double textLG = 22;
 double textMD = 16;
 double textSM = 13;
@@ -33,12 +35,16 @@ double btnHeightMD = 55;
 double marginMD = 25; //For home content (MB)
 double marginMT = 12; //For detail content (MT)
 double paddingMD = 20;
+double paddingSM = 15;
+double paddingXSM = 10;
 double marginHZ = 4; //For horizontal listview
 
 double iconLG = 32; //For floating add btn, ...
 double iconMD = 26; //For link or file btn, ...
 
-List archieveVal = [];
+//Others variable
+List archieveVal = []; //Need to be fixed
+DateTime slctSchedule = DateTime.now();
 
 class MyApp extends StatelessWidget {
   const MyApp({key}) : super(key: key);
