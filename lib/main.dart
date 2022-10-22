@@ -15,6 +15,7 @@ var primaryColor = const Color(0xFFFB8C00);
 var mainbg = const Color(0xFFD9D9D9);
 var whitebg = const Color(0xFFFFFFFF);
 var blackbg = const Color(0xFF414141);
+var greybg = Color.fromARGB(255, 118, 118, 118);
 
 var roundedLG = const Radius.circular(18); //For navbar, ...
 var roundedMd = const Radius.circular(10); //For container, ...
@@ -34,6 +35,7 @@ double btnHeightMD = 55;
 double marginMD = 25; //For home content (MB)
 double marginMT = 12; //For detail content (MT)
 double paddingMD = 20;
+double paddingSM = 15;
 double marginHZ = 4; //For horizontal listview
 
 double iconLG = 32; //For floating add btn, ...

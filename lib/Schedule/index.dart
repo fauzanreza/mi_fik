@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:mi_fik/Schedule/Archieve.dart';
+import 'package:mi_fik/Schedule/MySchedule.dart';
 import 'package:mi_fik/main.dart';
 
 class SchedulePage extends StatefulWidget {
@@ -9,11 +11,19 @@ class SchedulePage extends StatefulWidget {
   _SchedulePage createState() => _SchedulePage();
 }
 
-class _SchedulePage extends State<SchedulePage> {
+class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
+  TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+  }
+
   @override
   Widget build(BuildContext context) {
     double fullHeight = MediaQuery.of(context).size.height;
-    //double fullWidth = MediaQuery.of(context).size.width;
+    double fullWidth = MediaQuery.of(context).size.width;
 
     //Get greeting in header
     Widget getGreeting(hours) {
@@ -132,6 +142,33 @@ class _SchedulePage extends State<SchedulePage> {
                       ));
                 }),
           ),
+          Container(
+            margin: EdgeInsets.only(top: 10),
+            child: TabBar(
+              controller: _tabController,
+              labelColor: greybg,
+              indicatorColor: primaryColor,
+              labelStyle:
+                  TextStyle(fontSize: textMD, fontWeight: FontWeight.w500),
+              indicatorPadding:
+                  EdgeInsets.symmetric(horizontal: fullWidth * 0.1),
+              tabs: const <Widget>[
+                Tab(
+                  text: "My Schedule",
+                ),
+                Tab(
+                  text: "Archieve",
+                ),
+              ],
+            ),
+          ),
+          Container(
+            height: fullHeight * 0.7,
+            child: TabBarView(
+              controller: _tabController,
+              children: [MySchedulePage(), ArchievePage()],
+            ),
+          )
         ]));
   }
 }
