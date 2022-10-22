@@ -22,6 +22,7 @@ double roundedMd2 = 10; //For container, ...
 double roundedLG2 = 14; //For container, ...
 
 double textXL = 32;
+double textXLG = 25;
 double textLG = 22;
 double textMD = 16;
 double textSM = 13;
@@ -38,7 +39,9 @@ double marginHZ = 4; //For horizontal listview
 double iconLG = 32; //For floating add btn, ...
 double iconMD = 26; //For link or file btn, ...
 
-List archieveVal = [];
+//Others variable
+List archieveVal = []; //Need to be fixed
+DateTime slctSchedule = DateTime.now();
 
 class MyApp extends StatelessWidget {
   const MyApp({key}) : super(key: key);
