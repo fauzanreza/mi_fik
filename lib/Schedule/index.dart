@@ -69,7 +69,7 @@ class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
           ),
           Container(
             padding: const EdgeInsets.only(left: 10),
-            height: 56,
+            height: 60,
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: 7,

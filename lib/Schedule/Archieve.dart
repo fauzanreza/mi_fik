@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mi_fik/DB/Database.dart';
-import 'package:mi_fik/DB/Model/Archieve_M.dart';
+import 'package:mi_fik/DB/Model/Archieve.dart';
+import 'package:mi_fik/DB/Services/ArchieveServices.dart';
 import 'package:mi_fik/main.dart';
 
 class ArchievePage extends StatefulWidget {
@@ -11,58 +11,57 @@ class ArchievePage extends StatefulWidget {
 }
 
 class _ArchievePage extends State<ArchievePage> {
-  //Initial variable
-  var db = Mysql();
-  final List<ArchieveModel> _archieveList = <ArchieveModel>[];
-
-  //Controller
-  Future getArchieve() async {
-    db.getConnection().then((conn) {
-      String sql =
-          "SELECT archieve.id, archieve.archieve_name,  CASE WHEN content.content_type = 'event' THEN COUNT(content.id) ELSE 0 END AS event, CASE WHEN content.content_type = 'task' THEN COUNT(content.id) ELSE 0 END AS task FROM archieve JOIN archieve_relation ON archieve.id = archieve_relation.archieve_id join content on content.id = archieve_relation.content_id WHERE archieve.id_user = 1 GROUP by archieve.id ORDER BY archieve.created_at";
-      conn.query(sql).then((results) {
-        for (var row in results) {
-          setState(() {
-            //Mapping
-            var archieveModels = ArchieveModel();
-
-            archieveModels.id = row['id'];
-            archieveModels.archieveName = row['archieve_name'];
-            archieveModels.event = row['event'];
-            archieveModels.task = row['task'];
-
-            _archieveList.add(archieveModels);
-          });
-        }
-      });
-      conn.close();
-    });
-  }
-
-  //Get total content in an archieve
-  getTotalArchieve(event, task) {
-    if ((event != 0) && (task == 0)) {
-      return "${event} Events";
-    } else if ((event == 0) && (task != 0)) {
-      return "${task} Task";
-    } else {
-      return "${event} Events, ${task} Task";
-    }
-  }
+  ArchieveService apiService;
 
   @override
   void initState() {
     super.initState();
-    getArchieve();
+    apiService = ArchieveService();
   }
 
   @override
   Widget build(BuildContext context) {
+    return SafeArea(
+      maintainBottomViewPadding: false,
+      child: FutureBuilder(
+        future: apiService.getAllArchieve(),
+        builder: (BuildContext context,
+            AsyncSnapshot<List<ArchieveModel>> snapshot) {
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(
+                  "Something wrong with message: ${snapshot.error.toString()}"),
+            );
+          } else if (snapshot.connectionState == ConnectionState.done) {
+            List<ArchieveModel> archieves = snapshot.data;
+            return _buildListView(archieves);
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
+      ),
+    );
+  }
+
+  Widget _buildListView(List<ArchieveModel> archieves) {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
+    //Get total content in an archieve
+    getTotalArchieve(event, task) {
+      if ((event != 0) && (task == 0)) {
+        return "${event} Events";
+      } else if ((event == 0) && (task != 0)) {
+        return "${task} Task";
+      } else {
+        return "${event} Events, ${task} Task";
+      }
+    }
+
     return Column(
-        children: _archieveList.map((content) {
+        children: archieves.map((archieve) {
       return SizedBox(
           width: fullWidth,
           child: IntrinsicHeight(
@@ -73,7 +72,7 @@ class _ArchievePage extends State<ArchievePage> {
               color: primaryColor,
             ),
 
-            //Open content w/ full container
+            //Open Archieve w/ full container
             GestureDetector(
                 onTap: () {},
                 child: Container(
@@ -101,7 +100,7 @@ class _ArchievePage extends State<ArchievePage> {
                     child: Row(children: [
                       SizedBox(
                         width: fullWidth * 0.35,
-                        child: Text(content.archieveName.toString(),
+                        child: Text(archieve.archieveName.toString(),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -111,7 +110,7 @@ class _ArchievePage extends State<ArchievePage> {
                       ),
                       const Spacer(),
                       //This text is to small and will affect the name of archieve.
-                      Text(getTotalArchieve(content.event, content.task),
+                      Text(getTotalArchieve(archieve.event, archieve.task),
                           style: TextStyle(
                             color: whitebg,
                             fontSize: textXSM,

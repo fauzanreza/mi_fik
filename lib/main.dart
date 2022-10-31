@@ -45,6 +45,8 @@ double iconMD = 26; //For link or file btn, ...
 //Others variable
 List archieveVal = []; //Need to be fixed
 DateTime slctSchedule = DateTime.now();
+int passIdUser = 1; //For now.
+int passIdContent;
 
 class MyApp extends StatelessWidget {
   const MyApp({key}) : super(key: key);

@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/DB/Database.dart';
+import 'package:mi_fik/DB/Model/Content.dart';
+import 'package:mi_fik/DB/Services/ContentServices.dart';
 import 'package:mi_fik/Home/Detail/Attach.dart';
 import 'package:mi_fik/Home/Detail/Location.dart';
 import 'package:mi_fik/Home/Detail/Save.dart';
@@ -17,217 +19,207 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPage extends State<DetailPage> {
-  //Initial variable.
-  var db = Mysql();
-  int contentId = 0;
-  var contentTitle = "";
-  var contentSubtitle = "";
-  var contentDesc = "";
-  var contentAttach;
-  var contentTag;
-  var contentLoc;
-
-  DateTime contentDateStart = DateTime.now();
-  DateTime contentDateEnd = DateTime.now();
-
-  //Controller.
-  Future getContent() async {
-    db.getConnection().then((conn) {
-      String sql =
-          'SELECT * FROM content WHERE id = ' + widget.passIdContent.toString();
-      conn.query(sql).then((results) {
-        for (var row in results) {
-          setState(() {
-            //Mapping.
-            contentId = row['id'];
-            contentTitle = row['content_title'];
-            if (row['content_subtitle'] != null) {
-              contentSubtitle = row['content_subtitle'].toString();
-            }
-            contentDesc = row['content_desc'].toString();
-            contentAttach = row['content_attach'];
-            contentTag = row['content_tag'];
-            contentLoc = row['content_loc'];
-            contentDateStart = row['content_date_start'];
-            contentDateEnd = row['content_date_end'];
-          });
-        }
-      });
-      conn.close();
-    });
-  }
-
-  //Convert date.
-  getContentDate(dateStart, dateEnd) {
-    //Initial variable.
-    var monthStart = DateFormat("MM").format(dateStart).toString();
-    var dayStart = DateFormat("dd").format(dateStart).toString();
-    var yearStart = DateFormat("yyyy").format(dateStart).toString();
-    var monthEnd = DateFormat("MM").format(dateEnd).toString();
-    var dayEnd = DateFormat("dd").format(dateEnd).toString();
-    var yearEnd = DateFormat("yyyy").format(dateEnd).toString();
-    var result = "";
-
-    if (yearStart == yearEnd) {
-      if (monthStart == monthEnd) {
-        if (dayStart == dayEnd) {
-          result =
-              "$dayStart ${DateFormat("MMM").format(dateStart)} $yearStart";
-        } else {
-          result =
-              "$dayStart-$dayEnd ${DateFormat("MMM").format(dateStart)} $yearStart";
-        }
-      } else {
-        result =
-            "$dayStart  ${DateFormat("MMM").format(dateStart)}-$dayEnd ${DateFormat("MMM").format(dateEnd)} $yearStart";
-      }
-    } else {
-      result =
-          "$dayStart  ${DateFormat("MMM").format(dateStart)} $yearStart-$dayEnd ${DateFormat("MMM").format(dateEnd)} $yearEnd";
-    }
-
-    return TextSpan(
-        text: result,
-        style: TextStyle(
-            color: primaryColor,
-            fontSize: textMD,
-            fontWeight: FontWeight.w500));
-  }
-
-  //Get location name.
-  Widget getLocation(loc, id) {
-    if (loc != null) {
-      return LocationButton(passLocation: loc.toString(), passId: id);
-    } else {
-      return const SizedBox();
-    }
-  }
-
-  //Get attachment file or link.
-  Widget getAttach(attach) {
-    if (attach != null) {
-      return AttachButton(passAttach: attach.toString());
-    } else {
-      return const SizedBox();
-    }
-  }
-
-  //Get content subtitle.
-  Widget getSubtitle(sub) {
-    if (sub != "") {
-      return Text(
-        sub,
-        style: TextStyle(fontSize: textSM, color: blackbg),
-      );
-    } else {
-      return const SizedBox();
-    }
-  }
-
-  //Get content tag.
-  Widget getTag(tag, height) {
-    int i = 0;
-    int max = 10; //Maximum tag
-
-    if (tag != null) {
-      final jsonLoc = json.decode(tag.toString());
-
-      return Wrap(
-          runSpacing: -5,
-          spacing: 5,
-          children: jsonLoc.map<Widget>((content) {
-            if (i < max) {
-              i++;
-              return ElevatedButton.icon(
-                onPressed: () {
-                  // Respond to button press
-                },
-                icon: Icon(
-                  Icons.circle,
-                  size: textSM,
-                  color: Colors.green,
-                ),
-                label: Text(content['tag_name'],
-                    style: TextStyle(fontSize: textXSM)),
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(roundedLG2),
-                  )),
-                  backgroundColor:
-                      MaterialStatePropertyAll<Color>(primaryColor),
-                ),
-              );
-            } else if (i == max) {
-              i++;
-              return Container(
-                  margin: const EdgeInsets.only(right: 5),
-                  child: TextButton(
-                    onPressed: () => showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context) => AlertDialog(
-                        contentPadding: EdgeInsets.all(paddingMD),
-                        title: Text(
-                          'All Tag',
-                          style:
-                              TextStyle(color: primaryColor, fontSize: textMD),
-                        ),
-                        content: Container(
-                            width: height,
-                            child: Wrap(
-                                runSpacing: -5,
-                                spacing: 5,
-                                children: jsonLoc.map<Widget>((content) {
-                                  return ElevatedButton.icon(
-                                    onPressed: () {
-                                      // Respond to button press
-                                    },
-                                    icon: Icon(
-                                      Icons.circle,
-                                      size: textSM,
-                                      color: Colors.green,
-                                    ),
-                                    label: Text(content['tag_name'],
-                                        style: TextStyle(fontSize: textXSM)),
-                                    style: ButtonStyle(
-                                      shape: MaterialStateProperty.all<
-                                              RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(roundedLG2),
-                                      )),
-                                      backgroundColor:
-                                          MaterialStatePropertyAll<Color>(
-                                              primaryColor),
-                                    ),
-                                  );
-                                }).toList())),
-                      ),
-                    ),
-                    child: Text(
-                      "See ${jsonLoc.length - max} More",
-                      style: TextStyle(color: primaryColor),
-                    ),
-                  ));
-            } else {
-              return SizedBox();
-            }
-          }).toList());
-    } else {
-      return const SizedBox();
-    }
-  }
+  ContentService apiService;
 
   @override
   void initState() {
     super.initState();
-    getContent();
+    apiService = ContentService();
   }
 
   @override
   Widget build(BuildContext context) {
+    return SafeArea(
+      maintainBottomViewPadding: false,
+      child: FutureBuilder(
+        future: apiService.getContent(),
+        builder:
+            (BuildContext context, AsyncSnapshot<List<ContentModel>> snapshot) {
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(
+                  "Something wrong with message: ${snapshot.error.toString()}"),
+            );
+          } else if (snapshot.connectionState == ConnectionState.done) {
+            List<ContentModel> contents = snapshot.data;
+            return _buildListView(contents);
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
+      ),
+    );
+  }
+
+  Widget _buildListView(List<ContentModel> contents) {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
+
+    DateTime contentDateStart = DateTime.now();
+    DateTime contentDateEnd = DateTime.now();
+
+    //Convert date.
+    getContentDate(dateStart, dateEnd) {
+      //Initial variable.
+      var monthStart = DateFormat("MM").format(dateStart).toString();
+      var dayStart = DateFormat("dd").format(dateStart).toString();
+      var yearStart = DateFormat("yyyy").format(dateStart).toString();
+      var monthEnd = DateFormat("MM").format(dateEnd).toString();
+      var dayEnd = DateFormat("dd").format(dateEnd).toString();
+      var yearEnd = DateFormat("yyyy").format(dateEnd).toString();
+      var result = "";
+
+      if (yearStart == yearEnd) {
+        if (monthStart == monthEnd) {
+          if (dayStart == dayEnd) {
+            result =
+                "$dayStart ${DateFormat("MMM").format(dateStart)} $yearStart";
+          } else {
+            result =
+                "$dayStart-$dayEnd ${DateFormat("MMM").format(dateStart)} $yearStart";
+          }
+        } else {
+          result =
+              "$dayStart  ${DateFormat("MMM").format(dateStart)}-$dayEnd ${DateFormat("MMM").format(dateEnd)} $yearStart";
+        }
+      } else {
+        result =
+            "$dayStart  ${DateFormat("MMM").format(dateStart)} $yearStart-$dayEnd ${DateFormat("MMM").format(dateEnd)} $yearEnd";
+      }
+
+      return TextSpan(
+          text: result,
+          style: TextStyle(
+              color: primaryColor,
+              fontSize: textMD,
+              fontWeight: FontWeight.w500));
+    }
+
+    //Get location name.
+    Widget getLocation(loc, id) {
+      if (loc != null) {
+        return LocationButton(passLocation: loc.toString(), passId: id);
+      } else {
+        return const SizedBox();
+      }
+    }
+
+    //Get attachment file or link.
+    Widget getAttach(attach) {
+      if (attach != null) {
+        return AttachButton(passAttach: attach.toString());
+      } else {
+        return const SizedBox();
+      }
+    }
+
+    //Get content subtitle.
+    Widget getSubtitle(sub) {
+      if (sub != null) {
+        return Text(
+          sub,
+          style: TextStyle(fontSize: textSM, color: blackbg),
+        );
+      } else {
+        return const SizedBox();
+      }
+    }
+
+    //Get content tag.
+    Widget getTag(tag, height) {
+      int i = 0;
+      int max = 10; //Maximum tag
+
+      if (tag != null) {
+        final jsonLoc = json.decode(tag.toString());
+
+        return Wrap(
+            runSpacing: -5,
+            spacing: 5,
+            children: jsonLoc.map<Widget>((content) {
+              if (i < max) {
+                i++;
+                return ElevatedButton.icon(
+                  onPressed: () {
+                    // Respond to button press
+                  },
+                  icon: Icon(
+                    Icons.circle,
+                    size: textSM,
+                    color: Colors.green,
+                  ),
+                  label: Text(content['tag_name'],
+                      style: TextStyle(fontSize: textXSM)),
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(roundedLG2),
+                    )),
+                    backgroundColor:
+                        MaterialStatePropertyAll<Color>(primaryColor),
+                  ),
+                );
+              } else if (i == max) {
+                i++;
+                return Container(
+                    margin: const EdgeInsets.only(right: 5),
+                    child: TextButton(
+                      onPressed: () => showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          contentPadding: EdgeInsets.all(paddingMD),
+                          title: Text(
+                            'All Tag',
+                            style: TextStyle(
+                                color: primaryColor, fontSize: textMD),
+                          ),
+                          content: Container(
+                              width: height,
+                              child: Wrap(
+                                  runSpacing: -5,
+                                  spacing: 5,
+                                  children: jsonLoc.map<Widget>((content) {
+                                    return ElevatedButton.icon(
+                                      onPressed: () {
+                                        // Respond to button press
+                                      },
+                                      icon: Icon(
+                                        Icons.circle,
+                                        size: textSM,
+                                        color: Colors.green,
+                                      ),
+                                      label: Text(content['tag_name'],
+                                          style: TextStyle(fontSize: textXSM)),
+                                      style: ButtonStyle(
+                                        shape: MaterialStateProperty.all<
+                                                RoundedRectangleBorder>(
+                                            RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(roundedLG2),
+                                        )),
+                                        backgroundColor:
+                                            MaterialStatePropertyAll<Color>(
+                                                primaryColor),
+                                      ),
+                                    );
+                                  }).toList())),
+                        ),
+                      ),
+                      child: Text(
+                        "See ${jsonLoc.length - max} More",
+                        style: TextStyle(color: primaryColor),
+                      ),
+                    ));
+              } else {
+                return SizedBox();
+              }
+            }).toList());
+      } else {
+        return const SizedBox();
+      }
+    }
 
     return Scaffold(
       body: Stack(
@@ -303,12 +295,12 @@ class _DetailPage extends State<DetailPage> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(contentTitle,
+                            Text(contents[0].contentTitle,
                                 style: TextStyle(
                                     fontSize: textMD,
                                     fontWeight: FontWeight.bold)),
                             //Check this...
-                            getSubtitle(contentSubtitle),
+                            getSubtitle(contents[0].contentSubtitle),
                           ],
                         )
                       ],
@@ -320,16 +312,16 @@ class _DetailPage extends State<DetailPage> {
                     Container(
                         margin: EdgeInsets.only(
                             top: marginMT, left: marginMD, right: marginMD),
-                        child: Text(contentDesc,
+                        child: Text(contents[0].contentDesc,
                             style:
                                 TextStyle(color: blackbg, fontSize: textSM))),
                     //Attached file or link.
-                    getAttach(contentAttach),
+                    getAttach(contents[0].contentAttach),
                     //Tag holder.
                     Container(
                       margin: EdgeInsets.symmetric(
                           vertical: marginMT, horizontal: marginMD),
-                      child: getTag(contentTag, fullHeight),
+                      child: getTag(contents[0].contentTag, fullHeight),
                     ),
                   ])),
                   Container(
@@ -340,7 +332,8 @@ class _DetailPage extends State<DetailPage> {
                           Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                getLocation(contentLoc, contentId),
+                                getLocation(contents[0].contentLoc,
+                                    int.parse(contents[0].id)),
                                 const Spacer(),
                                 RichText(
                                   text: TextSpan(
@@ -376,7 +369,7 @@ class _DetailPage extends State<DetailPage> {
                       )),
 
                   //Save content to archieve.
-                  SaveButton(passId: contentId)
+                  SaveButton(passId: int.parse(contents[0].id))
                 ]),
           )
         ],
