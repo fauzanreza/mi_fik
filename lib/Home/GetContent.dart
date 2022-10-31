@@ -128,6 +128,8 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
                           builder: (context) =>
                               DetailPage(passIdContent: int.parse(content.id))),
                     );
+
+                    passIdContent = int.parse(content.id);
                   },
                   child: Container(
                       width: fullWidth * 0.82,
@@ -209,6 +211,8 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
                                             passIdContent:
                                                 int.parse(content.id))),
                                   );
+
+                                  passIdContent = int.parse(content.id);
                                 },
                                 style: ButtonStyle(
                                   shape: MaterialStateProperty.all<

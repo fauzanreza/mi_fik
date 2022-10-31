@@ -18,6 +18,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   bool isChecked = false;
 
   //Controller
+  //Fixed thiss..
   Future checkArchieve() async {
     db.getConnection().then((conn) {
       String sql =

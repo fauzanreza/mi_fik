@@ -16,6 +16,16 @@ class ContentService {
     }
   }
 
+  Future<List<ContentModel>> getContent() async {
+    final response =
+        await client.get(Uri.parse("${baseUrl}/api/content/${passIdContent}"));
+    if (response.statusCode == 200) {
+      return ContentModelFromJson(response.body);
+    } else {
+      return null;
+    }
+  }
+
   Future<List<ContentModel>> getAllSchedule() async {
     //Should join w/ task
     final response = await client.get(Uri.parse(

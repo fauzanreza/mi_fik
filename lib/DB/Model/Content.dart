@@ -6,8 +6,10 @@ class ContentModel {
   int idUser; //Foreign->user
 
   String contentTitle;
+  String contentSubtitle;
   String contentDesc;
   var contentTag;
+  var contentAttach;
   var contentLoc;
 
   String createdAt;
@@ -18,7 +20,9 @@ class ContentModel {
   ContentModel({
     this.id,
     this.contentTitle,
+    this.contentSubtitle,
     this.contentDesc,
+    this.contentAttach,
     this.contentTag,
     this.contentLoc,
     this.createdAt,
@@ -31,8 +35,10 @@ class ContentModel {
     return ContentModel(
         id: map["id"].toString(),
         contentTitle: map["content_title"],
+        contentSubtitle: map["content_subtitle"],
         contentDesc: map["content_desc"],
         contentTag: map["content_tag"],
+        contentAttach: map["content_attach"],
         contentLoc: map["content_loc"],
         createdAt: map["created_at"],
         updatedAt: map["updated_at"],
