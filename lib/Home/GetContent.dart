@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:mi_fik/DB/Database.dart';
-import 'package:mi_fik/DB/Model/Content_M.dart';
+// import 'package:mi_fik/DB/Database.dart';
+import 'package:mi_fik/DB/Model/Content.dart';
+import 'package:mi_fik/DB/Services/ContentServices.dart';
 import 'package:mi_fik/Home/Detail/index.dart';
 import 'package:mi_fik/main.dart';
 
@@ -13,84 +14,84 @@ class GetContent extends StatefulWidget {
 }
 
 class _GetContent extends State<GetContent> with TickerProviderStateMixin {
-  //Initial variable
-  var db = Mysql();
-  final List<ContentModel> _contentList = <ContentModel>[];
-
-  //Controller
-  Future getContent() async {
-    db.getConnection().then((conn) {
-      String sql = 'SELECT * FROM content ORDER BY created_at DESC';
-      conn.query(sql).then((results) {
-        for (var row in results) {
-          setState(() {
-            //Mapping
-            var contentModels = ContentModel();
-
-            contentModels.id = row['id'];
-            contentModels.contentTitle = row['content_title'];
-            contentModels.contentDesc = row['content_desc'].toString();
-            contentModels.createdAt = row['created_at'];
-
-            _contentList.add(contentModels);
-          });
-        }
-      });
-      conn.close();
-    });
-  }
-
-  Widget getUploadDate(date) {
-    //Initial variable.
-    final now = DateTime.now();
-    final today = DateTime(now.year, now.month, now.day);
-    final justNowHour = DateTime(now.hour);
-    final justNowMinute = DateFormat("mm").format(now);
-    final yesterday = DateTime(now.year, now.month, now.day - 1);
-    final content = DateTime(date.year, date.month, date.day);
-    final contentHour = DateTime(date.hour);
-    final contentMinute = DateFormat("mm").format(date);
-
-    var result = "";
-
-    if (content == today) {
-      if (justNowHour == contentHour) {
-        int diff = int.parse((justNowMinute).toString()) -
-            int.parse((contentMinute).toString());
-        if (diff > 10) {
-          result = "${diff} min ago";
-        } else {
-          result = "Just Now";
-        }
-      } else {
-        result = "Today at ${DateFormat("HH:mm").format(date).toString()}";
-      }
-    } else if (content == yesterday) {
-      result = "Yesterday at ${DateFormat("HH:mm").format(date).toString()}";
-    } else {
-      result = DateFormat("dd/MM/yy HH:mm").format(date).toString();
-    }
-
-    return Text(result,
-        style: TextStyle(
-          color: whitebg,
-          fontWeight: FontWeight.w500,
-        ));
-  }
+  ContentService apiService;
 
   @override
   void initState() {
     super.initState();
-    getContent();
+    apiService = ContentService();
   }
 
   @override
   Widget build(BuildContext context) {
+    return SafeArea(
+      maintainBottomViewPadding: false,
+      child: FutureBuilder(
+        future: apiService.getAllContent(),
+        builder:
+            (BuildContext context, AsyncSnapshot<List<ContentModel>> snapshot) {
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(
+                  "Something wrong with message: ${snapshot.error.toString()}"),
+            );
+          } else if (snapshot.connectionState == ConnectionState.done) {
+            List<ContentModel> contents = snapshot.data;
+            return _buildListView(contents);
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
+      ),
+    );
+  }
+
+  Widget _buildListView(List<ContentModel> contents) {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
+    Widget getUploadDate(date) {
+      //Initial variable.
+      final now = DateTime.now();
+      final today = DateTime(now.year, now.month, now.day);
+      final justNowHour = DateTime(now.hour);
+      final justNowMinute = DateFormat("mm").format(now);
+      final yesterday = DateTime(now.year, now.month, now.day - 1);
+      final content = DateTime(date.year, date.month, date.day);
+      final contentHour = DateTime(date.hour);
+      final contentMinute = DateFormat("mm").format(date);
+
+      var result = "";
+
+      if (content == today) {
+        if (justNowHour == contentHour) {
+          int diff = int.parse((justNowMinute).toString()) -
+              int.parse((contentMinute).toString());
+          if (diff > 10) {
+            result = "${diff} min ago";
+          } else {
+            result = "Just Now";
+          }
+        } else {
+          result = "Today at ${DateFormat("HH:mm").format(date).toString()}";
+        }
+      } else if (content == yesterday) {
+        result = "Yesterday at ${DateFormat("HH:mm").format(date).toString()}";
+      } else {
+        result = DateFormat("dd/MM/yy HH:mm").format(date).toString();
+      }
+
+      return Text(result,
+          style: TextStyle(
+            color: whitebg,
+            fontWeight: FontWeight.w500,
+          ));
+    }
+
     return Column(
-        children: _contentList.map((content) {
+        children: contents.map((content) {
       return SizedBox(
           width: fullWidth,
           child: IntrinsicHeight(
@@ -170,7 +171,10 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
                             ),
                             child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [getUploadDate(content.createdAt)]),
+                                children: [
+                                  getUploadDate(
+                                      DateTime.parse(content.createdAt))
+                                ]),
                           ),
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 10),
