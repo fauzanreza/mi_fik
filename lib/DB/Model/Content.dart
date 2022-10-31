@@ -2,7 +2,7 @@ import 'dart:convert';
 
 class ContentModel {
   //Key
-  int id; //Primary
+  String id; //Primary
   int idUser; //Foreign->user
 
   String contentTitle;
@@ -29,7 +29,7 @@ class ContentModel {
 
   factory ContentModel.fromJson(Map<String, dynamic> map) {
     return ContentModel(
-        id: map["id"],
+        id: map["id"].toString(),
         contentTitle: map["content_title"],
         contentDesc: map["content_desc"],
         contentTag: map["content_tag"],

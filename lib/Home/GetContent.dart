@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-// import 'package:mi_fik/DB/Database.dart';
 import 'package:mi_fik/DB/Model/Content.dart';
 import 'package:mi_fik/DB/Services/ContentServices.dart';
 import 'package:mi_fik/Home/Detail/index.dart';
@@ -127,7 +126,7 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              DetailPage(passIdContent: content.id)),
+                              DetailPage(passIdContent: int.parse(content.id))),
                     );
                   },
                   child: Container(
@@ -207,7 +206,8 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => DetailPage(
-                                            passIdContent: content.id)),
+                                            passIdContent:
+                                                int.parse(content.id))),
                                   );
                                 },
                                 style: ButtonStyle(
