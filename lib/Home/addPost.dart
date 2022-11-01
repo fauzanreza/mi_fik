@@ -150,8 +150,8 @@ class _addPost extends State<addPost> {
                         height: 40,
                         child: ElevatedButton.icon(
                           style: ElevatedButton.styleFrom(
-                            // primary: Colors.white,
-                            // onPrimary: Color(0xFFFB8C00),
+                            primary: Colors.white,
+                            onPrimary: Color(0xFFFB8C00),
                             side: BorderSide(
                               width: 1.0,
                               color: Color(0xFFFB8C00),
@@ -304,7 +304,7 @@ class _addPost extends State<addPost> {
               alignment: Alignment.bottomCenter,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  //primary: Color(0xFFFB8C00),
+                  primary: Color(0xFFFB8C00),
                   minimumSize: const Size.fromHeight(50), // NEW
                 ),
                 onPressed: () {},
