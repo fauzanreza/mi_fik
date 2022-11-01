@@ -109,12 +109,12 @@ class _addPost extends State<addPost> {
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                               borderSide:
-                                  BorderSide(width: 1, color: primaryColor),
+                                  BorderSide(width: 1, color: Color(0xFFFB8C00)),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                               borderSide:
-                                  BorderSide(width: 1, color: primaryColor),
+                                  BorderSide(width: 1, color: Color(0xFFFB8C00)),
                             ),
                             fillColor: Colors.white,
                             filled: true),
@@ -129,12 +129,12 @@ class _addPost extends State<addPost> {
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                               borderSide:
-                                  BorderSide(width: 1, color: primaryColor),
+                                  BorderSide(width: 1, color: Color(0xFFFB8C00)),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                               borderSide:
-                                  BorderSide(width: 1, color: primaryColor),
+                                  BorderSide(width: 1, color: Color(0xFFFB8C00)),
                             ),
                             fillColor: Colors.white,
                             filled: true),
@@ -151,10 +151,10 @@ class _addPost extends State<addPost> {
                         child: ElevatedButton.icon(
                           style: ElevatedButton.styleFrom(
                             // primary: Colors.white,
-                            // onPrimary: primaryColor,
+                            // onPrimary: Color(0xFFFB8C00),
                             side: BorderSide(
                               width: 1.0,
-                              color: primaryColor,
+                              color: Color(0xFFFB8C00),
                             ),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0)),
@@ -177,7 +177,7 @@ class _addPost extends State<addPost> {
                           style: TextStyle(
                             fontSize: 16,
                             fontFamily: 'Poppins',
-                            color: primaryColor,
+                            color: Color(0xFFFB8C00),
                             fontWeight: FontWeight.w500,
                           )),
                     ),
@@ -197,7 +197,7 @@ class _addPost extends State<addPost> {
                                 child: ElevatedButton.icon(
                                   style: ElevatedButton.styleFrom(
                                     // primary: Colors.white,
-                                    // onPrimary: primaryColor,
+                                    // onPrimary: Color(0xFFFB8C00),
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(50.0)),
@@ -222,7 +222,7 @@ class _addPost extends State<addPost> {
                         child: TextButton.icon(
                           style: TextButton.styleFrom(
                             textStyle: const TextStyle(fontSize: 16),
-                            foregroundColor: primaryColor,
+                            foregroundColor: Color(0xFFFB8C00),
                           ), // <-- TextButton
                           onPressed: () {},
                           icon: const Icon(
@@ -237,7 +237,7 @@ class _addPost extends State<addPost> {
                         child: TextButton.icon(
                           style: TextButton.styleFrom(
                             textStyle: const TextStyle(fontSize: 16),
-                            foregroundColor: primaryColor,
+                            foregroundColor: Color(0xFFFB8C00),
                           ), // <-- TextButton
                           onPressed: () {},
                           icon: const Icon(
@@ -254,7 +254,7 @@ class _addPost extends State<addPost> {
                         child: TextButton.icon(
                           style: TextButton.styleFrom(
                             textStyle: const TextStyle(fontSize: 16),
-                            foregroundColor: primaryColor,
+                            foregroundColor: Color(0xFFFB8C00),
                           ), // <-- TextButton
                           onPressed: () {},
                           icon: const Icon(
@@ -270,7 +270,7 @@ class _addPost extends State<addPost> {
                           child: TextButton(
                             style: TextButton.styleFrom(
                               textStyle: const TextStyle(fontSize: 16),
-                              foregroundColor: primaryColor,
+                              foregroundColor: Color(0xFFFB8C00),
                             ),
                             onPressed: () {},
                             child: const Text('Reminder :'),
@@ -281,10 +281,10 @@ class _addPost extends State<addPost> {
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               // primary: Colors.white,
-                              // onPrimary: primaryColor,
+                              // onPrimary: Color(0xFFFB8C00),
                               side: BorderSide(
                                 width: 1.0,
-                                color: primaryColor,
+                                color: Color(0xFFFB8C00),
                               ),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10.0)),
@@ -304,7 +304,7 @@ class _addPost extends State<addPost> {
               alignment: Alignment.bottomCenter,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  //primary: primaryColor,
+                  //primary: Color(0xFFFB8C00),
                   minimumSize: const Size.fromHeight(50), // NEW
                 ),
                 onPressed: () {},
