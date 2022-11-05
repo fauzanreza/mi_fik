@@ -62,6 +62,12 @@ List<ContentModel> ContentModelFromJson(String jsonData) {
       data.map((item) => ContentModel.fromJson(item)));
 }
 
+List<ContentModel> ContentModelFromJsonWPaginate(String jsonData) {
+  final data = json.decode(jsonData);
+  return List<ContentModel>.from(
+      data['data'].map((item) => ContentModel.fromJson(item)));
+}
+
 // String contentModelToJson(contentModel data) {
 //   final jsonData = data.toJson();
 //   return json.encode(jsonData);

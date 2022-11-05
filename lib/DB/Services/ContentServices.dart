@@ -8,9 +8,10 @@ class ContentService {
   Client client = Client();
 
   Future<List<ContentModel>> getAllContent() async {
-    final response = await client.get(Uri.parse("${baseUrl}/api/content"));
+    final response =
+        await client.get(Uri.parse("${baseUrl}/api/content?page=1"));
     if (response.statusCode == 200) {
-      return ContentModelFromJson(response.body);
+      return ContentModelFromJsonWPaginate(response.body);
     } else {
       return null;
     }

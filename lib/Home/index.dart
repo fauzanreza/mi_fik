@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mi_fik/Home/addPost.dart';
+import 'package:mi_fik/AddPost/index.dart';
 import 'package:mi_fik/Home/getContent.dart';
 import 'package:mi_fik/Others/custombg.dart';
 import 'package:mi_fik/Others/leftbar.dart';
