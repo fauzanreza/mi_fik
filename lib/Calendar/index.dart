@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mi_fik/Others/leftbar.dart';
+import 'package:mi_fik/Others/rightbar.dart';
 import 'package:mi_fik/main.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,6 +12,8 @@ class CalendarPage extends StatefulWidget {
 }
 
 class _CalendarPageState extends State<CalendarPage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   CalendarFormat format = CalendarFormat.month;
   DateTime selectedDay = DateTime.now();
   DateTime focusedDay = DateTime.now();
@@ -22,10 +26,35 @@ class _CalendarPageState extends State<CalendarPage> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        key: _scaffoldKey,
+        drawer: LeftBar(),
+        drawerScrimColor: primaryColor.withOpacity(0.35),
+        endDrawer: RightBar(),
         body: SafeArea(
           child: ListView(
-            padding: const EdgeInsets.all(5),
+            padding: EdgeInsets.only(
+                top: fullHeight *
+                    0.02), //Check this!!! make same as the other main menu page
             children: [
+              Container(
+                margin: EdgeInsets.zero,
+                child: Row(children: [
+                  IconButton(
+                    padding: EdgeInsets.zero,
+                    icon: Icon(Icons.menu, size: 32, color: primaryColor),
+                    tooltip: '...',
+                    onPressed: () => _scaffoldKey.currentState.openDrawer(),
+                  ),
+                  Spacer(),
+                  IconButton(
+                    padding: EdgeInsets.zero,
+                    icon: Icon(Icons.notifications,
+                        size: 32, color: primaryColor),
+                    tooltip: 'Notification',
+                    onPressed: () => _scaffoldKey.currentState.openEndDrawer(),
+                  ),
+                ]),
+              ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [

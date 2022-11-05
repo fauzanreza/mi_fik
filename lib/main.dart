@@ -47,6 +47,7 @@ List archieveVal = []; //Need to be fixed
 DateTime slctSchedule = DateTime.now();
 int passIdUser = 1; //For now.
 int passIdContent;
+final selectedTag = [];
 
 class MyApp extends StatelessWidget {
   const MyApp({key}) : super(key: key);

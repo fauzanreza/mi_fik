@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:mi_fik/Others/leftbar.dart';
+import 'package:mi_fik/Others/rightbar.dart';
 import 'package:mi_fik/Schedule/Archieve.dart';
 import 'package:mi_fik/Schedule/MySchedule.dart';
 import 'package:mi_fik/main.dart';
@@ -12,6 +14,7 @@ class SchedulePage extends StatefulWidget {
 }
 
 class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   TabController _tabController;
 
   @override
@@ -44,138 +47,164 @@ class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
     }
 
     return Scaffold(
+        key: _scaffoldKey,
+        drawer: LeftBar(),
+        drawerScrimColor: primaryColor.withOpacity(0.35),
+        endDrawer: RightBar(),
         body: ListView(
-            padding: EdgeInsets.only(top: fullHeight * 0.05),
+            padding: EdgeInsets.only(top: fullHeight * 0.04), //Check this!!!
             children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            child: Row(children: [
-              Text(DateFormat("dd MMM yyyy").format(DateTime.now()),
-                  style: TextStyle(
-                      color: blackbg,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold)),
-              const Spacer(),
-              Text(DateFormat("HH : mm a").format(DateTime.now()),
-                  style: TextStyle(
-                      color: blackbg,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold))
-            ]),
-          ),
-          Container(
-            padding: const EdgeInsets.all(10),
-            child: getGreeting(DateFormat("HH").format(DateTime.now())),
-          ),
-          Container(
-            padding: const EdgeInsets.only(left: 10),
-            height: 60,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 7,
-                itemBuilder: (BuildContext context, int index) {
-                  //Get day style.
-                  getBgcolor(i) {
-                    if (i == 0) {
-                      return primaryColor;
-                    } else {
-                      return whitebg;
-                    }
-                  }
+              Container(
+                margin: EdgeInsets.zero,
+                child: Row(children: [
+                  IconButton(
+                    padding: EdgeInsets.zero,
+                    icon: Icon(Icons.menu, size: 32, color: primaryColor),
+                    tooltip: '...',
+                    onPressed: () => _scaffoldKey.currentState.openDrawer(),
+                  ),
+                  Spacer(),
+                  IconButton(
+                    padding: EdgeInsets.zero,
+                    icon: Icon(Icons.notifications,
+                        size: 32, color: primaryColor),
+                    tooltip: 'Notification',
+                    onPressed: () => _scaffoldKey.currentState.openEndDrawer(),
+                  ),
+                ]),
+              ),
+              Container(
+                padding: const EdgeInsets.all(10),
+                child: Row(children: [
+                  Text(DateFormat("dd MMM yyyy").format(DateTime.now()),
+                      style: TextStyle(
+                          color: blackbg,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold)),
+                  const Spacer(),
+                  Text(DateFormat("HH : mm a").format(DateTime.now()),
+                      style: TextStyle(
+                          color: blackbg,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold))
+                ]),
+              ),
+              Container(
+                padding: const EdgeInsets.all(10),
+                child: getGreeting(DateFormat("HH").format(DateTime.now())),
+              ),
+              Container(
+                padding: const EdgeInsets.only(left: 10),
+                height: 60,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 7,
+                    itemBuilder: (BuildContext context, int index) {
+                      //Get day style.
+                      getBgcolor(i) {
+                        if (i == 0) {
+                          return primaryColor;
+                        } else {
+                          return whitebg;
+                        }
+                      }
 
-                  getcolor(i) {
-                    if (i == 0) {
-                      return whitebg;
-                    } else {
-                      return blackbg;
-                    }
-                  }
+                      getcolor(i) {
+                        if (i == 0) {
+                          return whitebg;
+                        } else {
+                          return blackbg;
+                        }
+                      }
 
-                  return GestureDetector(
-                      onTap: () {
-                        setState(
-                          () {
-                            slctSchedule =
-                                slctSchedule.add(Duration(days: index));
+                      return GestureDetector(
+                          onTap: () {
+                            setState(
+                              () {
+                                slctSchedule =
+                                    slctSchedule.add(Duration(days: index));
+                              },
+                            );
+
+                            //For now. need to be fixed soon!!!
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const NavBar()),
+                            );
                           },
-                        );
-
-                        //For now. need to be fixed soon!!!
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const NavBar()),
-                        );
-                      },
-                      child: Container(
-                        width: 56,
-                        margin: const EdgeInsets.only(right: 10),
-                        padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          color: getBgcolor(index),
-                          borderRadius: BorderRadius.all(roundedMd),
-                          boxShadow: [
-                            BoxShadow(
-                              color: const Color.fromARGB(255, 128, 128, 128)
-                                  .withOpacity(0.3),
-                              blurRadius: 10.0,
-                              spreadRadius: 0.0,
-                              offset: const Offset(
-                                5.0,
-                                5.0,
-                              ),
-                            )
-                          ],
-                        ),
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                  DateFormat("EEE").format(
-                                      slctSchedule.add(Duration(days: index))),
-                                  style: TextStyle(
-                                      color: getcolor(index),
-                                      fontSize: textSM,
-                                      fontWeight: FontWeight.w500)),
-                              Text(
-                                  (slctSchedule.add(Duration(days: index)).day)
-                                      .toString(),
-                                  style: TextStyle(
-                                      color: getcolor(index),
-                                      fontSize: textXLG,
-                                      fontWeight: FontWeight.w500))
-                            ]),
-                      ));
-                }),
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 10),
-            child: TabBar(
-              controller: _tabController,
-              labelColor: greybg,
-              indicatorColor: primaryColor,
-              labelStyle:
-                  TextStyle(fontSize: textMD, fontWeight: FontWeight.w500),
-              indicatorPadding:
-                  EdgeInsets.symmetric(horizontal: fullWidth * 0.1),
-              tabs: const <Widget>[
-                Tab(
-                  text: "My Schedule",
+                          child: Container(
+                            width: 56,
+                            margin: const EdgeInsets.only(right: 10),
+                            padding: const EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              color: getBgcolor(index),
+                              borderRadius: BorderRadius.all(roundedMd),
+                              boxShadow: [
+                                BoxShadow(
+                                  color:
+                                      const Color.fromARGB(255, 128, 128, 128)
+                                          .withOpacity(0.3),
+                                  blurRadius: 10.0,
+                                  spreadRadius: 0.0,
+                                  offset: const Offset(
+                                    5.0,
+                                    5.0,
+                                  ),
+                                )
+                              ],
+                            ),
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                      DateFormat("EEE").format(slctSchedule
+                                          .add(Duration(days: index))),
+                                      style: TextStyle(
+                                          color: getcolor(index),
+                                          fontSize: textSM,
+                                          fontWeight: FontWeight.w500)),
+                                  Text(
+                                      (slctSchedule
+                                              .add(Duration(days: index))
+                                              .day)
+                                          .toString(),
+                                      style: TextStyle(
+                                          color: getcolor(index),
+                                          fontSize: textXLG,
+                                          fontWeight: FontWeight.w500))
+                                ]),
+                          ));
+                    }),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 10),
+                child: TabBar(
+                  controller: _tabController,
+                  labelColor: greybg,
+                  indicatorColor: primaryColor,
+                  labelStyle:
+                      TextStyle(fontSize: textMD, fontWeight: FontWeight.w500),
+                  indicatorPadding:
+                      EdgeInsets.symmetric(horizontal: fullWidth * 0.1),
+                  tabs: const <Widget>[
+                    Tab(
+                      text: "My Schedule",
+                    ),
+                    Tab(
+                      text: "Archieve",
+                    ),
+                  ],
                 ),
-                Tab(
-                  text: "Archieve",
+              ),
+              SizedBox(
+                height: fullHeight * 0.7,
+                child: TabBarView(
+                  controller: _tabController,
+                  children: const [MySchedulePage(), ArchievePage()],
                 ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: fullHeight * 0.7,
-            child: TabBarView(
-              controller: _tabController,
-              children: const [MySchedulePage(), ArchievePage()],
-            ),
-          )
-        ]));
+              )
+            ]));
   }
 }
