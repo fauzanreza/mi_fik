@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mi_fik/Home/addPost.dart';
 import 'package:mi_fik/Home/getContent.dart';
 import 'package:mi_fik/Others/custombg.dart';
+import 'package:mi_fik/Others/leftbar.dart';
+import 'package:mi_fik/Others/rightbar.dart';
 import 'package:mi_fik/main.dart';
 
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -15,6 +17,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State<HomePage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     double fullHeight = MediaQuery.of(context).size.height;
@@ -37,11 +41,34 @@ class _HomePage extends State<HomePage> {
     }
 
     return Scaffold(
+      key: _scaffoldKey,
+      drawer: LeftBar(),
+      drawerScrimColor: primaryColor.withOpacity(0.35),
+      endDrawer: RightBar(),
       body: CustomPaint(
           painter: CirclePainter(),
           child: ListView(
-              padding: EdgeInsets.only(top: fullHeight * 0.08),
+              padding: EdgeInsets.only(top: fullHeight * 0.04),
               children: [
+                Container(
+                  margin: EdgeInsets.zero,
+                  child: Row(children: [
+                    IconButton(
+                      padding: EdgeInsets.zero,
+                      icon: Icon(Icons.menu, size: 32, color: whitebg),
+                      tooltip: '...',
+                      onPressed: () => _scaffoldKey.currentState.openDrawer(),
+                    ),
+                    Spacer(),
+                    IconButton(
+                      padding: EdgeInsets.zero,
+                      icon: Icon(Icons.notifications, size: 32, color: whitebg),
+                      tooltip: 'Notification',
+                      onPressed: () =>
+                          _scaffoldKey.currentState.openEndDrawer(),
+                    ),
+                  ]),
+                ),
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 15),
                   child: Column(
