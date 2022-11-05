@@ -37,4 +37,17 @@ class ContentService {
       return null;
     }
   }
+
+  Future<bool> addContent(ContentModel data) async {
+    final response = await client.post(
+      Uri.parse("${baseUrl}/api/content/create/${passIdUser}"),
+      headers: {"content-type": "application/json"},
+      body: ContentModelToJson(data),
+    );
+    if (response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

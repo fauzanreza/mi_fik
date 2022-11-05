@@ -46,14 +46,18 @@ class ContentModel {
         dateEnd: map["content_date_end"]);
   }
 
-  // Map<String, dynamic> toJson() {
-  //   return {"fullname": fullname};
-  // }
-
-  // @override
-  // String toString() {
-  //   return '{fullname: $fullname}';
-  // }
+  Map<String, dynamic> toJson() {
+    return {
+      "content_title": contentTitle,
+      "content_subtitle": contentSubtitle,
+      "content_desc": contentDesc,
+      "content_tag": contentTag,
+      "content_attach": contentAttach,
+      "content_loc": contentLoc,
+      "content_date_start": dateStart,
+      "content_date_end": dateEnd
+    };
+  }
 }
 
 List<ContentModel> ContentModelFromJson(String jsonData) {
@@ -68,7 +72,7 @@ List<ContentModel> ContentModelFromJsonWPaginate(String jsonData) {
       data['data'].map((item) => ContentModel.fromJson(item)));
 }
 
-// String contentModelToJson(contentModel data) {
-//   final jsonData = data.toJson();
-//   return json.encode(jsonData);
-// }
+String ContentModelToJson(ContentModel data) {
+  final jsonData = data.toJson();
+  return json.encode(jsonData);
+}
