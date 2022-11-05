@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mi_fik/DB/Database.dart';
-import 'package:mi_fik/DB/Model/Tag_M.dart';
+import 'package:mi_fik/AddPost/ChooseTag.dart';
 import 'package:mi_fik/main.dart';
 import 'package:file_picker/file_picker.dart';
 
@@ -60,13 +59,13 @@ class _addPost extends State<addPost> {
                       hintText: 'Title',
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide:
-                            BorderSide(width: 1, color: Color(0xFFFB8C00)),
+                        borderSide: const BorderSide(
+                            width: 1, color: Color(0xFFFB8C00)),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide:
-                            BorderSide(width: 1, color: Color(0xFFFB8C00)),
+                        borderSide: const BorderSide(
+                            width: 1, color: Color(0xFFFB8C00)),
                       ),
                       fillColor: Colors.white,
                       filled: true),
@@ -80,13 +79,13 @@ class _addPost extends State<addPost> {
                       hintText: 'Content',
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide:
-                            BorderSide(width: 1, color: Color(0xFFFB8C00)),
+                        borderSide: const BorderSide(
+                            width: 1, color: Color(0xFFFB8C00)),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide:
-                            BorderSide(width: 1, color: Color(0xFFFB8C00)),
+                        borderSide: const BorderSide(
+                            width: 1, color: Color(0xFFFB8C00)),
                       ),
                       fillColor: Colors.white,
                       filled: true),
@@ -103,8 +102,8 @@ class _addPost extends State<addPost> {
                   child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
                       primary: Colors.white,
-                      onPrimary: Color(0xFFFB8C00),
-                      side: BorderSide(
+                      onPrimary: const Color(0xFFFB8C00),
+                      side: const BorderSide(
                         width: 1.0,
                         color: Color(0xFFFB8C00),
                       ),
@@ -123,58 +122,31 @@ class _addPost extends State<addPost> {
                 ),
               ),
               Container(
-                alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
-                child: Text("Choose Tags",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontFamily: 'Poppins',
-                      color: Color(0xFFFB8C00),
-                      fontWeight: FontWeight.w500,
-                    )),
-              ),
-              SizedBox(
-                height: 50,
-                child: ListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    padding: EdgeInsets.symmetric(vertical: 5),
-                    // itemCount: _tagList.length,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        alignment: Alignment.centerLeft,
-                        padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
-                        child: SizedBox(
-                          height: 30,
-                          child: ElevatedButton.icon(
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.white,
-                              onPrimary: Color(0xFFFB8C00),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50.0)),
-                            ),
-                            onPressed: () async {},
-                            icon: Icon(Icons.circle,
-                                color:
-                                    primaryColor), //icon data for elevated button
-                            label: Text(
-                              "Test",
-                              // _tagList[index].tagName,
-                              style: const TextStyle(fontSize: 12),
-                            ),
-                            //label text
-                          ),
-                        ),
-                      );
-                    }),
-              ),
+                  margin: EdgeInsets.only(left: paddingMD),
+                  padding: EdgeInsets.only(top: paddingXSM),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text("Choose Tags",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: 'Poppins',
+                            color: Color(0xFFFB8C00),
+                            fontWeight: FontWeight.w500,
+                          )),
+                      Container(
+                          transform: Matrix4.translationValues(0.0, -15.0, 0.0),
+                          child: ChooseTag()),
+                    ],
+                  )),
               Row(children: <Widget>[
                 Container(
                   padding: const EdgeInsets.fromLTRB(15, 10, 0, 0),
                   child: TextButton.icon(
                     style: TextButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 16),
-                      foregroundColor: Color(0xFFFB8C00),
+                      foregroundColor: const Color(0xFFFB8C00),
                     ), // <-- TextButton
                     onPressed: () {},
                     icon: const Icon(
@@ -189,7 +161,7 @@ class _addPost extends State<addPost> {
                   child: TextButton.icon(
                     style: TextButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 16),
-                      foregroundColor: Color(0xFFFB8C00),
+                      foregroundColor: const Color(0xFFFB8C00),
                     ), // <-- TextButton
                     onPressed: () {},
                     icon: const Icon(
@@ -206,7 +178,7 @@ class _addPost extends State<addPost> {
                   child: TextButton.icon(
                     style: TextButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 16),
-                      foregroundColor: Color(0xFFFB8C00),
+                      foregroundColor: const Color(0xFFFB8C00),
                     ), // <-- TextButton
                     onPressed: () {},
                     icon: const Icon(
@@ -222,7 +194,7 @@ class _addPost extends State<addPost> {
                     child: TextButton(
                       style: TextButton.styleFrom(
                         textStyle: const TextStyle(fontSize: 16),
-                        foregroundColor: Color(0xFFFB8C00),
+                        foregroundColor: const Color(0xFFFB8C00),
                       ),
                       onPressed: () {},
                       child: const Text('Reminder :'),
@@ -233,8 +205,8 @@ class _addPost extends State<addPost> {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         primary: Colors.white,
-                        onPrimary: Color(0xFFFB8C00),
-                        side: BorderSide(
+                        onPrimary: const Color(0xFFFB8C00),
+                        side: const BorderSide(
                           width: 1.0,
                           color: Color(0xFFFB8C00),
                         ),
