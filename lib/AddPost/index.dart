@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mi_fik/AddPost/ChooseTag.dart';
 import 'package:mi_fik/DB/Model/Content.dart';
 import 'package:mi_fik/DB/Services/ContentServices.dart';
@@ -23,6 +24,8 @@ class _addPost extends State<addPost> {
   //Initial variable
   final contentTitleCtrl = TextEditingController();
   final contentDescCtrl = TextEditingController();
+  DateTime dateStartCtrl = null;
+  DateTime dateEndCtrl = null;
 
   @override
   void initState() {
@@ -35,6 +38,14 @@ class _addPost extends State<addPost> {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
     bool _isLoading = false;
+
+    getDateText(date, type) {
+      if (date != null) {
+        return DateFormat("dd-MM-yy  HH:mm").format(date).toString();
+      } else {
+        return "Set Date ${type}";
+      }
+    }
 
     return Scaffold(
       body: Stack(
@@ -57,6 +68,7 @@ class _addPost extends State<addPost> {
               icon: Icon(Icons.arrow_back, size: iconLG),
               color: Colors.white,
               onPressed: () {
+                selectedTag.clear();
                 Navigator.pop(context);
               },
             ),
@@ -185,12 +197,25 @@ class _addPost extends State<addPost> {
                       textStyle: const TextStyle(fontSize: 16),
                       foregroundColor: const Color(0xFFFB8C00),
                     ), // <-- TextButton
-                    onPressed: () {},
+                    onPressed: () {
+                      final now = DateTime.now();
+
+                      DatePicker.showDateTimePicker(context,
+                          showTitleActions: true,
+                          minTime:
+                              DateTime(now.year, now.month, now.day), //Tomorrow
+                          maxTime: DateTime(now.year + 1, now.month, now.day),
+                          onConfirm: (date) {
+                        setState(() {
+                          dateStartCtrl = date;
+                        });
+                      }, currentTime: now, locale: LocaleType.en);
+                    },
                     icon: const Icon(
                       Icons.calendar_month,
                       size: 24.0,
                     ),
-                    label: const Text('Set Date'),
+                    label: Text(getDateText(dateStartCtrl, "Start")),
                   ),
                 ),
               ]),
@@ -201,12 +226,25 @@ class _addPost extends State<addPost> {
                     style: TextButton.styleFrom(
                         textStyle: const TextStyle(fontSize: 16),
                         foregroundColor: primaryColor), // <-- TextButton
-                    onPressed: () {},
+                    onPressed: () {
+                      final now = DateTime.now();
+
+                      DatePicker.showDateTimePicker(context,
+                          showTitleActions: true,
+                          minTime:
+                              DateTime(now.year, now.month, now.day), //Tomorrow
+                          maxTime: DateTime(now.year + 1, now.month, now.day),
+                          onConfirm: (date) {
+                        setState(() {
+                          dateEndCtrl = date;
+                        });
+                      }, currentTime: now, locale: LocaleType.en);
+                    },
                     icon: const Icon(
-                      Icons.timer_outlined,
+                      Icons.calendar_month,
                       size: 24.0,
                     ),
-                    label: const Text('Set Time'),
+                    label: Text(getDateText(dateEndCtrl, "End")),
                   ),
                 ),
                 Row(children: <Widget>[
@@ -257,6 +295,14 @@ class _addPost extends State<addPost> {
                     }
                   }
 
+                  validateDateNull(val) {
+                    if (val != null) {
+                      return val.toString();
+                    } else {
+                      return null;
+                    }
+                  }
+
                   //Mapping.
                   ContentModel content = ContentModel(
                     contentTitle: contentTitleCtrl.text.toString(),
@@ -265,8 +311,8 @@ class _addPost extends State<addPost> {
                     contentTag: validateNullJSON(selectedTag),
                     contentLoc: null, //For now.
                     contentAttach: null, //For now.
-                    dateStart: null, //For now.
-                    dateEnd: null, //For now.
+                    dateStart: validateDateNull(dateStartCtrl),
+                    dateEnd: validateDateNull(dateEndCtrl),
                   );
 
                   //Validator
@@ -285,8 +331,14 @@ class _addPost extends State<addPost> {
                             context: context,
                             builder: (BuildContext context) =>
                                 SuccessDialog(text: "Create content success"));
-                        print("Success");
+                        // print("Success");
+
+                        //Clear all variable
                         selectedTag.clear();
+                        dateStartCtrl = null;
+                        dateEndCtrl = null;
+                        contentTitleCtrl.clear();
+                        contentDescCtrl.clear();
                       }
                     });
                   } else {

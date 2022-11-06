@@ -82,7 +82,7 @@ class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
                           fontSize: 18,
                           fontWeight: FontWeight.bold)),
                   const Spacer(),
-                  Text(DateFormat("HH : mm a").format(DateTime.now()),
+                  Text(DateFormat("hh : mm a").format(DateTime.now()),
                       style: TextStyle(
                           color: blackbg,
                           fontSize: 18,

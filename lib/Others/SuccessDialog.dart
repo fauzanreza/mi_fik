@@ -17,7 +17,7 @@ class _SuccessDialog extends State<SuccessDialog> {
 
     return AlertDialog(
       contentPadding: const EdgeInsets.all(10),
-      title: const Text('Error'),
+      title: const Text('Information'),
       content: SizedBox(
         width: fullWidth,
         height: 180,
