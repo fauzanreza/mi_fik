@@ -1,7 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mi_fik/AddPost/ChooseTag.dart';
+import 'package:mi_fik/DB/Model/Content.dart';
+import 'package:mi_fik/DB/Services/ContentServices.dart';
+import 'package:mi_fik/Others/FailedDialog.dart';
+import 'package:mi_fik/Others/SuccessDialog.dart';
 import 'package:mi_fik/main.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class addPost extends StatefulWidget {
   const addPost({Key key}) : super(key: key);
@@ -11,10 +19,33 @@ class addPost extends StatefulWidget {
 }
 
 class _addPost extends State<addPost> {
+  ContentService apiService;
+
+  //Initial variable
+  final contentTitleCtrl = TextEditingController();
+  final contentDescCtrl = TextEditingController();
+  DateTime dateStartCtrl = null;
+  DateTime dateEndCtrl = null;
+
+  @override
+  void initState() {
+    super.initState();
+    apiService = ContentService();
+  }
+
   @override
   Widget build(BuildContext context) {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
+    bool _isLoading = false;
+
+    getDateText(date, type) {
+      if (date != null) {
+        return DateFormat("dd-MM-yy  HH:mm").format(date).toString();
+      } else {
+        return "Set Date ${type}";
+      }
+    }
 
     return Scaffold(
       body: Stack(
@@ -37,6 +68,7 @@ class _addPost extends State<addPost> {
               icon: Icon(Icons.arrow_back, size: iconLG),
               color: Colors.white,
               onPressed: () {
+                selectedTag.clear();
                 Navigator.pop(context);
               },
             ),
@@ -55,6 +87,7 @@ class _addPost extends State<addPost> {
                 padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                 child: TextFormField(
                   cursorColor: Colors.white,
+                  controller: contentTitleCtrl,
                   decoration: InputDecoration(
                       hintText: 'Title',
                       enabledBorder: OutlineInputBorder(
@@ -75,6 +108,7 @@ class _addPost extends State<addPost> {
                 padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
                 child: TextFormField(
                   cursorColor: Colors.white,
+                  controller: contentDescCtrl,
                   decoration: InputDecoration(
                       hintText: 'Content',
                       enabledBorder: OutlineInputBorder(
@@ -163,12 +197,25 @@ class _addPost extends State<addPost> {
                       textStyle: const TextStyle(fontSize: 16),
                       foregroundColor: const Color(0xFFFB8C00),
                     ), // <-- TextButton
-                    onPressed: () {},
+                    onPressed: () {
+                      final now = DateTime.now();
+
+                      DatePicker.showDateTimePicker(context,
+                          showTitleActions: true,
+                          minTime:
+                              DateTime(now.year, now.month, now.day), //Tomorrow
+                          maxTime: DateTime(now.year + 1, now.month, now.day),
+                          onConfirm: (date) {
+                        setState(() {
+                          dateStartCtrl = date;
+                        });
+                      }, currentTime: now, locale: LocaleType.en);
+                    },
                     icon: const Icon(
                       Icons.calendar_month,
                       size: 24.0,
                     ),
-                    label: const Text('Set Date'),
+                    label: Text(getDateText(dateStartCtrl, "Start")),
                   ),
                 ),
               ]),
@@ -177,15 +224,27 @@ class _addPost extends State<addPost> {
                   padding: const EdgeInsets.fromLTRB(15, 10, 0, 0),
                   child: TextButton.icon(
                     style: TextButton.styleFrom(
-                      textStyle: const TextStyle(fontSize: 16),
-                      foregroundColor: const Color(0xFFFB8C00),
-                    ), // <-- TextButton
-                    onPressed: () {},
+                        textStyle: const TextStyle(fontSize: 16),
+                        foregroundColor: primaryColor), // <-- TextButton
+                    onPressed: () {
+                      final now = DateTime.now();
+
+                      DatePicker.showDateTimePicker(context,
+                          showTitleActions: true,
+                          minTime:
+                              DateTime(now.year, now.month, now.day), //Tomorrow
+                          maxTime: DateTime(now.year + 1, now.month, now.day),
+                          onConfirm: (date) {
+                        setState(() {
+                          dateEndCtrl = date;
+                        });
+                      }, currentTime: now, locale: LocaleType.en);
+                    },
                     icon: const Icon(
-                      Icons.timer_outlined,
+                      Icons.calendar_month,
                       size: 24.0,
                     ),
-                    label: const Text('Set Time'),
+                    label: Text(getDateText(dateEndCtrl, "End")),
                   ),
                 ),
                 Row(children: <Widget>[
@@ -226,7 +285,72 @@ class _addPost extends State<addPost> {
               width: fullWidth,
               height: btnHeightMD,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  //Validate json.
+                  validateNullJSON(val) {
+                    if (val.length != 0) {
+                      return jsonEncode(val);
+                    } else {
+                      return null;
+                    }
+                  }
+
+                  validateDateNull(val) {
+                    if (val != null) {
+                      return val.toString();
+                    } else {
+                      return null;
+                    }
+                  }
+
+                  //Mapping.
+                  ContentModel content = ContentModel(
+                    contentTitle: contentTitleCtrl.text.toString(),
+                    contentSubtitle: "Lorem ipsum", //For now.
+                    contentDesc: contentDescCtrl.text.toString(),
+                    contentTag: validateNullJSON(selectedTag),
+                    contentLoc: null, //For now.
+                    contentAttach: null, //For now.
+                    dateStart: validateDateNull(dateStartCtrl),
+                    dateEnd: validateDateNull(dateEndCtrl),
+                  );
+
+                  //Validator
+                  if (content.contentTitle.isNotEmpty &&
+                      content.contentDesc.isNotEmpty) {
+                    apiService.addContent(content).then((isError) {
+                      setState(() => _isLoading = false);
+                      if (isError) {
+                        Navigator.pop(context);
+                        showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) =>
+                                FailedDialog(text: "Create content failed"));
+                      } else {
+                        showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) =>
+                                SuccessDialog(text: "Create content success"));
+                        // print("Success");
+
+                        //Clear all variable
+                        selectedTag.clear();
+                        dateStartCtrl = null;
+                        dateEndCtrl = null;
+                        contentTitleCtrl.clear();
+                        contentDescCtrl.clear();
+                      }
+                    });
+                  } else {
+                    showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => FailedDialog(
+                            text:
+                                "Create content failed, field can't be empty"));
+                  }
+
+                  // print(jsonEncode(selectedTag).toString());
+                },
                 style: ButtonStyle(
                   backgroundColor:
                       MaterialStatePropertyAll<Color>(primaryColor),

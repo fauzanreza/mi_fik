@@ -1,5 +1,6 @@
 //Plugin.
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 //Main Menu.
 import 'package:mi_fik/Calendar/index.dart';
@@ -53,6 +54,12 @@ class MyApp extends StatelessWidget {
   const MyApp({key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    //Lock device on portrait
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(scaffoldBackgroundColor: mainbg),

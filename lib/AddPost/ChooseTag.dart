@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/DB/Model/Tag.dart';
 import 'package:mi_fik/DB/Services/TagServices.dart';
+import 'package:mi_fik/Others/skeleton/tag_1.dart';
 import 'package:mi_fik/main.dart';
 
 class ChooseTag extends StatefulWidget {
@@ -36,9 +37,7 @@ class _ChooseTag extends State<ChooseTag> {
             List<TagModel> tags = snapshot.data;
             return _buildListView(tags);
           } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const TagSkeleton1();
           }
         },
       ),
@@ -121,7 +120,8 @@ class _ChooseTag extends State<ChooseTag> {
             spacing: 5,
             children: tags.map<Widget>((tag) {
               //Check if tag already selected
-              var contain = selectedTag.where((item) => item['id'] == tag.id);
+              var contain =
+                  selectedTag.where((item) => item['id'] == int.parse(tag.id));
               if (contain.isEmpty || selectedTag.isEmpty) {
                 if (i < max) {
                   i++;
@@ -129,8 +129,8 @@ class _ChooseTag extends State<ChooseTag> {
                     onPressed: () {
                       //Store selected tags
                       setState(() {
-                        selectedTag
-                            .add({"id": tag.id, "tag_name": tag.tagName});
+                        selectedTag.add(
+                            {"id": int.parse(tag.id), "tag_name": tag.tagName});
                       });
                     },
                     icon: Icon(

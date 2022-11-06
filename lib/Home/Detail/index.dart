@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:mi_fik/DB/Database.dart';
 import 'package:mi_fik/DB/Model/Content.dart';
 import 'package:mi_fik/DB/Services/ContentServices.dart';
 import 'package:mi_fik/Home/Detail/Attach.dart';
@@ -57,44 +56,82 @@ class _DetailPage extends State<DetailPage> {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
-    DateTime contentDateStart = DateTime.now();
-    DateTime contentDateEnd = DateTime.now();
-
     //Convert date.
-    getContentDate(dateStart, dateEnd) {
-      //Initial variable.
-      var monthStart = DateFormat("MM").format(dateStart).toString();
-      var dayStart = DateFormat("dd").format(dateStart).toString();
-      var yearStart = DateFormat("yyyy").format(dateStart).toString();
-      var monthEnd = DateFormat("MM").format(dateEnd).toString();
-      var dayEnd = DateFormat("dd").format(dateEnd).toString();
-      var yearEnd = DateFormat("yyyy").format(dateEnd).toString();
-      var result = "";
+    Widget getContentDate(dateStart, dateEnd) {
+      if (dateStart != null && dateEnd != null) {
+        dateStart = DateTime.parse(dateStart);
+        dateEnd = DateTime.parse(dateEnd);
 
-      if (yearStart == yearEnd) {
-        if (monthStart == monthEnd) {
-          if (dayStart == dayEnd) {
-            result =
-                "$dayStart ${DateFormat("MMM").format(dateStart)} $yearStart";
+        //Initial variable.
+        var monthStart = DateFormat("MM").format(dateStart).toString();
+        var dayStart = DateFormat("dd").format(dateStart).toString();
+        var yearStart = DateFormat("yyyy").format(dateStart).toString();
+        var monthEnd = DateFormat("MM").format(dateEnd).toString();
+        var dayEnd = DateFormat("dd").format(dateEnd).toString();
+        var yearEnd = DateFormat("yyyy").format(dateEnd).toString();
+        var result = "";
+
+        if (yearStart == yearEnd) {
+          if (monthStart == monthEnd) {
+            if (dayStart == dayEnd) {
+              result =
+                  "$dayStart ${DateFormat("MMM").format(dateStart)} $yearStart";
+            } else {
+              result =
+                  "$dayStart-$dayEnd ${DateFormat("MMM").format(dateStart)} $yearStart";
+            }
           } else {
             result =
-                "$dayStart-$dayEnd ${DateFormat("MMM").format(dateStart)} $yearStart";
+                "$dayStart  ${DateFormat("MMM").format(dateStart)}-$dayEnd ${DateFormat("MMM").format(dateEnd)} $yearStart";
           }
         } else {
           result =
-              "$dayStart  ${DateFormat("MMM").format(dateStart)}-$dayEnd ${DateFormat("MMM").format(dateEnd)} $yearStart";
+              "$dayStart  ${DateFormat("MMM").format(dateStart)} $yearStart-$dayEnd ${DateFormat("MMM").format(dateEnd)} $yearEnd";
         }
+        return RichText(
+          text: TextSpan(
+            children: [
+              WidgetSpan(
+                child:
+                    Icon(Icons.calendar_month, size: 22, color: primaryColor),
+              ),
+              TextSpan(
+                  text: result,
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontSize: textMD,
+                      fontWeight: FontWeight.w500))
+            ],
+          ),
+        );
       } else {
-        result =
-            "$dayStart  ${DateFormat("MMM").format(dateStart)} $yearStart-$dayEnd ${DateFormat("MMM").format(dateEnd)} $yearEnd";
+        return const SizedBox();
       }
+    }
 
-      return TextSpan(
-          text: result,
-          style: TextStyle(
-              color: primaryColor,
-              fontSize: textMD,
-              fontWeight: FontWeight.w500));
+    //Convert hour.
+    Widget getContentHour(dateStart, dateEnd) {
+      if (dateStart != null && dateEnd != null) {
+        return RichText(
+          text: TextSpan(
+            children: [
+              //Content date start & end
+              WidgetSpan(
+                child: Icon(Icons.access_time, size: 22, color: primaryColor),
+              ),
+              TextSpan(
+                  text:
+                      " ${DateFormat("hh:mm a").format(DateTime.parse(contents[0].dateStart))} - ${DateFormat("hh:mm a").format(DateTime.parse(contents[0].dateEnd))} WIB",
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontSize: textMD,
+                      fontWeight: FontWeight.w500)),
+            ],
+          ),
+        );
+      } else {
+        return const SizedBox();
+      }
     }
 
     //Get location name.
@@ -175,7 +212,7 @@ class _DetailPage extends State<DetailPage> {
                             style: TextStyle(
                                 color: primaryColor, fontSize: textMD),
                           ),
-                          content: Container(
+                          content: SizedBox(
                               width: height,
                               child: Wrap(
                                   runSpacing: -5,
@@ -213,7 +250,7 @@ class _DetailPage extends State<DetailPage> {
                       ),
                     ));
               } else {
-                return SizedBox();
+                return const SizedBox();
               }
             }).toList());
       } else {
@@ -237,7 +274,7 @@ class _DetailPage extends State<DetailPage> {
                     height: fullHeight * 0.45,
                     width: fullWidth,
                     decoration: BoxDecoration(
-                      image: DecorationImage(
+                      image: const DecorationImage(
                         image: AssetImage("assets/content/content-2.jpg"),
                         fit: BoxFit.cover,
                       ),
@@ -279,8 +316,8 @@ class _DetailPage extends State<DetailPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20),
-                    padding: EdgeInsets.only(bottom: 5),
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
+                    padding: const EdgeInsets.only(bottom: 5),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -325,48 +362,16 @@ class _DetailPage extends State<DetailPage> {
                     ),
                   ])),
                   Container(
-                      margin: EdgeInsets.only(
-                          left: marginMD, right: marginMD, bottom: marginMD),
-                      child: Column(
-                        children: [
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                getLocation(contents[0].contentLoc,
-                                    int.parse(contents[0].id)),
-                                const Spacer(),
-                                RichText(
-                                  text: TextSpan(
-                                    children: [
-                                      WidgetSpan(
-                                        child: Icon(Icons.calendar_month,
-                                            size: 22, color: primaryColor),
-                                      ),
-                                      getContentDate(
-                                          contentDateStart, contentDateEnd)
-                                    ],
-                                  ),
-                                )
-                              ]),
-                          RichText(
-                            text: TextSpan(
-                              children: [
-                                WidgetSpan(
-                                  child: Icon(Icons.access_time,
-                                      size: 22, color: primaryColor),
-                                ),
-                                TextSpan(
-                                    text:
-                                        " ${DateFormat("HH:mm a").format(contentDateStart).toString()} - ${DateFormat("HH:mm a").format(contentDateEnd).toString()} WIB",
-                                    style: TextStyle(
-                                        color: primaryColor,
-                                        fontSize: textMD,
-                                        fontWeight: FontWeight.w500)),
-                              ],
-                            ),
-                          )
-                        ],
-                      )),
+                    margin: EdgeInsets.only(
+                        left: paddingXSM, right: paddingXSM, bottom: marginMD),
+                    child: Wrap(runSpacing: -5, spacing: 10, children: [
+                      getLocation(
+                          contents[0].contentLoc, int.parse(contents[0].id)),
+                      getContentDate(
+                          contents[0].dateStart, contents[0].dateEnd),
+                      getContentHour(contents[0].dateStart, contents[0].dateEnd)
+                    ]),
+                  ),
 
                   //Save content to archieve.
                   SaveButton(passId: int.parse(contents[0].id))

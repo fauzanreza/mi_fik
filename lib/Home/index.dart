@@ -77,7 +77,7 @@ class _HomePage extends State<HomePage> {
                       children: [
                         getGreeting(DateFormat("HH").format(DateTime.now())),
                         const SizedBox(height: 5),
-                        Text(DateFormat("HH : mm a").format(DateTime.now()),
+                        Text(DateFormat("hh : mm a").format(DateTime.now()),
                             style: TextStyle(
                                 color: whitebg,
                                 fontWeight: FontWeight.bold,

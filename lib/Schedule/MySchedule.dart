@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/DB/Model/Content.dart';
 import 'package:mi_fik/DB/Services/ContentServices.dart';
+import 'package:mi_fik/Others/skeleton/content_2.dart';
 import 'package:mi_fik/main.dart';
 
 class MySchedulePage extends StatefulWidget {
@@ -40,9 +41,7 @@ class _MySchedulePage extends State<MySchedulePage> {
             List<ContentModel> contents = snapshot.data;
             return _buildListView(contents);
           } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return ContentSkeleton2();
           }
         },
       ),
@@ -174,89 +173,92 @@ class _MySchedulePage extends State<MySchedulePage> {
 
     if ((contents != null) && (contents.length != 0)) {
       return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: contents.map((content) {
-        return SizedBox(
-            width: fullWidth,
-            child: IntrinsicHeight(
-                child: Stack(children: [
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: fullWidth * 0.05),
-                width: 2.5,
-                color: primaryColor,
-              ),
+            return SizedBox(
+                width: fullWidth,
+                child: IntrinsicHeight(
+                    child: Stack(children: [
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: fullWidth * 0.05),
+                    width: 2.5,
+                    color: primaryColor,
+                  ),
 
-              //Open content w/ full container
-              GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    width: fullWidth * 0.8,
-                    padding: EdgeInsets.symmetric(
-                        horizontal: paddingXSM, vertical: paddingXSM),
-                    margin: EdgeInsets.only(top: marginMT),
-                    transform: Matrix4.translationValues(55.0, 5.0, 0.0),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: getBgColor(DateTime.parse(content.dateStart))),
-                    child: Container(
-                        padding: const EdgeInsets.all(4),
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
+                  //Open content w/ full container
+                  GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        width: fullWidth * 0.8,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: paddingXSM, vertical: paddingXSM),
+                        margin: EdgeInsets.only(bottom: marginMT),
+                        transform: Matrix4.translationValues(55.0, 10.0, 0.0),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color:
+                                getBgColor(DateTime.parse(content.dateStart))),
+                        child: Container(
+                            padding: const EdgeInsets.all(4),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    content.contentTitle,
-                                    style: GoogleFonts.poppins(
-                                      color: getColor(
-                                          DateTime.parse(content.dateStart)),
-                                      fontSize: textSM,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        content.contentTitle,
+                                        style: GoogleFonts.poppins(
+                                          color: getColor(DateTime.parse(
+                                              content.dateStart)),
+                                          fontSize: textSM,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      // getLocation(content.contentLoc),
+                                      //Width doesnt enough
+                                      const Spacer(),
+                                      Text(
+                                        DateFormat("HH : mm a").format(
+                                            DateTime.parse(content.dateStart)),
+                                        style: GoogleFonts.poppins(
+                                          color: getColor(DateTime.parse(
+                                              content.dateStart)),
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: textSM,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  // getLocation(content.contentLoc),
-                                  //Width doesnt enough
-                                  const Spacer(),
-                                  Text(
-                                    DateFormat("HH : mm a").format(
-                                        DateTime.parse(content.dateStart)),
-                                    style: GoogleFonts.poppins(
-                                      color: getColor(
-                                          DateTime.parse(content.dateStart)),
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: textSM,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Container(
-                                  margin:
-                                      const EdgeInsets.symmetric(vertical: 15),
-                                  child: getTag(
-                                      content.contentTag, content.dateStart)),
-                              Container(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: getLocation(
-                                    content.contentLoc,
-                                    getColor(
-                                        DateTime.parse(content.dateStart))),
-                              )
-                            ])),
-                  )),
-              Positioned(
-                  bottom: 0,
-                  right: fullWidth * 0.1,
-                  child: Opacity(
-                    opacity: 0.50,
-                    child: Icon(
-                      Icons.event_note_outlined,
-                      color: getColor(DateTime.parse(content.dateStart)),
-                      size: 38,
-                    ),
-                  ))
-            ])));
-      }).toList());
+                                  Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          vertical: 15),
+                                      child: getTag(content.contentTag,
+                                          content.dateStart)),
+                                  Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    child: getLocation(
+                                        content.contentLoc,
+                                        getColor(
+                                            DateTime.parse(content.dateStart))),
+                                  )
+                                ])),
+                      )),
+                  Positioned(
+                      bottom: 0,
+                      right: fullWidth * 0.1,
+                      child: Opacity(
+                        opacity: 0.50,
+                        child: Icon(
+                          Icons.event_note_outlined,
+                          color: getColor(DateTime.parse(content.dateStart)),
+                          size: 38,
+                        ),
+                      ))
+                ])));
+          }).toList());
     } else {
       return Align(
           alignment: Alignment.topCenter,
