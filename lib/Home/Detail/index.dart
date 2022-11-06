@@ -367,7 +367,6 @@ class _DetailPage extends State<DetailPage> {
                     child: Wrap(runSpacing: -5, spacing: 10, children: [
                       getLocation(
                           contents[0].contentLoc, int.parse(contents[0].id)),
-                      const Spacer(),
                       getContentDate(
                           contents[0].dateStart, contents[0].dateEnd),
                       getContentHour(contents[0].dateStart, contents[0].dateEnd)

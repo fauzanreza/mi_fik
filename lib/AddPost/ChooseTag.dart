@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/DB/Model/Tag.dart';
 import 'package:mi_fik/DB/Services/TagServices.dart';
+import 'package:mi_fik/Others/skeleton/tag_1.dart';
 import 'package:mi_fik/main.dart';
 
 class ChooseTag extends StatefulWidget {
@@ -36,9 +37,7 @@ class _ChooseTag extends State<ChooseTag> {
             List<TagModel> tags = snapshot.data;
             return _buildListView(tags);
           } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const TagSkeleton1();
           }
         },
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/DB/Model/Archieve.dart';
 import 'package:mi_fik/DB/Services/ArchieveServices.dart';
+import 'package:mi_fik/Others/skeleton/archive_1.dart';
 import 'package:mi_fik/main.dart';
 
 class ArchievePage extends StatefulWidget {
@@ -36,9 +37,7 @@ class _ArchievePage extends State<ArchievePage> {
             List<ArchieveModel> archieves = snapshot.data;
             return _buildListView(archieves);
           } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return ArchiveSkeleton1();
           }
         },
       ),
