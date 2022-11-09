@@ -48,6 +48,8 @@ List archieveVal = []; //Need to be fixed
 DateTime slctSchedule = DateTime.now();
 int passIdUser = 1; //For now.
 int passIdContent;
+final locDetailCtrl = TextEditingController();
+var locCoordinateCtrl = null;
 final selectedTag = [];
 
 class MyApp extends StatelessWidget {

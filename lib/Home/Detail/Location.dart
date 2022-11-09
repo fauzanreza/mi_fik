@@ -116,7 +116,7 @@ class _LocationButton extends State<LocationButton>
 
     //Maps starting point.
     final _initialCameraPosition = CameraPosition(
-      target: LatLng(lat, lng), //Bandung
+      target: LatLng(lat, lng),
       zoom: 14,
     );
 
@@ -124,10 +124,11 @@ class _LocationButton extends State<LocationButton>
       onPressed: () => showDialog<String>(
           context: context,
           builder: (BuildContext context) => AlertDialog(
+              insetPadding: EdgeInsets.all(paddingSM),
               contentPadding: EdgeInsets.all(paddingMD),
               content: SizedBox(
-                height: fullWidth *
-                    0.8, //Pop up height based on fullwidth (Square maps).
+                height:
+                    fullWidth, //Pop up height based on fullwidth (Square maps).
                 width: fullWidth,
                 child: Column(children: [
                   Flexible(
