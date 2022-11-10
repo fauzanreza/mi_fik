@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/AddPost/ChooseTag.dart';
+import 'package:mi_fik/AddPost/SetLocation.dart';
 import 'package:mi_fik/DB/Model/Content.dart';
 import 'package:mi_fik/DB/Services/ContentServices.dart';
 import 'package:mi_fik/Others/FailedDialog.dart';
@@ -68,14 +69,17 @@ class _addPost extends State<addPost> {
               icon: Icon(Icons.arrow_back, size: iconLG),
               color: Colors.white,
               onPressed: () {
+                //Empty all input
                 selectedTag.clear();
+                locDetailCtrl.clear();
+                locCoordinateCtrl = null;
                 Navigator.pop(context);
               },
             ),
           ),
           Container(
             margin: EdgeInsets.only(top: fullHeight * 0.25),
-            height: fullHeight * 0.8,
+            height: fullHeight * 0.7,
             width: fullWidth,
             padding: EdgeInsets.only(top: paddingMD),
             decoration: BoxDecoration(
@@ -88,6 +92,7 @@ class _addPost extends State<addPost> {
                 child: TextFormField(
                   cursorColor: Colors.white,
                   controller: contentTitleCtrl,
+                  maxLength: 75,
                   decoration: InputDecoration(
                       hintText: 'Title',
                       enabledBorder: OutlineInputBorder(
@@ -175,21 +180,7 @@ class _addPost extends State<addPost> {
                     ],
                   )),
               Row(children: <Widget>[
-                Container(
-                  padding: const EdgeInsets.fromLTRB(15, 10, 0, 0),
-                  child: TextButton.icon(
-                    style: TextButton.styleFrom(
-                      textStyle: const TextStyle(fontSize: 16),
-                      foregroundColor: const Color(0xFFFB8C00),
-                    ), // <-- TextButton
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.location_pin,
-                      size: 24.0,
-                    ),
-                    label: const Text('Set My Location'),
-                  ),
-                ),
+                SetLocationButton(),
                 Container(
                   padding: const EdgeInsets.fromLTRB(30, 10, 0, 0),
                   child: TextButton.icon(
@@ -303,13 +294,27 @@ class _addPost extends State<addPost> {
                     }
                   }
 
+                  //Get content location json
+                  getContentLoc(detail, loc) {
+                    if (detail != null && loc != null) {
+                      var tag = [
+                        {"type": "location", "detail": detail},
+                        {"type": "coodinate", "detail": loc}
+                      ];
+                      return json.encode(tag);
+                    } else {
+                      return null;
+                    }
+                  }
+
                   //Mapping.
                   ContentModel content = ContentModel(
                     contentTitle: contentTitleCtrl.text.toString(),
                     contentSubtitle: "Lorem ipsum", //For now.
                     contentDesc: contentDescCtrl.text.toString(),
                     contentTag: validateNullJSON(selectedTag),
-                    contentLoc: null, //For now.
+                    contentLoc: getContentLoc(
+                        locDetailCtrl.text, locCoordinateCtrl), //For now.
                     contentAttach: null, //For now.
                     dateStart: validateDateNull(dateStartCtrl),
                     dateEnd: validateDateNull(dateEndCtrl),
@@ -339,6 +344,8 @@ class _addPost extends State<addPost> {
                         dateEndCtrl = null;
                         contentTitleCtrl.clear();
                         contentDescCtrl.clear();
+                        locDetailCtrl.clear();
+                        locCoordinateCtrl = null;
                       }
                     });
                   } else {

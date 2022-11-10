@@ -139,6 +139,7 @@ class _HomePage extends State<HomePage> {
               ])),
       floatingActionButton: SpeedDial(
           activeIcon: Icons.close,
+          icon: Icons.add,
           backgroundColor: primaryColor,
           overlayColor: primaryColor,
           overlayOpacity: 0.4,
