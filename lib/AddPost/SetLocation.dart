@@ -165,7 +165,7 @@ class _SetLocationButton extends State<SetLocationButton>
                                   position: pos,
                                 );
                                 locCoordinateCtrl =
-                                    "${pos.latitude},${pos.longitude}";
+                                    "${pos.latitude}, ${pos.longitude}";
                               });
                             }
                           }),

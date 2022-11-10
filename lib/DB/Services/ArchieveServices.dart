@@ -15,4 +15,17 @@ class ArchieveService {
       return null;
     }
   }
+
+  Future<bool> addArchive(ArchieveModel data) async {
+    final response = await client.post(
+      Uri.parse("${baseUrl}/api/archieve/create/${passIdUser}"),
+      headers: {"content-type": "application/json"},
+      body: ArchieveModelToJson(data),
+    );
+    if (response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Others/leftbar.dart';
 import 'package:mi_fik/Others/rightbar.dart';
+import 'package:mi_fik/Schedule/Add.dart';
 import 'package:mi_fik/Schedule/Archieve.dart';
 import 'package:mi_fik/Schedule/MySchedule.dart';
 import 'package:mi_fik/main.dart';
@@ -205,6 +207,7 @@ class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
                   children: const [MySchedulePage(), ArchievePage()],
                 ),
               )
-            ]));
+            ]),
+        floatingActionButton: AddTaskwArchive());
   }
 }
