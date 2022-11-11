@@ -1,26 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:mi_fik/DB/Model/Task.dart';
+import 'package:mi_fik/DB/Services/TaskServices.dart';
+import 'package:mi_fik/Others/FailedDialog.dart';
+import 'package:mi_fik/Others/SuccessDialog.dart';
 import 'package:mi_fik/main.dart';
 
 class DetailTask extends StatefulWidget {
   DetailTask(
       {Key key,
-      this.taskTitle,
-      this.taskDesc,
-      this.taskDateStart,
-      this.taskDateEnd})
+      this.id,
+      this.taskTitlePass,
+      this.taskDescPass,
+      this.taskDateStartPass,
+      this.taskDateEndPass})
       : super(key: key);
-  String taskTitle;
-  String taskDesc;
-  String taskDateStart;
-  String taskDateEnd;
+  String id;
+  String taskTitlePass;
+  String taskDescPass;
+  String taskDateStartPass;
+  String taskDateEndPass;
 
   @override
   _DetailTask createState() => _DetailTask();
 }
 
 class _DetailTask extends State<DetailTask> {
+  TaskService taskService;
+
   //Initial variable
   final taskTitleCtrl = TextEditingController();
   final taskDescCtrl = TextEditingController();
@@ -28,9 +36,16 @@ class _DetailTask extends State<DetailTask> {
   DateTime dateEndCtrl = null;
 
   @override
+  void initState() {
+    super.initState();
+    taskService = TaskService();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
+    // bool _isLoading = false;
 
     getDateText(date, type) {
       if (date != null) {
@@ -41,10 +56,15 @@ class _DetailTask extends State<DetailTask> {
     }
 
     //Assign value to controller
-    taskTitleCtrl.text = widget.taskTitle;
-    taskDescCtrl.text = widget.taskDesc;
-    dateStartCtrl = DateTime.parse(widget.taskDateStart);
-    dateEndCtrl = DateTime.parse(widget.taskDateEnd);
+    taskTitleCtrl.text = widget.taskTitlePass;
+    taskDescCtrl.text = widget.taskDescPass;
+
+    if (dateStartCtrl == null) {
+      dateStartCtrl = DateTime.parse(widget.taskDateStartPass);
+    }
+    if (dateEndCtrl == null) {
+      dateEndCtrl = DateTime.parse(widget.taskDateEndPass);
+    }
 
     return SizedBox(
         height:
@@ -57,7 +77,11 @@ class _DetailTask extends State<DetailTask> {
               icon: const Icon(Icons.close),
               tooltip: 'Back',
               onPressed: () {
-                Navigator.pop(context);
+                // Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const NavBar()),
+                );
               },
             ),
           ),
@@ -133,6 +157,7 @@ class _DetailTask extends State<DetailTask> {
 
                       DatePicker.showDateTimePicker(context,
                           showTitleActions: true,
+                          currentTime: dateStartCtrl,
                           minTime:
                               DateTime(now.year, now.month, now.day), //Tomorrow
                           maxTime: DateTime(now.year + 1, now.month, now.day),
@@ -140,7 +165,7 @@ class _DetailTask extends State<DetailTask> {
                         setState(() {
                           dateStartCtrl = date;
                         });
-                      }, currentTime: now, locale: LocaleType.en);
+                      }, locale: LocaleType.en);
                     },
                     icon: const Icon(
                       Icons.calendar_month,
@@ -160,12 +185,13 @@ class _DetailTask extends State<DetailTask> {
                         showTitleActions: true,
                         minTime:
                             DateTime(now.year, now.month, now.day), //Tomorrow
+                        currentTime: dateEndCtrl,
                         maxTime: DateTime(now.year + 1, now.month, now.day),
                         onConfirm: (date) {
                       setState(() {
                         dateEndCtrl = date;
                       });
-                    }, currentTime: now, locale: LocaleType.en);
+                    }, locale: LocaleType.en);
                   },
                   icon: const Icon(
                     Icons.calendar_month,
@@ -197,6 +223,61 @@ class _DetailTask extends State<DetailTask> {
                     child: const Text('1 Hour Before'),
                   ),
                 ]),
+                Container(
+                    margin: EdgeInsets.only(top: paddingXSM),
+                    width: fullWidth,
+                    height: btnHeightMD,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        validateDateNull(val) {
+                          if (val != null) {
+                            return val.toString();
+                          } else {
+                            return null;
+                          }
+                        }
+
+                        //Mapping.
+                        TaskModel task = TaskModel(
+                          taskTitle: taskTitleCtrl.text.toString(),
+                          taskDesc: taskDescCtrl.text.toString(),
+                          dateStart: validateDateNull(dateStartCtrl),
+                          dateEnd: validateDateNull(dateEndCtrl),
+                        );
+
+                        //Validator
+                        if (task.taskTitle.isNotEmpty) {
+                          taskService
+                              .updateTask(task, int.parse(widget.id))
+                              .then((isError) {
+                            // setState(() => _isLoading = false);
+                            if (isError) {
+                              showDialog<String>(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      FailedDialog(text: "Update task failed"));
+                            } else {
+                              showDialog<String>(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      SuccessDialog(
+                                          text: "Update task success"));
+                            }
+                          });
+                        } else {
+                          showDialog<String>(
+                              context: context,
+                              builder: (BuildContext context) => FailedDialog(
+                                  text:
+                                      "Update task failed, field can't be empty"));
+                        }
+                      },
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStatePropertyAll<Color>(primaryColor),
+                      ),
+                      child: const Text('Save'),
+                    ))
               ],
             ),
           ),

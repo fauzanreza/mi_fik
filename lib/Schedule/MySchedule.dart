@@ -42,7 +42,7 @@ class _MySchedulePage extends State<MySchedulePage> {
             List<ContentModel> contents = snapshot.data;
             return _buildListView(contents);
           } else {
-            return ContentSkeleton2();
+            return const ContentSkeleton2();
           }
         },
       ),
@@ -224,10 +224,11 @@ class _MySchedulePage extends State<MySchedulePage> {
                                           borderRadius:
                                               BorderRadius.all(roundedLG)),
                                       content: DetailTask(
-                                        taskTitle: content.contentTitle,
-                                        taskDesc: content.contentDesc,
-                                        taskDateStart: content.dateStart,
-                                        taskDateEnd: content.dateEnd,
+                                        id: content.id,
+                                        taskTitlePass: content.contentTitle,
+                                        taskDescPass: content.contentDesc,
+                                        taskDateStartPass: content.dateStart,
+                                        taskDateEndPass: content.dateEnd,
                                       ));
                                 });
                               });

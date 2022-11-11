@@ -273,8 +273,6 @@ class _AddTaskwArchive extends State<AddTaskwArchive> {
                                           builder: (BuildContext context) =>
                                               SuccessDialog(
                                                   text: "Create task success"));
-
-                                      archiveNameCtrl.clear();
                                     }
                                   });
                                 } else {

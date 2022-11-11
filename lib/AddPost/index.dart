@@ -167,7 +167,7 @@ class _addPost extends State<addPost> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text("Choose Tags",
+                      const Text("Choose Tags",
                           style: TextStyle(
                             fontSize: 16,
                             fontFamily: 'Poppins',
@@ -176,67 +176,61 @@ class _addPost extends State<addPost> {
                           )),
                       Container(
                           transform: Matrix4.translationValues(0.0, -15.0, 0.0),
-                          child: ChooseTag()),
+                          child: const ChooseTag()),
                     ],
                   )),
               Container(
                   padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
                   child: Wrap(runSpacing: -5, spacing: 5, children: [
-                    SetLocationButton(),
-                    Container(
-                      child: TextButton.icon(
-                        style: TextButton.styleFrom(
-                          textStyle: const TextStyle(fontSize: 16),
-                          foregroundColor: const Color(0xFFFB8C00),
-                        ), // <-- TextButton
-                        onPressed: () {
-                          final now = DateTime.now();
+                    const SetLocationButton(),
+                    TextButton.icon(
+                      style: TextButton.styleFrom(
+                        textStyle: const TextStyle(fontSize: 16),
+                        foregroundColor: const Color(0xFFFB8C00),
+                      ), // <-- TextButton
+                      onPressed: () {
+                        final now = DateTime.now();
 
-                          DatePicker.showDateTimePicker(context,
-                              showTitleActions: true,
-                              minTime: DateTime(
-                                  now.year, now.month, now.day), //Tomorrow
-                              maxTime:
-                                  DateTime(now.year + 1, now.month, now.day),
-                              onConfirm: (date) {
-                            setState(() {
-                              dateStartCtrl = date;
-                            });
-                          }, currentTime: now, locale: LocaleType.en);
-                        },
-                        icon: const Icon(
-                          Icons.calendar_month,
-                          size: 24.0,
-                        ),
-                        label: Text(getDateText(dateStartCtrl, "Start")),
+                        DatePicker.showDateTimePicker(context,
+                            showTitleActions: true,
+                            minTime: DateTime(
+                                now.year, now.month, now.day), //Tomorrow
+                            maxTime: DateTime(now.year + 1, now.month, now.day),
+                            onConfirm: (date) {
+                          setState(() {
+                            dateStartCtrl = date;
+                          });
+                        }, currentTime: now, locale: LocaleType.en);
+                      },
+                      icon: const Icon(
+                        Icons.calendar_month,
+                        size: 24.0,
                       ),
+                      label: Text(getDateText(dateStartCtrl, "Start")),
                     ),
-                    Container(
-                      child: TextButton.icon(
-                        style: TextButton.styleFrom(
-                            textStyle: const TextStyle(fontSize: 16),
-                            foregroundColor: primaryColor), // <-- TextButton
-                        onPressed: () {
-                          final now = DateTime.now();
+                    TextButton.icon(
+                      style: TextButton.styleFrom(
+                          textStyle: const TextStyle(fontSize: 16),
+                          foregroundColor: primaryColor), // <-- TextButton
+                      onPressed: () {
+                        final now = DateTime.now();
 
-                          DatePicker.showDateTimePicker(context,
-                              showTitleActions: true,
-                              minTime: DateTime(
-                                  now.year, now.month, now.day), //Tomorrow
-                              maxTime:
-                                  DateTime(now.year + 1, now.month, now.day),
-                              onConfirm: (date) {
-                            setState(() {
-                              dateEndCtrl = date;
-                            });
-                          }, currentTime: now, locale: LocaleType.en);
-                        },
-                        icon: const Icon(
-                          Icons.calendar_month,
-                          size: 24.0,
-                        ),
-                        label: Text(getDateText(dateEndCtrl, "End")),
+                        DatePicker.showDateTimePicker(context,
+                            showTitleActions: true,
+                            minTime: DateTime(
+                                now.year, now.month, now.day), //Tomorrow
+                            maxTime: DateTime(now.year + 1, now.month, now.day),
+                            onConfirm: (date) {
+                          setState(() {
+                            dateEndCtrl = date;
+                          });
+                        }, currentTime: now, locale: LocaleType.en);
+                      },
+                      icon: const Icon(
+                        Icons.calendar_month,
+                        size: 24.0,
                       ),
+                      label: Text(getDateText(dateEndCtrl, "End")),
                     ),
                     Wrap(children: <Widget>[
                       TextButton(
