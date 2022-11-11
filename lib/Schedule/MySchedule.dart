@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:mi_fik/DB/Model/Content.dart';
 import 'package:mi_fik/DB/Services/ContentServices.dart';
 import 'package:mi_fik/Others/skeleton/content_2.dart';
+import 'package:mi_fik/Schedule/DetailTask.dart';
 import 'package:mi_fik/main.dart';
 
 class MySchedulePage extends StatefulWidget {
@@ -41,7 +42,7 @@ class _MySchedulePage extends State<MySchedulePage> {
             List<ContentModel> contents = snapshot.data;
             return _buildListView(contents);
           } else {
-            return ContentSkeleton2();
+            return const ContentSkeleton2();
           }
         },
       ),
@@ -49,7 +50,7 @@ class _MySchedulePage extends State<MySchedulePage> {
   }
 
   Widget _buildListView(List<ContentModel> contents) {
-    //double fullHeight = MediaQuery.of(context).size.height;
+    double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
     //Get total content in an archieve.
@@ -171,6 +172,25 @@ class _MySchedulePage extends State<MySchedulePage> {
       }
     }
 
+    //Get icon based on event or task
+    Widget getIcon(type, dateStart) {
+      if (type == "1") {
+        //Event or content
+        return Icon(
+          Icons.event_note_outlined,
+          color: getColor(DateTime.parse(dateStart)),
+          size: 38,
+        );
+      } else if (type == "2") {
+        //Task
+        return Icon(
+          Icons.task,
+          color: getColor(DateTime.parse(dateStart)),
+          size: 38,
+        );
+      }
+    }
+
     if ((contents != null) && (contents.length != 0)) {
       return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -188,7 +208,34 @@ class _MySchedulePage extends State<MySchedulePage> {
 
                   //Open content w/ full container
                   GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        if (content.dataFrom == "2") {
+                          showDialog<String>(
+                              context: context,
+                              barrierColor: primaryColor.withOpacity(0.5),
+                              builder: (BuildContext context) {
+                                return StatefulBuilder(
+                                    builder: (context, setState) {
+                                  return AlertDialog(
+                                      insetPadding: EdgeInsets.all(paddingXSM),
+                                      contentPadding:
+                                          EdgeInsets.all(paddingXSM),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.all(roundedLG)),
+                                      content: DetailTask(
+                                        id: content.id,
+                                        taskTitlePass: content.contentTitle,
+                                        taskDescPass: content.contentDesc,
+                                        taskDateStartPass: content.dateStart,
+                                        taskDateEndPass: content.dateEnd,
+                                      ));
+                                });
+                              });
+                        } else {
+                          return print("tes");
+                        }
+                      },
                       child: Container(
                         width: fullWidth * 0.8,
                         padding: EdgeInsets.symmetric(
@@ -250,13 +297,8 @@ class _MySchedulePage extends State<MySchedulePage> {
                       bottom: 0,
                       right: fullWidth * 0.1,
                       child: Opacity(
-                        opacity: 0.50,
-                        child: Icon(
-                          Icons.event_note_outlined,
-                          color: getColor(DateTime.parse(content.dateStart)),
-                          size: 38,
-                        ),
-                      ))
+                          opacity: 0.50,
+                          child: getIcon(content.dataFrom, content.dateStart)))
                 ])));
           }).toList());
     } else {

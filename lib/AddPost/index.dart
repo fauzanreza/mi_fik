@@ -167,7 +167,7 @@ class _addPost extends State<addPost> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text("Choose Tags",
+                      const Text("Choose Tags",
                           style: TextStyle(
                             fontSize: 16,
                             fontFamily: 'Poppins',
@@ -176,99 +176,87 @@ class _addPost extends State<addPost> {
                           )),
                       Container(
                           transform: Matrix4.translationValues(0.0, -15.0, 0.0),
-                          child: ChooseTag()),
+                          child: const ChooseTag()),
                     ],
                   )),
-              Row(children: <Widget>[
-                SetLocationButton(),
-                Container(
-                  padding: const EdgeInsets.fromLTRB(30, 10, 0, 0),
-                  child: TextButton.icon(
-                    style: TextButton.styleFrom(
-                      textStyle: const TextStyle(fontSize: 16),
-                      foregroundColor: const Color(0xFFFB8C00),
-                    ), // <-- TextButton
-                    onPressed: () {
-                      final now = DateTime.now();
-
-                      DatePicker.showDateTimePicker(context,
-                          showTitleActions: true,
-                          minTime:
-                              DateTime(now.year, now.month, now.day), //Tomorrow
-                          maxTime: DateTime(now.year + 1, now.month, now.day),
-                          onConfirm: (date) {
-                        setState(() {
-                          dateStartCtrl = date;
-                        });
-                      }, currentTime: now, locale: LocaleType.en);
-                    },
-                    icon: const Icon(
-                      Icons.calendar_month,
-                      size: 24.0,
-                    ),
-                    label: Text(getDateText(dateStartCtrl, "Start")),
-                  ),
-                ),
-              ]),
-              Row(children: <Widget>[
-                Container(
-                  padding: const EdgeInsets.fromLTRB(15, 10, 0, 0),
-                  child: TextButton.icon(
-                    style: TextButton.styleFrom(
-                        textStyle: const TextStyle(fontSize: 16),
-                        foregroundColor: primaryColor), // <-- TextButton
-                    onPressed: () {
-                      final now = DateTime.now();
-
-                      DatePicker.showDateTimePicker(context,
-                          showTitleActions: true,
-                          minTime:
-                              DateTime(now.year, now.month, now.day), //Tomorrow
-                          maxTime: DateTime(now.year + 1, now.month, now.day),
-                          onConfirm: (date) {
-                        setState(() {
-                          dateEndCtrl = date;
-                        });
-                      }, currentTime: now, locale: LocaleType.en);
-                    },
-                    icon: const Icon(
-                      Icons.calendar_month,
-                      size: 24.0,
-                    ),
-                    label: Text(getDateText(dateEndCtrl, "End")),
-                  ),
-                ),
-                Row(children: <Widget>[
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(15, 10, 0, 0),
-                    child: TextButton(
+              Container(
+                  padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+                  child: Wrap(runSpacing: -5, spacing: 5, children: [
+                    const SetLocationButton(),
+                    TextButton.icon(
                       style: TextButton.styleFrom(
                         textStyle: const TextStyle(fontSize: 16),
                         foregroundColor: const Color(0xFFFB8C00),
+                      ), // <-- TextButton
+                      onPressed: () {
+                        final now = DateTime.now();
+
+                        DatePicker.showDateTimePicker(context,
+                            showTitleActions: true,
+                            minTime: DateTime(
+                                now.year, now.month, now.day), //Tomorrow
+                            maxTime: DateTime(now.year + 1, now.month, now.day),
+                            onConfirm: (date) {
+                          setState(() {
+                            dateStartCtrl = date;
+                          });
+                        }, currentTime: now, locale: LocaleType.en);
+                      },
+                      icon: const Icon(
+                        Icons.calendar_month,
+                        size: 24.0,
                       ),
-                      onPressed: () {},
-                      child: const Text('Reminder :'),
+                      label: Text(getDateText(dateStartCtrl, "Start")),
                     ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
-                        onPrimary: const Color(0xFFFB8C00),
-                        side: const BorderSide(
-                          width: 1.0,
-                          color: Color(0xFFFB8C00),
+                    TextButton.icon(
+                      style: TextButton.styleFrom(
+                          textStyle: const TextStyle(fontSize: 16),
+                          foregroundColor: primaryColor), // <-- TextButton
+                      onPressed: () {
+                        final now = DateTime.now();
+
+                        DatePicker.showDateTimePicker(context,
+                            showTitleActions: true,
+                            minTime: DateTime(
+                                now.year, now.month, now.day), //Tomorrow
+                            maxTime: DateTime(now.year + 1, now.month, now.day),
+                            onConfirm: (date) {
+                          setState(() {
+                            dateEndCtrl = date;
+                          });
+                        }, currentTime: now, locale: LocaleType.en);
+                      },
+                      icon: const Icon(
+                        Icons.calendar_month,
+                        size: 24.0,
+                      ),
+                      label: Text(getDateText(dateEndCtrl, "End")),
+                    ),
+                    Wrap(children: <Widget>[
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          textStyle: const TextStyle(fontSize: 16),
+                          foregroundColor: const Color(0xFFFB8C00),
                         ),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0)),
+                        onPressed: () {},
+                        child: const Text('Reminder :'),
                       ),
-                      onPressed: () {},
-                      child: const Text('1 Hour Before'),
-                    ),
-                  ),
-                ]),
-              ]),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.white,
+                          onPrimary: const Color(0xFFFB8C00),
+                          side: const BorderSide(
+                            width: 1.0,
+                            color: Color(0xFFFB8C00),
+                          ),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0)),
+                        ),
+                        onPressed: () {},
+                        child: const Text('1 Hour Before'),
+                      ),
+                    ])
+                  ])),
             ]),
           ),
           Container(
