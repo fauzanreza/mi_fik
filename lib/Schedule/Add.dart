@@ -3,7 +3,9 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/DB/Model/Archieve.dart';
+import 'package:mi_fik/DB/Model/Task.dart';
 import 'package:mi_fik/DB/Services/ArchieveServices.dart';
+import 'package:mi_fik/DB/Services/TaskServices.dart';
 import 'package:mi_fik/Others/FailedDialog.dart';
 import 'package:mi_fik/Others/SuccessDialog.dart';
 import 'package:mi_fik/main.dart';
@@ -17,7 +19,8 @@ class AddTaskwArchive extends StatefulWidget {
 }
 
 class _AddTaskwArchive extends State<AddTaskwArchive> {
-  ArchieveService apiService;
+  ArchieveService archiveService;
+  TaskService taskService;
 
   //Initial variable
   final archiveNameCtrl = TextEditingController();
@@ -29,7 +32,8 @@ class _AddTaskwArchive extends State<AddTaskwArchive> {
   @override
   void initState() {
     super.initState();
-    apiService = ArchieveService();
+    archiveService = ArchieveService();
+    taskService = TaskService();
   }
 
   @override
@@ -237,31 +241,38 @@ class _AddTaskwArchive extends State<AddTaskwArchive> {
                             height: btnHeightMD,
                             child: ElevatedButton(
                               onPressed: () async {
+                                validateDateNull(val) {
+                                  if (val != null) {
+                                    return val.toString();
+                                  } else {
+                                    return null;
+                                  }
+                                }
+
                                 //Mapping.
-                                ArchieveModel archive = ArchieveModel(
-                                  archieveName: archiveNameCtrl.text.toString(),
+                                TaskModel task = TaskModel(
+                                  taskTitle: taskTitleCtrl.text.toString(),
+                                  taskDesc: taskDescCtrl.text.toString(),
+                                  dateStart: validateDateNull(dateStartCtrl),
+                                  dateEnd: validateDateNull(dateEndCtrl),
                                 );
 
                                 //Validator
-                                if (archive.archieveName.isNotEmpty) {
-                                  apiService
-                                      .addArchive(archive)
-                                      .then((isError) {
+                                if (task.taskTitle.isNotEmpty) {
+                                  taskService.addTask(task).then((isError) {
                                     setState(() => _isLoading = false);
                                     if (isError) {
                                       showDialog<String>(
                                           context: context,
                                           builder: (BuildContext context) =>
                                               FailedDialog(
-                                                  text:
-                                                      "Create archive failed"));
+                                                  text: "Create task failed"));
                                     } else {
                                       showDialog<String>(
                                           context: context,
                                           builder: (BuildContext context) =>
                                               SuccessDialog(
-                                                  text:
-                                                      "Create archive success"));
+                                                  text: "Create task success"));
 
                                       archiveNameCtrl.clear();
                                     }
@@ -272,7 +283,7 @@ class _AddTaskwArchive extends State<AddTaskwArchive> {
                                       builder: (BuildContext context) =>
                                           FailedDialog(
                                               text:
-                                                  "Create archive failed, field can't be empty"));
+                                                  "Create task failed, field can't be empty"));
                                 }
                               },
                               style: ButtonStyle(
@@ -364,7 +375,7 @@ class _AddTaskwArchive extends State<AddTaskwArchive> {
 
                                 //Validator
                                 if (archive.archieveName.isNotEmpty) {
-                                  apiService
+                                  archiveService
                                       .addArchive(archive)
                                       .then((isError) {
                                     setState(() => _isLoading = false);
