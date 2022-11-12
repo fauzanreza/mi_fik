@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Others/leftbar.dart';
 import 'package:mi_fik/Others/rightbar.dart';
@@ -17,7 +16,7 @@ class SchedulePage extends StatefulWidget {
 }
 
 class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   TabController _tabController;
 
   @override
@@ -59,15 +58,15 @@ class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
 
     getArchiveView(slctd) {
       if (slctd == null) {
-        return ArchievePage();
+        return const ArchievePage();
       } else {
-        return SavedContent();
+        return const SavedContent();
       }
     }
 
     return Scaffold(
         key: _scaffoldKey,
-        drawer: LeftBar(),
+        drawer: const LeftBar(),
         drawerScrimColor: primaryColor.withOpacity(0.35),
         endDrawer: RightBar(),
         body: ListView(
@@ -82,7 +81,7 @@ class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
                     tooltip: '...',
                     onPressed: () => _scaffoldKey.currentState.openDrawer(),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   IconButton(
                     padding: EdgeInsets.zero,
                     icon: Icon(Icons.notifications,
@@ -208,7 +207,7 @@ class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
                   indicatorPadding:
                       EdgeInsets.symmetric(horizontal: fullWidth * 0.1),
                   tabs: <Widget>[
-                    Tab(
+                    const Tab(
                       text: "My Schedule",
                     ),
                     Tab(
@@ -222,7 +221,7 @@ class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
                 child: TabBarView(
                   controller: _tabController,
                   children: [
-                    MySchedulePage(),
+                    const MySchedulePage(),
                     getArchiveView(selectedArchiveId)
                   ],
                 ),

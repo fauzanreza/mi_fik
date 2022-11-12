@@ -76,7 +76,7 @@ class _SetLocationButton extends State<SetLocationButton>
       //refresh UI
     });
 
-    LocationSettings locationSettings = LocationSettings(
+    LocationSettings locationSettings = const LocationSettings(
       accuracy: LocationAccuracy.high,
       distanceFilter: 100,
     );
@@ -192,7 +192,7 @@ class _SetLocationButton extends State<SetLocationButton>
                             child: const Text('Set Current Location'),
                           )),
                       Container(
-                        margin: EdgeInsets.only(top: 20),
+                        margin: const EdgeInsets.only(top: 20),
                         child: TextFormField(
                           cursorColor: Colors.white,
                           controller: locDetailCtrl,

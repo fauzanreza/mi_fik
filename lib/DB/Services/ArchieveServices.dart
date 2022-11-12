@@ -8,7 +8,7 @@ class ArchieveService {
 
   Future<List<ArchieveModel>> getAllArchieve() async {
     final response =
-        await client.get(Uri.parse("${baseUrl}/api/archieve/${passIdUser}"));
+        await client.get(Uri.parse("$baseUrl/api/archieve/$passIdUser"));
     if (response.statusCode == 200) {
       return ArchieveModelFromJson(response.body);
     } else {
@@ -18,7 +18,7 @@ class ArchieveService {
 
   Future<bool> addArchive(ArchieveModel data) async {
     final response = await client.post(
-      Uri.parse("${baseUrl}/api/archieve/create/${passIdUser}"),
+      Uri.parse("$baseUrl/api/archieve/create/$passIdUser"),
       headers: {"content-type": "application/json"},
       body: ArchieveModelToJson(data),
     );

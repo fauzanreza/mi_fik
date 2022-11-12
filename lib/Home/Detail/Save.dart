@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:mi_fik/DB/Model/Archieve.dart';
 import 'package:mi_fik/DB/Services/ArchieveServices.dart';
 import 'package:mi_fik/Others/checkbox.dart';
@@ -37,7 +36,7 @@ class _SaveButton extends State<SaveButton> {
 
   @override
   Widget build(BuildContext context) {
-    double fullWidth = MediaQuery.of(context).size.width;
+    //double fullWidth = MediaQuery.of(context).size.width;
 
     return SafeArea(
       maintainBottomViewPadding: false,
@@ -64,17 +63,17 @@ class _SaveButton extends State<SaveButton> {
   }
 
   Widget _buildListView(List<ArchieveModel> archieves) {
-    double fullHeight = MediaQuery.of(context).size.height;
+    //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
     //Get total content in an archieve
     getTotalArchieve(event, task) {
       if ((event != 0) && (task == 0)) {
-        return "${event} Events";
+        return "$event Events";
       } else if ((event == 0) && (task != 0)) {
-        return "${task} Task";
+        return "$task Task";
       } else {
-        return "${event} Events, ${task} Task";
+        return "$event Events, $task Task";
       }
     }
 
@@ -188,16 +187,16 @@ class _SaveButton extends State<SaveButton> {
                                                             fullWidth * 0.1),
                                                         margin: EdgeInsets.only(
                                                             bottom: marginMT),
-                                                        child: ClipRRect(
-                                                          child: Image.asset(
-                                                              'assets/icon/checklist.png'),
-                                                        ),
                                                         decoration:
                                                             BoxDecoration(
                                                           color: whitebg,
                                                           borderRadius:
                                                               BorderRadius
                                                                   .circular(10),
+                                                        ),
+                                                        child: ClipRRect(
+                                                          child: Image.asset(
+                                                              'assets/icon/checklist.png'),
                                                         ),
                                                       ),
                                                       Text("Post Saved",

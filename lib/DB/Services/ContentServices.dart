@@ -8,8 +8,7 @@ class ContentService {
   Client client = Client();
 
   Future<List<ContentModel>> getAllContent() async {
-    final response =
-        await client.get(Uri.parse("${baseUrl}/api/content?page=1"));
+    final response = await client.get(Uri.parse("$baseUrl/api/content?page=1"));
     if (response.statusCode == 200) {
       return ContentModelFromJsonWPaginate(response.body);
     } else {
@@ -19,7 +18,7 @@ class ContentService {
 
   Future<List<ContentModel>> getContent() async {
     final response =
-        await client.get(Uri.parse("${baseUrl}/api/content/${passIdContent}"));
+        await client.get(Uri.parse("$baseUrl/api/content/$passIdContent"));
     if (response.statusCode == 200) {
       return ContentModelFromJson(response.body);
     } else {
@@ -30,7 +29,7 @@ class ContentService {
   Future<List<ContentModel>> getAllSchedule() async {
     //Should join w/ task
     final response = await client.get(Uri.parse(
-        "${baseUrl}/api/schedule/${DateFormat("yyyy-MM-dd").format(slctSchedule)}"));
+        "$baseUrl/api/schedule/${DateFormat("yyyy-MM-dd").format(slctSchedule)}"));
     if (response.statusCode == 200) {
       return ContentModelFromJson(response.body);
     } else {
@@ -40,7 +39,7 @@ class ContentService {
 
   Future<bool> addContent(ContentModel data) async {
     final response = await client.post(
-      Uri.parse("${baseUrl}/api/content/create/${passIdUser}"),
+      Uri.parse("$baseUrl/api/content/create/$passIdUser"),
       headers: {"content-type": "application/json"},
       body: ContentModelToJson(data),
     );
@@ -53,7 +52,7 @@ class ContentService {
 
   Future<List<ContentModel>> getContentArchive() async {
     final response = await client
-        .get(Uri.parse("${baseUrl}/api/schedule/my/${selectedArchiveId}"));
+        .get(Uri.parse("$baseUrl/api/schedule/my/$selectedArchiveId"));
     if (response.statusCode == 200) {
       return ContentModelFromJson(response.body);
     } else {

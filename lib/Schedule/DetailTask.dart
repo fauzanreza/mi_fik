@@ -32,8 +32,8 @@ class _DetailTask extends State<DetailTask> {
   //Initial variable
   final taskTitleCtrl = TextEditingController();
   final taskDescCtrl = TextEditingController();
-  DateTime dateStartCtrl = null;
-  DateTime dateEndCtrl = null;
+  DateTime dateStartCtrl;
+  DateTime dateEndCtrl;
 
   @override
   void initState() {
@@ -51,7 +51,7 @@ class _DetailTask extends State<DetailTask> {
       if (date != null) {
         return DateFormat("dd-MM-yy  HH:mm").format(date).toString();
       } else {
-        return "Set Date ${type}";
+        return "Set Date $type";
       }
     }
 
@@ -59,12 +59,8 @@ class _DetailTask extends State<DetailTask> {
     taskTitleCtrl.text = widget.taskTitlePass;
     taskDescCtrl.text = widget.taskDescPass;
 
-    if (dateStartCtrl == null) {
-      dateStartCtrl = DateTime.parse(widget.taskDateStartPass);
-    }
-    if (dateEndCtrl == null) {
-      dateEndCtrl = DateTime.parse(widget.taskDateEndPass);
-    }
+    dateStartCtrl ??= DateTime.parse(widget.taskDateStartPass);
+    dateEndCtrl ??= DateTime.parse(widget.taskDateEndPass);
 
     return SizedBox(
         height:
@@ -146,33 +142,31 @@ class _DetailTask extends State<DetailTask> {
               runSpacing: -5,
               spacing: 5,
               children: [
-                Container(
-                  child: TextButton.icon(
-                    style: TextButton.styleFrom(
-                      textStyle: const TextStyle(fontSize: 16),
-                      foregroundColor: const Color(0xFFFB8C00),
-                    ), // <-- TextButton
-                    onPressed: () {
-                      final now = DateTime.now();
+                TextButton.icon(
+                  style: TextButton.styleFrom(
+                    textStyle: const TextStyle(fontSize: 16),
+                    foregroundColor: const Color(0xFFFB8C00),
+                  ), // <-- TextButton
+                  onPressed: () {
+                    final now = DateTime.now();
 
-                      DatePicker.showDateTimePicker(context,
-                          showTitleActions: true,
-                          currentTime: dateStartCtrl,
-                          minTime:
-                              DateTime(now.year, now.month, now.day), //Tomorrow
-                          maxTime: DateTime(now.year + 1, now.month, now.day),
-                          onConfirm: (date) {
-                        setState(() {
-                          dateStartCtrl = date;
-                        });
-                      }, locale: LocaleType.en);
-                    },
-                    icon: const Icon(
-                      Icons.calendar_month,
-                      size: 24.0,
-                    ),
-                    label: Text(getDateText(dateStartCtrl, "Start")),
+                    DatePicker.showDateTimePicker(context,
+                        showTitleActions: true,
+                        currentTime: dateStartCtrl,
+                        minTime:
+                            DateTime(now.year, now.month, now.day), //Tomorrow
+                        maxTime: DateTime(now.year + 1, now.month, now.day),
+                        onConfirm: (date) {
+                      setState(() {
+                        dateStartCtrl = date;
+                      });
+                    }, locale: LocaleType.en);
+                  },
+                  icon: const Icon(
+                    Icons.calendar_month,
+                    size: 24.0,
                   ),
+                  label: Text(getDateText(dateStartCtrl, "Start")),
                 ),
                 TextButton.icon(
                   style: TextButton.styleFrom(

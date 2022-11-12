@@ -5,7 +5,6 @@ import 'package:mi_fik/DB/Services/ContentServices.dart';
 import 'package:mi_fik/Home/Detail/index.dart';
 import 'package:mi_fik/Others/skeleton/content_1.dart';
 import 'package:mi_fik/main.dart';
-import 'package:skeletons/skeletons.dart';
 
 class SavedContent extends StatefulWidget {
   const SavedContent({Key key}) : super(key: key);
@@ -25,8 +24,8 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    double fullHeight = MediaQuery.of(context).size.height;
-    double fullWidth = MediaQuery.of(context).size.width;
+    //double fullHeight = MediaQuery.of(context).size.height;
+    //double fullWidth = MediaQuery.of(context).size.width;
 
     return SafeArea(
       maintainBottomViewPadding: false,
@@ -43,7 +42,7 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
             List<ContentModel> contents = snapshot.data;
             return _buildListView(contents);
           } else {
-            return ContentSkeleton1();
+            return const ContentSkeleton1();
           }
         },
       ),
@@ -72,7 +71,7 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
           int diff = int.parse((justNowMinute).toString()) -
               int.parse((contentMinute).toString());
           if (diff > 10) {
-            result = "${diff} min ago";
+            result = "$diff min ago";
           } else {
             result = "Just Now";
           }
@@ -93,149 +92,179 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
     }
 
     return Column(
-        children: contents.map((content) {
-      return SizedBox(
-          width: fullWidth,
-          child: IntrinsicHeight(
-            child: Stack(
-              children: [
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: fullWidth * 0.03),
-                  width: 2.5,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TextButton.icon(
+          onPressed: () {
+            setState(() {
+              selectedArchiveId = null;
+              selectedArchiveName = null;
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const NavBar()),
+              );
+            });
+          },
+          label: Text('Back to Archive',
+              style: TextStyle(
                   color: primaryColor,
-                ),
+                  fontSize: textMD,
+                  fontWeight: FontWeight.w500)),
+          icon: Icon(Icons.arrow_back, color: primaryColor),
+          style: OutlinedButton.styleFrom(
+              // side: BorderSide(color: primaryColor),
+              ),
+        ),
+        Column(
+            children: contents.map((content) {
+          return SizedBox(
+              width: fullWidth,
+              child: IntrinsicHeight(
+                child: Stack(
+                  children: [
+                    Container(
+                      margin:
+                          EdgeInsets.symmetric(horizontal: fullWidth * 0.03),
+                      width: 2.5,
+                      color: primaryColor,
+                    ),
 
-                //    CONTENT DOT????
+                    //    CONTENT DOT????
 
-                // Container(
-                //   width: 20,
-                //   margin: EdgeInsets.symmetric(
-                //       horizontal: fullWidth * 0.01),
-                //   transform: Matrix4.translationValues(
-                //       0.0, -15.0, 0.0),
-                //   decoration: BoxDecoration(
-                //       color: mainbg,
-                //       shape: BoxShape.circle,
-                //       border: Border.all(
-                //         color: primaryColor,
-                //         width: 2.5,
-                //       )),
-                // ),
+                    // Container(
+                    //   width: 20,
+                    //   margin: EdgeInsets.symmetric(
+                    //       horizontal: fullWidth * 0.01),
+                    //   transform: Matrix4.translationValues(
+                    //       0.0, -15.0, 0.0),
+                    //   decoration: BoxDecoration(
+                    //       color: mainbg,
+                    //       shape: BoxShape.circle,
+                    //       border: Border.all(
+                    //         color: primaryColor,
+                    //         width: 2.5,
+                    //       )),
+                    // ),
 
-                //Open content w/ full container
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              DetailPage(passIdContent: int.parse(content.id))),
-                    );
+                    //Open content w/ full container
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DetailPage(
+                                  passIdContent: int.parse(content.id))),
+                        );
 
-                    passIdContent = int.parse(content.id);
-                  },
-                  child: Container(
-                      width: fullWidth * 0.82,
-                      margin: EdgeInsets.only(bottom: marginMD),
-                      transform: Matrix4.translationValues(40.0, 5.0, 0.0),
-                      decoration: BoxDecoration(
-                        color: whitebg,
-                        borderRadius: BorderRadius.all(roundedMd),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color.fromARGB(255, 128, 128, 128)
-                                .withOpacity(0.3),
-                            blurRadius: 10.0,
-                            spreadRadius: 0.0,
-                            offset: const Offset(
-                              5.0,
-                              5.0,
-                            ),
-                          )
-                        ],
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Container(
-                            height: 108.0,
-                            width: fullWidth,
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                fit: BoxFit.fitWidth,
-                                image: const AssetImage(
-                                    'assets/content/content-2.jpg'),
-                                colorFilter: ColorFilter.mode(
-                                    Colors.black.withOpacity(0.5),
-                                    BlendMode.darken),
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  getUploadDate(
-                                      DateTime.parse(content.createdAt))
-                                ]),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            margin: const EdgeInsets.symmetric(vertical: 10),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(content.contentTitle,
-                                      style: TextStyle(
-                                          color: blackbg,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: textMD)),
-                                  Text(content.contentDesc,
-                                      maxLines: 4,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                          color: blackbg, fontSize: textSM))
-                                ]),
-                          ),
-
-                          //Open content w/ button.
-                          Container(
-                              transform:
-                                  Matrix4.translationValues(0.0, 5.0, 0.0),
-                              padding: EdgeInsets.zero,
-                              width: fullWidth,
-                              height: 35,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => DetailPage(
-                                            passIdContent:
-                                                int.parse(content.id))),
-                                  );
-
-                                  passIdContent = int.parse(content.id);
-                                },
-                                style: ButtonStyle(
-                                  shape: MaterialStateProperty.all<
-                                          RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  )),
-                                  backgroundColor:
-                                      MaterialStatePropertyAll<Color>(
-                                          primaryColor),
+                        passIdContent = int.parse(content.id);
+                      },
+                      child: Container(
+                          width: fullWidth * 0.82,
+                          margin: EdgeInsets.only(bottom: marginMD),
+                          transform: Matrix4.translationValues(40.0, 5.0, 0.0),
+                          decoration: BoxDecoration(
+                            color: whitebg,
+                            borderRadius: BorderRadius.all(roundedMd),
+                            boxShadow: [
+                              BoxShadow(
+                                color: const Color.fromARGB(255, 128, 128, 128)
+                                    .withOpacity(0.3),
+                                blurRadius: 10.0,
+                                spreadRadius: 0.0,
+                                offset: const Offset(
+                                  5.0,
+                                  5.0,
                                 ),
-                                child: const Text('Detail'),
-                              ))
-                        ],
-                      )),
-                )
-              ],
-            ),
-          ));
-    }).toList());
+                              )
+                            ],
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Container(
+                                height: 108.0,
+                                width: fullWidth,
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    fit: BoxFit.fitWidth,
+                                    image: const AssetImage(
+                                        'assets/content/content-2.jpg'),
+                                    colorFilter: ColorFilter.mode(
+                                        Colors.black.withOpacity(0.5),
+                                        BlendMode.darken),
+                                  ),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      getUploadDate(
+                                          DateTime.parse(content.createdAt))
+                                    ]),
+                              ),
+                              Container(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                margin:
+                                    const EdgeInsets.symmetric(vertical: 10),
+                                child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(content.contentTitle,
+                                          style: TextStyle(
+                                              color: blackbg,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: textMD)),
+                                      Text(content.contentDesc,
+                                          maxLines: 4,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              color: blackbg, fontSize: textSM))
+                                    ]),
+                              ),
+
+                              //Open content w/ button.
+                              Container(
+                                  transform:
+                                      Matrix4.translationValues(0.0, 5.0, 0.0),
+                                  padding: EdgeInsets.zero,
+                                  width: fullWidth,
+                                  height: 35,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => DetailPage(
+                                                passIdContent:
+                                                    int.parse(content.id))),
+                                      );
+
+                                      passIdContent = int.parse(content.id);
+                                    },
+                                    style: ButtonStyle(
+                                      shape: MaterialStateProperty.all<
+                                              RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      )),
+                                      backgroundColor:
+                                          MaterialStatePropertyAll<Color>(
+                                              primaryColor),
+                                    ),
+                                    child: const Text('Detail'),
+                                  ))
+                            ],
+                          )),
+                    )
+                  ],
+                ),
+              ));
+        }).toList())
+      ],
+    );
   }
 }

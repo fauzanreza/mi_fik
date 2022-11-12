@@ -5,7 +5,6 @@ import 'package:mi_fik/DB/Services/ContentServices.dart';
 import 'package:mi_fik/Home/Detail/index.dart';
 import 'package:mi_fik/Others/skeleton/content_1.dart';
 import 'package:mi_fik/main.dart';
-import 'package:skeletons/skeletons.dart';
 
 class GetContent extends StatefulWidget {
   const GetContent({Key key}) : super(key: key);
@@ -25,8 +24,8 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    double fullHeight = MediaQuery.of(context).size.height;
-    double fullWidth = MediaQuery.of(context).size.width;
+    //double fullHeight = MediaQuery.of(context).size.height;
+    //double fullWidth = MediaQuery.of(context).size.width;
 
     return SafeArea(
       maintainBottomViewPadding: false,
@@ -43,7 +42,7 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
             List<ContentModel> contents = snapshot.data;
             return _buildListView(contents);
           } else {
-            return ContentSkeleton1();
+            return const ContentSkeleton1();
           }
         },
       ),
@@ -72,7 +71,7 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
           int diff = int.parse((justNowMinute).toString()) -
               int.parse((contentMinute).toString());
           if (diff > 10) {
-            result = "${diff} min ago";
+            result = "$diff min ago";
           } else {
             result = "Just Now";
           }

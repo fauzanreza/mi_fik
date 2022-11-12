@@ -50,17 +50,17 @@ class _MySchedulePage extends State<MySchedulePage> {
   }
 
   Widget _buildListView(List<ContentModel> contents) {
-    double fullHeight = MediaQuery.of(context).size.height;
+    //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
     //Get total content in an archieve.
     getTotalArchieve(event, task) {
       if ((event != 0) && (task == 0)) {
-        return "${event} Events";
+        return "$event Events";
       } else if ((event == 0) && (task != 0)) {
-        return "${task} Task";
+        return "$task Task";
       } else {
-        return "${event} Events, ${task} Task";
+        return "$event Events, $task Task";
       }
     }
 
@@ -98,7 +98,7 @@ class _MySchedulePage extends State<MySchedulePage> {
                     color: textColor, size: 18),
               ),
               TextSpan(
-                  text: " ${location}",
+                  text: " $location",
                   style:
                       TextStyle(fontWeight: FontWeight.w500, color: textColor)),
             ],
