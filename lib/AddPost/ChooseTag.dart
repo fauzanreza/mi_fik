@@ -44,7 +44,6 @@ class _ChooseTag extends State<ChooseTag> {
     );
   }
 
-  @override
   Widget _buildListView(List<TagModel> tags) {
     int i = 0;
     int max = 10; //Maximum tag

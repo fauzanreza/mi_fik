@@ -25,8 +25,8 @@ class _addPost extends State<addPost> {
   //Initial variable
   final contentTitleCtrl = TextEditingController();
   final contentDescCtrl = TextEditingController();
-  DateTime dateStartCtrl = null;
-  DateTime dateEndCtrl = null;
+  DateTime dateStartCtrl;
+  DateTime dateEndCtrl;
 
   @override
   void initState() {
@@ -44,43 +44,121 @@ class _addPost extends State<addPost> {
       if (date != null) {
         return DateFormat("dd-MM-yy  HH:mm").format(date).toString();
       } else {
-        return "Set Date ${type}";
+        return "Set Date $type";
       }
     }
 
     return Scaffold(
-      body: Stack(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          GestureDetector(
-            onTap: () {},
-            child: Container(
-              height: fullHeight * 0.275,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/content/content-2.jpg"),
-                  fit: BoxFit.cover,
+          Stack(children: [
+            GestureDetector(
+              onTap: () {},
+              child: Container(
+                height: fullHeight * 0.25,
+                transform: Matrix4.translationValues(0.0, 15, 0.0),
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("assets/content/content-2.jpg"),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
-          ),
-          Container(
-            transform: Matrix4.translationValues(0.0, fullHeight * 0.03, 0.0),
-            child: IconButton(
-              icon: Icon(Icons.arrow_back, size: iconLG),
-              color: Colors.white,
-              onPressed: () {
-                //Empty all input
-                selectedTag.clear();
-                locDetailCtrl.clear();
-                locCoordinateCtrl = null;
-                Navigator.pop(context);
-              },
+            Container(
+              transform:
+                  Matrix4.translationValues(0.0, fullHeight * 0.045, 0.0),
+              child: IconButton(
+                icon: Icon(Icons.arrow_back, size: iconLG),
+                color: Colors.white,
+                onPressed: () {
+                  //Empty all input
+                  if (selectedTag.isNotEmpty ||
+                      locDetailCtrl.text.isNotEmpty ||
+                      locCoordinateCtrl != null ||
+                      contentTitleCtrl.text.isNotEmpty ||
+                      contentDescCtrl.text.isNotEmpty ||
+                      dateStartCtrl != null ||
+                      dateEndCtrl != null) {
+                    return showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return StatefulBuilder(builder: (context, setState) {
+                            return AlertDialog(
+                                insetPadding: EdgeInsets.all(paddingSM),
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: paddingMD,
+                                    vertical: paddingMD * 1.5),
+                                content: SizedBox(
+                                    height: 120,
+                                    width: fullWidth,
+                                    child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                              "Are you sure want to leave? All changes will not be saved",
+                                              style: TextStyle(
+                                                  color: blackbg,
+                                                  fontSize: textMD,
+                                                  fontWeight: FontWeight.w500)),
+                                          const SizedBox(height: 15),
+                                          Row(
+                                            children: [
+                                              TextButton(
+                                                style: TextButton.styleFrom(
+                                                    backgroundColor: Colors.red
+                                                        .withOpacity(0.8),
+                                                    padding: EdgeInsets.all(
+                                                        paddingMD * 0.8)),
+                                                onPressed: () {
+                                                  selectedTag.clear();
+                                                  locDetailCtrl.clear();
+                                                  locCoordinateCtrl = null;
+                                                  Navigator.pop(context);
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text(
+                                                  "Yes, Discard Change",
+                                                  style: TextStyle(
+                                                    color: whitebg,
+                                                  ),
+                                                ),
+                                              ),
+                                              const Spacer(),
+                                              TextButton(
+                                                style: TextButton.styleFrom(
+                                                    backgroundColor:
+                                                        primaryColor,
+                                                    padding: EdgeInsets.all(
+                                                        paddingMD * 0.8)),
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text(
+                                                  "Cancel",
+                                                  style: TextStyle(
+                                                    color: whitebg,
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          )
+                                        ])));
+                          });
+                        });
+                  } else {
+                    Navigator.pop(context);
+                  }
+                },
+              ),
             ),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: fullHeight * 0.25),
-            height: fullHeight * 0.7,
-            width: fullWidth,
+          ]),
+          Expanded(
+              child: Container(
             padding: EdgeInsets.only(top: paddingMD),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(roundedLG2),
@@ -258,9 +336,8 @@ class _addPost extends State<addPost> {
                     ])
                   ])),
             ]),
-          ),
-          Container(
-              transform: Matrix4.translationValues(0.0, fullHeight * 0.94, 0.0),
+          )),
+          SizedBox(
               width: fullWidth,
               height: btnHeightMD,
               child: ElevatedButton(

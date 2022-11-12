@@ -26,8 +26,8 @@ class _AddTaskwArchive extends State<AddTaskwArchive> {
   final archiveNameCtrl = TextEditingController();
   final taskTitleCtrl = TextEditingController();
   final taskDescCtrl = TextEditingController();
-  DateTime dateStartCtrl = null;
-  DateTime dateEndCtrl = null;
+  DateTime dateStartCtrl;
+  DateTime dateEndCtrl;
 
   @override
   void initState() {
@@ -38,7 +38,7 @@ class _AddTaskwArchive extends State<AddTaskwArchive> {
 
   @override
   Widget build(BuildContext context) {
-    double fullHeight = MediaQuery.of(context).size.height;
+    //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
     bool _isLoading = false;
 
@@ -46,7 +46,7 @@ class _AddTaskwArchive extends State<AddTaskwArchive> {
       if (date != null) {
         return DateFormat("dd-MM-yy  HH:mm").format(date).toString();
       } else {
-        return "Set Date ${type}";
+        return "Set Date $type";
       }
     }
 
@@ -152,34 +152,32 @@ class _AddTaskwArchive extends State<AddTaskwArchive> {
                             runSpacing: -5,
                             spacing: 5,
                             children: [
-                              Container(
-                                child: TextButton.icon(
-                                  style: TextButton.styleFrom(
-                                    textStyle: const TextStyle(fontSize: 16),
-                                    foregroundColor: const Color(0xFFFB8C00),
-                                  ), // <-- TextButton
-                                  onPressed: () {
-                                    final now = DateTime.now();
+                              TextButton.icon(
+                                style: TextButton.styleFrom(
+                                  textStyle: const TextStyle(fontSize: 16),
+                                  foregroundColor: const Color(0xFFFB8C00),
+                                ), // <-- TextButton
+                                onPressed: () {
+                                  final now = DateTime.now();
 
-                                    DatePicker.showDateTimePicker(context,
-                                        showTitleActions: true,
-                                        minTime: DateTime(now.year, now.month,
-                                            now.day), //Tomorrow
-                                        maxTime: DateTime(
-                                            now.year + 1, now.month, now.day),
-                                        onConfirm: (date) {
-                                      setState(() {
-                                        dateStartCtrl = date;
-                                      });
-                                    }, currentTime: now, locale: LocaleType.en);
-                                  },
-                                  icon: const Icon(
-                                    Icons.calendar_month,
-                                    size: 24.0,
-                                  ),
-                                  label:
-                                      Text(getDateText(dateStartCtrl, "Start")),
+                                  DatePicker.showDateTimePicker(context,
+                                      showTitleActions: true,
+                                      minTime: DateTime(now.year, now.month,
+                                          now.day), //Tomorrow
+                                      maxTime: DateTime(
+                                          now.year + 1, now.month, now.day),
+                                      onConfirm: (date) {
+                                    setState(() {
+                                      dateStartCtrl = date;
+                                    });
+                                  }, currentTime: now, locale: LocaleType.en);
+                                },
+                                icon: const Icon(
+                                  Icons.calendar_month,
+                                  size: 24.0,
                                 ),
+                                label:
+                                    Text(getDateText(dateStartCtrl, "Start")),
                               ),
                               TextButton.icon(
                                 style: TextButton.styleFrom(
@@ -359,7 +357,7 @@ class _AddTaskwArchive extends State<AddTaskwArchive> {
                                 filled: true),
                           ),
                         ),
-                        Container(
+                        SizedBox(
                             // transform: Matrix4.translationValues(
                             //     0.0, fullHeight * 0.94, 0.0),
                             width: fullWidth,

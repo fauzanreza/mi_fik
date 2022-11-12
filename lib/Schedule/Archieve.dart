@@ -37,7 +37,7 @@ class _ArchievePage extends State<ArchievePage> {
             List<ArchieveModel> archieves = snapshot.data;
             return _buildListView(archieves);
           } else {
-            return ArchiveSkeleton1();
+            return const ArchiveSkeleton1();
           }
         },
       ),
@@ -45,17 +45,17 @@ class _ArchievePage extends State<ArchievePage> {
   }
 
   Widget _buildListView(List<ArchieveModel> archieves) {
-    double fullHeight = MediaQuery.of(context).size.height;
+    //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
     //Get total content in an archieve
     getTotalArchieve(event, task) {
       if ((event != 0) && (task == 0)) {
-        return "${event} Events";
+        return "$event Events";
       } else if ((event == 0) && (task != 0)) {
-        return "${task} Task";
+        return "$task Task";
       } else {
-        return "${event} Events, ${task} Task";
+        return "$event Events, $task Task";
       }
     }
 
@@ -73,7 +73,16 @@ class _ArchievePage extends State<ArchievePage> {
 
             //Open Archieve w/ full container
             GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  setState(() {
+                    selectedArchiveName = archieve.archieveName;
+                    selectedArchiveId = archieve.id.toString();
+                  });
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const NavBar()),
+                  );
+                },
                 child: Container(
                     height: 60,
                     width: fullWidth * 0.7,

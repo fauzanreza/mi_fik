@@ -17,7 +17,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State<HomePage> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class _HomePage extends State<HomePage> {
 
     return Scaffold(
       key: _scaffoldKey,
-      drawer: LeftBar(),
+      drawer: const LeftBar(),
       drawerScrimColor: primaryColor.withOpacity(0.35),
       endDrawer: RightBar(),
       body: CustomPaint(
@@ -59,7 +59,7 @@ class _HomePage extends State<HomePage> {
                       tooltip: '...',
                       onPressed: () => _scaffoldKey.currentState.openDrawer(),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     IconButton(
                       padding: EdgeInsets.zero,
                       icon: Icon(Icons.notifications, size: 32, color: whitebg),
@@ -90,7 +90,7 @@ class _HomePage extends State<HomePage> {
                                     .format(DateTime.now()),
                                 style: TextStyle(
                                     color: whitebg, fontSize: textMD)),
-                            Spacer(),
+                            const Spacer(),
                             RichText(
                               text: TextSpan(
                                 children: [

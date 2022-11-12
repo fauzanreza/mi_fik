@@ -8,9 +8,9 @@ class ContentModel {
   String contentTitle;
   String contentSubtitle;
   String contentDesc;
-  var contentTag;
-  var contentAttach;
-  var contentLoc;
+  var contentTag = "";
+  var contentAttach = "";
+  var contentLoc = "";
 
   String createdAt;
   String updatedAt;
