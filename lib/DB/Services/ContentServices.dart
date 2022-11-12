@@ -50,4 +50,14 @@ class ContentService {
       return false;
     }
   }
+
+  Future<List<ContentModel>> getContentArchive() async {
+    final response = await client
+        .get(Uri.parse("${baseUrl}/api/schedule/my/${selectedArchiveId}"));
+    if (response.statusCode == 200) {
+      return ContentModelFromJson(response.body);
+    } else {
+      return null;
+    }
+  }
 }

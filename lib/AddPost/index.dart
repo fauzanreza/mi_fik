@@ -70,10 +70,84 @@ class _addPost extends State<addPost> {
               color: Colors.white,
               onPressed: () {
                 //Empty all input
-                selectedTag.clear();
-                locDetailCtrl.clear();
-                locCoordinateCtrl = null;
-                Navigator.pop(context);
+                if (selectedTag.length != 0 ||
+                    locDetailCtrl.text.isNotEmpty ||
+                    locCoordinateCtrl != null ||
+                    contentTitleCtrl.text.isNotEmpty ||
+                    contentDescCtrl.text.isNotEmpty ||
+                    dateStartCtrl != null ||
+                    dateEndCtrl != null) {
+                  return showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return StatefulBuilder(builder: (context, setState) {
+                          return AlertDialog(
+                              insetPadding: EdgeInsets.all(paddingSM),
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: paddingMD,
+                                  vertical: paddingMD * 1.5),
+                              content: SizedBox(
+                                  height: 120,
+                                  width: fullWidth,
+                                  child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                            "Are you sure want to leave? All changes will not be saved",
+                                            style: TextStyle(
+                                                color: blackbg,
+                                                fontSize: textMD,
+                                                fontWeight: FontWeight.w500)),
+                                        SizedBox(height: 15),
+                                        Row(
+                                          children: [
+                                            TextButton(
+                                              style: TextButton.styleFrom(
+                                                  backgroundColor: Colors.red
+                                                      .withOpacity(0.8),
+                                                  padding: EdgeInsets.all(
+                                                      paddingMD * 0.8)),
+                                              onPressed: () {
+                                                selectedTag.clear();
+                                                locDetailCtrl.clear();
+                                                locCoordinateCtrl = null;
+                                                Navigator.pop(context);
+                                                Navigator.pop(context);
+                                              },
+                                              child: Text(
+                                                "Yes, Discard Change",
+                                                style: TextStyle(
+                                                  color: whitebg,
+                                                ),
+                                              ),
+                                            ),
+                                            Spacer(),
+                                            TextButton(
+                                              style: TextButton.styleFrom(
+                                                  backgroundColor: primaryColor,
+                                                  padding: EdgeInsets.all(
+                                                      paddingMD * 0.8)),
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: Text(
+                                                "Cancel",
+                                                style: TextStyle(
+                                                  color: whitebg,
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        )
+                                      ])));
+                        });
+                      });
+                } else {
+                  Navigator.pop(context);
+                }
               },
             ),
           ),

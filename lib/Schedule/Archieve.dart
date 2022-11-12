@@ -73,7 +73,16 @@ class _ArchievePage extends State<ArchievePage> {
 
             //Open Archieve w/ full container
             GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  setState(() {
+                    selectedArchiveName = archieve.archieveName;
+                    selectedArchiveId = archieve.id;
+                  });
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => NavBar()),
+                  );
+                },
                 child: Container(
                     height: 60,
                     width: fullWidth * 0.7,

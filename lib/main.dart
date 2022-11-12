@@ -51,6 +51,8 @@ int passIdContent;
 final locDetailCtrl = TextEditingController();
 var locCoordinateCtrl = null;
 final selectedTag = [];
+var selectedArchiveName;
+var selectedArchiveId;
 
 class MyApp extends StatelessWidget {
   const MyApp({key}) : super(key: key);

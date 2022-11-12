@@ -6,6 +6,7 @@ import 'package:mi_fik/Others/rightbar.dart';
 import 'package:mi_fik/Schedule/Add.dart';
 import 'package:mi_fik/Schedule/Archieve.dart';
 import 'package:mi_fik/Schedule/MySchedule.dart';
+import 'package:mi_fik/Schedule/SavedContent.dart';
 import 'package:mi_fik/main.dart';
 
 class SchedulePage extends StatefulWidget {
@@ -46,6 +47,22 @@ class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
               color: primaryColor,
               fontWeight: FontWeight.bold,
               fontSize: textXL));
+    }
+
+    getOpenedArchive(slctd) {
+      if (slctd == null) {
+        return "Archive";
+      } else {
+        return slctd.toString();
+      }
+    }
+
+    getArchiveView(slctd) {
+      if (slctd == null) {
+        return ArchievePage();
+      } else {
+        return SavedContent();
+      }
     }
 
     return Scaffold(
@@ -190,12 +207,12 @@ class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
                       TextStyle(fontSize: textMD, fontWeight: FontWeight.w500),
                   indicatorPadding:
                       EdgeInsets.symmetric(horizontal: fullWidth * 0.1),
-                  tabs: const <Widget>[
+                  tabs: <Widget>[
                     Tab(
                       text: "My Schedule",
                     ),
                     Tab(
-                      text: "Archieve",
+                      text: getOpenedArchive(selectedArchiveName),
                     ),
                   ],
                 ),
@@ -204,7 +221,10 @@ class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
                 height: fullHeight * 0.7,
                 child: TabBarView(
                   controller: _tabController,
-                  children: const [MySchedulePage(), ArchievePage()],
+                  children: [
+                    MySchedulePage(),
+                    getArchiveView(selectedArchiveId)
+                  ],
                 ),
               )
             ]),
