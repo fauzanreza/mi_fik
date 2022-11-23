@@ -34,7 +34,11 @@ class ArchieveModel {
   }
 
   Map<String, dynamic> toJson() {
-    return {"archieve_name": archieveName};
+    return {
+      "archieve_name": archieveName,
+      "id_user": idUser,
+      "user_id": idUser
+    }; //Check this again. for user id column in db!
   }
 }
 

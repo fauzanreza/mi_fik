@@ -13,10 +13,11 @@ void main() {
 
 //Style guide.
 var primaryColor = const Color(0xFFFB8C00);
-var mainbg = const Color(0xFFD9D9D9);
+var dangerColor = const Color(0xFFFB5E5B);
+var mainbg = const Color.fromARGB(255, 232, 232, 232);
 var whitebg = const Color(0xFFFFFFFF);
 var blackbg = const Color(0xFF414141);
-var greybg = Color.fromARGB(255, 118, 118, 118);
+var greybg = const Color.fromARGB(255, 118, 118, 118);
 
 var roundedLG = const Radius.circular(18); //For navbar, ...
 var roundedMd = const Radius.circular(10); //For container, ...
@@ -53,6 +54,7 @@ var locCoordinateCtrl = null;
 final selectedTag = [];
 var selectedArchiveName;
 var selectedArchiveId;
+int selectedIndex = 0;
 
 class MyApp extends StatelessWidget {
   const MyApp({key}) : super(key: key);
@@ -80,25 +82,23 @@ class NavBar extends StatefulWidget {
 }
 
 class _NavBarState extends State<NavBar> {
-  int _selectedIndex = 0;
-
   final List<Widget> _widgetOptions = <Widget>[
     const SchedulePage(),
     const HomePage(),
-    CalendarPage(),
+    const CalendarPage(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: _widgetOptions.elementAt(_selectedIndex),
+        body: _widgetOptions.elementAt(selectedIndex),
         bottomNavigationBar: ClipRRect(
           borderRadius: BorderRadius.only(
             topRight: roundedLG,
             topLeft: roundedLG,
           ),
           child: BottomNavigationBar(
-            currentIndex: _selectedIndex,
+            currentIndex: selectedIndex,
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(Icons.schedule), //Change if there's an asset.
@@ -119,7 +119,7 @@ class _NavBarState extends State<NavBar> {
             unselectedItemColor: primaryColor,
             onTap: (index) {
               setState(() {
-                _selectedIndex = index;
+                selectedIndex = index;
               });
             },
           ),

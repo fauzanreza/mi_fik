@@ -44,7 +44,7 @@ class _HomePage extends State<HomePage> {
       key: _scaffoldKey,
       drawer: const LeftBar(),
       drawerScrimColor: primaryColor.withOpacity(0.35),
-      endDrawer: RightBar(),
+      endDrawer: const RightBar(),
       body: CustomPaint(
           painter: CirclePainter(),
           child: ListView(
