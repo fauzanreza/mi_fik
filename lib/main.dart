@@ -53,6 +53,7 @@ var locCoordinateCtrl = null;
 final selectedTag = [];
 var selectedArchiveName;
 var selectedArchiveId;
+int selectedIndex = 0;
 
 class MyApp extends StatelessWidget {
   const MyApp({key}) : super(key: key);
@@ -80,8 +81,6 @@ class NavBar extends StatefulWidget {
 }
 
 class _NavBarState extends State<NavBar> {
-  int _selectedIndex = 0;
-
   final List<Widget> _widgetOptions = <Widget>[
     const SchedulePage(),
     const HomePage(),
@@ -91,14 +90,14 @@ class _NavBarState extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: _widgetOptions.elementAt(_selectedIndex),
+        body: _widgetOptions.elementAt(selectedIndex),
         bottomNavigationBar: ClipRRect(
           borderRadius: BorderRadius.only(
             topRight: roundedLG,
             topLeft: roundedLG,
           ),
           child: BottomNavigationBar(
-            currentIndex: _selectedIndex,
+            currentIndex: selectedIndex,
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(Icons.schedule), //Change if there's an asset.
@@ -119,7 +118,7 @@ class _NavBarState extends State<NavBar> {
             unselectedItemColor: primaryColor,
             onTap: (index) {
               setState(() {
-                _selectedIndex = index;
+                selectedIndex = index;
               });
             },
           ),

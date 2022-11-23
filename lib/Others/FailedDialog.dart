@@ -20,7 +20,7 @@ class _FailedDialog extends State<FailedDialog> {
       title: const Text('Error'),
       content: SizedBox(
         width: fullWidth,
-        height: 180,
+        height: 210,
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,

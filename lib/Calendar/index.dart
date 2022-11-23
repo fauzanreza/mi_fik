@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mi_fik/Calendar/DayEvent.dart';
 import 'package:mi_fik/Others/leftbar.dart';
 import 'package:mi_fik/Others/rightbar.dart';
 import 'package:mi_fik/main.dart';
@@ -17,8 +18,8 @@ class _CalendarPageState extends State<CalendarPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   CalendarFormat format = CalendarFormat.month;
-  DateTime selectedDay = DateTime.now();
-  DateTime focusedDay = DateTime.now();
+  DateTime selectedDay = slctSchedule;
+  DateTime focusedDay = slctSchedule;
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +83,15 @@ class _CalendarPageState extends State<CalendarPage> {
                         () {
                           selectedDay = selectDay;
                           focusedDay = focusDay;
+                          slctSchedule = selectDay;
+                          selectedIndex = 2;
+
+                          //For now. need to be fixed soon!!!
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const NavBar()),
+                          );
                         },
                       );
                       print(selectedDay);
@@ -166,384 +176,23 @@ class _CalendarPageState extends State<CalendarPage> {
                       ),
                     ],
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(left: 15, top: 10),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '06.00',
-                          style: GoogleFonts.poppins(
-                            color: Colors.grey,
-                            fontSize: textSM,
-                            //fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(left: 15),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.only(top: 7),
-                                color: primaryColor,
-                                height: 2.0,
-                                width: fullWidth * 0.78,
-                              ),
-                              SizedBox(height: fullHeight * 0.02),
-                              Stack(
-                                clipBehavior: Clip.none,
-                                children: [
-                                  Container(
-                                    width: fullWidth * 0.68,
-                                    height: fullHeight * 0.1,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: primaryColor,
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Container(
-                                              margin: const EdgeInsets.all(10),
-                                              child: Text(
-                                                'UAS - STUDIO 4',
-                                                style: GoogleFonts.poppins(
-                                                  color: Colors.white,
-                                                  fontSize: textSM,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              margin: const EdgeInsets.all(10),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  const Icon(
-                                                    Icons.location_on_outlined,
-                                                    color: Colors.white,
-                                                    size: 18,
-                                                  ),
-                                                  Text(
-                                                    'Lt.4 FIK',
-                                                    style: GoogleFonts.poppins(
-                                                      color: Colors.white,
-                                                      fontSize: 12,
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                      width: fullWidth * 0.02),
-                                                  Text(
-                                                    '10.00 AM',
-                                                    style: GoogleFonts.poppins(
-                                                      color: Colors.white,
-                                                      fontSize: 12,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Container(
-                                              margin: const EdgeInsets.all(10),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Container(
-                                                    width: 160,
-                                                    height: 12,
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      color: Colors.white,
-                                                    ),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceEvenly,
-                                                      children: [
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Container(
-                                                              width: 8,
-                                                              height: 8,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10),
-                                                                color:
-                                                                    Colors.blue,
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                                width: 3),
-                                                            Text(
-                                                              'DE-42-E',
-                                                              style: GoogleFonts
-                                                                  .poppins(
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontSize:
-                                                                          8),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Container(
-                                                              width: 8,
-                                                              height: 8,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10),
-                                                                color:
-                                                                    primaryColor,
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                                width: 3),
-                                                            Text(
-                                                              'DE 2018',
-                                                              style: GoogleFonts
-                                                                  .poppins(
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontSize:
-                                                                          8),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Container(
-                                                              width: 8,
-                                                              height: 8,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10),
-                                                                color: Colors
-                                                                    .yellow,
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                                width: 3),
-                                                            Text(
-                                                              'Studio 4',
-                                                              style: GoogleFonts
-                                                                  .poppins(
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontSize:
-                                                                          8),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            const Opacity(
-                                              opacity: 0.50,
-                                              child: Icon(
-                                                Icons.event_note_outlined,
-                                                color: Colors.white,
-                                                size: 38,
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Positioned(
-                                    bottom: -10,
-                                    right: -10,
-                                    child: Container(
-                                      width: 25,
-                                      height: 25,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        color: Colors.grey.shade200,
-                                      ),
-                                      child: Icon(Icons.check,
-                                          color: primaryColor),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Stack(
-                                clipBehavior: Clip.none,
-                                children: [
-                                  Container(
-                                    width: fullWidth * 0.68,
-                                    height: fullHeight * 0.1,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.grey.shade200,
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Container(
-                                              margin: const EdgeInsets.all(10),
-                                              child: Text(
-                                                '-',
-                                                style: GoogleFonts.poppins(
-                                                  color: primaryColor,
-                                                  fontSize: textSM,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              margin: const EdgeInsets.all(10),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  const Icon(
-                                                    Icons.location_on_outlined,
-                                                    color: Colors.white,
-                                                    size: 18,
-                                                  ),
-                                                  Text(
-                                                    'Kantin FKB',
-                                                    style: GoogleFonts.poppins(
-                                                      color: primaryColor,
-                                                      fontSize: 12,
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                      width: fullWidth * 0.02),
-                                                  Text(
-                                                    '12.00 PM',
-                                                    style: GoogleFonts.poppins(
-                                                      color: primaryColor,
-                                                      fontSize: 12,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Container(
-                                              margin: const EdgeInsets.all(10),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Container(
-                                                    width: 50,
-                                                    height: 12,
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      color: primaryColor,
-                                                    ),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceEvenly,
-                                                      children: [
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Container(
-                                                              width: 8,
-                                                              height: 8,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10),
-                                                                color:
-                                                                    Colors.blue,
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                                width: 3),
-                                                            Text(
-                                                              '-',
-                                                              style: GoogleFonts
-                                                                  .poppins(
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontSize:
-                                                                          8),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  // Container(
+                  //   margin: const EdgeInsets.only(left: 15, top: 10),
+                  //   child: Row(
+                  //     crossAxisAlignment: CrossAxisAlignment.start,
+                  //     children: [
+                  //       Text(
+                  //         '06.00',
+                  //         style: GoogleFonts.poppins(
+                  //           color: Colors.grey,
+                  //           fontSize: textSM,
+                  //           //fontWeight: FontWeight.bold,
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  DayEvent()
                 ],
               ),
             ],
