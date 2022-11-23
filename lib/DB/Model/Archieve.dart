@@ -34,7 +34,7 @@ class ArchieveModel {
   }
 
   Map<String, dynamic> toJson() {
-    return {"archieve_name": archieveName};
+    return {"archieve_name": archieveName, "id_user": idUser};
   }
 }
 

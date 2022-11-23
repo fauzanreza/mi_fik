@@ -4,6 +4,7 @@ import 'package:mi_fik/DB/Model/Content.dart';
 import 'package:mi_fik/DB/Services/ContentServices.dart';
 import 'package:mi_fik/Home/Detail/index.dart';
 import 'package:mi_fik/Others/skeleton/content_1.dart';
+import 'package:mi_fik/Schedule/EditArchive.dart';
 import 'package:mi_fik/main.dart';
 
 class SavedContent extends StatefulWidget {
@@ -94,26 +95,32 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TextButton.icon(
-          onPressed: () {
-            setState(() {
-              selectedArchiveId = null;
-              selectedArchiveName = null;
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const NavBar()),
-              );
-            });
-          },
-          label: Text('Back to Archive',
-              style: TextStyle(
-                  color: primaryColor,
-                  fontSize: textMD,
-                  fontWeight: FontWeight.w500)),
-          icon: Icon(Icons.arrow_back, color: primaryColor),
-          style: OutlinedButton.styleFrom(
-              // side: BorderSide(color: primaryColor),
-              ),
+        Row(
+          children: [
+            TextButton.icon(
+              onPressed: () {
+                setState(() {
+                  selectedArchiveId = null;
+                  selectedArchiveName = null;
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const NavBar()),
+                  );
+                });
+              },
+              label: Text('Back to Archive',
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontSize: textMD,
+                      fontWeight: FontWeight.w500)),
+              icon: Icon(Icons.arrow_back, color: primaryColor),
+              style: OutlinedButton.styleFrom(
+                  // side: BorderSide(color: primaryColor),
+                  ),
+            ),
+            Spacer(),
+            EditArchive(id: selectedArchiveId, archiveName: selectedArchiveName)
+          ],
         ),
         Column(
             children: contents.map((content) {

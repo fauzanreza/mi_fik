@@ -258,130 +258,150 @@ class _DayEvent extends State<DayEvent> with TickerProviderStateMixin {
       }
     }
 
-    return Container(
-        margin: const EdgeInsets.only(left: 15, top: 10),
-        padding: EdgeInsets.only(bottom: 15),
-        child: Column(
-            children: contents.map((content) {
-          return Column(children: [
-            hourChip(content.dateStart),
-            SizedBox(
-                width: fullWidth,
-                child: IntrinsicHeight(
-                    child: Stack(children: [
-                  // Container(
-                  //   margin: EdgeInsets.symmetric(horizontal: fullWidth * 0.05),
-                  //   width: 2.5,
-                  //   color: primaryColor,
-                  // ),
+    if ((contents != null) && (contents.length != 0)) {
+      return Container(
+          margin: const EdgeInsets.only(left: 15, top: 10),
+          padding: EdgeInsets.only(bottom: 15),
+          child: Column(
+              children: contents.map((content) {
+            return Column(children: [
+              hourChip(content.dateStart),
+              SizedBox(
+                  width: fullWidth,
+                  child: IntrinsicHeight(
+                      child: Stack(children: [
+                    // Container(
+                    //   margin: EdgeInsets.symmetric(horizontal: fullWidth * 0.05),
+                    //   width: 2.5,
+                    //   color: primaryColor,
+                    // ),
 
-                  //Open content w/ full container
-                  GestureDetector(
-                      onTap: () {
-                        if (content.dataFrom == "2") {
-                          showDialog<String>(
-                              context: context,
-                              barrierColor: primaryColor.withOpacity(0.5),
-                              builder: (BuildContext context) {
-                                return StatefulBuilder(
-                                    builder: (context, setState) {
-                                  return AlertDialog(
-                                      insetPadding: EdgeInsets.all(paddingXSM),
-                                      contentPadding:
-                                          EdgeInsets.all(paddingXSM),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.all(roundedLG)),
-                                      content: DetailTask(
-                                        id: content.id,
-                                        taskTitlePass: content.contentTitle,
-                                        taskDescPass: content.contentDesc,
-                                        taskDateStartPass: content.dateStart,
-                                        taskDateEndPass: content.dateEnd,
-                                      ));
+                    //Open content w/ full container
+                    GestureDetector(
+                        onTap: () {
+                          if (content.dataFrom == "2") {
+                            showDialog<String>(
+                                context: context,
+                                barrierColor: primaryColor.withOpacity(0.5),
+                                builder: (BuildContext context) {
+                                  return StatefulBuilder(
+                                      builder: (context, setState) {
+                                    return AlertDialog(
+                                        insetPadding:
+                                            EdgeInsets.all(paddingXSM),
+                                        contentPadding:
+                                            EdgeInsets.all(paddingXSM),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.all(roundedLG)),
+                                        content: DetailTask(
+                                          id: content.id,
+                                          taskTitlePass: content.contentTitle,
+                                          taskDescPass: content.contentDesc,
+                                          taskDateStartPass: content.dateStart,
+                                          taskDateEndPass: content.dateEnd,
+                                        ));
+                                  });
                                 });
-                              });
-                        } else {
-                          return print("tes");
-                        }
-                      },
-                      child: Container(
-                        width: fullWidth * 0.8,
-                        padding: EdgeInsets.symmetric(
-                            horizontal: paddingXSM, vertical: paddingXSM),
-                        margin: EdgeInsets.only(bottom: marginMT),
-                        transform: Matrix4.translationValues(55.0, 10.0, 0.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: getBgColor(DateTime.parse(content.dateStart)),
-                          boxShadow: [
-                            BoxShadow(
-                              color: const Color.fromARGB(255, 128, 128, 128)
-                                  .withOpacity(0.3),
-                              blurRadius: 10.0,
-                              spreadRadius: 0.0,
-                              offset: const Offset(
-                                5.0,
-                                5.0,
-                              ),
-                            )
-                          ],
-                        ),
+                          } else {
+                            return print("tes");
+                          }
+                        },
                         child: Container(
-                            padding: const EdgeInsets.all(4),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        content.contentTitle,
-                                        style: GoogleFonts.poppins(
-                                          color: getColor(DateTime.parse(
-                                              content.dateStart)),
-                                          fontSize: textSM,
-                                          fontWeight: FontWeight.bold,
+                          width: fullWidth * 0.8,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: paddingXSM, vertical: paddingXSM),
+                          margin: EdgeInsets.only(bottom: marginMT),
+                          transform: Matrix4.translationValues(55.0, 10.0, 0.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color:
+                                getBgColor(DateTime.parse(content.dateStart)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: const Color.fromARGB(255, 128, 128, 128)
+                                    .withOpacity(0.3),
+                                blurRadius: 10.0,
+                                spreadRadius: 0.0,
+                                offset: const Offset(
+                                  5.0,
+                                  5.0,
+                                ),
+                              )
+                            ],
+                          ),
+                          child: Container(
+                              padding: const EdgeInsets.all(4),
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          content.contentTitle,
+                                          style: GoogleFonts.poppins(
+                                            color: getColor(DateTime.parse(
+                                                content.dateStart)),
+                                            fontSize: textSM,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
-                                      ),
-                                      // getLocation(content.contentLoc),
-                                      //Width doesnt enough
-                                      const Spacer(),
-                                      Text(
-                                        DateFormat("HH : mm a").format(
-                                            DateTime.parse(content.dateStart)),
-                                        style: GoogleFonts.poppins(
-                                          color: getColor(DateTime.parse(
-                                              content.dateStart)),
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: textSM,
+                                        // getLocation(content.contentLoc),
+                                        //Width doesnt enough
+                                        const Spacer(),
+                                        Text(
+                                          DateFormat("HH : mm a").format(
+                                              DateTime.parse(
+                                                  content.dateStart)),
+                                          style: GoogleFonts.poppins(
+                                            color: getColor(DateTime.parse(
+                                                content.dateStart)),
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: textSM,
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  Container(
+                                      ],
+                                    ),
+                                    Container(
+                                        margin: const EdgeInsets.symmetric(
+                                            vertical: 15),
+                                        child: getTag(content.contentTag,
+                                            content.dateStart)),
+                                    Container(
                                       margin: const EdgeInsets.symmetric(
-                                          vertical: 15),
-                                      child: getTag(content.contentTag,
-                                          content.dateStart)),
-                                  Container(
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 10),
-                                    child: getLocation(
-                                        content.contentLoc,
-                                        getColor(
-                                            DateTime.parse(content.dateStart))),
-                                  )
-                                ])),
-                      )),
-                  Positioned(
-                      bottom: 0,
-                      right: fullWidth * 0.1,
-                      child: Opacity(
-                          opacity: 0.50,
-                          child: getIcon(content.dataFrom, content.dateStart)))
-                ])))
-          ]);
-        }).toList()));
+                                          horizontal: 10),
+                                      child: getLocation(
+                                          content.contentLoc,
+                                          getColor(DateTime.parse(
+                                              content.dateStart))),
+                                    )
+                                  ])),
+                        )),
+                    Positioned(
+                        bottom: 0,
+                        right: fullWidth * 0.1,
+                        child: Opacity(
+                            opacity: 0.50,
+                            child:
+                                getIcon(content.dataFrom, content.dateStart)))
+                  ])))
+            ]);
+          }).toList()));
+    } else {
+      return Align(
+          alignment: Alignment.topCenter,
+          child: Column(
+            children: [
+              Image.asset('assets/icon/empty.png', width: fullWidth * 0.6),
+              Text("No Event/Task for today, have a good rest",
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontWeight: FontWeight.w500,
+                      fontSize: textMD))
+            ],
+          ));
+    }
   }
 }

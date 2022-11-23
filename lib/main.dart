@@ -13,7 +13,7 @@ void main() {
 
 //Style guide.
 var primaryColor = const Color(0xFFFB8C00);
-var mainbg = const Color(0xFFD9D9D9);
+var mainbg = Color.fromARGB(255, 232, 232, 232);
 var whitebg = const Color(0xFFFFFFFF);
 var blackbg = const Color(0xFF414141);
 var greybg = Color.fromARGB(255, 118, 118, 118);

@@ -28,4 +28,18 @@ class ArchieveService {
       return false;
     }
   }
+
+  Future<bool> editArchive(ArchieveModel data, id) async {
+    final response = await client.put(
+      Uri.parse("$baseUrl/api/archieve/edit/$id"),
+      headers: {"content-type": "application/json"},
+      body: ArchieveModelToJson(data),
+    );
+    if (response.statusCode == 201) {
+      //Must return 2 different message
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
