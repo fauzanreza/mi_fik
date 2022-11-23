@@ -5,8 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/DB/Model/Content.dart';
 import 'package:mi_fik/DB/Services/ContentServices.dart';
-import 'package:mi_fik/Home/Detail/index.dart';
-import 'package:mi_fik/Others/skeleton/content_1.dart';
 import 'package:mi_fik/Others/skeleton/content_2.dart';
 import 'package:mi_fik/Schedule/DetailTask.dart';
 import 'package:mi_fik/main.dart';
@@ -232,7 +230,7 @@ class _DayEvent extends State<DayEvent> with TickerProviderStateMixin {
         hourChipBefore = check;
 
         return Container(
-            margin: EdgeInsets.only(top: 10),
+            margin: const EdgeInsets.only(top: 10),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -246,7 +244,7 @@ class _DayEvent extends State<DayEvent> with TickerProviderStateMixin {
                 ),
                 Expanded(
                     child: Container(
-                  margin: EdgeInsets.only(left: 15, right: 15, top: 7.5),
+                  margin: const EdgeInsets.only(left: 15, right: 15, top: 7.5),
                   color: primaryColor,
                   height: 2,
                   width: fullWidth,
@@ -261,7 +259,7 @@ class _DayEvent extends State<DayEvent> with TickerProviderStateMixin {
     if ((contents != null) && (contents.length != 0)) {
       return Container(
           margin: const EdgeInsets.only(left: 15, top: 10),
-          padding: EdgeInsets.only(bottom: 15),
+          padding: const EdgeInsets.only(bottom: 15),
           child: Column(
               children: contents.map((content) {
             return Column(children: [

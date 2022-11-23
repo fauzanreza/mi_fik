@@ -13,10 +13,11 @@ void main() {
 
 //Style guide.
 var primaryColor = const Color(0xFFFB8C00);
-var mainbg = Color.fromARGB(255, 232, 232, 232);
+var dangerColor = const Color(0xFFFB5E5B);
+var mainbg = const Color.fromARGB(255, 232, 232, 232);
 var whitebg = const Color(0xFFFFFFFF);
 var blackbg = const Color(0xFF414141);
-var greybg = Color.fromARGB(255, 118, 118, 118);
+var greybg = const Color.fromARGB(255, 118, 118, 118);
 
 var roundedLG = const Radius.circular(18); //For navbar, ...
 var roundedMd = const Radius.circular(10); //For container, ...
@@ -84,7 +85,7 @@ class _NavBarState extends State<NavBar> {
   final List<Widget> _widgetOptions = <Widget>[
     const SchedulePage(),
     const HomePage(),
-    CalendarPage(),
+    const CalendarPage(),
   ];
 
   @override

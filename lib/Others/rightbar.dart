@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mi_fik/main.dart';
 
 class RightBar extends StatelessWidget {
-  RightBar({Key key}) : super(key: key);
+  const RightBar({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

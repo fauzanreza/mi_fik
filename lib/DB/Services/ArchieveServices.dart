@@ -42,4 +42,17 @@ class ArchieveService {
       return false;
     }
   }
+
+  Future<bool> deleteArchive(ArchieveModel data, id) async {
+    final response = await client.delete(
+      Uri.parse("$baseUrl/api/archieve/delete/$id"),
+      headers: {"content-type": "application/json"},
+      body: ArchieveModelToJson(data),
+    );
+    if (response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
