@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mi_fik/Landing/Intro/index.dart';
 import 'package:mi_fik/Others/custombg.dart';
 import 'package:mi_fik/main.dart';
 
@@ -16,7 +17,6 @@ class _LoginPage extends State<LoginPage> {
     double fullWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-        backgroundColor: primaryColor,
         body: CustomPaint(
             painter: CirclePainterSide(),
             child: ListView(
@@ -96,7 +96,12 @@ class _LoginPage extends State<LoginPage> {
                             height: 45,
                             child: ElevatedButton(
                               onPressed: () {
-                                //Do something
+                                //For now
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => IntroPage()),
+                                );
                               },
                               style: ButtonStyle(
                                 shape: MaterialStateProperty.all<
