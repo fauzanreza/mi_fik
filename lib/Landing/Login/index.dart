@@ -100,7 +100,7 @@ class _LoginPage extends State<LoginPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => IntroPage()),
+                                      builder: (context) => const IntroPage()),
                                 );
                               },
                               style: ButtonStyle(

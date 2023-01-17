@@ -68,7 +68,7 @@ class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
         key: _scaffoldKey,
         drawer: const LeftBar(),
         drawerScrimColor: primaryColor.withOpacity(0.35),
-        endDrawer: RightBar(),
+        endDrawer: const RightBar(),
         body: ListView(
             padding: EdgeInsets.only(top: fullHeight * 0.04), //Check this!!!
             children: [
