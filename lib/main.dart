@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 //Main Menu.
 import 'package:mi_fik/Calendar/index.dart';
 import 'package:mi_fik/Home/index.dart';
+import 'package:mi_fik/Landing/Login/index.dart';
 import 'package:mi_fik/Schedule/index.dart';
 
 void main() {
@@ -69,7 +70,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(scaffoldBackgroundColor: mainbg),
-      home: const NavBar(), //For now.
+      home: const LoginPage(), //For now.
     );
   }
 }
