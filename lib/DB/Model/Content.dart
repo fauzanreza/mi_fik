@@ -8,28 +8,30 @@ class ContentModel {
   String contentTitle;
   String contentSubtitle;
   String contentDesc;
-  var contentTag;
-  var contentAttach;
-  var contentLoc;
+  var contentTag = "";
+  var contentAttach = "";
+  var contentLoc = "";
 
   String createdAt;
   String updatedAt;
   String dateStart;
   String dateEnd;
 
-  ContentModel({
-    this.id,
-    this.contentTitle,
-    this.contentSubtitle,
-    this.contentDesc,
-    this.contentAttach,
-    this.contentTag,
-    this.contentLoc,
-    this.createdAt,
-    this.updatedAt,
-    this.dateStart,
-    this.dateEnd,
-  });
+  String dataFrom; //For sql union
+
+  ContentModel(
+      {this.id,
+      this.contentTitle,
+      this.contentSubtitle,
+      this.contentDesc,
+      this.contentAttach,
+      this.contentTag,
+      this.contentLoc,
+      this.createdAt,
+      this.updatedAt,
+      this.dateStart,
+      this.dateEnd,
+      this.dataFrom});
 
   factory ContentModel.fromJson(Map<String, dynamic> map) {
     return ContentModel(
@@ -43,7 +45,8 @@ class ContentModel {
         createdAt: map["created_at"],
         updatedAt: map["updated_at"],
         dateStart: map["content_date_start"],
-        dateEnd: map["content_date_end"]);
+        dateEnd: map["content_date_end"],
+        dataFrom: map["data_from"].toString());
   }
 
   Map<String, dynamic> toJson() {

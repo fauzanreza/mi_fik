@@ -82,7 +82,7 @@ class _LocationButton extends State<LocationButton>
       //refresh UI
     });
 
-    LocationSettings locationSettings = LocationSettings(
+    LocationSettings locationSettings = const LocationSettings(
       accuracy: LocationAccuracy.high,
       distanceFilter: 100,
     );
@@ -115,8 +115,8 @@ class _LocationButton extends State<LocationButton>
     double lng = double.parse(coordinate[1]);
 
     //Maps starting point.
-    final _initialCameraPosition = CameraPosition(
-      target: LatLng(lat, lng), //Bandung
+    final initialCameraPosition = CameraPosition(
+      target: LatLng(lat, lng),
       zoom: 14,
     );
 
@@ -124,17 +124,18 @@ class _LocationButton extends State<LocationButton>
       onPressed: () => showDialog<String>(
           context: context,
           builder: (BuildContext context) => AlertDialog(
+              insetPadding: EdgeInsets.all(paddingSM),
               contentPadding: EdgeInsets.all(paddingMD),
               content: SizedBox(
-                height: fullWidth *
-                    0.8, //Pop up height based on fullwidth (Square maps).
+                height:
+                    fullWidth, //Pop up height based on fullwidth (Square maps).
                 width: fullWidth,
                 child: Column(children: [
                   Flexible(
                     child: GoogleMap(
                       myLocationButtonEnabled: false,
                       zoomControlsEnabled: false,
-                      initialCameraPosition: _initialCameraPosition,
+                      initialCameraPosition: initialCameraPosition,
                       onMapCreated: (controller) =>
                           _googleMapController = controller,
                       markers: {
@@ -148,8 +149,8 @@ class _LocationButton extends State<LocationButton>
                           position: LatLng(lat, lng),
                         ),
                         Marker(
-                          markerId: MarkerId("0"),
-                          infoWindow: InfoWindow(title: "You"),
+                          markerId: const MarkerId("0"),
+                          infoWindow: const InfoWindow(title: "You"),
 
                           // icon: BitmapDescriptor.defaultMarkerWithHue(
                           //     BitmapDescriptor.hueRed),
@@ -170,7 +171,7 @@ class _LocationButton extends State<LocationButton>
                           //Navigate through google maps w/ direction.
                           String googleUrl =
                               //'https://www.google.com/maps/dir/Current+Location/?api=1&query=${lat},${lng}';
-                              'https://www.google.com/maps/dir/Current+Location/${lat},${lng}';
+                              'https://www.google.com/maps/dir/Current+Location/$lat,$lng';
                           if (await canLaunch(googleUrl)) {
                             await launch(googleUrl);
                           } else {

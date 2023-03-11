@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/AddPost/ChooseTag.dart';
+import 'package:mi_fik/AddPost/SetLocation.dart';
 import 'package:mi_fik/DB/Model/Content.dart';
 import 'package:mi_fik/DB/Services/ContentServices.dart';
 import 'package:mi_fik/Others/FailedDialog.dart';
@@ -24,8 +25,8 @@ class _addPost extends State<addPost> {
   //Initial variable
   final contentTitleCtrl = TextEditingController();
   final contentDescCtrl = TextEditingController();
-  DateTime dateStartCtrl = null;
-  DateTime dateEndCtrl = null;
+  DateTime dateStartCtrl;
+  DateTime dateEndCtrl;
 
   @override
   void initState() {
@@ -43,40 +44,121 @@ class _addPost extends State<addPost> {
       if (date != null) {
         return DateFormat("dd-MM-yy  HH:mm").format(date).toString();
       } else {
-        return "Set Date ${type}";
+        return "Set Date $type";
       }
     }
 
     return Scaffold(
-      body: Stack(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          GestureDetector(
-            onTap: () {},
-            child: Container(
-              height: fullHeight * 0.275,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/content/content-2.jpg"),
-                  fit: BoxFit.cover,
+          Stack(children: [
+            GestureDetector(
+              onTap: () {},
+              child: Container(
+                height: fullHeight * 0.25,
+                transform: Matrix4.translationValues(0.0, 15, 0.0),
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("assets/content/content-2.jpg"),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
-          ),
-          Container(
-            transform: Matrix4.translationValues(0.0, fullHeight * 0.03, 0.0),
-            child: IconButton(
-              icon: Icon(Icons.arrow_back, size: iconLG),
-              color: Colors.white,
-              onPressed: () {
-                selectedTag.clear();
-                Navigator.pop(context);
-              },
+            Container(
+              transform:
+                  Matrix4.translationValues(0.0, fullHeight * 0.045, 0.0),
+              child: IconButton(
+                icon: Icon(Icons.arrow_back, size: iconLG),
+                color: Colors.white,
+                onPressed: () {
+                  //Empty all input
+                  if (selectedTag.isNotEmpty ||
+                      locDetailCtrl.text.isNotEmpty ||
+                      locCoordinateCtrl != null ||
+                      contentTitleCtrl.text.isNotEmpty ||
+                      contentDescCtrl.text.isNotEmpty ||
+                      dateStartCtrl != null ||
+                      dateEndCtrl != null) {
+                    return showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return StatefulBuilder(builder: (context, setState) {
+                            return AlertDialog(
+                                insetPadding: EdgeInsets.all(paddingSM),
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: paddingMD,
+                                    vertical: paddingMD * 1.5),
+                                content: SizedBox(
+                                    height: 120,
+                                    width: fullWidth,
+                                    child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                              "Are you sure want to leave? All changes will not be saved",
+                                              style: TextStyle(
+                                                  color: blackbg,
+                                                  fontSize: textMD,
+                                                  fontWeight: FontWeight.w500)),
+                                          const SizedBox(height: 15),
+                                          Row(
+                                            children: [
+                                              TextButton(
+                                                style: TextButton.styleFrom(
+                                                    backgroundColor: Colors.red
+                                                        .withOpacity(0.8),
+                                                    padding: EdgeInsets.all(
+                                                        paddingMD * 0.8)),
+                                                onPressed: () {
+                                                  selectedTag.clear();
+                                                  locDetailCtrl.clear();
+                                                  locCoordinateCtrl = null;
+                                                  Navigator.pop(context);
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text(
+                                                  "Yes, Discard Change",
+                                                  style: TextStyle(
+                                                    color: whitebg,
+                                                  ),
+                                                ),
+                                              ),
+                                              const Spacer(),
+                                              TextButton(
+                                                style: TextButton.styleFrom(
+                                                    backgroundColor:
+                                                        primaryColor,
+                                                    padding: EdgeInsets.all(
+                                                        paddingMD * 0.8)),
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text(
+                                                  "Cancel",
+                                                  style: TextStyle(
+                                                    color: whitebg,
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          )
+                                        ])));
+                          });
+                        });
+                  } else {
+                    Navigator.pop(context);
+                  }
+                },
+              ),
             ),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: fullHeight * 0.25),
-            height: fullHeight * 0.8,
-            width: fullWidth,
+          ]),
+          Expanded(
+              child: Container(
             padding: EdgeInsets.only(top: paddingMD),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(roundedLG2),
@@ -88,6 +170,7 @@ class _addPost extends State<addPost> {
                 child: TextFormField(
                   cursorColor: Colors.white,
                   controller: contentTitleCtrl,
+                  maxLength: 75,
                   decoration: InputDecoration(
                       hintText: 'Title',
                       enabledBorder: OutlineInputBorder(
@@ -162,7 +245,7 @@ class _addPost extends State<addPost> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text("Choose Tags",
+                      const Text("Choose Tags",
                           style: TextStyle(
                             fontSize: 16,
                             fontFamily: 'Poppins',
@@ -171,117 +254,90 @@ class _addPost extends State<addPost> {
                           )),
                       Container(
                           transform: Matrix4.translationValues(0.0, -15.0, 0.0),
-                          child: ChooseTag()),
+                          child: const ChooseTag()),
                     ],
                   )),
-              Row(children: <Widget>[
-                Container(
-                  padding: const EdgeInsets.fromLTRB(15, 10, 0, 0),
-                  child: TextButton.icon(
-                    style: TextButton.styleFrom(
-                      textStyle: const TextStyle(fontSize: 16),
-                      foregroundColor: const Color(0xFFFB8C00),
-                    ), // <-- TextButton
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.location_pin,
-                      size: 24.0,
-                    ),
-                    label: const Text('Set My Location'),
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.fromLTRB(30, 10, 0, 0),
-                  child: TextButton.icon(
-                    style: TextButton.styleFrom(
-                      textStyle: const TextStyle(fontSize: 16),
-                      foregroundColor: const Color(0xFFFB8C00),
-                    ), // <-- TextButton
-                    onPressed: () {
-                      final now = DateTime.now();
-
-                      DatePicker.showDateTimePicker(context,
-                          showTitleActions: true,
-                          minTime:
-                              DateTime(now.year, now.month, now.day), //Tomorrow
-                          maxTime: DateTime(now.year + 1, now.month, now.day),
-                          onConfirm: (date) {
-                        setState(() {
-                          dateStartCtrl = date;
-                        });
-                      }, currentTime: now, locale: LocaleType.en);
-                    },
-                    icon: const Icon(
-                      Icons.calendar_month,
-                      size: 24.0,
-                    ),
-                    label: Text(getDateText(dateStartCtrl, "Start")),
-                  ),
-                ),
-              ]),
-              Row(children: <Widget>[
-                Container(
-                  padding: const EdgeInsets.fromLTRB(15, 10, 0, 0),
-                  child: TextButton.icon(
-                    style: TextButton.styleFrom(
-                        textStyle: const TextStyle(fontSize: 16),
-                        foregroundColor: primaryColor), // <-- TextButton
-                    onPressed: () {
-                      final now = DateTime.now();
-
-                      DatePicker.showDateTimePicker(context,
-                          showTitleActions: true,
-                          minTime:
-                              DateTime(now.year, now.month, now.day), //Tomorrow
-                          maxTime: DateTime(now.year + 1, now.month, now.day),
-                          onConfirm: (date) {
-                        setState(() {
-                          dateEndCtrl = date;
-                        });
-                      }, currentTime: now, locale: LocaleType.en);
-                    },
-                    icon: const Icon(
-                      Icons.calendar_month,
-                      size: 24.0,
-                    ),
-                    label: Text(getDateText(dateEndCtrl, "End")),
-                  ),
-                ),
-                Row(children: <Widget>[
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(15, 10, 0, 0),
-                    child: TextButton(
+              Container(
+                  padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+                  child: Wrap(runSpacing: -5, spacing: 5, children: [
+                    const SetLocationButton(),
+                    TextButton.icon(
                       style: TextButton.styleFrom(
                         textStyle: const TextStyle(fontSize: 16),
                         foregroundColor: const Color(0xFFFB8C00),
+                      ), // <-- TextButton
+                      onPressed: () {
+                        final now = DateTime.now();
+
+                        DatePicker.showDateTimePicker(context,
+                            showTitleActions: true,
+                            minTime: DateTime(
+                                now.year, now.month, now.day), //Tomorrow
+                            maxTime: DateTime(now.year + 1, now.month, now.day),
+                            onConfirm: (date) {
+                          setState(() {
+                            dateStartCtrl = date;
+                          });
+                        }, currentTime: now, locale: LocaleType.en);
+                      },
+                      icon: const Icon(
+                        Icons.calendar_month,
+                        size: 24.0,
                       ),
-                      onPressed: () {},
-                      child: const Text('Reminder :'),
+                      label: Text(getDateText(dateStartCtrl, "Start")),
                     ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
-                        onPrimary: const Color(0xFFFB8C00),
-                        side: const BorderSide(
-                          width: 1.0,
-                          color: Color(0xFFFB8C00),
+                    TextButton.icon(
+                      style: TextButton.styleFrom(
+                          textStyle: const TextStyle(fontSize: 16),
+                          foregroundColor: primaryColor), // <-- TextButton
+                      onPressed: () {
+                        final now = DateTime.now();
+
+                        DatePicker.showDateTimePicker(context,
+                            showTitleActions: true,
+                            minTime: DateTime(
+                                now.year, now.month, now.day), //Tomorrow
+                            maxTime: DateTime(now.year + 1, now.month, now.day),
+                            onConfirm: (date) {
+                          setState(() {
+                            dateEndCtrl = date;
+                          });
+                        }, currentTime: now, locale: LocaleType.en);
+                      },
+                      icon: const Icon(
+                        Icons.calendar_month,
+                        size: 24.0,
+                      ),
+                      label: Text(getDateText(dateEndCtrl, "End")),
+                    ),
+                    Wrap(children: <Widget>[
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          textStyle: const TextStyle(fontSize: 16),
+                          foregroundColor: const Color(0xFFFB8C00),
                         ),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0)),
+                        onPressed: () {},
+                        child: const Text('Reminder :'),
                       ),
-                      onPressed: () {},
-                      child: const Text('1 Hour Before'),
-                    ),
-                  ),
-                ]),
-              ]),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.white,
+                          onPrimary: const Color(0xFFFB8C00),
+                          side: const BorderSide(
+                            width: 1.0,
+                            color: Color(0xFFFB8C00),
+                          ),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0)),
+                        ),
+                        onPressed: () {},
+                        child: const Text('1 Hour Before'),
+                      ),
+                    ])
+                  ])),
             ]),
-          ),
-          Container(
-              transform: Matrix4.translationValues(0.0, fullHeight * 0.94, 0.0),
+          )),
+          SizedBox(
               width: fullWidth,
               height: btnHeightMD,
               child: ElevatedButton(
@@ -303,13 +359,27 @@ class _addPost extends State<addPost> {
                     }
                   }
 
+                  //Get content location json
+                  getContentLoc(detail, loc) {
+                    if (detail != null && loc != null) {
+                      var tag = [
+                        {"type": "location", "detail": detail},
+                        {"type": "coodinate", "detail": loc}
+                      ];
+                      return json.encode(tag);
+                    } else {
+                      return null;
+                    }
+                  }
+
                   //Mapping.
                   ContentModel content = ContentModel(
                     contentTitle: contentTitleCtrl.text.toString(),
                     contentSubtitle: "Lorem ipsum", //For now.
                     contentDesc: contentDescCtrl.text.toString(),
                     contentTag: validateNullJSON(selectedTag),
-                    contentLoc: null, //For now.
+                    contentLoc: getContentLoc(
+                        locDetailCtrl.text, locCoordinateCtrl), //For now.
                     contentAttach: null, //For now.
                     dateStart: validateDateNull(dateStartCtrl),
                     dateEnd: validateDateNull(dateEndCtrl),
@@ -339,6 +409,8 @@ class _addPost extends State<addPost> {
                         dateEndCtrl = null;
                         contentTitleCtrl.clear();
                         contentDescCtrl.clear();
+                        locDetailCtrl.clear();
+                        locCoordinateCtrl = null;
                       }
                     });
                   } else {

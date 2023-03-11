@@ -33,14 +33,13 @@ class ArchieveModel {
         updatedAt: map["updated_at"]);
   }
 
-  // Map<String, dynamic> toJson() {
-  //   return {"fullname": fullname};
-  // }
-
-  // @override
-  // String toString() {
-  //   return '{fullname: $fullname}';
-  // }
+  Map<String, dynamic> toJson() {
+    return {
+      "archieve_name": archieveName,
+      "id_user": idUser,
+      "user_id": idUser
+    }; //Check this again. for user id column in db!
+  }
 }
 
 List<ArchieveModel> ArchieveModelFromJson(String jsonData) {
@@ -49,7 +48,7 @@ List<ArchieveModel> ArchieveModelFromJson(String jsonData) {
       data.map((item) => ArchieveModel.fromJson(item)));
 }
 
-// String ArchieveModelToJson(ArchieveModel data) {
-//   final jsonData = data.toJson();
-//   return json.encode(jsonData);
-// }
+String ArchieveModelToJson(ArchieveModel data) {
+  final jsonData = data.toJson();
+  return json.encode(jsonData);
+}
