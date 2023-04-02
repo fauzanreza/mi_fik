@@ -1,12 +1,11 @@
 //Plugin.
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mi_fik/Pages/Menus/Calendar/index.dart';
+import 'package:mi_fik/Pages/Menus/Home/index.dart';
 
 //Main Menu.
-import 'package:mi_fik/Calendar/index.dart';
-import 'package:mi_fik/Home/index.dart';
-import 'package:mi_fik/Landing/Login/index.dart';
-import 'package:mi_fik/Schedule/index.dart';
+import 'package:mi_fik/Pages/Menus/Schedule/index.dart';
 
 void main() {
   runApp(const MyApp());
@@ -70,7 +69,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(scaffoldBackgroundColor: mainbg),
-      home: const LoginPage(), //For now.
+      home: const NavBar(), //For now.
     );
   }
 }
