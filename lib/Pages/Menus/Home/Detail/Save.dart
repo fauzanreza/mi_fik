@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Modules/Models/Archieve.dart';
 import 'package:mi_fik/Modules/Services/ArchieveServices.dart';
-import 'package:mi_fik/Components/checkbox.dart';
 import 'package:mi_fik/main.dart';
 
 class SaveButton extends StatefulWidget {
@@ -140,10 +139,6 @@ class _SaveButton extends State<SaveButton> {
                                                 color: whitebg,
                                                 fontSize: textXXSM,
                                               )),
-                                          const Spacer(),
-                                          MyStatefulWidget(
-                                              idArchieve: archieves[index].id,
-                                              idContent: widget.passId),
                                         ]),
                                       );
                                     })),

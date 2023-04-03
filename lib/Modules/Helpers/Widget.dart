@@ -67,18 +67,58 @@ Widget getDescHeaderWidget(desc) {
     return Container(
         margin: const EdgeInsets.only(top: 5),
         child: Text(removeHtmlTags(desc),
-            maxLines: 4,
+            maxLines: 3,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(color: blackbg, fontSize: textSM)));
   } else {
     return Container(
         margin: const EdgeInsets.only(top: 5),
         child: Text("No description provided",
-            maxLines: 4,
+            maxLines: 3,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
                 color: blackbg,
                 fontSize: textSM,
                 fontStyle: FontStyle.italic)));
+  }
+}
+
+Widget getContentLoc(loc) {
+  if (loc != null) {
+    return RichText(
+      text: TextSpan(
+        children: [
+          WidgetSpan(
+            child: Icon(Icons.location_on, color: primaryColor, size: iconSM),
+          ),
+          TextSpan(
+              text: " ${loc[0]['detail']}",
+              style: TextStyle(color: primaryColor, fontSize: textSM)),
+        ],
+      ),
+    );
+  } else {
+    return SizedBox();
+  }
+}
+
+Widget getTotalTag(tag) {
+  if (tag != null) {
+    int total = tag.length;
+
+    return RichText(
+      text: TextSpan(
+        children: [
+          WidgetSpan(
+            child: Icon(Icons.tag, color: primaryColor, size: iconSM),
+          ),
+          TextSpan(
+              text: total.toString(),
+              style: TextStyle(color: primaryColor, fontSize: textSM)),
+        ],
+      ),
+    );
+  } else {
+    return SizedBox();
   }
 }

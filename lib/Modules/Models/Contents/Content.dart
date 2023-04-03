@@ -39,11 +39,11 @@ class ContentModel {
       slugName: map["slug_name"],
       contentTitle: map["content_title"],
       contentDesc: map["content_desc"].toString(),
-      // contentLoc: map["content_loc"],
+      contentLoc: map["content_loc"],
       contentImage: map["content_image"].toString(),
       //dateStart: map["content_date_start"],
       //dateEnd: map["content_date_end"],
-      // contentTag: map["content_tag"],
+      contentTag: map["content_tag"],
       createdAt: map["created_at"],
       totalViews: map["total_views"].toString(),
       //dataFrom: map["data_from"].toString()

@@ -121,20 +121,8 @@ class _HomePage extends State<HomePage> {
                       borderRadius: BorderRadius.only(
                           topLeft: roundedLG, topRight: roundedLG),
                     ),
-                    child: IntrinsicHeight(
-                      child: Column(children: [
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          padding: const EdgeInsets.all(10),
-                          child: Text("What's New ?",
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: textLG,
-                                  fontWeight: FontWeight.w500)),
-                        ),
-                        const Flexible(child: GetContent())
-                      ]),
+                    child: const IntrinsicHeight(
+                      child: Flexible(child: GetContent()),
                     ))
               ])),
       floatingActionButton: SpeedDial(
