@@ -1,14 +1,19 @@
 import 'package:http/http.dart' show Client;
 import 'package:intl/intl.dart';
-import 'package:mi_fik/Modules/Models/Content.dart';
+import 'package:mi_fik/Modules/Helpers/Converter.dart';
+import 'package:mi_fik/Modules/Models/Contents/Content.dart';
 import 'package:mi_fik/main.dart';
 
-class ContentService {
-  final String baseUrl = "https://mifik.leonardhors.site";
+class ContentQueriesService {
+  final String baseUrl = "https://mifik.id";
   Client client = Client();
 
-  Future<List<ContentModel>> getAllContent() async {
-    final response = await client.get(Uri.parse("$baseUrl/api/content?page=1"));
+  Future<List<ContentModel>> getAllContent(tag, order, date, find, page) async {
+    //Helpers
+    String finds = await getFind(find);
+
+    final response = await client.get(Uri.parse(
+        "$baseUrl/api/v2/content/slug/$tag/order/$order/date/$date/find/$finds?page=$page"));
     if (response.statusCode == 200) {
       return ContentModelFromJsonWPaginate(response.body);
     } else {
@@ -16,9 +21,8 @@ class ContentService {
     }
   }
 
-  Future<List<ContentModel>> getContent() async {
-    final response =
-        await client.get(Uri.parse("$baseUrl/api/content/$passIdContent"));
+  Future<List<ContentModel>> getContent(slug) async {
+    final response = await client.get(Uri.parse("$baseUrl/api/content/$slug"));
     if (response.statusCode == 200) {
       return ContentModelFromJson(response.body);
     } else {
@@ -34,19 +38,6 @@ class ContentService {
       return ContentModelFromJson(response.body);
     } else {
       return null;
-    }
-  }
-
-  Future<bool> addContent(ContentModel data) async {
-    final response = await client.post(
-      Uri.parse("$baseUrl/api/content/create/$passIdUser"),
-      headers: {"content-type": "application/json"},
-      body: ContentModelToJson(data),
-    );
-    if (response.statusCode == 201) {
-      return true;
-    } else {
-      return false;
     }
   }
 

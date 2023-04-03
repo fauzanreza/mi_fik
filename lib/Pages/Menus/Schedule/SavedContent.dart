@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/Skeletons/content_1.dart';
-import 'package:mi_fik/Modules/Models/Content.dart';
-import 'package:mi_fik/Modules/Services/ContentServices.dart';
+import 'package:mi_fik/Modules/Models/Contents/Content.dart';
+import 'package:mi_fik/Modules/Services/Queries/ContentQueries.dart';
 import 'package:mi_fik/Pages/Menus/Home/Detail/index.dart';
 import 'package:mi_fik/Pages/Menus/Schedule/DeleteArchive.dart';
 import 'package:mi_fik/Pages/Menus/Schedule/EditArchive.dart';
@@ -16,12 +16,12 @@ class SavedContent extends StatefulWidget {
 }
 
 class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
-  ContentService apiService;
+  ContentQueriesService apiService;
 
   @override
   void initState() {
     super.initState();
-    apiService = ContentService();
+    apiService = ContentQueriesService();
   }
 
   @override
@@ -163,11 +163,11 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => DetailPage(
-                                    passIdContent: int.parse(content.id))),
+                                builder: (context) =>
+                                    DetailPage(passSlug: content.slugName)),
                           );
 
-                          passIdContent = int.parse(content.id);
+                          passSlugContent = int.parse(content.id);
                         },
                         child: Container(
                             width: fullWidth * 0.82,
@@ -254,11 +254,10 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) => DetailPage(
-                                                  passIdContent:
-                                                      int.parse(content.id))),
+                                                  passSlug: content.slugName)),
                                         );
 
-                                        passIdContent = int.parse(content.id);
+                                        passSlugContent = int.parse(content.id);
                                       },
                                       style: ButtonStyle(
                                         shape: MaterialStateProperty.all<

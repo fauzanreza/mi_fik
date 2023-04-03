@@ -3,11 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mi_fik/Pages/Menus/Calendar/index.dart';
 import 'package:mi_fik/Pages/Menus/Home/index.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 //Main Menu.
 import 'package:mi_fik/Pages/Menus/Schedule/index.dart';
 
-void main() {
+bool shouldUseFirestoreEmulator = false;
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  // if (shouldUseFirestoreEmulator) {
+  //   FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
+  // }
   runApp(const MyApp());
 }
 
@@ -48,7 +57,7 @@ double iconMD = 26; //For link or file btn, ...
 List archieveVal = []; //Need to be fixed
 DateTime slctSchedule = DateTime.now();
 int passIdUser = 1; //For now.
-int passIdContent;
+int passSlugContent;
 final locDetailCtrl = TextEditingController();
 var locCoordinateCtrl = null;
 final selectedTag = [];
@@ -69,7 +78,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(scaffoldBackgroundColor: mainbg),
-      home: const NavBar(), //For now.
+      home: const HomePage(), //For now.
     );
   }
 }
@@ -101,12 +110,12 @@ class _NavBarState extends State<NavBar> {
             currentIndex: selectedIndex,
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                icon: Icon(Icons.schedule), //Change if there's an asset.
-                label: 'Schedule',
-              ),
-              BottomNavigationBarItem(
                 icon: Icon(Icons.home), //Change if there's an asset.
                 label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.schedule), //Change if there's an asset.
+                label: 'Schedule',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.calendar_month), //Change if there's an asset.

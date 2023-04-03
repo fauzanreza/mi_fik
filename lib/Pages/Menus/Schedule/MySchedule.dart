@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/Skeletons/content_2.dart';
-import 'package:mi_fik/Modules/Models/Content.dart';
-import 'package:mi_fik/Modules/Services/ContentServices.dart';
+import 'package:mi_fik/Modules/Models/Contents/Content.dart';
+import 'package:mi_fik/Modules/Services/Queries/ContentQueries.dart';
 import 'package:mi_fik/Pages/Menus/Schedule/DetailTask.dart';
 import 'package:mi_fik/main.dart';
 
@@ -17,12 +17,12 @@ class MySchedulePage extends StatefulWidget {
 }
 
 class _MySchedulePage extends State<MySchedulePage> {
-  ContentService apiService;
+  ContentQueriesService apiService;
 
   @override
   void initState() {
     super.initState();
-    apiService = ContentService();
+    apiService = ContentQueriesService();
   }
 
   @override

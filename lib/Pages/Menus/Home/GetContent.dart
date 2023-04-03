@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/Skeletons/content_1.dart';
-import 'package:mi_fik/Modules/Models/Content.dart';
-import 'package:mi_fik/Modules/Services/ContentServices.dart';
+import 'package:mi_fik/Modules/Helpers/Widget.dart';
+import 'package:mi_fik/Modules/Models/Contents/Content.dart';
+import 'package:mi_fik/Modules/Services/Queries/ContentQueries.dart';
 import 'package:mi_fik/Pages/Menus/Home/Detail/index.dart';
 import 'package:mi_fik/main.dart';
 
@@ -14,12 +15,12 @@ class GetContent extends StatefulWidget {
 }
 
 class _GetContent extends State<GetContent> with TickerProviderStateMixin {
-  ContentService apiService;
+  ContentQueriesService apiService;
 
   @override
   void initState() {
     super.initState();
-    apiService = ContentService();
+    apiService = ContentQueriesService();
   }
 
   @override
@@ -30,7 +31,7 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
-        future: apiService.getAllContent(),
+        future: apiService.getAllContent("all", "DESC", "all", " ", 1),
         builder:
             (BuildContext context, AsyncSnapshot<List<ContentModel>> snapshot) {
           if (snapshot.hasError) {
@@ -52,44 +53,6 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
   Widget _buildListView(List<ContentModel> contents) {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-
-    Widget getUploadDate(date) {
-      //Initial variable.
-      final now = DateTime.now();
-      final today = DateTime(now.year, now.month, now.day);
-      final justNowHour = DateTime(now.hour);
-      final justNowMinute = DateFormat("mm").format(now);
-      final yesterday = DateTime(now.year, now.month, now.day - 1);
-      final content = DateTime(date.year, date.month, date.day);
-      final contentHour = DateTime(date.hour);
-      final contentMinute = DateFormat("mm").format(date);
-
-      var result = "";
-
-      if (content == today) {
-        if (justNowHour == contentHour) {
-          int diff = int.parse((justNowMinute).toString()) -
-              int.parse((contentMinute).toString());
-          if (diff > 10) {
-            result = "$diff min ago";
-          } else {
-            result = "Just Now";
-          }
-        } else {
-          result = "Today at ${DateFormat("HH:mm").format(date).toString()}";
-        }
-      } else if (content == yesterday) {
-        result = "Yesterday at ${DateFormat("HH:mm").format(date).toString()}";
-      } else {
-        result = DateFormat("dd/MM/yy HH:mm").format(date).toString();
-      }
-
-      return Text(result,
-          style: TextStyle(
-            color: whitebg,
-            fontWeight: FontWeight.w500,
-          ));
-    }
 
     return Column(
         children: contents.map((content) {
@@ -121,17 +84,17 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
                 //       )),
                 // ),
 
-                //Open content w/ full container
+                // Open content w/ full container
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              DetailPage(passIdContent: int.parse(content.id))),
+                              DetailPage(passSlug: content.slugName)),
                     );
 
-                    passIdContent = int.parse(content.id);
+                    passSlugContent = int.parse(content.slugName);
                   },
                   child: Container(
                       width: fullWidth * 0.82,
@@ -164,18 +127,19 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
                             decoration: BoxDecoration(
                               image: DecorationImage(
                                 fit: BoxFit.fitWidth,
-                                image: const AssetImage(
-                                    'assets/content/content-2.jpg'),
+                                image: getImageHeader(content.contentImage),
                                 colorFilter: ColorFilter.mode(
                                     Colors.black.withOpacity(0.5),
                                     BlendMode.darken),
                               ),
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
+                            child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  getUploadDate(
+                                  getViewWidget(content.totalViews),
+                                  const Spacer(),
+                                  getUploadDateWidget(
                                       DateTime.parse(content.createdAt))
                                 ]),
                           ),
@@ -190,11 +154,7 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
                                           color: blackbg,
                                           fontWeight: FontWeight.bold,
                                           fontSize: textMD)),
-                                  Text(content.contentDesc,
-                                      maxLines: 4,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                          color: blackbg, fontSize: textSM))
+                                  getDescHeaderWidget(content.contentDesc)
                                 ]),
                           ),
 
@@ -211,11 +171,10 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => DetailPage(
-                                            passIdContent:
-                                                int.parse(content.id))),
+                                            passSlug: content.slugName)),
                                   );
 
-                                  passIdContent = int.parse(content.id);
+                                  passSlugContent = int.parse(content.slugName);
                                 },
                                 style: ButtonStyle(
                                   shape: MaterialStateProperty.all<

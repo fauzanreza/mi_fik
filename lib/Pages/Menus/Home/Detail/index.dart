@@ -2,28 +2,29 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:mi_fik/Modules/Models/Content.dart';
-import 'package:mi_fik/Modules/Services/ContentServices.dart';
+import 'package:mi_fik/Modules/Models/Contents/Content.dart';
+import 'package:mi_fik/Modules/Services/Commands/ContentCommands.dart';
+import 'package:mi_fik/Modules/Services/Queries/ContentQueries.dart';
 import 'package:mi_fik/Pages/Menus/Home/Detail/Attach.dart';
 import 'package:mi_fik/Pages/Menus/Home/Detail/Location.dart';
 import 'package:mi_fik/Pages/Menus/Home/Detail/Save.dart';
 import 'package:mi_fik/main.dart';
 
 class DetailPage extends StatefulWidget {
-  const DetailPage({Key key, this.passIdContent}) : super(key: key);
-  final int passIdContent;
+  const DetailPage({Key key, this.passSlug}) : super(key: key);
+  final String passSlug;
 
   @override
   _DetailPage createState() => _DetailPage();
 }
 
 class _DetailPage extends State<DetailPage> {
-  ContentService apiService;
+  ContentQueriesService apiQuery;
 
   @override
   void initState() {
     super.initState();
-    apiService = ContentService();
+    apiQuery = ContentQueriesService();
   }
 
   @override
@@ -31,7 +32,7 @@ class _DetailPage extends State<DetailPage> {
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
-        future: apiService.getContent(),
+        future: apiQuery.getContent(widget.passSlug),
         builder:
             (BuildContext context, AsyncSnapshot<List<ContentModel>> snapshot) {
           if (snapshot.hasError) {
@@ -337,7 +338,7 @@ class _DetailPage extends State<DetailPage> {
                                     fontSize: textMD,
                                     fontWeight: FontWeight.bold)),
                             //Check this...
-                            getSubtitle(contents[0].contentSubtitle),
+                            //getSubtitle(contents[0].contentSubtitle),
                           ],
                         )
                       ],
@@ -353,7 +354,7 @@ class _DetailPage extends State<DetailPage> {
                             style:
                                 TextStyle(color: blackbg, fontSize: textSM))),
                     //Attached file or link.
-                    getAttach(contents[0].contentAttach),
+                    //getAttach(contents[0].contentAttach),
                     //Tag holder.
                     Container(
                       margin: EdgeInsets.symmetric(

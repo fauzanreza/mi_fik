@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:mi_fik/Modules/Models/Content.dart';
-import 'package:mi_fik/Modules/Services/ContentServices.dart';
+import 'package:mi_fik/Modules/Models/Contents/Content.dart';
+import 'package:mi_fik/Modules/Services/Queries/ContentQueries.dart';
 import 'package:mi_fik/Components/Skeletons/content_2.dart';
 import 'package:mi_fik/Pages/Menus/Schedule/DetailTask.dart';
 import 'package:mi_fik/main.dart';
@@ -17,13 +17,13 @@ class DayEvent extends StatefulWidget {
 }
 
 class _DayEvent extends State<DayEvent> with TickerProviderStateMixin {
-  ContentService apiService;
+  ContentQueriesService apiService;
   String hourChipBefore;
 
   @override
   void initState() {
     super.initState();
-    apiService = ContentService();
+    apiService = ContentQueriesService();
   }
 
   @override
@@ -293,7 +293,7 @@ class _DayEvent extends State<DayEvent> with TickerProviderStateMixin {
                                             borderRadius:
                                                 BorderRadius.all(roundedLG)),
                                         content: DetailTask(
-                                          id: content.id,
+                                          id: 2.toString(),
                                           taskTitlePass: content.contentTitle,
                                           taskDescPass: content.contentDesc,
                                           taskDateStartPass: content.dateStart,

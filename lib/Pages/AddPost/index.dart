@@ -2,8 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:mi_fik/Modules/Models/Content.dart';
-import 'package:mi_fik/Modules/Services/ContentServices.dart';
+import 'package:mi_fik/Modules/Models/Contents/Content.dart';
+import 'package:mi_fik/Modules/Services/Commands/ContentCommands.dart';
+import 'package:mi_fik/Modules/Services/Queries/ContentQueries.dart';
 import 'package:mi_fik/Components/FailedDialog.dart';
 import 'package:mi_fik/Components/SuccessDialog.dart';
 import 'package:mi_fik/Pages/SubMenus/AddPost/ChooseTag.dart';
@@ -20,7 +21,7 @@ class addPost extends StatefulWidget {
 }
 
 class _addPost extends State<addPost> {
-  ContentService apiService;
+  ContentCommandsService apiService;
 
   //Initial variable
   final contentTitleCtrl = TextEditingController();
@@ -31,7 +32,7 @@ class _addPost extends State<addPost> {
   @override
   void initState() {
     super.initState();
-    apiService = ContentService();
+    apiService = ContentCommandsService();
   }
 
   @override
@@ -375,12 +376,10 @@ class _addPost extends State<addPost> {
                   //Mapping.
                   ContentModel content = ContentModel(
                     contentTitle: contentTitleCtrl.text.toString(),
-                    contentSubtitle: "Lorem ipsum", //For now.
                     contentDesc: contentDescCtrl.text.toString(),
-                    contentTag: validateNullJSON(selectedTag),
-                    contentLoc: getContentLoc(
-                        locDetailCtrl.text, locCoordinateCtrl), //For now.
-                    contentAttach: null, //For now.
+                    // contentTag: validateNullJSON(selectedTag),
+                    // contentLoc: getContentLoc(
+                    //     locDetailCtrl.text, locCoordinateCtrl), //For now.
                     dateStart: validateDateNull(dateStartCtrl),
                     dateEnd: validateDateNull(dateEndCtrl),
                   );
