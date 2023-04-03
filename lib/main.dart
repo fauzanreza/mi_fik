@@ -1,14 +1,23 @@
 //Plugin.
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mi_fik/Pages/Menus/Calendar/index.dart';
+import 'package:mi_fik/Pages/Menus/Home/index.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 //Main Menu.
-import 'package:mi_fik/Calendar/index.dart';
-import 'package:mi_fik/Home/index.dart';
-import 'package:mi_fik/Landing/Login/index.dart';
-import 'package:mi_fik/Schedule/index.dart';
+import 'package:mi_fik/Pages/Menus/Schedule/index.dart';
 
-void main() {
+bool shouldUseFirestoreEmulator = false;
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  if (shouldUseFirestoreEmulator) {
+    FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
+  }
   runApp(const MyApp());
 }
 
@@ -44,18 +53,22 @@ double marginHZ = 4; //For horizontal listview
 
 double iconLG = 32; //For floating add btn, ...
 double iconMD = 26; //For link or file btn, ...
+double iconSM = 15; //For content header ...
 
 //Others variable
 List archieveVal = []; //Need to be fixed
 DateTime slctSchedule = DateTime.now();
 int passIdUser = 1; //For now.
-int passIdContent;
+int passSlugContent;
 final locDetailCtrl = TextEditingController();
 var locCoordinateCtrl = null;
 final selectedTag = [];
 var selectedArchiveName;
 var selectedArchiveId;
 int selectedIndex = 0;
+
+//Homepage (Content Header)
+String sortingHomepageContent = "DESC";
 
 class MyApp extends StatelessWidget {
   const MyApp({key}) : super(key: key);
@@ -70,7 +83,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(scaffoldBackgroundColor: mainbg),
-      home: const LoginPage(), //For now.
+      home: const NavBar(), //For now.
     );
   }
 }
@@ -84,8 +97,8 @@ class NavBar extends StatefulWidget {
 
 class _NavBarState extends State<NavBar> {
   final List<Widget> _widgetOptions = <Widget>[
-    const SchedulePage(),
     const HomePage(),
+    const SchedulePage(),
     const CalendarPage(),
   ];
 
@@ -102,12 +115,12 @@ class _NavBarState extends State<NavBar> {
             currentIndex: selectedIndex,
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                icon: Icon(Icons.schedule), //Change if there's an asset.
-                label: 'Schedule',
-              ),
-              BottomNavigationBarItem(
                 icon: Icon(Icons.home), //Change if there's an asset.
                 label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.schedule), //Change if there's an asset.
+                label: 'Schedule',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.calendar_month), //Change if there's an asset.
