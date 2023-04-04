@@ -1,27 +1,16 @@
 import 'dart:convert';
 
 class TagModel {
-  //Key
-  String id; //Primary
-
+  String slugName;
   String tagName;
 
-  String createdAt;
-  String updatedAt;
-
   TagModel({
-    this.id,
+    this.slugName,
     this.tagName,
-    this.createdAt,
-    this.updatedAt,
   });
 
   factory TagModel.fromJson(Map<String, dynamic> map) {
-    return TagModel(
-        id: map["id"].toString(),
-        tagName: map["tag_name"],
-        createdAt: map["created_at"],
-        updatedAt: map["updated_at"]);
+    return TagModel(slugName: map["slug_name"], tagName: map["tag_name"]);
   }
 
   // Map<String, dynamic> toJson() {
@@ -36,7 +25,8 @@ class TagModel {
 
 List<TagModel> TagModelFromJson(String jsonData) {
   final data = json.decode(jsonData);
-  return List<TagModel>.from(data.map((item) => TagModel.fromJson(item)));
+  return List<TagModel>.from(
+      data['data']['data'].map((item) => TagModel.fromJson(item)));
 }
 
 // String TagModelToJson(TagModel data) {
