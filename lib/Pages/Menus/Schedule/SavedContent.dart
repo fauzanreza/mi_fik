@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/Skeletons/content_1.dart';
 import 'package:mi_fik/Modules/Models/Contents/Content.dart';
 import 'package:mi_fik/Modules/Services/Queries/ContentQueries.dart';
-import 'package:mi_fik/Pages/Menus/Home/Detail/index.dart';
+import 'package:mi_fik/Pages/SubMenus/Detail/index.dart';
 import 'package:mi_fik/Pages/Menus/Schedule/DeleteArchive.dart';
 import 'package:mi_fik/Pages/Menus/Schedule/EditArchive.dart';
 import 'package:mi_fik/main.dart';
@@ -167,7 +167,7 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
                                     DetailPage(passSlug: content.slugName)),
                           );
 
-                          passSlugContent = int.parse(content.id);
+                          passSlugContent = content.slugName;
                         },
                         child: Container(
                             width: fullWidth * 0.82,
@@ -257,7 +257,7 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
                                                   passSlug: content.slugName)),
                                         );
 
-                                        passSlugContent = int.parse(content.id);
+                                        passSlugContent = content.slugName;
                                       },
                                       style: ButtonStyle(
                                         shape: MaterialStateProperty.all<

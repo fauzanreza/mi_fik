@@ -22,7 +22,8 @@ class ContentQueriesService {
   }
 
   Future<List<ContentModel>> getContent(slug) async {
-    final response = await client.get(Uri.parse("$baseUrl/api/content/$slug"));
+    final response =
+        await client.get(Uri.parse("$baseUrl/api/v1/content/slug/$slug"));
     if (response.statusCode == 200) {
       return ContentModelFromJson(response.body);
     } else {

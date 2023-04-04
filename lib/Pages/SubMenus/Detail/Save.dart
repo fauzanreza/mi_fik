@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mi_fik/Modules/Models/Archieve.dart';
+import 'package:mi_fik/Modules/Models/Archive/Archive.dart';
 import 'package:mi_fik/Modules/Services/ArchieveServices.dart';
 import 'package:mi_fik/main.dart';
 
 class SaveButton extends StatefulWidget {
-  SaveButton({Key key, this.passId}) : super(key: key);
-  int passId;
+  SaveButton({Key key, this.passSlug}) : super(key: key);
+  String passSlug;
 
   @override
   _SaveButton createState() => _SaveButton();
@@ -20,19 +20,6 @@ class _SaveButton extends State<SaveButton> {
     apiService = ArchieveService();
   }
 
-  // Future postArchieveRel(archieveId) async {
-  //   var date = DateFormat("yyyy-MM-dd h:i:s").format(DateTime.now()).toString();
-
-  //   db.getConnection().then((conn) {
-  //     String sql =
-  //         "INSERT INTO `archieve_relation`(`id`, `archieve_id`, `content_id`, `user_id`, `created_at`, `updated_at`) VALUES (null,'${archieveId}','${widget.passId}',1, '${date}','${date}')";
-  //     conn.query(sql).then((results) {
-  //       print("success");
-  //     });
-  //     conn.close();
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     //double fullWidth = MediaQuery.of(context).size.width;
@@ -41,15 +28,15 @@ class _SaveButton extends State<SaveButton> {
       maintainBottomViewPadding: false,
       child: FutureBuilder(
         future: apiService.getAllArchieve(),
-        builder: (BuildContext context,
-            AsyncSnapshot<List<ArchieveModel>> snapshot) {
+        builder:
+            (BuildContext context, AsyncSnapshot<List<ArchiveModel>> snapshot) {
           if (snapshot.hasError) {
             return Center(
               child: Text(
                   "Something wrong with message: ${snapshot.error.toString()}"),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
-            List<ArchieveModel> archieves = snapshot.data;
+            List<ArchiveModel> archieves = snapshot.data;
             return _buildListView(archieves);
           } else {
             return const Center(
@@ -61,7 +48,7 @@ class _SaveButton extends State<SaveButton> {
     );
   }
 
-  Widget _buildListView(List<ArchieveModel> archieves) {
+  Widget _buildListView(List<ArchiveModel> archieves) {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 

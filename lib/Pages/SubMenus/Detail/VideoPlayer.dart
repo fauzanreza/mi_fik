@@ -1,22 +1,29 @@
 import 'dart:convert';
 
+import 'package:chewie/chewie.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:mi_fik/main.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:video_player/video_player.dart';
 
-class AttachButton extends StatelessWidget {
-  AttachButton({Key key, this.passAttach}) : super(key: key);
-  String passAttach;
+class VideoPlayer extends StatefulWidget {
+  VideoPlayer({Key key, this.passAttach}) : super(key: key);
+  var passAttach;
+
+  @override
+  _VideoPlayer createState() => _VideoPlayer();
+}
+
+class _VideoPlayer extends State<VideoPlayer> {
+  VideoPlayerController _controller;
 
   @override
   Widget build(BuildContext context) {
     double fullWidth = MediaQuery.of(context).size.width;
-    final jsonAtt = json.decode(passAttach);
-    //final jsonAtt = json.encode(widget.passAttach);
 
     return Column(
-        children: jsonAtt.map<Widget>((attach) {
+        children: widget.passAttach.map<Widget>((attach) {
       //Get button text by name or url.
       getButtonText(attach) {
         if (attach['attach_name'] != "") {
@@ -28,16 +35,12 @@ class AttachButton extends StatelessWidget {
 
       //Get button attachment by its type.
       Widget getButton() {
-        if (attach['type'] == "youtube") {
+        if (attach['attach_type'] == "attachment_url") {
           return RichText(
             text: TextSpan(
               children: [
                 WidgetSpan(
-                  child: Icon(
-                      Icons
-                          .video_collection_outlined, //Change if there's an asset.
-                      size: iconMD,
-                      color: primaryColor),
+                  child: Icon(Icons.link, size: iconMD, color: primaryColor),
                 ),
                 TextSpan(
                     text: getButtonText(attach),
@@ -52,28 +55,7 @@ class AttachButton extends StatelessWidget {
               ],
             ),
           );
-        } else if (attach['type'] == "pdf") {
-          return RichText(
-            text: TextSpan(
-              children: [
-                WidgetSpan(
-                  child: Icon(Icons.picture_as_pdf_outlined,
-                      size: iconMD, color: primaryColor),
-                ),
-                TextSpan(
-                    text: getButtonText(attach),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        launchUrl(Uri.parse(attach['attach_url'].toString()));
-                      },
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: blackbg,
-                        fontSize: textSM)),
-              ],
-            ),
-          );
-        } else if (attach['type'] == "image") {
+        } else if (attach['attach_type'] == "attachment_image") {
           return SizedBox(
             width: fullWidth * 0.8,
             child: Column(
@@ -91,15 +73,26 @@ class AttachButton extends StatelessWidget {
               ],
             ),
           );
-        } else if (attach['type'] == "video") {
+        } else if (attach['attach_type'] == "attachment_video") {
           //Do something.
-        } else if (attach['type'] == "undefined") {
-          //Other link.
+          _controller = attach['attach_url'];
+
+          return SizedBox(
+              width: fullWidth * 0.8,
+              child: Flexible(
+                child: Chewie(
+                    controller: ChewieController(
+                  videoPlayerController: _controller,
+                  autoPlay: false,
+                  looping: false,
+                  aspectRatio: 16 / 9,
+                )),
+              ));
         }
       }
 
       return Container(
-          margin: EdgeInsets.only(left: marginMD, top: marginMD),
+          margin: EdgeInsets.only(left: marginMD, top: marginMD * 0.3),
           alignment: Alignment.centerLeft,
           child: getButton());
     }).toList());

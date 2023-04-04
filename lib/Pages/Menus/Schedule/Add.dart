@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:intl/intl.dart';
-import 'package:mi_fik/Modules/Models/Archieve.dart';
+import 'package:mi_fik/Modules/Models/Archive/Archive.dart';
 import 'package:mi_fik/Modules/Models/Task.dart';
 import 'package:mi_fik/Modules/Services/ArchieveServices.dart';
 import 'package:mi_fik/Modules/Services/TaskServices.dart';
@@ -365,7 +365,7 @@ class _AddTaskwArchive extends State<AddTaskwArchive> {
                             child: ElevatedButton(
                               onPressed: () async {
                                 //Mapping.
-                                ArchieveModel archive = ArchieveModel(
+                                ArchiveModel archive = ArchiveModel(
                                   archieveName: archiveNameCtrl.text.toString(),
                                 );
 

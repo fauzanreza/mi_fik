@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mi_fik/Modules/Models/Archieve.dart';
+import 'package:mi_fik/Modules/Models/Archive/Archive.dart';
 import 'package:mi_fik/Modules/Services/ArchieveServices.dart';
 import 'package:mi_fik/Components/FailedDialog.dart';
 import 'package:mi_fik/Components/SuccessDialog.dart';
@@ -64,7 +64,7 @@ class _DeleteArchive extends State<DeleteArchive> {
                                             EdgeInsets.all(paddingMD * 0.8)),
                                     onPressed: () async {
                                       //Mapping.
-                                      ArchieveModel archive = ArchieveModel(
+                                      ArchiveModel archive = ArchiveModel(
                                           idUser: passIdUser.toString());
 
                                       apiService

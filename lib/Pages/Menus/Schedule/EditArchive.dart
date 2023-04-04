@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mi_fik/Modules/Models/Archieve.dart';
+import 'package:mi_fik/Modules/Models/Archive/Archive.dart';
 import 'package:mi_fik/Modules/Services/ArchieveServices.dart';
 import 'package:mi_fik/Components/FailedDialog.dart';
 import 'package:mi_fik/Components/SuccessDialog.dart';
@@ -101,7 +101,7 @@ class _EditArchive extends State<EditArchive> {
                       child: ElevatedButton(
                         onPressed: () async {
                           //Mapping.
-                          ArchieveModel archive = ArchieveModel(
+                          ArchiveModel archive = ArchiveModel(
                               archieveName: archiveNameCtrl.text.toString(),
                               idUser: passIdUser.toString());
 

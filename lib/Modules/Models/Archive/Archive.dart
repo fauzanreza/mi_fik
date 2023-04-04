@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-class ArchieveModel {
+class ArchiveModel {
   //Key
   int id; //Primary
   String idUser; //Foreign->user
@@ -12,7 +12,7 @@ class ArchieveModel {
   String createdAt;
   String updatedAt;
 
-  ArchieveModel({
+  ArchiveModel({
     this.id,
     this.idUser,
     this.archieveName,
@@ -22,8 +22,8 @@ class ArchieveModel {
     this.updatedAt,
   });
 
-  factory ArchieveModel.fromJson(Map<String, dynamic> map) {
-    return ArchieveModel(
+  factory ArchiveModel.fromJson(Map<String, dynamic> map) {
+    return ArchiveModel(
         id: map["id"],
         idUser: map["id_user"],
         archieveName: map["archieve_name"],
@@ -42,13 +42,13 @@ class ArchieveModel {
   }
 }
 
-List<ArchieveModel> ArchieveModelFromJson(String jsonData) {
+List<ArchiveModel> ArchieveModelFromJson(String jsonData) {
   final data = json.decode(jsonData);
-  return List<ArchieveModel>.from(
-      data.map((item) => ArchieveModel.fromJson(item)));
+  return List<ArchiveModel>.from(
+      data.map((item) => ArchiveModel.fromJson(item)));
 }
 
-String ArchieveModelToJson(ArchieveModel data) {
+String ArchieveModelToJson(ArchiveModel data) {
   final jsonData = data.toJson();
   return json.encode(jsonData);
 }

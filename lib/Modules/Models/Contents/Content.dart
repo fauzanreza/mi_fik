@@ -10,6 +10,7 @@ class ContentModel {
   String contentImage;
   var contentTag;
   var contentLoc;
+  var contentAttach;
 
   //Properties
   String createdAt;
@@ -25,6 +26,7 @@ class ContentModel {
     this.contentTitle,
     this.contentDesc,
     this.contentLoc,
+    this.contentAttach,
     this.contentImage,
     this.dateStart,
     this.dateEnd,
@@ -36,13 +38,15 @@ class ContentModel {
 
   factory ContentModel.fromJson(Map<String, dynamic> map) {
     return ContentModel(
+      id: map["id"],
       slugName: map["slug_name"],
       contentTitle: map["content_title"],
       contentDesc: map["content_desc"].toString(),
       contentLoc: map["content_loc"],
+      contentAttach: map["content_attach"],
       contentImage: map["content_image"].toString(),
-      //dateStart: map["content_date_start"],
-      //dateEnd: map["content_date_end"],
+      dateStart: map["content_date_start"],
+      dateEnd: map["content_date_end"],
       contentTag: map["content_tag"],
       createdAt: map["created_at"],
       totalViews: map["total_views"].toString(),
@@ -52,7 +56,6 @@ class ContentModel {
 
   Map<String, dynamic> toJson() {
     return {
-      "id": id,
       "content_title": contentTitle,
       "content_desc": contentDesc,
       "content_tag": contentTag,
@@ -66,7 +69,7 @@ class ContentModel {
 List<ContentModel> ContentModelFromJson(String jsonData) {
   final data = json.decode(jsonData);
   return List<ContentModel>.from(
-      data.map((item) => ContentModel.fromJson(item)));
+      data['data'].map((item) => ContentModel.fromJson(item)));
 }
 
 List<ContentModel> ContentModelFromJsonWPaginate(String jsonData) {

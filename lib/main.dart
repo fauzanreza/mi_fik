@@ -59,7 +59,7 @@ double iconSM = 15; //For content header ...
 List archieveVal = []; //Need to be fixed
 DateTime slctSchedule = DateTime.now();
 int passIdUser = 1; //For now.
-int passSlugContent;
+String passSlugContent;
 final locDetailCtrl = TextEditingController();
 var locCoordinateCtrl = null;
 final selectedTag = [];
