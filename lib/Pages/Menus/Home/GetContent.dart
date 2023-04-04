@@ -197,6 +197,8 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     getViewWidget(content.totalViews),
+                                    getPeriodDateWidget(
+                                        content.dateStart, content.dateEnd),
                                     const Spacer(),
                                     getUploadDateWidget(
                                         DateTime.parse(content.createdAt))

@@ -238,3 +238,95 @@ Widget getContentHour(dateStart, dateEnd) {
     return const SizedBox();
   }
 }
+
+Widget getPeriodDateWidget(dateStart, dateEnd) {
+  //Initial variable.
+  final now = DateTime.now();
+  dateStart = DateTime.parse(dateStart);
+  dateEnd = DateTime.parse(dateEnd);
+
+  bool hasDatePassed(DateTime date) {
+    final now = DateTime.now();
+    return date.isBefore(now);
+  }
+
+  final ds = DateTime(dateStart.year, dateStart.month, dateStart.day,
+      dateStart.hour, dateStart.minute);
+  final de = DateTime(
+      dateEnd.year, dateEnd.month, dateEnd.day, dateEnd.hour, dateEnd.minute);
+
+  final isTodayStart =
+      now.year == ds.year && now.month == ds.month && now.day == ds.day;
+  final isTodayEnd =
+      now.year == de.year && now.month == de.month && now.day == de.day;
+
+  if (hasDatePassed(ds) && !hasDatePassed(de)) {
+    if (now.difference(ds).inMinutes < 60 && isTodayStart) {
+      return Container(
+          margin: EdgeInsets.only(left: marginMD * 0.8),
+          child: RichText(
+            text: TextSpan(
+              children: [
+                WidgetSpan(
+                  child: Icon(Icons.circle, size: 14, color: primaryColor),
+                ),
+                TextSpan(
+                    text: " About to start",
+                    style: TextStyle(
+                        color: primaryColor, fontWeight: FontWeight.w500)),
+              ],
+            ),
+          ));
+    } else if (de.difference(now).inMinutes < 30 && isTodayEnd) {
+      return Container(
+          margin: EdgeInsets.only(left: marginMD * 0.8),
+          child: RichText(
+            text: TextSpan(
+              children: [
+                WidgetSpan(
+                  child: Icon(Icons.circle, size: 14, color: dangerColor),
+                ),
+                TextSpan(
+                    text: " About to end",
+                    style: TextStyle(
+                        color: dangerColor, fontWeight: FontWeight.w500)),
+              ],
+            ),
+          ));
+    } else {
+      return Container(
+          margin: EdgeInsets.only(left: marginMD * 0.8),
+          child: RichText(
+            text: TextSpan(
+              children: [
+                WidgetSpan(
+                  child: Icon(Icons.circle, size: 14, color: dangerColor),
+                ),
+                TextSpan(
+                    text: " Live",
+                    style: TextStyle(
+                        color: dangerColor, fontWeight: FontWeight.w500)),
+              ],
+            ),
+          ));
+    }
+  } else if (hasDatePassed(ds) && hasDatePassed(de)) {
+    return Container(
+        margin: EdgeInsets.only(left: marginMD * 0.8),
+        child: RichText(
+          text: TextSpan(
+            children: [
+              WidgetSpan(
+                child: Icon(Icons.circle, size: 14, color: successbg),
+              ),
+              TextSpan(
+                  text: " Just Ended",
+                  style:
+                      TextStyle(color: successbg, fontWeight: FontWeight.w500)),
+            ],
+          ),
+        ));
+  } else {
+    return SizedBox();
+  }
+}

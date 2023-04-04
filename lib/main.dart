@@ -28,6 +28,7 @@ var mainbg = const Color.fromARGB(255, 232, 232, 232);
 var whitebg = const Color(0xFFFFFFFF);
 var blackbg = const Color(0xFF414141);
 var greybg = const Color.fromARGB(255, 118, 118, 118);
+var successbg = const Color(0xFF6EC25B);
 
 var roundedLG = const Radius.circular(18); //For navbar, ...
 var roundedMd = const Radius.circular(10); //For container, ...
