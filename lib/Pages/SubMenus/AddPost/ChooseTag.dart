@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mi_fik/Modules/Models/Tag.dart';
-import 'package:mi_fik/Modules/Services/TagServices.dart';
+import 'package:mi_fik/Modules/Models/Tags/Tag.dart';
 import 'package:mi_fik/Components/Skeletons/tag_1.dart';
+import 'package:mi_fik/Modules/Services/Queries/TagQueries.dart';
 import 'package:mi_fik/main.dart';
 
 class ChooseTag extends StatefulWidget {
@@ -13,6 +13,7 @@ class ChooseTag extends StatefulWidget {
 
 class _ChooseTag extends State<ChooseTag> {
   TagService apiService;
+  int pageTag = 1;
 
   @override
   void initState() {
@@ -25,7 +26,7 @@ class _ChooseTag extends State<ChooseTag> {
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
-        future: apiService.getAllTag(),
+        future: apiService.getAllTag(pageTag),
         builder:
             (BuildContext context, AsyncSnapshot<List<TagModel>> snapshot) {
           if (snapshot.hasError) {
@@ -46,7 +47,6 @@ class _ChooseTag extends State<ChooseTag> {
 
   Widget _buildListView(List<TagModel> tags) {
     int i = 0;
-    int max = 10; //Maximum tag
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
@@ -77,8 +77,8 @@ class _ChooseTag extends State<ChooseTag> {
                         onPressed: () {
                           //Remove selected tag
                           setState(() {
-                            selectedTag
-                                .removeWhere((item) => item['id'] == tg['id']);
+                            selectedTag.removeWhere(
+                                (item) => item['slug_name'] == tg['slug_name']);
                           });
                         },
                         icon: Icon(
@@ -110,6 +110,43 @@ class _ChooseTag extends State<ChooseTag> {
       }
     }
 
+    Widget getControlButton(type) {
+      if (type == "more") {
+        return Container(
+            alignment: Alignment.center,
+            margin: EdgeInsets.only(right: 15),
+            child: TextButton.icon(
+              onPressed: () {
+                setState(() {
+                  pageTag++;
+                });
+              },
+              icon: Icon(Icons.navigate_next, color: primaryColor),
+              label: Text(
+                "More",
+                style: TextStyle(color: primaryColor),
+              ),
+            ));
+      } else if (type == "previous" && pageTag > 1) {
+        return Container(
+            alignment: Alignment.center,
+            child: TextButton.icon(
+              onPressed: () {
+                setState(() {
+                  pageTag--;
+                });
+              },
+              icon: Icon(Icons.navigate_before, color: primaryColor),
+              label: Text(
+                "Previous",
+                style: TextStyle(color: primaryColor),
+              ),
+            ));
+      } else {
+        return SizedBox();
+      }
+    }
+
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -119,94 +156,45 @@ class _ChooseTag extends State<ChooseTag> {
             spacing: 5,
             children: tags.map<Widget>((tag) {
               //Check if tag already selected
-              var contain =
-                  selectedTag.where((item) => item['id'] == int.parse(tag.id));
+              var contain = selectedTag
+                  .where((item) => item['slug_name'] == tag.slugName);
               if (contain.isEmpty || selectedTag.isEmpty) {
-                if (i < max) {
-                  i++;
-                  return ElevatedButton.icon(
-                    onPressed: () {
-                      //Store selected tags
-                      setState(() {
-                        selectedTag.add(
-                            {"id": int.parse(tag.id), "tag_name": tag.tagName});
+                return ElevatedButton.icon(
+                  onPressed: () {
+                    //Store selected tags
+                    setState(() {
+                      selectedTag.add({
+                        "slug_name": tag.slugName,
+                        "tag_name": tag.slugName
                       });
-                    },
-                    icon: Icon(
-                      Icons.circle,
-                      size: textSM,
-                      color: Colors.green,
-                    ),
-                    label:
-                        Text(tag.tagName, style: TextStyle(fontSize: textXSM)),
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(roundedLG2),
-                      )),
-                      backgroundColor:
-                          MaterialStatePropertyAll<Color>(primaryColor),
-                    ),
-                  );
-                } else if (i == max) {
-                  i++;
-                  return Container(
-                      margin: const EdgeInsets.only(right: 5),
-                      child: TextButton(
-                        onPressed: () => showDialog<String>(
-                          context: context,
-                          builder: (BuildContext context) => AlertDialog(
-                            contentPadding: EdgeInsets.all(paddingMD),
-                            title: Text(
-                              'All Tag',
-                              style: TextStyle(
-                                  color: primaryColor, fontSize: textMD),
-                            ),
-                            content: SizedBox(
-                                width: fullWidth,
-                                child: Wrap(
-                                    runSpacing: -5,
-                                    spacing: 5,
-                                    children: tags.map<Widget>((tag) {
-                                      return ElevatedButton.icon(
-                                        onPressed: () {
-                                          // Respond to button press
-                                        },
-                                        icon: Icon(
-                                          Icons.circle,
-                                          size: textSM,
-                                          color: Colors.green,
-                                        ),
-                                        label: Text(tag.tagName,
-                                            style:
-                                                TextStyle(fontSize: textXSM)),
-                                        style: ButtonStyle(
-                                          shape: MaterialStateProperty.all<
-                                                  RoundedRectangleBorder>(
-                                              RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                roundedLG2),
-                                          )),
-                                          backgroundColor:
-                                              MaterialStatePropertyAll<Color>(
-                                                  primaryColor),
-                                        ),
-                                      );
-                                    }).toList())),
-                          ),
-                        ),
-                        child: Text(
-                          "See ${tags.length - max} More",
-                          style: TextStyle(color: primaryColor),
-                        ),
-                      ));
-                } else {
-                  return const SizedBox();
-                }
+                    });
+                  },
+                  icon: Icon(
+                    Icons.circle,
+                    size: textSM,
+                    color: Colors.green,
+                  ),
+                  label: Text(tag.tagName, style: TextStyle(fontSize: textXSM)),
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(roundedLG2),
+                    )),
+                    backgroundColor:
+                        MaterialStatePropertyAll<Color>(primaryColor),
+                  ),
+                );
               } else {
                 return const SizedBox();
               }
             }).toList(),
+          ),
+          Row(
+            children: [
+              getControlButton("previous"),
+              Spacer(),
+              getControlButton("more"),
+            ],
           ),
           getSelectedTag(selectedTag)
         ]);

@@ -1,12 +1,12 @@
 import 'package:http/http.dart' show Client;
-import 'package:mi_fik/Modules/Models/Archieve.dart';
+import 'package:mi_fik/Modules/Models/Archive/Archive.dart';
 import 'package:mi_fik/main.dart';
 
 class ArchieveService {
   final String baseUrl = "https://mifik.leonardhors.site";
   Client client = Client();
 
-  Future<List<ArchieveModel>> getAllArchieve() async {
+  Future<List<ArchiveModel>> getAllArchieve() async {
     final response =
         await client.get(Uri.parse("$baseUrl/api/archieve/$passIdUser"));
     if (response.statusCode == 200) {
@@ -16,7 +16,7 @@ class ArchieveService {
     }
   }
 
-  Future<bool> addArchive(ArchieveModel data) async {
+  Future<bool> addArchive(ArchiveModel data) async {
     final response = await client.post(
       Uri.parse("$baseUrl/api/archieve/create/$passIdUser"),
       headers: {"content-type": "application/json"},
@@ -29,7 +29,7 @@ class ArchieveService {
     }
   }
 
-  Future<bool> editArchive(ArchieveModel data, id) async {
+  Future<bool> editArchive(ArchiveModel data, id) async {
     final response = await client.put(
       Uri.parse("$baseUrl/api/archieve/edit/$id"),
       headers: {"content-type": "application/json"},
@@ -43,7 +43,7 @@ class ArchieveService {
     }
   }
 
-  Future<bool> deleteArchive(ArchieveModel data, id) async {
+  Future<bool> deleteArchive(ArchiveModel data, id) async {
     final response = await client.delete(
       Uri.parse("$baseUrl/api/archieve/delete/$id"),
       headers: {"content-type": "application/json"},

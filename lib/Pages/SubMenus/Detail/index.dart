@@ -1,13 +1,11 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:mi_fik/Modules/Helpers/Widget.dart';
 import 'package:mi_fik/Modules/Models/Contents/Content.dart';
-import 'package:mi_fik/Modules/Services/Commands/ContentCommands.dart';
 import 'package:mi_fik/Modules/Services/Queries/ContentQueries.dart';
-import 'package:mi_fik/Pages/Menus/Home/Detail/Attach.dart';
-import 'package:mi_fik/Pages/Menus/Home/Detail/Location.dart';
-import 'package:mi_fik/Pages/Menus/Home/Detail/Save.dart';
+import 'package:mi_fik/Pages/SubMenus/Detail/Attach.dart';
+import 'package:mi_fik/Pages/SubMenus/Detail/Location.dart';
+import 'package:mi_fik/Pages/SubMenus/Detail/Save.dart';
 import 'package:mi_fik/main.dart';
 
 class DetailPage extends StatefulWidget {
@@ -110,31 +108,6 @@ class _DetailPage extends State<DetailPage> {
       }
     }
 
-    //Convert hour.
-    Widget getContentHour(dateStart, dateEnd) {
-      if (dateStart != null && dateEnd != null) {
-        return RichText(
-          text: TextSpan(
-            children: [
-              //Content date start & end
-              WidgetSpan(
-                child: Icon(Icons.access_time, size: 22, color: primaryColor),
-              ),
-              TextSpan(
-                  text:
-                      " ${DateFormat("hh:mm a").format(DateTime.parse(contents[0].dateStart))} - ${DateFormat("hh:mm a").format(DateTime.parse(contents[0].dateEnd))} WIB",
-                  style: TextStyle(
-                      color: primaryColor,
-                      fontSize: textMD,
-                      fontWeight: FontWeight.w500)),
-            ],
-          ),
-        );
-      } else {
-        return const SizedBox();
-      }
-    }
-
     //Get location name.
     Widget getLocation(loc, id) {
       if (loc != null) {
@@ -147,113 +120,7 @@ class _DetailPage extends State<DetailPage> {
     //Get attachment file or link.
     Widget getAttach(attach) {
       if (attach != null) {
-        return AttachButton(passAttach: attach.toString());
-      } else {
-        return const SizedBox();
-      }
-    }
-
-    //Get content subtitle.
-    Widget getSubtitle(sub) {
-      if (sub != null) {
-        return Text(
-          sub,
-          style: TextStyle(fontSize: textSM, color: blackbg),
-        );
-      } else {
-        return const SizedBox();
-      }
-    }
-
-    //Get content tag.
-    Widget getTag(tag, height) {
-      int i = 0;
-      int max = 10; //Maximum tag
-
-      if (tag != null) {
-        final jsonLoc = json.decode(tag.toString());
-
-        return Wrap(
-            runSpacing: -5,
-            spacing: 5,
-            children: jsonLoc.map<Widget>((content) {
-              if (i < max) {
-                i++;
-                return ElevatedButton.icon(
-                  onPressed: () {
-                    // Respond to button press
-                  },
-                  icon: Icon(
-                    Icons.circle,
-                    size: textSM,
-                    color: Colors.green,
-                  ),
-                  label: Text(content['tag_name'],
-                      style: TextStyle(fontSize: textXSM)),
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(roundedLG2),
-                    )),
-                    backgroundColor:
-                        MaterialStatePropertyAll<Color>(primaryColor),
-                  ),
-                );
-              } else if (i == max) {
-                i++;
-                return Container(
-                    margin: const EdgeInsets.only(right: 5),
-                    child: TextButton(
-                      onPressed: () => showDialog<String>(
-                        context: context,
-                        builder: (BuildContext context) => AlertDialog(
-                          contentPadding: EdgeInsets.all(paddingMD),
-                          title: Text(
-                            'All Tag',
-                            style: TextStyle(
-                                color: primaryColor, fontSize: textMD),
-                          ),
-                          content: SizedBox(
-                              width: height,
-                              child: Wrap(
-                                  runSpacing: -5,
-                                  spacing: 5,
-                                  children: jsonLoc.map<Widget>((content) {
-                                    return ElevatedButton.icon(
-                                      onPressed: () {
-                                        // Respond to button press
-                                      },
-                                      icon: Icon(
-                                        Icons.circle,
-                                        size: textSM,
-                                        color: Colors.green,
-                                      ),
-                                      label: Text(content['tag_name'],
-                                          style: TextStyle(fontSize: textXSM)),
-                                      style: ButtonStyle(
-                                        shape: MaterialStateProperty.all<
-                                                RoundedRectangleBorder>(
-                                            RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(roundedLG2),
-                                        )),
-                                        backgroundColor:
-                                            MaterialStatePropertyAll<Color>(
-                                                primaryColor),
-                                      ),
-                                    );
-                                  }).toList())),
-                        ),
-                      ),
-                      child: Text(
-                        "See ${jsonLoc.length - max} More",
-                        style: TextStyle(color: primaryColor),
-                      ),
-                    ));
-              } else {
-                return const SizedBox();
-              }
-            }).toList());
+        return AttachButton(passAttach: attach);
       } else {
         return const SizedBox();
       }
@@ -275,8 +142,8 @@ class _DetailPage extends State<DetailPage> {
                     height: fullHeight * 0.45,
                     width: fullWidth,
                     decoration: BoxDecoration(
-                      image: const DecorationImage(
-                        image: AssetImage("assets/content/content-2.jpg"),
+                      image: DecorationImage(
+                        image: getImageHeader(contents[0].contentImage),
                         fit: BoxFit.cover,
                       ),
                       borderRadius: BorderRadius.circular(roundedLG2),
@@ -285,18 +152,34 @@ class _DetailPage extends State<DetailPage> {
             ),
             child: Container(
               height: fullHeight * 0.3,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assets/content/content-2.jpg"),
+                  image: getImageHeader(contents[0].contentImage),
                   fit: BoxFit.cover,
                 ),
               ),
             ),
           ),
           Container(
-            transform: Matrix4.translationValues(0.0, fullHeight * 0.03, 0.0),
+            transform: Matrix4.translationValues(
+                fullWidth * 0.03, fullHeight * 0.03, 0.0),
+            decoration: BoxDecoration(
+              color: primaryColor,
+              borderRadius: BorderRadius.all(Radius.circular(100)),
+              boxShadow: [
+                BoxShadow(
+                  color: Color.fromARGB(255, 67, 67, 67).withOpacity(0.3),
+                  blurRadius: 10.0,
+                  spreadRadius: 0.0,
+                  offset: const Offset(
+                    5.0,
+                    5.0,
+                  ),
+                )
+              ],
+            ),
             child: IconButton(
-              icon: Icon(Icons.arrow_back, size: iconLG),
+              icon: Icon(Icons.arrow_back, size: iconMD),
               color: Colors.white,
               onPressed: () {
                 Navigator.pop(context);
@@ -350,24 +233,23 @@ class _DetailPage extends State<DetailPage> {
                     Container(
                         margin: EdgeInsets.only(
                             top: marginMT, left: marginMD, right: marginMD),
-                        child: Text(contents[0].contentDesc,
-                            style:
-                                TextStyle(color: blackbg, fontSize: textSM))),
+                        child: getDescHeaderWidget(contents[0].contentDesc)),
                     //Attached file or link.
-                    //getAttach(contents[0].contentAttach),
+                    getAttach(contents[0].contentAttach),
                     //Tag holder.
                     Container(
                       margin: EdgeInsets.symmetric(
                           vertical: marginMT, horizontal: marginMD),
-                      child: getTag(contents[0].contentTag, fullHeight),
+                      child:
+                          getTag(contents[0].contentTag, fullHeight, contents),
                     ),
                   ])),
                   Container(
                     margin: EdgeInsets.only(
                         left: paddingXSM, right: paddingXSM, bottom: marginMD),
                     child: Wrap(runSpacing: -5, spacing: 10, children: [
-                      getLocation(
-                          contents[0].contentLoc, int.parse(contents[0].id)),
+                      // getLocation(
+                      //     contents[0].contentLoc, int.parse(contents[0].id)),
                       getContentDate(
                           contents[0].dateStart, contents[0].dateEnd),
                       getContentHour(contents[0].dateStart, contents[0].dateEnd)
@@ -375,7 +257,7 @@ class _DetailPage extends State<DetailPage> {
                   ),
 
                   //Save content to archieve.
-                  SaveButton(passId: int.parse(contents[0].id))
+                  SaveButton(passSlug: contents[0].slugName)
                 ]),
           )
         ],

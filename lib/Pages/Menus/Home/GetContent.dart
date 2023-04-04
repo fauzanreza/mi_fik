@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/Skeletons/content_1.dart';
 import 'package:mi_fik/Modules/Helpers/Widget.dart';
 import 'package:mi_fik/Modules/Models/Contents/Content.dart';
 import 'package:mi_fik/Modules/Services/Queries/ContentQueries.dart';
-import 'package:mi_fik/Pages/Menus/Home/Detail/index.dart';
+import 'package:mi_fik/Pages/SubMenus/Detail/index.dart';
+
 import 'package:mi_fik/main.dart';
 
 class GetContent extends StatefulWidget {
@@ -151,7 +151,7 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
                                 DetailPage(passSlug: content.slugName)),
                       );
 
-                      passSlugContent = int.parse(content.slugName);
+                      passSlugContent = content.slugName;
                     },
                     child: Container(
                         width: fullWidth * 0.82,
@@ -197,6 +197,8 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     getViewWidget(content.totalViews),
+                                    getPeriodDateWidget(
+                                        content.dateStart, content.dateEnd),
                                     const Spacer(),
                                     getUploadDateWidget(
                                         DateTime.parse(content.createdAt))
@@ -209,13 +211,50 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
                               child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(content.contentTitle,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            color: blackbg,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: textMD)),
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          margin: const EdgeInsets.symmetric(
+                                              horizontal: 10.0),
+                                          width: iconLG,
+                                          child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(25),
+                                              child: Image.network(
+                                                  "https://sci.telkomuniversity.ac.id/wp-content/uploads/2022/02/13.jpg")), //For now.
+                                        ),
+                                        SizedBox(
+                                            width: fullWidth * 0.6,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Text(content.contentTitle,
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                        color: blackbg,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: textMD - 1)),
+                                                Text("username",
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                        color: greybg,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        fontSize: textSM - 1)),
+                                              ],
+                                            ))
+                                      ],
+                                    ),
                                     getDescHeaderWidget(content.contentDesc)
                                   ]),
                             ),
@@ -248,8 +287,7 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
                                               passSlug: content.slugName)),
                                     );
 
-                                    passSlugContent =
-                                        int.parse(content.slugName);
+                                    passSlugContent = content.slugName;
                                   },
                                   style: ButtonStyle(
                                     shape: MaterialStateProperty.all<

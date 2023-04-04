@@ -46,6 +46,7 @@ dependencies:
   geolocator: ^9.0.2
   flutter_datetime_picker: ^1.5.1
   skeletons: ^0.0.3
+  chewie: ^1.2.2
 
   #firebase.
   firebase_core: ^1.19.1

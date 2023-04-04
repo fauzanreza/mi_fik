@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mi_fik/Modules/Models/Archieve.dart';
+import 'package:mi_fik/Modules/Models/Archive/Archive.dart';
 import 'package:mi_fik/Modules/Services/ArchieveServices.dart';
 import 'package:mi_fik/Components/Skeletons/archive_1.dart';
 import 'package:mi_fik/main.dart';
@@ -26,15 +26,15 @@ class _ArchievePage extends State<ArchievePage> {
       maintainBottomViewPadding: false,
       child: FutureBuilder(
         future: apiService.getAllArchieve(),
-        builder: (BuildContext context,
-            AsyncSnapshot<List<ArchieveModel>> snapshot) {
+        builder:
+            (BuildContext context, AsyncSnapshot<List<ArchiveModel>> snapshot) {
           if (snapshot.hasError) {
             return Center(
               child: Text(
                   "Something wrong with message: ${snapshot.error.toString()}"),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
-            List<ArchieveModel> archieves = snapshot.data;
+            List<ArchiveModel> archieves = snapshot.data;
             return _buildListView(archieves);
           } else {
             return const ArchiveSkeleton1();
@@ -44,7 +44,7 @@ class _ArchievePage extends State<ArchievePage> {
     );
   }
 
-  Widget _buildListView(List<ArchieveModel> archieves) {
+  Widget _buildListView(List<ArchiveModel> archieves) {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
