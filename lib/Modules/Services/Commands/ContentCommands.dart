@@ -1,8 +1,5 @@
 import 'package:http/http.dart' show Client;
-import 'package:intl/intl.dart';
-import 'package:mi_fik/Modules/Helpers/Converter.dart';
 import 'package:mi_fik/Modules/Models/Contents/Content.dart';
-import 'package:mi_fik/main.dart';
 
 class ContentCommandsService {
   final String baseUrl = "https://mifik.id";
@@ -10,7 +7,7 @@ class ContentCommandsService {
 
   Future<bool> addContent(ContentModel data) async {
     final response = await client.post(
-      Uri.parse("$baseUrl/api/content/create/$passIdUser"),
+      Uri.parse("$baseUrl/api/v1/content/create"),
       headers: {"content-type": "application/json"},
       body: ContentModelToJson(data),
     );

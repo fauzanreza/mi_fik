@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 class ContentModel {
   String id;
   String slugName;
   String contentTitle;
+  String reminder;
 
   //Nullable
   String contentDesc;
@@ -16,25 +18,35 @@ class ContentModel {
   String createdAt;
   String dateStart;
   String dateEnd;
+  String timeStart;
+  String timeEnd;
   String totalViews;
+  int isDraft;
+
+  String userId;
 
   String dataFrom; //For sql union
 
-  ContentModel({
-    this.id,
-    this.slugName,
-    this.contentTitle,
-    this.contentDesc,
-    this.contentLoc,
-    this.contentAttach,
-    this.contentImage,
-    this.dateStart,
-    this.dateEnd,
-    this.contentTag,
-    this.createdAt,
-    this.totalViews,
-    //this.dataFrom
-  });
+  ContentModel(
+      {this.id,
+      this.slugName,
+      this.contentTitle,
+      this.contentDesc,
+      this.contentLoc,
+      this.contentAttach,
+      this.contentImage,
+      this.dateStart,
+      this.dateEnd,
+      this.timeStart,
+      this.timeEnd,
+      this.contentTag,
+      this.createdAt,
+      this.totalViews,
+      this.reminder,
+      this.isDraft,
+      this.userId
+      //this.dataFrom
+      });
 
   factory ContentModel.fromJson(Map<String, dynamic> map) {
     return ContentModel(
@@ -56,12 +68,19 @@ class ContentModel {
 
   Map<String, dynamic> toJson() {
     return {
+      "user_id": userId,
       "content_title": contentTitle,
       "content_desc": contentDesc,
       "content_tag": contentTag,
       "content_loc": contentLoc,
+      "content_attach": contentAttach,
       "content_date_start": dateStart,
-      "content_date_end": dateEnd
+      "content_date_end": dateEnd,
+      "content_time_start": timeStart,
+      "content_time_end": timeEnd,
+      "content_reminder": reminder,
+      "content_image": contentImage,
+      "is_draft": isDraft
     };
   }
 }
