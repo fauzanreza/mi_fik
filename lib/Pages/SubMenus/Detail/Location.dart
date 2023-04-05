@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -10,10 +9,10 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LocationButton extends StatefulWidget {
-  const LocationButton({Key key, this.passLocation, this.passId})
+  LocationButton({Key key, this.passLocation, this.passSlugName})
       : super(key: key);
-  final String passLocation;
-  final int passId;
+  var passLocation;
+  final String passSlugName;
 
   @override
   _LocationButton createState() => _LocationButton();
@@ -108,9 +107,8 @@ class _LocationButton extends State<LocationButton>
     double fullWidth = MediaQuery.of(context).size.width;
 
     //Get location name and coordinate from json.
-    final jsonLoc = json.decode(widget.passLocation.toString());
-    var location = jsonLoc[0]['detail'];
-    var coordinate = jsonLoc[1]['detail'].split(', ');
+    var location = widget.passLocation[0]['detail'];
+    var coordinate = widget.passLocation[1]['detail'].split(', ');
     double lat = double.parse(coordinate[0]);
     double lng = double.parse(coordinate[1]);
 
@@ -142,7 +140,7 @@ class _LocationButton extends State<LocationButton>
                         if (_origin != null) _origin,
                         if (_destination != null) _destination,
                         Marker(
-                          markerId: MarkerId(widget.passId.toString()),
+                          markerId: MarkerId(widget.passSlugName),
                           infoWindow: InfoWindow(title: location),
                           icon: BitmapDescriptor.defaultMarkerWithHue(
                               BitmapDescriptor.hueOrange),

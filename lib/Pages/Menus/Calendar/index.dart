@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/leftbar.dart';
-import 'package:mi_fik/Components/rightbar.dart';
+import 'package:mi_fik/Components/RightBar.dart';
 import 'package:mi_fik/Pages/Menus/Calendar/DayEvent.dart';
 import 'package:mi_fik/main.dart';
 import 'package:table_calendar/table_calendar.dart';

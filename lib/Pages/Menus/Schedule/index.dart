@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/leftbar.dart';
-import 'package:mi_fik/Components/rightbar.dart';
+import 'package:mi_fik/Components/RightBar.dart';
 import 'package:mi_fik/Pages/Menus/Schedule/Add.dart';
 import 'package:mi_fik/Pages/Menus/Schedule/Archieve.dart';
 import 'package:mi_fik/Pages/Menus/Schedule/MySchedule.dart';

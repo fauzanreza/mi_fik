@@ -2,6 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:mi_fik/Modules/Helpers/Converter.dart';
+import 'package:mi_fik/Modules/Helpers/Template.dart';
+import 'package:mi_fik/Modules/Helpers/Validation.dart';
 import 'package:mi_fik/Modules/Models/Contents/Content.dart';
 import 'package:mi_fik/Modules/Services/Commands/ContentCommands.dart';
 import 'package:mi_fik/Modules/Services/Queries/ContentQueries.dart';
@@ -345,45 +348,25 @@ class _addPost extends State<addPost> {
               height: btnHeightMD,
               child: ElevatedButton(
                 onPressed: () async {
-                  //Validate json.
-                  validateNullJSON(val) {
-                    if (val.length != 0) {
-                      return jsonEncode(val);
-                    } else {
-                      return null;
-                    }
-                  }
-
-                  validateDateNull(val) {
-                    if (val != null) {
-                      return val.toString();
-                    } else {
-                      return null;
-                    }
-                  }
-
-                  //Get content location json
-                  getContentLoc(detail, loc) {
-                    if (detail != null && loc != null) {
-                      var tag = [
-                        {"type": "location", "detail": detail},
-                        {"type": "coodinate", "detail": loc}
-                      ];
-                      return json.encode(tag);
-                    } else {
-                      return null;
-                    }
-                  }
-
                   //Mapping.
                   ContentModel content = ContentModel(
+                    userId: passIdUser,
                     contentTitle: contentTitleCtrl.text.toString(),
                     contentDesc: contentDescCtrl.text.toString(),
                     contentTag: validateNullJSON(selectedTag),
-                    contentLoc: getContentLoc(
-                        locDetailCtrl.text, locCoordinateCtrl), //For now.
-                    dateStart: validateDateNull(dateStartCtrl),
-                    dateEnd: validateDateNull(dateEndCtrl),
+                    contentLoc:
+                        getContentLocObj(locDetailCtrl.text, locCoordinateCtrl),
+                    contentAttach: null,
+                    contentImage: null,
+                    reminder: "reminder_none",
+                    dateStart:
+                        validateNull(getDBDateFormat("date", dateStartCtrl)),
+                    dateEnd:
+                        validateNull(getDBDateFormat("date", dateStartCtrl)),
+                    timeStart:
+                        validateNull(getDBDateFormat("time", dateEndCtrl)),
+                    timeEnd: validateNull(getDBDateFormat("time", dateEndCtrl)),
+                    isDraft: 0,
                   );
 
                   //Validator
@@ -398,20 +381,21 @@ class _addPost extends State<addPost> {
                             builder: (BuildContext context) =>
                                 FailedDialog(text: "Create content failed"));
                       } else {
+                        print(json.encode(content));
+
                         showDialog<String>(
                             context: context,
                             builder: (BuildContext context) =>
                                 SuccessDialog(text: "Create content success"));
-                        // print("Success");
 
                         //Clear all variable
-                        selectedTag.clear();
-                        dateStartCtrl = null;
-                        dateEndCtrl = null;
-                        contentTitleCtrl.clear();
-                        contentDescCtrl.clear();
-                        locDetailCtrl.clear();
-                        locCoordinateCtrl = null;
+                        // selectedTag.clear();
+                        // dateStartCtrl = null;
+                        // dateEndCtrl = null;
+                        // contentTitleCtrl.clear();
+                        // contentDescCtrl.clear();
+                        // locDetailCtrl.clear();
+                        // locCoordinateCtrl = null;
                       }
                     });
                   } else {
