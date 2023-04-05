@@ -109,9 +109,9 @@ class _DetailPage extends State<DetailPage> {
     }
 
     //Get location name.
-    Widget getLocation(loc, id) {
+    Widget getLocation(loc, slug) {
       if (loc != null) {
-        return LocationButton(passLocation: loc.toString(), passId: id);
+        return LocationButton(passLocation: loc, passSlugName: slug);
       } else {
         return const SizedBox();
       }
@@ -248,8 +248,7 @@ class _DetailPage extends State<DetailPage> {
                     margin: EdgeInsets.only(
                         left: paddingXSM, right: paddingXSM, bottom: marginMD),
                     child: Wrap(runSpacing: -5, spacing: 10, children: [
-                      // getLocation(
-                      //     contents[0].contentLoc, int.parse(contents[0].id)),
+                      getLocation(contents[0].contentLoc, contents[0].slugName),
                       getContentDate(
                           contents[0].dateStart, contents[0].dateEnd),
                       getContentHour(contents[0].dateStart, contents[0].dateEnd)

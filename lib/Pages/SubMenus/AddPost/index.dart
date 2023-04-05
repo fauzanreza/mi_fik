@@ -381,7 +381,7 @@ class _addPost extends State<addPost> {
                             builder: (BuildContext context) =>
                                 FailedDialog(text: "Create content failed"));
                       } else {
-                        //print(json.encode(content));
+                        print(json.encode(content));
 
                         showDialog<String>(
                             context: context,
@@ -389,13 +389,13 @@ class _addPost extends State<addPost> {
                                 SuccessDialog(text: "Create content success"));
 
                         //Clear all variable
-                        selectedTag.clear();
-                        dateStartCtrl = null;
-                        dateEndCtrl = null;
-                        contentTitleCtrl.clear();
-                        contentDescCtrl.clear();
-                        locDetailCtrl.clear();
-                        locCoordinateCtrl = null;
+                        // selectedTag.clear();
+                        // dateStartCtrl = null;
+                        // dateEndCtrl = null;
+                        // contentTitleCtrl.clear();
+                        // contentDescCtrl.clear();
+                        // locDetailCtrl.clear();
+                        // locCoordinateCtrl = null;
                       }
                     });
                   } else {
