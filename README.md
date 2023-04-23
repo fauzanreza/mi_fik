@@ -39,21 +39,13 @@ Directory               : /assets
     - SubMenus :
     - Others : 
 
-
-
 ============================ Rules ===============================
-# Penamaan CSS 
-> << CONTEXT_NAME >>_v1.0.css                       <= Iterate 
 
-# Penamaan JS
-> << CONTEXT_NAME >>_v1.0.js                        <= Iterate
+# Penamaan Class dan Function
+> NamaClass & namaFunction
 
-# Secret JSON
-> << RANDOM_STRING >>_v1.0.js                       <= Iterate
-
-Note : 
-<< v1 + 1 >>.0  If major change
-v1.<< 1 + 1 >>  If minor change
+# Penamaan File Dart
+> nama_file.dart
 
 ==================================================================
-Last Updated : 15 Apr 2023
+Last Updated : 24 Apr 2023

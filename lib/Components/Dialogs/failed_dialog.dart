@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class FailedDialog extends StatefulWidget {
   FailedDialog({Key key, this.text}) : super(key: key);
-  String text;
+  var text;
 
   @override
   _FailedDialog createState() => _FailedDialog();
@@ -31,11 +32,10 @@ class _FailedDialog extends State<FailedDialog> {
               ),
               Container(
                   margin: const EdgeInsets.symmetric(vertical: 10),
-                  child: Text(widget.text,
-                      style: TextStyle(
-                          color: greybg,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500)))
+                  child: Text(
+                      getMessageResponseFromObject(widget.text, "login"),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: greybg, fontSize: textMD)))
             ]),
       ),
       actions: <Widget>[

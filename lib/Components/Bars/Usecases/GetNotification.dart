@@ -1,9 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/Skeletons/content_1.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Models/Notifications/Notifications.dart';
 import 'package:mi_fik/Modules/Services/Queries/NotificationQueries.dart';
+import 'package:mi_fik/Modules/Variables/dummy.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
