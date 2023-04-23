@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/Skeletons/content_1.dart';
 import 'package:mi_fik/Modules/Models/Contents/Content.dart';
 import 'package:mi_fik/Modules/Services/Queries/ContentQueries.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
+import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/Detail/index.dart';
 import 'package:mi_fik/Pages/Menus/Schedule/DeleteArchive.dart';
 import 'package:mi_fik/Pages/Menus/Schedule/EditArchive.dart';

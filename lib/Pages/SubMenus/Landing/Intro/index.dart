@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/custombg.dart';
-import 'package:mi_fik/main.dart';
+import 'package:mi_fik/Modules/Variables/style.dart';
 
 class IntroPage extends StatefulWidget {
   const IntroPage({Key key}) : super(key: key);

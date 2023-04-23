@@ -8,7 +8,7 @@ import 'package:mi_fik/Modules/Services/ArchieveServices.dart';
 import 'package:mi_fik/Modules/Services/TaskServices.dart';
 import 'package:mi_fik/Components/FailedDialog.dart';
 import 'package:mi_fik/Components/SuccessDialog.dart';
-import 'package:mi_fik/main.dart';
+import 'package:mi_fik/Modules/Variables/style.dart';
 
 class AddTaskwArchive extends StatefulWidget {
   AddTaskwArchive({Key key, this.text}) : super(key: key);

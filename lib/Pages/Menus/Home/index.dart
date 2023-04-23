@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/custombg.dart';
 import 'package:mi_fik/Components/leftbar.dart';
 import 'package:mi_fik/Components/RightBar.dart';
+import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/Menus/Home/GetContent.dart';
 import 'package:mi_fik/Pages/SubMenus/AddPost/index.dart';
 import 'package:mi_fik/main.dart';

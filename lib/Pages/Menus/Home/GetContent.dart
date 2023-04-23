@@ -3,6 +3,8 @@ import 'package:mi_fik/Components/Skeletons/content_1.dart';
 import 'package:mi_fik/Modules/Helpers/Widget.dart';
 import 'package:mi_fik/Modules/Models/Contents/Content.dart';
 import 'package:mi_fik/Modules/Services/Queries/ContentQueries.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
+import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/Detail/index.dart';
 
 import 'package:mi_fik/main.dart';
@@ -60,7 +62,7 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
         return TextButton(
           style: TextButton.styleFrom(
             backgroundColor: primaryColor,
-            shape: CircleBorder(),
+            shape: const CircleBorder(),
           ),
           child: Icon(
             Icons.arrow_downward_rounded,
@@ -76,7 +78,7 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
         return TextButton(
           style: TextButton.styleFrom(
             backgroundColor: primaryColor,
-            shape: CircleBorder(),
+            shape: const CircleBorder(),
           ),
           child: Icon(
             Icons.arrow_upward_rounded,
@@ -99,14 +101,14 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
-              padding: EdgeInsets.symmetric(vertical: 6),
+              padding: const EdgeInsets.symmetric(vertical: 6),
               child: Text("What's New ?",
                   style: TextStyle(
                       color: Colors.grey,
                       fontSize: textLG,
                       fontWeight: FontWeight.w500)),
             ),
-            Spacer(),
+            const Spacer(),
             getSortingButton(sortingHomepageContent),
           ],
         ),
@@ -189,7 +191,7 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
                                       Colors.black.withOpacity(0.5),
                                       BlendMode.darken),
                                 ),
-                                borderRadius: BorderRadius.only(
+                                borderRadius: const BorderRadius.only(
                                     topLeft: Radius.circular(10),
                                     topRight: Radius.circular(10)),
                               ),
@@ -292,7 +294,7 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
                                   style: ButtonStyle(
                                     shape: MaterialStateProperty.all<
                                             RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
+                                        const RoundedRectangleBorder(
                                       borderRadius: BorderRadius.only(
                                           bottomLeft: Radius.circular(10),
                                           bottomRight: Radius.circular(10)),

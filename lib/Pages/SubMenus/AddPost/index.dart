@@ -10,9 +10,10 @@ import 'package:mi_fik/Modules/Services/Commands/ContentCommands.dart';
 import 'package:mi_fik/Modules/Services/Queries/ContentQueries.dart';
 import 'package:mi_fik/Components/FailedDialog.dart';
 import 'package:mi_fik/Components/SuccessDialog.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
+import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/AddPost/ChooseTag.dart';
 import 'package:mi_fik/Pages/SubMenus/AddPost/SetLocation.dart';
-import 'package:mi_fik/main.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 

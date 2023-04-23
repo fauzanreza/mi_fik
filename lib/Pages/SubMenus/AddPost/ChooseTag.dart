@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mi_fik/Modules/Models/Tags/Tag.dart';
 import 'package:mi_fik/Components/Skeletons/tag_1.dart';
 import 'package:mi_fik/Modules/Services/Queries/TagQueries.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
+import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/main.dart';
 
 class ChooseTag extends StatefulWidget {

@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:mi_fik/Modules/Helpers/Widget.dart';
 import 'package:mi_fik/Modules/Models/Contents/Content.dart';
 import 'package:mi_fik/Modules/Services/Queries/ContentQueries.dart';
+import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/Detail/Attach.dart';
 import 'package:mi_fik/Pages/SubMenus/Detail/Location.dart';
 import 'package:mi_fik/Pages/SubMenus/Detail/Save.dart';

@@ -5,6 +5,7 @@ import 'package:mi_fik/Modules/Models/Task.dart';
 import 'package:mi_fik/Modules/Services/TaskServices.dart';
 import 'package:mi_fik/Components/FailedDialog.dart';
 import 'package:mi_fik/Components/SuccessDialog.dart';
+import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/main.dart';
 
 class DetailTask extends StatefulWidget {

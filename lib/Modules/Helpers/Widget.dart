@@ -1,9 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Modules/Helpers/Converter.dart';
-import 'package:mi_fik/main.dart';
+import 'package:mi_fik/Modules/Variables/style.dart';
 
 Widget getUploadDateWidget(date) {
   //Initial variable.
@@ -60,7 +58,7 @@ getImageHeader(url) {
   if (url.trim() != "" && url != "null") {
     return NetworkImage(url);
   } else {
-    return AssetImage('assets/content/content-2.jpg');
+    return const AssetImage('assets/content/content-2.jpg');
   }
 }
 
@@ -100,7 +98,7 @@ Widget getContentLoc(loc) {
       ),
     );
   } else {
-    return SizedBox();
+    return const SizedBox();
   }
 }
 
@@ -121,7 +119,7 @@ Widget getTotalTag(tag) {
       ),
     );
   } else {
-    return SizedBox();
+    return const SizedBox();
   }
 }
 
@@ -327,6 +325,6 @@ Widget getPeriodDateWidget(dateStart, dateEnd) {
           ),
         ));
   } else {
-    return SizedBox();
+    return const SizedBox();
   }
 }

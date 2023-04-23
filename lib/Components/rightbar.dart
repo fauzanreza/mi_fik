@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/Queries/GetNotification.dart';
-import 'package:mi_fik/main.dart';
+import 'package:mi_fik/Modules/Variables/style.dart';
 
 class RightBar extends StatelessWidget {
   const RightBar({Key key}) : super(key: key);
@@ -37,7 +37,7 @@ class RightBar extends StatelessWidget {
                                 color: whitebg,
                                 fontSize: textMD,
                                 fontWeight: FontWeight.w500))),
-                    GetNotification()
+                    const GetNotification()
                   ],
                 ))
               ],

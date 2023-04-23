@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mi_fik/main.dart';
+import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:skeletons/skeletons.dart';
 
 class TagSkeleton1 extends StatelessWidget {

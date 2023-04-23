@@ -1,6 +1,6 @@
 import 'package:http/http.dart' show Client;
 import 'package:mi_fik/Modules/Models/Task.dart';
-import 'package:mi_fik/main.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
 
 class TaskService {
   final String baseUrl = "https://mifik.leonardhors.site";

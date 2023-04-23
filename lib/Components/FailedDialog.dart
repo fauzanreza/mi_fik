@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mi_fik/main.dart';
+import 'package:mi_fik/Modules/Variables/style.dart';
 
 class FailedDialog extends StatefulWidget {
   FailedDialog({Key key, this.text}) : super(key: key);

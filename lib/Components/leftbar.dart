@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mi_fik/main.dart';
+import 'package:mi_fik/Modules/Variables/style.dart';
 
 class LeftBar extends StatelessWidget {
   const LeftBar({Key key}) : super(key: key);
@@ -42,7 +42,7 @@ class LeftBar extends StatelessWidget {
                                     width: fullWidth * 0.15),
                               ),
                             ),
-                            Text("Adolfhus Hitler",
+                            Text("FlazeFy",
                                 style: TextStyle(
                                     color: whitebg,
                                     fontSize: textMD,

@@ -2,7 +2,7 @@ import 'package:http/http.dart' show Client;
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Modules/Helpers/Converter.dart';
 import 'package:mi_fik/Modules/Models/Contents/Content.dart';
-import 'package:mi_fik/main.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
 
 class ContentQueriesService {
   final String baseUrl = "https://mifik.id";

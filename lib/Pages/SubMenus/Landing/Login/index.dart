@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/custombg.dart';
+import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/Landing/Intro/index.dart';
-import 'package:mi_fik/main.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key key}) : super(key: key);

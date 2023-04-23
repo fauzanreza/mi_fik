@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/leftbar.dart';
 import 'package:mi_fik/Components/RightBar.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
+import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/Menus/Calendar/DayEvent.dart';
 import 'package:mi_fik/main.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -32,7 +34,7 @@ class _CalendarPageState extends State<CalendarPage> {
         key: _scaffoldKey,
         drawer: const LeftBar(),
         drawerScrimColor: primaryColor.withOpacity(0.35),
-        endDrawer: RightBar(),
+        endDrawer: const RightBar(),
         body: SafeArea(
           child: ListView(
             padding: EdgeInsets.only(
