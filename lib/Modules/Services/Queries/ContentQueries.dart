@@ -8,28 +8,28 @@ class ContentQueriesService {
   final String baseUrl = "https://mifik.id";
   Client client = Client();
 
-  Future<List<ContentModel>> getAllContent(tag, order, date, find, page) async {
-    //Helpers
-    String finds = await getFind(find);
+  // Future<List<ContentModel>> getAllContent(tag, order, date, find, page) async {
+  //   //Helpers
+  //   String finds = await getFind(find);
 
-    final response = await client.get(Uri.parse(
-        "$baseUrl/api/v2/content/slug/$tag/order/$order/date/$date/find/$finds?page=$page"));
-    if (response.statusCode == 200) {
-      return ContentModelFromJsonWPaginate(response.body);
-    } else {
-      return null;
-    }
-  }
+  //   final response = await client.get(Uri.parse(
+  //       "$baseUrl/api/v2/content/slug/$tag/order/$order/date/$date/find/$finds?page=$page"));
+  //   if (response.statusCode == 200) {
+  //     return ContentModelFromJsonWPaginate(response.body);
+  //   } else {
+  //     return null;
+  //   }
+  // }
 
-  Future<List<ContentModel>> getContent(slug) async {
-    final response =
-        await client.get(Uri.parse("$baseUrl/api/v1/content/slug/$slug"));
-    if (response.statusCode == 200) {
-      return ContentModelFromJson(response.body);
-    } else {
-      return null;
-    }
-  }
+  // Future<List<ContentModel>> getContent(slug) async {
+  //   final response =
+  //       await client.get(Uri.parse("$baseUrl/api/v1/content/slug/$slug"));
+  //   if (response.statusCode == 200) {
+  //     return ContentModelFromJson(response.body);
+  //   } else {
+  //     return null;
+  //   }
+  // }
 
   Future<List<ContentModel>> getAllSchedule() async {
     //Should join w/ task

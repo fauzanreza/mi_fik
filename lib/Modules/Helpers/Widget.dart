@@ -92,7 +92,7 @@ Widget getContentLoc(loc) {
             child: Icon(Icons.location_on, color: primaryColor, size: iconSM),
           ),
           TextSpan(
-              text: " ${loc[0]['detail']}",
+              text: getLocationName(loc),
               style: TextStyle(color: primaryColor, fontSize: textSM)),
         ],
       ),

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/Forms/sorting.dart';
 import 'package:mi_fik/Components/Skeletons/content_1.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
+import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
+import 'package:mi_fik/Modules/APIs/ContentApi/Services/query_contents.dart';
 import 'package:mi_fik/Modules/Helpers/widget.dart';
-import 'package:mi_fik/Modules/Models/Contents/Content.dart';
-import 'package:mi_fik/Modules/Services/Queries/ContentQueries.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/index.dart';
@@ -39,17 +39,17 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
-        future: apiService.getAllContent(
+        future: apiService.getAllContentHeader(
             "all", sortingHomepageContent, "all", " ", 1),
-        builder:
-            (BuildContext context, AsyncSnapshot<List<ContentModel>> snapshot) {
+        builder: (BuildContext context,
+            AsyncSnapshot<List<ContentHeaderModel>> snapshot) {
           if (snapshot.hasError) {
             return Center(
               child: Text(
                   "Something wrong with message: ${snapshot.error.toString()}"),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
-            List<ContentModel> contents = snapshot.data;
+            List<ContentHeaderModel> contents = snapshot.data;
             return _buildListView(contents);
           } else {
             return const ContentSkeleton1();
@@ -59,7 +59,7 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildListView(List<ContentModel> contents) {
+  Widget _buildListView(List<ContentHeaderModel> contents) {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 

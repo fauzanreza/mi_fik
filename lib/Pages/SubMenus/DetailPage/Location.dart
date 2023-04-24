@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -107,7 +108,6 @@ class _LocationButton extends State<LocationButton>
     double fullWidth = MediaQuery.of(context).size.width;
 
     //Get location name and coordinate from json.
-    var location = widget.passLocation[0]['detail'];
     var coordinate = widget.passLocation[1]['detail'].split(', ');
     double lat = double.parse(coordinate[0]);
     double lng = double.parse(coordinate[1]);
@@ -141,7 +141,8 @@ class _LocationButton extends State<LocationButton>
                         if (_destination != null) _destination,
                         Marker(
                           markerId: MarkerId(widget.passSlugName),
-                          infoWindow: InfoWindow(title: location),
+                          infoWindow: InfoWindow(
+                              title: getLocationName(widget.passLocation)),
                           icon: BitmapDescriptor.defaultMarkerWithHue(
                               BitmapDescriptor.hueOrange),
                           position: LatLng(lat, lng),
@@ -190,7 +191,7 @@ class _LocationButton extends State<LocationButton>
                 ]),
               ))),
       icon: Icon(Icons.location_on_outlined, size: 22, color: primaryColor),
-      label: Text(location,
+      label: Text(getLocationName(widget.passLocation),
           style: TextStyle(fontSize: textMD, color: primaryColor)),
     );
   }

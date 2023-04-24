@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
+import 'package:mi_fik/Modules/APIs/ContentApi/Services/query_contents.dart';
 import 'package:mi_fik/Modules/Helpers/widget.dart';
-import 'package:mi_fik/Modules/Models/Contents/Content.dart';
-import 'package:mi_fik/Modules/Services/Queries/ContentQueries.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/Attach.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/Location.dart';
@@ -30,16 +30,16 @@ class _DetailPage extends State<DetailPage> {
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
-        future: apiQuery.getContent(widget.passSlug),
-        builder:
-            (BuildContext context, AsyncSnapshot<List<ContentModel>> snapshot) {
+        future: apiQuery.getContentDetail(widget.passSlug),
+        builder: (BuildContext context,
+            AsyncSnapshot<List<ContentDetailModel>> snapshot) {
           if (snapshot.hasError) {
             return Center(
               child: Text(
                   "Something wrong with message: ${snapshot.error.toString()}"),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
-            List<ContentModel> contents = snapshot.data;
+            List<ContentDetailModel> contents = snapshot.data;
             return _buildListView(contents);
           } else {
             return const Center(
@@ -51,7 +51,7 @@ class _DetailPage extends State<DetailPage> {
     );
   }
 
-  Widget _buildListView(List<ContentModel> contents) {
+  Widget _buildListView(List<ContentDetailModel> contents) {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
