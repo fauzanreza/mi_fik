@@ -1,16 +1,51 @@
-# mi_fik
+# MI-FIK Mobile Documentation
 
-A new Flutter project.
+========================= Command =========================
+# First Run
+> flutter clean
+> flutter pub get
+> flutter run
 
-## Getting Started
+# Run Application
+> flutter run
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+========================= File & Structure Directory =========================
+Assets (Image, Video)
+Directory               : /assets
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+# Components 
+    - Backgrounds :
+    - Bars :
+    - Dialogs :
+    - Forms :
+    - Skeletons :
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Modules
+    - APIs :
+        - << Functionality Name >>
+            - Models :
+            - Services :
+    - Firebases :
+    - Helpers :
+    - Variables :
+
+# Pages
+    - Landings :
+        - << Menus Name >>
+            - index.dart :
+            - Usecases :
+    - MainMenus :
+    - SubMenus :
+    - Others : 
+
+============================ Rules ===============================
+
+# Penamaan Class dan Function
+> NamaClass & namaFunction
+
+# Penamaan File Dart
+> nama_file.dart
+
+==================================================================
+Last Updated : 24 Apr 2023

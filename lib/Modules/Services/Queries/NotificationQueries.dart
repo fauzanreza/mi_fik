@@ -1,5 +1,4 @@
 import 'package:http/http.dart' show Client;
-import 'package:mi_fik/Modules/Models/Contents/Content.dart';
 import 'package:mi_fik/Modules/Models/Notifications/Notifications.dart';
 
 class NotificationQueriesService {

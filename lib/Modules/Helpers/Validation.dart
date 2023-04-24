@@ -1,5 +1,9 @@
 import 'dart:convert';
 
+// Validation variable
+int usernameLength = 30;
+int passwordLength = 50;
+
 validateNull(val) {
   if (val != null) {
     return val.toString();

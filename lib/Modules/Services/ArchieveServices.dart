@@ -1,5 +1,7 @@
 import 'package:http/http.dart' show Client;
 import 'package:mi_fik/Modules/Models/Archive/Archive.dart';
+import 'package:mi_fik/Modules/Variables/dummy.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/main.dart';
 
 class ArchieveService {
