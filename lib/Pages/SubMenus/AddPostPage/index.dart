@@ -46,7 +46,7 @@ class _addPost extends State<addPost> {
   Widget build(BuildContext context) {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    bool _isLoading = false;
+    bool isLoading = false;
 
     getDateText(date, type) {
       if (date != null) {
@@ -375,7 +375,7 @@ class _addPost extends State<addPost> {
                   if (content.contentTitle.isNotEmpty &&
                       content.contentDesc.isNotEmpty) {
                     apiCommand.addContent(content).then((isError) {
-                      setState(() => _isLoading = false);
+                      setState(() => isLoading = false);
                       if (isError) {
                         Navigator.pop(context);
                         showDialog<String>(

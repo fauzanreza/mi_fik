@@ -23,7 +23,7 @@ class _LocationButton extends State<LocationButton>
     with SingleTickerProviderStateMixin {
   //Initial variable.
   //_MapsPageState(passIdFakses);
-  GoogleMapController _googleMapController;
+  GoogleMapController googleMapController;
   Marker _origin;
   Marker _destination;
   bool servicestatus = false;
@@ -135,7 +135,7 @@ class _LocationButton extends State<LocationButton>
                       zoomControlsEnabled: false,
                       initialCameraPosition: initialCameraPosition,
                       onMapCreated: (controller) =>
-                          _googleMapController = controller,
+                          googleMapController = controller,
                       markers: {
                         if (_origin != null) _origin,
                         if (_destination != null) _destination,

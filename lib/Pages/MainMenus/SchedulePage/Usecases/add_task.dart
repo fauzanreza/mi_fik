@@ -40,7 +40,7 @@ class _AddTaskwArchive extends State<AddTaskwArchive> {
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    bool _isLoading = false;
+    bool isLoading = false;
 
     getDateText(date, type) {
       if (date != null) {
@@ -258,7 +258,7 @@ class _AddTaskwArchive extends State<AddTaskwArchive> {
                                 //Validator
                                 if (task.taskTitle.isNotEmpty) {
                                   taskService.addTask(task).then((isError) {
-                                    setState(() => _isLoading = false);
+                                    setState(() => isLoading = false);
                                     if (isError) {
                                       showDialog<String>(
                                           context: context,
@@ -374,7 +374,7 @@ class _AddTaskwArchive extends State<AddTaskwArchive> {
                                   archiveService
                                       .addArchive(archive)
                                       .then((isError) {
-                                    setState(() => _isLoading = false);
+                                    setState(() => isLoading = false);
                                     if (isError) {
                                       showDialog<String>(
                                           context: context,

@@ -47,7 +47,6 @@ class _ChooseTag extends State<ChooseTag> {
   }
 
   Widget _buildListView(List<TagModel> tags) {
-    int i = 0;
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 

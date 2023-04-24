@@ -103,7 +103,7 @@ class ContentDetailModel {
     return ContentDetailModel(
       slugName: map["slug_name"],
       contentTitle: map["content_title"],
-      contentDesc: map["content_desc"],
+      contentDesc: map["content_desc"].toString(),
       contentLoc: map["content_loc"],
       contentImage: map["content_image"].toString(),
       contentAttach: map["content_attach"],
@@ -126,4 +126,49 @@ List<ContentDetailModel> ContentDetailModelFromJson(String jsonData) {
   final data = json.decode(jsonData);
   return List<ContentDetailModel>.from(
       data['data'].map((item) => ContentDetailModel.fromJson(item)));
+}
+
+// Usecase get all content & task header (schedule)
+class ScheduleModel {
+  String slugName;
+  String contentTitle;
+
+  //Nullable
+  String contentDesc;
+  var contentTag;
+  var contentLoc;
+
+  //Properties
+  String dateStart;
+  String dateEnd;
+  int dataFrom;
+
+  ScheduleModel(
+      {this.slugName,
+      this.contentTitle,
+      this.contentDesc,
+      this.contentLoc,
+      this.dateStart,
+      this.dateEnd,
+      this.contentTag,
+      this.dataFrom});
+
+  factory ScheduleModel.fromJson(Map<String, dynamic> map) {
+    return ScheduleModel(
+      slugName: map["slug_name"],
+      contentTitle: map["content_title"],
+      contentDesc: map["content_desc"].toString(),
+      contentTag: map["content_tag"],
+      contentLoc: map["content_loc"],
+      dateStart: map["content_date_start"],
+      dateEnd: map["content_date_end"],
+      dataFrom: map["data_from"],
+    );
+  }
+}
+
+List<ScheduleModel> ScheduleModelFromJsonWPaginate(String jsonData) {
+  final data = json.decode(jsonData);
+  return List<ScheduleModel>.from(
+      data['data']['data'].map((item) => ScheduleModel.fromJson(item)));
 }

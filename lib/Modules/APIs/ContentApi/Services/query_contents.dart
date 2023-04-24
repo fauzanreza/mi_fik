@@ -2,7 +2,6 @@ import 'package:http/http.dart' show Client;
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
-import 'package:mi_fik/Modules/Models/Contents/Content.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -44,6 +43,25 @@ class ContentQueriesService {
         .get(Uri.parse("$emuUrl/api/v1/content/slug/$slug"), headers: header);
     if (response.statusCode == 200) {
       return ContentDetailModelFromJson(response.body);
+    } else {
+      return null;
+    }
+  }
+
+  Future<List<ScheduleModel>> getSchedule() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token_key');
+    final header = {
+      'Accept': 'application/json',
+      'Authorization': "Bearer $token",
+    };
+
+    final response = await client.get(
+        Uri.parse(
+            "$emuUrl/api/v1/content/date/${DateFormat("yyyy-MM-dd").format(slctSchedule)}"),
+        headers: header);
+    if (response.statusCode == 200) {
+      return ScheduleModelFromJsonWPaginate(response.body);
     } else {
       return null;
     }

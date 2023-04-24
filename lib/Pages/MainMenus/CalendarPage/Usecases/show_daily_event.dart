@@ -3,18 +3,19 @@ import 'package:mi_fik/Components/Container/content.dart';
 import 'package:mi_fik/Components/Skeletons/content_2.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/query_contents.dart';
-
+import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
-class MySchedulePage extends StatefulWidget {
-  const MySchedulePage({Key key}) : super(key: key);
+class DayEvent extends StatefulWidget {
+  const DayEvent({Key key}) : super(key: key);
 
   @override
-  _MySchedulePage createState() => _MySchedulePage();
+  _DayEvent createState() => _DayEvent();
 }
 
-class _MySchedulePage extends State<MySchedulePage> {
+class _DayEvent extends State<DayEvent> with TickerProviderStateMixin {
   ContentQueriesService apiService;
+  String hourChipBefore;
 
   @override
   void initState() {
@@ -50,35 +51,18 @@ class _MySchedulePage extends State<MySchedulePage> {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
-    //Get total content in an archieve.
-    getTotalArchieve(event, task) {
-      if ((event != 0) && (task == 0)) {
-        return "$event Events";
-      } else if ((event == 0) && (task != 0)) {
-        return "$task Task";
-      } else {
-        return "$event Events, $task Task";
-      }
-    }
-
-    if ((contents != null) && (contents.isNotEmpty)) {
-      return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: contents.map((content) {
-            return SizedBox(
-                width: fullWidth,
-                child: IntrinsicHeight(
-                    child: Stack(children: [
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: fullWidth * 0.05),
-                    width: 2.5,
-                    color: primaryColor,
-                  ),
-                  GetScheduleContainer(
-                      width: fullWidth, content: content, ctx: context)
-                ])));
-          }).toList());
+    if ((contents != null) && (contents.length != 0)) {
+      return Container(
+          margin: const EdgeInsets.only(left: 15, top: 10),
+          padding: const EdgeInsets.only(bottom: 15),
+          child: Column(
+              children: contents.map((content) {
+            return Column(children: [
+              getHourChip(content.dateStart, hourChipBefore, fullWidth),
+              GetScheduleContainer(
+                  width: fullWidth, content: content, ctx: context)
+            ]);
+          }).toList()));
     } else {
       return Align(
           alignment: Alignment.topCenter,

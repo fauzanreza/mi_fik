@@ -33,7 +33,7 @@ class _EditArchive extends State<EditArchive> {
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    bool _isLoading = false;
+    bool isLoading = false;
 
     return IconButton(
       icon: const Icon(Icons.edit),
@@ -113,7 +113,7 @@ class _EditArchive extends State<EditArchive> {
                             apiService
                                 .editArchive(archive, widget.id)
                                 .then((isError) {
-                              setState(() => _isLoading = false);
+                              setState(() => isLoading = false);
                               if (isError) {
                                 showDialog<String>(
                                     context: context,
