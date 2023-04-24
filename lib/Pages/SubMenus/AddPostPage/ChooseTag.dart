@@ -4,7 +4,6 @@ import 'package:mi_fik/Components/Skeletons/tag_1.dart';
 import 'package:mi_fik/Modules/Services/Queries/TagQueries.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/main.dart';
 
 class ChooseTag extends StatefulWidget {
   const ChooseTag({Key key}) : super(key: key);
@@ -116,7 +115,7 @@ class _ChooseTag extends State<ChooseTag> {
       if (type == "more") {
         return Container(
             alignment: Alignment.center,
-            margin: EdgeInsets.only(right: 15),
+            margin: const EdgeInsets.only(right: 15),
             child: TextButton.icon(
               onPressed: () {
                 setState(() {
@@ -145,7 +144,7 @@ class _ChooseTag extends State<ChooseTag> {
               ),
             ));
       } else {
-        return SizedBox();
+        return const SizedBox();
       }
     }
 
@@ -194,7 +193,7 @@ class _ChooseTag extends State<ChooseTag> {
           Row(
             children: [
               getControlButton("previous"),
-              Spacer(),
+              const Spacer(),
               getControlButton("more"),
             ],
           ),

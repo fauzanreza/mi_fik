@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mi_fik/Components/Bars/Usecases/show_side_bar.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Bars/left_bar.dart';
 import 'package:mi_fik/Components/Bars/right_bar.dart';
@@ -17,7 +18,7 @@ class CalendarPage extends StatefulWidget {
 }
 
 class _CalendarPageState extends State<CalendarPage> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   CalendarFormat format = CalendarFormat.month;
   DateTime selectedDay = slctSchedule;
@@ -31,7 +32,7 @@ class _CalendarPageState extends State<CalendarPage> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        key: _scaffoldKey,
+        key: scaffoldKey,
         drawer: const LeftBar(),
         drawerScrimColor: primaryColor.withOpacity(0.35),
         endDrawer: const RightBar(),
@@ -41,25 +42,7 @@ class _CalendarPageState extends State<CalendarPage> {
                 top: fullHeight *
                     0.02), //Check this!!! make same as the other main menu page
             children: [
-              Container(
-                margin: EdgeInsets.zero,
-                child: Row(children: [
-                  IconButton(
-                    padding: EdgeInsets.zero,
-                    icon: Icon(Icons.menu, size: 32, color: primaryColor),
-                    tooltip: '...',
-                    onPressed: () => _scaffoldKey.currentState.openDrawer(),
-                  ),
-                  const Spacer(),
-                  IconButton(
-                    padding: EdgeInsets.zero,
-                    icon: Icon(Icons.notifications,
-                        size: 32, color: primaryColor),
-                    tooltip: 'Notification',
-                    onPressed: () => _scaffoldKey.currentState.openEndDrawer(),
-                  ),
-                ]),
-              ),
+              showSideBar(scaffoldKey, primaryColor),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [

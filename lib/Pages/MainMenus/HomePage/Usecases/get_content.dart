@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:mi_fik/Components/Forms/sorting.dart';
 import 'package:mi_fik/Components/Skeletons/content_1.dart';
+import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/Helpers/widget.dart';
 import 'package:mi_fik/Modules/Models/Contents/Content.dart';
 import 'package:mi_fik/Modules/Services/Queries/ContentQueries.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/index.dart';
-
-import 'package:mi_fik/main.dart';
 
 class GetContent extends StatefulWidget {
   const GetContent({Key key}) : super(key: key);
@@ -23,6 +23,12 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     apiService = ContentQueriesService();
+  }
+
+  void updateSorting(String newValue) {
+    setState(() {
+      sortingHomepageContent = newValue;
+    });
   }
 
   @override
@@ -57,42 +63,6 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
-    Widget getSortingButton(active) {
-      if (active == "DESC") {
-        return TextButton(
-          style: TextButton.styleFrom(
-            backgroundColor: primaryColor,
-            shape: const CircleBorder(),
-          ),
-          child: Icon(
-            Icons.arrow_downward_rounded,
-            color: whitebg,
-          ),
-          onPressed: () {
-            setState(() {
-              sortingHomepageContent = "ASC";
-            });
-          },
-        );
-      } else if (active == "ASC") {
-        return TextButton(
-          style: TextButton.styleFrom(
-            backgroundColor: primaryColor,
-            shape: const CircleBorder(),
-          ),
-          child: Icon(
-            Icons.arrow_upward_rounded,
-            color: whitebg,
-          ),
-          onPressed: () {
-            setState(() {
-              sortingHomepageContent = "DESC";
-            });
-          },
-        );
-      }
-    }
-
     return Column(children: [
       Container(
         transform: Matrix4.translationValues(0, -10, 0),
@@ -100,16 +70,12 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 6),
-              child: Text("What's New ?",
-                  style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: textLG,
-                      fontWeight: FontWeight.w500)),
-            ),
+            getTitleLarge("What's New", greybg),
             const Spacer(),
-            getSortingButton(sortingHomepageContent),
+            SortingButton(
+              active: sortingHomepageContent,
+              action: updateSorting,
+            ),
           ],
         ),
       ),

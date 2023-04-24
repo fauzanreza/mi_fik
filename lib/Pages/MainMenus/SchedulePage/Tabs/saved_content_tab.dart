@@ -7,8 +7,8 @@ import 'package:mi_fik/Modules/Services/Queries/ContentQueries.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/index.dart';
-import 'package:mi_fik/Pages/MainMenus/SchedulePage/DeleteArchive.dart';
-import 'package:mi_fik/Pages/MainMenus/SchedulePage/EditArchive.dart';
+import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/delete_archive.dart';
+import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/edit_archive.dart';
 
 class SavedContent extends StatefulWidget {
   const SavedContent({Key key}) : super(key: key);

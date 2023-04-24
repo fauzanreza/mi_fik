@@ -7,7 +7,7 @@ import 'package:mi_fik/Modules/Models/Contents/Content.dart';
 import 'package:mi_fik/Modules/Services/Queries/ContentQueries.dart';
 import 'package:mi_fik/Components/Skeletons/content_2.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/MainMenus/SchedulePage/DetailTask.dart';
+import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/show_detail_task.dart';
 
 class DayEvent extends StatefulWidget {
   const DayEvent({Key key}) : super(key: key);

@@ -7,7 +7,6 @@ import 'package:mi_fik/Modules/Services/ArchieveServices.dart';
 import 'package:mi_fik/Modules/Variables/dummy.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/main.dart';
 
 class DeleteArchive extends StatefulWidget {
   DeleteArchive({Key key, this.id}) : super(key: key);
