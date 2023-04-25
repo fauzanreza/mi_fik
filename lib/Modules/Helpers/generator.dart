@@ -56,7 +56,7 @@ getBgColor(date) {
 }
 
 //Get content tag.
-Widget getTag(tag, dateStart) {
+Widget getTagShow(tag, dateStart) {
   int i = 0;
   int max = 3; //Maximum tag
 

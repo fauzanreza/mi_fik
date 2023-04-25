@@ -6,6 +6,7 @@ var dangerColor = const Color(0xFFFB5E5B);
 var mainbg = const Color.fromARGB(255, 232, 232, 232);
 var whitebg = const Color(0xFFFFFFFF);
 var blackbg = const Color(0xFF414141);
+var semiblackbg = const Color(0xFF5b5b5b);
 var greybg = const Color.fromARGB(255, 118, 118, 118);
 var successbg = const Color(0xFF6EC25B);
 

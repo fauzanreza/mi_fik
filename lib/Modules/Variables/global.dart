@@ -19,3 +19,11 @@ int selectedIndex = 0;
 String sortingHomepageContent = "DESC";
 
 DateTime slctSchedule = DateTime.now();
+
+// Class and object
+class UserProfileLeftBar {
+  final String username;
+  final String image;
+
+  UserProfileLeftBar({this.username, this.image});
+}

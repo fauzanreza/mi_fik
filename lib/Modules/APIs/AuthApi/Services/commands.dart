@@ -25,10 +25,14 @@ class LoginCommandsService {
     var responseData = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('token_key', responseData['token']);
-
       if (responseData['role'] != 1) {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('token_key', responseData['token']);
+        await prefs.setString(
+            'username_key', responseData['result']['username']);
+        await prefs.setString(
+            'image_key', responseData['result']['image_url'].toString());
+
         // Lecturer or student role
         return [
           {
