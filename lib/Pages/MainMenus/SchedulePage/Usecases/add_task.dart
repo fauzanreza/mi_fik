@@ -284,8 +284,7 @@ class _AddTaskwArchive extends State<AddTaskwArchive> {
                               },
                               style: ButtonStyle(
                                 backgroundColor:
-                                    MaterialStatePropertyAll<Color>(
-                                        primaryColor),
+                                    MaterialStatePropertyAll<Color>(successbg),
                               ),
                               child: const Text('Done'),
                             ))
@@ -404,8 +403,7 @@ class _AddTaskwArchive extends State<AddTaskwArchive> {
                               },
                               style: ButtonStyle(
                                 backgroundColor:
-                                    MaterialStatePropertyAll<Color>(
-                                        primaryColor),
+                                    MaterialStatePropertyAll<Color>(successbg),
                               ),
                               child: const Text('Done'),
                             ))

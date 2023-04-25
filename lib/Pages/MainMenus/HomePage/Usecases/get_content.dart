@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/Container/content.dart';
-import 'package:mi_fik/Components/Forms/sorting.dart';
 import 'package:mi_fik/Components/Skeletons/content_1.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/query_contents.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/MainMenus/HomePage/Usecases/set_control.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/index.dart';
 
 class GetContent extends StatefulWidget {
@@ -18,6 +18,10 @@ class GetContent extends StatefulWidget {
 
 class _GetContent extends State<GetContent> with TickerProviderStateMixin {
   ContentQueriesService apiService;
+  //Initial variable
+  final titleCtrl = TextEditingController();
+  DateTime dateStartCtrl;
+  DateTime dateEndCtrl;
 
   @override
   void initState() {
@@ -25,9 +29,21 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
     apiService = ContentQueriesService();
   }
 
-  void updateSorting(String newValue) {
+  // void updateSorting(String newValue) {
+  //   setState(() {
+  //     sortingHomepageContent = newValue;
+  //   });
+  // }
+
+  void updateDateStart(DateTime newValue) {
     setState(() {
-      sortingHomepageContent = newValue;
+      dateStartCtrl = newValue;
+    });
+  }
+
+  void updateDateEnd(DateTime newValue) {
+    setState(() {
+      dateEndCtrl = newValue;
     });
   }
 
@@ -72,10 +88,16 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
           children: [
             getTitleLarge("What's New", greybg),
             const Spacer(),
-            SortingButton(
-              active: sortingHomepageContent,
-              action: updateSorting,
-            ),
+            // SortingButton(
+            //   active: sortingHomepageContent,
+            //   action: updateSorting,
+            // ),
+            ControlPanel(
+                titleCtrl: titleCtrl,
+                setDateStartCtrl: updateDateStart,
+                setDateEndCtrl: updateDateEnd,
+                dateStart: dateStartCtrl,
+                dateEnd: dateEndCtrl)
           ],
         ),
       ),

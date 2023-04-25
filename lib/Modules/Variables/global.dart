@@ -16,7 +16,7 @@ List archieveVal = [];
 int selectedIndex = 0;
 
 // Starting Variables
-String sortingHomepageContent = "DESC";
+String sortingHomepageContent = "Desc";
 
 DateTime slctSchedule = DateTime.now();
 
@@ -26,4 +26,10 @@ class UserProfileLeftBar {
   final String image;
 
   UserProfileLeftBar({this.username, this.image});
+}
+
+class Role {
+  var role;
+
+  Role({this.role});
 }

@@ -32,6 +32,8 @@ class LoginCommandsService {
             'username_key', responseData['result']['username']);
         await prefs.setString(
             'image_key', responseData['result']['image_url'].toString());
+        await prefs.setString(
+            'role_lsit_key', jsonEncode(responseData['result']['role']));
 
         // Lecturer or student role
         return [

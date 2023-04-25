@@ -116,6 +116,14 @@ Widget getTagShow(tag, dateStart) {
   }
 }
 
+String getDateText(date, type) {
+  if (date != null) {
+    return DateFormat("dd-MM-yy  HH:mm").format(date).toString();
+  } else {
+    return "Set Date $type";
+  }
+}
+
 Widget getLocation(loc, textColor) {
   if (loc != null) {
     var location = loc[0]['detail'];
