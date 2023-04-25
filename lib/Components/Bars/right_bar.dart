@@ -11,16 +11,21 @@ class RightBar extends StatelessWidget {
     double fullWidth = MediaQuery.of(context).size.width;
 
     return Drawer(
-        backgroundColor: primaryColor,
         child: Container(
-            width: fullWidth,
-            margin: EdgeInsets.only(top: fullHeight * 0.075),
+            padding: EdgeInsets.only(top: fullWidth * 0.15),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [primaryColor, semiblackbg],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+            ),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                    margin: EdgeInsets.only(bottom: marginMD),
+                    margin: EdgeInsets.only(bottom: marginMD, left: marginSM),
                     child: Text("Notification",
                         style: TextStyle(
                             color: whitebg,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/query_contents.dart';
@@ -233,7 +234,7 @@ class _DetailPage extends State<DetailPage> {
                     Container(
                         margin: EdgeInsets.only(
                             top: marginMT, left: marginMD, right: marginMD),
-                        child: getDescHeaderWidget(contents[0].contentDesc)),
+                        child: HtmlWidget(contents[0].contentDesc)),
                     //Attached file or link.
                     getAttach(contents[0].contentAttach),
                     //Tag holder.

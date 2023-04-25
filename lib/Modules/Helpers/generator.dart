@@ -56,7 +56,7 @@ getBgColor(date) {
 }
 
 //Get content tag.
-Widget getTag(tag, dateStart) {
+Widget getTagShow(tag, dateStart) {
   int i = 0;
   int max = 3; //Maximum tag
 
@@ -113,6 +113,14 @@ Widget getTag(tag, dateStart) {
             }).toList()));
   } else {
     return const SizedBox();
+  }
+}
+
+String getDateText(date, type) {
+  if (date != null) {
+    return DateFormat("dd-MM-yy  HH:mm").format(date).toString();
+  } else {
+    return "Set Date $type";
   }
 }
 

@@ -18,6 +18,12 @@ getNotifSender(admin, user) {
   }
 }
 
+String ucFirst(String val) {
+  String res = val[0].toUpperCase() + val.substring(1);
+
+  return res;
+}
+
 String removeHtmlTags(String htmlString) {
   RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
   return htmlString.replaceAll(exp, '');
