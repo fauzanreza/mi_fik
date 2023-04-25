@@ -31,6 +31,7 @@ double btnHeightMD = 55;
 // Margin
 double marginMD = 25; //For home content (MB)
 double marginMT = 12; //For detail content (MT)
+double marginSM = 8; //For detail content (MT)
 double marginHZ = 4; //For horizontal listview
 
 // Padding

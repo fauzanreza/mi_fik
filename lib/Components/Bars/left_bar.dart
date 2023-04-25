@@ -3,6 +3,7 @@ import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Skeletons/drawer.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/SubMenus/AboutPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/HelpPage/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -177,7 +178,13 @@ class LeftBar extends StatelessWidget {
                           margin: EdgeInsets.symmetric(horizontal: paddingXSM),
                           alignment: Alignment.centerLeft,
                           child: TextButton.icon(
-                            onPressed: () async {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const AboutPage()),
+                              );
+                            },
                             icon:
                                 Icon(Icons.info, size: textXLG, color: whitebg),
                             label: Text("About",
