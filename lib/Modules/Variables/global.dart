@@ -6,7 +6,7 @@ String passSlugContent;
 // Selected
 var selectedArchiveName;
 var selectedArchiveId;
-var locCoordinateCtrl = null;
+var locCoordinateCtrl;
 
 final selectedTag = [];
 final locDetailCtrl = TextEditingController();

@@ -19,4 +19,18 @@ class HelpQueriesService {
       return null;
     }
   }
+
+  Future<List<HelpBodyModel>> getHelpBody(String type) async {
+    final header = {
+      'Accept': 'application/json',
+    };
+
+    final response = await client.get(Uri.parse("$emuUrl/api/v1/help/$type"),
+        headers: header);
+    if (response.statusCode == 200) {
+      return HelpBodyModelFromJsonWPaginate(response.body);
+    } else {
+      return null;
+    }
+  }
 }

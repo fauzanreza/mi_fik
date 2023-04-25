@@ -225,7 +225,7 @@ class LeftBar extends StatelessWidget {
                       ],
                     )));
           } else {
-            return DrawerSkeleton();
+            return const DrawerSkeleton();
           }
         });
   }

@@ -4,10 +4,10 @@ import 'package:mi_fik/Modules/APIs/HelpApi/Models/queries.dart';
 import 'package:mi_fik/Modules/APIs/HelpApi/Services/queries.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/SubMenus/HelpPage/Usecases/get_help_by_type.dart';
 
 class GetAllHelpType extends StatefulWidget {
-  const GetAllHelpType({Key key, this.passSlug}) : super(key: key);
-  final String passSlug;
+  const GetAllHelpType({Key key}) : super(key: key);
 
   @override
   _GetAllHelpType createState() => _GetAllHelpType();
@@ -49,8 +49,8 @@ class _GetAllHelpType extends State<GetAllHelpType> {
   }
 
   Widget _buildListView(List<HelpTypeModel> contents) {
-    double fullHeight = MediaQuery.of(context).size.height;
-    double fullWidth = MediaQuery.of(context).size.width;
+    // double fullHeight = MediaQuery.of(context).size.height;
+    // double fullWidth = MediaQuery.of(context).size.width;
 
     return ListView.builder(
         itemCount: contents.length,
@@ -65,10 +65,12 @@ class _GetAllHelpType extends State<GetAllHelpType> {
               initiallyExpanded: false,
               iconColor: primaryColor,
               textColor: primaryColor,
+              expandedCrossAxisAlignment: CrossAxisAlignment.start,
+              expandedAlignment: Alignment.topLeft,
               title: Text(ucFirst(contents[index].helpType),
                   style: const TextStyle(fontWeight: FontWeight.w500)),
               subtitle: Text('Lorem ipsum', style: TextStyle(color: greybg)),
-              children: [],
+              children: [GetHelpByType(passType: contents[index].helpType)],
             ),
           );
         });

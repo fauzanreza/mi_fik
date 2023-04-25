@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/main.dart';
 import 'package:skeletons/skeletons.dart';
 
 class ContentSkeleton1 extends StatelessWidget {

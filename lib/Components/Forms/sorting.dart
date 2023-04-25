@@ -5,7 +5,7 @@ class SortingButton extends StatelessWidget {
   final String active;
   final Function(String) action;
 
-  const SortingButton({this.active, this.action});
+  const SortingButton({Key key, this.active, this.action}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
