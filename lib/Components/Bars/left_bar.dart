@@ -4,6 +4,7 @@ import 'package:mi_fik/Components/Skeletons/drawer.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/AboutPage/index.dart';
+import 'package:mi_fik/Pages/SubMenus/FAQPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/HelpPage/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -140,7 +141,14 @@ class LeftBar extends StatelessWidget {
                                       left: paddingXSM, right: paddingXSM),
                                   alignment: Alignment.centerLeft,
                                   child: TextButton.icon(
-                                    onPressed: () async {},
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const FAQPage()),
+                                      );
+                                    },
                                     icon: Icon(Icons.question_answer_outlined,
                                         size: textXLG, color: whitebg),
                                     label: Text("FAQ",
