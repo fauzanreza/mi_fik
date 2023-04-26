@@ -70,10 +70,10 @@ class ShowRole extends StatelessWidget {
                               ),
                             );
                           }).toList()),
-                      Divider(thickness: 1.5)
+                      const Divider(thickness: 1.5)
                     ]));
           } else {
-            return SizedBox();
+            return const SizedBox();
           }
         });
   }

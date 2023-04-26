@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
+import 'package:mi_fik/Modules/APIs/UserApi/Models/queries.dart';
+import 'package:mi_fik/Modules/APIs/UserApi/Services/queries.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
@@ -11,6 +13,14 @@ class GetEditProfile extends StatefulWidget {
 }
 
 class _GetEditProfileState extends State<GetEditProfile> {
+  UserQueriesService apiQuery;
+
+  @override
+  void initState() {
+    super.initState();
+    apiQuery = UserQueriesService();
+  }
+
   var fNameCtrl = TextEditingController();
   var lNameCtrl = TextEditingController();
   var passCtrl = TextEditingController();
@@ -29,6 +39,35 @@ class _GetEditProfileState extends State<GetEditProfile> {
 
   @override
   Widget build(BuildContext context) {
+    return SafeArea(
+      maintainBottomViewPadding: false,
+      child: FutureBuilder(
+        future: apiQuery.getMyProfile(),
+        builder: (BuildContext context,
+            AsyncSnapshot<List<UserProfileModel>> snapshot) {
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(
+                  "Something wrong with message: ${snapshot.error.toString()}"),
+            );
+          } else if (snapshot.connectionState == ConnectionState.done) {
+            List<UserProfileModel> contents = snapshot.data;
+            return _buildListView(contents);
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
+      ),
+    );
+  }
+
+  Widget _buildListView(List<UserProfileModel> contents) {
+    fNameCtrl.text = contents[0].firstName;
+    lNameCtrl.text = contents[0].lastName;
+    passCtrl.text = contents[0].password;
+
     return Theme(
         data: Theme.of(context).copyWith(
           dividerColor:

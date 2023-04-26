@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
@@ -11,7 +9,6 @@ class ShowProfile extends StatelessWidget {
     final prefs = await SharedPreferences.getInstance();
     final username = prefs.getString('username_key');
     final image = prefs.getString('image_key');
-    final roles = jsonDecode(prefs.getString('role_lsit_key'));
     return UserProfileLeftBar(username: username, image: image);
   }
 
@@ -57,7 +54,7 @@ class ShowProfile extends StatelessWidget {
                   ]),
             );
           } else {
-            return SizedBox();
+            return const SizedBox();
           }
         });
   }

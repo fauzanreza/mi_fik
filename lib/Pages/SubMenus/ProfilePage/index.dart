@@ -1,14 +1,11 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/Backgrounds/custom.dart';
 import 'package:mi_fik/Components/Bars/top_bar.dart';
-import 'package:mi_fik/Modules/Variables/global.dart';
+import 'package:mi_fik/Components/Button/navigation.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/ProfilePage/Usecases/edit_profile.dart';
 import 'package:mi_fik/Pages/SubMenus/ProfilePage/Usecases/show_profile.dart';
 import 'package:mi_fik/Pages/SubMenus/ProfilePage/Usecases/show_roles.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key key}) : super(key: key);
@@ -33,7 +30,7 @@ class _ProfilePage extends State<ProfilePage> {
                   ShowProfile(),
                   const GetEditProfile(),
                   Container(
-                      height: fullHeight,
+                      height: fullHeight * 0.7,
                       margin: const EdgeInsets.only(top: 10.0),
                       padding: EdgeInsets.only(
                           top: paddingMD, left: paddingSM, right: paddingSM),
@@ -43,7 +40,10 @@ class _ProfilePage extends State<ProfilePage> {
                             topLeft: roundedLG, topRight: roundedLG),
                       ),
                       child: Column(
-                        children: [ShowRole()],
+                        children: [
+                          const ShowRole(),
+                          getSignOutButtonWide(context)
+                        ],
                       )),
                 ])));
   }
