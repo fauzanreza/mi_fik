@@ -16,29 +16,34 @@ class _LoginPage extends State<LoginPage> {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
-    return Scaffold(
-        body: CustomPaint(
-            painter: CirclePainterSide(),
-            child: ListView(
-              children: [
-                const PostLogin(),
-                Container(
-                  padding: EdgeInsets.symmetric(
-                      vertical: paddingXSM, horizontal: paddingMD),
-                  margin: EdgeInsets.only(
-                      left: fullWidth * 0.2,
-                      right: fullWidth * 0.2,
-                      top: 20,
-                      bottom: 20),
-                  decoration: BoxDecoration(
-                    color: whitebg,
-                    borderRadius: BorderRadius.all(roundedLG),
-                  ),
-                  child: ClipRRect(
-                    child: Image.asset('assets/icon/fik_logo.png'),
-                  ),
-                )
-              ],
-            )));
+    return WillPopScope(
+        onWillPop: () async {
+          // Do something LOL
+          return false;
+        },
+        child: Scaffold(
+            body: CustomPaint(
+                painter: CirclePainterSide(),
+                child: ListView(
+                  children: [
+                    const PostLogin(),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                          vertical: paddingXSM, horizontal: paddingMD),
+                      margin: EdgeInsets.only(
+                          left: fullWidth * 0.2,
+                          right: fullWidth * 0.2,
+                          top: 20,
+                          bottom: 20),
+                      decoration: BoxDecoration(
+                        color: whitebg,
+                        borderRadius: BorderRadius.all(roundedLG),
+                      ),
+                      child: ClipRRect(
+                        child: Image.asset('assets/icon/fik_logo.png'),
+                      ),
+                    )
+                  ],
+                ))));
   }
 }

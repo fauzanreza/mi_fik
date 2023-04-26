@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 // Navigation
 String passSlugContent;
+String passRoleGeneral;
 
 // Selected
 var selectedArchiveName;
@@ -29,7 +30,7 @@ class UserProfileLeftBar {
 }
 
 class Role {
-  var role;
+  final String role;
 
   Role({this.role});
 }

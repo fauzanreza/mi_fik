@@ -99,6 +99,8 @@ String getMessageResponseFromObject(val, type) {
           res += "${passErr.join('\n')}";
         }
       }
+    } else if (type == "signout") {
+      return val;
     }
 
     return res;

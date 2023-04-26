@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 // Colors
 var primaryColor = const Color(0xFFFB8C00);
 var dangerColor = const Color(0xFFFB5E5B);
+var infoColor = const Color(0xFF009FF9);
 var mainbg = const Color.fromARGB(255, 232, 232, 232);
 var whitebg = const Color(0xFFFFFFFF);
 var blackbg = const Color(0xFF414141);

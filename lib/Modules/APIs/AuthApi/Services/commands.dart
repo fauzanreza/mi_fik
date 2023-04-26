@@ -2,9 +2,10 @@ import 'dart:convert';
 
 import 'package:http/http.dart' show Client;
 import 'package:mi_fik/Modules/APIs/AuthApi/Models/commands.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginCommandsService {
+class AuthCommandsService {
   final String baseUrl = "https://mifik.id";
   final String emuUrl = "http://10.0.2.2:8000";
 
@@ -26,14 +27,28 @@ class LoginCommandsService {
 
     if (response.statusCode == 200) {
       if (responseData['role'] != 1) {
+        var roles = responseData['result']['role'];
+
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('token_key', responseData['token']);
         await prefs.setString(
             'username_key', responseData['result']['username']);
         await prefs.setString(
             'image_key', responseData['result']['image_url'].toString());
-        await prefs.setString(
-            'role_lsit_key', jsonEncode(responseData['result']['role']));
+        await prefs.setString('role_list_key', jsonEncode(roles));
+
+        roles.forEach((e) {
+          if (e['slug_name'] == "lecturer") {
+            passRoleGeneral = "Lecturer";
+            return;
+          } else if (e['slug_name'] == "student") {
+            passRoleGeneral = "Student";
+            return;
+          } else if (e['slug_name'] == "staff") {
+            passRoleGeneral = "Staff";
+            return;
+          }
+        });
 
         // Lecturer or student role
         return [

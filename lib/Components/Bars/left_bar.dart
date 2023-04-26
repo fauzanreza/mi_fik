@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
+import 'package:mi_fik/Components/Dialogs/sign_out_dialog.dart';
 import 'package:mi_fik/Components/Skeletons/drawer.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/AboutPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/FAQPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/HelpPage/index.dart';
+import 'package:mi_fik/Pages/SubMenus/ProfilePage/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LeftBar extends StatelessWidget {
@@ -59,13 +61,13 @@ class LeftBar extends StatelessWidget {
                                           MainAxisAlignment.center,
                                       children: [
                                         getProfileImageSideBar(
-                                            fullWidth, image),
+                                            fullWidth, 0.15, image),
                                         Text(username,
                                             style: TextStyle(
                                                 color: whitebg,
                                                 fontSize: textMD,
                                                 fontWeight: FontWeight.w500)),
-                                        Text("Dosen FIK",
+                                        Text(passRoleGeneral,
                                             style: TextStyle(
                                                 color: whitebg,
                                                 fontSize: textMD,
@@ -78,7 +80,14 @@ class LeftBar extends StatelessWidget {
                                       horizontal: paddingXSM),
                                   alignment: Alignment.centerLeft,
                                   child: TextButton.icon(
-                                    onPressed: () async {},
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const ProfilePage()),
+                                      );
+                                    },
                                     icon: Icon(Icons.person,
                                         size: textXLG, color: whitebg),
                                     label: Text("Profile",
@@ -228,7 +237,12 @@ class LeftBar extends StatelessWidget {
                               ),
                               color: dangerColor),
                           child: TextButton.icon(
-                            onPressed: () async {},
+                            onPressed: () {
+                              showDialog<String>(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      SignOutDialog());
+                            },
                             icon: Icon(Icons.logout,
                                 size: textXLG, color: whitebg),
                             label: Text("Log Out",

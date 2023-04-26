@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
-Widget getProfileImageSideBar(double width, String url) {
+Widget getProfileImageSideBar(double width, double size, String url) {
   if (url != null && url != "null") {
     return Container(
       padding: const EdgeInsets.all(3),
@@ -12,7 +12,7 @@ Widget getProfileImageSideBar(double width, String url) {
       ),
       child: ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(100)),
-        child: Image.network(url, width: width * 0.15),
+        child: Image.network(url, width: width * size),
       ),
     );
   } else {
@@ -26,7 +26,7 @@ Widget getProfileImageSideBar(double width, String url) {
       child: ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(100)),
         child: Image.asset('assets/icon/default_lecturer.png',
-            width: width * 0.15),
+            width: width * size),
       ),
     );
   }

@@ -7,7 +7,7 @@ class RightBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double fullHeight = MediaQuery.of(context).size.height;
+    //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
     return Drawer(
