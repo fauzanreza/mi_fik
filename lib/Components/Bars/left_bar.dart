@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
+import 'package:mi_fik/Components/Dialogs/sign_out_dialog.dart';
 import 'package:mi_fik/Components/Skeletons/drawer.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -228,7 +229,12 @@ class LeftBar extends StatelessWidget {
                               ),
                               color: dangerColor),
                           child: TextButton.icon(
-                            onPressed: () async {},
+                            onPressed: () {
+                              showDialog<String>(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      SignOutDialog());
+                            },
                             icon: Icon(Icons.logout,
                                 size: textXLG, color: whitebg),
                             label: Text("Log Out",

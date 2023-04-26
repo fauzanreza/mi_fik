@@ -3,8 +3,9 @@ import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class FailedDialog extends StatefulWidget {
-  FailedDialog({Key key, this.text}) : super(key: key);
+  FailedDialog({Key key, this.text, this.type}) : super(key: key);
   var text;
+  String type;
 
   @override
   _FailedDialog createState() => _FailedDialog();
@@ -33,7 +34,7 @@ class _FailedDialog extends State<FailedDialog> {
               Container(
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   child: Text(
-                      getMessageResponseFromObject(widget.text, "login"),
+                      getMessageResponseFromObject(widget.text, widget.type),
                       textAlign: TextAlign.center,
                       style: TextStyle(color: greybg, fontSize: textMD)))
             ]),

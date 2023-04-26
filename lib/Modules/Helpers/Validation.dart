@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 // Validation variable
 int usernameLength = 30;
 int passwordLength = 50;
@@ -18,4 +20,9 @@ validateNullJSON(val) {
   } else {
     return null;
   }
+}
+
+Future<bool> keyExist(String key) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.containsKey(key);
 }

@@ -16,12 +16,12 @@ class PostLogin extends StatefulWidget {
 class _PostLogin extends State<PostLogin> {
   TextEditingController usernameCtrl = TextEditingController();
   TextEditingController passCtrl = TextEditingController();
-  LoginCommandsService apiService;
+  AuthCommandsService apiService;
 
   @override
   void initState() {
     super.initState();
-    apiService = LoginCommandsService();
+    apiService = AuthCommandsService();
   }
 
   @override
@@ -126,7 +126,7 @@ class _PostLogin extends State<PostLogin> {
                           showDialog<String>(
                               context: context,
                               builder: (BuildContext context) =>
-                                  FailedDialog(text: body));
+                                  FailedDialog(text: body, type: "login"));
 
                           usernameCtrl.clear();
                           passCtrl.clear();
@@ -136,7 +136,8 @@ class _PostLogin extends State<PostLogin> {
                       showDialog<String>(
                           context: context,
                           builder: (BuildContext context) => FailedDialog(
-                              text: "Login failed, field can't be empty"));
+                              text: "Login failed, field can't be empty",
+                              type: "login"));
                     }
                   },
                   style: ButtonStyle(

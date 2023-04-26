@@ -4,7 +4,7 @@ import 'package:http/http.dart' show Client;
 import 'package:mi_fik/Modules/APIs/AuthApi/Models/commands.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginCommandsService {
+class AuthCommandsService {
   final String baseUrl = "https://mifik.id";
   final String emuUrl = "http://10.0.2.2:8000";
 
