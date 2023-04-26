@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 // Navigation
 String passSlugContent;
+String passRoleGeneral;
 
 // Selected
 var selectedArchiveName;
@@ -24,8 +25,9 @@ DateTime slctSchedule = DateTime.now();
 class UserProfileLeftBar {
   final String username;
   final String image;
+  final List<dynamic> roles;
 
-  UserProfileLeftBar({this.username, this.image});
+  UserProfileLeftBar({this.username, this.image, this.roles});
 }
 
 class Role {
