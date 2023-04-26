@@ -35,7 +35,7 @@ class AuthCommandsService {
             'username_key', responseData['result']['username']);
         await prefs.setString(
             'image_key', responseData['result']['image_url'].toString());
-        await prefs.setString('role_lsit_key', jsonEncode(roles));
+        await prefs.setString('role_list_key', jsonEncode(roles));
 
         roles.forEach((e) {
           if (e['slug_name'] == "lecturer") {

@@ -27,7 +27,7 @@ class ControlPanel extends StatelessWidget {
 
   Future<Role> getToken() async {
     final prefs = await SharedPreferences.getInstance();
-    final roles = prefs.getString('role_lsit_key');
+    final roles = prefs.getString('role_list_key');
     return Role(role: roles);
   }
 
@@ -38,6 +38,7 @@ class ControlPanel extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             var roles = jsonDecode(snapshot.data.role);
+
             //double fullHeight = MediaQuery.of(context).size.height;
             double fullWidth = MediaQuery.of(context).size.width;
 

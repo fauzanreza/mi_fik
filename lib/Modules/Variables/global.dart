@@ -25,13 +25,12 @@ DateTime slctSchedule = DateTime.now();
 class UserProfileLeftBar {
   final String username;
   final String image;
-  final List<dynamic> roles;
 
-  UserProfileLeftBar({this.username, this.image, this.roles});
+  UserProfileLeftBar({this.username, this.image});
 }
 
 class Role {
-  var role;
+  final String role;
 
   Role({this.role});
 }

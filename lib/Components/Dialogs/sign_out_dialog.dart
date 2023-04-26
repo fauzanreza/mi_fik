@@ -65,7 +65,7 @@ class _SignOutDialog extends State<SignOutDialog> {
                 if (body == "Logout success") {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => LoginPage()),
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
                   );
                   showDialog<String>(
                       context: context,
@@ -85,7 +85,7 @@ class _SignOutDialog extends State<SignOutDialog> {
                       text: "Sign out failed, token does't exist"));
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LoginPage()),
+                MaterialPageRoute(builder: (context) => const LoginPage()),
               );
             }
           },

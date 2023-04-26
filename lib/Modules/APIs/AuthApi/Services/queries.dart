@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' show Client;
-import 'package:mi_fik/Modules/APIs/AuthApi/Models/commands.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthQueriesService {

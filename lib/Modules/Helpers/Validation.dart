@@ -4,6 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // Validation variable
 int usernameLength = 30;
+int fnameLength = 30;
+int lnameLength = 30;
 int passwordLength = 50;
 
 validateNull(val) {

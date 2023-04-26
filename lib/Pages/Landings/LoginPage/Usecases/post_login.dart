@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
+import 'package:mi_fik/Components/Forms/input.dart';
 import 'package:mi_fik/Modules/APIs/AuthApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/AuthApi/Services/commands.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
@@ -14,9 +15,16 @@ class PostLogin extends StatefulWidget {
 }
 
 class _PostLogin extends State<PostLogin> {
-  TextEditingController usernameCtrl = TextEditingController();
-  TextEditingController passCtrl = TextEditingController();
+  var usernameCtrl = TextEditingController();
+  var passCtrl = TextEditingController();
   AuthCommandsService apiService;
+
+  @override
+  void dispose() {
+    usernameCtrl.dispose();
+    passCtrl.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -50,54 +58,10 @@ class _PostLogin extends State<PostLogin> {
             ),
             Text("Username",
                 style: TextStyle(color: blackbg, fontSize: textMD)),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: paddingXSM),
-              padding: EdgeInsets.only(top: paddingXSM * 0.5),
-              child: TextField(
-                cursorColor: blackbg,
-                maxLength: usernameLength,
-                autofocus: true,
-                controller: usernameCtrl,
-                decoration: InputDecoration(
-                  fillColor: mainbg,
-                  filled: true,
-                  border: InputBorder.none,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide.none,
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-              ),
-            ),
+            getInputText(lnameLength, usernameCtrl, false),
             Text("Password",
                 style: TextStyle(color: blackbg, fontSize: textMD)),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: paddingXSM),
-              padding: EdgeInsets.only(top: paddingXSM * 0.5),
-              child: TextField(
-                cursorColor: blackbg,
-                maxLength: passwordLength,
-                autofocus: true,
-                controller: passCtrl,
-                decoration: InputDecoration(
-                  fillColor: mainbg,
-                  filled: true,
-                  border: InputBorder.none,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide.none,
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-              ),
-            ),
+            getInputText(passwordLength, passCtrl, true),
             Container(
                 padding: EdgeInsets.zero,
                 width: fullWidth,
