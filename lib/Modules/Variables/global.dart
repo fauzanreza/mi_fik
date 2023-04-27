@@ -8,6 +8,7 @@ String passRoleGeneral;
 var selectedArchiveName;
 var selectedArchiveId;
 var locCoordinateCtrl;
+var selectedArchiveSlug;
 
 final selectedTag = [];
 final locDetailCtrl = TextEditingController();

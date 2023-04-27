@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
-import 'package:mi_fik/Modules/Models/Archive/Archive.dart';
-import 'package:mi_fik/Modules/Services/ArchieveServices.dart';
 import 'package:mi_fik/Components/Skeletons/archive_1.dart';
+import 'package:mi_fik/Modules/APIs/ArchiveApi/Models/queries.dart';
+import 'package:mi_fik/Modules/APIs/ArchiveApi/Services/queries.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
@@ -14,12 +14,12 @@ class ArchievePage extends StatefulWidget {
 }
 
 class _ArchievePage extends State<ArchievePage> {
-  ArchieveService apiService;
+  ArchiveQueriesService apiService;
 
   @override
   void initState() {
     super.initState();
-    apiService = ArchieveService();
+    apiService = ArchiveQueriesService();
   }
 
   @override
@@ -27,7 +27,7 @@ class _ArchievePage extends State<ArchievePage> {
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
-        future: apiService.getAllArchieve(),
+        future: apiService.getMyArchive(),
         builder:
             (BuildContext context, AsyncSnapshot<List<ArchiveModel>> snapshot) {
           if (snapshot.hasError) {
@@ -77,8 +77,8 @@ class _ArchievePage extends State<ArchievePage> {
             GestureDetector(
                 onTap: () {
                   setState(() {
-                    selectedArchiveName = archieve.archieveName;
-                    selectedArchiveId = archieve.id.toString();
+                    selectedArchiveName = archieve.archiveName;
+                    selectedArchiveSlug = archieve.slug;
                   });
                   Navigator.push(
                     context,
@@ -110,7 +110,7 @@ class _ArchievePage extends State<ArchievePage> {
                     child: Row(children: [
                       SizedBox(
                         width: fullWidth * 0.35,
-                        child: Text(archieve.archieveName.toString(),
+                        child: Text(archieve.archiveName,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -120,7 +120,7 @@ class _ArchievePage extends State<ArchievePage> {
                       ),
                       const Spacer(),
                       //This text is to small and will affect the name of archieve.
-                      Text(getTotalArchieve(archieve.event, archieve.task),
+                      Text(getTotalArchieve(0, 0),
                           style: TextStyle(
                             color: whitebg,
                             fontSize: textXSM,

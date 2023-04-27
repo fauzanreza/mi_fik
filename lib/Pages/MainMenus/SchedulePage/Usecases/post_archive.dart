@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
-import 'package:mi_fik/Modules/Models/Archive/Archive.dart';
-import 'package:mi_fik/Modules/Services/ArchieveServices.dart';
+import 'package:mi_fik/Modules/APIs/ArchiveApi/Models/commands.dart';
+import 'package:mi_fik/Modules/APIs/ArchiveApi/Services/commands.dart';
+import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/SubMenus/ProfilePage/index.dart';
 
 class PostArchive extends StatefulWidget {
   PostArchive({Key key, this.text}) : super(key: key);
@@ -15,7 +18,7 @@ class PostArchive extends StatefulWidget {
 }
 
 class _PostArchive extends State<PostArchive> {
-  ArchieveService archiveService;
+  ArchiveCommandsService archiveService;
   final archiveNameCtrl = TextEditingController();
   final archiveDescCtrl = TextEditingController();
 
@@ -29,7 +32,7 @@ class _PostArchive extends State<PostArchive> {
   @override
   void initState() {
     super.initState();
-    archiveService = ArchieveService();
+    archiveService = ArchiveCommandsService();
   }
 
   @override
@@ -86,34 +89,40 @@ class _PostArchive extends State<PostArchive> {
               child: ElevatedButton(
                 onPressed: () async {
                   //Mapping.
-                  ArchiveModel archive = ArchiveModel(
-                    archieveName: archiveNameCtrl.text.toString(),
-                  );
+                  AddArchiveModel archive = AddArchiveModel(
+                      archiveName: archiveNameCtrl.text,
+                      archiveDesc: validateNull(archiveDescCtrl.text));
 
                   //Validator
-                  if (archive.archieveName.isNotEmpty) {
-                    archiveService.addArchive(archive).then((isError) {
+                  if (archive.archiveName.isNotEmpty) {
+                    archiveService.addArchive(archive).then((response) {
                       setState(() => isLoading = false);
-                      if (isError) {
+                      var status = response[0]['message'];
+                      var body = response[0]['body'];
+
+                      if (status == "success") {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const BottomBar()),
+                        );
                         showDialog<String>(
                             context: context,
                             builder: (BuildContext context) =>
-                                FailedDialog(text: "Create archive failed"));
+                                SuccessDialog(text: body));
                       } else {
                         showDialog<String>(
                             context: context,
                             builder: (BuildContext context) =>
-                                SuccessDialog(text: "Create archive success"));
-
-                        archiveNameCtrl.clear();
+                                FailedDialog(text: body, type: "addarchive"));
                       }
                     });
                   } else {
                     showDialog<String>(
                         context: context,
                         builder: (BuildContext context) => FailedDialog(
-                            text:
-                                "Create archive failed, field can't be empty"));
+                            text: "Create archive failed, field can't be empty",
+                            type: "addarchive"));
                   }
                 },
                 style: ButtonStyle(
