@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:intl/intl.dart';
+import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
 import 'package:mi_fik/Components/Forms/date_picker.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
-import 'package:mi_fik/Modules/Models/Task.dart';
-import 'package:mi_fik/Modules/Services/TaskServices.dart';
+import 'package:mi_fik/Modules/APIs/ContentApi/Models/command_tasks.dart';
+import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_tasks.dart';
+import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class PostTask extends StatefulWidget {
@@ -18,18 +19,24 @@ class PostTask extends StatefulWidget {
 }
 
 class _PostTask extends State<PostTask> {
-  TaskService taskService;
+  TaskCommandsService taskService;
 
-  //Initial variable
   final taskTitleCtrl = TextEditingController();
   final taskDescCtrl = TextEditingController();
   DateTime dateStartCtrl;
   DateTime dateEndCtrl;
 
   @override
+  void dispose() {
+    taskTitleCtrl.dispose();
+    taskDescCtrl.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
-    taskService = TaskService();
+    taskService = TaskCommandsService();
   }
 
   @override
@@ -37,14 +44,6 @@ class _PostTask extends State<PostTask> {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
     bool isLoading = false;
-
-    getDateText(date, type) {
-      if (date != null) {
-        return DateFormat("dd-MM-yy  HH:mm").format(date).toString();
-      } else {
-        return "Set Date $type";
-      }
-    }
 
     return Padding(
       padding: MediaQuery.of(context).viewInsets,
@@ -152,43 +151,45 @@ class _PostTask extends State<PostTask> {
               height: btnHeightMD,
               child: ElevatedButton(
                 onPressed: () async {
-                  validateDateNull(val) {
-                    if (val != null) {
-                      return val.toString();
-                    } else {
-                      return null;
-                    }
-                  }
-
                   //Mapping.
-                  TaskModel task = TaskModel(
-                    taskTitle: taskTitleCtrl.text.toString(),
-                    taskDesc: taskDescCtrl.text.toString(),
-                    dateStart: validateDateNull(dateStartCtrl),
-                    dateEnd: validateDateNull(dateEndCtrl),
-                  );
+                  AddTaskModel data = AddTaskModel(
+                      taskTitle: taskTitleCtrl.text,
+                      taskDesc: taskDescCtrl.text,
+                      dateStart: validateDatetime(dateStartCtrl),
+                      dateEnd: validateDatetime(dateEndCtrl),
+                      reminder: "reminder_1_day_before" // For now.
+                      );
 
                   //Validator
-                  if (task.taskTitle.isNotEmpty) {
-                    taskService.addTask(task).then((isError) {
+                  if (data.taskTitle.isNotEmpty) {
+                    taskService.addTask(data).then((response) {
                       setState(() => isLoading = false);
-                      if (isError) {
+                      var status = response[0]['message'];
+                      var body = response[0]['body'];
+
+                      if (status == "success") {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const BottomBar()),
+                        );
                         showDialog<String>(
                             context: context,
                             builder: (BuildContext context) =>
-                                FailedDialog(text: "Create task failed"));
+                                SuccessDialog(text: body));
                       } else {
                         showDialog<String>(
                             context: context,
                             builder: (BuildContext context) =>
-                                SuccessDialog(text: "Create task success"));
+                                FailedDialog(text: body, type: "addtask"));
                       }
                     });
                   } else {
                     showDialog<String>(
                         context: context,
                         builder: (BuildContext context) => FailedDialog(
-                            text: "Create task failed, field can't be empty"));
+                            text: "Create archive failed, field can't be empty",
+                            type: "addtask"));
                   }
                 },
                 style: ButtonStyle(

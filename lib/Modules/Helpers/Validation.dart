@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Validation variable
@@ -13,6 +14,14 @@ validateNull(val) {
     return val.toString();
   } else {
     return null;
+  }
+}
+
+validateDatetime(DateTime date) {
+  if (date != null && date != "null") {
+    return DateFormat("yyyy-MM-dd HH:mm").format(date).toString();
+  } else {
+    return "null";
   }
 }
 
