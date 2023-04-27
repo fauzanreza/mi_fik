@@ -101,6 +101,27 @@ String getMessageResponseFromObject(val, type) {
       }
     } else if (type == "signout") {
       return val;
+    } else if (type == "editacc") {
+      if (val.containsKey('first_name') != null) {
+        var fnameErr = val['first_name'];
+
+        if (fnameErr != null) {
+          res += "${fnameErr.join('\n')}";
+        }
+      }
+      if (val.containsKey('last_name') != null) {
+        var lnameErr = val['last_name'];
+
+        if (lnameErr != null) {
+          res += "${lnameErr.join('\n')}";
+        }
+      }
+      if (val.containsKey('password')) {
+        var passErr = val['password'];
+        if (passErr != null) {
+          res += "${passErr.join('\n')}";
+        }
+      }
     }
 
     return res;
