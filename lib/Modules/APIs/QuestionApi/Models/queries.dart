@@ -17,7 +17,7 @@ class QuestionBodyModel {
   }
 }
 
-List<QuestionBodyModel> QuestionBodyModelFromJsonWPaginate(String jsonData) {
+List<QuestionBodyModel> questionBodyModelFromJsonWPaginate(String jsonData) {
   final data = json.decode(jsonData);
   return List<QuestionBodyModel>.from(
       data['data']['data'].map((item) => QuestionBodyModel.fromJson(item)));

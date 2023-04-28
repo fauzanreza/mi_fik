@@ -50,7 +50,6 @@ class _GetAllTagByCategory extends State<GetAllTagByCategory> {
   Widget _buildListView(List<TagAllModel> contents) {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    int i;
 
     return Wrap(
         runSpacing: -5,
@@ -76,7 +75,7 @@ class _GetAllTagByCategory extends State<GetAllTagByCategory> {
               child: Text(e.tagName, style: TextStyle(fontSize: textXSM)),
             );
           } else {
-            return SizedBox();
+            return const SizedBox();
           }
         }).toList());
   }

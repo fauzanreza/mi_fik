@@ -11,7 +11,7 @@ class HelpTypeModel {
   }
 }
 
-List<HelpTypeModel> HelpTypeModelFromJson(String jsonData) {
+List<HelpTypeModel> helpTypeModelFromJson(String jsonData) {
   final data = json.decode(jsonData);
   return List<HelpTypeModel>.from(
       data['data'].map((item) => HelpTypeModel.fromJson(item)));
@@ -35,7 +35,7 @@ class HelpBodyModel {
   }
 }
 
-List<HelpBodyModel> HelpBodyModelFromJsonWPaginate(String jsonData) {
+List<HelpBodyModel> helpBodyModelFromJsonWPaginate(String jsonData) {
   final data = json.decode(jsonData);
   return List<HelpBodyModel>.from(
       data['data']['data'].map((item) => HelpBodyModel.fromJson(item)));

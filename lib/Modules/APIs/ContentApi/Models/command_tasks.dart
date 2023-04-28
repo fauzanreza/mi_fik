@@ -26,7 +26,7 @@ class AddTaskModel {
   }
 }
 
-String AddTaskModelToJson(AddTaskModel data) {
+String addTaskModelToJson(AddTaskModel data) {
   final jsonData = data.toJson();
   return json.encode(jsonData);
 }

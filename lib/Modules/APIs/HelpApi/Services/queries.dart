@@ -14,7 +14,7 @@ class HelpQueriesService {
     final response =
         await client.get(Uri.parse("$emuUrl/api/v1/help"), headers: header);
     if (response.statusCode == 200) {
-      return HelpTypeModelFromJson(response.body);
+      return helpTypeModelFromJson(response.body);
     } else {
       return null;
     }
@@ -28,7 +28,7 @@ class HelpQueriesService {
     final response = await client.get(Uri.parse("$emuUrl/api/v1/help/$type"),
         headers: header);
     if (response.statusCode == 200) {
-      return HelpBodyModelFromJsonWPaginate(response.body);
+      return helpBodyModelFromJsonWPaginate(response.body);
     } else {
       return null;
     }
@@ -42,7 +42,7 @@ class HelpQueriesService {
     final response = await client.get(Uri.parse("$emuUrl/api/v1/help/about"),
         headers: header);
     if (response.statusCode == 200) {
-      return HelpBodyModelFromJsonWPaginate(response.body);
+      return helpBodyModelFromJsonWPaginate(response.body);
     } else {
       return null;
     }

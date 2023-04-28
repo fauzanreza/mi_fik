@@ -54,3 +54,33 @@ Widget getInputDesc(int len, int lines, var ctrl, bool secure) {
     ),
   );
 }
+
+Widget getDropDownMain(
+    String slct, List<String> opt, Function(String) onChanged) {
+  return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      height: 45,
+      margin: const EdgeInsets.only(top: 8),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: primaryColor,
+          width: 1.0,
+        ),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: DropdownButton(
+        value: slct,
+        underline: Container(
+          height: 1.0,
+          decoration: const BoxDecoration(border: null),
+        ),
+        style: TextStyle(fontSize: textMD, color: primaryColor),
+        items: opt.map((String item) {
+          return DropdownMenuItem<String>(
+            value: item,
+            child: Text(item),
+          );
+        }).toList(),
+        onChanged: onChanged,
+      ));
+}

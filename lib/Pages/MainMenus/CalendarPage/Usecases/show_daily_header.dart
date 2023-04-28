@@ -5,7 +5,6 @@ import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/query_contents.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
-import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class DayHeader extends StatefulWidget {
@@ -42,7 +41,7 @@ class _DayHeader extends State<DayHeader> with TickerProviderStateMixin {
             List<ScheduleTotalModel> contents = snapshot.data;
             return _buildListView(contents);
           } else {
-            return SizedBox();
+            return const SizedBox();
           }
         },
       ),

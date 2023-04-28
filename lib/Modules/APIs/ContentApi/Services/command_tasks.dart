@@ -23,7 +23,7 @@ class TaskCommandsService {
     final response = await client.post(
       Uri.parse("$emuUrl/api/v1/task/create"),
       headers: header,
-      body: AddTaskModelToJson(data),
+      body: addTaskModelToJson(data),
     );
 
     var responseData = jsonDecode(response.body);

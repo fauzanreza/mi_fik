@@ -51,7 +51,7 @@ class _DayEvent extends State<DayEvent> with TickerProviderStateMixin {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
-    if ((contents != null) && (contents.length != 0)) {
+    if ((contents != null) && (contents.isNotEmpty)) {
       return Container(
           margin: const EdgeInsets.only(left: 15, top: 10),
           padding: const EdgeInsets.only(bottom: 15),

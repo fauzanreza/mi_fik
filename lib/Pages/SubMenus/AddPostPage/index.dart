@@ -14,9 +14,9 @@ import 'package:mi_fik/Modules/Variables/dummy.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/AddPostPage/ChooseTag.dart';
-import 'package:mi_fik/Pages/SubMenus/AddPostPage/SetLocation.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:mi_fik/Pages/SubMenus/AddPostPage/Usecases/set_location.dart';
 
 class AddPost extends StatefulWidget {
   const AddPost({Key key}) : super(key: key);
@@ -80,7 +80,7 @@ class _AddPost extends State<AddPost> {
               child: IconButton(
                 icon: Icon(Icons.arrow_back, size: iconLG),
                 color: Colors.white,
-                onPressed: () {
+                onPressed: () async {
                   //Empty all input
                   if (selectedTag.isNotEmpty ||
                       locDetailCtrl.text.isNotEmpty ||
@@ -222,15 +222,15 @@ class _AddPost extends State<AddPost> {
                 alignment: Alignment.centerLeft,
                 padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
                 child: SizedBox(
-                  width: 180, // <-- Your width
+                  width: 180,
                   height: 40,
                   child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.white,
-                      onPrimary: const Color(0xFFFB8C00),
-                      side: const BorderSide(
+                      foregroundColor: primaryColor,
+                      backgroundColor: Colors.white,
+                      side: BorderSide(
                         width: 1.0,
-                        color: Color(0xFFFB8C00),
+                        color: primaryColor,
                       ),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0)),
@@ -268,7 +268,7 @@ class _AddPost extends State<AddPost> {
               Container(
                   padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
                   child: Wrap(runSpacing: -5, spacing: 5, children: [
-                    const SetLocationButton(),
+                    const SetLocation(),
                     TextButton.icon(
                       style: TextButton.styleFrom(
                         textStyle: const TextStyle(fontSize: 16),
@@ -322,18 +322,18 @@ class _AddPost extends State<AddPost> {
                       TextButton(
                         style: TextButton.styleFrom(
                           textStyle: const TextStyle(fontSize: 16),
-                          foregroundColor: const Color(0xFFFB8C00),
+                          foregroundColor: primaryColor,
                         ),
                         onPressed: () {},
                         child: const Text('Reminder :'),
                       ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
-                          onPrimary: const Color(0xFFFB8C00),
-                          side: const BorderSide(
+                          foregroundColor: primaryColor,
+                          backgroundColor: whitebg,
+                          side: BorderSide(
                             width: 1.0,
-                            color: Color(0xFFFB8C00),
+                            color: primaryColor,
                           ),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0)),

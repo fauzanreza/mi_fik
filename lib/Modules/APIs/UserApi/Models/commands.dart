@@ -17,7 +17,7 @@ class EditUserProfileModel {
   }
 }
 
-String EditUserProfileModelToJson(EditUserProfileModel data) {
+String editUserProfileModelToJson(EditUserProfileModel data) {
   final jsonData = data.toJson();
   return json.encode(jsonData);
 }
@@ -34,7 +34,7 @@ class AddNewReqModel {
   }
 }
 
-String AddNewReqModelToJson(AddNewReqModel data) {
+String addNewReqModelToJson(AddNewReqModel data) {
   final jsonData = data.toJson();
   return json.encode(jsonData);
 }

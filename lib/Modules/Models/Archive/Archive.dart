@@ -42,12 +42,6 @@ class ArchiveModel {
   }
 }
 
-List<ArchiveModel> ArchieveModelFromJson(String jsonData) {
-  final data = json.decode(jsonData);
-  return List<ArchiveModel>.from(
-      data.map((item) => ArchiveModel.fromJson(item)));
-}
-
 String ArchieveModelToJson(ArchiveModel data) {
   final jsonData = data.toJson();
   return json.encode(jsonData);

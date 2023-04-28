@@ -12,7 +12,8 @@ class GetHomePageEventContainer extends StatelessWidget {
   final double width;
   var content;
 
-  GetHomePageEventContainer({this.width, this.content});
+  GetHomePageEventContainer({Key key, this.width, this.content})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -154,7 +155,8 @@ class GetScheduleContainer extends StatelessWidget {
   var content;
   var ctx;
 
-  GetScheduleContainer({this.width, this.content, this.ctx});
+  GetScheduleContainer({Key key, this.width, this.content, this.ctx})
+      : super(key: key);
 
   //Get icon based on event or task
   Widget getIcon(type, dateStart) {
@@ -172,6 +174,8 @@ class GetScheduleContainer extends StatelessWidget {
         color: getColor(DateTime.parse(dateStart)),
         size: 38,
       );
+    } else {
+      return const SizedBox();
     }
   }
 

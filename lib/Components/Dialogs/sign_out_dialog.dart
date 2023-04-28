@@ -7,7 +7,7 @@ import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
 
 class SignOutDialog extends StatefulWidget {
-  SignOutDialog({Key key}) : super(key: key);
+  const SignOutDialog({Key key}) : super(key: key);
 
   @override
   _SignOutDialog createState() => _SignOutDialog();

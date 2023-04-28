@@ -15,7 +15,7 @@ class QuestionQueriesService {
         Uri.parse("$emuUrl/api/v1/faq/question/active/10"),
         headers: header);
     if (response.statusCode == 200) {
-      return QuestionBodyModelFromJsonWPaginate(response.body);
+      return questionBodyModelFromJsonWPaginate(response.body);
     } else {
       return null;
     }

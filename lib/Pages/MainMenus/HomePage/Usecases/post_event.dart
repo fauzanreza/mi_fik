@@ -12,7 +12,7 @@ class _PostEvent extends State<PostEvent> {
   @override
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
-    double fullWidth = MediaQuery.of(context).size.width;
+    //double fullWidth = MediaQuery.of(context).size.width;
     bool isLoading = false;
 
     return Padding(

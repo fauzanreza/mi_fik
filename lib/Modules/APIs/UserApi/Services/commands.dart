@@ -24,7 +24,7 @@ class UserCommandsService {
     final response = await client.put(
       Uri.parse("$emuUrl/api/v1/user/update/data"),
       headers: header,
-      body: EditUserProfileModelToJson(data),
+      body: editUserProfileModelToJson(data),
     );
 
     var responseData = jsonDecode(response.body);
@@ -61,7 +61,7 @@ class UserCommandsService {
     final response = await client.post(
       Uri.parse("$emuUrl/api/v1/user/request/role"),
       headers: header,
-      body: AddNewReqModelToJson(data),
+      body: addNewReqModelToJson(data),
     );
 
     var responseData = jsonDecode(response.body);

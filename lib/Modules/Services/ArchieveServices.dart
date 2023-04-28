@@ -1,20 +1,9 @@
 import 'package:http/http.dart' show Client;
 import 'package:mi_fik/Modules/Models/Archive/Archive.dart';
-import 'package:mi_fik/Modules/Variables/dummy.dart';
 
 class ArchieveService {
   final String baseUrl = "https://mifik.leonardhors.site";
   Client client = Client();
-
-  Future<List<ArchiveModel>> getAllArchieve() async {
-    final response =
-        await client.get(Uri.parse("$baseUrl/api/archieve/$passIdUser"));
-    if (response.statusCode == 200) {
-      return ArchieveModelFromJson(response.body);
-    } else {
-      return null;
-    }
-  }
 
   Future<bool> editArchive(ArchiveModel data, id) async {
     final response = await client.put(
