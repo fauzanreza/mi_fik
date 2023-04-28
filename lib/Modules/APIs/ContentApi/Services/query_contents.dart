@@ -66,4 +66,23 @@ class ContentQueriesService {
       return null;
     }
   }
+
+  Future<List<ScheduleTotalModel>> getTotalSchedule() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token_key');
+    final header = {
+      'Accept': 'application/json',
+      'Authorization': "Bearer $token",
+    };
+
+    final response = await client.get(
+        Uri.parse(
+            "$emuUrl/api/v1/content/date/${DateFormat("yyyy-MM-dd").format(slctSchedule)}"),
+        headers: header);
+    if (response.statusCode == 200) {
+      return ScheduleTotalModelFromJson(response.body);
+    } else {
+      return null;
+    }
+  }
 }

@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:mi_fik/Components/Bars/Usecases/show_side_bar.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Bars/left_bar.dart';
 import 'package:mi_fik/Components/Bars/right_bar.dart';
 import 'package:mi_fik/Components/Bars/tab_bar.dart';
+import 'package:mi_fik/Components/Button/navigation.dart';
 import 'package:mi_fik/Components/Typography/show_greeting.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/add_task.dart';
+import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/post_archive.dart';
+import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/post_task.dart';
 import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/show_weekly.dart';
 
 class SchedulePage extends StatefulWidget {
@@ -77,6 +80,18 @@ class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
                   ctrl: tabController,
                   col: tabColSchedule)
             ]),
-        floatingActionButton: AddTaskwArchive());
+        floatingActionButton: SpeedDial(
+            activeIcon: Icons.close,
+            icon: Icons.add,
+            iconTheme: IconThemeData(color: whitebg),
+            backgroundColor: primaryColor,
+            overlayColor: primaryColor,
+            overlayOpacity: 0.4,
+            children: [
+              getSpeeDialChild(
+                  "New Task", context, PostTask(), Icons.note_add_outlined),
+              getSpeeDialChild(
+                  "New Archive", context, PostArchive(), Icons.folder)
+            ]));
   }
 }

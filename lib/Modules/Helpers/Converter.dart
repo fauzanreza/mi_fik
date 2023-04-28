@@ -101,6 +101,75 @@ String getMessageResponseFromObject(val, type) {
       }
     } else if (type == "signout") {
       return val;
+    } else if (type == "editacc") {
+      if (val.containsKey('first_name') != null) {
+        var fnameErr = val['first_name'];
+
+        if (fnameErr != null) {
+          res += "${fnameErr.join('\n')}";
+        }
+      }
+      if (val.containsKey('last_name') != null) {
+        var lnameErr = val['last_name'];
+
+        if (lnameErr != null) {
+          res += "${lnameErr.join('\n')}";
+        }
+      }
+      if (val.containsKey('password')) {
+        var passErr = val['password'];
+        if (passErr != null) {
+          res += "${passErr.join('\n')}";
+        }
+      }
+    } else if (type == "addarchive") {
+      if (val.containsKey('archive_name') != null) {
+        var anameErr = val['archive_name'];
+
+        if (anameErr != null) {
+          res += "${anameErr.join('\n')}";
+        }
+      }
+      if (val.containsKey('archive_desc') != null) {
+        var adescErr = val['archive_desc'];
+
+        if (adescErr != null) {
+          res += "${adescErr.join('\n')}";
+        }
+      }
+    } else if (type == "addtask") {
+      if (val.containsKey('task_title') != null) {
+        var ttitleErr = val['task_title'];
+
+        if (ttitleErr != null) {
+          res += "${ttitleErr.join('\n')}";
+        }
+      }
+      if (val.containsKey('task_desc') != null) {
+        var tdescErr = val['task_desc'];
+
+        if (tdescErr != null) {
+          res += "${tdescErr.join('\n')}";
+        }
+      }
+      if (val.containsKey('task_date_start')) {
+        var tdsErr = val['task_date_start'];
+        if (tdsErr != null) {
+          res += "${tdsErr.join('\n')}";
+        }
+      }
+      if (val.containsKey('task_date_end')) {
+        var tdeErr = val['task_date_end'];
+        if (tdeErr != null) {
+          res += "${tdeErr.join('\n')}";
+        }
+      }
+      if (val.containsKey('task_reminder')) {
+        var remindErr = val['task_reminder'];
+        if (remindErr != null) {
+          res += "${remindErr.join('\n')}";
+        }
+      }
     }
 
     return res;

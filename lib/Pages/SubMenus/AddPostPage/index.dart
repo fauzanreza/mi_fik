@@ -18,14 +18,14 @@ import 'package:mi_fik/Pages/SubMenus/AddPostPage/SetLocation.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
-class addPost extends StatefulWidget {
-  const addPost({Key key}) : super(key: key);
+class AddPost extends StatefulWidget {
+  const AddPost({Key key}) : super(key: key);
 
   @override
-  _addPost createState() => _addPost();
+  _AddPost createState() => _AddPost();
 }
 
-class _addPost extends State<addPost> {
+class _AddPost extends State<AddPost> {
   ContentQueriesService apiQuery;
   ContentCommandsService apiCommand;
 

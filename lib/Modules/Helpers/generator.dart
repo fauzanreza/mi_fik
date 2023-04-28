@@ -37,6 +37,25 @@ getShadow(String type) {
   }
 }
 
+getTodayCalendarHeader(DateTime val) {
+  final now = DateTime.now();
+  final today = DateTime(now.year, now.month, now.day);
+  final content = DateTime(val.year, val.month, val.day);
+  final yesterday = DateTime(now.year, now.month, now.day - 1);
+  var tomorrow = now.add(Duration(days: 1));
+  tomorrow = DateTime(tomorrow.year, tomorrow.month, tomorrow.day);
+
+  if (content == today) {
+    return "Today";
+  } else if (content == yesterday) {
+    return "Yesterday";
+  } else if (content == tomorrow) {
+    return "Tommorow";
+  } else {
+    return DateFormat("yyyy").format(val).toString();
+  }
+}
+
 getColor(date) {
   if (DateFormat("HH").format(DateTime.now()) ==
       DateFormat("HH").format(date)) {
@@ -118,7 +137,7 @@ Widget getTagShow(tag, dateStart) {
 
 String getDateText(date, type) {
   if (date != null) {
-    return DateFormat("dd-MM-yy  HH:mm").format(date).toString();
+    return DateFormat("dd-MM-yy").format(date).toString();
   } else {
     return "Set Date $type";
   }

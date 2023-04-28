@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:http/http.dart' show Client;
 import 'package:mi_fik/Modules/APIs/AuthApi/Models/commands.dart';
-import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthCommandsService {
@@ -37,6 +36,7 @@ class AuthCommandsService {
             'image_key', responseData['result']['image_url'].toString());
         await prefs.setString('role_list_key', jsonEncode(roles));
 
+        var passRoleGeneral;
         roles.forEach((e) {
           if (e['slug_name'] == "lecturer") {
             passRoleGeneral = "Lecturer";
@@ -49,6 +49,7 @@ class AuthCommandsService {
             return;
           }
         });
+        await prefs.setString('role_general_key', passRoleGeneral);
 
         // Lecturer or student role
         return [

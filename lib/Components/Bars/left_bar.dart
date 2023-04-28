@@ -7,6 +7,7 @@ import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/AboutPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/FAQPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/HelpPage/index.dart';
+import 'package:mi_fik/Pages/SubMenus/ManageRolePage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/ProfilePage/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,7 +18,9 @@ class LeftBar extends StatelessWidget {
     final prefs = await SharedPreferences.getInstance();
     final username = prefs.getString('username_key');
     final image = prefs.getString('image_key');
-    return UserProfileLeftBar(username: username, image: image);
+    final role = prefs.getString('role_general_key');
+    return UserProfileLeftBar(
+        username: username, image: image, roleGeneral: role);
   }
 
   @override
@@ -31,6 +34,7 @@ class LeftBar extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.done) {
             String username = snapshot.data.username;
             String image = snapshot.data.image;
+            String role = snapshot.data.roleGeneral;
 
             return Drawer(
                 child: Container(
@@ -67,7 +71,7 @@ class LeftBar extends StatelessWidget {
                                                 color: whitebg,
                                                 fontSize: textMD,
                                                 fontWeight: FontWeight.w500)),
-                                        Text(passRoleGeneral,
+                                        Text(role,
                                             style: TextStyle(
                                                 color: whitebg,
                                                 fontSize: textMD,
@@ -117,7 +121,14 @@ class LeftBar extends StatelessWidget {
                                       horizontal: paddingXSM),
                                   alignment: Alignment.centerLeft,
                                   child: TextButton.icon(
-                                    onPressed: () async {},
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const RolePage()),
+                                      );
+                                    },
                                     icon: Icon(
                                         Icons
                                             .tag, //Change w/ asset icon from figma

@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:mi_fik/Components/Forms/date_picker.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
-import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Variables/dummy.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -59,10 +59,7 @@ class ControlPanel extends StatelessWidget {
                   builder: (BuildContext context) {
                     return Padding(
                       padding: MediaQuery.of(context).viewInsets,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
+                      child: ListView(
                         children: <Widget>[
                           Container(
                             alignment: Alignment.topRight,
@@ -140,55 +137,33 @@ class ControlPanel extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                TextButton.icon(
-                                  style: TextButton.styleFrom(
-                                    textStyle: const TextStyle(fontSize: 16),
-                                    foregroundColor: blackbg,
-                                  ), // <-- TextButton
-                                  onPressed: () {
-                                    final now = DateTime.now();
+                                getDatePicker(dateStart, () {
+                                  final now = DateTime.now();
 
-                                    DatePicker.showDatePicker(context,
-                                        showTitleActions: true,
-                                        minTime: DateTime(now.year, now.month,
-                                            now.day), //Tomorrow
-                                        maxTime: DateTime(
-                                            now.year + 1, now.month, now.day),
-                                        onConfirm: (date) =>
-                                            setDateStartCtrl(date),
-                                        currentTime: now,
-                                        locale: LocaleType.en);
-                                  },
-                                  icon: const Icon(
-                                    Icons.calendar_month,
-                                    size: 24.0,
-                                  ),
-                                  label: Text(getDateText(dateStart, "Start")),
-                                ),
-                                TextButton.icon(
-                                  style: TextButton.styleFrom(
-                                      textStyle: const TextStyle(fontSize: 16),
-                                      foregroundColor: blackbg),
-                                  onPressed: () {
-                                    final now = DateTime.now();
+                                  DatePicker.showDatePicker(context,
+                                      showTitleActions: true,
+                                      minTime: DateTime(
+                                          now.year, now.month, now.day),
+                                      maxTime: DateTime(
+                                          now.year + 1, now.month, now.day),
+                                      onConfirm: (date) =>
+                                          setDateStartCtrl(date),
+                                      currentTime: now,
+                                      locale: LocaleType.en);
+                                }, "Start"),
+                                getDatePicker(dateEnd, () {
+                                  final now = DateTime.now();
 
-                                    DatePicker.showDatePicker(context,
-                                        showTitleActions: true,
-                                        minTime: DateTime(now.year, now.month,
-                                            now.day), //Tomorrow
-                                        maxTime: DateTime(
-                                            now.year + 1, now.month, now.day),
-                                        onConfirm: (date) =>
-                                            setDateEndCtrl(date),
-                                        currentTime: now,
-                                        locale: LocaleType.en);
-                                  },
-                                  icon: const Icon(
-                                    Icons.calendar_month,
-                                    size: 24.0,
-                                  ),
-                                  label: Text(getDateText(dateEnd, "End")),
-                                ),
+                                  DatePicker.showDatePicker(context,
+                                      showTitleActions: true,
+                                      minTime: DateTime(
+                                          now.year, now.month, now.day),
+                                      maxTime: DateTime(
+                                          now.year + 1, now.month, now.day),
+                                      onConfirm: (date) => setDateEndCtrl(date),
+                                      currentTime: now,
+                                      locale: LocaleType.en);
+                                }, "End"),
                                 const Spacer(),
                                 Container(
                                     margin: EdgeInsets.only(

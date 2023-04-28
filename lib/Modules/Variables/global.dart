@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 
 // Navigation
 String passSlugContent;
-String passRoleGeneral;
+// String passRoleGeneral;
 
 // Selected
 var selectedArchiveName;
 var selectedArchiveId;
 var locCoordinateCtrl;
+var selectedArchiveSlug;
 
 final selectedTag = [];
 final locDetailCtrl = TextEditingController();
@@ -25,8 +26,9 @@ DateTime slctSchedule = DateTime.now();
 class UserProfileLeftBar {
   final String username;
   final String image;
+  final String roleGeneral;
 
-  UserProfileLeftBar({this.username, this.image});
+  UserProfileLeftBar({this.username, this.image, this.roleGeneral});
 }
 
 class Role {

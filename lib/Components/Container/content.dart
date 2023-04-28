@@ -229,7 +229,7 @@ class GetScheduleContainer extends StatelessWidget {
                     )
                   ],
                 ),
-                child: Container(
+                child: Padding(
                     padding: const EdgeInsets.all(4),
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -239,6 +239,8 @@ class GetScheduleContainer extends StatelessWidget {
                             children: [
                               Text(
                                 content.contentTitle,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
                                 style: GoogleFonts.poppins(
                                   color: getColor(
                                       DateTime.parse(content.dateStart)),

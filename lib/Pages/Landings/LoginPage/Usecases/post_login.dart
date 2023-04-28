@@ -63,6 +63,7 @@ class _PostLogin extends State<PostLogin> {
                 style: TextStyle(color: blackbg, fontSize: textMD)),
             getInputText(passwordLength, passCtrl, true),
             Container(
+                margin: EdgeInsets.only(top: paddingSM),
                 padding: EdgeInsets.zero,
                 width: fullWidth,
                 height: 45,

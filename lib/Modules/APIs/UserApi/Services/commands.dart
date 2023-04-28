@@ -1,16 +1,17 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' show Client;
-import 'package:mi_fik/Modules/APIs/ContentApi/Models/command_tasks.dart';
+import 'package:mi_fik/Modules/APIs/UserApi/Models/commands.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class TaskCommandsService {
+class UserCommandsService {
   final String baseUrl = "https://mifik.id";
   final String emuUrl = "http://10.0.2.2:8000";
 
   Client client = Client();
 
-  Future<List<Map<String, dynamic>>> addTask(AddTaskModel data) async {
+  Future<List<Map<String, dynamic>>> putProfileData(
+      EditUserProfileModel data) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token_key');
 
@@ -20,10 +21,10 @@ class TaskCommandsService {
       'Authorization': "Bearer $token",
     };
 
-    final response = await client.post(
-      Uri.parse("$emuUrl/api/v1/task/create"),
+    final response = await client.put(
+      Uri.parse("$emuUrl/api/v1/user/update/data"),
       headers: header,
-      body: AddTaskModelToJson(data),
+      body: EditUserProfileModelToJson(data),
     );
 
     var responseData = jsonDecode(response.body);
