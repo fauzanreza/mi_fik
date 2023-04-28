@@ -47,4 +47,41 @@ class UserCommandsService {
       ];
     }
   }
+
+  Future<List<Map<String, dynamic>>> postUserReq(AddNewReqModel data) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token_key');
+
+    final header = {
+      'Accept': 'application/json',
+      'content-type': 'application/json',
+      'Authorization': "Bearer $token",
+    };
+
+    final response = await client.post(
+      Uri.parse("$emuUrl/api/v1/user/request/role"),
+      headers: header,
+      body: AddNewReqModelToJson(data),
+    );
+
+    var responseData = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      return [
+        {
+          "message": "success",
+          "body": responseData["message"],
+        }
+      ];
+    } else if (response.statusCode == 422 || response.statusCode == 401) {
+      // Validation failed
+      return [
+        {"message": "failed", "body": responseData['result']}
+      ];
+    } else {
+      return [
+        {"message": "failed", "body": "Unknown error"}
+      ];
+    }
+  }
 }

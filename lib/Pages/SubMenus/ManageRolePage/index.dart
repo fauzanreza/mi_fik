@@ -25,7 +25,7 @@ class _RolePage extends State<RolePage> {
       body: const GetAllTagCategory(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          if (selectedRole.isNotEmpty) {
+          if (selectedRole.isEmpty) {
             showDialog<String>(
                 context: context,
                 builder: (BuildContext context) =>

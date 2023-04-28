@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
@@ -24,18 +25,17 @@ class _TagSelectedArea extends State<TagSelectedArea> {
           width: fullWidth,
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            border: Border.all(
-              color: primaryColor,
-            ),
-            borderRadius: const BorderRadius.all(
-              Radius.circular(10.0),
-            ),
-          ),
+              borderRadius: const BorderRadius.all(
+                Radius.circular(10.0),
+              ),
+              color: semiPrimaryBg),
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text("Selected Tag", style: TextStyle(color: primaryColor)),
+                Text("Selected ${ucFirst(widget.type)}",
+                    style:
+                        TextStyle(color: blackbg, fontWeight: FontWeight.w500)),
                 Wrap(
                   runSpacing: -5,
                   spacing: 5,
@@ -61,8 +61,8 @@ class _TagSelectedArea extends State<TagSelectedArea> {
                         color: Colors.red.withOpacity(0.7),
                       ),
                       label: Text(tg['tag_name'],
-                          style: TextStyle(
-                              fontSize: textXSM, color: primaryColor)),
+                          style:
+                              TextStyle(fontSize: textSM, color: primaryColor)),
                       style: ButtonStyle(
                         side: MaterialStateProperty.all(BorderSide(
                             color: primaryColor,

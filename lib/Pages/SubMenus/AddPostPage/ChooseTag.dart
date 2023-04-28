@@ -106,7 +106,6 @@ class _ChooseTag extends State<ChooseTag> {
               if (contain.isEmpty || selectedTag.isEmpty) {
                 return ElevatedButton.icon(
                   onPressed: () {
-                    //Store selected tags
                     setState(() {
                       selectedTag.add({
                         "slug_name": tag.slugName,

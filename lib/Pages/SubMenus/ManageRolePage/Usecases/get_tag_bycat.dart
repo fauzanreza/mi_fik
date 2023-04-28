@@ -58,7 +58,7 @@ class _GetAllTagByCategory extends State<GetAllTagByCategory> {
         children: contents.map<Widget>((e) {
           var contain =
               selectedRole.where((item) => item['slug_name'] == e.slug);
-          if (contain.isEmpty || selectedTag.isEmpty) {
+          if (contain.isEmpty || selectedRole.isEmpty) {
             return ElevatedButton(
               onPressed: () {
                 setState(() {

@@ -122,6 +122,7 @@ class LeftBar extends StatelessWidget {
                                   alignment: Alignment.centerLeft,
                                   child: TextButton.icon(
                                     onPressed: () {
+                                      selectedRole.clear();
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
