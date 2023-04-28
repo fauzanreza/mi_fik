@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mi_fik/Modules/APIs/TagApi/Models/queries.dart';
 import 'package:mi_fik/Modules/APIs/TagApi/Services/queries.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/SubMenus/ManageRolePage/Usecases/get_tag_bycat.dart';
 
 class GetAllTagCategory extends StatefulWidget {
   const GetAllTagCategory({Key key}) : super(key: key);
@@ -66,12 +67,13 @@ class _GetAllTagCategory extends State<GetAllTagCategory> {
               children: [
                 Text(contents[index].dctName,
                     style: TextStyle(
-                        color: primaryColor,
+                        color: blackbg,
                         fontWeight: FontWeight.bold,
                         fontSize: textMD)),
                 const Divider(
                   thickness: 1,
-                )
+                ),
+                GetAllTagByCategory(slug: contents[index].slug)
               ],
             ),
           );

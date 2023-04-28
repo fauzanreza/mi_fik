@@ -1,0 +1,72 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:mi_fik/Modules/APIs/TagApi/Models/queries.dart';
+import 'package:mi_fik/Modules/APIs/TagApi/Services/queries.dart';
+import 'package:mi_fik/Modules/Variables/style.dart';
+
+class GetAllTagByCategory extends StatefulWidget {
+  GetAllTagByCategory({Key key, this.slug}) : super(key: key);
+  String slug;
+
+  @override
+  _GetAllTagByCategory createState() => _GetAllTagByCategory();
+}
+
+class _GetAllTagByCategory extends State<GetAllTagByCategory> {
+  TagQueriesService apiQuery;
+
+  @override
+  void initState() {
+    super.initState();
+    apiQuery = TagQueriesService();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      maintainBottomViewPadding: false,
+      child: FutureBuilder(
+        future: apiQuery.getAllTagByCategory(widget.slug),
+        builder:
+            (BuildContext context, AsyncSnapshot<List<TagAllModel>> snapshot) {
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(
+                  "Something wrong with message: ${snapshot.error.toString()}"),
+            );
+          } else if (snapshot.connectionState == ConnectionState.done) {
+            List<TagAllModel> contents = snapshot.data;
+            return _buildListView(contents);
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
+      ),
+    );
+  }
+
+  Widget _buildListView(List<TagAllModel> contents) {
+    //double fullHeight = MediaQuery.of(context).size.height;
+    double fullWidth = MediaQuery.of(context).size.width;
+    int i;
+
+    return Wrap(
+        runSpacing: -5,
+        spacing: 5,
+        children: contents.map<Widget>((e) {
+          return ElevatedButton(
+            onPressed: () {},
+            style: ButtonStyle(
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(roundedLG2),
+              )),
+              backgroundColor: MaterialStatePropertyAll<Color>(primaryColor),
+            ),
+            child: Text(e.tagName, style: TextStyle(fontSize: textXSM)),
+          );
+        }).toList());
+  }
+}

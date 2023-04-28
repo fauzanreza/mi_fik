@@ -19,7 +19,25 @@ class TagQueriesService {
         Uri.parse("$emuUrl/api/v1/dictionaries/type/TAG-001"),
         headers: header);
     if (response.statusCode == 200) {
-      return TagCategoryModeFromJson(response.body);
+      return TagCategoryModelFromJson(response.body);
+    } else {
+      return null;
+    }
+  }
+
+  Future<List<TagAllModel>> getAllTagByCategory(String cat) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token_key');
+    final header = {
+      'Accept': 'application/json',
+      'Authorization': "Bearer $token",
+    };
+
+    final response = await client.get(
+        Uri.parse("$emuUrl/api/v1/tag/cat/$cat/20?page=1"),
+        headers: header);
+    if (response.statusCode == 200) {
+      return TagAllModelFromJson(response.body);
     } else {
       return null;
     }
