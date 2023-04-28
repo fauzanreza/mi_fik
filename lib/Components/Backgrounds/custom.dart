@@ -64,13 +64,34 @@ class CirclePainterSide extends CustomPainter {
     //Customable paint path
     var paint = Paint()..strokeWidth = 15;
 
+    final gradientColors = [
+      primaryColor,
+      blackbg,
+    ];
+
+    final gradientStops = [
+      0.0,
+      1.0,
+    ];
+
+    final gradient = LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: gradientColors,
+      stops: gradientStops,
+    );
+
+    final shader =
+        gradient.createShader(Rect.fromLTRB(0, 0, size.width, size.height));
+    paint.shader = shader;
+
     Path mainBackground = Path();
     mainBackground.addRect(Rect.fromLTRB(0, 0, size.width, size.height));
     paint.color = primaryColor;
     canvas.drawPath(mainBackground, paint);
 
     //Color attribute
-    var paint1 = Paint()..color = primaryColor; //Main color
+    var paint1 = Paint()..shader = shader; //Main color
     var paint2 = Paint()
       ..color = const Color.fromARGB(255, 192, 115, 0); //Border
 
