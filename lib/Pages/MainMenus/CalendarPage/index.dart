@@ -74,7 +74,7 @@ class _CalendarPageState extends State<CalendarPage> {
                   setActionday: updateDay,
                   setActionformat: updateFormat,
                 ),
-                getDailyHeader(selectedDay),
+                DayHeader(selectedDay: selectedDay),
                 const DayEvent()
               ],
             ),

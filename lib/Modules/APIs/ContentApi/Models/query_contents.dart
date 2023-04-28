@@ -172,3 +172,23 @@ List<ScheduleModel> ScheduleModelFromJsonWPaginate(String jsonData) {
   return List<ScheduleModel>.from(
       data['data']['data'].map((item) => ScheduleModel.fromJson(item)));
 }
+
+class ScheduleTotalModel {
+  int content;
+  int task;
+
+  ScheduleTotalModel({this.content, this.task});
+
+  factory ScheduleTotalModel.fromJson(Map<String, dynamic> map) {
+    return ScheduleTotalModel(
+      content: map["content"],
+      task: map["task"],
+    );
+  }
+}
+
+List<ScheduleTotalModel> ScheduleTotalModelFromJson(String jsonData) {
+  final data = json.decode(jsonData);
+  return List<ScheduleTotalModel>.from(
+      data['total'].map((item) => ScheduleTotalModel.fromJson(item)));
+}

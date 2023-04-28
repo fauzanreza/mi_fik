@@ -17,6 +17,14 @@ validateNull(val) {
   }
 }
 
+validateZero(val) {
+  if (val != null) {
+    return val.toInt();
+  } else {
+    return 0;
+  }
+}
+
 validateDatetime(DateTime date) {
   if (date != null && date != "null") {
     return DateFormat("yyyy-MM-dd HH:mm").format(date).toString();
