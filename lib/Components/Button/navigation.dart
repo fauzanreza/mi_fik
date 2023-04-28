@@ -31,9 +31,9 @@ Widget getSignOutButtonWide(var ctx) {
       ));
 }
 
-getSpeeDialChild(String title, var ctx, var cls) {
+getSpeeDialChild(String title, var ctx, var cls, var icon) {
   return SpeedDialChild(
-    child: const Icon(Icons.post_add_outlined),
+    child: Icon(icon),
     label: title,
     backgroundColor: primaryColor,
     foregroundColor: whitebg,

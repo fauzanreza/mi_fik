@@ -9,7 +9,9 @@ class ShowProfile extends StatelessWidget {
     final prefs = await SharedPreferences.getInstance();
     final username = prefs.getString('username_key');
     final image = prefs.getString('image_key');
-    return UserProfileLeftBar(username: username, image: image);
+    final role = prefs.getString('role_general_key');
+    return UserProfileLeftBar(
+        username: username, image: image, roleGeneral: role);
   }
 
   @override
@@ -23,6 +25,7 @@ class ShowProfile extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.done) {
             String username = snapshot.data.username;
             String image = snapshot.data.image;
+            String role = snapshot.data.roleGeneral;
 
             return Container(
               width: fullWidth,
@@ -46,7 +49,7 @@ class ShowProfile extends StatelessWidget {
                             color: whitebg,
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(10))),
-                        child: Text(passRoleGeneral,
+                        child: Text(role,
                             style: TextStyle(
                                 color: primaryColor,
                                 fontSize: textMD,
