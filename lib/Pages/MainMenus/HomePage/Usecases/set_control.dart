@@ -39,7 +39,7 @@ class ControlPanel extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.done) {
             var roles = jsonDecode(snapshot.data.role);
 
-            //double fullHeight = MediaQuery.of(context).size.height;
+            double fullHeight = MediaQuery.of(context).size.height;
             double fullWidth = MediaQuery.of(context).size.width;
 
             return TextButton(
@@ -57,7 +57,8 @@ class ControlPanel extends StatelessWidget {
                   barrierColor: primaryColor.withOpacity(0.5),
                   isScrollControlled: true,
                   builder: (BuildContext context) {
-                    return Padding(
+                    return Container(
+                      height: fullHeight * 0.8,
                       padding: MediaQuery.of(context).viewInsets,
                       child: ListView(
                         children: <Widget>[

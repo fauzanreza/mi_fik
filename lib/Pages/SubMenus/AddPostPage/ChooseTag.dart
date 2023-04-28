@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mi_fik/Components/Forms/tag_picker.dart';
 import 'package:mi_fik/Modules/Models/Tags/Tag.dart';
 import 'package:mi_fik/Components/Skeletons/tag_1.dart';
 import 'package:mi_fik/Modules/Services/Queries/TagQueries.dart';
@@ -20,6 +21,10 @@ class _ChooseTag extends State<ChooseTag> {
   void initState() {
     super.initState();
     apiService = TagService();
+  }
+
+  void _updateTags() {
+    setState(() {});
   }
 
   @override
@@ -49,66 +54,6 @@ class _ChooseTag extends State<ChooseTag> {
   Widget _buildListView(List<TagModel> tags) {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-
-    Widget getSelectedTag(tag) {
-      if (tag.length != 0) {
-        return Container(
-            margin: EdgeInsets.only(top: 10, right: paddingMD),
-            width: fullWidth,
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: primaryColor,
-              ),
-              borderRadius: const BorderRadius.all(
-                Radius.circular(10.0),
-              ),
-            ),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text("Selected Tag", style: TextStyle(color: primaryColor)),
-                  Wrap(
-                    runSpacing: -5,
-                    spacing: 5,
-                    children: tag.map<Widget>((tg) {
-                      return OutlinedButton.icon(
-                        onPressed: () {
-                          //Remove selected tag
-                          setState(() {
-                            selectedTag.removeWhere(
-                                (item) => item['slug_name'] == tg['slug_name']);
-                          });
-                        },
-                        icon: Icon(
-                          Icons.close,
-                          color: Colors.red.withOpacity(0.7),
-                        ),
-                        label: Text(tg['tag_name'],
-                            style: TextStyle(
-                                fontSize: textXSM, color: primaryColor)),
-                        style: ButtonStyle(
-                          side: MaterialStateProperty.all(BorderSide(
-                              color: primaryColor,
-                              width: 1.5,
-                              style: BorderStyle.solid)),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(roundedLG2),
-                          )),
-                          backgroundColor:
-                              MaterialStatePropertyAll<Color>(whitebg),
-                        ),
-                      );
-                    }).toList(),
-                  )
-                ]));
-      } else {
-        return const SizedBox();
-      }
-    }
 
     Widget getControlButton(type) {
       if (type == "more") {
@@ -196,7 +141,7 @@ class _ChooseTag extends State<ChooseTag> {
               getControlButton("more"),
             ],
           ),
-          getSelectedTag(selectedTag)
+          TagSelectedArea(tag: selectedTag, type: "tag", action: _updateTags)
         ]);
   }
 }

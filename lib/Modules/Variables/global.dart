@@ -9,6 +9,7 @@ var selectedArchiveName;
 var selectedArchiveId;
 var locCoordinateCtrl;
 var selectedArchiveSlug;
+var selectedRole = [];
 
 final selectedTag = [];
 final locDetailCtrl = TextEditingController();

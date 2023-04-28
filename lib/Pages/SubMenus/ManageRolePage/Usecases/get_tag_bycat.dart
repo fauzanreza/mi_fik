@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:mi_fik/Modules/APIs/TagApi/Models/queries.dart';
 import 'package:mi_fik/Modules/APIs/TagApi/Services/queries.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class GetAllTagByCategory extends StatefulWidget {
@@ -56,17 +56,28 @@ class _GetAllTagByCategory extends State<GetAllTagByCategory> {
         runSpacing: -5,
         spacing: 5,
         children: contents.map<Widget>((e) {
-          return ElevatedButton(
-            onPressed: () {},
-            style: ButtonStyle(
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(roundedLG2),
-              )),
-              backgroundColor: MaterialStatePropertyAll<Color>(primaryColor),
-            ),
-            child: Text(e.tagName, style: TextStyle(fontSize: textXSM)),
-          );
+          var contain =
+              selectedRole.where((item) => item['slug_name'] == e.slug);
+          if (contain.isEmpty || selectedTag.isEmpty) {
+            return ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  selectedRole
+                      .add({"slug_name": e.slug, "tag_name": e.tagName});
+                });
+              },
+              style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(roundedLG2),
+                )),
+                backgroundColor: MaterialStatePropertyAll<Color>(primaryColor),
+              ),
+              child: Text(e.tagName, style: TextStyle(fontSize: textXSM)),
+            );
+          } else {
+            return SizedBox();
+          }
         }).toList());
   }
 }
