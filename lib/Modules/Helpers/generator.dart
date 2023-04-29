@@ -42,7 +42,7 @@ getTodayCalendarHeader(DateTime val) {
   final today = DateTime(now.year, now.month, now.day);
   final content = DateTime(val.year, val.month, val.day);
   final yesterday = DateTime(now.year, now.month, now.day - 1);
-  var tomorrow = now.add(Duration(days: 1));
+  var tomorrow = now.add(const Duration(days: 1));
   tomorrow = DateTime(tomorrow.year, tomorrow.month, tomorrow.day);
 
   if (content == today) {

@@ -7,7 +7,8 @@ Widget getSignOutButtonWide(var ctx) {
   return InkWell(
       onTap: () {
         showDialog<String>(
-            context: ctx, builder: (BuildContext context) => SignOutDialog());
+            context: ctx,
+            builder: (BuildContext context) => const SignOutDialog());
       },
       child: Container(
         margin: EdgeInsets.symmetric(

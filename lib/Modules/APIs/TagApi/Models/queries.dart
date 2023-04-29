@@ -15,7 +15,7 @@ class TagCategoryModel {
   }
 }
 
-List<TagCategoryModel> TagCategoryModelFromJson(String jsonData) {
+List<TagCategoryModel> tagCategoryModelFromJson(String jsonData) {
   final data = json.decode(jsonData);
   return List<TagCategoryModel>.from(
       data['data'].map((item) => TagCategoryModel.fromJson(item)));
@@ -36,7 +36,7 @@ class TagAllModel {
   }
 }
 
-List<TagAllModel> TagAllModelFromJson(String jsonData) {
+List<TagAllModel> tagAllModelFromJson(String jsonData) {
   final data = json.decode(jsonData);
   return List<TagAllModel>.from(
       data['data']['data'].map((item) => TagAllModel.fromJson(item)));

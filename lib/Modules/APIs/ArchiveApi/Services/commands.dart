@@ -23,7 +23,7 @@ class ArchiveCommandsService {
     final response = await client.post(
       Uri.parse("$emuUrl/api/v1/archive/create"),
       headers: header,
-      body: AddArchiveModelToJson(data),
+      body: addArchiveModelToJson(data),
     );
 
     var responseData = jsonDecode(response.body);

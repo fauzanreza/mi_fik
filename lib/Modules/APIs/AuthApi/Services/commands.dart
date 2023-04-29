@@ -19,7 +19,7 @@ class AuthCommandsService {
     final response = await client.post(
       Uri.parse("$emuUrl/api/v1/login"),
       headers: header,
-      body: LoginModelToJson(data),
+      body: loginModelToJson(data),
     );
 
     var responseData = jsonDecode(response.body);

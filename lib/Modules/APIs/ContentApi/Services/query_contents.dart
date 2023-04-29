@@ -25,7 +25,7 @@ class ContentQueriesService {
             "$emuUrl/api/v2/content/slug/$tag/order/$order/date/$date/find/$finds?page=$page"),
         headers: header);
     if (response.statusCode == 200) {
-      return ContentHeaderModelFromJsonWPaginate(response.body);
+      return contentHeaderModelFromJsonWPaginate(response.body);
     } else {
       return null;
     }
@@ -42,7 +42,7 @@ class ContentQueriesService {
     final response = await client
         .get(Uri.parse("$emuUrl/api/v1/content/slug/$slug"), headers: header);
     if (response.statusCode == 200) {
-      return ContentDetailModelFromJson(response.body);
+      return contentDetailModelFromJson(response.body);
     } else {
       return null;
     }
@@ -61,7 +61,7 @@ class ContentQueriesService {
             "$emuUrl/api/v1/content/date/${DateFormat("yyyy-MM-dd").format(slctSchedule)}"),
         headers: header);
     if (response.statusCode == 200) {
-      return ScheduleModelFromJsonWPaginate(response.body);
+      return scheduleModelFromJsonWPaginate(response.body);
     } else {
       return null;
     }
@@ -80,7 +80,7 @@ class ContentQueriesService {
             "$emuUrl/api/v1/content/date/${DateFormat("yyyy-MM-dd").format(slctSchedule)}"),
         headers: header);
     if (response.statusCode == 200) {
-      return ScheduleTotalModelFromJson(response.body);
+      return scheduleTotalModelFromJson(response.body);
     } else {
       return null;
     }

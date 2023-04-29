@@ -122,6 +122,7 @@ class LeftBar extends StatelessWidget {
                                   alignment: Alignment.centerLeft,
                                   child: TextButton.icon(
                                     onPressed: () {
+                                      selectedRole.clear();
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -252,7 +253,7 @@ class LeftBar extends StatelessWidget {
                               showDialog<String>(
                                   context: context,
                                   builder: (BuildContext context) =>
-                                      SignOutDialog());
+                                      const SignOutDialog());
                             },
                             icon: Icon(Icons.logout,
                                 size: textXLG, color: whitebg),

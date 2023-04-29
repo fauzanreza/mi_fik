@@ -3,19 +3,20 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class SetLocationButton extends StatefulWidget {
-  const SetLocationButton({Key key}) : super(key: key);
+class SetLocation extends StatefulWidget {
+  const SetLocation({Key key}) : super(key: key);
 
   @override
-  _SetLocationButton createState() => _SetLocationButton();
+  _SetLocation createState() => _SetLocation();
 }
 
-class _SetLocationButton extends State<SetLocationButton>
+class _SetLocation extends State<SetLocation>
     with SingleTickerProviderStateMixin {
   //Initial variable.
   //_MapsPageState(passIdFakses);
@@ -44,9 +45,18 @@ class _SetLocationButton extends State<SetLocationButton>
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
-          print('Location permissions are denied');
+          showDialog<String>(
+              context: context,
+              builder: (BuildContext context) => FailedDialog(
+                  text: "Location permissions are denied", type: "addpost"));
         } else if (permission == LocationPermission.deniedForever) {
-          print("'Location permissions are permanently denied");
+          if (permission == LocationPermission.denied) {
+            showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => FailedDialog(
+                    text: "Location permissions are permently denied",
+                    type: "addpost"));
+          }
         } else {
           haspermission = true;
         }
@@ -60,7 +70,13 @@ class _SetLocationButton extends State<SetLocationButton>
         getLocation();
       }
     } else {
-      print("GPS Service is not enabled, turn on GPS location");
+      if (permission == LocationPermission.denied) {
+        showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => FailedDialog(
+                text: "GPS Service is not enabled, turn on GPS location",
+                type: "addpost"));
+      }
     }
 
     setState(() {});

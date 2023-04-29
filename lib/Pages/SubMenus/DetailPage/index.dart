@@ -7,7 +7,7 @@ import 'package:mi_fik/Modules/Helpers/widget.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/Attach.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/Location.dart';
-import 'package:mi_fik/Pages/SubMenus/DetailPage/Save.dart';
+import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/post_archive_rel.dart';
 
 class DetailPage extends StatefulWidget {
   const DetailPage({Key key, this.passSlug}) : super(key: key);
@@ -257,7 +257,7 @@ class _DetailPage extends State<DetailPage> {
                   ),
 
                   //Save content to archieve.
-                  SaveButton(passSlug: contents[0].slugName)
+                  PostArchiveRelation(passSlug: contents[0].slugName)
                 ]),
           )
         ],

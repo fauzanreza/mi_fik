@@ -12,7 +12,7 @@ class LoginModel {
   }
 }
 
-String LoginModelToJson(LoginModel data) {
+String loginModelToJson(LoginModel data) {
   final jsonData = data.toJson();
   return json.encode(jsonData);
 }

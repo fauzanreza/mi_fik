@@ -49,7 +49,7 @@ class ContentHeaderModel {
   }
 }
 
-List<ContentHeaderModel> ContentHeaderModelFromJsonWPaginate(String jsonData) {
+List<ContentHeaderModel> contentHeaderModelFromJsonWPaginate(String jsonData) {
   final data = json.decode(jsonData);
   return List<ContentHeaderModel>.from(
       data['data']['data'].map((item) => ContentHeaderModel.fromJson(item)));
@@ -122,7 +122,7 @@ class ContentDetailModel {
   }
 }
 
-List<ContentDetailModel> ContentDetailModelFromJson(String jsonData) {
+List<ContentDetailModel> contentDetailModelFromJson(String jsonData) {
   final data = json.decode(jsonData);
   return List<ContentDetailModel>.from(
       data['data'].map((item) => ContentDetailModel.fromJson(item)));
@@ -167,7 +167,7 @@ class ScheduleModel {
   }
 }
 
-List<ScheduleModel> ScheduleModelFromJsonWPaginate(String jsonData) {
+List<ScheduleModel> scheduleModelFromJsonWPaginate(String jsonData) {
   final data = json.decode(jsonData);
   return List<ScheduleModel>.from(
       data['data']['data'].map((item) => ScheduleModel.fromJson(item)));
@@ -187,7 +187,7 @@ class ScheduleTotalModel {
   }
 }
 
-List<ScheduleTotalModel> ScheduleTotalModelFromJson(String jsonData) {
+List<ScheduleTotalModel> scheduleTotalModelFromJson(String jsonData) {
   final data = json.decode(jsonData);
   return List<ScheduleTotalModel>.from(
       data['total'].map((item) => ScheduleTotalModel.fromJson(item)));

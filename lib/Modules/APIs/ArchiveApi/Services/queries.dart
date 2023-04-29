@@ -18,7 +18,7 @@ class ArchiveQueriesService {
     final response =
         await client.get(Uri.parse("$emuUrl/api/v1/archive"), headers: header);
     if (response.statusCode == 200) {
-      return ArchiveModelFromJson(response.body);
+      return archiveModelFromJson(response.body);
     } else {
       return null;
     }

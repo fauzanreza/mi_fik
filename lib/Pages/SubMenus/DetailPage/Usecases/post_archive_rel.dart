@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:mi_fik/Modules/Models/Archive/Archive.dart';
-import 'package:mi_fik/Modules/Services/ArchieveServices.dart';
+import 'package:mi_fik/Modules/APIs/ArchiveApi/Models/queries.dart';
+import 'package:mi_fik/Modules/APIs/ArchiveApi/Services/queries.dart';
+
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
-class SaveButton extends StatefulWidget {
-  SaveButton({Key key, this.passSlug}) : super(key: key);
+class PostArchiveRelation extends StatefulWidget {
+  PostArchiveRelation({Key key, this.passSlug}) : super(key: key);
   String passSlug;
 
   @override
-  _SaveButton createState() => _SaveButton();
+  _PostArchiveRelation createState() => _PostArchiveRelation();
 }
 
-class _SaveButton extends State<SaveButton> {
-  ArchieveService apiService;
+class _PostArchiveRelation extends State<PostArchiveRelation> {
+  ArchiveQueriesService apiService;
 
   @override
   void initState() {
     super.initState();
-    apiService = ArchieveService();
+    apiService = ArchiveQueriesService();
   }
 
   @override
@@ -28,7 +29,7 @@ class _SaveButton extends State<SaveButton> {
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
-        future: apiService.getAllArchieve(),
+        future: apiService.getMyArchive(),
         builder:
             (BuildContext context, AsyncSnapshot<List<ArchiveModel>> snapshot) {
           if (snapshot.hasError) {
@@ -107,7 +108,7 @@ class _SaveButton extends State<SaveButton> {
                                             width: fullWidth * 0.35,
                                             child: Text(
                                                 archieves[index]
-                                                    .archieveName
+                                                    .archiveName
                                                     .toString(),
                                                 maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
@@ -119,14 +120,14 @@ class _SaveButton extends State<SaveButton> {
                                           ),
                                           const Spacer(),
                                           //This text is to small and will affect the name of archieve.
-                                          Text(
-                                              getTotalArchieve(
-                                                  archieves[index].event,
-                                                  archieves[index].task),
-                                              style: TextStyle(
-                                                color: whitebg,
-                                                fontSize: textXXSM,
-                                              )),
+                                          // Text(
+                                          //     getTotalArchieve(
+                                          //         archieves[index].event,
+                                          //         archieves[index].task),
+                                          //     style: TextStyle(
+                                          //       color: whitebg,
+                                          //       fontSize: textXXSM,
+                                          //     )),
                                         ]),
                                       );
                                     })),

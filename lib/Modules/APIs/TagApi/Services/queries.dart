@@ -19,7 +19,7 @@ class TagQueriesService {
         Uri.parse("$emuUrl/api/v1/dictionaries/type/TAG-001"),
         headers: header);
     if (response.statusCode == 200) {
-      return TagCategoryModelFromJson(response.body);
+      return tagCategoryModelFromJson(response.body);
     } else {
       return null;
     }
@@ -37,7 +37,7 @@ class TagQueriesService {
         Uri.parse("$emuUrl/api/v1/tag/cat/$cat/20?page=1"),
         headers: header);
     if (response.statusCode == 200) {
-      return TagAllModelFromJson(response.body);
+      return tagAllModelFromJson(response.body);
     } else {
       return null;
     }

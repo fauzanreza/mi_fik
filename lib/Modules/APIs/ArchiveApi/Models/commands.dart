@@ -14,7 +14,7 @@ class AddArchiveModel {
   }
 }
 
-String AddArchiveModelToJson(AddArchiveModel data) {
+String addArchiveModelToJson(AddArchiveModel data) {
   final jsonData = data.toJson();
   return json.encode(jsonData);
 }

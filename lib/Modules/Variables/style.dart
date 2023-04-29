@@ -11,6 +11,8 @@ var semiblackbg = const Color(0xFF5b5b5b);
 var greybg = const Color.fromARGB(255, 118, 118, 118);
 var successbg = const Color(0xFF6EC25B);
 
+var semiPrimaryBg = const Color(0xFFFADFb9);
+
 // Border Radius
 var roundedLG = const Radius.circular(18); //For navbar, ...
 var roundedMd = const Radius.circular(10); //For container, ...

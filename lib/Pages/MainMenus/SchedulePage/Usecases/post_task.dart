@@ -129,8 +129,8 @@ class _PostTask extends State<PostTask> {
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.white,
-                      onPrimary: const Color(0xFFFB8C00),
+                      foregroundColor: const Color(0xFFFB8C00),
+                      backgroundColor: Colors.white,
                       side: const BorderSide(
                         width: 1.0,
                         color: Color(0xFFFB8C00),

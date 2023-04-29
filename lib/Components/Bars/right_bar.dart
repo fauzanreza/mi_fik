@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mi_fik/Components/Bars/Usecases/GetNotification.dart';
+import 'package:mi_fik/Components/Bars/Usecases/get_notif.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class RightBar extends StatelessWidget {

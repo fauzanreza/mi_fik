@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/Bars/top_bar.dart';
-import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/FAQPage/Usecases/get_question.dart';
+import 'package:mi_fik/Pages/SubMenus/FAQPage/Usecases/post_question.dart';
 
 class FAQPage extends StatefulWidget {
   const FAQPage({Key key}) : super(key: key);
@@ -17,14 +17,8 @@ class _FAQPage extends State<FAQPage> {
     //double fullWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: getAppbar("Frequently Asked Question"),
-      body: const GetAllQuestion(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: successbg,
-        tooltip: "Ask a question",
-        child: const Icon(Icons.headset_mic),
-      ),
-    );
+        appBar: getAppbar("Frequently Asked Question"),
+        body: const GetAllQuestion(),
+        floatingActionButton: PostQuestion());
   }
 }
