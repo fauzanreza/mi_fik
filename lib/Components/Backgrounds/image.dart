@@ -31,3 +31,22 @@ Widget getProfileImageSideBar(double width, double size, String url) {
     );
   }
 }
+
+Widget getProfileImageContent(var url) {
+  if (url != null && url != "null") {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 10.0),
+      width: iconLG,
+      child: ClipRRect(
+          borderRadius: BorderRadius.circular(25),
+          child: Image.network(url)), //For now.
+    );
+  } else {
+    return Container(
+        margin: const EdgeInsets.symmetric(horizontal: 10.0),
+        width: iconLG,
+        child: ClipRRect(
+            borderRadius: BorderRadius.circular(25),
+            child: Image.asset('assets/icon/default_lecturer.png')));
+  }
+}

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Helpers/widget.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
@@ -14,6 +15,43 @@ class GetHomePageEventContainer extends StatelessWidget {
 
   GetHomePageEventContainer({Key key, this.width, this.content})
       : super(key: key);
+
+  Widget getUsername(u1, u2) {
+    String username = " ";
+    if (u1 != null) {
+      username = u1;
+    } else if (u2 != null) {
+      username = u2;
+    } else {
+      username = "Unknown User";
+    }
+    return Text(username,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(
+            color: greybg, fontWeight: FontWeight.w400, fontSize: textSM - 1));
+  }
+
+  Widget getProfileImage(u1, u2, i1, i2) {
+    String username = " ";
+    String image = null;
+    if (u1 != null) {
+      if (i1 != null) {
+        image = i1;
+      } else {
+        image = null;
+      }
+    } else if (u2 != null) {
+      if (i2 != null) {
+        image = i2;
+      } else {
+        image = null;
+      }
+    } else {
+      image = null;
+    }
+    return getProfileImageContent(image);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,14 +110,8 @@ class GetHomePageEventContainer extends StatelessWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                          width: iconLG,
-                          child: ClipRRect(
-                              borderRadius: BorderRadius.circular(25),
-                              child: Image.network(
-                                  "https://sci.telkomuniversity.ac.id/wp-content/uploads/2022/02/13.jpg")), //For now.
-                        ),
+                        getProfileImage(content.acUsername, content.ucUsername,
+                            content.acImage, content.ucImage),
                         SizedBox(
                             width: width * 0.6,
                             child: Column(
@@ -93,13 +125,8 @@ class GetHomePageEventContainer extends StatelessWidget {
                                         color: blackbg,
                                         fontWeight: FontWeight.bold,
                                         fontSize: textMD - 1)),
-                                Text("username",
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                        color: greybg,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: textSM - 1)),
+                                getUsername(
+                                    content.acUsername, content.ucUsername),
                               ],
                             ))
                       ],
@@ -160,14 +187,14 @@ class GetScheduleContainer extends StatelessWidget {
 
   //Get icon based on event or task
   Widget getIcon(type, dateStart) {
-    if (type == "1") {
+    if (type == 1) {
       //Event or content
       return Icon(
         Icons.event_note_outlined,
         color: getColor(DateTime.parse(dateStart)),
         size: 38,
       );
-    } else if (type == "2") {
+    } else if (type == 2) {
       //Task
       return Icon(
         Icons.task,
@@ -187,7 +214,7 @@ class GetScheduleContainer extends StatelessWidget {
             child: Stack(children: [
           GestureDetector(
               onTap: () {
-                if (content.dataFrom == "2") {
+                if (content.dataFrom == 2) {
                   showDialog<String>(
                       context: context,
                       barrierColor: primaryColor.withOpacity(0.5),
@@ -207,8 +234,6 @@ class GetScheduleContainer extends StatelessWidget {
                               ));
                         });
                       });
-                } else {
-                  return print("tes");
                 }
               },
               child: Container(
