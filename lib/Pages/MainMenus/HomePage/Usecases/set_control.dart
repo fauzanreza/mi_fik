@@ -151,7 +151,7 @@ class ControlPanel extends StatelessWidget {
                                           setDateStartCtrl(date),
                                       currentTime: now,
                                       locale: LocaleType.en);
-                                }, "Start"),
+                                }, "Start", "date"),
                                 getDatePicker(dateEnd, () {
                                   final now = DateTime.now();
 
@@ -164,7 +164,7 @@ class ControlPanel extends StatelessWidget {
                                       onConfirm: (date) => setDateEndCtrl(date),
                                       currentTime: now,
                                       locale: LocaleType.en);
-                                }, "End"),
+                                }, "End", "date"),
                                 const Spacer(),
                                 Container(
                                     margin: EdgeInsets.only(

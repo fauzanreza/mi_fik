@@ -103,7 +103,7 @@ class _PostTask extends State<PostTask> {
                       dateStartCtrl = date;
                     });
                   }, currentTime: now, locale: LocaleType.en);
-                }, "Start"),
+                }, "Start", "datetime"),
                 getDatePicker(dateEndCtrl, () {
                   final now = DateTime.now();
 
@@ -117,7 +117,7 @@ class _PostTask extends State<PostTask> {
                       dateEndCtrl = date;
                     });
                   }, currentTime: now, locale: LocaleType.en);
-                }, "End"),
+                }, "End", "datetime"),
                 Wrap(children: <Widget>[
                   TextButton(
                     style: TextButton.styleFrom(

@@ -135,11 +135,19 @@ Widget getTagShow(tag, dateStart) {
   }
 }
 
-String getDateText(date, type) {
-  if (date != null) {
-    return DateFormat("dd-MM-yy").format(date).toString();
-  } else {
-    return "Set Date $type";
+String getDateText(DateTime date, String type, String view) {
+  if (view == "datetime") {
+    if (date != null) {
+      return DateFormat("dd-MM-yy h:m").format(date).toString();
+    } else {
+      return "Set Date $type";
+    }
+  } else if (view == "date") {
+    if (date != null) {
+      return DateFormat("dd-MM-yy").format(date).toString();
+    } else {
+      return "Set Date $type";
+    }
   }
 }
 

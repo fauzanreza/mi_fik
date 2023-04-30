@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
+import 'package:mi_fik/Components/Forms/input.dart';
+import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:geolocator/geolocator.dart';
@@ -89,9 +91,9 @@ class _SetLocation extends State<SetLocation>
     my_long = position.longitude;
     my_lat = position.latitude;
 
-    setState(() {
-      //refresh UI
-    });
+    // setState(() {
+    //   //refresh UI
+    // });
 
     LocationSettings locationSettings = const LocationSettings(
       accuracy: LocationAccuracy.high,
@@ -206,30 +208,10 @@ class _SetLocation extends State<SetLocation>
                               backgroundColor:
                                   MaterialStatePropertyAll<Color>(primaryColor),
                             ),
-                            child: const Text('Set Current Location'),
+                            child: const Text('Event Location'),
                           )),
-                      Container(
-                        margin: const EdgeInsets.only(top: 20),
-                        child: TextFormField(
-                          cursorColor: Colors.white,
-                          controller: locDetailCtrl,
-                          maxLength: 105,
-                          decoration: InputDecoration(
-                              hintText: 'Location Detail',
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: const BorderSide(
-                                    width: 1, color: Color(0xFFFB8C00)),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: const BorderSide(
-                                    width: 1, color: Color(0xFFFB8C00)),
-                              ),
-                              fillColor: Colors.white,
-                              filled: true),
-                        ),
-                      ),
+                      getSubTitleMedium("Location Name", blackbg),
+                      getInputText(75, locDetailCtrl, false)
                     ]),
                   ));
             });

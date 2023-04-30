@@ -2,21 +2,26 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
+import 'package:mi_fik/Components/Forms/date_picker.dart';
+import 'package:mi_fik/Components/Forms/input.dart';
+import 'package:mi_fik/Components/Typography/title.dart';
+import 'package:mi_fik/Modules/APIs/ContentApi/Models/command_contents.dart';
+import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_contents.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Helpers/template.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
-import 'package:mi_fik/Modules/Models/Contents/Content.dart';
-import 'package:mi_fik/Modules/Services/Commands/ContentCommands.dart';
+
 import 'package:mi_fik/Modules/Services/Queries/ContentQueries.dart';
 import 'package:mi_fik/Modules/Variables/dummy.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/SubMenus/AddPostPage/ChooseTag.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:mi_fik/Pages/SubMenus/AddPostPage/Usecases/set_location.dart';
+import 'package:mi_fik/Pages/SubMenus/AddPostPage/Usecases/set_tag.dart';
 
 class AddPost extends StatefulWidget {
   const AddPost({Key key}) : super(key: key);
@@ -26,6 +31,8 @@ class AddPost extends StatefulWidget {
 }
 
 class _AddPost extends State<AddPost> {
+  String result = '';
+
   ContentQueriesService apiQuery;
   ContentCommandsService apiCommand;
 
@@ -40,6 +47,11 @@ class _AddPost extends State<AddPost> {
     super.initState();
     apiQuery = ContentQueriesService();
     apiCommand = ContentCommandsService();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -86,7 +98,7 @@ class _AddPost extends State<AddPost> {
                       locDetailCtrl.text.isNotEmpty ||
                       locCoordinateCtrl != null ||
                       contentTitleCtrl.text.isNotEmpty ||
-                      contentDescCtrl.text.isNotEmpty ||
+                      contentDescCtrl != null ||
                       dateStartCtrl != null ||
                       dateEndCtrl != null) {
                     return showDialog<String>(
@@ -175,49 +187,13 @@ class _AddPost extends State<AddPost> {
             child: ListView(padding: EdgeInsets.zero, children: [
               Container(
                 padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: TextFormField(
-                  cursorColor: Colors.white,
-                  controller: contentTitleCtrl,
-                  maxLength: 75,
-                  decoration: InputDecoration(
-                      hintText: 'Title',
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(
-                            width: 1, color: Color(0xFFFB8C00)),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(
-                            width: 1, color: Color(0xFFFB8C00)),
-                      ),
-                      fillColor: Colors.white,
-                      filled: true),
-                ),
+                child: getSubTitleMedium("Event Title", blackbg),
               ),
               Container(
-                padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-                child: TextFormField(
-                  cursorColor: Colors.white,
-                  controller: contentDescCtrl,
-                  decoration: InputDecoration(
-                      hintText: 'Content',
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(
-                            width: 1, color: Color(0xFFFB8C00)),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(
-                            width: 1, color: Color(0xFFFB8C00)),
-                      ),
-                      fillColor: Colors.white,
-                      filled: true),
-                  keyboardType: TextInputType.multiline,
-                  maxLines: 4,
-                ),
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                child: getInputText(75, contentTitleCtrl, false),
               ),
+              getInputDesc(10000, 5, contentDescCtrl, false),
               Container(
                 alignment: Alignment.centerLeft,
                 padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
@@ -247,77 +223,58 @@ class _AddPost extends State<AddPost> {
                 ),
               ),
               Container(
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                child: getSubTitleMedium("Event Tag", blackbg),
+              ),
+              Container(
                   margin: EdgeInsets.only(left: paddingMD),
                   padding: EdgeInsets.only(top: paddingXSM),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      const Text("Choose Tags",
+                      Text("Event Tag",
                           style: TextStyle(
                             fontSize: 16,
                             fontFamily: 'Poppins',
-                            color: Color(0xFFFB8C00),
+                            color: blackbg,
                             fontWeight: FontWeight.w500,
                           )),
-                      Container(
-                          transform: Matrix4.translationValues(0.0, -15.0, 0.0),
-                          child: const ChooseTag()),
+                      const ChooseTag(),
                     ],
                   )),
               Container(
                   padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
                   child: Wrap(runSpacing: -5, spacing: 5, children: [
                     const SetLocation(),
-                    TextButton.icon(
-                      style: TextButton.styleFrom(
-                        textStyle: const TextStyle(fontSize: 16),
-                        foregroundColor: const Color(0xFFFB8C00),
-                      ), // <-- TextButton
-                      onPressed: () {
-                        final now = DateTime.now();
+                    getDatePicker(dateStartCtrl, () {
+                      final now = DateTime.now();
 
-                        DatePicker.showDateTimePicker(context,
-                            showTitleActions: true,
-                            minTime: DateTime(
-                                now.year, now.month, now.day), //Tomorrow
-                            maxTime: DateTime(now.year + 1, now.month, now.day),
-                            onConfirm: (date) {
-                          setState(() {
-                            dateStartCtrl = date;
-                          });
-                        }, currentTime: now, locale: LocaleType.en);
-                      },
-                      icon: const Icon(
-                        Icons.calendar_month,
-                        size: 24.0,
-                      ),
-                      label: Text(getDateText(dateStartCtrl, "Start")),
-                    ),
-                    TextButton.icon(
-                      style: TextButton.styleFrom(
-                          textStyle: const TextStyle(fontSize: 16),
-                          foregroundColor: primaryColor), // <-- TextButton
-                      onPressed: () {
-                        final now = DateTime.now();
+                      DatePicker.showDateTimePicker(context,
+                          showTitleActions: true,
+                          minTime:
+                              DateTime(now.year, now.month, now.day), //Tomorrow
+                          maxTime: DateTime(now.year + 1, now.month, now.day),
+                          onConfirm: (date) {
+                        setState(() {
+                          dateStartCtrl = date;
+                        });
+                      }, currentTime: now, locale: LocaleType.en);
+                    }, "Start", "datetime"),
+                    getDatePicker(dateEndCtrl, () {
+                      final now = DateTime.now();
 
-                        DatePicker.showDateTimePicker(context,
-                            showTitleActions: true,
-                            minTime: DateTime(
-                                now.year, now.month, now.day), //Tomorrow
-                            maxTime: DateTime(now.year + 1, now.month, now.day),
-                            onConfirm: (date) {
-                          setState(() {
-                            dateEndCtrl = date;
-                          });
-                        }, currentTime: now, locale: LocaleType.en);
-                      },
-                      icon: const Icon(
-                        Icons.calendar_month,
-                        size: 24.0,
-                      ),
-                      label: Text(getDateText(dateEndCtrl, "End")),
-                    ),
+                      DatePicker.showDateTimePicker(context,
+                          showTitleActions: true,
+                          minTime:
+                              DateTime(now.year, now.month, now.day), //Tomorrow
+                          maxTime: DateTime(now.year + 1, now.month, now.day),
+                          onConfirm: (date) {
+                        setState(() {
+                          dateEndCtrl = date;
+                        });
+                      }, currentTime: now, locale: LocaleType.en);
+                    }, "End", "datetime"),
                     Wrap(children: <Widget>[
                       TextButton(
                         style: TextButton.styleFrom(
@@ -350,64 +307,73 @@ class _AddPost extends State<AddPost> {
               height: btnHeightMD,
               child: ElevatedButton(
                 onPressed: () async {
-                  //Mapping.
-                  ContentModel content = ContentModel(
-                    userId: passIdUser,
-                    contentTitle: contentTitleCtrl.text.toString(),
-                    contentDesc: contentDescCtrl.text.toString(),
-                    contentTag: validateNullJSON(selectedTag),
-                    contentLoc:
-                        getContentLocObj(locDetailCtrl.text, locCoordinateCtrl),
-                    contentAttach: null,
-                    contentImage: null,
-                    reminder: "reminder_none",
-                    dateStart:
-                        validateNull(getDBDateFormat("date", dateStartCtrl)),
-                    dateEnd:
-                        validateNull(getDBDateFormat("date", dateStartCtrl)),
-                    timeStart:
-                        validateNull(getDBDateFormat("time", dateEndCtrl)),
-                    timeEnd: validateNull(getDBDateFormat("time", dateEndCtrl)),
-                    isDraft: 0,
-                  );
+                  if (dateStartCtrl != null || dateEndCtrl != null) {
+                    ContentModel content = ContentModel(
+                      userId: passIdUser,
+                      contentTitle: contentTitleCtrl.text.toString(),
+                      contentDesc: contentDescCtrl.text.toString(),
+                      contentTag: validateNullJSON(selectedTag),
+                      contentLoc: getContentLocObj(
+                          locDetailCtrl.text, locCoordinateCtrl),
+                      contentAttach: null,
+                      contentImage: null,
+                      reminder: "reminder_none",
+                      dateStart: getDBDateFormat("date", dateStartCtrl),
+                      dateEnd: getDBDateFormat("date", dateStartCtrl),
+                      timeStart: getDBDateFormat("time", dateEndCtrl),
+                      timeEnd: getDBDateFormat("time", dateEndCtrl),
+                      isDraft: 0,
+                    );
 
-                  //Validator
-                  if (content.contentTitle.isNotEmpty &&
-                      content.contentDesc.isNotEmpty) {
-                    apiCommand.addContent(content).then((isError) {
-                      setState(() => isLoading = false);
-                      if (isError) {
-                        Navigator.pop(context);
-                        showDialog<String>(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                FailedDialog(text: "Create content failed"));
+                    if (content.contentTag != null) {
+                      if (content.contentTitle.isNotEmpty &&
+                          content.contentDesc.isNotEmpty) {
+                        apiCommand.postContent(content).then((response) {
+                          setState(() => isLoading = false);
+                          var status = response[0]['message'];
+                          var body = response[0]['body'];
+
+                          if (status == "success") {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const BottomBar()),
+                            );
+                            showDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    SuccessDialog(text: body));
+                          } else {
+                            showDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    FailedDialog(text: body, type: "addevent"));
+                          }
+                        });
                       } else {
-                        print(json.encode(content));
-
                         showDialog<String>(
                             context: context,
-                            builder: (BuildContext context) =>
-                                SuccessDialog(text: "Create content success"));
-
-                        //Clear all variable
-                        // selectedTag.clear();
-                        // dateStartCtrl = null;
-                        // dateEndCtrl = null;
-                        // contentTitleCtrl.clear();
-                        // contentDescCtrl.clear();
-                        // locDetailCtrl.clear();
-                        // locCoordinateCtrl = null;
+                            builder: (BuildContext context) => FailedDialog(
+                                text:
+                                    "Create archive failed, field can't be empty",
+                                type: "addevent"));
                       }
-                    });
+                    } else {
+                      showDialog<String>(
+                          context: context,
+                          builder: (BuildContext context) => FailedDialog(
+                              text:
+                                  "Create archive failed, tag must be selected",
+                              type: "addevent"));
+                    }
                   } else {
                     showDialog<String>(
                         context: context,
                         builder: (BuildContext context) => FailedDialog(
                             text:
-                                "Create content failed, field can't be empty"));
+                                "Create archive failed, date period must be selected",
+                            type: "addevent"));
                   }
-
                   // print(jsonEncode(selectedTag).toString());
                 },
                 style: ButtonStyle(
