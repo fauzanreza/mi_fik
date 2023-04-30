@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/Bars/top_bar.dart';
 import 'package:mi_fik/Pages/SubMenus/AboutPage/Usecases/get_about.dart';
+import 'package:mi_fik/Pages/SubMenus/AboutPage/Usecases/post_feedback.dart';
 
 class AboutPage extends StatefulWidget {
   const AboutPage({Key key}) : super(key: key);
@@ -17,7 +18,7 @@ class _AboutPage extends State<AboutPage> {
 
     return Scaffold(
       appBar: getAppbar("About Us"),
-      body: const GetAbout(),
+      body: ListView(children: [GetAbout(), PostFeedback()]),
     );
   }
 }
