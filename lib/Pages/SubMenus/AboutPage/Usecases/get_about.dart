@@ -48,18 +48,18 @@ class _GetAbout extends State<GetAbout> {
   }
 
   Widget _buildListView(List<HelpBodyModel> contents) {
-    return ListView.builder(
-        itemCount: contents.length,
-        padding: const EdgeInsets.all(10),
-        itemBuilder: (context, index) {
-          return Container(
-            padding: EdgeInsets.all(paddingMD),
-            margin: EdgeInsets.all(marginSM),
-            decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
-                color: whitebg),
-            child: HtmlWidget(contents[index].helpBody),
-          );
-        });
+    return Column(
+        children: contents.map(
+      (e) {
+        return Container(
+          padding: EdgeInsets.all(paddingMD),
+          margin: EdgeInsets.all(paddingSM),
+          decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              color: whitebg),
+          child: HtmlWidget(e.helpBody),
+        );
+      },
+    ).toList());
   }
 }

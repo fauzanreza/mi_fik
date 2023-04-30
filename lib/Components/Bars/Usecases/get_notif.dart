@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/Skeletons/content_1.dart';
+import 'package:mi_fik/Modules/APIs/SystemApi/Models/query_notification.dart';
+import 'package:mi_fik/Modules/APIs/SystemApi/Services/query_notification.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
-import 'package:mi_fik/Modules/Models/Notifications/Notifications.dart';
-import 'package:mi_fik/Modules/Services/Queries/NotificationQueries.dart';
-import 'package:mi_fik/Modules/Variables/dummy.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class GetNotification extends StatefulWidget {
@@ -31,7 +30,7 @@ class _GetNotification extends State<GetNotification>
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
-        future: apiService.getMyNotif(passIdUser, 1),
+        future: apiService.getAllNotification(1),
         builder: (BuildContext context,
             AsyncSnapshot<List<NotificationModel>> snapshot) {
           if (snapshot.hasError) {

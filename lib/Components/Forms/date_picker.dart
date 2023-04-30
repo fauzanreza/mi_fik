@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
-Widget getDatePicker(DateTime ds, Function() actionPressed, String type) {
+Widget getDatePicker(
+    DateTime ds, Function() actionPressed, String type, String view) {
   return TextButton.icon(
     style: TextButton.styleFrom(
       textStyle: const TextStyle(fontSize: 16),
@@ -13,6 +14,6 @@ Widget getDatePicker(DateTime ds, Function() actionPressed, String type) {
       Icons.calendar_month,
       size: 24.0,
     ),
-    label: Text(getDateText(ds, type)),
+    label: Text(getDateText(ds, type, view)),
   );
 }

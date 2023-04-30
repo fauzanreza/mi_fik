@@ -123,7 +123,6 @@ class _PostSelectedRole extends State<PostSelectedRole> {
                             MaterialPageRoute(
                                 builder: (context) => const RolePage()),
                           );
-                          print(body);
                         }
                       });
                     } else {

@@ -64,24 +64,6 @@ class ContentModel {
       //dataFrom: map["data_from"].toString()
     );
   }
-
-  Map<String, dynamic> toJson() {
-    return {
-      "user_id": userId,
-      "content_title": contentTitle,
-      "content_desc": contentDesc,
-      "content_tag": contentTag,
-      "content_loc": contentLoc,
-      "content_attach": contentAttach,
-      "content_date_start": dateStart,
-      "content_date_end": dateEnd,
-      "content_time_start": timeStart,
-      "content_time_end": timeEnd,
-      "content_reminder": reminder,
-      "content_image": contentImage,
-      "is_draft": isDraft
-    };
-  }
 }
 
 List<ContentModel> ContentModelFromJson(String jsonData) {
@@ -94,9 +76,4 @@ List<ContentModel> ContentModelFromJsonWPaginate(String jsonData) {
   final data = json.decode(jsonData);
   return List<ContentModel>.from(
       data['data']['data'].map((item) => ContentModel.fromJson(item)));
-}
-
-String ContentModelToJson(ContentModel data) {
-  final jsonData = data.toJson();
-  return json.encode(jsonData);
 }

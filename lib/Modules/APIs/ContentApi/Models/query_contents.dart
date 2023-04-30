@@ -17,20 +17,27 @@ class ContentHeaderModel {
   String dateStart;
   String dateEnd;
   String totalViews;
+  String acUsername;
+  String ucUsername;
+  String acImage;
+  String ucImage;
 
-  ContentHeaderModel({
-    this.id,
-    this.slugName,
-    this.contentTitle,
-    this.contentDesc,
-    this.contentLoc,
-    this.contentImage,
-    this.dateStart,
-    this.dateEnd,
-    this.contentTag,
-    this.createdAt,
-    this.totalViews,
-  });
+  ContentHeaderModel(
+      {this.id,
+      this.slugName,
+      this.contentTitle,
+      this.contentDesc,
+      this.contentLoc,
+      this.contentImage,
+      this.dateStart,
+      this.dateEnd,
+      this.contentTag,
+      this.createdAt,
+      this.totalViews,
+      this.acUsername,
+      this.ucImage,
+      this.acImage,
+      this.ucUsername});
 
   factory ContentHeaderModel.fromJson(Map<String, dynamic> map) {
     return ContentHeaderModel(
@@ -44,6 +51,10 @@ class ContentHeaderModel {
       dateEnd: map["content_date_end"],
       contentTag: map["content_tag"],
       createdAt: map["created_at"],
+      acUsername: map["admin_username_created"],
+      ucUsername: map["user_username_created"],
+      acImage: map["admin_image_created"],
+      ucImage: map["user_image_created"],
       totalViews: map["total_views"].toString(),
     );
   }
@@ -130,6 +141,7 @@ List<ContentDetailModel> contentDetailModelFromJson(String jsonData) {
 
 // Usecase get all content & task header (schedule)
 class ScheduleModel {
+  String id;
   String slugName;
   String contentTitle;
 
@@ -144,7 +156,8 @@ class ScheduleModel {
   int dataFrom;
 
   ScheduleModel(
-      {this.slugName,
+      {this.id,
+      this.slugName,
       this.contentTitle,
       this.contentDesc,
       this.contentLoc,
@@ -155,6 +168,7 @@ class ScheduleModel {
 
   factory ScheduleModel.fromJson(Map<String, dynamic> map) {
     return ScheduleModel(
+      id: map["id"],
       slugName: map["slug_name"],
       contentTitle: map["content_title"],
       contentDesc: map["content_desc"].toString(),

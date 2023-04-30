@@ -4,31 +4,24 @@ import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
-import 'package:mi_fik/Modules/Models/Task.dart';
-import 'package:mi_fik/Modules/Services/TaskServices.dart';
+import 'package:mi_fik/Components/Forms/date_picker.dart';
+import 'package:mi_fik/Components/Forms/input.dart';
+import 'package:mi_fik/Components/Typography/title.dart';
+import 'package:mi_fik/Modules/APIs/ContentApi/Models/command_tasks.dart';
+import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_tasks.dart';
+import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class DetailTask extends StatefulWidget {
-  DetailTask(
-      {Key key,
-      this.id,
-      this.taskTitlePass,
-      this.taskDescPass,
-      this.taskDateStartPass,
-      this.taskDateEndPass})
-      : super(key: key);
-  String id;
-  String taskTitlePass;
-  String taskDescPass;
-  String taskDateStartPass;
-  String taskDateEndPass;
+  DetailTask({Key key, this.data}) : super(key: key);
+  var data;
 
   @override
   _DetailTask createState() => _DetailTask();
 }
 
 class _DetailTask extends State<DetailTask> {
-  TaskService taskService;
+  TaskCommandsService taskService;
 
   //Initial variable
   final taskTitleCtrl = TextEditingController();
@@ -39,14 +32,14 @@ class _DetailTask extends State<DetailTask> {
   @override
   void initState() {
     super.initState();
-    taskService = TaskService();
+    taskService = TaskCommandsService();
   }
 
   @override
   Widget build(BuildContext context) {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    // bool _isLoading = false;
+    bool isLoading = false;
 
     getDateText(date, type) {
       if (date != null) {
@@ -57,17 +50,17 @@ class _DetailTask extends State<DetailTask> {
     }
 
     //Assign value to controller
-    taskTitleCtrl.text = widget.taskTitlePass;
-    taskDescCtrl.text = widget.taskDescPass;
+    taskTitleCtrl.text = widget.data.contentTitle;
+    taskDescCtrl.text = widget.data.contentDesc;
 
-    dateStartCtrl ??= DateTime.parse(widget.taskDateStartPass);
-    dateEndCtrl ??= DateTime.parse(widget.taskDateEndPass);
+    dateStartCtrl ??= DateTime.parse(widget.data.dateStart);
+    dateEndCtrl ??= DateTime.parse(widget.data.dateEnd);
 
     return SizedBox(
         height:
             fullHeight * 0.6, //Pop up height based on fullwidth (Square maps).
         width: fullWidth,
-        child: Column(children: [
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Container(
             alignment: Alignment.topRight,
             child: IconButton(
@@ -83,59 +76,20 @@ class _DetailTask extends State<DetailTask> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-            child: Text("Edit Task",
-                style: TextStyle(
-                    color: primaryColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: textLG)),
+            padding: EdgeInsets.only(left: paddingSM),
+            child: getSubTitleMedium("Task Name", blackbg),
           ),
           Container(
-            margin: EdgeInsets.symmetric(vertical: paddingXSM),
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-            child: TextField(
-              cursorColor: Colors.white,
-              controller: taskTitleCtrl,
-              maxLength: 75,
-              autofocus: true,
-              decoration: InputDecoration(
-                  hintText: 'Title',
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide:
-                        const BorderSide(width: 1, color: Color(0xFFFB8C00)),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide:
-                        const BorderSide(width: 1, color: Color(0xFFFB8C00)),
-                  ),
-                  fillColor: Colors.white,
-                  filled: true),
-            ),
+            padding: EdgeInsets.symmetric(horizontal: paddingSM),
+            child: getInputText(75, taskTitleCtrl, false),
           ),
           Container(
-            padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-            child: TextFormField(
-              cursorColor: Colors.white,
-              controller: taskDescCtrl,
-              decoration: InputDecoration(
-                  hintText: 'Notes (Optional)',
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide:
-                        const BorderSide(width: 1, color: Color(0xFFFB8C00)),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide:
-                        const BorderSide(width: 1, color: Color(0xFFFB8C00)),
-                  ),
-                  fillColor: Colors.white,
-                  filled: true),
-              keyboardType: TextInputType.multiline,
-              maxLines: 4,
-            ),
+            padding: EdgeInsets.only(left: paddingSM),
+            child: getSubTitleMedium("Notes (Optional)", blackbg),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: paddingSM),
+            child: getInputDesc(255, 4, taskDescCtrl, false),
           ),
           Container(
             padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
@@ -143,57 +97,34 @@ class _DetailTask extends State<DetailTask> {
               runSpacing: -5,
               spacing: 5,
               children: [
-                TextButton.icon(
-                  style: TextButton.styleFrom(
-                    textStyle: const TextStyle(fontSize: 16),
-                    foregroundColor: const Color(0xFFFB8C00),
-                  ), // <-- TextButton
-                  onPressed: () {
-                    final now = DateTime.now();
+                getDatePicker(dateStartCtrl, () {
+                  final now = DateTime.now();
 
-                    DatePicker.showDateTimePicker(context,
-                        showTitleActions: true,
-                        currentTime: dateStartCtrl,
-                        minTime:
-                            DateTime(now.year, now.month, now.day), //Tomorrow
-                        maxTime: DateTime(now.year + 1, now.month, now.day),
-                        onConfirm: (date) {
-                      setState(() {
-                        dateStartCtrl = date;
-                      });
-                    }, locale: LocaleType.en);
-                  },
-                  icon: const Icon(
-                    Icons.calendar_month,
-                    size: 24.0,
-                  ),
-                  label: Text(getDateText(dateStartCtrl, "Start")),
-                ),
-                TextButton.icon(
-                  style: TextButton.styleFrom(
-                      textStyle: const TextStyle(fontSize: 16),
-                      foregroundColor: primaryColor), // <-- TextButton
-                  onPressed: () {
-                    final now = DateTime.now();
+                  DatePicker.showDateTimePicker(context,
+                      showTitleActions: true,
+                      minTime:
+                          DateTime(now.year, now.month, now.day), //Tomorrow
+                      maxTime: DateTime(now.year + 1, now.month, now.day),
+                      onConfirm: (date) {
+                    setState(() {
+                      dateStartCtrl = date;
+                    });
+                  }, currentTime: dateStartCtrl, locale: LocaleType.en);
+                }, "Start", "datetime"),
+                getDatePicker(dateEndCtrl, () {
+                  final now = DateTime.now();
 
-                    DatePicker.showDateTimePicker(context,
-                        showTitleActions: true,
-                        minTime:
-                            DateTime(now.year, now.month, now.day), //Tomorrow
-                        currentTime: dateEndCtrl,
-                        maxTime: DateTime(now.year + 1, now.month, now.day),
-                        onConfirm: (date) {
-                      setState(() {
-                        dateEndCtrl = date;
-                      });
-                    }, locale: LocaleType.en);
-                  },
-                  icon: const Icon(
-                    Icons.calendar_month,
-                    size: 24.0,
-                  ),
-                  label: Text(getDateText(dateEndCtrl, "End")),
-                ),
+                  DatePicker.showDateTimePicker(context,
+                      showTitleActions: true,
+                      minTime:
+                          DateTime(now.year, now.month, now.day), //Tomorrow
+                      maxTime: DateTime(now.year + 1, now.month, now.day),
+                      onConfirm: (date) {
+                    setState(() {
+                      dateEndCtrl = date;
+                    });
+                  }, currentTime: dateEndCtrl, locale: LocaleType.en);
+                }, "End", "datetime"),
                 Wrap(children: <Widget>[
                   TextButton(
                     style: TextButton.styleFrom(
@@ -224,39 +155,39 @@ class _DetailTask extends State<DetailTask> {
                     height: btnHeightMD,
                     child: ElevatedButton(
                       onPressed: () async {
-                        validateDateNull(val) {
-                          if (val != null) {
-                            return val.toString();
-                          } else {
-                            return null;
-                          }
-                        }
-
-                        //Mapping.
-                        TaskModel task = TaskModel(
-                          taskTitle: taskTitleCtrl.text.toString(),
-                          taskDesc: taskDescCtrl.text.toString(),
-                          dateStart: validateDateNull(dateStartCtrl),
-                          dateEnd: validateDateNull(dateEndCtrl),
-                        );
+                        AddTaskModel task = AddTaskModel(
+                            taskTitle: taskTitleCtrl.text.toString(),
+                            taskDesc: taskDescCtrl.text.toString(),
+                            dateStart: validateDatetime(dateStartCtrl),
+                            dateEnd: validateDatetime(dateEndCtrl),
+                            reminder: "reminder_1_day_before");
 
                         //Validator
                         if (task.taskTitle.isNotEmpty) {
                           taskService
-                              .updateTask(task, int.parse(widget.id))
-                              .then((isError) {
-                            // setState(() => _isLoading = false);
-                            if (isError) {
+                              .updateTask(task, widget.data.id)
+                              .then((response) {
+                            setState(() => isLoading = false);
+                            var status = response[0]['message'];
+                            var body = response[0]['body'];
+
+                            if (status == "success") {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const BottomBar()),
+                              );
                               showDialog<String>(
                                   context: context,
                                   builder: (BuildContext context) =>
-                                      FailedDialog(text: "Update task failed"));
+                                      SuccessDialog(text: body));
                             } else {
                               showDialog<String>(
                                   context: context,
                                   builder: (BuildContext context) =>
-                                      SuccessDialog(
-                                          text: "Update task success"));
+                                      FailedDialog(
+                                          text: body, type: "addtask"));
+                              print(task.dateEnd);
                             }
                           });
                         } else {
@@ -264,7 +195,8 @@ class _DetailTask extends State<DetailTask> {
                               context: context,
                               builder: (BuildContext context) => FailedDialog(
                                   text:
-                                      "Update task failed, field can't be empty"));
+                                      "Create archive failed, field can't be empty",
+                                  type: "addtask"));
                         }
                       },
                       style: ButtonStyle(

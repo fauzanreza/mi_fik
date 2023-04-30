@@ -46,4 +46,42 @@ class TaskCommandsService {
       ];
     }
   }
+
+  Future<List<Map<String, dynamic>>> updateTask(
+      AddTaskModel data, String id) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token_key');
+
+    final header = {
+      'Accept': 'application/json',
+      'content-type': 'application/json',
+      'Authorization': "Bearer $token",
+    };
+
+    final response = await client.put(
+      Uri.parse("$emuUrl/api/v1/task/update/$id"),
+      headers: header,
+      body: addTaskModelToJson(data), // Same request as add task
+    );
+
+    var responseData = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      return [
+        {
+          "message": "success",
+          "body": responseData["message"],
+        }
+      ];
+    } else if (response.statusCode == 422 || response.statusCode == 401) {
+      // Validation failed
+      return [
+        {"message": "failed", "body": responseData['result']}
+      ];
+    } else {
+      return [
+        {"message": "failed", "body": "Unknown error"}
+      ];
+    }
+  }
 }

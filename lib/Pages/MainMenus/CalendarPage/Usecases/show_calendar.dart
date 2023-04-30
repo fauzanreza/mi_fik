@@ -19,7 +19,7 @@ class ShowCalendar extends StatelessWidget {
       lastDay: DateTime.utc(2052),
       weekendDays: const [DateTime.sunday],
       calendarFormat: format,
-      onFormatChanged: (format) => setActionformat(format),
+      onFormatChanged: (format) {},
       startingDayOfWeek: StartingDayOfWeek.sunday,
       daysOfWeekVisible: true,
 
