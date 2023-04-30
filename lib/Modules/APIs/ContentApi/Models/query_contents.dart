@@ -141,6 +141,7 @@ List<ContentDetailModel> contentDetailModelFromJson(String jsonData) {
 
 // Usecase get all content & task header (schedule)
 class ScheduleModel {
+  String id;
   String slugName;
   String contentTitle;
 
@@ -155,7 +156,8 @@ class ScheduleModel {
   int dataFrom;
 
   ScheduleModel(
-      {this.slugName,
+      {this.id,
+      this.slugName,
       this.contentTitle,
       this.contentDesc,
       this.contentLoc,
@@ -166,6 +168,7 @@ class ScheduleModel {
 
   factory ScheduleModel.fromJson(Map<String, dynamic> map) {
     return ScheduleModel(
+      id: map["id"],
       slugName: map["slug_name"],
       contentTitle: map["content_title"],
       contentDesc: map["content_desc"].toString(),

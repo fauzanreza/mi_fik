@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-// Usecase add task
+// Usecase add task & update task
 class AddTaskModel {
   String taskTitle;
   String taskDesc;

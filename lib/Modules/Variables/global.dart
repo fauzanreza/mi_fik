@@ -37,23 +37,3 @@ class Role {
 
   Role({this.role});
 }
-
-// class WebViewControllerSingleton {
-//   static final WebViewControllerSingleton _singleton =
-//       WebViewControllerSingleton._internal();
-//   WebViewController _webViewController;
-
-//   factory WebViewControllerSingleton() {
-//     return _singleton;
-//   }
-
-//   WebViewControllerSingleton._internal();
-
-//   void setController(WebViewController controller) {
-//     _webViewController = controller;
-//   }
-
-//   WebViewController getController() {
-//     return _webViewController;
-//   }
-// }

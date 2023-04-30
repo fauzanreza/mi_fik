@@ -226,11 +226,7 @@ class GetScheduleContainer extends StatelessWidget {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.all(roundedLG)),
                               content: DetailTask(
-                                id: 2.toString(),
-                                taskTitlePass: content.contentTitle,
-                                taskDescPass: content.contentDesc,
-                                taskDateStartPass: content.dateStart,
-                                taskDateEndPass: content.dateEnd,
+                                data: content,
                               ));
                         });
                       });

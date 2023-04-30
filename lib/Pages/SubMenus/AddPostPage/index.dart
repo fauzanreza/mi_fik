@@ -221,10 +221,6 @@ class _AddPost extends State<AddPost> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-                child: getSubTitleMedium("Event Tag", blackbg),
-              ),
-              Container(
                   margin: EdgeInsets.only(left: paddingMD),
                   padding: EdgeInsets.only(top: paddingXSM),
                   child: Column(
