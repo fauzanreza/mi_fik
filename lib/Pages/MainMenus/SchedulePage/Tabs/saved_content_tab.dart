@@ -206,7 +206,7 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
                                     image: DecorationImage(
                                       fit: BoxFit.fitWidth,
                                       image: const AssetImage(
-                                          'assets/content/content-2.jpg'),
+                                          'assets/icon/default_content.jpg'),
                                       colorFilter: ColorFilter.mode(
                                           Colors.black.withOpacity(0.5),
                                           BlendMode.darken),

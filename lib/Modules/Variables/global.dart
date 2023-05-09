@@ -12,6 +12,8 @@ var selectedArchiveSlug;
 var selectedRole = [];
 
 final selectedTag = [];
+var slctQuestionType = "";
+var slctFeedbackType = "";
 final locDetailCtrl = TextEditingController();
 
 List archieveVal = [];
@@ -22,6 +24,10 @@ int selectedIndex = 0;
 String sortingHomepageContent = "Desc";
 
 DateTime slctSchedule = DateTime.now();
+
+// Filled by API dictionary
+List<String> questionTypeOpt = [];
+List<String> feedbackTypeOpt = [];
 
 // Class and object
 class UserProfileLeftBar {

@@ -51,32 +51,37 @@ class _GetAllTagByCategory extends State<GetAllTagByCategory> {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
-    return Wrap(
-        runSpacing: -5,
-        spacing: 5,
-        children: contents.map<Widget>((e) {
-          var contain =
-              selectedRole.where((item) => item['slug_name'] == e.slug);
-          if (contain.isEmpty || selectedRole.isEmpty) {
-            return ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  selectedRole
-                      .add({"slug_name": e.slug, "tag_name": e.tagName});
-                });
-              },
-              style: ButtonStyle(
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(roundedLG2),
-                )),
-                backgroundColor: MaterialStatePropertyAll<Color>(primaryColor),
-              ),
-              child: Text(e.tagName, style: TextStyle(fontSize: textXSM)),
-            );
-          } else {
-            return const SizedBox();
-          }
-        }).toList());
+    if (contents != null) {
+      return Wrap(
+          runSpacing: -5,
+          spacing: 5,
+          children: contents.map<Widget>((e) {
+            var contain =
+                selectedRole.where((item) => item['slug_name'] == e.slug);
+            if (contain.isEmpty || selectedRole.isEmpty) {
+              return ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    selectedRole
+                        .add({"slug_name": e.slug, "tag_name": e.tagName});
+                  });
+                },
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(roundedLG2),
+                  )),
+                  backgroundColor:
+                      MaterialStatePropertyAll<Color>(primaryColor),
+                ),
+                child: Text(e.tagName, style: TextStyle(fontSize: textXSM)),
+              );
+            } else {
+              return const SizedBox();
+            }
+          }).toList());
+    } else {
+      return const Center(child: Text("No data available"));
+    }
   }
 }

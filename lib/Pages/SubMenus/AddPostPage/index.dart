@@ -78,7 +78,7 @@ class _AddPost extends State<AddPost> {
                 transform: Matrix4.translationValues(0.0, 15, 0.0),
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage("assets/content/content-2.jpg"),
+                    image: AssetImage("assets/icon/default_content.jpg"),
                     fit: BoxFit.cover,
                   ),
                 ),
