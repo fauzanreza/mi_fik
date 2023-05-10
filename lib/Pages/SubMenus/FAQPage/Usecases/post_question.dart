@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/APIs/QuestionApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/QuestionApi/Services/commands.dart';
-import 'package:mi_fik/Modules/Variables/dummy.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/FAQPage/index.dart';
-import 'package:mi_fik/Pages/SubMenus/ManageRolePage/index.dart';
 
 class PostQuestion extends StatefulWidget {
   const PostQuestion({Key key}) : super(key: key);
@@ -87,15 +84,13 @@ class _PostQuestion extends State<PostQuestion> {
                       Container(
                           margin: EdgeInsets.only(bottom: paddingMD),
                           padding: EdgeInsets.only(left: paddingSM),
-                          child: getDropDownMain(
-                            slctQuestionType,
-                            queTypeOpt,
-                            (String newValue) {
-                              setState(() {
-                                slctQuestionType = newValue;
-                              });
-                            },
-                          )),
+                          child:
+                              getDropDownMain(slctQuestionType, questionTypeOpt,
+                                  (String newValue) {
+                            setState(() {
+                              slctQuestionType = newValue;
+                            });
+                          }, false, null)),
                       // Info or help
                     ]),
                     SizedBox(

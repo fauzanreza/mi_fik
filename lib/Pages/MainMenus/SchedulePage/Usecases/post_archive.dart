@@ -87,10 +87,9 @@ class _PostArchive extends State<PostArchive> {
               height: btnHeightMD,
               child: ElevatedButton(
                 onPressed: () async {
-                  //Mapping.
                   AddArchiveModel archive = AddArchiveModel(
-                      archiveName: archiveNameCtrl.text,
-                      archiveDesc: validateNull(archiveDescCtrl.text));
+                      archiveName: archiveNameCtrl.text.trim(),
+                      archiveDesc: validateNull(archiveDescCtrl.text.trim()));
 
                   //Validator
                   if (archive.archiveName.isNotEmpty) {

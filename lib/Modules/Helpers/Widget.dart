@@ -58,7 +58,7 @@ getImageHeader(url) {
   if (url.trim() != "" && url != "null") {
     return NetworkImage(url);
   } else {
-    return const AssetImage('assets/content/content-2.jpg');
+    return const AssetImage('assets/icon/default_content.jpg');
   }
 }
 

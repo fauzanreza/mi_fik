@@ -6,14 +6,14 @@ import 'package:mi_fik/Modules/APIs/ArchiveApi/Services/queries.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
-class ArchievePage extends StatefulWidget {
-  const ArchievePage({Key key}) : super(key: key);
+class ArchivePage extends StatefulWidget {
+  const ArchivePage({Key key}) : super(key: key);
 
   @override
-  _ArchievePage createState() => _ArchievePage();
+  _ArchivePage createState() => _ArchivePage();
 }
 
-class _ArchievePage extends State<ArchievePage> {
+class _ArchivePage extends State<ArchivePage> {
   ArchiveQueriesService apiService;
 
   @override
@@ -36,8 +36,8 @@ class _ArchievePage extends State<ArchievePage> {
                   "Something wrong with message: ${snapshot.error.toString()}"),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
-            List<ArchiveModel> archieves = snapshot.data;
-            return _buildListView(archieves);
+            List<ArchiveModel> archives = snapshot.data;
+            return _buildListView(archives);
           } else {
             return const ArchiveSkeleton1();
           }
@@ -46,12 +46,12 @@ class _ArchievePage extends State<ArchievePage> {
     );
   }
 
-  Widget _buildListView(List<ArchiveModel> archieves) {
+  Widget _buildListView(List<ArchiveModel> archives) {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
-    //Get total content in an archieve
-    getTotalArchieve(event, task) {
+    //Get total content in an archive
+    getTotalArchive(event, task) {
       if ((event != 0) && (task == 0)) {
         return "$event Events";
       } else if ((event == 0) && (task != 0)) {
@@ -62,7 +62,7 @@ class _ArchievePage extends State<ArchievePage> {
     }
 
     return Column(
-        children: archieves.map((archieve) {
+        children: archives.map((archive) {
       return SizedBox(
           width: fullWidth,
           child: IntrinsicHeight(
@@ -73,12 +73,13 @@ class _ArchievePage extends State<ArchievePage> {
               color: primaryColor,
             ),
 
-            //Open Archieve w/ full container
+            //Open Archive w/ full container
             GestureDetector(
                 onTap: () {
                   setState(() {
-                    selectedArchiveName = archieve.archiveName;
-                    selectedArchiveSlug = archieve.slug;
+                    selectedArchiveName = archive.archiveName;
+                    selectedArchiveDesc = archive.archiveDesc;
+                    selectedArchiveSlug = archive.slug;
                   });
                   Navigator.push(
                     context,
@@ -110,7 +111,7 @@ class _ArchievePage extends State<ArchievePage> {
                     child: Row(children: [
                       SizedBox(
                         width: fullWidth * 0.35,
-                        child: Text(archieve.archiveName,
+                        child: Text(archive.archiveName,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -119,8 +120,8 @@ class _ArchievePage extends State<ArchievePage> {
                                 fontWeight: FontWeight.w500)),
                       ),
                       const Spacer(),
-                      //This text is to small and will affect the name of archieve.
-                      Text(getTotalArchieve(0, 0),
+                      //This text is to small and will affect the name of archive.
+                      Text(getTotalArchive(0, 0),
                           style: TextStyle(
                             color: whitebg,
                             fontSize: textXSM,

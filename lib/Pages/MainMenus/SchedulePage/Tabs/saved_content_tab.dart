@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Skeletons/content_1.dart';
-import 'package:mi_fik/Modules/Models/Contents/Content.dart';
-import 'package:mi_fik/Modules/Services/Queries/ContentQueries.dart';
+import 'package:mi_fik/Modules/APIs/ArchiveApi/Services/queries.dart';
+import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
+import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/index.dart';
@@ -11,19 +12,22 @@ import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/delete_archive.dart
 import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/edit_archive.dart';
 
 class SavedContent extends StatefulWidget {
-  const SavedContent({Key key}) : super(key: key);
+  SavedContent({Key key, this.slug, this.name, this.desc}) : super(key: key);
+  String slug;
+  String name;
+  String desc;
 
   @override
   _SavedContent createState() => _SavedContent();
 }
 
 class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
-  ContentQueriesService apiService;
+  ArchiveQueriesService apiService;
 
   @override
   void initState() {
     super.initState();
-    apiService = ContentQueriesService();
+    apiService = ArchiveQueriesService();
   }
 
   @override
@@ -34,16 +38,16 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
-        future: apiService.getContentArchive(),
-        builder:
-            (BuildContext context, AsyncSnapshot<List<ContentModel>> snapshot) {
+        future: apiService.getArchiveContent(widget.slug),
+        builder: (BuildContext context,
+            AsyncSnapshot<List<ScheduleModel>> snapshot) {
           if (snapshot.hasError) {
             return Center(
               child: Text(
                   "Something wrong with message: ${snapshot.error.toString()}"),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
-            List<ContentModel> contents = snapshot.data;
+            List<ScheduleModel> contents = snapshot.data;
             return _buildListView(contents);
           } else {
             return const ContentSkeleton1();
@@ -53,7 +57,7 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildListView(List<ContentModel> contents) {
+  Widget _buildListView(List<ScheduleModel> contents) {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
@@ -104,7 +108,7 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
               TextButton.icon(
                 onPressed: () {
                   setState(() {
-                    selectedArchiveId = null;
+                    selectedArchiveSlug = null;
                     selectedArchiveName = null;
                     Navigator.push(
                       context,
@@ -124,9 +128,11 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
                     ),
               ),
               const Spacer(),
-              DeleteArchive(id: selectedArchiveId),
+              DeleteArchive(slug: widget.slug, name: widget.name),
               EditArchive(
-                  id: selectedArchiveId, archiveName: selectedArchiveName)
+                  slug: widget.slug,
+                  archiveName: widget.name,
+                  archiveDesc: widget.desc)
             ],
           ),
           Column(
@@ -206,7 +212,7 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
                                     image: DecorationImage(
                                       fit: BoxFit.fitWidth,
                                       image: const AssetImage(
-                                          'assets/content/content-2.jpg'),
+                                          'assets/icon/default_content.jpg'),
                                       colorFilter: ColorFilter.mode(
                                           Colors.black.withOpacity(0.5),
                                           BlendMode.darken),
@@ -218,7 +224,7 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
                                           CrossAxisAlignment.end,
                                       children: [
                                         getUploadDate(
-                                            DateTime.parse(content.createdAt))
+                                            DateTime.parse(content.dateStart))
                                       ]),
                                 ),
                                 Container(
@@ -235,7 +241,8 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
                                                 color: blackbg,
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: textMD)),
-                                        Text(content.contentDesc,
+                                        Text(
+                                            removeHtmlTags(content.contentDesc),
                                             maxLines: 4,
                                             overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
@@ -293,7 +300,6 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
               TextButton.icon(
                 onPressed: () {
                   setState(() {
-                    selectedArchiveId = null;
                     selectedArchiveName = null;
                     Navigator.push(
                       context,
@@ -313,9 +319,9 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
                     ),
               ),
               const Spacer(),
-              DeleteArchive(id: selectedArchiveId),
+              DeleteArchive(slug: selectedArchiveSlug),
               EditArchive(
-                  id: selectedArchiveId, archiveName: selectedArchiveName)
+                  slug: selectedArchiveSlug, archiveName: selectedArchiveName)
             ],
           ),
           Align(

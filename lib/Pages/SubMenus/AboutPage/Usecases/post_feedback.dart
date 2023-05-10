@@ -6,6 +6,7 @@ import 'package:mi_fik/Components/Forms/rate.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/APIs/FeedbackApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/FeedbackApi/Models/queries.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/AboutPage/index.dart';
 
@@ -54,12 +55,24 @@ class _PostFeedback extends State<PostFeedback> {
               });
             }),
             getInputDesc(255, 3, fbBodyCtrl, false),
+            Row(children: [
+              Container(
+                  margin: EdgeInsets.only(bottom: paddingMD),
+                  padding: EdgeInsets.only(left: paddingSM),
+                  child: getDropDownMain(slctFeedbackType, feedbackTypeOpt,
+                      (String newValue) {
+                    setState(() {
+                      slctFeedbackType = newValue;
+                    });
+                  }, true, "feedback_")),
+              // Info or help
+            ]),
             InkWell(
               onTap: () async {
                 FeedbackModel data = FeedbackModel(
                     fbBody: fbBodyCtrl.text,
                     rate: rateCtrl,
-                    suggest: "feedback_services");
+                    suggest: slctFeedbackType);
 
                 //Validator
                 if (data.fbBody != null || (data.rate >= 0 && data.rate <= 5)) {

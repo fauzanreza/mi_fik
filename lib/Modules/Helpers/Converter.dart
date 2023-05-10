@@ -10,6 +10,11 @@ Future<String> getFind(check) async {
   }
 }
 
+String getSeparatedAfter(String divider, String value) {
+  List<String> res = value.split(divider);
+  return res[1];
+}
+
 getNotifSender(admin, user) {
   if (admin != null) {
     return admin;

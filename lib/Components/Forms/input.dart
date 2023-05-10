@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mi_fik/Modules/Helpers/converter.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 Widget getInputText(int len, var ctrl, bool secure) {
@@ -55,8 +57,8 @@ Widget getInputDesc(int len, int lines, var ctrl, bool secure) {
   );
 }
 
-Widget getDropDownMain(
-    String slct, List<String> opt, Function(String) onChanged) {
+Widget getDropDownMain(String slct, List<String> opt,
+    Function(String) onChanged, bool separate, String divider) {
   return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       height: 45,
@@ -76,10 +78,17 @@ Widget getDropDownMain(
         ),
         style: TextStyle(fontSize: textMD, color: primaryColor),
         items: opt.map((String item) {
-          return DropdownMenuItem<String>(
-            value: item,
-            child: Text(item),
-          );
+          if (separate) {
+            return DropdownMenuItem<String>(
+              value: item,
+              child: Text(getSeparatedAfter(divider, item)),
+            );
+          } else {
+            return DropdownMenuItem<String>(
+              value: item,
+              child: Text(item),
+            );
+          }
         }).toList(),
         onChanged: onChanged,
       ));

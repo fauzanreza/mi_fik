@@ -12,7 +12,6 @@ import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Helpers/template.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
 
-import 'package:mi_fik/Modules/Services/Queries/ContentQueries.dart';
 import 'package:mi_fik/Modules/Variables/dummy.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -31,7 +30,6 @@ class AddPost extends StatefulWidget {
 class _AddPost extends State<AddPost> {
   String result = '';
 
-  ContentQueriesService apiQuery;
   ContentCommandsService apiCommand;
 
   //Initial variable
@@ -43,7 +41,6 @@ class _AddPost extends State<AddPost> {
   @override
   void initState() {
     super.initState();
-    apiQuery = ContentQueriesService();
     apiCommand = ContentCommandsService();
   }
 
@@ -78,7 +75,7 @@ class _AddPost extends State<AddPost> {
                 transform: Matrix4.translationValues(0.0, 15, 0.0),
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage("assets/content/content-2.jpg"),
+                    image: AssetImage("assets/icon/default_content.jpg"),
                     fit: BoxFit.cover,
                   ),
                 ),
