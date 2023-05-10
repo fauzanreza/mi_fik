@@ -2,27 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
-import 'package:mi_fik/Modules/Models/Archive/Archive.dart';
-import 'package:mi_fik/Modules/Services/ArchieveServices.dart';
-import 'package:mi_fik/Modules/Variables/dummy.dart';
+import 'package:mi_fik/Modules/APIs/ArchiveApi/Models/commands.dart';
+import 'package:mi_fik/Modules/APIs/ArchiveApi/Services/commands.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class DeleteArchive extends StatefulWidget {
-  DeleteArchive({Key key, this.slug}) : super(key: key);
+  DeleteArchive({Key key, this.slug, this.name}) : super(key: key);
   String slug;
+  String name;
 
   @override
   _DeleteArchive createState() => _DeleteArchive();
 }
 
 class _DeleteArchive extends State<DeleteArchive> {
-  ArchieveService apiService;
+  ArchiveCommandsService apiService;
 
   @override
   void initState() {
     super.initState();
-    apiService = ArchieveService();
+    apiService = ArchiveCommandsService();
   }
 
   @override
@@ -66,39 +66,39 @@ class _DeleteArchive extends State<DeleteArchive> {
                                         padding:
                                             EdgeInsets.all(paddingMD * 0.8)),
                                     onPressed: () async {
-                                      //Mapping.
-                                      ArchiveModel archive = ArchiveModel(
-                                          idUser: passIdUser.toString());
+                                      DeleteArchiveModel archive =
+                                          DeleteArchiveModel(
+                                              archiveName: widget.name);
 
                                       apiService
                                           .deleteArchive(archive, widget.slug)
-                                          .then((isError) {
+                                          .then((response) {
                                         setState(() => isLoading = false);
-                                        if (isError) {
-                                          showDialog<String>(
-                                              context: context,
-                                              builder: (BuildContext context) =>
-                                                  FailedDialog(
-                                                      text:
-                                                          "Delete archive failed"));
-                                        } else {
-                                          selectedIndex = 0;
-                                          selectedArchiveName = null;
+                                        var status = response[0]['message'];
+                                        var body = response[0]['body'];
 
-                                          //For now. need to be fixed soon!!!
+                                        if (status == "success") {
+                                          selectedArchiveSlug = null;
+                                          selectedArchiveName = null;
+                                          selectedArchiveDesc = null;
+
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     const BottomBar()),
                                           );
-
                                           showDialog<String>(
                                               context: context,
                                               builder: (BuildContext context) =>
-                                                  SuccessDialog(
-                                                      text:
-                                                          "Delete archive success"));
+                                                  SuccessDialog(text: body));
+                                        } else {
+                                          showDialog<String>(
+                                              context: context,
+                                              builder: (BuildContext context) =>
+                                                  FailedDialog(
+                                                      text: body,
+                                                      type: "addarchive"));
                                         }
                                       });
                                     },

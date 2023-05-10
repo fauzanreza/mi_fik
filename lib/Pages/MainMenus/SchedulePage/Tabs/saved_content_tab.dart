@@ -12,8 +12,10 @@ import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/delete_archive.dart
 import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/edit_archive.dart';
 
 class SavedContent extends StatefulWidget {
-  SavedContent({Key key, this.slug}) : super(key: key);
+  SavedContent({Key key, this.slug, this.name, this.desc}) : super(key: key);
   String slug;
+  String name;
+  String desc;
 
   @override
   _SavedContent createState() => _SavedContent();
@@ -126,9 +128,11 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
                     ),
               ),
               const Spacer(),
-              DeleteArchive(slug: selectedArchiveSlug),
+              DeleteArchive(slug: widget.slug, name: widget.name),
               EditArchive(
-                  slug: selectedArchiveSlug, archiveName: selectedArchiveName)
+                  slug: widget.slug,
+                  archiveName: widget.name,
+                  archiveDesc: widget.desc)
             ],
           ),
           Column(
