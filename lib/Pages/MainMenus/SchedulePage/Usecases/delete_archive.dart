@@ -9,8 +9,8 @@ import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class DeleteArchive extends StatefulWidget {
-  DeleteArchive({Key key, this.id}) : super(key: key);
-  String id;
+  DeleteArchive({Key key, this.slug}) : super(key: key);
+  String slug;
 
   @override
   _DeleteArchive createState() => _DeleteArchive();
@@ -71,7 +71,7 @@ class _DeleteArchive extends State<DeleteArchive> {
                                           idUser: passIdUser.toString());
 
                                       apiService
-                                          .deleteArchive(archive, widget.id)
+                                          .deleteArchive(archive, widget.slug)
                                           .then((isError) {
                                         setState(() => isLoading = false);
                                         if (isError) {
@@ -83,7 +83,6 @@ class _DeleteArchive extends State<DeleteArchive> {
                                                           "Delete archive failed"));
                                         } else {
                                           selectedIndex = 0;
-                                          selectedArchiveId = null;
                                           selectedArchiveName = null;
 
                                           //For now. need to be fixed soon!!!

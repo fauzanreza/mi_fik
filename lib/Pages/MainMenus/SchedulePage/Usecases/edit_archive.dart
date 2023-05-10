@@ -9,9 +9,11 @@ import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class EditArchive extends StatefulWidget {
-  EditArchive({Key key, this.id, this.archiveName}) : super(key: key);
-  String id;
+  EditArchive({Key key, this.slug, this.archiveName, this.archiveDesc})
+      : super(key: key);
+  String slug;
   String archiveName;
+  String archiveDesc;
 
   @override
   _EditArchive createState() => _EditArchive();
@@ -111,7 +113,7 @@ class _EditArchive extends State<EditArchive> {
                           //Validator
                           if (archive.archieveName.isNotEmpty) {
                             apiService
-                                .editArchive(archive, widget.id)
+                                .editArchive(archive, widget.slug)
                                 .then((isError) {
                               setState(() => isLoading = false);
                               if (isError) {
@@ -129,7 +131,6 @@ class _EditArchive extends State<EditArchive> {
 
                                 archiveNameCtrl.clear();
                                 selectedIndex = 0;
-                                selectedArchiveId = null;
                                 selectedArchiveName = null;
 
                                 //For now. need to be fixed soon!!!

@@ -6,7 +6,6 @@ String passSlugContent;
 
 // Selected
 var selectedArchiveName;
-var selectedArchiveId;
 var locCoordinateCtrl;
 var selectedArchiveSlug;
 var selectedRole = [];
