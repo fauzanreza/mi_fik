@@ -100,6 +100,27 @@ String getFindFilter(String check) {
   }
 }
 
+String getTagFilterContent(List<dynamic> tag) {
+  if (tag.isEmpty) {
+    return "all";
+  } else {
+    String res = "";
+    int count_tag = tag.length;
+    int i = 1;
+
+    tag.forEach((e) {
+      if (i != count_tag) {
+        res += "${e['slug_name']},";
+      } else {
+        res += e['slug_name'];
+      }
+      i++;
+    });
+
+    return res;
+  }
+}
+
 String getMessageResponseFromObject(val, type) {
   var res = "";
 

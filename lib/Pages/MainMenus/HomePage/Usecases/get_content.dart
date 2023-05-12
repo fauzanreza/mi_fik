@@ -56,7 +56,7 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
       maintainBottomViewPadding: false,
       child: FutureBuilder(
         future: apiService.getAllContentHeader(
-            "all",
+            getTagFilterContent(selectedTagFilterContent),
             sortingHomepageContent,
             getWhereDateFilter(filterDateStart, filterDateEnd),
             getFindFilter(searchingContent),
@@ -136,11 +136,7 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
           children: [
             getTitleLarge("What's New", greybg),
             const Spacer(),
-            // SortingButton(
-            //   active: sortingHomepageContent,
-            //   action: updateSorting,
-            // ),
-            ControlPanel(
+            SetControl(
                 titleCtrl: titleCtrl,
                 setDateStartCtrl: updateDateStart,
                 setDateEndCtrl: updateDateEnd,

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
+import 'package:mi_fik/Components/Button/navigation.dart';
 import 'package:mi_fik/Components/Forms/date_picker.dart';
 import 'package:mi_fik/Components/Forms/tag_picker.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
@@ -11,14 +12,8 @@ import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ControlPanel extends StatelessWidget {
-  final TextEditingController titleCtrl;
-  final Function(DateTime) setDateStartCtrl;
-  final Function(DateTime) setDateEndCtrl;
-  final DateTime dateStart;
-  final DateTime dateEnd;
-
-  ControlPanel(
+class SetControl extends StatefulWidget {
+  const SetControl(
       {Key key,
       this.titleCtrl,
       this.setDateStartCtrl,
@@ -26,7 +21,17 @@ class ControlPanel extends StatelessWidget {
       this.dateStart,
       this.dateEnd})
       : super(key: key);
+  final TextEditingController titleCtrl;
+  final Function(DateTime) setDateStartCtrl;
+  final Function(DateTime) setDateEndCtrl;
+  final DateTime dateStart;
+  final DateTime dateEnd;
 
+  @override
+  _SetControl createState() => _SetControl();
+}
+
+class _SetControl extends State<SetControl> {
   Future<Role> getToken() async {
     final prefs = await SharedPreferences.getInstance();
     final roles = prefs.getString('role_list_key');
@@ -35,13 +40,12 @@ class ControlPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (searchingContent != null) {
+      widget.titleCtrl.text = searchingContent;
+    }
     return FutureBuilder<Role>(
         future: getToken(),
         builder: (context, snapshot) {
-          if (searchingContent != null) {
-            titleCtrl.text = searchingContent;
-          }
-
           if (snapshot.connectionState == ConnectionState.done) {
             var roles = jsonDecode(snapshot.data.role);
 
@@ -93,7 +97,7 @@ class ControlPanel extends StatelessWidget {
                                 child: TextField(
                                   cursorColor: whitebg,
                                   maxLength: 75,
-                                  controller: titleCtrl,
+                                  controller: widget.titleCtrl,
                                   autofocus: true,
                                   decoration: InputDecoration(
                                       hintText: 'ex : webinar',
@@ -127,6 +131,12 @@ class ControlPanel extends StatelessWidget {
                                       color: whitebg,
                                       onPressed: () {
                                         searchingContent = null;
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const BottomBar()),
+                                        );
                                       },
                                     ),
                                   )),
@@ -147,7 +157,7 @@ class ControlPanel extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                getDatePicker(dateStart, () {
+                                getDatePicker(widget.dateStart, () {
                                   final now = DateTime.now();
 
                                   DatePicker.showDatePicker(context,
@@ -157,11 +167,11 @@ class ControlPanel extends StatelessWidget {
                                       maxTime: DateTime(
                                           now.year + 1, now.month, now.day),
                                       onConfirm: (date) =>
-                                          setDateStartCtrl(date),
+                                          widget.setDateStartCtrl(date),
                                       currentTime: now,
                                       locale: LocaleType.en);
                                 }, "Start", "date"),
-                                getDatePicker(dateEnd, () {
+                                getDatePicker(widget.dateEnd, () {
                                   final now = DateTime.now();
 
                                   DatePicker.showDatePicker(context,
@@ -170,7 +180,8 @@ class ControlPanel extends StatelessWidget {
                                           now.year, now.month, now.day),
                                       maxTime: DateTime(
                                           now.year + 1, now.month, now.day),
-                                      onConfirm: (date) => setDateEndCtrl(date),
+                                      onConfirm: (date) =>
+                                          widget.setDateEndCtrl(date),
                                       currentTime: now,
                                       locale: LocaleType.en);
                                 }, "End", "date"),
@@ -238,13 +249,28 @@ class ControlPanel extends StatelessWidget {
                               indent: paddingMD,
                               endIndent: paddingMD),
                           Container(
-                            padding: EdgeInsets.only(
-                                left: paddingMD, top: paddingSM),
-                            child: Text("Filter by tag",
-                                style: TextStyle(
-                                    color: primaryColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: textMD)),
+                            padding:
+                                EdgeInsets.symmetric(horizontal: paddingSM),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text("Filter by tag",
+                                    style: TextStyle(
+                                        color: primaryColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: textMD)),
+                                const Spacer(),
+                                OutlinedButtonCustom(() {
+                                  selectedTagFilterContent.clear();
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const BottomBar()),
+                                  );
+                                }, "Clear All", Icons.delete)
+                              ],
+                            ),
                           ),
                           Container(
                               padding: EdgeInsets.only(left: paddingMD),
@@ -254,9 +280,11 @@ class ControlPanel extends StatelessWidget {
                                   children: roles.map<Widget>((tag) {
                                     return ElevatedButton.icon(
                                       onPressed: () {
-                                        selectedTagFilterContent.add({
-                                          "slug_name": tag['slug_name'],
-                                          "tag_name": tag['tag_name'],
+                                        setState(() {
+                                          selectedTagFilterContent.add({
+                                            "slug_name": tag['slug_name'],
+                                            "tag_name": tag['tag_name']
+                                          });
                                         });
                                       },
                                       icon: Icon(
@@ -290,7 +318,8 @@ class ControlPanel extends StatelessWidget {
                               height: btnHeightMD,
                               child: ElevatedButton(
                                 onPressed: () {
-                                  searchingContent = titleCtrl.text.trim();
+                                  searchingContent =
+                                      widget.titleCtrl.text.trim();
 
                                   Navigator.push(
                                     context,

@@ -69,12 +69,12 @@ Widget getSideBarTile(double width, IconData icon, String title, var action) {
   );
 }
 
-Widget OutlinedButtonCustom(var action, String title) {
+Widget OutlinedButtonCustom(var action, String title, IconData icon) {
   return TextButton.icon(
     onPressed: action,
-    label: Text('Back to Archive',
+    label: Text(title,
         style: TextStyle(
             color: dangerColor, fontSize: textMD, fontWeight: FontWeight.w500)),
-    icon: Icon(Icons.arrow_back, color: dangerColor),
+    icon: Icon(icon, color: dangerColor),
   );
 }

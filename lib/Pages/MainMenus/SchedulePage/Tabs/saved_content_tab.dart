@@ -115,7 +115,7 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
                     MaterialPageRoute(builder: (context) => const BottomBar()),
                   );
                 });
-              }, "Back to Archive"),
+              }, "Back to Archive", Icons.arrow_back),
               const Spacer(),
               DeleteArchive(slug: widget.slug, name: widget.name),
               EditArchive(
@@ -215,7 +215,7 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
                     MaterialPageRoute(builder: (context) => const BottomBar()),
                   );
                 });
-              }, "Back to Archive"),
+              }, "Back to Archive", Icons.arrow_back),
               const Spacer(),
               DeleteArchive(slug: selectedArchiveSlug),
               EditArchive(

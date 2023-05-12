@@ -59,7 +59,7 @@ class _TagSelectedArea extends State<TagSelectedArea> {
                             selectedTagFilterContent.removeWhere(
                                 (item) => item['slug_name'] == tg['slug_name']);
                           });
-                          widget.action();
+                          // widget.action(); i dont know why tf this shit can run as the others
                         }
                       },
                       icon: Icon(
