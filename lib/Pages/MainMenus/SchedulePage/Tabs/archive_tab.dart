@@ -62,10 +62,10 @@ class _ArchivePage extends State<ArchivePage> {
       }
     }
 
-    Widget getData(var archives) {
-      if (archives != null) {
+    Widget getData(List<ArchiveModel> contents) {
+      if (contents != null) {
         return Column(
-            children: archives.map((archive) {
+            children: contents.map((archive) {
           return SizedBox(
               width: fullWidth,
               child: IntrinsicHeight(
@@ -101,7 +101,8 @@ class _ArchivePage extends State<ArchivePage> {
                           borderRadius: BorderRadius.all(roundedMd),
                           boxShadow: [
                             BoxShadow(
-                              color: greybg,
+                              color: const Color.fromARGB(255, 128, 128, 128)
+                                  .withOpacity(0.3),
                               blurRadius: 10.0,
                               spreadRadius: 0.0,
                               offset: const Offset(

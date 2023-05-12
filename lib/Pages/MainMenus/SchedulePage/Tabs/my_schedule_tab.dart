@@ -4,8 +4,12 @@ import 'package:mi_fik/Components/Container/content.dart';
 import 'package:mi_fik/Components/Skeletons/content_2.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/query_contents.dart';
+import 'package:mi_fik/Modules/Helpers/generator.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
 
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/show_detail_task.dart';
+import 'package:mi_fik/Pages/SubMenus/DetailPage/index.dart';
 
 class MySchedulePage extends StatefulWidget {
   const MySchedulePage({Key key}) : super(key: key);
@@ -16,6 +20,7 @@ class MySchedulePage extends StatefulWidget {
 
 class _MySchedulePage extends State<MySchedulePage> {
   ContentQueriesService apiService;
+  String hourChipBefore;
 
   @override
   void initState() {
@@ -63,23 +68,59 @@ class _MySchedulePage extends State<MySchedulePage> {
     }
 
     if ((contents != null) && (contents.isNotEmpty)) {
-      return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: contents.map((content) {
-            return SizedBox(
-                width: fullWidth,
-                child: IntrinsicHeight(
-                    child: Stack(children: [
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: fullWidth * 0.05),
-                    width: 2.5,
-                    color: primaryColor,
-                  ),
-                  GetScheduleContainer(
-                      width: fullWidth, content: content, ctx: context)
-                ])));
-          }).toList());
+      return Container(
+          margin: const EdgeInsets.only(left: 15, top: 10),
+          padding: const EdgeInsets.only(bottom: 15),
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: contents.map((content) {
+                return Column(children: [
+                  getHourChip(content.dateStart, hourChipBefore, fullWidth),
+                  SizedBox(
+                      width: fullWidth,
+                      child: IntrinsicHeight(
+                          child: Stack(children: [
+                        GestureDetector(
+                            onTap: () {
+                              if (content.dataFrom == 2) {
+                                showDialog<String>(
+                                    context: context,
+                                    barrierColor: primaryColor.withOpacity(0.5),
+                                    builder: (BuildContext context) {
+                                      return StatefulBuilder(
+                                          builder: (context, setState) {
+                                        return AlertDialog(
+                                            insetPadding:
+                                                EdgeInsets.all(paddingXSM),
+                                            contentPadding:
+                                                EdgeInsets.all(paddingXSM),
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    roundedLG)),
+                                            content: DetailTask(
+                                              data: content,
+                                            ));
+                                      });
+                                    });
+                              } else {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => DetailPage(
+                                          passSlug: content.slugName)),
+                                );
+
+                                passSlugContent = content.slugName;
+                              }
+                            },
+                            child: GetScheduleContainer(
+                                width: fullWidth,
+                                content: content,
+                                ctx: context))
+                      ])))
+                ]);
+              }).toList()));
     } else {
       return SizedBox(
           height: fullHeight * 0.7,

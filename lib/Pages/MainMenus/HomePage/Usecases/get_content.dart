@@ -80,7 +80,7 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
-    Widget getData(var contents) {
+    Widget getData(List<ContentHeaderModel> contents) {
       if (contents != null) {
         return Column(
             children: contents.map((content) {
@@ -95,23 +95,6 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
                       width: 2.5,
                       color: primaryColor,
                     ),
-
-                    //    CONTENT DOT????
-
-                    // Container(
-                    //   width: 20,
-                    //   margin: EdgeInsets.symmetric(
-                    //       horizontal: fullWidth * 0.01),
-                    //   transform: Matrix4.translationValues(
-                    //       0.0, -15.0, 0.0),
-                    //   decoration: BoxDecoration(
-                    //       color: mainbg,
-                    //       shape: BoxShape.circle,
-                    //       border: Border.all(
-                    //         color: primaryColor,
-                    //         width: 2.5,
-                    //       )),
-                    // ),
 
                     // Open content w/ full container
                     GestureDetector(

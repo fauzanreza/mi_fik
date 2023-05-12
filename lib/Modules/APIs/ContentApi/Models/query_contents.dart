@@ -149,22 +149,39 @@ class ScheduleModel {
   String contentDesc;
   var contentTag;
   var contentLoc;
+  var contentImage;
+  String acUsername;
+  String ucUsername;
+  String acImage;
+  String ucImage;
 
   //Properties
+  String createdAt;
+  String updatedAt;
   String dateStart;
   String dateEnd;
   int dataFrom;
+  String totalViews;
 
-  ScheduleModel(
-      {this.id,
-      this.slugName,
-      this.contentTitle,
-      this.contentDesc,
-      this.contentLoc,
-      this.dateStart,
-      this.dateEnd,
-      this.contentTag,
-      this.dataFrom});
+  ScheduleModel({
+    this.id,
+    this.slugName,
+    this.contentTitle,
+    this.contentDesc,
+    this.contentLoc,
+    this.dateStart,
+    this.dateEnd,
+    this.contentTag,
+    this.contentImage,
+    this.dataFrom,
+    this.acUsername,
+    this.ucImage,
+    this.acImage,
+    this.ucUsername,
+    this.totalViews,
+    this.createdAt,
+    this.updatedAt,
+  });
 
   factory ScheduleModel.fromJson(Map<String, dynamic> map) {
     return ScheduleModel(
@@ -174,9 +191,17 @@ class ScheduleModel {
       contentDesc: map["content_desc"].toString(),
       contentTag: map["content_tag"],
       contentLoc: map["content_loc"],
+      contentImage: map["content_image"],
       dateStart: map["content_date_start"],
       dateEnd: map["content_date_end"],
       dataFrom: map["data_from"],
+      acUsername: map["admin_username_created"],
+      ucUsername: map["user_username_created"],
+      acImage: map["admin_image_created"],
+      ucImage: map["user_image_created"],
+      createdAt: map["created_at"],
+      updatedAt: map["updated_at"],
+      totalViews: map["total_views"].toString(),
     );
   }
 }
