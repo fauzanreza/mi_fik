@@ -54,6 +54,12 @@ class _TagSelectedArea extends State<TagSelectedArea> {
                                 (item) => item['slug_name'] == tg['slug_name']);
                           });
                           widget.action();
+                        } else if (widget.type == "filter") {
+                          setState(() {
+                            selectedTagFilterContent.removeWhere(
+                                (item) => item['slug_name'] == tg['slug_name']);
+                          });
+                          widget.action();
                         }
                       },
                       icon: Icon(

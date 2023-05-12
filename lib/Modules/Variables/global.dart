@@ -21,6 +21,11 @@ int selectedIndex = 0;
 
 // Starting Variables
 String sortingHomepageContent = "Desc";
+String filteringTag = "all";
+String searchingContent;
+DateTime filterDateStart;
+DateTime filterDateEnd;
+var selectedTagFilterContent = [];
 
 DateTime slctSchedule = DateTime.now();
 

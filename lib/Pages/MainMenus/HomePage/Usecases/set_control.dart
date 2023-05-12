@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Forms/date_picker.dart';
+import 'package:mi_fik/Components/Forms/tag_picker.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/Variables/dummy.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
@@ -36,6 +38,10 @@ class ControlPanel extends StatelessWidget {
     return FutureBuilder<Role>(
         future: getToken(),
         builder: (context, snapshot) {
+          if (searchingContent != null) {
+            titleCtrl.text = searchingContent;
+          }
+
           if (snapshot.connectionState == ConnectionState.done) {
             var roles = jsonDecode(snapshot.data.role);
 
@@ -75,7 +81,7 @@ class ControlPanel extends StatelessWidget {
                           Container(
                               padding: EdgeInsets.only(left: paddingMD),
                               child: getSubTitleMedium(
-                                  "Search by date", primaryColor)),
+                                  "Search by title", primaryColor)),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -87,6 +93,7 @@ class ControlPanel extends StatelessWidget {
                                 child: TextField(
                                   cursorColor: whitebg,
                                   maxLength: 75,
+                                  controller: titleCtrl,
                                   autofocus: true,
                                   decoration: InputDecoration(
                                       hintText: 'ex : webinar',
@@ -118,7 +125,9 @@ class ControlPanel extends StatelessWidget {
                                     child: IconButton(
                                       icon: Icon(Icons.close, size: iconMD - 5),
                                       color: whitebg,
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        searchingContent = null;
+                                      },
                                     ),
                                   )),
                             ],
@@ -180,7 +189,16 @@ class ControlPanel extends StatelessWidget {
                                         icon:
                                             Icon(Icons.close, size: iconMD - 5),
                                         color: whitebg,
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          filterDateStart = null;
+                                          filterDateEnd = null;
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const BottomBar()),
+                                          );
+                                        },
                                       ),
                                     )),
                               ],
@@ -203,7 +221,9 @@ class ControlPanel extends StatelessWidget {
                               elevation: iconSM.toInt(),
                               style:
                                   TextStyle(color: blackbg, fontSize: textMD),
-                              onChanged: (String value) {},
+                              onChanged: (String value) {
+                                sortingHomepageContent = value;
+                              },
                               items: sortingOpt.map<DropdownMenuItem<String>>(
                                   (String value) {
                                 return DropdownMenuItem<String>(
@@ -234,7 +254,10 @@ class ControlPanel extends StatelessWidget {
                                   children: roles.map<Widget>((tag) {
                                     return ElevatedButton.icon(
                                       onPressed: () {
-                                        // Respond to button press
+                                        selectedTagFilterContent.add({
+                                          "slug_name": tag['slug_name'],
+                                          "tag_name": tag['tag_name'],
+                                        });
                                       },
                                       icon: Icon(
                                         Icons.circle,
@@ -256,12 +279,26 @@ class ControlPanel extends StatelessWidget {
                                       ),
                                     );
                                   }).toList())),
+                          Padding(
+                              padding: EdgeInsets.only(left: paddingSM),
+                              child: TagSelectedArea(
+                                  tag: selectedTagFilterContent,
+                                  type: "filter")),
                           Container(
                               margin: EdgeInsets.only(top: paddingXSM),
                               width: fullWidth,
                               height: btnHeightMD,
                               child: ElevatedButton(
-                                onPressed: () async {},
+                                onPressed: () {
+                                  searchingContent = titleCtrl.text.trim();
+
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const BottomBar()),
+                                  );
+                                },
                                 style: ButtonStyle(
                                   backgroundColor:
                                       MaterialStatePropertyAll<Color>(
