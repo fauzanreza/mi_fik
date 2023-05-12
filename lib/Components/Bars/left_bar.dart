@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
+import 'package:mi_fik/Components/Button/navigation.dart';
 import 'package:mi_fik/Components/Dialogs/sign_out_dialog.dart';
 import 'package:mi_fik/Components/Skeletons/drawer.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
@@ -78,164 +79,55 @@ class LeftBar extends StatelessWidget {
                                                 fontWeight: FontWeight.w500))
                                       ]),
                                 ),
-                                Container(
-                                  width: fullWidth,
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal: paddingXSM),
-                                  alignment: Alignment.centerLeft,
-                                  child: TextButton.icon(
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const ProfilePage()),
-                                      );
-                                    },
-                                    icon: Icon(Icons.person,
-                                        size: textXLG, color: whitebg),
-                                    label: Text("Profile",
-                                        style: TextStyle(
-                                            color: whitebg, fontSize: textMD)),
-                                    style: ElevatedButton.styleFrom(),
-                                  ),
-                                ),
-                                Container(
-                                  width: fullWidth,
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal: paddingXSM),
-                                  alignment: Alignment.centerLeft,
-                                  child: TextButton.icon(
-                                    onPressed: () async {},
-                                    icon: Icon(Icons.folder_open,
-                                        size: textXLG, color: whitebg),
-                                    label: Text("Archive",
-                                        style: TextStyle(
-                                            color: whitebg, fontSize: textMD)),
-                                    style: ElevatedButton.styleFrom(),
-                                  ),
-                                ),
-                                Container(
-                                  width: fullWidth,
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal: paddingXSM),
-                                  alignment: Alignment.centerLeft,
-                                  child: TextButton.icon(
-                                    onPressed: () {
-                                      selectedRole.clear();
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const RolePage()),
-                                      );
-                                    },
-                                    icon: Icon(
-                                        Icons
-                                            .tag, //Change w/ asset icon from figma
-                                        size: textXLG,
-                                        color: whitebg),
-                                    label: Text("Role",
-                                        style: TextStyle(
-                                            color: whitebg, fontSize: textMD)),
-                                    style: ElevatedButton.styleFrom(),
-                                  ),
-                                ),
-                                Container(
-                                  width: fullWidth,
-                                  margin: EdgeInsets.only(
-                                      left: paddingXSM, right: paddingXSM),
-                                  alignment: Alignment.centerLeft,
-                                  child: TextButton.icon(
-                                    onPressed: () async {},
-                                    icon: Icon(Icons.checklist,
-                                        size: textXLG, color: whitebg),
-                                    label: Text("Schedule",
-                                        style: TextStyle(
-                                            color: whitebg, fontSize: textMD)),
-                                    style: ElevatedButton.styleFrom(),
-                                  ),
-                                ),
-                                Container(
-                                  width: fullWidth,
-                                  margin: EdgeInsets.only(
-                                      left: paddingXSM, right: paddingXSM),
-                                  alignment: Alignment.centerLeft,
-                                  child: TextButton.icon(
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const FAQPage()),
-                                      );
-                                    },
-                                    icon: Icon(Icons.question_answer_outlined,
-                                        size: textXLG, color: whitebg),
-                                    label: Text("FAQ",
-                                        style: TextStyle(
-                                            color: whitebg, fontSize: textMD)),
-                                    style: ElevatedButton.styleFrom(),
-                                  ),
-                                ),
-                                Container(
-                                  width: fullWidth,
-                                  margin: EdgeInsets.only(
-                                      left: paddingXSM, right: paddingXSM),
-                                  alignment: Alignment.centerLeft,
-                                  child: TextButton.icon(
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const HelpPage()),
-                                      );
-                                    },
-                                    icon: Icon(Icons.help_center,
-                                        size: textXLG, color: whitebg),
-                                    label: Text("Help",
-                                        style: TextStyle(
-                                            color: whitebg, fontSize: textMD)),
-                                    style: ElevatedButton.styleFrom(),
-                                  ),
-                                )
+                                getSideBarTile(
+                                    fullWidth, Icons.person, "Profile", () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ProfilePage()),
+                                  );
+                                }),
+                                getSideBarTile(fullWidth, Icons.folder_open,
+                                    "Archive", () {}),
+                                getSideBarTile(fullWidth, Icons.tag, "Role",
+                                    () {
+                                  selectedRole.clear();
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const RolePage()),
+                                  );
+                                }),
+                                getSideBarTile(fullWidth, Icons.checklist,
+                                    "Schedule", () {}),
+                                getSideBarTile(fullWidth,
+                                    Icons.question_answer_outlined, "FAQ", () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const FAQPage()),
+                                  );
+                                }),
+                                getSideBarTile(
+                                    fullWidth, Icons.help_center, "Help", () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const HelpPage()),
+                                  );
+                                }),
                               ]),
                         ),
-                        Container(
-                          width: fullWidth,
-                          margin: EdgeInsets.symmetric(horizontal: paddingXSM),
-                          alignment: Alignment.centerLeft,
-                          child: TextButton.icon(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const AboutPage()),
-                              );
-                            },
-                            icon:
-                                Icon(Icons.info, size: textXLG, color: whitebg),
-                            label: Text("About",
-                                style: TextStyle(
-                                    color: whitebg, fontSize: textMD)),
-                            style: ElevatedButton.styleFrom(),
-                          ),
-                        ),
-                        Container(
-                          width: fullWidth,
-                          margin: EdgeInsets.symmetric(horizontal: paddingXSM),
-                          alignment: Alignment.centerLeft,
-                          child: TextButton.icon(
-                            onPressed: () async {},
-                            icon: Icon(Icons.settings,
-                                size: textXLG, color: whitebg),
-                            label: Text("Setting",
-                                style: TextStyle(
-                                    color: whitebg, fontSize: textMD)),
-                            style: ElevatedButton.styleFrom(),
-                          ),
-                        ),
+                        getSideBarTile(fullWidth, Icons.info, "About", () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const AboutPage()),
+                          );
+                        }),
+                        getSideBarTile(
+                            fullWidth, Icons.settings, "Setting", () {}),
                         Container(
                           width: fullWidth,
                           margin: EdgeInsets.only(

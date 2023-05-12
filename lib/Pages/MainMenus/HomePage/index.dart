@@ -52,7 +52,7 @@ class _HomePage extends State<HomePage> {
                   children: [
                     getSpeeDialChild("New Task", context, PostTask(),
                         Icons.note_add_outlined),
-                    getSpeeDialChild("New Post", context, AddPost(),
+                    getSpeeDialChild("New Post", context, const AddPost(),
                         Icons.post_add_outlined),
                   ],
                   child: Icon(Icons.add, size: iconLG));

@@ -58,7 +58,7 @@ class _TagSelectedArea extends State<TagSelectedArea> {
                       },
                       icon: Icon(
                         Icons.close,
-                        color: Colors.red.withOpacity(0.7),
+                        color: dangerColor.withOpacity(0.7),
                       ),
                       label: Text(tg['tag_name'],
                           style:

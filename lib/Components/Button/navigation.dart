@@ -54,3 +54,17 @@ getSpeeDialChild(String title, var ctx, var cls, var icon) {
     },
   );
 }
+
+Widget getSideBarTile(double width, IconData icon, String title, var action) {
+  return Container(
+    width: width,
+    margin: EdgeInsets.only(left: paddingXSM, right: paddingXSM),
+    alignment: Alignment.centerLeft,
+    child: TextButton.icon(
+      onPressed: action,
+      icon: Icon(icon, size: textXLG, color: whitebg),
+      label: Text(title, style: TextStyle(color: whitebg, fontSize: textMD)),
+      style: ElevatedButton.styleFrom(),
+    ),
+  );
+}

@@ -18,7 +18,7 @@ class _AboutPage extends State<AboutPage> {
 
     return Scaffold(
       appBar: getAppbar("About Us"),
-      body: ListView(children: [GetAbout(), PostFeedback()]),
+      body: ListView(children: const [GetAbout(), PostFeedback()]),
     );
   }
 }

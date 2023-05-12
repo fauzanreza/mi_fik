@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Container/content.dart';
 import 'package:mi_fik/Components/Skeletons/content_2.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
@@ -47,7 +48,7 @@ class _MySchedulePage extends State<MySchedulePage> {
   }
 
   Widget _buildListView(List<ScheduleModel> contents) {
-    //double fullHeight = MediaQuery.of(context).size.height;
+    double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
     //Get total content in an archieve.
@@ -80,18 +81,10 @@ class _MySchedulePage extends State<MySchedulePage> {
                 ])));
           }).toList());
     } else {
-      return Align(
-          alignment: Alignment.topCenter,
-          child: Column(
-            children: [
-              Image.asset('assets/icon/empty.png', width: fullWidth * 0.6),
-              Text("No Event/Task for today, have a good rest",
-                  style: TextStyle(
-                      color: primaryColor,
-                      fontWeight: FontWeight.w500,
-                      fontSize: textMD))
-            ],
-          ));
+      return SizedBox(
+          height: fullHeight * 0.7,
+          child: getMessageImageNoData("assets/icon/empty.png",
+              "No event / task for today, have a good rest", fullWidth));
     }
   }
 }

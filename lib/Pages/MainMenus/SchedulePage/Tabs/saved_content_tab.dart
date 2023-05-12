@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Skeletons/content_1.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Services/queries.dart';
@@ -58,11 +59,10 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
   }
 
   Widget _buildListView(List<ScheduleModel> contents) {
-    //double fullHeight = MediaQuery.of(context).size.height;
+    double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
     Widget getUploadDate(date) {
-      //Initial variable.
       final now = DateTime.now();
       final today = DateTime(now.year, now.month, now.day);
       final justNowHour = DateTime(now.hour);
@@ -99,7 +99,7 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
           ));
     }
 
-    if (contents.isNotEmpty) {
+    if (contents != null) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -324,18 +324,10 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
                   slug: selectedArchiveSlug, archiveName: selectedArchiveName)
             ],
           ),
-          Align(
-              alignment: Alignment.topCenter,
-              child: Column(
-                children: [
-                  Image.asset('assets/icon/nodata.png', width: fullWidth * 0.6),
-                  Text("No Event/Task saved in this archive",
-                      style: TextStyle(
-                          color: primaryColor,
-                          fontWeight: FontWeight.w400,
-                          fontSize: textMD))
-                ],
-              ))
+          SizedBox(
+              height: fullHeight * 0.7,
+              child: getMessageImageNoData("assets/icon/nodata.png",
+                  "No event / task saved in this archive", fullWidth))
         ],
       );
     }

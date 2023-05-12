@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Container/content.dart';
 import 'package:mi_fik/Components/Skeletons/content_2.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/query_contents.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
-import 'package:mi_fik/Modules/Variables/style.dart';
 
 class DayEvent extends StatefulWidget {
   const DayEvent({Key key}) : super(key: key);
@@ -48,10 +48,10 @@ class _DayEvent extends State<DayEvent> with TickerProviderStateMixin {
   }
 
   Widget _buildListView(List<ScheduleModel> contents) {
-    //double fullHeight = MediaQuery.of(context).size.height;
+    double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
-    if ((contents != null) && (contents.isNotEmpty)) {
+    if (contents != null) {
       return Container(
           margin: const EdgeInsets.only(left: 15, top: 10),
           padding: const EdgeInsets.only(bottom: 15),
@@ -64,18 +64,10 @@ class _DayEvent extends State<DayEvent> with TickerProviderStateMixin {
             ]);
           }).toList()));
     } else {
-      return Align(
-          alignment: Alignment.topCenter,
-          child: Column(
-            children: [
-              Image.asset('assets/icon/empty.png', width: fullWidth * 0.6),
-              Text("No Event/Task for today, have a good rest",
-                  style: TextStyle(
-                      color: primaryColor,
-                      fontWeight: FontWeight.w500,
-                      fontSize: textMD))
-            ],
-          ));
+      return SizedBox(
+          height: fullHeight * 0.7,
+          child: getMessageImageNoData("assets/icon/empty.png",
+              "No event / task for today, have a good rest", fullWidth));
     }
   }
 }

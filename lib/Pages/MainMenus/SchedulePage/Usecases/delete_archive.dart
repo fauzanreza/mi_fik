@@ -62,7 +62,7 @@ class _DeleteArchive extends State<DeleteArchive> {
                                   TextButton(
                                     style: TextButton.styleFrom(
                                         backgroundColor:
-                                            Colors.red.withOpacity(0.8),
+                                            dangerColor.withOpacity(0.8),
                                         padding:
                                             EdgeInsets.all(paddingMD * 0.8)),
                                     onPressed: () async {

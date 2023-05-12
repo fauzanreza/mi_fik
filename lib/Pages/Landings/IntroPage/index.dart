@@ -382,22 +382,22 @@ class _IntroPage extends State<IntroPage> {
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 10),
                                         child: TextFormField(
-                                          cursorColor: Colors.white,
+                                          cursorColor: whitebg,
                                           decoration: InputDecoration(
                                             hintText: 'Search',
                                             enabledBorder: OutlineInputBorder(
                                               borderRadius:
                                                   BorderRadius.circular(10),
-                                              borderSide: const BorderSide(
+                                              borderSide: BorderSide(
                                                   width: 1,
-                                                  color: Color(0xFFFB8C00)),
+                                                  color: primaryColor),
                                             ),
                                             focusedBorder: OutlineInputBorder(
                                               borderRadius:
                                                   BorderRadius.circular(10),
-                                              borderSide: const BorderSide(
+                                              borderSide: BorderSide(
                                                   width: 1,
-                                                  color: Color(0xFFFB8C00)),
+                                                  color: primaryColor),
                                             ),
                                             prefixIcon: Icon(Icons.search,
                                                 color: primaryColor),

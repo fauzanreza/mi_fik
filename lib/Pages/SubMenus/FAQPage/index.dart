@@ -19,6 +19,6 @@ class _FAQPage extends State<FAQPage> {
     return Scaffold(
         appBar: getAppbar("Frequently Asked Question"),
         body: const GetAllQuestion(),
-        floatingActionButton: PostQuestion());
+        floatingActionButton: const PostQuestion());
   }
 }

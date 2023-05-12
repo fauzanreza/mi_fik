@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 // Navigation
 String passSlugContent;
-// String passRoleGeneral;
 
 // Selected
 var selectedArchiveName;

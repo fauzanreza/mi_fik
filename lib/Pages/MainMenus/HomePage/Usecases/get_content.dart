@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Container/content.dart';
 import 'package:mi_fik/Components/Skeletons/content_1.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
@@ -76,8 +77,67 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
   }
 
   Widget _buildListView(List<ContentHeaderModel> contents) {
-    //double fullHeight = MediaQuery.of(context).size.height;
+    double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
+
+    Widget getData(var contents) {
+      if (contents != null) {
+        return Column(
+            children: contents.map((content) {
+          return SizedBox(
+              width: fullWidth,
+              child: IntrinsicHeight(
+                child: Stack(
+                  children: [
+                    Container(
+                      margin:
+                          EdgeInsets.symmetric(horizontal: fullWidth * 0.03),
+                      width: 2.5,
+                      color: primaryColor,
+                    ),
+
+                    //    CONTENT DOT????
+
+                    // Container(
+                    //   width: 20,
+                    //   margin: EdgeInsets.symmetric(
+                    //       horizontal: fullWidth * 0.01),
+                    //   transform: Matrix4.translationValues(
+                    //       0.0, -15.0, 0.0),
+                    //   decoration: BoxDecoration(
+                    //       color: mainbg,
+                    //       shape: BoxShape.circle,
+                    //       border: Border.all(
+                    //         color: primaryColor,
+                    //         width: 2.5,
+                    //       )),
+                    // ),
+
+                    // Open content w/ full container
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    DetailPage(passSlug: content.slugName)),
+                          );
+
+                          passSlugContent = content.slugName;
+                        },
+                        child: GetHomePageEventContainer(
+                            width: fullWidth, content: content))
+                  ],
+                ),
+              ));
+        }).toList());
+      } else {
+        return SizedBox(
+            height: fullHeight * 0.7,
+            child: getMessageImageNoData("assets/icon/nodata2.png",
+                "Sorry but we not found specific event", fullWidth));
+      }
+    }
 
     return Column(children: [
       Container(
@@ -97,58 +157,11 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
                 setDateStartCtrl: updateDateStart,
                 setDateEndCtrl: updateDateEnd,
                 dateStart: dateStartCtrl,
-                dateEnd: dateEndCtrl)
+                dateEnd: dateEndCtrl),
           ],
         ),
       ),
-      Column(
-          children: contents.map((content) {
-        return SizedBox(
-            width: fullWidth,
-            child: IntrinsicHeight(
-              child: Stack(
-                children: [
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: fullWidth * 0.03),
-                    width: 2.5,
-                    color: primaryColor,
-                  ),
-
-                  //    CONTENT DOT????
-
-                  // Container(
-                  //   width: 20,
-                  //   margin: EdgeInsets.symmetric(
-                  //       horizontal: fullWidth * 0.01),
-                  //   transform: Matrix4.translationValues(
-                  //       0.0, -15.0, 0.0),
-                  //   decoration: BoxDecoration(
-                  //       color: mainbg,
-                  //       shape: BoxShape.circle,
-                  //       border: Border.all(
-                  //         color: primaryColor,
-                  //         width: 2.5,
-                  //       )),
-                  // ),
-
-                  // Open content w/ full container
-                  GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  DetailPage(passSlug: content.slugName)),
-                        );
-
-                        passSlugContent = content.slugName;
-                      },
-                      child: GetHomePageEventContainer(
-                          width: fullWidth, content: content))
-                ],
-              ),
-            ));
-      }).toList())
+      getData(contents)
     ]);
   }
 }

@@ -85,22 +85,22 @@ class ControlPanel extends StatelessWidget {
                                     EdgeInsets.symmetric(vertical: paddingXSM),
                                 padding: EdgeInsets.only(left: paddingMD),
                                 child: TextField(
-                                  cursorColor: Colors.white,
+                                  cursorColor: whitebg,
                                   maxLength: 75,
                                   autofocus: true,
                                   decoration: InputDecoration(
                                       hintText: 'ex : webinar',
                                       enabledBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(10),
-                                        borderSide: const BorderSide(
-                                            width: 1, color: Color(0xFFFB8C00)),
+                                        borderSide: BorderSide(
+                                            width: 1, color: primaryColor),
                                       ),
                                       focusedBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(10),
-                                        borderSide: const BorderSide(
-                                            width: 1, color: Color(0xFFFB8C00)),
+                                        borderSide: BorderSide(
+                                            width: 1, color: primaryColor),
                                       ),
-                                      fillColor: Colors.white,
+                                      fillColor: whitebg,
                                       filled: true),
                                 ),
                               ),
