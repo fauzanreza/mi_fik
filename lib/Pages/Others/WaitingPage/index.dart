@@ -73,10 +73,10 @@ class _WaitingPage extends State<WaitingPage> {
                             color: successbg,
                             border: Border.all(color: whitebg, width: 2),
                             borderRadius:
-                                BorderRadius.all(Radius.circular(100))),
+                                const BorderRadius.all(Radius.circular(100))),
                         child: IconButton(
                           icon: const Icon(Icons.mail),
-                          color: Colors.white,
+                          color: whitebg,
                           onPressed: () {},
                         ),
                       ),

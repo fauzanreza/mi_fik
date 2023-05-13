@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
+import 'package:mi_fik/Components/Button/navigation.dart';
+import 'package:mi_fik/Components/Container/content.dart';
 import 'package:mi_fik/Components/Skeletons/content_1.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Services/queries.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
-import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/show_detail_task.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/index.dart';
 import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/delete_archive.dart';
 import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/edit_archive.dart';
@@ -58,11 +61,10 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
   }
 
   Widget _buildListView(List<ScheduleModel> contents) {
-    //double fullHeight = MediaQuery.of(context).size.height;
+    double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
     Widget getUploadDate(date) {
-      //Initial variable.
       final now = DateTime.now();
       final today = DateTime(now.year, now.month, now.day);
       final justNowHour = DateTime(now.hour);
@@ -99,34 +101,21 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
           ));
     }
 
-    if (contents.isNotEmpty) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+    if (contents != null) {
+      return ListView(
         children: [
           Row(
             children: [
-              TextButton.icon(
-                onPressed: () {
-                  setState(() {
-                    selectedArchiveSlug = null;
-                    selectedArchiveName = null;
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const BottomBar()),
-                    );
-                  });
-                },
-                label: Text('Back to Archive',
-                    style: TextStyle(
-                        color: primaryColor,
-                        fontSize: textMD,
-                        fontWeight: FontWeight.w500)),
-                icon: Icon(Icons.arrow_back, color: primaryColor),
-                style: OutlinedButton.styleFrom(
-                    // side: BorderSide(color: primaryColor),
-                    ),
-              ),
+              OutlinedButtonCustom(() {
+                setState(() {
+                  selectedArchiveSlug = null;
+                  selectedArchiveName = null;
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const BottomBar()),
+                  );
+                });
+              }, "Back to Archive", Icons.arrow_back),
               const Spacer(),
               DeleteArchive(slug: widget.slug, name: widget.name),
               EditArchive(
@@ -137,157 +126,77 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
           ),
           Column(
               children: contents.map((content) {
-            return SizedBox(
-                width: fullWidth,
-                child: IntrinsicHeight(
-                  child: Stack(
-                    children: [
-                      Container(
-                        margin:
-                            EdgeInsets.symmetric(horizontal: fullWidth * 0.03),
-                        width: 2.5,
-                        color: primaryColor,
-                      ),
+            if (content.dataFrom == 1) {
+              return SizedBox(
+                  width: fullWidth,
+                  child: IntrinsicHeight(
+                    child: Stack(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.symmetric(
+                              horizontal: fullWidth * 0.03),
+                          width: 2.5,
+                          color: primaryColor,
+                        ),
 
-                      //    CONTENT DOT????
+                        // Open content w/ full container
+                        GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        DetailPage(passSlug: content.slugName)),
+                              );
 
-                      // Container(
-                      //   width: 20,
-                      //   margin: EdgeInsets.symmetric(
-                      //       horizontal: fullWidth * 0.01),
-                      //   transform: Matrix4.translationValues(
-                      //       0.0, -15.0, 0.0),
-                      //   decoration: BoxDecoration(
-                      //       color: mainbg,
-                      //       shape: BoxShape.circle,
-                      //       border: Border.all(
-                      //         color: primaryColor,
-                      //         width: 2.5,
-                      //       )),
-                      // ),
+                              passSlugContent = content.slugName;
+                            },
+                            child: GetHomePageEventContainer(
+                                width: fullWidth, content: content))
+                      ],
+                    ),
+                  ));
+            } else {
+              return SizedBox(
+                  width: fullWidth,
+                  child: IntrinsicHeight(
+                      child: Stack(children: [
+                    Container(
+                      margin:
+                          EdgeInsets.symmetric(horizontal: fullWidth * 0.03),
+                      width: 2.5,
+                      color: primaryColor,
+                    ),
 
-                      //Open content w/ full container
-                      GestureDetector(
+                    // Open content w/ full container
+                    GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    DetailPage(passSlug: content.slugName)),
-                          );
-
-                          passSlugContent = content.slugName;
+                          if (content.dataFrom == 2) {
+                            showDialog<String>(
+                                context: context,
+                                barrierColor: primaryColor.withOpacity(0.5),
+                                builder: (BuildContext context) {
+                                  return StatefulBuilder(
+                                      builder: (context, setState) {
+                                    return AlertDialog(
+                                        insetPadding:
+                                            EdgeInsets.all(paddingXSM),
+                                        contentPadding:
+                                            EdgeInsets.all(paddingXSM),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.all(roundedLG)),
+                                        content: DetailTask(
+                                          data: content,
+                                        ));
+                                  });
+                                });
+                          }
                         },
-                        child: Container(
-                            width: fullWidth * 0.82,
-                            margin: EdgeInsets.only(bottom: marginMD),
-                            transform:
-                                Matrix4.translationValues(40.0, 5.0, 0.0),
-                            decoration: BoxDecoration(
-                              color: whitebg,
-                              borderRadius: BorderRadius.all(roundedMd),
-                              boxShadow: [
-                                BoxShadow(
-                                  color:
-                                      const Color.fromARGB(255, 128, 128, 128)
-                                          .withOpacity(0.3),
-                                  blurRadius: 10.0,
-                                  spreadRadius: 0.0,
-                                  offset: const Offset(
-                                    5.0,
-                                    5.0,
-                                  ),
-                                )
-                              ],
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Container(
-                                  height: 108.0,
-                                  width: fullWidth,
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      fit: BoxFit.fitWidth,
-                                      image: const AssetImage(
-                                          'assets/icon/default_content.jpg'),
-                                      colorFilter: ColorFilter.mode(
-                                          Colors.black.withOpacity(0.5),
-                                          BlendMode.darken),
-                                    ),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        getUploadDate(
-                                            DateTime.parse(content.dateStart))
-                                      ]),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10),
-                                  margin:
-                                      const EdgeInsets.symmetric(vertical: 10),
-                                  child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(content.contentTitle,
-                                            style: TextStyle(
-                                                color: blackbg,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: textMD)),
-                                        Text(
-                                            removeHtmlTags(content.contentDesc),
-                                            maxLines: 4,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                                color: blackbg,
-                                                fontSize: textSM))
-                                      ]),
-                                ),
-
-                                //Open content w/ button.
-                                Container(
-                                    transform: Matrix4.translationValues(
-                                        0.0, 5.0, 0.0),
-                                    padding: EdgeInsets.zero,
-                                    width: fullWidth,
-                                    height: 35,
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => DetailPage(
-                                                  passSlug: content.slugName)),
-                                        );
-
-                                        passSlugContent = content.slugName;
-                                      },
-                                      style: ButtonStyle(
-                                        shape: MaterialStateProperty.all<
-                                                RoundedRectangleBorder>(
-                                            RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        )),
-                                        backgroundColor:
-                                            MaterialStatePropertyAll<Color>(
-                                                primaryColor),
-                                      ),
-                                      child: const Text('Detail'),
-                                    ))
-                              ],
-                            )),
-                      )
-                    ],
-                  ),
-                ));
+                        child: GetScheduleContainer(
+                            width: fullWidth, content: content, ctx: context))
+                  ])));
+            }
           }).toList())
         ],
       );
@@ -297,45 +206,27 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
         children: [
           Row(
             children: [
-              TextButton.icon(
-                onPressed: () {
-                  setState(() {
-                    selectedArchiveName = null;
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const BottomBar()),
-                    );
-                  });
-                },
-                label: Text('Back to Archive',
-                    style: TextStyle(
-                        color: primaryColor,
-                        fontSize: textMD,
-                        fontWeight: FontWeight.w500)),
-                icon: Icon(Icons.arrow_back, color: primaryColor),
-                style: OutlinedButton.styleFrom(
-                    // side: BorderSide(color: primaryColor),
-                    ),
-              ),
+              OutlinedButtonCustom(() {
+                setState(() {
+                  selectedArchiveSlug = null;
+                  selectedArchiveName = null;
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const BottomBar()),
+                  );
+                });
+              }, "Back to Archive", Icons.arrow_back),
               const Spacer(),
               DeleteArchive(slug: selectedArchiveSlug),
               EditArchive(
                   slug: selectedArchiveSlug, archiveName: selectedArchiveName)
             ],
           ),
-          Align(
-              alignment: Alignment.topCenter,
-              child: Column(
-                children: [
-                  Image.asset('assets/icon/nodata.png', width: fullWidth * 0.6),
-                  Text("No Event/Task saved in this archive",
-                      style: TextStyle(
-                          color: primaryColor,
-                          fontWeight: FontWeight.w400,
-                          fontSize: textMD))
-                ],
-              ))
+          Container(
+              alignment: Alignment.center,
+              height: fullHeight * 0.7,
+              child: getMessageImageNoData("assets/icon/nodata.png",
+                  "No event / task saved in this archive", fullWidth))
         ],
       );
     }

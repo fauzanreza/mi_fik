@@ -84,6 +84,43 @@ getItemTimeString(date) {
   return result;
 }
 
+String getWhereDateFilter(DateTime ds, DateTime de) {
+  if (ds != null && de != null) {
+    return "${DateFormat("yyyy-MM-dd").format(ds)}_${DateFormat("yyyy-MM-dd").format(de)}";
+  } else {
+    return "all";
+  }
+}
+
+String getFindFilter(String check) {
+  if (check == null || check.trim() == '') {
+    return " ";
+  } else {
+    return check;
+  }
+}
+
+String getTagFilterContent(List<dynamic> tag) {
+  if (tag.isEmpty) {
+    return "all";
+  } else {
+    String res = "";
+    int count_tag = tag.length;
+    int i = 1;
+
+    tag.forEach((e) {
+      if (i != count_tag) {
+        res += "${e['slug_name']},";
+      } else {
+        res += e['slug_name'];
+      }
+      i++;
+    });
+
+    return res;
+  }
+}
+
 String getMessageResponseFromObject(val, type) {
   var res = "";
 

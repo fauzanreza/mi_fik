@@ -1,7 +1,5 @@
 import 'package:http/http.dart' show Client;
-import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/APIs/SystemApi/Models/query_notification.dart';
-import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationQueriesService {

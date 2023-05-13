@@ -181,7 +181,7 @@ class _DetailPage extends State<DetailPage> {
             ),
             child: IconButton(
               icon: Icon(Icons.arrow_back, size: iconMD),
-              color: Colors.white,
+              color: whitebg,
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -194,7 +194,7 @@ class _DetailPage extends State<DetailPage> {
             padding: EdgeInsets.only(top: paddingMD),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(roundedLG2),
-              color: Colors.white,
+              color: whitebg,
             ),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

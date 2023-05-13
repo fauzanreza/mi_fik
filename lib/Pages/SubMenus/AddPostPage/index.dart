@@ -86,7 +86,7 @@ class _AddPost extends State<AddPost> {
                   Matrix4.translationValues(0.0, fullHeight * 0.045, 0.0),
               child: IconButton(
                 icon: Icon(Icons.arrow_back, size: iconLG),
-                color: Colors.white,
+                color: whitebg,
                 onPressed: () async {
                   //Empty all input
                   if (selectedTag.isNotEmpty ||
@@ -125,7 +125,7 @@ class _AddPost extends State<AddPost> {
                                             children: [
                                               TextButton(
                                                 style: TextButton.styleFrom(
-                                                    backgroundColor: Colors.red
+                                                    backgroundColor: dangerColor
                                                         .withOpacity(0.8),
                                                     padding: EdgeInsets.all(
                                                         paddingMD * 0.8)),
@@ -177,7 +177,7 @@ class _AddPost extends State<AddPost> {
             padding: EdgeInsets.only(top: paddingMD),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(roundedLG2),
-              color: Colors.white,
+              color: whitebg,
             ),
             child: ListView(padding: EdgeInsets.zero, children: [
               Container(
@@ -198,7 +198,7 @@ class _AddPost extends State<AddPost> {
                   child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
                       foregroundColor: primaryColor,
-                      backgroundColor: Colors.white,
+                      backgroundColor: whitebg,
                       side: BorderSide(
                         width: 1.0,
                         color: primaryColor,

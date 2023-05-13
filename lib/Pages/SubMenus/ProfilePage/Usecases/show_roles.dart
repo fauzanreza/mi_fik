@@ -25,7 +25,7 @@ class ShowRole extends StatelessWidget {
 
             return Card(
                 shape: RoundedRectangleBorder(
-                  side: const BorderSide(color: Color(0xFFe8e8e8), width: 1),
+                  side: BorderSide(color: mainbg, width: 1),
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: ExpansionTile(

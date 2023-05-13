@@ -1,8 +1,10 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 // Navigation
 String passSlugContent;
-// String passRoleGeneral;
 
 // Selected
 var selectedArchiveName;
@@ -22,6 +24,11 @@ int selectedIndex = 0;
 
 // Starting Variables
 String sortingHomepageContent = "Desc";
+String filteringTag = "all";
+String searchingContent;
+DateTime filterDateStart;
+DateTime filterDateEnd;
+var selectedTagFilterContent = [];
 
 DateTime slctSchedule = DateTime.now();
 
@@ -43,3 +50,15 @@ class Role {
 
   Role({this.role});
 }
+
+// Firebase FCM
+bool shouldUseFirestoreEmulator = false;
+
+String token;
+
+const AndroidNotificationChannel channel = AndroidNotificationChannel(
+  'high_importance_channel',
+  'High Importance Notifications',
+  description: 'This channel is used for important notifications.',
+  importance: Importance.high,
+);

@@ -36,7 +36,7 @@ class AuthCommandsService {
             'image_key', responseData['result']['image_url'].toString());
         await prefs.setString('role_list_key', jsonEncode(roles));
 
-        var passRoleGeneral;
+        var passRoleGeneral = "";
         roles.forEach((e) {
           if (e['slug_name'] == "lecturer") {
             passRoleGeneral = "Lecturer";

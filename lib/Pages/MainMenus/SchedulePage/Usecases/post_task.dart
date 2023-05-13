@@ -122,18 +122,18 @@ class _PostTask extends State<PostTask> {
                   TextButton(
                     style: TextButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 16),
-                      foregroundColor: const Color(0xFFFB8C00),
+                      foregroundColor: primaryColor,
                     ),
                     onPressed: () {},
                     child: const Text('Reminder :'),
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      foregroundColor: const Color(0xFFFB8C00),
-                      backgroundColor: Colors.white,
-                      side: const BorderSide(
+                      foregroundColor: primaryColor,
+                      backgroundColor: whitebg,
+                      side: BorderSide(
                         width: 1.0,
-                        color: Color(0xFFFB8C00),
+                        color: primaryColor,
                       ),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0)),

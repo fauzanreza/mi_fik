@@ -55,7 +55,7 @@ Widget getViewWidget(total) {
 }
 
 getImageHeader(url) {
-  if (url.trim() != "" && url != "null") {
+  if (url != null && url != "null") {
     return NetworkImage(url);
   } else {
     return const AssetImage('assets/icon/default_content.jpg');

@@ -54,11 +54,17 @@ class _TagSelectedArea extends State<TagSelectedArea> {
                                 (item) => item['slug_name'] == tg['slug_name']);
                           });
                           widget.action();
+                        } else if (widget.type == "filter") {
+                          setState(() {
+                            selectedTagFilterContent.removeWhere(
+                                (item) => item['slug_name'] == tg['slug_name']);
+                          });
+                          // widget.action(); i dont know why tf this shit can run as the others
                         }
                       },
                       icon: Icon(
                         Icons.close,
-                        color: Colors.red.withOpacity(0.7),
+                        color: dangerColor.withOpacity(0.7),
                       ),
                       label: Text(tg['tag_name'],
                           style:
