@@ -3,6 +3,9 @@ import 'package:mi_fik/Components/Backgrounds/custom.dart';
 import 'package:mi_fik/Components/Bars/top_bar.dart';
 import 'package:mi_fik/Components/Button/navigation.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/SubMenus/AboutPage/index.dart';
+import 'package:mi_fik/Pages/SubMenus/HistoryPage/index.dart';
+import 'package:mi_fik/Pages/SubMenus/MyFAQPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/ProfilePage/Usecases/edit_profile.dart';
 import 'package:mi_fik/Pages/SubMenus/ProfilePage/Usecases/show_profile.dart';
 import 'package:mi_fik/Pages/SubMenus/ProfilePage/Usecases/show_roles.dart';
@@ -42,6 +45,35 @@ class _ProfilePage extends State<ProfilePage> {
                       child: Column(
                         children: [
                           const ShowRole(),
+                          getProfileButton(() {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const MyFAQPage()),
+                            );
+                          }, Icons.question_answer, "My Question",
+                              Icons.keyboard_arrow_right),
+                          getProfileButton(() {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const HistoryPage()),
+                            );
+                          }, Icons.history, "History",
+                              Icons.keyboard_arrow_right),
+                          getProfileButton(() {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const AboutPage()),
+                            );
+                          }, Icons.info, "About Us",
+                              Icons.keyboard_arrow_right),
+                          Container(
+                            margin: EdgeInsets.only(top: paddingMD * 2),
+                            child: Text("Version 1.0",
+                                style: TextStyle(fontSize: textSM)),
+                          ),
                           getSignOutButtonWide(context)
                         ],
                       )),

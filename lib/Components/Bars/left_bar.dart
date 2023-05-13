@@ -5,11 +5,11 @@ import 'package:mi_fik/Components/Dialogs/sign_out_dialog.dart';
 import 'package:mi_fik/Components/Skeletons/drawer.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/SubMenus/AboutPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/FAQPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/HelpPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/ManageRolePage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/ProfilePage/index.dart';
+import 'package:mi_fik/Pages/SubMenus/SettingPage/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LeftBar extends StatelessWidget {
@@ -51,7 +51,7 @@ class LeftBar extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         SizedBox(
-                          height: fullHeight * 0.7,
+                          height: fullHeight * 0.75,
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -119,15 +119,14 @@ class LeftBar extends StatelessWidget {
                                 }),
                               ]),
                         ),
-                        getSideBarTile(fullWidth, Icons.info, "About", () {
+                        getSideBarTile(fullWidth, Icons.settings, "Setting",
+                            () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const AboutPage()),
+                                builder: (context) => const SettingPage()),
                           );
                         }),
-                        getSideBarTile(
-                            fullWidth, Icons.settings, "Setting", () {}),
                         Container(
                           width: fullWidth,
                           margin: EdgeInsets.only(

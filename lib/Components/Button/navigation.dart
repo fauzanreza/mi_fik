@@ -12,7 +12,7 @@ Widget getSignOutButtonWide(var ctx) {
       },
       child: Container(
         margin: EdgeInsets.symmetric(
-            vertical: paddingMD * 2, horizontal: paddingXSM - 5),
+            vertical: paddingMD, horizontal: paddingXSM - 5),
         padding:
             EdgeInsets.symmetric(horizontal: paddingMD, vertical: paddingSM),
         decoration: BoxDecoration(
@@ -77,4 +77,28 @@ Widget OutlinedButtonCustom(var action, String title, IconData icon) {
             color: dangerColor, fontSize: textMD, fontWeight: FontWeight.w500)),
     icon: Icon(icon, color: dangerColor),
   );
+}
+
+Widget getProfileButton(
+    var action, IconData iconStart, String title, IconData iconEnd) {
+  return InkWell(
+      onTap: action,
+      child: Card(
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: mainbg, width: 1),
+          borderRadius: BorderRadius.circular(6),
+        ),
+        child: Container(
+            padding: EdgeInsets.symmetric(
+                horizontal: paddingSM, vertical: paddingMD),
+            child: Row(
+              children: [
+                Icon(iconStart, color: greybg, size: iconMD * 0.8),
+                const SizedBox(width: 35),
+                Text(title, style: TextStyle(fontSize: textMD - 1)),
+                const Spacer(),
+                Icon(iconEnd, color: greybg, size: iconMD * 0.8),
+              ],
+            )),
+      ));
 }

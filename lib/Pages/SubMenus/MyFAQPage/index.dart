@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/Bars/top_bar.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
-class SettingPage extends StatefulWidget {
-  const SettingPage({Key key}) : super(key: key);
+class MyFAQPage extends StatefulWidget {
+  const MyFAQPage({Key key}) : super(key: key);
 
   @override
-  _SettingPage createState() => _SettingPage();
+  _MyFAQPage createState() => _MyFAQPage();
 }
 
-class _SettingPage extends State<SettingPage> {
+class _MyFAQPage extends State<MyFAQPage> {
   @override
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
     //double fullWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: getAppbar("Setting"),
+      appBar: getAppbar("My Question"),
       body: ListView(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
