@@ -30,7 +30,7 @@ class TagQueriesService {
     final token = prefs.getString('token_key');
     final header = {
       'Accept': 'application/json',
-      'Authorization': "Bearer $token",
+      // 'Authorization': "Bearer $token",
     };
 
     final response = await client.get(

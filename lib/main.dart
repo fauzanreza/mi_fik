@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Modules/APIs/DictionaryApi/Services/queries.dart';
+import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
@@ -53,11 +54,13 @@ class MyApp extends StatefulWidget {
 
 class _MyApp extends State<MyApp> {
   DictionaryQueryService dctService;
+  UserCommandsService userService;
 
   @override
   void initState() {
     super.initState();
     dctService = DictionaryQueryService();
+    userService = UserCommandsService();
     var initializationSettingsAndroid =
         const AndroidInitializationSettings('@mipmap/ic_launcher');
     var initializationSettings =
@@ -105,13 +108,10 @@ class _MyApp extends State<MyApp> {
         );
       }
     });
-
-    getToken();
   }
 
   getToken() async {
     token = await FirebaseMessaging.instance.getToken();
-    print(token); // Past this shit to user data in db
   }
 
   @override
@@ -127,13 +127,25 @@ class _MyApp extends State<MyApp> {
     dctService.getDictionaryType("FBC-001");
 
     if (widget.signed) {
-      return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Kumande Mobile',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: const BottomBar(),
+      return FutureBuilder<String>(
+        future: FirebaseMessaging.instance.getToken(),
+        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+          if (snapshot.hasData) {
+            String tokens = snapshot.data;
+            userService.putFirebase(tokens);
+
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'Kumande Mobile',
+              theme: ThemeData(
+                primarySwatch: Colors.blue,
+              ),
+              home: const BottomBar(),
+            );
+          } else {
+            return CircularProgressIndicator();
+          }
+        },
       );
     } else {
       return MaterialApp(
