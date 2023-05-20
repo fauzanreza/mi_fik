@@ -15,14 +15,6 @@ String getSeparatedAfter(String divider, String value) {
   return res[1];
 }
 
-getNotifSender(admin, user) {
-  if (admin != null) {
-    return admin;
-  } else {
-    return user;
-  }
-}
-
 String ucFirst(String val) {
   String res = val[0].toUpperCase() + val.substring(1);
 

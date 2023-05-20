@@ -17,7 +17,14 @@ class _SettingPage extends State<SettingPage> {
 
     return Scaffold(
       appBar: getAppbar("Setting"),
-      body: ListView(),
+      body: ListView(
+        children: [
+          TextButton(
+            onPressed: () => throw Exception(),
+            child: const Text("Error testing"),
+          ),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         backgroundColor: successbg,

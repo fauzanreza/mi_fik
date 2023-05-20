@@ -25,7 +25,7 @@ class RightBar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                    margin: EdgeInsets.only(bottom: marginMD, left: marginSM),
+                    margin: EdgeInsets.only(bottom: paddingMD, left: marginSM),
                     child: Text("Notification",
                         style: TextStyle(
                             color: whitebg,
@@ -34,16 +34,7 @@ class RightBar extends StatelessWidget {
                 Expanded(
                     child: ListView(
                   padding: EdgeInsets.zero,
-                  children: [
-                    Container(
-                        margin: const EdgeInsets.all(10),
-                        child: Text("Today",
-                            style: TextStyle(
-                                color: whitebg,
-                                fontSize: textMD,
-                                fontWeight: FontWeight.w500))),
-                    const GetNotification()
-                  ],
+                  children: const [GetNotification()],
                 ))
               ],
             )));
