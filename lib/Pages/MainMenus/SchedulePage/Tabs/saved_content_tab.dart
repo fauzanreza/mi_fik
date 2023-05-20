@@ -106,7 +106,7 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
         children: [
           Row(
             children: [
-              OutlinedButtonCustom(() {
+              outlinedButtonCustom(() {
                 setState(() {
                   selectedArchiveSlug = null;
                   selectedArchiveName = null;
@@ -206,7 +206,7 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
         children: [
           Row(
             children: [
-              OutlinedButtonCustom(() {
+              outlinedButtonCustom(() {
                 setState(() {
                   selectedArchiveSlug = null;
                   selectedArchiveName = null;

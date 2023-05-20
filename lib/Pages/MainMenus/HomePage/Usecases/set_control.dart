@@ -260,7 +260,7 @@ class _SetControl extends State<SetControl> {
                                         fontWeight: FontWeight.bold,
                                         fontSize: textMD)),
                                 const Spacer(),
-                                OutlinedButtonCustom(() {
+                                outlinedButtonCustom(() {
                                   selectedTagFilterContent.clear();
                                   Navigator.push(
                                     context,

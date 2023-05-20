@@ -108,10 +108,13 @@ class _MyApp extends State<MyApp> {
         );
       }
     });
+
+    getToken();
   }
 
   getToken() async {
     token = await FirebaseMessaging.instance.getToken();
+    print(token);
   }
 
   @override
@@ -136,7 +139,7 @@ class _MyApp extends State<MyApp> {
 
             return MaterialApp(
               debugShowCheckedModeBanner: false,
-              title: 'Kumande Mobile',
+              title: 'Mi-FIK',
               theme: ThemeData(
                 primarySwatch: Colors.blue,
               ),
@@ -150,7 +153,7 @@ class _MyApp extends State<MyApp> {
     } else {
       return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Kumande Mobile',
+        title: 'Mi-FIK',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),

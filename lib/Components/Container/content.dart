@@ -6,7 +6,6 @@ import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Helpers/widget.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/show_detail_task.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/index.dart';
 
 class GetHomePageEventContainer extends StatelessWidget {
