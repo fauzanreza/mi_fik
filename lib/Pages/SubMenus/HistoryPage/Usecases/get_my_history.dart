@@ -15,7 +15,6 @@ class GetMyHistory extends StatefulWidget {
 
 class _GetMyHistory extends State<GetMyHistory> {
   HistoryQueriesService apiQuery;
-  ScrollController scrollController = ScrollController();
   int page = 1;
 
   @override
@@ -56,7 +55,6 @@ class _GetMyHistory extends State<GetMyHistory> {
 
     if (contents.isNotEmpty) {
       return ListView.builder(
-          controller: scrollController,
           padding: EdgeInsets.only(bottom: paddingMD),
           itemCount: contents.length,
           itemBuilder: (BuildContext context, int index) {
@@ -104,7 +102,7 @@ class _GetMyHistory extends State<GetMyHistory> {
                 ));
           });
     } else {
-      return getNoDataContainer("History not found");
+      return Center(child: getNoDataContainer("History not found"));
     }
   }
 }

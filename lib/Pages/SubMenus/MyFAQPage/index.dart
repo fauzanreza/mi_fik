@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/Bars/top_bar.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/SubMenus/MyFAQPage/Usecases/get_my_faq.dart';
 
 class MyFAQPage extends StatefulWidget {
   const MyFAQPage({Key key}) : super(key: key);
@@ -17,7 +18,7 @@ class _MyFAQPage extends State<MyFAQPage> {
 
     return Scaffold(
       appBar: getAppbar("My Question"),
-      body: ListView(),
+      body: const GetMyFAQ(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         backgroundColor: successbg,

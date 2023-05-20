@@ -146,7 +146,7 @@ class _MyApp extends State<MyApp> {
               home: const BottomBar(),
             );
           } else {
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           }
         },
       );
