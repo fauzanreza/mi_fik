@@ -38,6 +38,7 @@ double marginSM = 8; //For detail content (MT)
 double marginHZ = 4; //For horizontal listview
 
 // Padding
+double paddingLg = 35;
 double paddingMD = 20;
 double paddingSM = 15;
 double paddingXSM = 10;
