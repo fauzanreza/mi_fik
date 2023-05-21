@@ -82,8 +82,24 @@ class _AddPost extends State<AddPost> {
               ),
             ),
             Container(
-              transform:
-                  Matrix4.translationValues(0.0, fullHeight * 0.045, 0.0),
+              transform: Matrix4.translationValues(
+                  fullWidth * 0.03, fullHeight * 0.05, 0.0),
+              decoration: BoxDecoration(
+                color: primaryColor,
+                borderRadius: const BorderRadius.all(Radius.circular(100)),
+                boxShadow: [
+                  BoxShadow(
+                    color:
+                        const Color.fromARGB(255, 67, 67, 67).withOpacity(0.3),
+                    blurRadius: 10.0,
+                    spreadRadius: 0.0,
+                    offset: const Offset(
+                      5.0,
+                      5.0,
+                    ),
+                  )
+                ],
+              ),
               child: IconButton(
                 icon: Icon(Icons.arrow_back, size: iconLG),
                 color: whitebg,
@@ -182,40 +198,19 @@ class _AddPost extends State<AddPost> {
             child: ListView(padding: EdgeInsets.zero, children: [
               Container(
                 padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: getSubTitleMedium("Event Title", blackbg),
+                child: getSubTitleMedium("Title", blackbg),
               ),
               Container(
                 padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                 child: getInputText(75, contentTitleCtrl, false),
               ),
-              getInputDesc(10000, 5, contentDescCtrl, false),
               Container(
-                alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
-                child: SizedBox(
-                  width: 180,
-                  height: 40,
-                  child: ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: primaryColor,
-                      backgroundColor: whitebg,
-                      side: BorderSide(
-                        width: 1.0,
-                        color: primaryColor,
-                      ),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0)),
-                    ),
-                    onPressed: () async {
-                      FilePickerResult result = await FilePicker.platform
-                          .pickFiles(allowMultiple: true);
-                    },
-                    icon: const Icon(
-                        Icons.attach_file), //icon data for elevated button
-                    label: const Text("Insert Attachment"),
-                    //label text
-                  ),
-                ),
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                child: getSubTitleMedium("Description", blackbg),
+              ),
+              Container(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                child: getInputDesc(10000, 5, contentDescCtrl, false),
               ),
               Container(
                   margin: EdgeInsets.only(left: paddingMD),
@@ -236,8 +231,67 @@ class _AddPost extends State<AddPost> {
                   )),
               Container(
                   padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-                  child: Wrap(runSpacing: -5, spacing: 5, children: [
-                    const SetLocation(),
+                  child: Row(
+                    children: [
+                      Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Reminder :',
+                                style: TextStyle(fontSize: textSM)),
+                            Container(
+                                padding: EdgeInsets.only(left: paddingXSM),
+                                child: getDropDownMain(
+                                    slctReminderType, reminderTypeOpt,
+                                    (String newValue) {
+                                  setState(() {
+                                    slctReminderType = newValue;
+                                  });
+                                }, true, "reminder_")),
+                          ]),
+                      // Info or help
+                      Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                                margin: const EdgeInsets.only(left: 10),
+                                child: Text('ex : URL, Video, Image, Doc',
+                                    style: TextStyle(fontSize: textSM))),
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
+                              child: SizedBox(
+                                width: 180,
+                                height: 40,
+                                child: ElevatedButton.icon(
+                                  style: ElevatedButton.styleFrom(
+                                    foregroundColor: primaryColor,
+                                    backgroundColor: whitebg,
+                                    side: BorderSide(
+                                      width: 1.0,
+                                      color: primaryColor,
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0)),
+                                  ),
+                                  onPressed: () async {
+                                    FilePickerResult result = await FilePicker
+                                        .platform
+                                        .pickFiles(allowMultiple: true);
+                                  },
+                                  icon: const Icon(Icons
+                                      .attach_file), //icon data for elevated button
+                                  label: const Text("Insert Attachment"),
+                                  //label text
+                                ),
+                              ),
+                            ),
+                          ])
+                    ],
+                  )),
+              Container(
+                  padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+                  child: Row(children: [
                     getDatePicker(dateStartCtrl, () {
                       final now = DateTime.now();
 
@@ -252,6 +306,7 @@ class _AddPost extends State<AddPost> {
                         });
                       }, currentTime: now, locale: LocaleType.en);
                     }, "Start", "datetime"),
+                    const Spacer(),
                     getDatePicker(dateEndCtrl, () {
                       final now = DateTime.now();
 
@@ -266,31 +321,12 @@ class _AddPost extends State<AddPost> {
                         });
                       }, currentTime: now, locale: LocaleType.en);
                     }, "End", "datetime"),
-                    Wrap(children: <Widget>[
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          textStyle: const TextStyle(fontSize: 16),
-                          foregroundColor: primaryColor,
-                        ),
-                        onPressed: () {},
-                        child: const Text('Reminder :'),
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: primaryColor,
-                          backgroundColor: whitebg,
-                          side: BorderSide(
-                            width: 1.0,
-                            color: primaryColor,
-                          ),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0)),
-                        ),
-                        onPressed: () {},
-                        child: const Text('1 Hour Before'),
-                      ),
-                    ])
                   ])),
+              Container(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                  child: Row(children: [
+                    const SetLocation(),
+                  ]))
             ]),
           )),
           SizedBox(

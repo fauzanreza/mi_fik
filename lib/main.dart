@@ -121,6 +121,12 @@ class _MyApp extends State<MyApp> {
       }
     });
 
+    // Get dictionary collection
+    dctService.getDictionaryType("QST-001");
+    dctService.getDictionaryType("FBC-001");
+    dctService.getDictionaryType("ATT-001");
+    dctService.getDictionaryType("SLC-001");
+
     getToken();
   }
 
@@ -136,10 +142,6 @@ class _MyApp extends State<MyApp> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-
-    // Get dictionary collection
-    dctService.getDictionaryType("QST-001");
-    dctService.getDictionaryType("FBC-001");
 
     if (widget.signed) {
       return FutureBuilder<String>(

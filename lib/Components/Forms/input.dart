@@ -59,8 +59,8 @@ Widget getInputDesc(int len, int lines, var ctrl, bool secure) {
 Widget getDropDownMain(String slct, List<String> opt,
     Function(String) onChanged, bool separate, String divider) {
   return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      height: 45,
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      height: 40,
       margin: const EdgeInsets.only(top: 8),
       decoration: BoxDecoration(
         border: Border.all(
@@ -80,7 +80,8 @@ Widget getDropDownMain(String slct, List<String> opt,
           if (separate) {
             return DropdownMenuItem<String>(
               value: item,
-              child: Text(getSeparatedAfter(divider, item)),
+              child:
+                  Text(getSeparatedAfter(divider, item).replaceAll('_', ' ')),
             );
           } else {
             return DropdownMenuItem<String>(
