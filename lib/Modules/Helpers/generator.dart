@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:mi_fik/Modules/Helpers/template.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 getToday(String type) {
@@ -242,4 +243,12 @@ Widget getHourChip(String dateStart, String hrChip, double width) {
   } else {
     return const SizedBox();
   }
+}
+
+Widget getHourText(String date, var margin, var align) {
+  return Container(
+      margin: margin,
+      alignment: align,
+      child: Text(getDBDateFormat("time", DateTime.parse(date)),
+          style: TextStyle(fontSize: textSM)));
 }

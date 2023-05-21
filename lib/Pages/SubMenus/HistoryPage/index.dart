@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/Bars/top_bar.dart';
+import 'package:mi_fik/Pages/SubMenus/HistoryPage/Usecases/get_my_history.dart';
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({Key key}) : super(key: key);
@@ -16,7 +17,7 @@ class _HistoryPage extends State<HistoryPage> {
 
     return Scaffold(
       appBar: getAppbar("History"),
-      body: ListView(),
+      body: const GetMyHistory(),
     );
   }
 }

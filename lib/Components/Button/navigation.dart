@@ -69,7 +69,7 @@ Widget getSideBarTile(double width, IconData icon, String title, var action) {
   );
 }
 
-Widget OutlinedButtonCustom(var action, String title, IconData icon) {
+Widget outlinedButtonCustom(var action, String title, IconData icon) {
   return TextButton.icon(
     onPressed: action,
     label: Text(title,

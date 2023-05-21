@@ -4,9 +4,11 @@ import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Button/navigation.dart';
 import 'package:mi_fik/Components/Container/content.dart';
+import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Skeletons/content_1.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Services/queries.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
+import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_contents.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/show_detail_task.dart';
@@ -25,12 +27,16 @@ class SavedContent extends StatefulWidget {
 }
 
 class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
-  ArchiveQueriesService apiService;
+  ArchiveQueriesService queryService;
+  ContentCommandsService commandService;
+
+  String hourChipBefore;
 
   @override
   void initState() {
     super.initState();
-    apiService = ArchiveQueriesService();
+    queryService = ArchiveQueriesService();
+    commandService = ContentCommandsService();
   }
 
   @override
@@ -41,7 +47,7 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
-        future: apiService.getArchiveContent(widget.slug),
+        future: queryService.getArchiveContent(widget.slug),
         builder: (BuildContext context,
             AsyncSnapshot<List<ScheduleModel>> snapshot) {
           if (snapshot.hasError) {
@@ -63,6 +69,7 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
   Widget _buildListView(List<ScheduleModel> contents) {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
+    bool isLoading;
 
     Widget getUploadDate(date) {
       final now = DateTime.now();
@@ -106,7 +113,7 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
         children: [
           Row(
             children: [
-              OutlinedButtonCustom(() {
+              outlinedButtonCustom(() {
                 setState(() {
                   selectedArchiveSlug = null;
                   selectedArchiveName = null;
@@ -142,12 +149,28 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
                         // Open content w/ full container
                         GestureDetector(
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        DetailPage(passSlug: content.slugName)),
-                              );
+                              commandService
+                                  .postContentView(content.slugName)
+                                  .then((response) {
+                                setState(() => isLoading = false);
+                                var status = response[0]['message'];
+                                var body = response[0]['body'];
+
+                                if (status == "success") {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => DetailPage(
+                                            passSlug: content.slugName)),
+                                  );
+                                } else {
+                                  showDialog<String>(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          FailedDialog(
+                                              text: body, type: "openevent"));
+                                }
+                              });
 
                               passSlugContent = content.slugName;
                             },
@@ -206,7 +229,7 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
         children: [
           Row(
             children: [
-              OutlinedButtonCustom(() {
+              outlinedButtonCustom(() {
                 setState(() {
                   selectedArchiveSlug = null;
                   selectedArchiveName = null;

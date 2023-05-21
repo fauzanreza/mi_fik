@@ -216,9 +216,9 @@ class _SetLocation extends State<SetLocation>
                   ));
             });
           }).then((_) => setState(() {})), //Check this again !!!!
-      icon: Icon(Icons.location_on_outlined, size: 22, color: primaryColor),
+      icon: Icon(Icons.location_on_outlined, size: 22, color: semiblackbg),
       label: Text(getButtonText(locCoordinateCtrl, locDetailCtrl.text),
-          style: TextStyle(fontSize: textMD, color: primaryColor)),
+          style: TextStyle(fontSize: textMD, color: semiblackbg)),
     );
   }
 

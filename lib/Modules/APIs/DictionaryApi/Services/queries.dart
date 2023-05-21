@@ -21,6 +21,8 @@ class DictionaryQueryService {
     if (response.statusCode == 200) {
       var arrQtyType = dictionaryTypeModelFromJson(response.body);
       var arrFbcType = dictionaryTypeModelFromJson(response.body);
+      var arrAttType = dictionaryTypeModelFromJson(response.body);
+      var arrSlcType = dictionaryTypeModelFromJson(response.body);
 
       if (type == "QST-001") {
         arrQtyType.forEach((e) {
@@ -32,6 +34,16 @@ class DictionaryQueryService {
           feedbackTypeOpt.add(e.slug);
         });
         slctFeedbackType = feedbackTypeOpt.first;
+      } else if (type == "ATT-001") {
+        arrAttType.forEach((e) {
+          attachmentTypeOpt.add(e.slug);
+        });
+        slctAttachmentType = attachmentTypeOpt.first;
+      } else if (type == "SLC-001") {
+        arrSlcType.forEach((e) {
+          reminderTypeOpt.add(e.slug);
+        });
+        slctReminderType = reminderTypeOpt.first;
       }
     } else {
       return null;

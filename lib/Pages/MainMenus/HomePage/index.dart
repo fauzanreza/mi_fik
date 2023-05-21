@@ -114,7 +114,7 @@ class _HomePage extends State<HomePage> {
                                   topLeft: roundedLG, topRight: roundedLG),
                             ),
                             child: const IntrinsicHeight(
-                              child: Flexible(child: GetContent()),
+                              child: GetContent(),
                             ))
                       ])),
               floatingActionButton: getRoleFeature(role),

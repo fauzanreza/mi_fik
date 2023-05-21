@@ -1,11 +1,14 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
 import 'package:mi_fik/Modules/APIs/AuthApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/AuthApi/Services/commands.dart';
+import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/Landings/RegisterPage/index.dart';
 
 class PostLogin extends StatefulWidget {
   const PostLogin({Key key}) : super(key: key);
@@ -18,6 +21,7 @@ class _PostLogin extends State<PostLogin> {
   var usernameCtrl = TextEditingController();
   var passCtrl = TextEditingController();
   AuthCommandsService apiService;
+  UserCommandsService userService;
 
   @override
   void dispose() {
@@ -30,6 +34,7 @@ class _PostLogin extends State<PostLogin> {
   void initState() {
     super.initState();
     apiService = AuthCommandsService();
+    userService = UserCommandsService();
   }
 
   @override
@@ -69,6 +74,8 @@ class _PostLogin extends State<PostLogin> {
                 height: 45,
                 child: ElevatedButton(
                   onPressed: () async {
+                    String token = await FirebaseMessaging.instance.getToken();
+
                     LoginModel data = LoginModel(
                       username: usernameCtrl.text,
                       password: passCtrl.text,
@@ -87,6 +94,7 @@ class _PostLogin extends State<PostLogin> {
                             MaterialPageRoute(
                                 builder: (context) => const BottomBar()),
                           );
+                          userService.putFirebase(token);
                         } else {
                           showDialog<String>(
                               context: context,
@@ -110,11 +118,31 @@ class _PostLogin extends State<PostLogin> {
                         RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(roundedLG2),
                     )),
-                    backgroundColor:
-                        MaterialStatePropertyAll<Color>(primaryColor),
+                    backgroundColor: MaterialStatePropertyAll<Color>(successbg),
                   ),
                   child: const Text('Sign In'),
-                ))
+                )),
+            Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.symmetric(horizontal: paddingMD * 1.2),
+                margin: EdgeInsets.only(top: paddingSM * 2),
+                child: Row(children: [
+                  const Text("already have an account?"),
+                  const Spacer(),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      foregroundColor: primaryColor, // foreground
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const RegisterPage()),
+                      );
+                    },
+                    child: const Text('Register now'),
+                  )
+                ]))
           ]),
     );
   }

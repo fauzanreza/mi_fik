@@ -14,8 +14,10 @@ var selectedArchiveSlug;
 var selectedRole = [];
 
 final selectedTag = [];
-var slctQuestionType = "";
-var slctFeedbackType = "";
+var slctQuestionType = "event";
+var slctFeedbackType = "feedback_design";
+var slctAttachmentType = "image";
+var slctReminderType = "reminder_3_hour_before";
 final locDetailCtrl = TextEditingController();
 
 List archieveVal = [];
@@ -35,6 +37,8 @@ DateTime slctSchedule = DateTime.now();
 // Filled by API dictionary
 List<String> questionTypeOpt = [];
 List<String> feedbackTypeOpt = [];
+List<String> attachmentTypeOpt = [];
+List<String> reminderTypeOpt = [];
 
 // Class and object
 class UserProfileLeftBar {
