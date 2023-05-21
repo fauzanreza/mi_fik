@@ -46,4 +46,35 @@ class ContentCommandsService {
       ];
     }
   }
+
+  Future<List<Map<String, dynamic>>> postContentView(String slug) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token_key');
+
+    final header = {
+      'Accept': 'application/json',
+      'content-type': 'application/json',
+      'Authorization': "Bearer $token",
+    };
+
+    final response = await client.post(
+      Uri.parse("$emuUrl/api/v1/content/open/$slug"),
+      headers: header,
+    );
+
+    var responseData = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      return [
+        {
+          "message": "success",
+          "body": responseData["message"],
+        }
+      ];
+    } else {
+      return [
+        {"message": "failed", "body": responseData['message']}
+      ];
+    }
+  }
 }

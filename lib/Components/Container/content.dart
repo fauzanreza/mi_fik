@@ -2,19 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
+import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Helpers/widget.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/index.dart';
 
-class GetHomePageEventContainer extends StatelessWidget {
+class GetHomePageEventContainer extends StatefulWidget {
+  GetHomePageEventContainer({Key key, this.width, this.content, this.servc})
+      : super(key: key);
   final double width;
   var content;
+  var servc;
 
-  GetHomePageEventContainer({Key key, this.width, this.content})
-      : super(key: key);
+  @override
+  _GetHomePageEventContainer createState() => _GetHomePageEventContainer();
+}
 
+class _GetHomePageEventContainer extends State<GetHomePageEventContainer> {
   Widget getUsername(u1, u2) {
     String username = " ";
     if (u1 != null) {
@@ -54,8 +60,10 @@ class GetHomePageEventContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isLoading;
+
     return Container(
-        width: width * 0.82,
+        width: widget.width * 0.82,
         margin: EdgeInsets.only(bottom: marginMD),
         transform: Matrix4.translationValues(40.0, 5.0, 0.0),
         decoration: BoxDecoration(
@@ -79,12 +87,12 @@ class GetHomePageEventContainer extends StatelessWidget {
           children: [
             Container(
               height: 108.0,
-              width: width,
+              width: widget.width,
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 image: DecorationImage(
                   fit: BoxFit.fitWidth,
-                  image: getImageHeader(content.contentImage),
+                  image: getImageHeader(widget.content.contentImage),
                   colorFilter: ColorFilter.mode(
                       Colors.black.withOpacity(0.5), BlendMode.darken),
                 ),
@@ -94,10 +102,11 @@ class GetHomePageEventContainer extends StatelessWidget {
               ),
               child:
                   Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                getViewWidget(content.totalViews),
-                getPeriodDateWidget(content.dateStart, content.dateEnd),
+                getViewWidget(widget.content.totalViews),
+                getPeriodDateWidget(
+                    widget.content.dateStart, widget.content.dateEnd),
                 const Spacer(),
-                getUploadDateWidget(DateTime.parse(content.createdAt))
+                getUploadDateWidget(DateTime.parse(widget.content.createdAt))
               ]),
             ),
             Container(
@@ -109,36 +118,39 @@ class GetHomePageEventContainer extends StatelessWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        getProfileImage(content.acUsername, content.ucUsername,
-                            content.acImage, content.ucImage),
+                        getProfileImage(
+                            widget.content.acUsername,
+                            widget.content.ucUsername,
+                            widget.content.acImage,
+                            widget.content.ucImage),
                         SizedBox(
-                            width: width * 0.6,
+                            width: widget.width * 0.6,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Text(content.contentTitle,
+                                Text(widget.content.contentTitle,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                         color: blackbg,
                                         fontWeight: FontWeight.bold,
                                         fontSize: textMD - 1)),
-                                getUsername(
-                                    content.acUsername, content.ucUsername),
+                                getUsername(widget.content.acUsername,
+                                    widget.content.ucUsername),
                               ],
                             ))
                       ],
                     ),
-                    getDescHeaderWidget(content.contentDesc)
+                    getDescHeaderWidget(widget.content.contentDesc)
                   ]),
             ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               margin: const EdgeInsets.symmetric(vertical: 10),
               child: Wrap(runSpacing: -5, spacing: 5, children: [
-                getContentLoc(content.contentLoc),
-                getTotalTag(content.contentTag)
+                getContentLoc(widget.content.contentLoc),
+                getTotalTag(widget.content.contentTag)
               ]),
             ),
 
@@ -146,18 +158,33 @@ class GetHomePageEventContainer extends StatelessWidget {
             Container(
                 transform: Matrix4.translationValues(0.0, 5.0, 0.0),
                 padding: EdgeInsets.zero,
-                width: width,
+                width: widget.width,
                 height: 35,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              DetailPage(passSlug: content.slugName)),
-                    );
+                    widget.servc
+                        .postContentView(widget.content.slugName)
+                        .then((response) {
+                      setState(() => isLoading = false);
+                      var status = response[0]['message'];
+                      var body = response[0]['body'];
 
-                    passSlugContent = content.slugName;
+                      if (status == "success") {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DetailPage(
+                                  passSlug: widget.content.slugName)),
+                        );
+                      } else {
+                        showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) =>
+                                FailedDialog(text: body, type: "openevent"));
+                      }
+                    });
+
+                    passSlugContent = widget.content.slugName;
                   },
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(

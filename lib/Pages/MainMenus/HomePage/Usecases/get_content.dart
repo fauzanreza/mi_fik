@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Container/content.dart';
+import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Skeletons/content_1.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
+import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/query_contents.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
@@ -19,14 +21,17 @@ class GetContent extends StatefulWidget {
 }
 
 class _GetContent extends State<GetContent> with TickerProviderStateMixin {
-  ContentQueriesService apiService;
+  ContentQueriesService queryService;
+  ContentCommandsService commandService;
+
   //Initial variable
   final titleCtrl = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    apiService = ContentQueriesService();
+    queryService = ContentQueriesService();
+    commandService = ContentCommandsService();
   }
 
   // void updateSorting(String newValue) {
@@ -55,7 +60,7 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
-        future: apiService.getAllContentHeader(
+        future: queryService.getAllContentHeader(
             getTagFilterContent(selectedTagFilterContent),
             sortingHomepageContent,
             getWhereDateFilter(filterDateStart, filterDateEnd),
@@ -84,6 +89,7 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
     double fullWidth = MediaQuery.of(context).size.width;
 
     Widget getData(List<ContentHeaderModel> contents) {
+      bool isLoading;
       if (contents != null) {
         return Container(
             constraints: BoxConstraints(minHeight: fullHeight * 0.8),
@@ -104,17 +110,35 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
                         // Open content w/ full container
                         GestureDetector(
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        DetailPage(passSlug: content.slugName)),
-                              );
+                              commandService
+                                  .postContentView(content.slugName)
+                                  .then((response) {
+                                setState(() => isLoading = false);
+                                var status = response[0]['message'];
+                                var body = response[0]['body'];
+
+                                if (status == "success") {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => DetailPage(
+                                            passSlug: content.slugName)),
+                                  );
+                                } else {
+                                  showDialog<String>(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          FailedDialog(
+                                              text: body, type: "openevent"));
+                                }
+                              });
 
                               passSlugContent = content.slugName;
                             },
                             child: GetHomePageEventContainer(
-                                width: fullWidth, content: content))
+                                width: fullWidth,
+                                content: content,
+                                servc: commandService))
                       ],
                     ),
                   ));

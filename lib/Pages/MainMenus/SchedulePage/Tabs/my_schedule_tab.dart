@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Container/content.dart';
+import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Skeletons/content_2.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
+import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/query_contents.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
@@ -19,13 +21,16 @@ class MySchedulePage extends StatefulWidget {
 }
 
 class _MySchedulePage extends State<MySchedulePage> {
-  ContentQueriesService apiService;
+  ContentQueriesService queryService;
+  ContentCommandsService commandService;
+
   String hourChipBefore;
 
   @override
   void initState() {
     super.initState();
-    apiService = ContentQueriesService();
+    queryService = ContentQueriesService();
+    commandService = ContentCommandsService();
   }
 
   @override
@@ -33,7 +38,7 @@ class _MySchedulePage extends State<MySchedulePage> {
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
-        future: apiService.getSchedule(),
+        future: queryService.getSchedule(),
         builder: (BuildContext context,
             AsyncSnapshot<List<ScheduleModel>> snapshot) {
           if (snapshot.hasError) {
@@ -55,6 +60,7 @@ class _MySchedulePage extends State<MySchedulePage> {
   Widget _buildListView(List<ScheduleModel> contents) {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
+    bool isLoading;
 
     //Get total content in an archieve.
     getTotalArchieve(event, task) {
@@ -104,12 +110,28 @@ class _MySchedulePage extends State<MySchedulePage> {
                                       });
                                     });
                               } else {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => DetailPage(
-                                          passSlug: content.slugName)),
-                                );
+                                commandService
+                                    .postContentView(content.slugName)
+                                    .then((response) {
+                                  setState(() => isLoading = false);
+                                  var status = response[0]['message'];
+                                  var body = response[0]['body'];
+
+                                  if (status == "success") {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => DetailPage(
+                                              passSlug: content.slugName)),
+                                    );
+                                  } else {
+                                    showDialog<String>(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            FailedDialog(
+                                                text: body, type: "openevent"));
+                                  }
+                                });
 
                                 passSlugContent = content.slugName;
                               }
