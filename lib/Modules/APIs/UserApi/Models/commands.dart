@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-// Usecase get my profile
+// Usecase update profile
 class EditUserProfileModel {
   String password;
   String firstName;
@@ -35,6 +35,22 @@ class AddNewReqModel {
 }
 
 String addNewReqModelToJson(AddNewReqModel data) {
+  final jsonData = data.toJson();
+  return json.encode(jsonData);
+}
+
+// Usecase update profile image
+class EditUserImageModel {
+  String imageUrl; // Nullable
+
+  EditUserImageModel({this.imageUrl});
+
+  Map<String, dynamic> toJson() {
+    return {"image_url": imageUrl};
+  }
+}
+
+String editUserProfileImageModelToJson(EditUserImageModel data) {
   final jsonData = data.toJson();
   return json.encode(jsonData);
 }

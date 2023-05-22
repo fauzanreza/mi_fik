@@ -87,15 +87,13 @@ class _GetEditProfileState extends State<GetEditProfile> {
                     left: paddingSM, bottom: paddingSM, right: paddingSM),
                 initiallyExpanded: false,
                 trailing: Container(
+                  padding: EdgeInsets.all(paddingXSM * 1),
                   decoration: BoxDecoration(
-                      color: infoColor,
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(100))),
-                  width: 48.0,
-                  height: 48.0,
-                  child: IconButton(
-                    icon: Icon(Icons.edit, color: whitebg),
+                    color: infoColor,
+                    borderRadius: const BorderRadius.all(Radius.circular(20)),
+                    border: Border.all(width: 3, color: whitebg),
                   ),
+                  child: Icon(Icons.edit, color: whitebg),
                 ),
                 iconColor: null,
                 textColor: whitebg,

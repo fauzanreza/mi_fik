@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/SubMenus/ProfilePage/Usecases/edit_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ShowProfile extends StatelessWidget {
@@ -34,7 +35,12 @@ class ShowProfile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    getProfileImageSideBar(fullWidth, 0.3, image),
+                    Stack(alignment: Alignment.center, children: [
+                      Container(
+                          margin: const EdgeInsets.all(20),
+                          child: getProfileImageSideBar(fullWidth, 0.3, image)),
+                      const EditImage(),
+                    ]),
                     Text(username,
                         style: TextStyle(
                             color: whitebg,
