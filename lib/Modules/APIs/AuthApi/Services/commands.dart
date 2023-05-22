@@ -30,6 +30,7 @@ class AuthCommandsService {
 
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('token_key', responseData['token']);
+        await prefs.setString('id_key', responseData['result']['id']);
         await prefs.setString(
             'username_key', responseData['result']['username']);
         await prefs.setString(

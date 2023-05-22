@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -251,4 +253,14 @@ Widget getHourText(String date, var margin, var align) {
       alignment: align,
       child: Text(getDBDateFormat("time", DateTime.parse(date)),
           style: TextStyle(fontSize: textSM)));
+}
+
+String getRandomString(int length) {
+  var chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  Random rnd = Random();
+
+  String.fromCharCodes(Iterable.generate(
+      length, (_) => chars.codeUnitAt(rnd.nextInt(chars.length))));
+
+  return chars;
 }
