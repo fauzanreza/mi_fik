@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:mi_fik/Modules/Variables/style.dart';
 
 Future<String> getFind(check) async {
   if (check == null || check.trim() == "") {
@@ -216,4 +218,27 @@ String getLocationName(var loc) {
   } else {
     return " ${loc[1]['detail']}";
   }
+}
+
+Widget getImageProfileContent(adminUname, userUname, adminImg, userImg) {
+  var url;
+  if (adminUname != null) {
+    if (adminImg != null) {
+      url = Image.network(adminImg.toString());
+    } else {
+      url = Image.asset("assets/icon/default_lecturer.png");
+    }
+  } else {
+    if (userImg != null) {
+      url = Image.network(adminImg.toString());
+    } else {
+      url = Image.asset("assets/icon/default_lecturer.png");
+    }
+  }
+  return Container(
+    margin: const EdgeInsets.symmetric(horizontal: 10.0),
+    width: iconLG,
+    child: ClipRRect(
+        borderRadius: BorderRadius.circular(25), child: url), //For now.
+  );
 }

@@ -78,6 +78,9 @@ class ContentDetailModel {
   String adminUsernameUpdated;
   String userUsernameUpdated;
 
+  String adminImageCreated;
+  String userImageCreated;
+
   String contentDesc;
   String contentImage;
   var contentAttach;
@@ -100,6 +103,8 @@ class ContentDetailModel {
       this.userUsernameCreated,
       this.adminUsernameUpdated,
       this.userUsernameUpdated,
+      this.adminImageCreated,
+      this.userImageCreated,
       this.contentImage,
       this.contentAttach,
       this.dateStart,
@@ -122,6 +127,8 @@ class ContentDetailModel {
       userUsernameCreated: map["user_username_created"],
       adminUsernameUpdated: map["admin_username_updated"],
       userUsernameUpdated: map["user_username_updated"],
+      adminImageCreated: map["admin_image_created"],
+      userImageCreated: map["user_image_created"],
       dateStart: map["content_date_start"],
       dateEnd: map["content_date_end"],
       contentTag: map["content_tag"],

@@ -28,15 +28,15 @@ class AuthQueriesService {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.clear();
       return [
-        {"message": "success", "body": respondeDecode["message"], "token": null}
+        {"message": "success", "body": respondeDecode["message"], "code": 200}
       ];
     } else if (response.statusCode == 401) {
       return [
-        {"message": "failed", "body": respondeDecode["message"], "token": null}
+        {"message": "failed", "body": respondeDecode["message"], "code": 401}
       ];
     } else {
       return [
-        {"message": "failed", "body": "Unknown error", "token": null}
+        {"message": "failed", "body": "Unknown error"}
       ];
     }
   }

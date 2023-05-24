@@ -43,7 +43,7 @@ class _AttachButton extends State<AttachButton> {
                   child: Icon(Icons.link, size: iconMD, color: primaryColor),
                 ),
                 TextSpan(
-                    text: getButtonText(attach),
+                    text: " ${getButtonText(attach)}",
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
                         launchUrl(Uri.parse(attach['attach_url'].toString()));
@@ -51,7 +51,7 @@ class _AttachButton extends State<AttachButton> {
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
                         color: blackbg,
-                        fontSize: textSM)),
+                        fontSize: textSM + 2)),
               ],
             ),
           );

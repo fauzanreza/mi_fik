@@ -220,15 +220,12 @@ Widget getContentHour(dateStart, dateEnd) {
         children: [
           //Content date start & end
           WidgetSpan(
-            child: Icon(Icons.access_time, size: 22, color: primaryColor),
+            child: Icon(Icons.access_time, size: 20, color: blackbg),
           ),
           TextSpan(
               text:
                   " ${DateFormat("hh:mm a").format(DateTime.parse(dateStart))} - ${DateFormat("hh:mm a").format(DateTime.parse(dateEnd))} WIB",
-              style: TextStyle(
-                  color: primaryColor,
-                  fontSize: textMD,
-                  fontWeight: FontWeight.w500)),
+              style: TextStyle(color: blackbg, fontSize: textMD)),
         ],
       ),
     );

@@ -61,8 +61,9 @@ class _SignOutDialog extends State<SignOutDialog> {
               apiService.getSignOut().then((response) {
                 setState(() => isLoading = false);
                 var body = response[0]['body'];
+                var code = response[0]['code'];
 
-                if (body == "Logout success") {
+                if (body == "Logout success" && code == 200) {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const LoginPage()),
@@ -71,6 +72,15 @@ class _SignOutDialog extends State<SignOutDialog> {
                       context: context,
                       builder: (BuildContext context) =>
                           SuccessDialog(text: body));
+                } else if (code == 401) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
+                  );
+                  showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) =>
+                          SuccessDialog(text: "Sign out success"));
                 } else {
                   showDialog<String>(
                       context: context,
