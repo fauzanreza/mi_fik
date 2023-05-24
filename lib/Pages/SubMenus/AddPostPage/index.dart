@@ -69,24 +69,7 @@ class _AddPost extends State<AddPost> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           Stack(children: [
-            Stack(
-              children: [
-                GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    height: fullHeight * 0.25,
-                    transform: Matrix4.translationValues(0.0, 15, 0.0),
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage("assets/icon/default_content.jpg"),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                ),
-                const SetImageAttachment()
-              ],
-            ),
+            const SetImageAttachment(),
             Container(
               transform: Matrix4.translationValues(
                   fullWidth * 0.03, fullHeight * 0.05, 0.0),
@@ -117,6 +100,7 @@ class _AddPost extends State<AddPost> {
                       contentTitleCtrl.text.isNotEmpty ||
                       contentDescCtrl != null ||
                       dateStartCtrl != null ||
+                      contentAttImage != null ||
                       dateEndCtrl != null) {
                     return showDialog<String>(
                         context: context,
@@ -155,6 +139,7 @@ class _AddPost extends State<AddPost> {
                                                   selectedTag.clear();
                                                   locDetailCtrl.clear();
                                                   locCoordinateCtrl = null;
+                                                  contentAttImage = null;
                                                   Navigator.pop(context);
                                                   Navigator.pop(context);
                                                 },
