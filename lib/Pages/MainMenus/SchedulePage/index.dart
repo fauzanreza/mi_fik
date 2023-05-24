@@ -28,10 +28,21 @@ class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   TabController tabController;
 
+  getStartIndex(String slug) {
+    if (slug == null) {
+      return 0;
+    } else {
+      return 1;
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    tabController = TabController(length: 2, vsync: this);
+    tabController = TabController(
+        length: 2,
+        vsync: this,
+        initialIndex: getStartIndex(selectedArchiveSlug));
   }
 
   void navigateDay(int newValue) {

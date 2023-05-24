@@ -47,7 +47,7 @@ class BottomBarState extends State<BottomBar> {
             backgroundColor: whitebg,
             selectedLabelStyle: const TextStyle(fontSize: 14),
             selectedItemColor: primaryColor,
-            unselectedItemColor: primaryColor,
+            unselectedItemColor: greybg,
             onTap: (index) {
               setState(() {
                 selectedIndex = index;

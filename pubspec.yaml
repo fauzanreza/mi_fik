@@ -71,6 +71,8 @@ dependencies:
   firebase_crashlytics: ^2.9.0
   full_screen_menu: ^1.0.0
   image_picker: ^0.8.5+3
+  geocoding: ^2.1.0
+  uuid: ^3.0.7
 
 dev_dependencies:
   flutter_test:

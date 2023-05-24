@@ -65,155 +65,147 @@ class _PostArchiveRelation extends State<PostArchiveRelation> {
       }
     }
 
-    return //Full save button.
-        SizedBox(
-            width: fullWidth,
-            height: btnHeightMD,
-            child: ElevatedButton(
-              onPressed: () => showDialog<String>(
-                  context: context,
-                  barrierColor: primaryColor.withOpacity(0.5),
-                  builder: (BuildContext context) => AlertDialog(
-                      contentPadding: EdgeInsets.zero,
-                      elevation: 0, //Remove shadow.
-                      backgroundColor: Colors.transparent,
-                      content: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Container(
-                                height: fullWidth * 1,
-                                width: fullWidth,
-                                padding: EdgeInsets.all(paddingMD),
-                                decoration: BoxDecoration(
-                                    color: whitebg,
-                                    borderRadius: BorderRadius.all(roundedMd)),
-                                child: ListView.builder(
-                                    padding: EdgeInsets.zero,
-                                    itemCount: archieves.length,
-                                    itemBuilder: (context, index) {
-                                      return Container(
-                                        width: fullWidth,
-                                        height:
-                                            btnHeightMD, //Same height as button.
-                                        margin: EdgeInsets.symmetric(
-                                            vertical: marginHZ),
-                                        padding: EdgeInsets.all(marginMT),
-                                        decoration: BoxDecoration(
-                                          color: primaryColor,
-                                          borderRadius:
-                                              BorderRadius.circular(roundedMd2),
-                                        ),
-                                        child: Row(children: [
-                                          SizedBox(
-                                            width: fullWidth * 0.35,
-                                            child: Text(
-                                                archieves[index]
-                                                    .archiveName
-                                                    .toString(),
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: TextStyle(
-                                                    color: whitebg,
-                                                    fontSize: textSM,
-                                                    fontWeight:
-                                                        FontWeight.w500)),
-                                          ),
-                                          const Spacer(),
-                                          //This text is to small and will affect the name of archieve.
-                                          // Text(
-                                          //     getTotalArchieve(
-                                          //         archieves[index].event,
-                                          //         archieves[index].task),
-                                          //     style: TextStyle(
-                                          //       color: whitebg,
-                                          //       fontSize: textXXSM,
-                                          //     )),
-                                        ]),
-                                      );
-                                    })),
-                            const SizedBox(height: 20),
-                            Container(
-                                width: fullWidth,
-                                height: btnHeightMD,
-                                margin: EdgeInsets.only(
-                                    left: marginMT,
-                                    right: marginMT,
-                                    bottom: btnHeightMD),
-                                child: ElevatedButton(
-                                  onPressed: () async {
-                                    //Insert multiple archive relation.
-                                    for (int i = 0;
-                                        i < archieveVal.length;
-                                        i++) {
-                                      // postArchieveRel(archieveVal[i]);
-                                    }
-                                    archieveVal.clear();
-                                    Navigator.pop(context);
-                                    showDialog<String>(
-                                        barrierDismissible: true,
-                                        barrierColor:
-                                            primaryColor.withOpacity(0.5),
-                                        context: context,
-                                        builder: (BuildContext context) =>
-                                            AlertDialog(
-                                                contentPadding: EdgeInsets.zero,
-                                                elevation: 0, //Remove shadow.
-                                                backgroundColor:
-                                                    Colors.transparent,
-                                                content: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Container(
-                                                        width: fullWidth * 0.45,
-                                                        padding: EdgeInsets.all(
-                                                            fullWidth * 0.1),
-                                                        margin: EdgeInsets.only(
-                                                            bottom: marginMT),
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: whitebg,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(10),
-                                                        ),
-                                                        child: ClipRRect(
-                                                          child: Image.asset(
-                                                              'assets/icon/checklist.png'),
-                                                        ),
-                                                      ),
-                                                      Text("Post Saved",
-                                                          style: TextStyle(
-                                                              color: whitebg,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontSize: textLG))
-                                                    ])));
-                                  },
-                                  style: ButtonStyle(
-                                    shape: MaterialStateProperty.all<
-                                            RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
+    return Container(
+        width: fullWidth * 0.9,
+        height: btnHeightMD,
+        margin:
+            EdgeInsets.symmetric(horizontal: paddingSM, vertical: paddingXSM),
+        child: ElevatedButton(
+          onPressed: () => showDialog<String>(
+              context: context,
+              barrierColor: primaryColor.withOpacity(0.5),
+              builder: (BuildContext context) => AlertDialog(
+                  contentPadding: EdgeInsets.zero,
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
+                  content: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Container(
+                            height: fullWidth * 1,
+                            width: fullWidth,
+                            padding: EdgeInsets.all(paddingMD),
+                            decoration: BoxDecoration(
+                                color: whitebg,
+                                borderRadius: BorderRadius.all(roundedMd)),
+                            child: ListView.builder(
+                                padding: EdgeInsets.zero,
+                                itemCount: archieves.length,
+                                itemBuilder: (context, index) {
+                                  return Container(
+                                    width: fullWidth,
+                                    height:
+                                        btnHeightMD, //Same height as button.
+                                    margin: EdgeInsets.symmetric(
+                                        vertical: marginHZ),
+                                    padding: EdgeInsets.all(marginMT),
+                                    decoration: BoxDecoration(
+                                      color: primaryColor,
                                       borderRadius:
-                                          BorderRadius.circular(roundedLG2),
-                                    )),
-                                    backgroundColor:
-                                        MaterialStatePropertyAll<Color>(
-                                            primaryColor),
-                                  ),
-                                  child: Text('Save',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: textMD)),
-                                ))
-                          ]))),
-              style: ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll<Color>(primaryColor),
-              ),
-              child: const Text('Save Event'),
-            ));
+                                          BorderRadius.circular(roundedMd2),
+                                    ),
+                                    child: Row(children: [
+                                      SizedBox(
+                                        width: fullWidth * 0.35,
+                                        child: Text(
+                                            archieves[index]
+                                                .archiveName
+                                                .toString(),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                color: whitebg,
+                                                fontSize: textSM,
+                                                fontWeight: FontWeight.w500)),
+                                      ),
+                                      const Spacer(),
+                                      //This text is to small and will affect the name of archieve.
+                                      // Text(
+                                      //     getTotalArchieve(
+                                      //         archieves[index].event,
+                                      //         archieves[index].task),
+                                      //     style: TextStyle(
+                                      //       color: whitebg,
+                                      //       fontSize: textXXSM,
+                                      //     )),
+                                    ]),
+                                  );
+                                })),
+                        const SizedBox(height: 20),
+                        Container(
+                            width: fullWidth,
+                            height: btnHeightMD,
+                            margin: EdgeInsets.only(
+                                left: marginMT,
+                                right: marginMT,
+                                bottom: btnHeightMD),
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                //Insert multiple archive relation.
+                                for (int i = 0; i < archieveVal.length; i++) {
+                                  // postArchieveRel(archieveVal[i]);
+                                }
+                                archieveVal.clear();
+                                Navigator.pop(context);
+                                showDialog<String>(
+                                    barrierDismissible: true,
+                                    barrierColor: primaryColor.withOpacity(0.5),
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        AlertDialog(
+                                            contentPadding: EdgeInsets.zero,
+                                            elevation: 0, //Remove shadow.
+                                            backgroundColor: Colors.transparent,
+                                            content: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                    width: fullWidth * 0.45,
+                                                    padding: EdgeInsets.all(
+                                                        fullWidth * 0.1),
+                                                    margin: EdgeInsets.only(
+                                                        bottom: marginMT),
+                                                    decoration: BoxDecoration(
+                                                      color: whitebg,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                    ),
+                                                    child: ClipRRect(
+                                                      child: Image.asset(
+                                                          'assets/icon/checklist.png'),
+                                                    ),
+                                                  ),
+                                                  Text("Post Saved",
+                                                      style: TextStyle(
+                                                          color: whitebg,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: textLG))
+                                                ])));
+                              },
+                              style: ButtonStyle(
+                                shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.circular(roundedLG2),
+                                )),
+                                backgroundColor:
+                                    MaterialStatePropertyAll<Color>(successbg),
+                              ),
+                              child: Text('Save',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: textMD)),
+                            ))
+                      ]))),
+          style: ButtonStyle(
+            backgroundColor: MaterialStatePropertyAll<Color>(primaryColor),
+          ),
+          child: const Text('Save Event'),
+        ));
 
     //Normal save button.
     // Container(

@@ -342,7 +342,7 @@ class _SetControl extends State<SetControl> {
                 );
               },
               child: Icon(
-                Icons.settings,
+                Icons.filter_alt,
                 color: whitebg,
               ),
             );

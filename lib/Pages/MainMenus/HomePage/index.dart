@@ -6,6 +6,7 @@ import 'package:mi_fik/Components/Bars/right_bar.dart';
 import 'package:mi_fik/Components/Button/navigation.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
+import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/MainMenus/HomePage/Usecases/get_content.dart';
@@ -27,9 +28,10 @@ class HomePage extends StatefulWidget {
 class _HomePage extends State<HomePage> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  Future<Role> getToken() async {
+  Future<Role> getTokenNLoc() async {
     final prefs = await SharedPreferences.getInstance();
     final role = prefs.getString('role_general_key');
+    await checkGps(getCurrentLocationDetails());
     return Role(role: role);
   }
 
@@ -39,7 +41,7 @@ class _HomePage extends State<HomePage> {
     //double fullWidth = MediaQuery.of(context).size.width;
 
     return FutureBuilder<Role>(
-        future: getToken(),
+        future: getTokenNLoc(),
         builder: (context, snapshot) {
           getRoleFeature(String role) {
             if (role != "Student") {
@@ -99,7 +101,7 @@ class _HomePage extends State<HomePage> {
                                     getSubTitleMedium(
                                         getToday("date"), whitebg),
                                     const Spacer(),
-                                    LocationTitle()
+                                    GetLocation()
                                   ],
                                 )
                               ]),

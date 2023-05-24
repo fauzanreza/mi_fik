@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:mi_fik/Modules/Helpers/converter.dart';
+import 'package:mi_fik/Modules/Helpers/generator.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
-class LocationTitle extends StatelessWidget {
+class GetLocation extends StatefulWidget {
+  const GetLocation({Key key}) : super(key: key);
+
+  @override
+  _GetLocation createState() => _GetLocation();
+}
+
+class _GetLocation extends State<GetLocation> {
   @override
   Widget build(BuildContext context) {
     return RichText(
@@ -10,13 +20,13 @@ class LocationTitle extends StatelessWidget {
           WidgetSpan(
             child: Icon(
               Icons.location_on_outlined,
-              size: 20,
+              size: iconMD,
               color: whitebg,
             ),
           ),
           TextSpan(
-            text: " :",
-            style: TextStyle(color: whitebg),
+            text: " $locName",
+            style: TextStyle(color: whitebg, fontSize: textMD),
           ),
         ],
       ),

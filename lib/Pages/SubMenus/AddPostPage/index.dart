@@ -17,6 +17,8 @@ import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:mi_fik/Pages/SubMenus/AddPostPage/Usecases/set_attachment.dart';
+import 'package:mi_fik/Pages/SubMenus/AddPostPage/Usecases/set_image.dart';
 import 'package:mi_fik/Pages/SubMenus/AddPostPage/Usecases/set_location.dart';
 import 'package:mi_fik/Pages/SubMenus/AddPostPage/Usecases/set_tag.dart';
 
@@ -68,19 +70,7 @@ class _AddPost extends State<AddPost> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           Stack(children: [
-            GestureDetector(
-              onTap: () {},
-              child: Container(
-                height: fullHeight * 0.25,
-                transform: Matrix4.translationValues(0.0, 15, 0.0),
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("assets/icon/default_content.jpg"),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-            ),
+            const SetImageContent(),
             Container(
               transform: Matrix4.translationValues(
                   fullWidth * 0.03, fullHeight * 0.05, 0.0),
@@ -111,6 +101,7 @@ class _AddPost extends State<AddPost> {
                       contentTitleCtrl.text.isNotEmpty ||
                       contentDescCtrl != null ||
                       dateStartCtrl != null ||
+                      contentAttImage != null ||
                       dateEndCtrl != null) {
                     return showDialog<String>(
                         context: context,
@@ -149,6 +140,7 @@ class _AddPost extends State<AddPost> {
                                                   selectedTag.clear();
                                                   locDetailCtrl.clear();
                                                   locCoordinateCtrl = null;
+                                                  contentAttImage = null;
                                                   Navigator.pop(context);
                                                   Navigator.pop(context);
                                                 },
@@ -249,44 +241,7 @@ class _AddPost extends State<AddPost> {
                                 }, true, "reminder_")),
                           ]),
                       // Info or help
-                      Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                                margin: const EdgeInsets.only(left: 10),
-                                child: Text('ex : URL, Video, Image, Doc',
-                                    style: TextStyle(fontSize: textSM))),
-                            Container(
-                              alignment: Alignment.centerLeft,
-                              padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
-                              child: SizedBox(
-                                width: 180,
-                                height: 40,
-                                child: ElevatedButton.icon(
-                                  style: ElevatedButton.styleFrom(
-                                    foregroundColor: primaryColor,
-                                    backgroundColor: whitebg,
-                                    side: BorderSide(
-                                      width: 1.0,
-                                      color: primaryColor,
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0)),
-                                  ),
-                                  onPressed: () async {
-                                    FilePickerResult result = await FilePicker
-                                        .platform
-                                        .pickFiles(allowMultiple: true);
-                                  },
-                                  icon: const Icon(Icons
-                                      .attach_file), //icon data for elevated button
-                                  label: const Text("Insert Attachment"),
-                                  //label text
-                                ),
-                              ),
-                            ),
-                          ])
+                      SetFileAttachment()
                     ],
                   )),
               Container(

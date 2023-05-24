@@ -3,10 +3,11 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/query_contents.dart';
+import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Helpers/widget.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/SubMenus/DetailPage/Attach.dart';
-import 'package:mi_fik/Pages/SubMenus/DetailPage/Location.dart';
+import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/get_attachment.dart';
+import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/get_location.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/post_archive_rel.dart';
 
 class DetailPage extends StatefulWidget {
@@ -92,15 +93,11 @@ class _DetailPage extends State<DetailPage> {
           text: TextSpan(
             children: [
               WidgetSpan(
-                child:
-                    Icon(Icons.calendar_month, size: 22, color: primaryColor),
+                child: Icon(Icons.calendar_month, size: 20, color: blackbg),
               ),
               TextSpan(
-                  text: result,
-                  style: TextStyle(
-                      color: primaryColor,
-                      fontSize: textMD,
-                      fontWeight: FontWeight.w500))
+                  text: " $result",
+                  style: TextStyle(color: blackbg, fontSize: textMD))
             ],
           ),
         );
@@ -128,140 +125,123 @@ class _DetailPage extends State<DetailPage> {
     }
 
     return Scaffold(
-      body: Stack(
-        //crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          GestureDetector(
-            onTap: () => showDialog<String>(
-              context: context,
-              barrierColor: primaryColor.withOpacity(0.5),
-              builder: (BuildContext context) => AlertDialog(
-                  contentPadding: EdgeInsets.zero,
-                  elevation: 0, //Remove shadow.
-                  backgroundColor: Colors.transparent,
-                  content: Container(
-                    height: fullHeight * 0.45,
-                    width: fullWidth,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: getImageHeader(contents[0].contentImage),
-                        fit: BoxFit.cover,
-                      ),
-                      borderRadius: BorderRadius.circular(roundedLG2),
+      body: Stack(alignment: Alignment.center, children: [
+        ListView(
+            padding: const EdgeInsets.only(bottom: 75),
+            //crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              GestureDetector(
+                onTap: () => showDialog<String>(
+                  context: context,
+                  barrierColor: primaryColor.withOpacity(0.5),
+                  builder: (BuildContext context) => AlertDialog(
+                      contentPadding: EdgeInsets.zero,
+                      elevation: 0,
+                      backgroundColor: Colors.transparent,
+                      content: Container(
+                        height: fullHeight * 0.45,
+                        width: fullWidth,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: getImageHeader(contents[0].contentImage),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.circular(roundedLG2),
+                        ),
+                      )),
+                ),
+                child: Container(
+                  height: fullHeight * 0.3,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: getImageHeader(contents[0].contentImage),
+                      fit: BoxFit.cover,
                     ),
-                  )),
-            ),
-            child: Container(
-              height: fullHeight * 0.3,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: getImageHeader(contents[0].contentImage),
-                  fit: BoxFit.cover,
+                  ),
                 ),
               ),
-            ),
-          ),
-          Container(
-            transform: Matrix4.translationValues(
-                fullWidth * 0.03, fullHeight * 0.03, 0.0),
-            decoration: BoxDecoration(
-              color: primaryColor,
-              borderRadius: const BorderRadius.all(Radius.circular(100)),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color.fromARGB(255, 67, 67, 67).withOpacity(0.3),
-                  blurRadius: 10.0,
-                  spreadRadius: 0.0,
-                  offset: const Offset(
-                    5.0,
-                    5.0,
-                  ),
-                )
-              ],
-            ),
+              Container(
+                  transform: Matrix4.translationValues(0.0, -20.0, 0.0),
+                  padding: EdgeInsets.symmetric(vertical: paddingMD),
+                  decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
+                      )),
+                  child: Column(children: [
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.only(bottom: 5),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          getImageProfileContent(
+                              contents[0].adminUsernameCreated,
+                              contents[0].userUsernameCreated,
+                              contents[0].adminImageCreated,
+                              contents[0].userImageCreated),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(contents[0].contentTitle,
+                                  style: TextStyle(
+                                      fontSize: textMD,
+                                      fontWeight: FontWeight.bold)),
+                              //Check this...
+                              //getSubtitle(contents[0].contentSubtitle),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Container(
+                        alignment: Alignment.centerLeft,
+                        margin: EdgeInsets.symmetric(horizontal: paddingSM),
+                        child: HtmlWidget(contents[0].contentDesc)),
+                    const SizedBox(height: 20),
+                    getAttach(contents[0].contentAttach),
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      margin: EdgeInsets.symmetric(horizontal: paddingSM),
+                      child:
+                          getTag(contents[0].contentTag, fullHeight, contents),
+                    ),
+                    const SizedBox(height: 20),
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      margin: EdgeInsets.symmetric(horizontal: paddingSM),
+                      child: Wrap(runSpacing: 5, spacing: 10, children: [
+                        getLocation(
+                            contents[0].contentLoc, contents[0].slugName),
+                        getContentDate(
+                            contents[0].dateStart, contents[0].dateEnd),
+                        getContentHour(
+                            contents[0].dateStart, contents[0].dateEnd)
+                      ]),
+                    ),
+                  ])),
+            ]),
+        Positioned(
+          bottom: 10,
+          child: PostArchiveRelation(passSlug: contents[0].slugName),
+        ),
+      ]),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+      floatingActionButton: Container(
+          margin: EdgeInsets.only(top: paddingMD),
+          child: FloatingActionButton(
+            backgroundColor: primaryColor,
+            onPressed: () {},
             child: IconButton(
-              icon: Icon(Icons.arrow_back, size: iconMD),
+              icon: Icon(Icons.arrow_back, size: iconLG),
               color: whitebg,
               onPressed: () {
                 Navigator.pop(context);
               },
             ),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: fullHeight * 0.28),
-            height: fullHeight * 0.8,
-            width: fullWidth,
-            padding: EdgeInsets.only(top: paddingMD),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(roundedLG2),
-              color: whitebg,
-            ),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 20),
-                    padding: const EdgeInsets.only(bottom: 5),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                          width: iconLG,
-                          child: ClipRRect(
-                              borderRadius: BorderRadius.circular(25),
-                              child: Image.network(
-                                  "https://sci.telkomuniversity.ac.id/wp-content/uploads/2022/02/13.jpg")), //For now.
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(contents[0].contentTitle,
-                                style: TextStyle(
-                                    fontSize: textMD,
-                                    fontWeight: FontWeight.bold)),
-                            //Check this...
-                            //getSubtitle(contents[0].contentSubtitle),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                      child: ListView(padding: EdgeInsets.zero, children: [
-                    //Content Description.
-                    Container(
-                        margin: EdgeInsets.only(
-                            top: marginMT, left: marginMD, right: marginMD),
-                        child: HtmlWidget(contents[0].contentDesc)),
-                    //Attached file or link.
-                    getAttach(contents[0].contentAttach),
-                    //Tag holder.
-                    Container(
-                      margin: EdgeInsets.symmetric(
-                          vertical: marginMT, horizontal: marginMD),
-                      child:
-                          getTag(contents[0].contentTag, fullHeight, contents),
-                    ),
-                  ])),
-                  Container(
-                    margin: EdgeInsets.only(
-                        left: paddingXSM, right: paddingXSM, bottom: marginMD),
-                    child: Wrap(runSpacing: -5, spacing: 10, children: [
-                      getLocation(contents[0].contentLoc, contents[0].slugName),
-                      getContentDate(
-                          contents[0].dateStart, contents[0].dateEnd),
-                      getContentHour(contents[0].dateStart, contents[0].dateEnd)
-                    ]),
-                  ),
-
-                  //Save content to archieve.
-                  PostArchiveRelation(passSlug: contents[0].slugName)
-                ]),
-          )
-        ],
-      ),
+          )),
     );
   }
 }

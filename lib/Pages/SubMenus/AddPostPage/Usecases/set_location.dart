@@ -218,7 +218,10 @@ class _SetLocation extends State<SetLocation>
           }).then((_) => setState(() {})), //Check this again !!!!
       icon: Icon(Icons.location_on_outlined, size: 22, color: semiblackbg),
       label: Text(getButtonText(locCoordinateCtrl, locDetailCtrl.text),
-          style: TextStyle(fontSize: textMD, color: semiblackbg)),
+          style: TextStyle(
+              fontSize: textMD,
+              color: semiblackbg,
+              fontWeight: FontWeight.w400)),
     );
   }
 
