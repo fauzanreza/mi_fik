@@ -1,24 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:full_screen_menu/full_screen_menu.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Modules/Firebases/Storages/Content/add_image.dart';
 import 'package:mi_fik/Modules/Firebases/Storages/Content/remove_image.dart';
-import 'package:mi_fik/Modules/Firebases/Storages/User/add_image.dart';
 import 'package:mi_fik/Modules/Helpers/widget.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class SetImageAttachment extends StatefulWidget {
-  const SetImageAttachment({Key key}) : super(key: key);
+class SetImageContent extends StatefulWidget {
+  const SetImageContent({Key key}) : super(key: key);
 
   @override
-  State<SetImageAttachment> createState() => _SetImageAttachmentState();
+  State<SetImageContent> createState() => _SetImageContentState();
 }
 
-class _SetImageAttachmentState extends State<SetImageAttachment> {
+class _SetImageContentState extends State<SetImageContent> {
   PostImageContent fireServicePost;
   DeleteImageContent fireServiceDelete;
   XFile file;

@@ -8,6 +8,7 @@ String passSlugContent;
 
 // Others
 String locName;
+List listAttachment = [];
 
 // Selected
 var selectedArchiveName;
