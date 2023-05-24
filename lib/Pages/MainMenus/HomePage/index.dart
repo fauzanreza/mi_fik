@@ -27,9 +27,10 @@ class HomePage extends StatefulWidget {
 class _HomePage extends State<HomePage> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  Future<Role> getToken() async {
+  Future<Role> getTokenNLoc() async {
     final prefs = await SharedPreferences.getInstance();
     final role = prefs.getString('role_general_key');
+    await getCurrentLocationDetails();
     return Role(role: role);
   }
 
@@ -39,7 +40,7 @@ class _HomePage extends State<HomePage> {
     //double fullWidth = MediaQuery.of(context).size.width;
 
     return FutureBuilder<Role>(
-        future: getToken(),
+        future: getTokenNLoc(),
         builder: (context, snapshot) {
           getRoleFeature(String role) {
             if (role != "Student") {
@@ -55,7 +56,7 @@ class _HomePage extends State<HomePage> {
                     getSpeeDialChild("New Post", context, const AddPost(),
                         Icons.post_add_outlined),
                   ],
-                  child: Icon(Icons.add, size: iconLG));
+                  child: Icon(Icons.add, size: iconMD));
             } else {
               return SpeedDial(
                   activeIcon: Icons.close,
@@ -67,7 +68,7 @@ class _HomePage extends State<HomePage> {
                     getSpeeDialChild("New Task", context, PostTask(),
                         Icons.note_add_outlined),
                   ],
-                  child: Icon(Icons.add, size: iconLG));
+                  child: Icon(Icons.add, size: iconMD));
             }
           }
 
@@ -99,7 +100,7 @@ class _HomePage extends State<HomePage> {
                                     getSubTitleMedium(
                                         getToday("date"), whitebg),
                                     const Spacer(),
-                                    LocationTitle()
+                                    GetLocation()
                                   ],
                                 )
                               ]),

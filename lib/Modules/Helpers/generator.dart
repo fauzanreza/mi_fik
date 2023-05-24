@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Modules/Helpers/template.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 
 getToday(String type) {
   if (type == "date") {
@@ -263,4 +266,32 @@ String getRandomString(int length) {
       length, (_) => chars.codeUnitAt(rnd.nextInt(chars.length))));
 
   return chars;
+}
+
+Future<void> getCurrentLocationDetails() async {
+  try {
+    Position currentPosition = await Geolocator.getCurrentPosition();
+    double latitude = currentPosition.latitude;
+    double longitude = currentPosition.longitude;
+
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(latitude, longitude);
+    if (placemarks.isNotEmpty) {
+      Placemark placemark = placemarks.first;
+      String locationName = placemark.name ?? '';
+      // String thoroughfare = placemark.thoroughfare ?? '';
+      // String subLocality = placemark.subLocality ?? '';
+      // String locality = placemark.locality ?? '';
+      // String administrativeArea = placemark.administrativeArea ?? '';
+      // String country = placemark.country ?? '';
+
+      locName = locationName;
+      print(locName);
+    } else {
+      print('No placemarks found for the current location');
+      locName = 'Invalid Location';
+    }
+  } catch (e) {
+    return e;
+  }
 }
