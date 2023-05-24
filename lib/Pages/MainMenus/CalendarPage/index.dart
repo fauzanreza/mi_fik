@@ -31,12 +31,6 @@ class _CalendarPageState extends State<CalendarPage> {
         focusedDay = newFocusDay;
         slctSchedule = newSelectDay;
         selectedIndex = 2;
-
-        //For now. need to be fixed soon!!!
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const BottomBar()),
-        );
       },
     );
   }

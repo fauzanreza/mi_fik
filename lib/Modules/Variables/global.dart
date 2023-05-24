@@ -31,6 +31,7 @@ int selectedIndex = 0;
 String sortingHomepageContent = "Desc";
 String filteringTag = "all";
 String searchingContent;
+String contentAttImage;
 DateTime filterDateStart;
 DateTime filterDateEnd;
 var selectedTagFilterContent = [];

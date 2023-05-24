@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
+import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -26,9 +27,6 @@ class _LocationButton extends State<LocationButton>
   GoogleMapController googleMapController;
   Marker _origin;
   Marker _destination;
-  bool servicestatus = false;
-  bool haspermission = false;
-  LocationPermission permission;
   Position position;
   String my_long = "", my_lat = "";
   StreamSubscription<Position> positionStream;
@@ -36,39 +34,9 @@ class _LocationButton extends State<LocationButton>
 
   @override
   void initState() {
-    checkGps();
+    checkGps(getLocation());
     super.initState();
-  }
-
-  //Get my location.
-  checkGps() async {
-    servicestatus = await Geolocator.isLocationServiceEnabled();
-    if (servicestatus) {
-      permission = await Geolocator.checkPermission();
-
-      if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
-        if (permission == LocationPermission.denied) {
-          print('Location permissions are denied');
-        } else if (permission == LocationPermission.deniedForever) {
-          print("'Location permissions are permanently denied");
-        } else {
-          haspermission = true;
-        }
-      } else {
-        haspermission = true;
-      }
-
-      if (haspermission) {
-        setState(() {});
-
-        getLocation();
-      }
-    } else {
-      print("GPS Service is not enabled, turn on GPS location");
-    }
-
-    setState(() {});
+    googleMapController;
   }
 
   getLocation() async {
@@ -204,10 +172,10 @@ class _LocationButton extends State<LocationButton>
         ));
   }
 
-  //Check this!!!!
-  @override
-  void dispose() {
-    //_googleMapController.dispose();
-    super.dispose();
-  }
+  // //Check this!!!!
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   googleMapController.dispose();
+  // }
 }

@@ -81,7 +81,7 @@ class _GetNotification extends State<GetNotification>
             ),
             trailing: IconButton(
               icon: Icon(Icons.chevron_right_rounded,
-                  color: primaryColor, size: iconLG),
+                  color: primaryColor, size: iconXL),
               tooltip: 'See Detail',
               onPressed: () {},
             ),

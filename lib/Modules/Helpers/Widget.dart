@@ -224,7 +224,7 @@ Widget getContentHour(dateStart, dateEnd) {
           ),
           TextSpan(
               text:
-                  " ${DateFormat("hh:mm a").format(DateTime.parse(dateStart))} - ${DateFormat("hh:mm a").format(DateTime.parse(dateEnd))} WIB",
+                  " ${DateFormat("hh:mm a").format(DateTime.parse(dateStart))} - ${DateFormat("hh:mm a").format(DateTime.parse(dateEnd))}",
               style: TextStyle(color: blackbg, fontSize: textMD)),
         ],
       ),

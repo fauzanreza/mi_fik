@@ -17,6 +17,7 @@ import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:mi_fik/Pages/SubMenus/AddPostPage/Usecases/set_image.dart';
 import 'package:mi_fik/Pages/SubMenus/AddPostPage/Usecases/set_location.dart';
 import 'package:mi_fik/Pages/SubMenus/AddPostPage/Usecases/set_tag.dart';
 
@@ -68,18 +69,23 @@ class _AddPost extends State<AddPost> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           Stack(children: [
-            GestureDetector(
-              onTap: () {},
-              child: Container(
-                height: fullHeight * 0.25,
-                transform: Matrix4.translationValues(0.0, 15, 0.0),
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("assets/icon/default_content.jpg"),
-                    fit: BoxFit.cover,
+            Stack(
+              children: [
+                GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    height: fullHeight * 0.25,
+                    transform: Matrix4.translationValues(0.0, 15, 0.0),
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage("assets/icon/default_content.jpg"),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                const SetImageAttachment()
+              ],
             ),
             Container(
               transform: Matrix4.translationValues(

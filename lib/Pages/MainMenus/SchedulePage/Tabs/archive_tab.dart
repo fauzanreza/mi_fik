@@ -97,7 +97,7 @@ class _ArchivePage extends State<ArchivePage> {
                         margin: EdgeInsets.only(top: marginMT),
                         transform: Matrix4.translationValues(55.0, 5.0, 0.0),
                         decoration: BoxDecoration(
-                          color: primaryColor,
+                          color: whitebg,
                           borderRadius: BorderRadius.all(roundedMd),
                           boxShadow: [
                             BoxShadow(
@@ -119,7 +119,7 @@ class _ArchivePage extends State<ArchivePage> {
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
-                                    color: whitebg,
+                                    color: blackbg,
                                     fontSize: textSM,
                                     fontWeight: FontWeight.w500)),
                           ),
@@ -127,7 +127,7 @@ class _ArchivePage extends State<ArchivePage> {
                           //This text is to small and will affect the name of archive.
                           Text(getTotalArchive(0, 0),
                               style: TextStyle(
-                                color: whitebg,
+                                color: blackbg,
                                 fontSize: textXSM,
                               )),
                         ])))

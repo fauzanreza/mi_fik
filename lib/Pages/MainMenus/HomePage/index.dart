@@ -6,6 +6,7 @@ import 'package:mi_fik/Components/Bars/right_bar.dart';
 import 'package:mi_fik/Components/Button/navigation.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
+import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/MainMenus/HomePage/Usecases/get_content.dart';
@@ -30,7 +31,7 @@ class _HomePage extends State<HomePage> {
   Future<Role> getTokenNLoc() async {
     final prefs = await SharedPreferences.getInstance();
     final role = prefs.getString('role_general_key');
-    await getCurrentLocationDetails();
+    await checkGps(getCurrentLocationDetails());
     return Role(role: role);
   }
 
@@ -56,7 +57,7 @@ class _HomePage extends State<HomePage> {
                     getSpeeDialChild("New Post", context, const AddPost(),
                         Icons.post_add_outlined),
                   ],
-                  child: Icon(Icons.add, size: iconMD));
+                  child: Icon(Icons.add, size: iconLG));
             } else {
               return SpeedDial(
                   activeIcon: Icons.close,
@@ -68,7 +69,7 @@ class _HomePage extends State<HomePage> {
                     getSpeeDialChild("New Task", context, PostTask(),
                         Icons.note_add_outlined),
                   ],
-                  child: Icon(Icons.add, size: iconMD));
+                  child: Icon(Icons.add, size: iconLG));
             }
           }
 

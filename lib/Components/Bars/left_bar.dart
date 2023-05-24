@@ -88,8 +88,6 @@ class LeftBar extends StatelessWidget {
                                             const ProfilePage()),
                                   );
                                 }),
-                                getSideBarTile(fullWidth, Icons.folder_open,
-                                    "Archive", () {}),
                                 getSideBarTile(fullWidth, Icons.tag, "Role",
                                     () {
                                   selectedRole.clear();
@@ -99,8 +97,6 @@ class LeftBar extends StatelessWidget {
                                         builder: (context) => const RolePage()),
                                   );
                                 }),
-                                getSideBarTile(fullWidth, Icons.checklist,
-                                    "Schedule", () {}),
                                 getSideBarTile(fullWidth,
                                     Icons.question_answer_outlined, "FAQ", () {
                                   Navigator.push(

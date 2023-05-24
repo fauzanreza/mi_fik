@@ -193,8 +193,7 @@ class _PostArchiveRelation extends State<PostArchiveRelation> {
                                       BorderRadius.circular(roundedLG2),
                                 )),
                                 backgroundColor:
-                                    MaterialStatePropertyAll<Color>(
-                                        primaryColor),
+                                    MaterialStatePropertyAll<Color>(successbg),
                               ),
                               child: Text('Save',
                                   style: TextStyle(

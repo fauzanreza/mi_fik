@@ -235,7 +235,7 @@ class _DetailPage extends State<DetailPage> {
             backgroundColor: primaryColor,
             onPressed: () {},
             child: IconButton(
-              icon: Icon(Icons.arrow_back, size: iconMD),
+              icon: Icon(Icons.arrow_back, size: iconLG),
               color: whitebg,
               onPressed: () {
                 Navigator.pop(context);

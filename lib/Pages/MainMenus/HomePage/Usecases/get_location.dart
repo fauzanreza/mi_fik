@@ -20,13 +20,13 @@ class _GetLocation extends State<GetLocation> {
           WidgetSpan(
             child: Icon(
               Icons.location_on_outlined,
-              size: 20,
+              size: iconMD,
               color: whitebg,
             ),
           ),
           TextSpan(
             text: " $locName",
-            style: TextStyle(color: whitebg, fontSize: textMD + 2),
+            style: TextStyle(color: whitebg, fontSize: textMD),
           ),
         ],
       ),
