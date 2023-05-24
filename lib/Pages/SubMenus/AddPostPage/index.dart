@@ -17,6 +17,7 @@ import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:mi_fik/Pages/SubMenus/AddPostPage/Usecases/get_attachment.dart';
 import 'package:mi_fik/Pages/SubMenus/AddPostPage/Usecases/set_attachment.dart';
 import 'package:mi_fik/Pages/SubMenus/AddPostPage/Usecases/set_image.dart';
 import 'package:mi_fik/Pages/SubMenus/AddPostPage/Usecases/set_location.dart';
@@ -241,9 +242,10 @@ class _AddPost extends State<AddPost> {
                                 }, true, "reminder_")),
                           ]),
                       // Info or help
-                      SetFileAttachment()
+                      const SetFileAttachment(),
                     ],
                   )),
+              GetFileAttachment(),
               Container(
                   padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
                   child: Row(children: [

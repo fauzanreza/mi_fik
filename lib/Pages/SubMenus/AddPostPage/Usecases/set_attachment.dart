@@ -4,6 +4,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mi_fik/Modules/Firebases/Storages/Content/add_image.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/SubMenus/AddPostPage/Usecases/get_attachment.dart';
+import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
 class SetFileAttachment extends StatefulWidget {
@@ -25,6 +27,10 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
 
   Future<XFile> getImage() async {
     return await ImagePicker().pickImage(source: ImageSource.gallery);
+  }
+
+  Future<XFile> getVideo() async {
+    return await ImagePicker().pickVideo(source: ImageSource.gallery);
   }
 
   @override
@@ -65,26 +71,51 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
                       gradient: orangeGradient,
                       onTap: () {}),
                   FSMenuItem(
-                    icon: Icon(Icons.folder, color: whitebg),
+                    icon: Icon(Icons.image_outlined, color: whitebg),
                     gradient: orangeGradient,
-                    text:
-                        Text('File Picker', style: TextStyle(fontSize: textMD)),
+                    text: Text('File Picker (Image)',
+                        style: TextStyle(fontSize: textMD)),
                     onTap: () async {
                       var file = await getImage();
+                      var type = "attachment_image";
 
                       if (file != null) {
                         await fireServicePost
-                            .sendImageContent(file, "attachment_image")
+                            .sendImageContent(file, type)
                             .then((value) {
                           listAttachment.add({
                             "id": Uuid().v4().substring(0, 8),
-                            "attach_type": "attachment_image",
+                            "attach_type": type,
                             "attach_name": null,
                             "attach_url": value
                           });
                         });
                         FullScreenMenu.hide();
-                        setState(() {});
+                        print(listAttachment);
+                      }
+                    },
+                  ),
+                  FSMenuItem(
+                    icon: Icon(Icons.ondemand_video, color: whitebg),
+                    gradient: orangeGradient,
+                    text: Text('File Picker (Video)',
+                        style: TextStyle(fontSize: textMD)),
+                    onTap: () async {
+                      var file = await getVideo();
+                      var type = "attachment_video";
+
+                      if (file != null) {
+                        await fireServicePost
+                            .sendImageContent(file, type)
+                            .then((value) {
+                          listAttachment.add({
+                            "id": Uuid().v4().substring(0, 8),
+                            "attach_type": type,
+                            "attach_name": null,
+                            "attach_url": value
+                          });
+                        });
+                        FullScreenMenu.hide();
                         print(listAttachment);
                       }
                     },
