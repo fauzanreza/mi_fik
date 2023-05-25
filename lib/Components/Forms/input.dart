@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 Widget getInputText(int len, var ctrl, bool secure) {
@@ -12,6 +13,37 @@ Widget getInputText(int len, var ctrl, bool secure) {
       controller: ctrl,
       obscureText: secure,
       decoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+        fillColor: mainbg,
+        filled: true,
+        border: InputBorder.none,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide.none,
+        ),
+      ),
+    ),
+  );
+}
+
+Widget getInputTextAtt(int len, String id, String obj) {
+  return Container(
+    padding: EdgeInsets.only(top: paddingXSM * 0.2),
+    child: TextField(
+      cursorColor: blackbg,
+      maxLength: len,
+      autofocus: false,
+      onChanged: (value) {
+        int idx = listAttachment.indexWhere((e) => e['id'] == id);
+        listAttachment[idx][obj] = value.trim();
+        print(listAttachment);
+      },
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
         fillColor: mainbg,
         filled: true,
         border: InputBorder.none,

@@ -14,10 +14,6 @@ class AttachButton extends StatefulWidget {
 }
 
 class _AttachButton extends State<AttachButton> {
-  final VideoPlayerController _controller = VideoPlayerController.network(
-    'https://firebasestorage.googleapis.com/v0/b/mifik-ad2d9.appspot.com/o/attachment_video%2F9ba74548-a6ec-497b-b943-64dcb77c578c?alt=media&token=72ec5618-2fd2-4596-abf8-2f6b06513b42',
-  );
-
   @override
   Widget build(BuildContext context) {
     double fullWidth = MediaQuery.of(context).size.width;
@@ -74,13 +70,13 @@ class _AttachButton extends State<AttachButton> {
             ),
           );
         } else if (attach['attach_type'] == "attachment_video") {
-          //Do something.
-
           return Chewie(
             controller: ChewieController(
-              videoPlayerController: _controller,
-              autoPlay: true,
-              looping: true,
+              videoPlayerController: VideoPlayerController.network(
+                attach['attach_url'].toString(),
+              ),
+              autoPlay: false,
+              looping: false,
             ),
           );
         }

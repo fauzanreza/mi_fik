@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mi_fik/Modules/Firebases/Storages/Content/add_image.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/SubMenus/AddPostPage/Usecases/get_attachment.dart';
 import 'package:uuid/uuid.dart';
 
 class SetFileAttachment extends StatefulWidget {
@@ -27,6 +28,10 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
     return await ImagePicker().pickImage(source: ImageSource.gallery);
   }
 
+  Future<XFile> getVideo() async {
+    return await ImagePicker().pickVideo(source: ImageSource.gallery);
+  }
+
   @override
   Widget build(BuildContext context) {
     double fullHeight = MediaQuery.of(context).size.height;
@@ -35,26 +40,11 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
 
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Container(
-          margin: const EdgeInsets.only(left: 10),
-          child: Text('ex : URL, Video, Image, Doc',
-              style: TextStyle(fontSize: textSM))),
-      Container(
         alignment: Alignment.centerLeft,
-        padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
         child: SizedBox(
           width: 180,
           height: 40,
-          child: ElevatedButton.icon(
-            style: ElevatedButton.styleFrom(
-              foregroundColor: primaryColor,
-              backgroundColor: whitebg,
-              side: BorderSide(
-                width: 1.0,
-                color: primaryColor,
-              ),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0)),
-            ),
+          child: TextButton.icon(
             onPressed: () async {
               FullScreenMenu.show(
                 context,
@@ -65,20 +55,67 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
                       gradient: orangeGradient,
                       onTap: () {}),
                   FSMenuItem(
-                    icon: Icon(Icons.folder, color: whitebg),
+                      icon: Icon(Icons.link, color: whitebg),
+                      text: Text('URL', style: TextStyle(fontSize: textMD)),
+                      gradient: orangeGradient,
+                      onTap: () {
+                        var type = "attachment_url";
+                        listAttachment.add({
+                          "id": Uuid().v4().substring(0, 8),
+                          "attach_type": type,
+                          "attach_name": null,
+                          "attach_url": null
+                        });
+                        FullScreenMenu.hide();
+                        setState(() {});
+                      }),
+                  FSMenuItem(
+                      icon: Icon(Icons.document_scanner, color: whitebg),
+                      text: Text('Doc', style: TextStyle(fontSize: textMD)),
+                      gradient: orangeGradient,
+                      onTap: () {}),
+                  FSMenuItem(
+                    icon: Icon(Icons.image_outlined, color: whitebg),
                     gradient: orangeGradient,
-                    text:
-                        Text('File Picker', style: TextStyle(fontSize: textMD)),
+                    text: Text('Image Picker',
+                        style: TextStyle(fontSize: textMD)),
                     onTap: () async {
                       var file = await getImage();
+                      var type = "attachment_image";
 
                       if (file != null) {
                         await fireServicePost
-                            .sendImageContent(file, "attachment_image")
+                            .sendImageContent(file, type)
                             .then((value) {
                           listAttachment.add({
                             "id": Uuid().v4().substring(0, 8),
-                            "attach_type": "attachment_image",
+                            "attach_type": type,
+                            "attach_name": null,
+                            "attach_url": value
+                          });
+                        });
+                        FullScreenMenu.hide();
+                        setState(() {});
+                        print(listAttachment);
+                      }
+                    },
+                  ),
+                  FSMenuItem(
+                    icon: Icon(Icons.ondemand_video, color: whitebg),
+                    gradient: orangeGradient,
+                    text: Text('Video Picker',
+                        style: TextStyle(fontSize: textMD)),
+                    onTap: () async {
+                      var file = await getVideo();
+                      var type = "attachment_video";
+
+                      if (file != null) {
+                        await fireServicePost
+                            .sendImageContent(file, type)
+                            .then((value) {
+                          listAttachment.add({
+                            "id": Uuid().v4().substring(0, 8),
+                            "attach_type": type,
                             "attach_name": null,
                             "attach_url": value
                           });
@@ -92,12 +129,20 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
                 ],
               );
             },
-            icon: const Icon(Icons.attach_file), //icon data for elevated button
-            label: const Text("Insert Attachment"),
+            icon: Icon(
+              Icons.attach_file,
+              color: semiblackbg,
+            ), //icon data for elevated button
+            label: Text("Insert Attachment",
+                style: TextStyle(
+                    fontSize: textMD,
+                    color: semiblackbg,
+                    fontWeight: FontWeight.w400)),
             //label text
           ),
         ),
       ),
+      GetFileAttachment()
     ]);
   }
 }

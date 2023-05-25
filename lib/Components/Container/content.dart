@@ -3,6 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
+import 'package:mi_fik/Components/Forms/input.dart';
+import 'package:mi_fik/Components/Typography/title.dart';
+import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Helpers/widget.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
@@ -294,6 +297,104 @@ class GetScheduleContainer extends StatelessWidget {
               child: getLocation(content.contentLoc,
                   getColor(DateTime.parse(content.dateStart))),
             )
+          ])),
+    );
+  }
+}
+
+class GetAttachmentContainer extends StatefulWidget {
+  GetAttachmentContainer({Key key, this.data, this.item, this.others, this.id})
+      : super(key: key);
+  var data;
+  var item;
+  var others;
+  String id;
+
+  @override
+  _GetAttachmentContainer createState() => _GetAttachmentContainer();
+}
+
+class _GetAttachmentContainer extends State<GetAttachmentContainer> {
+  var attachmentNameCtrl = TextEditingController();
+  var attachmentURLCtrl = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    double fullHeight = MediaQuery.of(context).size.height;
+    double fullWidth = MediaQuery.of(context).size.width;
+
+    Widget getOthers(val) {
+      if (val != null) {
+        return val;
+      } else {
+        return SizedBox();
+      }
+    }
+
+    Widget getExpansion(val) {
+      if (val != null) {
+        return Padding(
+            padding: EdgeInsets.symmetric(vertical: paddingSM),
+            child: getSubTitleMedium(
+                "Attachment Type : ${ucFirst(getSeparatedAfter("_", widget.data['attach_type']))}",
+                blackbg));
+      } else {
+        return ExpansionTile(
+            childrenPadding: EdgeInsets.only(
+                left: paddingSM, bottom: paddingSM, right: paddingSM),
+            initiallyExpanded: false,
+            trailing: Icon(Icons.remove_red_eye_outlined, color: blackbg),
+            iconColor: null,
+            textColor: whitebg,
+            collapsedTextColor: primaryColor,
+            leading: null,
+            expandedCrossAxisAlignment: CrossAxisAlignment.end,
+            expandedAlignment: Alignment.topLeft,
+            tilePadding: EdgeInsets.zero,
+            title: Padding(
+                padding: EdgeInsets.symmetric(vertical: paddingSM),
+                child: getSubTitleMedium(
+                    "Attachment Type : ${ucFirst(getSeparatedAfter("_", widget.data['attach_type']))}",
+                    blackbg)),
+            children: [widget.item]);
+      }
+    }
+
+    return Container(
+      width: fullWidth * 0.9,
+      alignment: Alignment.center,
+      padding: EdgeInsets.zero,
+      margin: EdgeInsets.only(bottom: paddingMD),
+      decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: const Color.fromARGB(255, 128, 128, 128).withOpacity(0.3),
+              blurRadius: 10.0,
+              spreadRadius: 0.0,
+              offset: const Offset(
+                5.0,
+                5.0,
+              ),
+            )
+          ],
+          color: whitebg,
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(paddingMD),
+              bottomRight: Radius.circular(paddingMD))),
+      child: Container(
+          width: double.infinity,
+          padding: EdgeInsets.all(paddingSM),
+          decoration: BoxDecoration(
+            border: Border(
+              left: BorderSide(width: 4, color: successbg),
+            ),
+          ),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            getExpansion(widget.others),
+            getSubTitleMedium("Attachment Name", blackbg),
+            getInputTextAtt(75, widget.id, 'attach_name'),
+            getOthers(widget.others)
           ])),
     );
   }
