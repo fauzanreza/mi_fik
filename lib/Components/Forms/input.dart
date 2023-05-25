@@ -12,6 +12,7 @@ Widget getInputText(int len, var ctrl, bool secure) {
       controller: ctrl,
       obscureText: secure,
       decoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
         fillColor: mainbg,
         filled: true,
         border: InputBorder.none,

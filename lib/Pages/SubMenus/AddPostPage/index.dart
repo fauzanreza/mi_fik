@@ -15,7 +15,6 @@ import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/dummy.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:mi_fik/Pages/SubMenus/AddPostPage/Usecases/get_attachment.dart';
 import 'package:mi_fik/Pages/SubMenus/AddPostPage/Usecases/set_attachment.dart';
@@ -142,6 +141,7 @@ class _AddPost extends State<AddPost> {
                                                   locDetailCtrl.clear();
                                                   locCoordinateCtrl = null;
                                                   contentAttImage = null;
+                                                  listAttachment = [];
                                                   Navigator.pop(context);
                                                   Navigator.pop(context);
                                                 },
@@ -188,103 +188,144 @@ class _AddPost extends State<AddPost> {
               borderRadius: BorderRadius.circular(roundedLG2),
               color: whitebg,
             ),
-            child: ListView(padding: EdgeInsets.zero, children: [
-              Container(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: getSubTitleMedium("Title", blackbg),
-              ),
-              Container(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: getInputText(75, contentTitleCtrl, false),
-              ),
-              Container(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: getSubTitleMedium("Description", blackbg),
-              ),
-              Container(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: getInputDesc(10000, 5, contentDescCtrl, false),
-              ),
-              Container(
-                  margin: EdgeInsets.only(left: paddingMD),
-                  padding: EdgeInsets.only(top: paddingXSM),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text("Event Tag",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontFamily: 'Poppins',
-                            color: blackbg,
-                            fontWeight: FontWeight.w500,
-                          )),
-                      const ChooseTag(),
-                    ],
-                  )),
-              Container(
-                  padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-                  child: Row(
-                    children: [
-                      Column(
+            child: ListView(
+                padding: EdgeInsets.only(bottom: paddingLg),
+                children: [
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    child: getSubTitleMedium("Title", blackbg),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    child: getInputText(75, contentTitleCtrl, false),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    child: getSubTitleMedium("Description", blackbg),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    child: getInputDesc(10000, 5, contentDescCtrl, false),
+                  ),
+                  Container(
+                      margin: EdgeInsets.only(left: paddingMD),
+                      padding: EdgeInsets.only(top: paddingXSM),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text("Event Tag",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: 'Poppins',
+                                color: blackbg,
+                                fontWeight: FontWeight.w500,
+                              )),
+                          const ChooseTag(),
+                        ],
+                      )),
+                  Container(
+                      padding: EdgeInsets.fromLTRB(20, paddingMD, 20, 0),
+                      child: Row(
+                        children: [
+                          Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Event Reminder",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontFamily: 'Poppins',
+                                      color: blackbg,
+                                      fontWeight: FontWeight.w500,
+                                    )),
+                                Container(
+                                    padding: EdgeInsets.only(left: paddingXSM),
+                                    child: getDropDownMain(
+                                        slctReminderType, reminderTypeOpt,
+                                        (String newValue) {
+                                      setState(() {
+                                        slctReminderType = newValue;
+                                      });
+                                    }, true, "reminder_")),
+                              ]),
+                          SizedBox(width: paddingMD),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Event Location",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: 'Poppins',
+                                    color: blackbg,
+                                    fontWeight: FontWeight.w500,
+                                  )),
+                              const SetLocation(),
+                            ],
+                          )
+                        ],
+                      )),
+                  const GetFileAttachment(),
+                  Container(
+                      padding: EdgeInsets.fromLTRB(20, paddingMD, 20, 0),
+                      child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Reminder :',
-                                style: TextStyle(fontSize: textSM)),
-                            Container(
-                                padding: EdgeInsets.only(left: paddingXSM),
-                                child: getDropDownMain(
-                                    slctReminderType, reminderTypeOpt,
-                                    (String newValue) {
+                            Text("Event Period",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: 'Poppins',
+                                  color: blackbg,
+                                  fontWeight: FontWeight.w500,
+                                )),
+                            Row(children: [
+                              getDatePicker(dateStartCtrl, () {
+                                final now = DateTime.now();
+
+                                DatePicker.showDateTimePicker(context,
+                                    showTitleActions: true,
+                                    minTime: DateTime(now.year, now.month,
+                                        now.day), //Tomorrow
+                                    maxTime: DateTime(
+                                        now.year + 1, now.month, now.day),
+                                    onConfirm: (date) {
                                   setState(() {
-                                    slctReminderType = newValue;
+                                    dateStartCtrl = date;
                                   });
-                                }, true, "reminder_")),
-                          ]),
-                      // Info or help
-                      const SetFileAttachment(),
-                    ],
-                  )),
-              GetFileAttachment(),
-              Container(
-                  padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-                  child: Row(children: [
-                    getDatePicker(dateStartCtrl, () {
-                      final now = DateTime.now();
+                                }, currentTime: now, locale: LocaleType.en);
+                              }, "Start", "datetime"),
+                              const Spacer(),
+                              getDatePicker(dateEndCtrl, () {
+                                final now = DateTime.now();
 
-                      DatePicker.showDateTimePicker(context,
-                          showTitleActions: true,
-                          minTime:
-                              DateTime(now.year, now.month, now.day), //Tomorrow
-                          maxTime: DateTime(now.year + 1, now.month, now.day),
-                          onConfirm: (date) {
-                        setState(() {
-                          dateStartCtrl = date;
-                        });
-                      }, currentTime: now, locale: LocaleType.en);
-                    }, "Start", "datetime"),
-                    const Spacer(),
-                    getDatePicker(dateEndCtrl, () {
-                      final now = DateTime.now();
-
-                      DatePicker.showDateTimePicker(context,
-                          showTitleActions: true,
-                          minTime:
-                              DateTime(now.year, now.month, now.day), //Tomorrow
-                          maxTime: DateTime(now.year + 1, now.month, now.day),
-                          onConfirm: (date) {
-                        setState(() {
-                          dateEndCtrl = date;
-                        });
-                      }, currentTime: now, locale: LocaleType.en);
-                    }, "End", "datetime"),
-                  ])),
-              Container(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                  child: Row(children: [
-                    const SetLocation(),
-                  ]))
-            ]),
+                                DatePicker.showDateTimePicker(context,
+                                    showTitleActions: true,
+                                    minTime: DateTime(now.year, now.month,
+                                        now.day), //Tomorrow
+                                    maxTime: DateTime(
+                                        now.year + 1, now.month, now.day),
+                                    onConfirm: (date) {
+                                  setState(() {
+                                    dateEndCtrl = date;
+                                  });
+                                }, currentTime: now, locale: LocaleType.en);
+                              }, "End", "datetime"),
+                            ])
+                          ])),
+                  Container(
+                      padding: EdgeInsets.fromLTRB(20, paddingMD, 20, 0),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Event Attachment",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: 'Poppins',
+                                  color: blackbg,
+                                  fontWeight: FontWeight.w500,
+                                )),
+                            const SetFileAttachment()
+                          ]))
+                ]),
           )),
           SizedBox(
               width: fullWidth,

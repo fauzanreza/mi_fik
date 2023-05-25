@@ -1,10 +1,10 @@
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
-import 'package:mi_fik/Components/Forms/input.dart';
-import 'package:mi_fik/Components/Typography/title.dart';
+import 'package:mi_fik/Components/Container/content.dart';
 import 'package:mi_fik/Modules/Firebases/Storages/Content/remove_image.dart';
-import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:video_player/video_player.dart';
 
 class GetFileAttachment extends StatefulWidget {
   const GetFileAttachment({Key key}) : super(key: key);
@@ -15,16 +15,11 @@ class GetFileAttachment extends StatefulWidget {
 
 class _GetFileAttachmentState extends State<GetFileAttachment> {
   DeleteImageContent fireServiceDelete;
-  var attachmentNameCtrl = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     fireServiceDelete = DeleteImageContent();
-  }
-
-  void refresh() {
-    setState(() {});
   }
 
   @override
@@ -33,65 +28,44 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
     double fullWidth = MediaQuery.of(context).size.width;
     bool isLoading;
 
+    Widget getListAttTitle(List arr) {
+      if (arr.isNotEmpty) {
+        return Container(
+            margin: EdgeInsets.all(paddingMD),
+            child: Text('List Attachment', style: TextStyle(fontSize: textMD)));
+      } else {
+        return SizedBox();
+      }
+    }
+
     return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-      Container(
-          margin: EdgeInsets.all(paddingMD),
-          child: Text('List Attachment', style: TextStyle(fontSize: textMD))),
+      getListAttTitle(listAttachment),
       Column(
           children: listAttachment.map((e) {
         if (e['attach_type'] == "attachment_image") {
-          return Container(
-            width: fullWidth * 0.9,
-            alignment: Alignment.center,
-            padding: EdgeInsets.all(paddingSM),
-            margin: EdgeInsets.only(bottom: paddingMD),
-            decoration: BoxDecoration(
-                // borderRadius: BorderRadius.only(
-                //     topRight: Radius.circular(paddingMD),
-                //     bottomRight: Radius.circular(paddingMD)),
-                border: Border(
-                    left: BorderSide(width: 4, color: successbg),
-                    right: BorderSide(width: 1.5, color: greybg),
-                    top: BorderSide(width: 1.5, color: greybg),
-                    bottom: BorderSide(width: 1.5, color: greybg))),
-            child: Container(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                  ExpansionTile(
-                      childrenPadding: EdgeInsets.only(
-                          left: paddingSM, bottom: paddingSM, right: paddingSM),
-                      initiallyExpanded: false,
-                      trailing:
-                          Icon(Icons.remove_red_eye_outlined, color: blackbg),
-                      iconColor: null,
-                      textColor: whitebg,
-                      collapsedTextColor: primaryColor,
-                      leading: null,
-                      expandedCrossAxisAlignment: CrossAxisAlignment.end,
-                      expandedAlignment: Alignment.topLeft,
-                      tilePadding: EdgeInsets.zero,
-                      title: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 5, vertical: paddingSM),
-                          child: getSubTitleMedium(
-                              "Attachment Type : ${ucFirst(getSeparatedAfter("_", e['attach_type']))}",
-                              blackbg)),
-                      children: [
-                        Container(
-                            alignment: Alignment.center,
-                            margin: EdgeInsets.symmetric(vertical: paddingMD),
-                            child: ClipRRect(
-                                borderRadius: BorderRadius.circular(12),
-                                child: Image.network(e['attach_url'],
-                                    width: fullWidth * 0.5))),
-                      ]),
-                  getSubTitleMedium("Attachment Name", blackbg),
-                  getInputText(75, attachmentNameCtrl, false),
-                ])),
-          );
+          return GetAttachmentContainer(
+              data: e,
+              item: Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.symmetric(vertical: paddingMD),
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.network(e['attach_url'],
+                          width: fullWidth * 0.5))));
         } else if (e['attach_type'] == "attachment_video") {
-          return Container();
+          return GetAttachmentContainer(
+              data: e,
+              item: Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.symmetric(vertical: paddingMD),
+                  child: Chewie(
+                    controller: ChewieController(
+                      videoPlayerController:
+                          VideoPlayerController.network(e['attach_url']),
+                      autoPlay: false,
+                      looping: false,
+                    ),
+                  )));
         } else if (e['attach_type'] == "attachment_url") {
           return Container();
         }
