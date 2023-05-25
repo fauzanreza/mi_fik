@@ -64,7 +64,9 @@ getTodayCalendarHeader(DateTime val) {
 
 getColor(date) {
   if (DateFormat("HH").format(DateTime.now()) ==
-      DateFormat("HH").format(date)) {
+          DateFormat("HH").format(date) &&
+      DateFormat("dd").format(DateTime.now()) ==
+          DateFormat("dd").format(date)) {
     return whitebg;
   } else {
     return primaryColor;
@@ -73,7 +75,9 @@ getColor(date) {
 
 getBgColor(date) {
   if (DateFormat("HH").format(DateTime.now()) ==
-      DateFormat("HH").format(date)) {
+          DateFormat("HH").format(date) &&
+      DateFormat("dd").format(DateTime.now()) ==
+          DateFormat("dd").format(date)) {
     return primaryColor;
   } else {
     return whitebg;
@@ -216,38 +220,55 @@ Widget getUploadDate(DateTime date) {
       ));
 }
 
-Widget getHourChip(String dateStart, String hrChip, double width) {
-  var date = DateTime.parse(dateStart);
+Widget getHourChipLine(String dateStart, double width) {
+  DateTime date = DateTime.parse(dateStart);
 
-  String check = date.hour.toString();
-  if (hrChip != check) {
-    hrChip = check;
-
-    return Container(
-        margin: const EdgeInsets.only(top: 10),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              '${date.hour}:00',
-              style: GoogleFonts.poppins(
-                color: greybg,
-                fontSize: textSM,
-                fontWeight: FontWeight.w500,
+  getLiveText(DateTime dt) {
+    if (DateFormat("HH").format(DateTime.now()) ==
+            DateFormat("HH").format(dt) &&
+        DateFormat("dd").format(DateTime.now()) ==
+            DateFormat("dd").format(dt)) {
+      return Row(children: [
+        SizedBox(width: paddingSM),
+        RichText(
+          text: TextSpan(
+            children: [
+              WidgetSpan(
+                child: Icon(Icons.circle, size: 14, color: dangerColor),
               ),
-            ),
-            Expanded(
-                child: Container(
-              margin: const EdgeInsets.only(left: 15, right: 15, top: 7.5),
-              color: primaryColor,
-              height: 2,
-              width: width,
-            ))
-          ],
-        ));
-  } else {
-    return const SizedBox();
+              TextSpan(text: " Now Live", style: TextStyle(color: dangerColor)),
+            ],
+          ),
+        )
+      ]);
+    } else {
+      return const SizedBox();
+    }
   }
+
+  return Container(
+      margin: const EdgeInsets.only(top: 10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '${date.hour}:00',
+            style: GoogleFonts.poppins(
+              color: greybg,
+              fontSize: textSM,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          getLiveText(date),
+          Expanded(
+              child: Container(
+            margin: const EdgeInsets.only(left: 15, right: 15, top: 7.5),
+            color: primaryColor,
+            height: 2,
+            width: width,
+          ))
+        ],
+      ));
 }
 
 Widget getHourText(String date, var margin, var align) {

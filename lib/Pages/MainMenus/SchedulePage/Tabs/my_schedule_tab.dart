@@ -81,8 +81,19 @@ class _MySchedulePage extends State<MySchedulePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: contents.map((content) {
+                getChipHour(String ds) {
+                  String now = DateTime.parse(ds).hour.toString();
+
+                  if (hourChipBefore == "" || hourChipBefore != now) {
+                    hourChipBefore = now;
+                    return getHourChipLine(content.dateStart, fullWidth);
+                  } else {
+                    return SizedBox();
+                  }
+                }
+
                 return Column(children: [
-                  getHourChip(content.dateStart, hourChipBefore, fullWidth),
+                  getChipHour(content.dateStart),
                   SizedBox(
                       width: fullWidth,
                       child: IntrinsicHeight(

@@ -12,7 +12,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class SetLocation extends StatefulWidget {
-  const SetLocation({Key key}) : super(key: key);
+  SetLocation({Key key, this.locDetailCtrl}) : super(key: key);
+  var locDetailCtrl;
 
   @override
   _SetLocation createState() => _SetLocation();
@@ -190,34 +191,17 @@ class _SetLocation extends State<SetLocation>
                           }),
                         ),
                       ),
+                      SizedBox(height: paddingMD),
                       Container(
-                          padding: EdgeInsets.zero,
-                          margin: EdgeInsets.only(top: paddingMD),
-                          width: fullWidth,
-                          height: btnHeightMD - 10,
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              //....
-                            },
-                            style: ButtonStyle(
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              )),
-                              backgroundColor:
-                                  MaterialStatePropertyAll<Color>(primaryColor),
-                            ),
-                            child: const Text('Event Location'),
-                          )),
-                      getSubTitleMedium("Location Name", blackbg),
-                      getInputText(75, locDetailCtrl, false)
+                          alignment: Alignment.centerLeft,
+                          child: getSubTitleMedium("Location Name", blackbg)),
+                      getInputText(75, widget.locDetailCtrl, false)
                     ]),
                   ));
             });
           }).then((_) => setState(() {})), //Check this again !!!!
       icon: Icon(Icons.location_on_outlined, size: 22, color: semiblackbg),
-      label: Text(getButtonText(locCoordinateCtrl, locDetailCtrl.text),
+      label: Text(getButtonText(locCoordinateCtrl, widget.locDetailCtrl.text),
           style: TextStyle(
               fontSize: textMD,
               color: semiblackbg,
