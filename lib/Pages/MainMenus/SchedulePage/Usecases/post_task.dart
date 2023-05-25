@@ -8,6 +8,7 @@ import 'package:mi_fik/Components/Forms/input.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/command_tasks.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_tasks.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class PostTask extends StatefulWidget {
@@ -127,20 +128,14 @@ class _PostTask extends State<PostTask> {
                     onPressed: () {},
                     child: const Text('Reminder :'),
                   ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: primaryColor,
-                      backgroundColor: whitebg,
-                      side: BorderSide(
-                        width: 1.0,
-                        color: primaryColor,
-                      ),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0)),
-                    ),
-                    onPressed: () {},
-                    child: const Text('1 Hour Before'),
-                  ),
+                  Container(
+                      padding: EdgeInsets.only(left: paddingXSM),
+                      child: getDropDownMain(slctReminderType, reminderTypeOpt,
+                          (String newValue) {
+                        setState(() {
+                          slctReminderType = newValue;
+                        });
+                      }, true, "reminder_")),
                 ]),
               ],
             ),
@@ -157,8 +152,7 @@ class _PostTask extends State<PostTask> {
                       taskDesc: taskDescCtrl.text,
                       dateStart: validateDatetime(dateStartCtrl),
                       dateEnd: validateDatetime(dateEndCtrl),
-                      reminder: "reminder_1_day_before" // For now.
-                      );
+                      reminder: slctReminderType);
 
                   //Validator
                   if (data.taskTitle.isNotEmpty) {

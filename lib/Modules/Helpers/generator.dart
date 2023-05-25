@@ -148,7 +148,7 @@ Widget getTagShow(tag, dateStart) {
 String getDateText(DateTime date, String type, String view) {
   if (view == "datetime") {
     if (date != null) {
-      return DateFormat("dd-MM-yy h:m").format(date).toString();
+      return DateFormat("dd-MM-yy ").format(date).toString();
     } else {
       return "Set Date $type";
     }
@@ -287,6 +287,16 @@ String getRandomString(int length) {
       length, (_) => chars.codeUnitAt(rnd.nextInt(chars.length))));
 
   return chars;
+}
+
+String getTotalArchieve(event, task) {
+  if ((event != 0) && (task == 0)) {
+    return "$event Events";
+  } else if ((event == 0) && (task != 0)) {
+    return "$task Task";
+  } else {
+    return "$event Events, $task Task";
+  }
 }
 
 Future<void> getCurrentLocationDetails() async {

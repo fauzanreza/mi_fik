@@ -5,6 +5,7 @@ import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/query_contents.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Helpers/widget.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/get_attachment.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/get_location.dart';
@@ -238,6 +239,7 @@ class _DetailPage extends State<DetailPage> {
               icon: Icon(Icons.arrow_back, size: iconLG),
               color: whitebg,
               onPressed: () {
+                listArchiveCheck = [];
                 Navigator.pop(context);
               },
             ),

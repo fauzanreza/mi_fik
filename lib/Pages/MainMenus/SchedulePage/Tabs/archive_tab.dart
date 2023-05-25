@@ -28,7 +28,7 @@ class _ArchivePage extends State<ArchivePage> {
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
-        future: apiService.getMyArchive(),
+        future: apiService.getMyArchive("%20"),
         builder:
             (BuildContext context, AsyncSnapshot<List<ArchiveModel>> snapshot) {
           if (snapshot.hasError) {
@@ -125,7 +125,9 @@ class _ArchivePage extends State<ArchivePage> {
                           ),
                           const Spacer(),
                           //This text is to small and will affect the name of archive.
-                          Text(getTotalArchive(0, 0),
+                          Text(
+                              getTotalArchive(
+                                  archive.totalEvent, archive.totalTask),
                               style: TextStyle(
                                 color: blackbg,
                                 fontSize: textXSM,

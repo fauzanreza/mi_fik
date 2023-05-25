@@ -40,6 +40,22 @@ getContentLocObj(detail, loc) {
   }
 }
 
+getBoolByInt(int val) {
+  if (val == 1) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+getIntByBool(bool val) {
+  if (val == true) {
+    return 1;
+  } else {
+    return 0;
+  }
+}
+
 getItemTimeString(date) {
   //Initial variable.
   final now = DateTime.now();

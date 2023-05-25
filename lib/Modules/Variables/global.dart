@@ -7,6 +7,7 @@ String passSlugContent;
 // Others
 String locName;
 List listAttachment = [];
+List<Map<String, dynamic>> listArchiveCheck = [];
 
 // Selected
 var selectedArchiveName;
