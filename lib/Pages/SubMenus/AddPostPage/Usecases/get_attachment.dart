@@ -1,6 +1,8 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/Container/content.dart';
+import 'package:mi_fik/Components/Forms/input.dart';
+import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/Firebases/Storages/Content/remove_image.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -15,6 +17,7 @@ class GetFileAttachment extends StatefulWidget {
 
 class _GetFileAttachmentState extends State<GetFileAttachment> {
   DeleteImageContent fireServiceDelete;
+  final attachmentURLCtrl = TextEditingController();
 
   @override
   void initState() {
@@ -28,23 +31,14 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
     double fullWidth = MediaQuery.of(context).size.width;
     bool isLoading;
 
-    Widget getListAttTitle(List arr) {
-      if (arr.isNotEmpty) {
-        return Container(
-            margin: EdgeInsets.all(paddingMD),
-            child: Text('List Attachment', style: TextStyle(fontSize: textMD)));
-      } else {
-        return SizedBox();
-      }
-    }
-
-    return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-      getListAttTitle(listAttachment),
-      Column(
-          children: listAttachment.map((e) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: listAttachment.map((e) {
         if (e['attach_type'] == "attachment_image") {
           return GetAttachmentContainer(
               data: e,
+              others: null,
+              id: e['id'],
               item: Container(
                   alignment: Alignment.center,
                   margin: EdgeInsets.symmetric(vertical: paddingMD),
@@ -55,6 +49,8 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
         } else if (e['attach_type'] == "attachment_video") {
           return GetAttachmentContainer(
               data: e,
+              others: null,
+              id: e['id'],
               item: Container(
                   alignment: Alignment.center,
                   margin: EdgeInsets.symmetric(vertical: paddingMD),
@@ -67,9 +63,19 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
                     ),
                   )));
         } else if (e['attach_type'] == "attachment_url") {
-          return Container();
+          return GetAttachmentContainer(
+              data: e,
+              item: SizedBox(),
+              id: e['id'],
+              others: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  getSubTitleMedium("Attachment URL", blackbg),
+                  getInputTextAtt(75, e['id'], 'attach_url'),
+                ],
+              ));
         }
-      }).toList()),
-    ]);
+      }).toList(),
+    );
   }
 }

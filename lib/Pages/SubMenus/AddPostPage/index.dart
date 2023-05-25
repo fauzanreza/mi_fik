@@ -264,7 +264,6 @@ class _AddPost extends State<AddPost> {
                           )
                         ],
                       )),
-                  const GetFileAttachment(),
                   Container(
                       padding: EdgeInsets.fromLTRB(20, paddingMD, 20, 0),
                       child: Column(
@@ -340,9 +339,9 @@ class _AddPost extends State<AddPost> {
                       contentTag: validateNullJSON(selectedTag),
                       contentLoc: getContentLocObj(
                           locDetailCtrl.text, locCoordinateCtrl),
-                      contentAttach: null,
-                      contentImage: null,
-                      reminder: "reminder_none",
+                      contentAttach: validateNullJSON(listAttachment),
+                      contentImage: validateNull(contentAttImage),
+                      reminder: slctReminderType,
                       dateStart: getDBDateFormat("date", dateStartCtrl),
                       dateEnd: getDBDateFormat("date", dateStartCtrl),
                       timeStart: getDBDateFormat("time", dateEndCtrl),

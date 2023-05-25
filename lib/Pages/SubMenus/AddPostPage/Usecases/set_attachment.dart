@@ -5,7 +5,6 @@ import 'package:mi_fik/Modules/Firebases/Storages/Content/add_image.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/AddPostPage/Usecases/get_attachment.dart';
-import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
 class SetFileAttachment extends StatefulWidget {

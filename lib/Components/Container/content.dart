@@ -303,9 +303,12 @@ class GetScheduleContainer extends StatelessWidget {
 }
 
 class GetAttachmentContainer extends StatefulWidget {
-  GetAttachmentContainer({Key key, this.data, this.item}) : super(key: key);
+  GetAttachmentContainer({Key key, this.data, this.item, this.others, this.id})
+      : super(key: key);
   var data;
   var item;
+  var others;
+  String id;
 
   @override
   _GetAttachmentContainer createState() => _GetAttachmentContainer();
@@ -313,11 +316,49 @@ class GetAttachmentContainer extends StatefulWidget {
 
 class _GetAttachmentContainer extends State<GetAttachmentContainer> {
   var attachmentNameCtrl = TextEditingController();
+  var attachmentURLCtrl = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
+
+    Widget getOthers(val) {
+      if (val != null) {
+        return val;
+      } else {
+        return SizedBox();
+      }
+    }
+
+    Widget getExpansion(val) {
+      if (val != null) {
+        return Padding(
+            padding: EdgeInsets.symmetric(vertical: paddingSM),
+            child: getSubTitleMedium(
+                "Attachment Type : ${ucFirst(getSeparatedAfter("_", widget.data['attach_type']))}",
+                blackbg));
+      } else {
+        return ExpansionTile(
+            childrenPadding: EdgeInsets.only(
+                left: paddingSM, bottom: paddingSM, right: paddingSM),
+            initiallyExpanded: false,
+            trailing: Icon(Icons.remove_red_eye_outlined, color: blackbg),
+            iconColor: null,
+            textColor: whitebg,
+            collapsedTextColor: primaryColor,
+            leading: null,
+            expandedCrossAxisAlignment: CrossAxisAlignment.end,
+            expandedAlignment: Alignment.topLeft,
+            tilePadding: EdgeInsets.zero,
+            title: Padding(
+                padding: EdgeInsets.symmetric(vertical: paddingSM),
+                child: getSubTitleMedium(
+                    "Attachment Type : ${ucFirst(getSeparatedAfter("_", widget.data['attach_type']))}",
+                    blackbg)),
+            children: [widget.item]);
+      }
+    }
 
     return Container(
       width: fullWidth * 0.9,
@@ -350,27 +391,10 @@ class _GetAttachmentContainer extends State<GetAttachmentContainer> {
           ),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            ExpansionTile(
-                childrenPadding: EdgeInsets.only(
-                    left: paddingSM, bottom: paddingSM, right: paddingSM),
-                initiallyExpanded: false,
-                trailing: Icon(Icons.remove_red_eye_outlined, color: blackbg),
-                iconColor: null,
-                textColor: whitebg,
-                collapsedTextColor: primaryColor,
-                leading: null,
-                expandedCrossAxisAlignment: CrossAxisAlignment.end,
-                expandedAlignment: Alignment.topLeft,
-                tilePadding: EdgeInsets.zero,
-                title: Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: 5, vertical: paddingSM),
-                    child: getSubTitleMedium(
-                        "Attachment Type : ${ucFirst(getSeparatedAfter("_", widget.data['attach_type']))}",
-                        blackbg)),
-                children: [widget.item]),
+            getExpansion(widget.others),
             getSubTitleMedium("Attachment Name", blackbg),
-            getInputText(75, attachmentNameCtrl, false),
+            getInputTextAtt(75, widget.id, 'attach_name'),
+            getOthers(widget.others)
           ])),
     );
   }
