@@ -77,14 +77,6 @@ class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
       getArchiveView(selectedArchiveSlug)
     ];
 
-    getOpenedArchive(slctd) {
-      if (slctd == null) {
-        return "Archive";
-      } else {
-        return slctd.toString();
-      }
-    }
-
     return Scaffold(
         key: scaffoldKey,
         drawer: const LeftBar(),

@@ -29,7 +29,7 @@ class _SetLocation extends State<SetLocation>
   bool haspermission = false;
   LocationPermission permission;
   Position position;
-  double my_long = 0, my_lat = 0;
+  double mylong = 0, mylat = 0;
   StreamSubscription<Position> positionStream;
   Uint8List bytes;
 
@@ -89,8 +89,8 @@ class _SetLocation extends State<SetLocation>
     position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
 
-    my_long = position.longitude;
-    my_lat = position.latitude;
+    mylong = position.longitude;
+    mylat = position.latitude;
 
     // setState(() {
     //   //refresh UI
@@ -104,8 +104,8 @@ class _SetLocation extends State<SetLocation>
     StreamSubscription<Position> positionStream =
         Geolocator.getPositionStream(locationSettings: locationSettings)
             .listen((Position position) {
-      my_long = position.longitude;
-      my_lat = position.latitude;
+      mylong = position.longitude;
+      mylat = position.latitude;
 
       setState(() {});
     });
@@ -131,7 +131,7 @@ class _SetLocation extends State<SetLocation>
 
     //Maps starting point.
     final _initialCameraPosition = CameraPosition(
-      target: LatLng(my_lat, my_long),
+      target: LatLng(mylat, mylong),
       zoom: 14,
     );
 

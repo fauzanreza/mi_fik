@@ -51,7 +51,7 @@ class _GetNotification extends State<GetNotification>
 
   Widget _buildListView(List<NotificationModel> notifs) {
     //double fullHeight = MediaQuery.of(context).size.height;
-    double fullWidth = MediaQuery.of(context).size.width;
+    //double fullWidth = MediaQuery.of(context).size.width;
 
     return Column(
         children: notifs.map((notif) {

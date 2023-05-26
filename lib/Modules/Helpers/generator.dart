@@ -319,7 +319,7 @@ Future<void> getCurrentLocationDetails() async {
       // String country = placemark.country ?? '';
 
       locName = locationName;
-      print(locName);
+      // print(locName);
     } else {
       print('No placemarks found for the current location');
       locName = 'Invalid Location';

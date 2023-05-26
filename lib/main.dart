@@ -17,7 +17,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> fireFCMHandler(RemoteMessage message) async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  print('Handling a background message ${message.messageId}');
 }
 
 Future<void> main() async {
@@ -132,7 +131,7 @@ class _MyApp extends State<MyApp> {
 
   getToken() async {
     token = await FirebaseMessaging.instance.getToken();
-    print(token);
+    //print(token);
   }
 
   @override

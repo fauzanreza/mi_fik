@@ -32,7 +32,7 @@ class UserProfileModel {
   }
 }
 
-List<UserProfileModel> UserProfileModelFromJson(String jsonData) {
+List<UserProfileModel> userProfileModelFromJson(String jsonData) {
   final data = json.decode(jsonData);
   return List<UserProfileModel>.from(
       data['data'].map((item) => UserProfileModel.fromJson(item)));

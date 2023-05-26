@@ -101,7 +101,7 @@ class _HomePage extends State<HomePage> {
                                     getSubTitleMedium(
                                         getToday("date"), whitebg),
                                     const Spacer(),
-                                    GetLocation()
+                                    const GetLocation()
                                   ],
                                 )
                               ]),

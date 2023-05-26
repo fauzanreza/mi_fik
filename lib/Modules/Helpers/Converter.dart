@@ -118,14 +118,14 @@ String getTagFilterContent(List<dynamic> tag) {
     int count_tag = tag.length;
     int i = 1;
 
-    tag.forEach((e) {
+    for (var e in tag) {
       if (i != count_tag) {
         res += "${e['slug_name']},";
       } else {
         res += e['slug_name'];
       }
       i++;
-    });
+    }
 
     return res;
   }

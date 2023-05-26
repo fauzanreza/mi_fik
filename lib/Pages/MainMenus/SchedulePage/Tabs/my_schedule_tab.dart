@@ -77,7 +77,7 @@ class _MySchedulePage extends State<MySchedulePage> {
                     hourChipBefore = now;
                     return getHourChipLine(content.dateStart, fullWidth);
                   } else {
-                    return SizedBox();
+                    return const SizedBox();
                   }
                 }
 

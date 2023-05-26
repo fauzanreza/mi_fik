@@ -27,7 +27,7 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
 
   @override
   Widget build(BuildContext context) {
-    double fullHeight = MediaQuery.of(context).size.height;
+    //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
     bool isLoading;
 
@@ -65,7 +65,7 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
         } else if (e['attach_type'] == "attachment_url") {
           return GetAttachmentContainer(
               data: e,
-              item: SizedBox(),
+              item: const SizedBox(),
               id: e['id'],
               others: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

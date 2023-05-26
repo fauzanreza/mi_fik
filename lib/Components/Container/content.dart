@@ -41,8 +41,7 @@ class _GetHomePageEventContainer extends State<GetHomePageEventContainer> {
   }
 
   Widget getProfileImage(u1, u2, i1, i2) {
-    String username = " ";
-    String image = null;
+    String image;
     if (u1 != null) {
       if (i1 != null) {
         image = i1;
@@ -320,14 +319,14 @@ class _GetAttachmentContainer extends State<GetAttachmentContainer> {
 
   @override
   Widget build(BuildContext context) {
-    double fullHeight = MediaQuery.of(context).size.height;
+    //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
     Widget getOthers(val) {
       if (val != null) {
         return val;
       } else {
-        return SizedBox();
+        return const SizedBox();
       }
     }
 

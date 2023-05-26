@@ -28,8 +28,8 @@ class _PostSelectedRole extends State<PostSelectedRole> {
 
   @override
   Widget build(BuildContext context) {
-    double fullHeight = MediaQuery.of(context).size.height;
-    double fullWidth = MediaQuery.of(context).size.width;
+    //double fullHeight = MediaQuery.of(context).size.height;
+    //double fullWidth = MediaQuery.of(context).size.width;
     bool isLoading = false;
 
     return ListView(

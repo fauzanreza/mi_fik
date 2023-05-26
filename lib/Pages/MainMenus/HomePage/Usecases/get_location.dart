@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mi_fik/Modules/Helpers/converter.dart';
-import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 

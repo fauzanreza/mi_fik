@@ -114,7 +114,7 @@ class _DayHeader extends State<DayHeader> with TickerProviderStateMixin {
           ),
         ],
       ),
-      DayEvent()
+      const DayEvent()
     ]);
   }
 }

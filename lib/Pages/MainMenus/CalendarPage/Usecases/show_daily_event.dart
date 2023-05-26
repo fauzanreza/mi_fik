@@ -74,7 +74,7 @@ class _DayEvent extends State<DayEvent> with TickerProviderStateMixin {
                 hourChipBefore = now;
                 return getHourChipLine(content.dateStart, fullWidth);
               } else {
-                return SizedBox();
+                return const SizedBox();
               }
             }
 

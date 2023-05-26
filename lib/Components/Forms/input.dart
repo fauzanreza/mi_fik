@@ -13,7 +13,7 @@ Widget getInputText(int len, var ctrl, bool secure) {
       controller: ctrl,
       obscureText: secure,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+        contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
         fillColor: mainbg,
         filled: true,
         border: InputBorder.none,
@@ -40,10 +40,9 @@ Widget getInputTextAtt(int len, String id, String obj) {
       onChanged: (value) {
         int idx = listAttachment.indexWhere((e) => e['id'] == id);
         listAttachment[idx][obj] = value.trim();
-        print(listAttachment);
       },
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+        contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
         fillColor: mainbg,
         filled: true,
         border: InputBorder.none,

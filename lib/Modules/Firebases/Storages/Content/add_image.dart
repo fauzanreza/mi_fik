@@ -6,14 +6,13 @@ import 'package:uuid/uuid.dart';
 class PostImageContent {
   Future<String> sendImageContent(XFile imageFile, String path) async {
     final prefs = await SharedPreferences.getInstance();
-    final id = prefs.getString('id_key');
     String url;
     String seed;
 
     if (imageFile != null) {
-      seed = Uuid().v4();
+      seed = const Uuid().v4();
 
-      Reference ref = FirebaseStorage.instance.ref(path).child("$seed");
+      Reference ref = FirebaseStorage.instance.ref(path).child(seed);
 
       final metadata = SettableMetadata(
         //contentType: 'image',

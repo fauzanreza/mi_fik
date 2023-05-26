@@ -9,7 +9,12 @@ class ShowCalendar extends StatelessWidget {
   final Function(DateTime, DateTime) setActionday;
 
   const ShowCalendar(
-      {this.active, this.format, this.setActionformat, this.setActionday});
+      {Key key,
+      this.active,
+      this.format,
+      this.setActionformat,
+      this.setActionday})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

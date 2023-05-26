@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/Bars/Usecases/show_side_bar.dart';
-import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Bars/left_bar.dart';
 import 'package:mi_fik/Components/Bars/right_bar.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/MainMenus/CalendarPage/Usecases/show_daily_event.dart';
 import 'package:mi_fik/Pages/MainMenus/CalendarPage/Usecases/show_calendar.dart';
 import 'package:mi_fik/Pages/MainMenus/CalendarPage/Usecases/show_daily_header.dart';
 import 'package:table_calendar/table_calendar.dart';

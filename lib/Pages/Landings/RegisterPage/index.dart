@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/Backgrounds/custom.dart';
-import 'package:mi_fik/Modules/Variables/style.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key key}) : super(key: key);
@@ -13,7 +12,7 @@ class _RegisterPage extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
-    double fullWidth = MediaQuery.of(context).size.width;
+    //double fullWidth = MediaQuery.of(context).size.width;
 
     return WillPopScope(
         onWillPop: () async {
@@ -24,7 +23,7 @@ class _RegisterPage extends State<RegisterPage> {
             body: CustomPaint(
                 painter: CirclePainterSide(),
                 child: ListView(
-                  children: [],
+                  children: const [],
                 ))));
   }
 }
