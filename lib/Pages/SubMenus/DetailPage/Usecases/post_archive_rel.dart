@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Models/queries.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Services/queries.dart';
-import 'package:mi_fik/Modules/Helpers/converter.dart';
-import 'package:mi_fik/Modules/Helpers/generator.dart';
 
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -40,9 +38,11 @@ class _PostArchiveRelation extends State<PostArchiveRelation> {
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
             List<ArchiveModel> archieves = snapshot.data;
+            listArchiveCheck = [];
             archieves.forEach((e) {
-              listArchiveCheck.add({"slug": e.slug, "check": e.found});
+              listArchiveCheck.add({"slug_name": e.slug, "check": e.found});
             });
+            print(listArchiveCheck);
             return _buildListView(archieves);
           } else {
             return const Center(
@@ -68,7 +68,7 @@ class _PostArchiveRelation extends State<PostArchiveRelation> {
               context: context,
               barrierColor: primaryColor.withOpacity(0.5),
               builder: (BuildContext context) =>
-                  ListArchive(archieves: archieves)),
+                  ListArchive(archieves: archieves, passSlug: widget.passSlug)),
           style: ButtonStyle(
             backgroundColor: MaterialStatePropertyAll<Color>(primaryColor),
           ),

@@ -289,13 +289,15 @@ String getRandomString(int length) {
   return chars;
 }
 
-String getTotalArchieve(event, task) {
+String getTotalArchive(event, task) {
   if ((event != 0) && (task == 0)) {
     return "$event Events";
   } else if ((event == 0) && (task != 0)) {
     return "$task Task";
-  } else {
+  } else if ((event > 0) && (task > 0)) {
     return "$event Events, $task Task";
+  } else {
+    return "No event and task attached";
   }
 }
 

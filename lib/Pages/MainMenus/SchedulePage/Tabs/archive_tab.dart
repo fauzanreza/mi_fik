@@ -4,6 +4,7 @@ import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Skeletons/archive_1.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Models/queries.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Services/queries.dart';
+import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
@@ -51,17 +52,6 @@ class _ArchivePage extends State<ArchivePage> {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
-    //Get total content in an archive
-    getTotalArchive(event, task) {
-      if ((event != 0) && (task == 0)) {
-        return "$event Events";
-      } else if ((event == 0) && (task != 0)) {
-        return "$task Task";
-      } else {
-        return "$event Events, $task Task";
-      }
-    }
-
     Widget getData(List<ArchiveModel> contents) {
       if (contents != null) {
         return Column(
@@ -91,9 +81,9 @@ class _ArchivePage extends State<ArchivePage> {
                       );
                     },
                     child: Container(
-                        height: 60,
                         width: fullWidth * 0.7,
-                        padding: EdgeInsets.symmetric(horizontal: paddingSM),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: paddingSM, vertical: paddingMD),
                         margin: EdgeInsets.only(top: marginMT),
                         transform: Matrix4.translationValues(55.0, 5.0, 0.0),
                         decoration: BoxDecoration(
@@ -112,27 +102,25 @@ class _ArchivePage extends State<ArchivePage> {
                             )
                           ],
                         ),
-                        child: Row(children: [
-                          SizedBox(
-                            width: fullWidth * 0.35,
-                            child: Text(archive.archiveName,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(archive.archiveName,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      color: blackbg,
+                                      fontSize: textSM,
+                                      fontWeight: FontWeight.w500)),
+                              SizedBox(height: paddingXSM),
+                              Text(
+                                  getTotalArchive(
+                                      archive.totalEvent, archive.totalTask),
+                                  style: TextStyle(
                                     color: blackbg,
-                                    fontSize: textSM,
-                                    fontWeight: FontWeight.w500)),
-                          ),
-                          const Spacer(),
-                          //This text is to small and will affect the name of archive.
-                          Text(
-                              getTotalArchive(
-                                  archive.totalEvent, archive.totalTask),
-                              style: TextStyle(
-                                color: blackbg,
-                                fontSize: textXSM,
-                              )),
-                        ])))
+                                    fontSize: textXSM,
+                                  )),
+                            ])))
               ])));
         }).toList());
       } else {

@@ -22,8 +22,6 @@ var slctFeedbackType = "feedback_design";
 var slctAttachmentType = "image";
 var slctReminderType = "reminder_3_hour_before";
 
-List archieveVal = [];
-
 int selectedIndex = 0;
 
 // Starting Variables

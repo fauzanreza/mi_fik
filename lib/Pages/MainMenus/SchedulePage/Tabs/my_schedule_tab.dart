@@ -62,17 +62,6 @@ class _MySchedulePage extends State<MySchedulePage> {
     double fullWidth = MediaQuery.of(context).size.width;
     bool isLoading;
 
-    //Get total content in an archieve.
-    getTotalArchieve(event, task) {
-      if ((event != 0) && (task == 0)) {
-        return "$event Events";
-      } else if ((event == 0) && (task != 0)) {
-        return "$task Task";
-      } else {
-        return "$event Events, $task Task";
-      }
-    }
-
     if ((contents != null) && (contents.isNotEmpty)) {
       return Container(
           margin: const EdgeInsets.only(left: 15, top: 10),
