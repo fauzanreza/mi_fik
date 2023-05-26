@@ -59,3 +59,21 @@ String deleteArchiveModelToJson(DeleteArchiveModel data) {
   final jsonData = data.toJson();
   return json.encode(jsonData);
 }
+
+// Use case multi relation archive
+class MultiRelationArchiveModel {
+  String list;
+
+  MultiRelationArchiveModel({this.list});
+
+  Map<String, dynamic> toJson() {
+    return {
+      "list_relation": list,
+    };
+  }
+}
+
+String multiActionArchiveModelToJson(MultiRelationArchiveModel data) {
+  final jsonData = data.toJson();
+  return json.encode(jsonData);
+}

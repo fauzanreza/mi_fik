@@ -21,7 +21,7 @@ class _ProfilePage extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     double fullHeight = MediaQuery.of(context).size.height;
-    double fullWidth = MediaQuery.of(context).size.width;
+    //double fullWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
         appBar: getAppbar("Profile"),
@@ -30,7 +30,7 @@ class _ProfilePage extends State<ProfilePage> {
             child: ListView(
                 padding: EdgeInsets.only(top: fullHeight * 0.04),
                 children: [
-                  ShowProfile(),
+                  const ShowProfile(),
                   const GetEditProfile(),
                   Container(
                       height: fullHeight * 0.7,

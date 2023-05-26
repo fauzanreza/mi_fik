@@ -28,7 +28,7 @@ class _LocationButton extends State<LocationButton>
   Marker _origin;
   Marker _destination;
   Position position;
-  String my_long = "", my_lat = "";
+  String mylong = "", mylat = "";
   StreamSubscription<Position> positionStream;
   Uint8List bytes;
 
@@ -43,8 +43,8 @@ class _LocationButton extends State<LocationButton>
     position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
 
-    my_long = position.longitude.toString();
-    my_lat = position.latitude.toString();
+    mylong = position.longitude.toString();
+    mylat = position.latitude.toString();
 
     setState(() {
       //refresh UI
@@ -54,15 +54,6 @@ class _LocationButton extends State<LocationButton>
       accuracy: LocationAccuracy.high,
       distanceFilter: 100,
     );
-
-    StreamSubscription<Position> positionStream =
-        Geolocator.getPositionStream(locationSettings: locationSettings)
-            .listen((Position position) {
-      my_long = position.longitude.toString();
-      my_lat = position.latitude.toString();
-
-      setState(() {});
-    });
 
     String imgurl =
         "https://leonardhors.site/public/assets/img/87409344219_PAS_FOTO_2.jpg";
@@ -123,7 +114,7 @@ class _LocationButton extends State<LocationButton>
                             //     BitmapDescriptor.hueRed),
                             icon: BitmapDescriptor.fromBytes(bytes),
                             position: LatLng(
-                                double.parse(my_lat), double.parse(my_long)),
+                                double.parse(mylat), double.parse(mylong)),
                           )
                         },
                       ),
@@ -139,8 +130,8 @@ class _LocationButton extends State<LocationButton>
                             String googleUrl =
                                 //'https://www.google.com/maps/dir/Current+Location/?api=1&query=${lat},${lng}';
                                 'https://www.google.com/maps/dir/Current+Location/$lat,$lng';
-                            if (await canLaunch(googleUrl)) {
-                              await launch(googleUrl);
+                            if (await canLaunchUrl(Uri.parse(googleUrl))) {
+                              await launchUrl(Uri.parse(googleUrl));
                             } else {
                               throw 'Could not open the map.';
                             }

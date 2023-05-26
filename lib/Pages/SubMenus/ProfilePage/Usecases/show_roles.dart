@@ -36,7 +36,7 @@ class ShowRole extends StatelessWidget {
                     initiallyExpanded: false,
                     iconColor: primaryColor,
                     textColor: blackbg,
-                    leading: const Icon(Icons.tag),
+                    leading: Icon(Icons.tag, size: iconLG),
                     expandedCrossAxisAlignment: CrossAxisAlignment.start,
                     expandedAlignment: Alignment.topLeft,
                     title: Text(ucFirst("My Roles"),

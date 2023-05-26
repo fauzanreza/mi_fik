@@ -18,7 +18,7 @@ class UserQueriesService {
     final response =
         await client.get(Uri.parse("$emuUrl/api/v1/user/"), headers: header);
     if (response.statusCode == 200) {
-      return UserProfileModelFromJson(response.body);
+      return userProfileModelFromJson(response.body);
     } else {
       return null;
     }

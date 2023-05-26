@@ -62,17 +62,6 @@ class _MySchedulePage extends State<MySchedulePage> {
     double fullWidth = MediaQuery.of(context).size.width;
     bool isLoading;
 
-    //Get total content in an archieve.
-    getTotalArchieve(event, task) {
-      if ((event != 0) && (task == 0)) {
-        return "$event Events";
-      } else if ((event == 0) && (task != 0)) {
-        return "$task Task";
-      } else {
-        return "$event Events, $task Task";
-      }
-    }
-
     if ((contents != null) && (contents.isNotEmpty)) {
       return Container(
           margin: const EdgeInsets.only(left: 15, top: 10),
@@ -81,8 +70,19 @@ class _MySchedulePage extends State<MySchedulePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: contents.map((content) {
+                getChipHour(String ds) {
+                  String now = DateTime.parse(ds).hour.toString();
+
+                  if (hourChipBefore == "" || hourChipBefore != now) {
+                    hourChipBefore = now;
+                    return getHourChipLine(content.dateStart, fullWidth);
+                  } else {
+                    return const SizedBox();
+                  }
+                }
+
                 return Column(children: [
-                  getHourChip(content.dateStart, hourChipBefore, fullWidth),
+                  getChipHour(content.dateStart),
                   SizedBox(
                       width: fullWidth,
                       child: IntrinsicHeight(

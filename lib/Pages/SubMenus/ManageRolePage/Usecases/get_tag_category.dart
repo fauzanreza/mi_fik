@@ -48,7 +48,7 @@ class _GetAllTagCategory extends State<GetAllTagCategory> {
 
   Widget _buildListView(List<TagCategoryModel> contents) {
     //double fullHeight = MediaQuery.of(context).size.height;
-    double fullWidth = MediaQuery.of(context).size.width;
+    //double fullWidth = MediaQuery.of(context).size.width;
 
     return ListView.builder(
         itemCount: contents.length,

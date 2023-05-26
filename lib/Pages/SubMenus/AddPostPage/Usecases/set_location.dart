@@ -12,7 +12,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class SetLocation extends StatefulWidget {
-  const SetLocation({Key key}) : super(key: key);
+  SetLocation({Key key, this.locDetailCtrl}) : super(key: key);
+  var locDetailCtrl;
 
   @override
   _SetLocation createState() => _SetLocation();
@@ -28,7 +29,7 @@ class _SetLocation extends State<SetLocation>
   bool haspermission = false;
   LocationPermission permission;
   Position position;
-  double my_long = 0, my_lat = 0;
+  double mylong = 0, mylat = 0;
   StreamSubscription<Position> positionStream;
   Uint8List bytes;
 
@@ -88,8 +89,8 @@ class _SetLocation extends State<SetLocation>
     position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
 
-    my_long = position.longitude;
-    my_lat = position.latitude;
+    mylong = position.longitude;
+    mylat = position.latitude;
 
     // setState(() {
     //   //refresh UI
@@ -103,8 +104,8 @@ class _SetLocation extends State<SetLocation>
     StreamSubscription<Position> positionStream =
         Geolocator.getPositionStream(locationSettings: locationSettings)
             .listen((Position position) {
-      my_long = position.longitude;
-      my_lat = position.latitude;
+      mylong = position.longitude;
+      mylat = position.latitude;
 
       setState(() {});
     });
@@ -130,7 +131,7 @@ class _SetLocation extends State<SetLocation>
 
     //Maps starting point.
     final _initialCameraPosition = CameraPosition(
-      target: LatLng(my_lat, my_long),
+      target: LatLng(mylat, mylong),
       zoom: 14,
     );
 
@@ -190,34 +191,17 @@ class _SetLocation extends State<SetLocation>
                           }),
                         ),
                       ),
+                      SizedBox(height: paddingMD),
                       Container(
-                          padding: EdgeInsets.zero,
-                          margin: EdgeInsets.only(top: paddingMD),
-                          width: fullWidth,
-                          height: btnHeightMD - 10,
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              //....
-                            },
-                            style: ButtonStyle(
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              )),
-                              backgroundColor:
-                                  MaterialStatePropertyAll<Color>(primaryColor),
-                            ),
-                            child: const Text('Event Location'),
-                          )),
-                      getSubTitleMedium("Location Name", blackbg),
-                      getInputText(75, locDetailCtrl, false)
+                          alignment: Alignment.centerLeft,
+                          child: getSubTitleMedium("Location Name", blackbg)),
+                      getInputText(75, widget.locDetailCtrl, false)
                     ]),
                   ));
             });
           }).then((_) => setState(() {})), //Check this again !!!!
       icon: Icon(Icons.location_on_outlined, size: 22, color: semiblackbg),
-      label: Text(getButtonText(locCoordinateCtrl, locDetailCtrl.text),
+      label: Text(getButtonText(locCoordinateCtrl, widget.locDetailCtrl.text),
           style: TextStyle(
               fontSize: textMD,
               color: semiblackbg,

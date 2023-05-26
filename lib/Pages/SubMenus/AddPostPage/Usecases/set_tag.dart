@@ -29,7 +29,7 @@ class _ChooseTag extends State<ChooseTag> {
   @override
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
-    double fullWidth = MediaQuery.of(context).size.width;
+    //double fullWidth = MediaQuery.of(context).size.width;
 
     Widget getControlButton(type) {
       if (type == "more") {

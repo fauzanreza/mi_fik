@@ -187,7 +187,6 @@ class _DetailTask extends State<DetailTask> {
                                   builder: (BuildContext context) =>
                                       FailedDialog(
                                           text: body, type: "addtask"));
-                              print(task.dateEnd);
                             }
                           });
                         } else {

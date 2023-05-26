@@ -25,24 +25,24 @@ class DictionaryQueryService {
       var arrSlcType = dictionaryTypeModelFromJson(response.body);
 
       if (type == "QST-001") {
-        arrQtyType.forEach((e) {
+        for (var e in arrQtyType) {
           questionTypeOpt.add(e.slug);
-        });
+        }
         slctQuestionType = questionTypeOpt.first;
       } else if (type == "FBC-001") {
-        arrFbcType.forEach((e) {
+        for (var e in arrFbcType) {
           feedbackTypeOpt.add(e.slug);
-        });
+        }
         slctFeedbackType = feedbackTypeOpt.first;
       } else if (type == "ATT-001") {
-        arrAttType.forEach((e) {
+        for (var e in arrAttType) {
           attachmentTypeOpt.add(e.slug);
-        });
+        }
         slctAttachmentType = attachmentTypeOpt.first;
       } else if (type == "SLC-001") {
-        arrSlcType.forEach((e) {
+        for (var e in arrSlcType) {
           reminderTypeOpt.add(e.slug);
-        });
+        }
         slctReminderType = reminderTypeOpt.first;
       }
     } else {

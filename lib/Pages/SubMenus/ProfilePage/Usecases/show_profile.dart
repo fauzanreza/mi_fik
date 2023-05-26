@@ -6,6 +6,8 @@ import 'package:mi_fik/Pages/SubMenus/ProfilePage/Usecases/edit_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ShowProfile extends StatelessWidget {
+  const ShowProfile({Key key}) : super(key: key);
+
   Future<UserProfileLeftBar> getToken() async {
     final prefs = await SharedPreferences.getInstance();
     final username = prefs.getString('username_key');

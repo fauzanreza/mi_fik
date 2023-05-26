@@ -93,11 +93,11 @@ Widget getProfileButton(
                 horizontal: paddingSM, vertical: paddingMD),
             child: Row(
               children: [
-                Icon(iconStart, color: greybg, size: iconMD * 0.8),
+                Icon(iconStart, color: greybg, size: iconLG),
                 const SizedBox(width: 35),
                 Text(title, style: TextStyle(fontSize: textMD - 1)),
                 const Spacer(),
-                Icon(iconEnd, color: greybg, size: iconMD * 0.8),
+                Icon(iconEnd, color: greybg, size: iconLG),
               ],
             )),
       ));

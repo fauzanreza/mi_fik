@@ -40,10 +40,6 @@ class _GetEditProfileState extends State<GetEditProfile> {
     super.dispose();
   }
 
-  void _refreshPage() {
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(

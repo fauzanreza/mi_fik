@@ -34,8 +34,8 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
 
   @override
   Widget build(BuildContext context) {
-    double fullHeight = MediaQuery.of(context).size.height;
-    double fullWidth = MediaQuery.of(context).size.width;
+    //double fullHeight = MediaQuery.of(context).size.height;
+    //double fullWidth = MediaQuery.of(context).size.width;
     bool isLoading;
 
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -61,7 +61,7 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
                       onTap: () {
                         var type = "attachment_url";
                         listAttachment.add({
-                          "id": Uuid().v4().substring(0, 8),
+                          "id": const Uuid().v4().substring(0, 8),
                           "attach_type": type,
                           "attach_name": null,
                           "attach_url": null
@@ -88,7 +88,7 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
                             .sendImageContent(file, type)
                             .then((value) {
                           listAttachment.add({
-                            "id": Uuid().v4().substring(0, 8),
+                            "id": const Uuid().v4().substring(0, 8),
                             "attach_type": type,
                             "attach_name": null,
                             "attach_url": value
@@ -96,7 +96,6 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
                         });
                         FullScreenMenu.hide();
                         setState(() {});
-                        print(listAttachment);
                       }
                     },
                   ),
@@ -114,7 +113,7 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
                             .sendImageContent(file, type)
                             .then((value) {
                           listAttachment.add({
-                            "id": Uuid().v4().substring(0, 8),
+                            "id": const Uuid().v4().substring(0, 8),
                             "attach_type": type,
                             "attach_name": null,
                             "attach_url": value
@@ -122,7 +121,6 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
                         });
                         FullScreenMenu.hide();
                         setState(() {});
-                        print(listAttachment);
                       }
                     },
                   ),
@@ -142,7 +140,7 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
           ),
         ),
       ),
-      GetFileAttachment()
+      const GetFileAttachment()
     ]);
   }
 }

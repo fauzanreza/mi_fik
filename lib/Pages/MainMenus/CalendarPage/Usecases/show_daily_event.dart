@@ -23,7 +23,7 @@ class _DayEvent extends State<DayEvent> with TickerProviderStateMixin {
   ContentQueriesService queryService;
   ContentCommandsService commandService;
 
-  String hourChipBefore;
+  String hourChipBefore = "";
 
   @override
   void initState() {
@@ -67,8 +67,19 @@ class _DayEvent extends State<DayEvent> with TickerProviderStateMixin {
           padding: const EdgeInsets.only(bottom: 15),
           child: Column(
               children: contents.map((content) {
+            getChipHour(String ds) {
+              String now = DateTime.parse(ds).hour.toString();
+
+              if (hourChipBefore == "" || hourChipBefore != now) {
+                hourChipBefore = now;
+                return getHourChipLine(content.dateStart, fullWidth);
+              } else {
+                return const SizedBox();
+              }
+            }
+
             return Column(children: [
-              getHourChip(content.dateStart, hourChipBefore, fullWidth),
+              getChipHour(content.dateStart),
               SizedBox(
                   width: fullWidth,
                   child: IntrinsicHeight(

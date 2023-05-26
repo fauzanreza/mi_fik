@@ -1,6 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 // Navigation
@@ -9,6 +6,7 @@ String passSlugContent;
 // Others
 String locName;
 List listAttachment = [];
+List<Map<String, dynamic>> listArchiveCheck = [];
 
 // Selected
 var selectedArchiveName;
@@ -22,9 +20,6 @@ var slctQuestionType = "event";
 var slctFeedbackType = "feedback_design";
 var slctAttachmentType = "image";
 var slctReminderType = "reminder_3_hour_before";
-final locDetailCtrl = TextEditingController();
-
-List archieveVal = [];
 
 int selectedIndex = 0;
 

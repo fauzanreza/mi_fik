@@ -6,6 +6,7 @@ import 'package:mi_fik/Modules/APIs/ContentApi/Services/query_contents.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/MainMenus/CalendarPage/Usecases/show_daily_event.dart';
 
 class DayHeader extends StatefulWidget {
   DayHeader({Key key, this.selectedDay}) : super(key: key);
@@ -60,57 +61,60 @@ class _DayHeader extends State<DayHeader> with TickerProviderStateMixin {
       return total;
     }
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Container(
-          margin: const EdgeInsets.only(left: 15),
-          child: Column(
-            children: [
-              Text(
-                DateFormat("EEE").format(widget.selectedDay),
-                style: GoogleFonts.poppins(
-                  color: primaryColor,
-                  fontSize: textMD,
-                  //fontWeight: FontWeight.bold,
+    return Column(children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            margin: const EdgeInsets.only(left: 15),
+            child: Column(
+              children: [
+                Text(
+                  DateFormat("EEE").format(widget.selectedDay),
+                  style: GoogleFonts.poppins(
+                    color: primaryColor,
+                    fontSize: textMD,
+                    //fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              Text(
-                DateFormat("d").format(widget.selectedDay),
-                style: GoogleFonts.poppins(
-                  color: primaryColor,
-                  fontSize: textLG,
-                  fontWeight: FontWeight.bold,
+                Text(
+                  DateFormat("d").format(widget.selectedDay),
+                  style: GoogleFonts.poppins(
+                    color: primaryColor,
+                    fontSize: textLG,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        Container(
-          margin: const EdgeInsets.only(left: 15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                getTodayCalendarHeader(widget.selectedDay),
-                style: GoogleFonts.poppins(
-                  color: Colors.grey,
-                  fontSize: textLG,
-                  //fontWeight: FontWeight.bold,
+          Container(
+            margin: const EdgeInsets.only(left: 15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  getTodayCalendarHeader(widget.selectedDay),
+                  style: GoogleFonts.poppins(
+                    color: Colors.grey,
+                    fontSize: textLG,
+                    //fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              Text(
-                getTotalContext(contents),
-                style: GoogleFonts.poppins(
-                  color: Colors.grey,
-                  fontSize: textSM,
-                  //fontWeight: FontWeight.bold,
+                Text(
+                  getTotalContext(contents),
+                  style: GoogleFonts.poppins(
+                    color: Colors.grey,
+                    fontSize: textSM,
+                    //fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
-    );
+        ],
+      ),
+      const DayEvent()
+    ]);
   }
 }
