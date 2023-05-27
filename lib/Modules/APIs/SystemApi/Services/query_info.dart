@@ -1,15 +1,12 @@
 import 'package:http/http.dart' show Client;
 import 'package:mi_fik/Modules/APIs/SystemApi/Models/query_info.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class InfoQueriesService {
   final String baseUrl = "https://mifik.id";
   final String emuUrl = "http://10.0.2.2:8000";
   Client client = Client();
 
-  Future<List<InfoModel>> getInfo(String page, String loc) async {
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token_key');
+  Future<InfoModel> getInfo(String page, String loc) async {
     final header = {
       'Accept': 'application/json',
     };

@@ -81,19 +81,26 @@ class _PostQuestion extends State<PostQuestion> {
                         padding:
                             EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
                         child: getInputDesc(255, 5, quBodyCtrl, false)),
-                    Row(children: [
-                      Container(
-                          margin: EdgeInsets.only(bottom: paddingMD),
-                          padding: EdgeInsets.only(left: paddingSM),
-                          child:
-                              getDropDownMain(slctQuestionType, questionTypeOpt,
-                                  (String newValue) {
-                            setState(() {
-                              slctQuestionType = newValue;
-                            });
-                          }, false, null)),
-                      // Info or help
-                    ]),
+                    Container(
+                      padding: EdgeInsets.only(left: paddingSM),
+                      child: Text("What do you think improvement should be",
+                          style: TextStyle(
+                            fontSize: textMD - 1,
+                            fontFamily: 'Poppins',
+                            color: blackbg,
+                            fontWeight: FontWeight.w500,
+                          )),
+                    ),
+                    Container(
+                        margin: EdgeInsets.only(bottom: paddingMD),
+                        padding: EdgeInsets.only(left: paddingSM),
+                        child:
+                            getDropDownMain(slctQuestionType, questionTypeOpt,
+                                (String newValue) {
+                          setState(() {
+                            slctQuestionType = newValue;
+                          });
+                        }, false, null)),
                     SizedBox(
                         width: fullWidth,
                         height: btnHeightMD,

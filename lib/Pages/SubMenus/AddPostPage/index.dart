@@ -324,10 +324,12 @@ class _AddPost extends State<AddPost> {
                                     )),
                                 const SetFileAttachment()
                               ])),
-                      GetInfoBox(
-                        page: "homepage",
-                        location: "add_event",
-                      )
+                      Container(
+                          padding: EdgeInsets.fromLTRB(20, paddingMD, 20, 0),
+                          child: GetInfoBox(
+                            page: "homepage",
+                            location: "add_event",
+                          ))
                     ]),
               )),
               SizedBox(
@@ -407,7 +409,7 @@ class _AddPost extends State<AddPost> {
                     },
                     style: ButtonStyle(
                       backgroundColor:
-                          MaterialStatePropertyAll<Color>(primaryColor),
+                          MaterialStatePropertyAll<Color>(successbg),
                     ),
                     child: const Text('Save Event'),
                   ))

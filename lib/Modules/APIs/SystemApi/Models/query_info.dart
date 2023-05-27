@@ -21,5 +21,5 @@ class InfoModel {
 
 InfoModel infoModelFromJson(String jsonData) {
   final data = json.decode(jsonData);
-  return InfoModel.fromJson(data);
+  return InfoModel.fromJson(data['data']);
 }

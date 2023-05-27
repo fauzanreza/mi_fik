@@ -70,7 +70,7 @@ class _PostArchiveRelation extends State<PostArchiveRelation> {
               builder: (BuildContext context) =>
                   ListArchive(archieves: archieves, passSlug: widget.passSlug)),
           style: ButtonStyle(
-            backgroundColor: MaterialStatePropertyAll<Color>(primaryColor),
+            backgroundColor: MaterialStatePropertyAll<Color>(successbg),
           ),
           child: const Text('Save Event'),
         ));

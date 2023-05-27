@@ -7,6 +7,7 @@ import 'package:mi_fik/Components/Forms/date_picker.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/command_tasks.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_tasks.dart';
+import 'package:mi_fik/Modules/Helpers/info.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -137,6 +138,12 @@ class _PostTask extends State<PostTask> {
                         });
                       }, true, "reminder_")),
                 ]),
+                Container(
+                    padding: EdgeInsets.fromLTRB(0, paddingMD, 0, 0),
+                    child: GetInfoBox(
+                      page: "homepage",
+                      location: "add_task",
+                    ))
               ],
             ),
           ),
@@ -146,7 +153,6 @@ class _PostTask extends State<PostTask> {
               height: btnHeightMD,
               child: ElevatedButton(
                 onPressed: () async {
-                  //Mapping.
                   AddTaskModel data = AddTaskModel(
                       taskTitle: taskTitleCtrl.text.trim(),
                       taskDesc: taskDescCtrl.text.trim(),
@@ -154,7 +160,6 @@ class _PostTask extends State<PostTask> {
                       dateEnd: validateDatetime(dateEndCtrl),
                       reminder: slctReminderType);
 
-                  //Validator
                   if (data.taskTitle.isNotEmpty) {
                     taskService.addTask(data).then((response) {
                       setState(() => isLoading = false);
