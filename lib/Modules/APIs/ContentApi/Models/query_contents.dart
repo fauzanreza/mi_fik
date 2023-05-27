@@ -169,26 +169,27 @@ class ScheduleModel {
   String dateEnd;
   int dataFrom;
   String totalViews;
+  String reminder;
 
-  ScheduleModel({
-    this.id,
-    this.slugName,
-    this.contentTitle,
-    this.contentDesc,
-    this.contentLoc,
-    this.dateStart,
-    this.dateEnd,
-    this.contentTag,
-    this.contentImage,
-    this.dataFrom,
-    this.acUsername,
-    this.ucImage,
-    this.acImage,
-    this.ucUsername,
-    this.totalViews,
-    this.createdAt,
-    this.updatedAt,
-  });
+  ScheduleModel(
+      {this.id,
+      this.slugName,
+      this.contentTitle,
+      this.contentDesc,
+      this.contentLoc,
+      this.dateStart,
+      this.dateEnd,
+      this.contentTag,
+      this.contentImage,
+      this.dataFrom,
+      this.acUsername,
+      this.ucImage,
+      this.acImage,
+      this.ucUsername,
+      this.totalViews,
+      this.createdAt,
+      this.updatedAt,
+      this.reminder});
 
   factory ScheduleModel.fromJson(Map<String, dynamic> map) {
     return ScheduleModel(
@@ -209,6 +210,7 @@ class ScheduleModel {
       createdAt: map["created_at"],
       updatedAt: map["updated_at"],
       totalViews: map["total_views"].toString(),
+      reminder: map["content_reminder"],
     );
   }
 }

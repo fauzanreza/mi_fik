@@ -67,6 +67,6 @@ Widget getMessageImageNoData(String url, String msg, double width) {
         child: Image.asset(url, width: width * 0.45),
       ),
     ),
-    getSubTitleMedium(msg, greybg)
+    getSubTitleMedium(msg, greybg, TextAlign.center)
   ]);
 }

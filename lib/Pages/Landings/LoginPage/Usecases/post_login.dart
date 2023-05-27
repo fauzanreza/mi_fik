@@ -77,8 +77,8 @@ class _PostLogin extends State<PostLogin> {
                     String token = await FirebaseMessaging.instance.getToken();
 
                     LoginModel data = LoginModel(
-                      username: usernameCtrl.text,
-                      password: passCtrl.text,
+                      username: usernameCtrl.text.trim(),
+                      password: passCtrl.text.trim(),
                     );
 
                     //Validator

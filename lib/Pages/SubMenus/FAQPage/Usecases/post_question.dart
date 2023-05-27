@@ -74,7 +74,8 @@ class _PostQuestion extends State<PostQuestion> {
                     Container(
                       padding: EdgeInsets.only(left: paddingMD),
                       alignment: Alignment.centerLeft,
-                      child: getSubTitleMedium("Question Body", blackbg),
+                      child: getSubTitleMedium(
+                          "Question Body", blackbg, TextAlign.start),
                     ),
                     Container(
                         padding:
@@ -100,7 +101,7 @@ class _PostQuestion extends State<PostQuestion> {
                           onPressed: () async {
                             AddQuestionModel data = AddQuestionModel(
                               quType: slctQuestionType,
-                              quBody: quBodyCtrl.text,
+                              quBody: quBodyCtrl.text.trim(),
                             );
 
                             //Validator

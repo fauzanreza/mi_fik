@@ -1,6 +1,6 @@
-// Usecase get my profile
 import 'dart:convert';
 
+// Usecase get my profile
 class UserProfileModel {
   String username;
   String email;
@@ -36,4 +36,26 @@ List<UserProfileModel> userProfileModelFromJson(String jsonData) {
   final data = json.decode(jsonData);
   return List<UserProfileModel>.from(
       data['data'].map((item) => UserProfileModel.fromJson(item)));
+}
+
+// Usecase get my request
+class UserRequestModel {
+  List<dynamic> tagSlugName;
+  String type;
+  String createdAt;
+
+  UserRequestModel({this.tagSlugName, this.createdAt, this.type});
+
+  factory UserRequestModel.fromJson(Map<String, dynamic> map) {
+    return UserRequestModel(
+        tagSlugName: map["tag_slug_name"],
+        createdAt: map["request_type"],
+        type: map["created_at"]);
+  }
+}
+
+List<UserRequestModel> userRequestModelFromJson(String jsonData) {
+  final data = json.decode(jsonData);
+  return List<UserRequestModel>.from(
+      data['data'].map((item) => UserRequestModel.fromJson(item)));
 }

@@ -40,7 +40,13 @@ class _PostSelectedRole extends State<PostSelectedRole> {
             icon: const Icon(Icons.close),
             tooltip: 'Back',
             onPressed: () {
-              Navigator.pop(context);
+              setState(() {
+                selectedRole.clear();
+              });
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const RolePage()),
+              );
             },
           ),
         ),

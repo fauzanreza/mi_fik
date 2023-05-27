@@ -24,7 +24,9 @@ class _ProfilePage extends State<ProfilePage> {
     //double fullWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-        appBar: getAppbar("Profile"),
+        appBar: getAppbar("Profile", () {
+          Navigator.pop(context);
+        }),
         body: CustomPaint(
             painter: CirclePainter(),
             child: ListView(

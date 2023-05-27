@@ -111,9 +111,9 @@ class _GetEditProfileState extends State<GetEditProfile> {
               InkWell(
                 onTap: () async {
                   EditUserProfileModel data = EditUserProfileModel(
-                      password: passCtrl.text,
-                      lastName: lNameCtrl.text,
-                      firstName: fNameCtrl.text);
+                      password: passCtrl.text.trim(),
+                      lastName: lNameCtrl.text.trim(),
+                      firstName: fNameCtrl.text.trim());
 
                   //Validator
                   if (data.password.isNotEmpty &&

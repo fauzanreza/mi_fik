@@ -16,7 +16,9 @@ class _SettingPage extends State<SettingPage> {
     //double fullWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: getAppbar("Setting"),
+      appBar: getAppbar("Setting", () {
+        Navigator.pop(context);
+      }),
       body: ListView(
         children: [
           TextButton(

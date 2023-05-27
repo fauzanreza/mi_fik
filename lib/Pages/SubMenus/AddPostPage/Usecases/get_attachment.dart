@@ -70,7 +70,7 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
               others: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  getSubTitleMedium("Attachment URL", blackbg),
+                  getSubTitleMedium("Attachment URL", blackbg, TextAlign.start),
                   getInputTextAtt(75, e['id'], 'attach_url'),
                 ],
               ));

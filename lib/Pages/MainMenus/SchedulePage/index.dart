@@ -92,7 +92,7 @@ class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
                     Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
                   getGreeting(getToday("part"), primaryColor),
                   const Spacer(),
-                  getSubTitleMedium(getToday("date"), blackbg)
+                  getSubTitleMedium(getToday("date"), blackbg, TextAlign.start)
                 ]),
               ),
               GetWeeklyNavigator(active: slctSchedule, action: navigateDay),

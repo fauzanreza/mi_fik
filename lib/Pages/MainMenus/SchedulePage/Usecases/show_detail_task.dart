@@ -10,6 +10,7 @@ import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/command_tasks.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_tasks.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class DetailTask extends StatefulWidget {
@@ -57,8 +58,7 @@ class _DetailTask extends State<DetailTask> {
     dateEndCtrl ??= DateTime.parse(widget.data.dateEnd);
 
     return SizedBox(
-        height:
-            fullHeight * 0.6, //Pop up height based on fullwidth (Square maps).
+        height: 500,
         width: fullWidth,
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Container(
@@ -77,7 +77,7 @@ class _DetailTask extends State<DetailTask> {
           ),
           Container(
             padding: EdgeInsets.only(left: paddingSM),
-            child: getSubTitleMedium("Task Name", blackbg),
+            child: getSubTitleMedium("Title", blackbg, TextAlign.start),
           ),
           Container(
             padding: EdgeInsets.symmetric(horizontal: paddingSM),
@@ -85,7 +85,8 @@ class _DetailTask extends State<DetailTask> {
           ),
           Container(
             padding: EdgeInsets.only(left: paddingSM),
-            child: getSubTitleMedium("Notes (Optional)", blackbg),
+            child:
+                getSubTitleMedium("Notes (Optional)", blackbg, TextAlign.start),
           ),
           Container(
             padding: EdgeInsets.symmetric(horizontal: paddingSM),
@@ -134,33 +135,28 @@ class _DetailTask extends State<DetailTask> {
                     onPressed: () {},
                     child: const Text('Reminder :'),
                   ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: primaryColor,
-                      backgroundColor: whitebg,
-                      side: BorderSide(
-                        width: 1.0,
-                        color: primaryColor,
-                      ),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0)),
-                    ),
-                    onPressed: () {},
-                    child: const Text('1 Hour Before'),
-                  ),
+                  Container(
+                      padding: EdgeInsets.only(left: paddingXSM),
+                      child:
+                          getDropDownMain(widget.data.reminder, reminderTypeOpt,
+                              (String newValue) {
+                        setState(() {
+                          slctReminderType = newValue;
+                        });
+                      }, true, "reminder_")),
                 ]),
                 Container(
-                    margin: EdgeInsets.only(top: paddingXSM),
+                    margin: EdgeInsets.only(top: paddingMD),
                     width: fullWidth,
                     height: btnHeightMD,
                     child: ElevatedButton(
                       onPressed: () async {
                         AddTaskModel task = AddTaskModel(
-                            taskTitle: taskTitleCtrl.text.toString(),
-                            taskDesc: taskDescCtrl.text.toString(),
+                            taskTitle: taskTitleCtrl.text.trim(),
+                            taskDesc: taskDescCtrl.text.trim(),
                             dateStart: validateDatetime(dateStartCtrl),
                             dateEnd: validateDatetime(dateEndCtrl),
-                            reminder: "reminder_1_day_before");
+                            reminder: slctReminderType);
 
                         //Validator
                         if (task.taskTitle.isNotEmpty) {
