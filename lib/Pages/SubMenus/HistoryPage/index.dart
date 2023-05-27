@@ -16,7 +16,9 @@ class _HistoryPage extends State<HistoryPage> {
     //double fullWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: getAppbar("History"),
+      appBar: getAppbar("History", () {
+        Navigator.pop(context);
+      }),
       body: const GetMyHistory(),
     );
   }

@@ -6,6 +6,7 @@ import 'package:mi_fik/Modules/APIs/UserApi/Models/queries.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/queries.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/MainMenus/HomePage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/ManageRolePage/Usecases/get_tag_category.dart';
 import 'package:mi_fik/Pages/SubMenus/ManageRolePage/Usecases/post_selected_role.dart';
 
@@ -51,14 +52,21 @@ class _RolePage extends State<RolePage> {
     );
   }
 
-  @override
   Widget _buildListView(List<UserRequestModel> contents) {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
     if (contents == null) {
       return Scaffold(
-        appBar: getAppbar("Manage Role"),
+        appBar: getAppbar("Manage Role", () {
+          setState(() {
+            selectedRole.clear();
+          });
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const HomePage()),
+          );
+        }),
         body: const GetAllTagCategory(),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
@@ -92,7 +100,9 @@ class _RolePage extends State<RolePage> {
       );
     } else {
       return Scaffold(
-        appBar: getAppbar("Manage Role"),
+        appBar: getAppbar("Manage Role", () {
+          Navigator.pop(context);
+        }),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,

@@ -17,7 +17,9 @@ class _AboutPage extends State<AboutPage> {
     //double fullWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: getAppbar("About Us"),
+      appBar: getAppbar("About Us", () {
+        Navigator.pop(context);
+      }),
       body: ListView(children: const [GetAbout(), PostFeedback()]),
     );
   }

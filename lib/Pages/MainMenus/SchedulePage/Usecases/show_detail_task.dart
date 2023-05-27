@@ -58,8 +58,7 @@ class _DetailTask extends State<DetailTask> {
     dateEndCtrl ??= DateTime.parse(widget.data.dateEnd);
 
     return SizedBox(
-        height:
-            fullHeight * 0.6, //Pop up height based on fullwidth (Square maps).
+        height: 500,
         width: fullWidth,
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Container(
@@ -147,7 +146,7 @@ class _DetailTask extends State<DetailTask> {
                       }, true, "reminder_")),
                 ]),
                 Container(
-                    margin: EdgeInsets.only(top: paddingXSM),
+                    margin: EdgeInsets.only(top: paddingMD),
                     width: fullWidth,
                     height: btnHeightMD,
                     child: ElevatedButton(
