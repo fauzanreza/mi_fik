@@ -230,7 +230,7 @@ String getMessageResponseFromObject(val, type) {
 
 String getLocationName(var loc) {
   if (loc[0]['detail'] != null) {
-    return " ${loc[0]['detail']}";
+    return " ${ucFirst(loc[0]['detail'])}";
   } else {
     return " ${loc[1]['detail']}";
   }

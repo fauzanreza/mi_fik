@@ -10,6 +10,7 @@ import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/command_tasks.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_tasks.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class DetailTask extends StatefulWidget {
@@ -77,7 +78,7 @@ class _DetailTask extends State<DetailTask> {
           ),
           Container(
             padding: EdgeInsets.only(left: paddingSM),
-            child: getSubTitleMedium("Task Name", blackbg),
+            child: getSubTitleMedium("Title", blackbg),
           ),
           Container(
             padding: EdgeInsets.symmetric(horizontal: paddingSM),
@@ -134,20 +135,15 @@ class _DetailTask extends State<DetailTask> {
                     onPressed: () {},
                     child: const Text('Reminder :'),
                   ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: primaryColor,
-                      backgroundColor: whitebg,
-                      side: BorderSide(
-                        width: 1.0,
-                        color: primaryColor,
-                      ),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0)),
-                    ),
-                    onPressed: () {},
-                    child: const Text('1 Hour Before'),
-                  ),
+                  Container(
+                      padding: EdgeInsets.only(left: paddingXSM),
+                      child:
+                          getDropDownMain(widget.data.reminder, reminderTypeOpt,
+                              (String newValue) {
+                        setState(() {
+                          slctReminderType = newValue;
+                        });
+                      }, true, "reminder_")),
                 ]),
                 Container(
                     margin: EdgeInsets.only(top: paddingXSM),
@@ -160,7 +156,7 @@ class _DetailTask extends State<DetailTask> {
                             taskDesc: taskDescCtrl.text.toString(),
                             dateStart: validateDatetime(dateStartCtrl),
                             dateEnd: validateDatetime(dateEndCtrl),
-                            reminder: "reminder_1_day_before");
+                            reminder: slctReminderType);
 
                         //Validator
                         if (task.taskTitle.isNotEmpty) {

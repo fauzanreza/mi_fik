@@ -3,7 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Helpers/template.dart';
+import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:geocoding/geocoding.dart';
@@ -62,22 +64,16 @@ getTodayCalendarHeader(DateTime val) {
   }
 }
 
-getColor(date) {
-  if (DateFormat("HH").format(DateTime.now()) ==
-          DateFormat("HH").format(date) &&
-      DateFormat("dd").format(DateTime.now()) ==
-          DateFormat("dd").format(date)) {
+getColor(DateTime ds, DateTime de) {
+  if (isPassedDate(ds, de)) {
     return whitebg;
   } else {
     return primaryColor;
   }
 }
 
-getBgColor(date) {
-  if (DateFormat("HH").format(DateTime.now()) ==
-          DateFormat("HH").format(date) &&
-      DateFormat("dd").format(DateTime.now()) ==
-          DateFormat("dd").format(date)) {
+getBgColor(DateTime ds, DateTime de) {
+  if (isPassedDate(ds, de)) {
     return primaryColor;
   } else {
     return whitebg;
@@ -85,7 +81,7 @@ getBgColor(date) {
 }
 
 //Get content tag.
-Widget getTagShow(tag, dateStart) {
+Widget getTagShow(tag, dateStart, dateEnd) {
   int i = 0;
   int max = 3; //Maximum tag
 
@@ -94,7 +90,7 @@ Widget getTagShow(tag, dateStart) {
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: getColor(DateTime.parse(dateStart)),
+          color: getColor(DateTime.parse(dateStart), DateTime.parse(dateEnd)),
         ),
         child: Wrap(
             runSpacing: -5,
@@ -112,7 +108,8 @@ Widget getTagShow(tag, dateStart) {
                       TextSpan(
                         text: " ${content['tag_name']}",
                         style: GoogleFonts.poppins(
-                            color: getBgColor(DateTime.parse(dateStart)),
+                            color: getBgColor(DateTime.parse(dateStart),
+                                DateTime.parse(dateEnd)),
                             fontSize: textSM),
                       ),
                     ],
@@ -130,7 +127,8 @@ Widget getTagShow(tag, dateStart) {
                       TextSpan(
                         text: " See ${tag.length - max} More",
                         style: GoogleFonts.poppins(
-                            color: getBgColor(DateTime.parse(dateStart)),
+                            color: getBgColor(DateTime.parse(dateStart),
+                                DateTime.parse(dateEnd)),
                             fontSize: textSM),
                       ),
                     ],
@@ -148,7 +146,7 @@ Widget getTagShow(tag, dateStart) {
 String getDateText(DateTime date, String type, String view) {
   if (view == "datetime") {
     if (date != null) {
-      return DateFormat("dd-MM-yy ").format(date).toString();
+      return DateFormat("dd-MM-yy HH:mm").format(date).toString();
     } else {
       return "Set Date $type";
     }
@@ -172,7 +170,7 @@ Widget getLocation(loc, textColor) {
             child: Icon(Icons.location_on_outlined, color: textColor, size: 18),
           ),
           TextSpan(
-              text: " $location",
+              text: " ${ucFirst(location)}",
               style: TextStyle(fontWeight: FontWeight.w500, color: textColor)),
         ],
       ),
@@ -236,7 +234,10 @@ Widget getHourChipLine(String dateStart, double width) {
               WidgetSpan(
                 child: Icon(Icons.circle, size: 14, color: dangerColor),
               ),
-              TextSpan(text: " Now Live", style: TextStyle(color: dangerColor)),
+              TextSpan(
+                  text: " Just Started",
+                  style: TextStyle(
+                      color: dangerColor, fontWeight: FontWeight.w500)),
             ],
           ),
         )

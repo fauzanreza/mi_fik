@@ -76,3 +76,8 @@ Future checkGps(var func) async {
     print("GPS Service is not enabled, turn on GPS location");
   }
 }
+
+bool isPassedDate(DateTime ds, DateTime de) {
+  DateTime now = DateTime.now();
+  return now.isAfter(ds) && now.isBefore(de);
+}

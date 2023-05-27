@@ -7,6 +7,7 @@ import 'package:mi_fik/Components/Forms/input.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
+import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Helpers/widget.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -27,9 +28,9 @@ class _GetHomePageEventContainer extends State<GetHomePageEventContainer> {
   Widget getUsername(u1, u2) {
     String username = " ";
     if (u1 != null) {
-      username = u1;
+      username = "@$u1";
     } else if (u2 != null) {
-      username = u2;
+      username = "@$u2";
     } else {
       username = "Unknown User";
     }
@@ -138,13 +139,14 @@ class _GetHomePageEventContainer extends State<GetHomePageEventContainer> {
                                         color: blackbg,
                                         fontWeight: FontWeight.bold,
                                         fontSize: textMD - 1)),
+                                const SizedBox(height: 1),
                                 getUsername(widget.content.acUsername,
                                     widget.content.ucUsername),
                               ],
                             ))
                       ],
                     ),
-                    getDescHeaderWidget(widget.content.contentDesc)
+                    getDescHeaderWidget(widget.content.contentDesc, blackbg)
                   ]),
             ),
             Container(
@@ -214,21 +216,29 @@ class GetScheduleContainer extends StatelessWidget {
       : super(key: key);
 
   //Get icon based on event or task
-  Widget getIcon(type, dateStart) {
+  Widget getIcon(type, dateStart, dateEnd) {
     if (type == 1) {
       //Event or content
       return Icon(
         Icons.event_note_outlined,
-        color: getColor(DateTime.parse(dateStart)),
+        color: getColor(DateTime.parse(dateStart), DateTime.parse(dateEnd)),
         size: 38,
       );
     } else if (type == 2) {
       //Task
       return Icon(
         Icons.task,
-        color: getColor(DateTime.parse(dateStart)),
+        color: getColor(DateTime.parse(dateStart), DateTime.parse(dateEnd)),
         size: 38,
       );
+    } else {
+      return const SizedBox();
+    }
+  }
+
+  Widget getOngoingDesc(DateTime ds, DateTime de, String desc) {
+    if (isPassedDate(ds, de)) {
+      return getDescHeaderWidget(desc, whitebg);
     } else {
       return const SizedBox();
     }
@@ -244,7 +254,8 @@ class GetScheduleContainer extends StatelessWidget {
       transform: Matrix4.translationValues(40.0, 5.0, 0.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: getBgColor(DateTime.parse(content.dateStart)),
+        color: getBgColor(
+            DateTime.parse(content.dateStart), DateTime.parse(content.dateEnd)),
         boxShadow: [
           BoxShadow(
             color: const Color.fromARGB(255, 128, 128, 128).withOpacity(0.3),
@@ -269,7 +280,8 @@ class GetScheduleContainer extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                   style: GoogleFonts.poppins(
-                    color: getColor(DateTime.parse(content.dateStart)),
+                    color: getColor(DateTime.parse(content.dateStart),
+                        DateTime.parse(content.dateEnd)),
                     fontSize: textSM,
                     fontWeight: FontWeight.bold,
                   ),
@@ -281,20 +293,26 @@ class GetScheduleContainer extends StatelessWidget {
                   DateFormat("HH : mm a")
                       .format(DateTime.parse(content.dateStart)),
                   style: GoogleFonts.poppins(
-                    color: getColor(DateTime.parse(content.dateStart)),
+                    color: getColor(DateTime.parse(content.dateStart),
+                        DateTime.parse(content.dateEnd)),
                     fontWeight: FontWeight.w500,
                     fontSize: textSM,
                   ),
                 ),
               ],
             ),
+            getOngoingDesc(DateTime.parse(content.dateStart),
+                DateTime.parse(content.dateEnd), content.contentDesc),
             Container(
                 margin: const EdgeInsets.symmetric(vertical: 15),
-                child: getTagShow(content.contentTag, content.dateStart)),
+                child: getTagShow(
+                    content.contentTag, content.dateStart, content.dateEnd)),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 10),
-              child: getLocation(content.contentLoc,
-                  getColor(DateTime.parse(content.dateStart))),
+              child: getLocation(
+                  content.contentLoc,
+                  getColor(DateTime.parse(content.dateStart),
+                      DateTime.parse(content.dateEnd))),
             )
           ])),
     );

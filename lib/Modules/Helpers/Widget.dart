@@ -62,14 +62,14 @@ getImageHeader(url) {
   }
 }
 
-Widget getDescHeaderWidget(desc) {
+Widget getDescHeaderWidget(String desc, Color clr) {
   if (desc.trim() != "" && desc != "null") {
     return Container(
         margin: const EdgeInsets.only(top: 5),
         child: Text(removeHtmlTags(desc),
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(color: blackbg, fontSize: textSM)));
+            style: TextStyle(color: clr, fontSize: textSM)));
   } else {
     return Container(
         margin: const EdgeInsets.only(top: 5),
@@ -77,9 +77,7 @@ Widget getDescHeaderWidget(desc) {
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
-                color: blackbg,
-                fontSize: textSM,
-                fontStyle: FontStyle.italic)));
+                color: clr, fontSize: textSM, fontStyle: FontStyle.italic)));
   }
 }
 

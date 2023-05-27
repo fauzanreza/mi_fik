@@ -42,7 +42,6 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
       Container(
         alignment: Alignment.centerLeft,
         child: SizedBox(
-          width: 180,
           height: 40,
           child: TextButton.icon(
             onPressed: () async {
@@ -130,17 +129,17 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
             icon: Icon(
               Icons.attach_file,
               color: semiblackbg,
-            ), //icon data for elevated button
+            ),
             label: Text("Insert Attachment",
                 style: TextStyle(
                     fontSize: textMD,
                     color: semiblackbg,
                     fontWeight: FontWeight.w400)),
-            //label text
           ),
         ),
       ),
-      const GetFileAttachment()
+      // Dont use const in this class
+      GetFileAttachment()
     ]);
   }
 }
