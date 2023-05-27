@@ -354,7 +354,8 @@ class _GetAttachmentContainer extends State<GetAttachmentContainer> {
             padding: EdgeInsets.symmetric(vertical: paddingSM),
             child: getSubTitleMedium(
                 "Attachment Type : ${ucFirst(getSeparatedAfter("_", widget.data['attach_type']))}",
-                blackbg));
+                blackbg,
+                TextAlign.start));
       } else {
         return ExpansionTile(
             childrenPadding: EdgeInsets.only(
@@ -372,7 +373,8 @@ class _GetAttachmentContainer extends State<GetAttachmentContainer> {
                 padding: EdgeInsets.symmetric(vertical: paddingSM),
                 child: getSubTitleMedium(
                     "Attachment Type : ${ucFirst(getSeparatedAfter("_", widget.data['attach_type']))}",
-                    blackbg)),
+                    blackbg,
+                    TextAlign.start)),
             children: [widget.item]);
       }
     }
@@ -409,7 +411,7 @@ class _GetAttachmentContainer extends State<GetAttachmentContainer> {
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             getExpansion(widget.others),
-            getSubTitleMedium("Attachment Name", blackbg),
+            getSubTitleMedium("Attachment Name", blackbg, TextAlign.start),
             getInputTextAtt(75, widget.id, 'attach_name'),
             getOthers(widget.others)
           ])),

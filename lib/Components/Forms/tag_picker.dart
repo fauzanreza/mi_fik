@@ -53,7 +53,7 @@ class _TagSelectedArea extends State<TagSelectedArea> {
                             selectedRole.removeWhere(
                                 (item) => item['slug_name'] == tg['slug_name']);
                           });
-                          widget.action();
+                          //widget.action();
                         } else if (widget.type == "filter") {
                           setState(() {
                             selectedTagFilterContent.removeWhere(

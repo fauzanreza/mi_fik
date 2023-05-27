@@ -78,7 +78,7 @@ class _DetailTask extends State<DetailTask> {
           ),
           Container(
             padding: EdgeInsets.only(left: paddingSM),
-            child: getSubTitleMedium("Title", blackbg),
+            child: getSubTitleMedium("Title", blackbg, TextAlign.start),
           ),
           Container(
             padding: EdgeInsets.symmetric(horizontal: paddingSM),
@@ -86,7 +86,8 @@ class _DetailTask extends State<DetailTask> {
           ),
           Container(
             padding: EdgeInsets.only(left: paddingSM),
-            child: getSubTitleMedium("Notes (Optional)", blackbg),
+            child:
+                getSubTitleMedium("Notes (Optional)", blackbg, TextAlign.start),
           ),
           Container(
             padding: EdgeInsets.symmetric(horizontal: paddingSM),
@@ -152,8 +153,8 @@ class _DetailTask extends State<DetailTask> {
                     child: ElevatedButton(
                       onPressed: () async {
                         AddTaskModel task = AddTaskModel(
-                            taskTitle: taskTitleCtrl.text.toString(),
-                            taskDesc: taskDescCtrl.text.toString(),
+                            taskTitle: taskTitleCtrl.text.trim(),
+                            taskDesc: taskDescCtrl.text.trim(),
                             dateStart: validateDatetime(dateStartCtrl),
                             dateEnd: validateDatetime(dateEndCtrl),
                             reminder: slctReminderType);

@@ -194,7 +194,8 @@ class _SetLocation extends State<SetLocation>
                       SizedBox(height: paddingMD),
                       Container(
                           alignment: Alignment.centerLeft,
-                          child: getSubTitleMedium("Location Name", blackbg)),
+                          child: getSubTitleMedium(
+                              "Location Name", blackbg, TextAlign.start)),
                       getInputText(75, widget.locDetailCtrl, false)
                     ]),
                   ));

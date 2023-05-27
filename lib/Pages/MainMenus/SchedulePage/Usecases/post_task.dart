@@ -148,8 +148,8 @@ class _PostTask extends State<PostTask> {
                 onPressed: () async {
                   //Mapping.
                   AddTaskModel data = AddTaskModel(
-                      taskTitle: taskTitleCtrl.text,
-                      taskDesc: taskDescCtrl.text,
+                      taskTitle: taskTitleCtrl.text.trim(),
+                      taskDesc: taskDescCtrl.text.trim(),
                       dateStart: validateDatetime(dateStartCtrl),
                       dateEnd: validateDatetime(dateEndCtrl),
                       reminder: slctReminderType);

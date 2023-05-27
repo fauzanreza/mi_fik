@@ -60,10 +60,10 @@ class _AddPost extends State<AddPost> {
     getDiscard() {
       //Empty all input
       if (selectedTag.isNotEmpty ||
-          locDetailCtrl.text.isNotEmpty ||
+          locDetailCtrl.text.trim().isNotEmpty ||
           locCoordinateCtrl != null ||
-          contentTitleCtrl.text.isNotEmpty ||
-          contentDescCtrl != null ||
+          contentTitleCtrl.text.trim().isNotEmpty ||
+          contentDescCtrl.text.trim().isNotEmpty ||
           dateStartCtrl != null ||
           contentAttImage != null ||
           dateEndCtrl != null) {
@@ -189,7 +189,8 @@ class _AddPost extends State<AddPost> {
                     children: [
                       Container(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                        child: getSubTitleMedium("Title", blackbg),
+                        child: getSubTitleMedium(
+                            "Title", blackbg, TextAlign.start),
                       ),
                       Container(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
@@ -197,7 +198,8 @@ class _AddPost extends State<AddPost> {
                       ),
                       Container(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                        child: getSubTitleMedium("Description", blackbg),
+                        child: getSubTitleMedium(
+                            "Description", blackbg, TextAlign.start),
                       ),
                       Container(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
@@ -331,8 +333,8 @@ class _AddPost extends State<AddPost> {
                       if (dateStartCtrl != null || dateEndCtrl != null) {
                         ContentModel content = ContentModel(
                           userId: passIdUser,
-                          contentTitle: contentTitleCtrl.text.toString(),
-                          contentDesc: contentDescCtrl.text.toString(),
+                          contentTitle: contentTitleCtrl.text.trim(),
+                          contentDesc: contentDescCtrl.text.trim(),
                           contentTag: validateNullJSON(selectedTag),
                           contentLoc: getContentLocObj(
                               locDetailCtrl.text, locCoordinateCtrl),

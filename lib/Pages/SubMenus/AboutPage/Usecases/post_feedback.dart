@@ -5,7 +5,7 @@ import 'package:mi_fik/Components/Forms/input.dart';
 import 'package:mi_fik/Components/Forms/rate.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/APIs/FeedbackApi/Models/commands.dart';
-import 'package:mi_fik/Modules/APIs/FeedbackApi/Models/queries.dart';
+import 'package:mi_fik/Modules/APIs/FeedbackApi/Services/commands.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/AboutPage/index.dart';
@@ -47,8 +47,8 @@ class _PostFeedback extends State<PostFeedback> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            getSubTitleMedium(
-                "Let us know, what do you think about this App?", blackbg),
+            getSubTitleMedium("Let us know, what do you think about this App?",
+                blackbg, TextAlign.start),
             getInputRate((double rate) {
               setState(() {
                 rateCtrl = rate.toInt();
@@ -70,7 +70,7 @@ class _PostFeedback extends State<PostFeedback> {
             InkWell(
               onTap: () async {
                 FeedbackModel data = FeedbackModel(
-                    fbBody: fbBodyCtrl.text,
+                    fbBody: fbBodyCtrl.text.trim(),
                     rate: rateCtrl,
                     suggest: slctFeedbackType);
 

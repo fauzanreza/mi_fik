@@ -84,8 +84,8 @@ class _SetControl extends State<SetControl> {
                           ),
                           Container(
                               padding: EdgeInsets.only(left: paddingMD),
-                              child: getSubTitleMedium(
-                                  "Search by title", primaryColor)),
+                              child: getSubTitleMedium("Search by title",
+                                  primaryColor, TextAlign.start)),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -149,8 +149,8 @@ class _SetControl extends State<SetControl> {
                           Container(
                               padding: EdgeInsets.only(
                                   left: paddingMD, top: paddingSM),
-                              child: getSubTitleMedium(
-                                  "Filter by date", primaryColor)),
+                              child: getSubTitleMedium("Filter by date",
+                                  primaryColor, TextAlign.start)),
                           Container(
                             padding: EdgeInsets.only(left: paddingSM),
                             child: Row(
@@ -222,8 +222,8 @@ class _SetControl extends State<SetControl> {
                           Container(
                               padding: EdgeInsets.only(
                                   left: paddingMD, top: paddingSM),
-                              child:
-                                  getSubTitleMedium("Sorting", primaryColor)),
+                              child: getSubTitleMedium(
+                                  "Sorting", primaryColor, TextAlign.start)),
                           Container(
                             padding: EdgeInsets.only(left: paddingMD),
                             child: DropdownButton<String>(

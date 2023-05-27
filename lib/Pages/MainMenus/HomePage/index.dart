@@ -98,8 +98,8 @@ class _HomePage extends State<HomePage> {
                                 SizedBox(height: fullHeight * 0.05),
                                 Row(
                                   children: [
-                                    getSubTitleMedium(
-                                        getToday("date"), whitebg),
+                                    getSubTitleMedium(getToday("date"), whitebg,
+                                        TextAlign.start),
                                     const Spacer(),
                                     const GetLocation()
                                   ],
