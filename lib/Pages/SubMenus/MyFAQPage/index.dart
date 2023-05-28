@@ -21,7 +21,7 @@ class _MyFAQPage extends State<MyFAQPage> {
     //double fullWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-        appBar: getAppbar("My Question", () {
+        appBar: getAppbar("My Question".tr, () {
           Get.to(() => const ProfilePage());
         }),
         body: const GetMyFAQ(),

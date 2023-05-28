@@ -61,21 +61,21 @@ class _PostArchive extends State<PostArchive> {
           ),
           Container(
               padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
-              child: Text("New Archive",
+              child: Text("New Archive".tr,
                   style: TextStyle(
                       color: primaryColor,
                       fontWeight: FontWeight.bold,
                       fontSize: textLG))),
           Container(
               padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
-              child: Text("Archive Name",
+              child: Text("Archive Name".tr,
                   style: TextStyle(color: blackbg, fontSize: textMD))),
           Container(
               padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
               child: getInputText(75, archiveNameCtrl, false)),
           Container(
               padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
-              child: Text("Description (optional)",
+              child: Text("Description (optional)".tr,
                   style: TextStyle(color: blackbg, fontSize: textMD))),
           Container(
               padding:
@@ -124,7 +124,7 @@ class _PostArchive extends State<PostArchive> {
                 style: ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll<Color>(successbg),
                 ),
-                child: const Text('Done'),
+                child: Text('Done'.tr),
               ))
         ],
       ),

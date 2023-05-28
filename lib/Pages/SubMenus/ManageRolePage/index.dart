@@ -60,7 +60,7 @@ class _RolePage extends State<RolePage> {
 
     if (contents == null) {
       return Scaffold(
-        appBar: getAppbar("Manage Role", () {
+        appBar: getAppbar("Manage Role".tr, () {
           selectedRole.clear();
           Get.to(() => const BottomBar());
         }),
@@ -91,13 +91,13 @@ class _RolePage extends State<RolePage> {
             }
           },
           backgroundColor: successbg,
-          tooltip: "Submit Chages",
+          tooltip: "Submit Changes".tr,
           child: const Icon(Icons.send),
         ),
       );
     } else {
       return Scaffold(
-        appBar: getAppbar("Manage Role", () {
+        appBar: getAppbar("Manage Role".tr, () {
           Get.back();
         }),
         body: Column(
@@ -119,7 +119,7 @@ class _RolePage extends State<RolePage> {
             //
           },
           backgroundColor: successbg,
-          tooltip: "Submit Chages",
+          tooltip: "Submit Changes".tr,
           child: const Icon(Icons.help_center),
         ),
       );

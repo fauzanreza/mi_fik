@@ -192,7 +192,7 @@ class _PostTask extends State<PostTask> {
                 style: ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll<Color>(successbg),
                 ),
-                child: const Text('Done'),
+                child: Text('Done'.tr),
               ))
         ],
       ),

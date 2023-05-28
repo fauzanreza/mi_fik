@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -39,7 +40,7 @@ class ShowRole extends StatelessWidget {
                     leading: Icon(Icons.tag, size: iconLG),
                     expandedCrossAxisAlignment: CrossAxisAlignment.start,
                     expandedAlignment: Alignment.topLeft,
-                    title: Text(ucFirst("My Roles"),
+                    title: Text(ucFirst("My Roles".tr),
                         style: TextStyle(fontSize: textMD - 1)),
                     children: [
                       Wrap(

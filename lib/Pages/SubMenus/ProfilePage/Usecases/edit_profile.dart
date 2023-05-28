@@ -101,7 +101,7 @@ class _GetEditProfileState extends State<GetEditProfile> {
                 title: Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: 5, vertical: paddingSM),
-                    child: Text("Edit Profile",
+                    child: Text("Edit Profile".tr,
                         style: TextStyle(
                             fontSize: textMD + 4,
                             fontWeight: FontWeight.w500))),
@@ -163,7 +163,7 @@ class _GetEditProfileState extends State<GetEditProfile> {
                     children: [
                       Icon(Icons.send, size: iconSM + 3, color: whitebg),
                       const Spacer(),
-                      Text("Submit",
+                      Text("Submit".tr,
                           style: TextStyle(
                               fontSize: textMD,
                               fontWeight: FontWeight.w500,

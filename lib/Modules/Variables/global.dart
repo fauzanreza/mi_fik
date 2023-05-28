@@ -21,6 +21,10 @@ var slctFeedbackType = "feedback_design";
 var slctAttachmentType = "image";
 var slctReminderType = "reminder_3_hour_before";
 
+enum LangList { en, id }
+
+LangList slctLang = LangList.en;
+
 int selectedIndex = 0;
 
 // Starting Variables

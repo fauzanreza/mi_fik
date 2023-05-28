@@ -9,6 +9,7 @@ import 'package:mi_fik/Components/Button/navigation.dart';
 import 'package:mi_fik/Components/Typography/show_greeting.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
+import 'package:mi_fik/Modules/Translators/service.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/MainMenus/SchedulePage/Tabs/archive_tab.dart';
@@ -28,6 +29,7 @@ class SchedulePage extends StatefulWidget {
 class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   TabController tabController;
+  LangCtrl langctrl = Get.put(LangCtrl());
 
   getStartIndex(String slug) {
     if (slug == null) {
@@ -55,7 +57,7 @@ class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
 
   getArchiveView(slctd) {
     if (slctd == null) {
-      return {"title": "Archive", "class": const ArchivePage()};
+      return {"title": "Archive".tr, "class": const ArchivePage()};
     } else {
       return {
         "title": selectedArchiveName,
@@ -71,7 +73,7 @@ class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
     double fullWidth = MediaQuery.of(context).size.width;
 
     var tabColSchedule = [
-      {"title": "My Schedule", "class": const MySchedulePage()},
+      {"title": "My Schedule".tr, "class": const MySchedulePage()},
       getArchiveView(selectedArchiveSlug)
     ];
 

@@ -141,7 +141,7 @@ class _PostFeedback extends State<PostFeedback> {
                           children: [
                             Icon(Icons.send, size: iconSM + 3, color: whitebg),
                             const Spacer(),
-                            Text("Submit",
+                            Text("Submit".tr,
                                 style: TextStyle(
                                     fontSize: textMD,
                                     fontWeight: FontWeight.w500,

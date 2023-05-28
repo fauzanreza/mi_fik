@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
@@ -54,11 +55,11 @@ getTodayCalendarHeader(DateTime val) {
   tomorrow = DateTime(tomorrow.year, tomorrow.month, tomorrow.day);
 
   if (content == today) {
-    return "Today";
+    return "Today".tr;
   } else if (content == yesterday) {
-    return "Yesterday";
+    return "Yesterday".tr;
   } else if (content == tomorrow) {
-    return "Tommorow";
+    return "Tommorow".tr;
   } else {
     return DateFormat("yyyy").format(val).toString();
   }

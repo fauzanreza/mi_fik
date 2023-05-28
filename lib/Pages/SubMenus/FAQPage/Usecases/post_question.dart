@@ -150,7 +150,7 @@ class _PostQuestion extends State<PostQuestion> {
                             backgroundColor:
                                 MaterialStatePropertyAll<Color>(successbg),
                           ),
-                          child: const Text('Done'),
+                          child: Text('Done'.tr),
                         ))
                   ],
                 ));

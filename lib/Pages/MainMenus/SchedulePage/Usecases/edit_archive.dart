@@ -84,7 +84,7 @@ class _EditArchive extends State<EditArchive> {
                   Container(
                       alignment: Alignment.topLeft,
                       padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
-                      child: Text("Archive Name",
+                      child: Text("Archive Name".tr,
                           style: TextStyle(color: blackbg, fontSize: textMD))),
                   Container(
                       padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
@@ -92,7 +92,7 @@ class _EditArchive extends State<EditArchive> {
                   Container(
                       alignment: Alignment.topLeft,
                       padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
-                      child: Text("Description (optional)",
+                      child: Text("Description (optional)".tr,
                           style: TextStyle(color: blackbg, fontSize: textMD))),
                   Container(
                       padding: EdgeInsets.fromLTRB(
@@ -145,7 +145,7 @@ class _EditArchive extends State<EditArchive> {
                           backgroundColor:
                               MaterialStatePropertyAll<Color>(successbg),
                         ),
-                        child: const Text('Done'),
+                        child: Text('Done'.tr),
                       ))
                 ],
               ),

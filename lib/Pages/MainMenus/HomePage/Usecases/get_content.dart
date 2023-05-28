@@ -155,7 +155,7 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            getTitleLarge("What's New", greybg),
+            getTitleLarge("What's New".tr, greybg),
             const Spacer(),
             SetControl(
                 titleCtrl: titleCtrl,

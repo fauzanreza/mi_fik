@@ -50,15 +50,15 @@ class _ProfilePage extends State<ProfilePage> {
                           const ShowRole(),
                           getProfileButton(() {
                             Get.to(() => const MyFAQPage());
-                          }, Icons.question_answer, "My Question",
+                          }, Icons.question_answer, "My Question".tr,
                               Icons.keyboard_arrow_right),
                           getProfileButton(() {
                             Get.to(() => const HistoryPage());
-                          }, Icons.history, "History",
+                          }, Icons.history, "History".tr,
                               Icons.keyboard_arrow_right),
                           getProfileButton(() {
                             Get.to(() => const AboutPage());
-                          }, Icons.info, "About Us",
+                          }, Icons.info, "About Us".tr,
                               Icons.keyboard_arrow_right),
                           Container(
                             margin: EdgeInsets.only(top: paddingMD * 2),
