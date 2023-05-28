@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:intl/intl.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
@@ -38,17 +38,9 @@ class _DetailTask extends State<DetailTask> {
 
   @override
   Widget build(BuildContext context) {
-    double fullHeight = MediaQuery.of(context).size.height;
+    //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
     bool isLoading = false;
-
-    getDateText(date, type) {
-      if (date != null) {
-        return DateFormat("dd-MM-yy  HH:mm").format(date).toString();
-      } else {
-        return "Set Date $type";
-      }
-    }
 
     //Assign value to controller
     taskTitleCtrl.text = widget.data.contentTitle;
@@ -67,11 +59,7 @@ class _DetailTask extends State<DetailTask> {
               icon: const Icon(Icons.close),
               tooltip: 'Back',
               onPressed: () {
-                // Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const BottomBar()),
-                );
+                Get.back();
               },
             ),
           ),
@@ -168,11 +156,8 @@ class _DetailTask extends State<DetailTask> {
                             var body = response[0]['body'];
 
                             if (status == "success") {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const BottomBar()),
-                              );
+                              Get.offAll(() => const BottomBar());
+
                               showDialog<String>(
                                   context: context,
                                   builder: (BuildContext context) =>
@@ -198,7 +183,7 @@ class _DetailTask extends State<DetailTask> {
                         backgroundColor:
                             MaterialStatePropertyAll<Color>(primaryColor),
                       ),
-                      child: const Text('Save'),
+                      child: Text('Save'.tr),
                     ))
               ],
             ),

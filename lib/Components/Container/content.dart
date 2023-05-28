@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
@@ -174,12 +175,8 @@ class _GetHomePageEventContainer extends State<GetHomePageEventContainer> {
                       var body = response[0]['body'];
 
                       if (status == "success") {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => DetailPage(
-                                  passSlug: widget.content.slugName)),
-                        );
+                        Get.to(() =>
+                            DetailPage(passSlug: widget.content.slugName));
                       } else {
                         showDialog<String>(
                             context: context,
@@ -210,10 +207,8 @@ class _GetHomePageEventContainer extends State<GetHomePageEventContainer> {
 class GetScheduleContainer extends StatelessWidget {
   final double width;
   var content;
-  var ctx;
 
-  GetScheduleContainer({Key key, this.width, this.content, this.ctx})
-      : super(key: key);
+  GetScheduleContainer({Key key, this.width, this.content}) : super(key: key);
 
   //Get icon based on event or task
   Widget getIcon(type, dateStart, dateEnd) {
@@ -411,7 +406,7 @@ class _GetAttachmentContainer extends State<GetAttachmentContainer> {
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             getExpansion(widget.others),
-            getSubTitleMedium("Attachment Name", blackbg, TextAlign.start),
+            getSubTitleMedium("Attachment Name".tr, blackbg, TextAlign.start),
             getInputTextAtt(75, widget.id, 'attach_name'),
             getOthers(widget.others)
           ])),

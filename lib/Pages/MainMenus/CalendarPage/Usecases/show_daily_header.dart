@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
@@ -51,12 +52,15 @@ class _DayHeader extends State<DayHeader> with TickerProviderStateMixin {
 
   Widget _buildListView(List<ScheduleTotalModel> contents) {
     getTotalContext(var item) {
+      String ev = "Events";
+      String ts = "Tasks";
       String total;
+
       if (item != null) {
         total =
-            '${validateZero(item[0].content)} events and ${validateZero(item[0].task)} tasks';
+            '${validateZero(item[0].content)} ${ev.tr} and ${validateZero(item[0].task)} ${ts.tr}';
       } else {
-        total = '0 events and 0 tasks';
+        total = '0 ${ev.tr} and 0 ${ts.tr}';
       }
       return total;
     }

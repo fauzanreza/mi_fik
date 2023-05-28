@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' show Client;
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Models/commands.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -155,7 +156,6 @@ class ArchiveCommandsService {
         {"message": "failed", "body": responseData['result']}
       ];
     } else {
-      print(responseData);
       return [
         {"message": "failed", "body": "Unknown error"}
       ];

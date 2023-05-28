@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
@@ -54,11 +55,11 @@ getTodayCalendarHeader(DateTime val) {
   tomorrow = DateTime(tomorrow.year, tomorrow.month, tomorrow.day);
 
   if (content == today) {
-    return "Today";
+    return "Today".tr;
   } else if (content == yesterday) {
-    return "Yesterday";
+    return "Yesterday".tr;
   } else if (content == tomorrow) {
-    return "Tommorow";
+    return "Tommorow".tr;
   } else {
     return DateFormat("yyyy").format(val).toString();
   }
@@ -143,7 +144,7 @@ Widget getTagShow(tag, dateStart, dateEnd) {
   }
 }
 
-String getDateText(DateTime date, String type, String view) {
+getDateText(DateTime date, String type, String view) {
   if (view == "datetime") {
     if (date != null) {
       return DateFormat("dd-MM-yy HH:mm").format(date).toString();
@@ -291,14 +292,17 @@ String getRandomString(int length) {
 }
 
 String getTotalArchive(event, task) {
+  String ev = "Events";
+  String ts = "Tasks";
+
   if ((event != 0) && (task == 0)) {
-    return "$event Events";
+    return "$event ${ev.tr}";
   } else if ((event == 0) && (task != 0)) {
-    return "$task Task";
+    return "$task ${ts.tr}";
   } else if ((event > 0) && (task > 0)) {
-    return "$event Events, $task Task";
+    return "$event ${ev.tr}, $task ${ts.tr}";
   } else {
-    return "No event and task attached";
+    return "No event and task attached".tr;
   }
 }
 
@@ -322,7 +326,7 @@ Future<void> getCurrentLocationDetails() async {
       locName = locationName;
       // print(locName);
     } else {
-      print('No placemarks found for the current location');
+      Get.snackbar("Alert", "No Placemark is found");
       locName = 'Invalid Location';
     }
   } catch (e) {

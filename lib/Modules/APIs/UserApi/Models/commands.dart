@@ -24,7 +24,7 @@ String editUserProfileModelToJson(EditUserProfileModel data) {
 
 // Usecase add new request
 class AddNewReqModel {
-  var userRole;
+  String userRole;
   String reqType;
 
   AddNewReqModel({this.userRole, this.reqType});

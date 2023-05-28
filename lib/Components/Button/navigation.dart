@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Dialogs/sign_out_dialog.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
@@ -21,7 +22,7 @@ Widget getSignOutButtonWide(var ctx) {
         child: Row(children: [
           Icon(Icons.logout, size: iconMD, color: whitebg),
           const Spacer(),
-          Text("Log-Out",
+          Text("Log-Out".tr,
               style: TextStyle(
                   fontSize: textMD,
                   fontWeight: FontWeight.w500,

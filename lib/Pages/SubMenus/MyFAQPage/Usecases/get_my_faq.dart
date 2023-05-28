@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/Container/nodata.dart';
 import 'package:mi_fik/Modules/APIs/QuestionApi/Models/queries.dart';
@@ -72,9 +73,9 @@ class _GetMyFAQ extends State<GetMyFAQ> {
                     .format(date.add(const Duration(days: 1)));
 
                 if (getToday("date") == dateContext) {
-                  dateContext = "Today";
+                  dateContext = "Today".tr;
                 } else if (getToday("date") == yesterdayContext) {
-                  dateContext = "Yesterday";
+                  dateContext = "Yesterday".tr;
                 }
 
                 return Container(

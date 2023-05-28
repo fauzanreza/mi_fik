@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
@@ -6,6 +7,7 @@ import 'package:mi_fik/Components/Forms/rate.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/APIs/FeedbackApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/FeedbackApi/Services/commands.dart';
+import 'package:mi_fik/Modules/Helpers/info.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/AboutPage/index.dart';
@@ -55,79 +57,99 @@ class _PostFeedback extends State<PostFeedback> {
               });
             }),
             getInputDesc(255, 3, fbBodyCtrl, false),
-            Row(children: [
-              Container(
-                  margin: EdgeInsets.only(bottom: paddingMD),
-                  padding: EdgeInsets.only(left: paddingSM),
-                  child: getDropDownMain(slctFeedbackType, feedbackTypeOpt,
-                      (String newValue) {
-                    setState(() {
-                      slctFeedbackType = newValue;
-                    });
-                  }, true, "feedback_")),
-              // Info or help
-            ]),
-            InkWell(
-              onTap: () async {
-                FeedbackModel data = FeedbackModel(
-                    fbBody: fbBodyCtrl.text.trim(),
-                    rate: rateCtrl,
-                    suggest: slctFeedbackType);
-
-                //Validator
-                if (data.fbBody != null || (data.rate >= 0 && data.rate <= 5)) {
-                  apiService.postFeedback(data).then((response) {
-                    setState(() => isLoading = false);
-                    var status = response[0]['message'];
-                    var body = response[0]['body'];
-
-                    if (status == "success") {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const AboutPage()),
-                      );
-                      showDialog<String>(
-                          context: context,
-                          builder: (BuildContext context) =>
-                              SuccessDialog(text: body));
-                    } else {
-                      showDialog<String>(
-                          context: context,
-                          builder: (BuildContext context) =>
-                              FailedDialog(text: body, type: "addfeedback"));
-                    }
-                  });
-                } else {
-                  showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context) => FailedDialog(
-                          text: "Add feedback, field can't be empty",
-                          type: "addfeedback"));
-                }
-              },
-              child: Container(
-                width: 110,
-                margin: EdgeInsets.only(top: paddingXSM),
-                padding: EdgeInsets.symmetric(
-                    vertical: paddingXSM, horizontal: paddingXSM + 3),
-                decoration: BoxDecoration(
-                    border: Border.all(color: whitebg, width: 2),
-                    color: successbg,
-                    borderRadius: const BorderRadius.all(Radius.circular(10))),
-                child: Row(
-                  children: [
-                    Icon(Icons.send, size: iconSM + 3, color: whitebg),
-                    const Spacer(),
-                    Text("Submit",
-                        style: TextStyle(
-                            fontSize: textMD,
+            SizedBox(height: paddingMD),
+            GetInfoBox(
+              page: "landing",
+              location: "add_feedback",
+            ),
+            SizedBox(height: paddingSM),
+            Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Event Reminder".tr,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontFamily: 'Poppins',
+                            color: blackbg,
                             fontWeight: FontWeight.w500,
-                            color: whitebg))
-                  ],
-                ),
-              ),
-            )
+                          )),
+                      Container(
+                          margin: EdgeInsets.only(bottom: paddingMD),
+                          child:
+                              getDropDownMain(slctFeedbackType, feedbackTypeOpt,
+                                  (String newValue) {
+                            setState(() {
+                              slctFeedbackType = newValue;
+                            });
+                          }, true, "feedback_")),
+                    ],
+                  ),
+                  const Spacer(),
+                  InkWell(
+                      onTap: () async {
+                        FeedbackModel data = FeedbackModel(
+                            fbBody: fbBodyCtrl.text.trim(),
+                            rate: rateCtrl,
+                            suggest: slctFeedbackType);
+
+                        //Validator
+                        if (data.fbBody != null ||
+                            (data.rate >= 0 && data.rate <= 5)) {
+                          apiService.postFeedback(data).then((response) {
+                            setState(() => isLoading = false);
+                            var status = response[0]['message'];
+                            var body = response[0]['body'];
+
+                            if (status == "success") {
+                              fbBodyCtrl.clear();
+                              Get.to(() => const AboutPage());
+
+                              showDialog<String>(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      SuccessDialog(text: body));
+                            } else {
+                              showDialog<String>(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      FailedDialog(
+                                          text: body, type: "addfeedback"));
+                            }
+                          });
+                        } else {
+                          showDialog<String>(
+                              context: context,
+                              builder: (BuildContext context) => FailedDialog(
+                                  text: "Add feedback, field can't be empty",
+                                  type: "addfeedback"));
+                        }
+                      },
+                      child: Container(
+                        width: 110,
+                        padding: EdgeInsets.symmetric(
+                            vertical: paddingXSM, horizontal: paddingXSM + 3),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: whitebg, width: 2),
+                            color: successbg,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10))),
+                        child: Row(
+                          children: [
+                            Icon(Icons.send, size: iconSM + 3, color: whitebg),
+                            const Spacer(),
+                            Text("Submit".tr,
+                                style: TextStyle(
+                                    fontSize: textMD,
+                                    fontWeight: FontWeight.w500,
+                                    color: whitebg))
+                          ],
+                        ),
+                      )),
+                ])
           ],
         ));
   }

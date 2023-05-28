@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:full_screen_menu/full_screen_menu.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
@@ -73,11 +74,7 @@ class _EditImageState extends State<EditImage> {
 
                             if (status == "success") {
                               FullScreenMenu.hide();
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const BottomBar()),
-                              );
+                              Get.to(() => const BottomBar());
                             } else {
                               FullScreenMenu.hide();
                               showDialog<String>(
@@ -110,14 +107,14 @@ class _EditImageState extends State<EditImage> {
                         items: [
                           FSMenuItem(
                               icon: Icon(Icons.camera, color: whitebg),
-                              text: Text('Camera',
+                              text: Text('Camera'.tr,
                                   style: TextStyle(fontSize: textMD)),
                               gradient: orangeGradient,
                               onTap: () {}),
                           FSMenuItem(
                             icon: Icon(Icons.folder, color: whitebg),
                             gradient: orangeGradient,
-                            text: Text('File Picker',
+                            text: Text('File Picker'.tr,
                                 style: TextStyle(fontSize: textMD)),
                             onTap: () async {
                               var file = await getImage();
@@ -138,12 +135,7 @@ class _EditImageState extends State<EditImage> {
 
                                     if (status == "success") {
                                       FullScreenMenu.hide();
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const ProfilePage()),
-                                      );
+                                      Get.to(() => const ProfilePage());
                                     } else {
                                       FullScreenMenu.hide();
                                       showDialog<String>(

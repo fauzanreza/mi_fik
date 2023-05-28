@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
@@ -71,11 +72,11 @@ class _EditArchive extends State<EditArchive> {
                       icon: const Icon(Icons.close),
                       tooltip: 'Back',
                       onPressed: () {
-                        Navigator.pop(context);
+                        Get.back();
                       },
                     ),
                   ),
-                  Text("Edit Archive",
+                  Text("Edit Archive".tr,
                       style: TextStyle(
                           color: primaryColor,
                           fontWeight: FontWeight.bold,
@@ -83,7 +84,7 @@ class _EditArchive extends State<EditArchive> {
                   Container(
                       alignment: Alignment.topLeft,
                       padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
-                      child: Text("Archive Name",
+                      child: Text("Archive Name".tr,
                           style: TextStyle(color: blackbg, fontSize: textMD))),
                   Container(
                       padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
@@ -91,7 +92,7 @@ class _EditArchive extends State<EditArchive> {
                   Container(
                       alignment: Alignment.topLeft,
                       padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
-                      child: Text("Description (optional)",
+                      child: Text("Description (optional)".tr,
                           style: TextStyle(color: blackbg, fontSize: textMD))),
                   Container(
                       padding: EdgeInsets.fromLTRB(
@@ -116,13 +117,9 @@ class _EditArchive extends State<EditArchive> {
                               var body = response[0]['body'];
 
                               if (status == "success") {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const BottomBar()),
-                                );
                                 selectedArchiveName = archive.archiveName;
                                 selectedArchiveDesc = archive.archiveDesc;
+                                Get.offAll(() => const BottomBar());
 
                                 showDialog<String>(
                                     context: context,
@@ -148,7 +145,7 @@ class _EditArchive extends State<EditArchive> {
                           backgroundColor:
                               MaterialStatePropertyAll<Color>(successbg),
                         ),
-                        child: const Text('Done'),
+                        child: Text('Done'.tr),
                       ))
                 ],
               ),

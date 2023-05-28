@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
@@ -40,13 +41,8 @@ class _PostSelectedRole extends State<PostSelectedRole> {
             icon: const Icon(Icons.close),
             tooltip: 'Back',
             onPressed: () {
-              setState(() {
-                selectedRole.clear();
-              });
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const RolePage()),
-              );
+              selectedRole.clear();
+              Get.to(() => const RolePage());
             },
           ),
         ),
@@ -59,13 +55,8 @@ class _PostSelectedRole extends State<PostSelectedRole> {
               children: [
                 InkWell(
                   onTap: () {
-                    setState(() {
-                      selectedRole.clear();
-                    });
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const RolePage()),
-                    );
+                    selectedRole.clear();
+                    Get.to(() => const RolePage());
                   },
                   child: Container(
                     width: 105,
@@ -106,11 +97,7 @@ class _PostSelectedRole extends State<PostSelectedRole> {
                         var body = response[0]['body'];
 
                         if (status == "success") {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const BottomBar()),
-                          );
+                          Get.to(() => const BottomBar());
                           showDialog<String>(
                               context: context,
                               builder: (BuildContext context) =>
@@ -124,11 +111,7 @@ class _PostSelectedRole extends State<PostSelectedRole> {
                           setState(() {
                             selectedRole.clear();
                           });
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const RolePage()),
-                          );
+                          Get.to(() => const RolePage());
                         }
                       });
                     } else {
@@ -154,7 +137,7 @@ class _PostSelectedRole extends State<PostSelectedRole> {
                       children: [
                         Icon(Icons.send, size: iconSM + 3, color: whitebg),
                         const Spacer(),
-                        Text("Submit",
+                        Text("Submit".tr,
                             style: TextStyle(
                                 fontSize: textMD,
                                 fontWeight: FontWeight.w500,

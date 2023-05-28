@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Backgrounds/custom.dart';
 import 'package:mi_fik/Components/Bars/Usecases/show_side_bar.dart';
 import 'package:mi_fik/Components/Bars/left_bar.dart';
@@ -52,9 +53,9 @@ class _HomePage extends State<HomePage> {
                   overlayColor: primaryColor,
                   overlayOpacity: 0.4,
                   children: [
-                    getSpeeDialChild("New Task", context, PostTask(),
+                    getSpeeDialChild("New Task".tr, context, PostTask(),
                         Icons.note_add_outlined),
-                    getSpeeDialChild("New Post", context, const AddPost(),
+                    getSpeeDialChild("New Post".tr, context, const AddPost(),
                         Icons.post_add_outlined),
                   ],
                   child: Icon(Icons.add, size: iconLG));
@@ -66,7 +67,7 @@ class _HomePage extends State<HomePage> {
                   overlayColor: primaryColor,
                   overlayOpacity: 0.4,
                   children: [
-                    getSpeeDialChild("New Task", context, PostTask(),
+                    getSpeeDialChild("New Task".tr, context, PostTask(),
                         Icons.note_add_outlined),
                   ],
                   child: Icon(Icons.add, size: iconLG));

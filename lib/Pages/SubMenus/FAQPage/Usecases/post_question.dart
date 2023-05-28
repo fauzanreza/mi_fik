@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
@@ -63,37 +64,45 @@ class _PostQuestion extends State<PostQuestion> {
                         icon: const Icon(Icons.close),
                         tooltip: 'Back',
                         onPressed: () {
-                          Navigator.pop(context);
+                          Get.back();
                         },
                       ),
                     ),
                     Container(
                         padding: EdgeInsets.only(left: paddingMD),
                         alignment: Alignment.centerLeft,
-                        child: getTitleLarge("Ask a question", primaryColor)),
+                        child:
+                            getTitleLarge("Ask a question".tr, primaryColor)),
                     Container(
                       padding: EdgeInsets.only(left: paddingMD),
                       alignment: Alignment.centerLeft,
                       child: getSubTitleMedium(
-                          "Question Body", blackbg, TextAlign.start),
+                          "Question Body".tr, blackbg, TextAlign.start),
                     ),
                     Container(
                         padding:
                             EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
                         child: getInputDesc(255, 5, quBodyCtrl, false)),
-                    Row(children: [
-                      Container(
-                          margin: EdgeInsets.only(bottom: paddingMD),
-                          padding: EdgeInsets.only(left: paddingSM),
-                          child:
-                              getDropDownMain(slctQuestionType, questionTypeOpt,
-                                  (String newValue) {
-                            setState(() {
-                              slctQuestionType = newValue;
-                            });
-                          }, false, null)),
-                      // Info or help
-                    ]),
+                    Container(
+                      padding: EdgeInsets.only(left: paddingSM),
+                      child: Text("What do you think improvement should be".tr,
+                          style: TextStyle(
+                            fontSize: textMD - 1,
+                            fontFamily: 'Poppins',
+                            color: blackbg,
+                            fontWeight: FontWeight.w500,
+                          )),
+                    ),
+                    Container(
+                        margin: EdgeInsets.only(bottom: paddingMD),
+                        padding: EdgeInsets.only(left: paddingSM),
+                        child:
+                            getDropDownMain(slctQuestionType, questionTypeOpt,
+                                (String newValue) {
+                          setState(() {
+                            slctQuestionType = newValue;
+                          });
+                        }, false, null)),
                     SizedBox(
                         width: fullWidth,
                         height: btnHeightMD,
@@ -113,21 +122,15 @@ class _PostQuestion extends State<PostQuestion> {
                                 var body = response[0]['body'];
 
                                 if (status == "success") {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => const FAQPage()),
-                                  );
+                                  Get.to(() => const FAQPage());
+
                                   showDialog<String>(
                                       context: context,
                                       builder: (BuildContext context) =>
                                           SuccessDialog(text: body));
                                 } else {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => const FAQPage()),
-                                  );
+                                  Get.to(() => const FAQPage());
+
                                   showDialog<String>(
                                       context: context,
                                       builder: (BuildContext context) =>
@@ -148,7 +151,7 @@ class _PostQuestion extends State<PostQuestion> {
                             backgroundColor:
                                 MaterialStatePropertyAll<Color>(successbg),
                           ),
-                          child: const Text('Done'),
+                          child: Text('Done'.tr),
                         ))
                   ],
                 ));
@@ -156,7 +159,7 @@ class _PostQuestion extends State<PostQuestion> {
         );
       },
       backgroundColor: successbg,
-      tooltip: "Ask a question",
+      tooltip: "Ask a question".tr,
       child: const Icon(Icons.headset_mic),
     );
   }

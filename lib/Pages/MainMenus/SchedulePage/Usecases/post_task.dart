@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
@@ -7,6 +8,7 @@ import 'package:mi_fik/Components/Forms/date_picker.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/command_tasks.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_tasks.dart';
+import 'package:mi_fik/Modules/Helpers/info.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -59,13 +61,13 @@ class _PostTask extends State<PostTask> {
               icon: const Icon(Icons.close),
               tooltip: 'Back',
               onPressed: () {
-                Navigator.pop(context);
+                Get.back();
               },
             ),
           ),
           Container(
             padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-            child: Text("New Task",
+            child: Text("New Task".tr,
                 style: TextStyle(
                     color: primaryColor,
                     fontWeight: FontWeight.bold,
@@ -73,14 +75,14 @@ class _PostTask extends State<PostTask> {
           ),
           Container(
               padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
-              child: Text("Title",
+              child: Text("Title".tr,
                   style: TextStyle(color: blackbg, fontSize: textMD))),
           Container(
               padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
               child: getInputText(75, taskTitleCtrl, false)),
           Container(
               padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
-              child: Text("Notes (Optional)",
+              child: Text("Notes (optional)".tr,
                   style: TextStyle(color: blackbg, fontSize: textMD))),
           Container(
               padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
@@ -137,6 +139,12 @@ class _PostTask extends State<PostTask> {
                         });
                       }, true, "reminder_")),
                 ]),
+                Container(
+                    padding: EdgeInsets.fromLTRB(0, paddingMD, 0, 0),
+                    child: GetInfoBox(
+                      page: "homepage",
+                      location: "add_task",
+                    ))
               ],
             ),
           ),
@@ -146,7 +154,6 @@ class _PostTask extends State<PostTask> {
               height: btnHeightMD,
               child: ElevatedButton(
                 onPressed: () async {
-                  //Mapping.
                   AddTaskModel data = AddTaskModel(
                       taskTitle: taskTitleCtrl.text.trim(),
                       taskDesc: taskDescCtrl.text.trim(),
@@ -154,7 +161,6 @@ class _PostTask extends State<PostTask> {
                       dateEnd: validateDatetime(dateEndCtrl),
                       reminder: slctReminderType);
 
-                  //Validator
                   if (data.taskTitle.isNotEmpty) {
                     taskService.addTask(data).then((response) {
                       setState(() => isLoading = false);
@@ -162,11 +168,8 @@ class _PostTask extends State<PostTask> {
                       var body = response[0]['body'];
 
                       if (status == "success") {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const BottomBar()),
-                        );
+                        Get.to(() => const BottomBar());
+
                         showDialog<String>(
                             context: context,
                             builder: (BuildContext context) =>
@@ -189,7 +192,7 @@ class _PostTask extends State<PostTask> {
                 style: ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll<Color>(successbg),
                 ),
-                child: const Text('Done'),
+                child: Text('Done'.tr),
               ))
         ],
       ),

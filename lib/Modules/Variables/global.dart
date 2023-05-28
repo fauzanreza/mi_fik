@@ -9,10 +9,10 @@ List listAttachment = [];
 List<Map<String, dynamic>> listArchiveCheck = [];
 
 // Selected
-var selectedArchiveName;
-var selectedArchiveDesc;
-var locCoordinateCtrl;
-var selectedArchiveSlug;
+String selectedArchiveName;
+String selectedArchiveDesc;
+String locCoordinateCtrl;
+String selectedArchiveSlug;
 var selectedRole = [];
 
 final selectedTag = [];
@@ -20,6 +20,10 @@ var slctQuestionType = "event";
 var slctFeedbackType = "feedback_design";
 var slctAttachmentType = "image";
 var slctReminderType = "reminder_3_hour_before";
+
+enum LangList { en, id }
+
+LangList slctLang = LangList.en;
 
 int selectedIndex = 0;
 

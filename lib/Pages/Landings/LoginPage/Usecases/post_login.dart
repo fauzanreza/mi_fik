@@ -1,10 +1,12 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
 import 'package:mi_fik/Modules/APIs/AuthApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/AuthApi/Services/commands.dart';
+import 'package:mi_fik/Modules/APIs/AuthApi/Validators/commands.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -81,19 +83,16 @@ class _PostLogin extends State<PostLogin> {
                       password: passCtrl.text.trim(),
                     );
 
-                    //Validator
-                    if (data.username.isNotEmpty && data.password.isNotEmpty) {
+                    Map<String, dynamic> valid =
+                        LoginValidator.validateLogin(data);
+                    if (valid['status']) {
                       apiService.postLogin(data).then((response) {
                         setState(() => isLoading = false);
                         var status = response[0]['message'];
                         var body = response[0]['body'];
 
                         if (status == "success") {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const BottomBar()),
-                          );
+                          Get.to(() => const BottomBar());
                           userService.putFirebase(token);
                         } else {
                           showDialog<String>(
@@ -109,8 +108,7 @@ class _PostLogin extends State<PostLogin> {
                       showDialog<String>(
                           context: context,
                           builder: (BuildContext context) => FailedDialog(
-                              text: "Login failed, field can't be empty",
-                              type: "login"));
+                              text: valid['message'], type: "login"));
                     }
                   },
                   style: ButtonStyle(
@@ -134,11 +132,7 @@ class _PostLogin extends State<PostLogin> {
                       foregroundColor: primaryColor, // foreground
                     ),
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const RegisterPage()),
-                      );
+                      Get.to(() => const RegisterPage());
                     },
                     child: const Text('Register now'),
                   )

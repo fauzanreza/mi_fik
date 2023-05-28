@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
@@ -104,11 +105,11 @@ class _AddPost extends State<AddPost> {
                                       locCoordinateCtrl = null;
                                       contentAttImage = null;
                                       listAttachment = [];
-                                      Navigator.pop(context);
-                                      Navigator.pop(context);
+                                      Get.back();
+                                      Get.back();
                                     },
                                     child: Text(
-                                      "Yes, Discard Change",
+                                      "Yes, Discard Change".tr,
                                       style: TextStyle(
                                         color: whitebg,
                                       ),
@@ -121,10 +122,10 @@ class _AddPost extends State<AddPost> {
                                         padding:
                                             EdgeInsets.all(paddingMD * 0.8)),
                                     onPressed: () {
-                                      Navigator.pop(context);
+                                      Get.back();
                                     },
                                     child: Text(
-                                      "Cancel",
+                                      "Cancel".tr,
                                       style: TextStyle(
                                         color: whitebg,
                                       ),
@@ -136,7 +137,7 @@ class _AddPost extends State<AddPost> {
               });
             });
       } else {
-        Navigator.pop(context);
+        Get.back();
       }
     }
 
@@ -191,7 +192,7 @@ class _AddPost extends State<AddPost> {
                       Container(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                         child: getSubTitleMedium(
-                            "Title", blackbg, TextAlign.start),
+                            "Title".tr, blackbg, TextAlign.start),
                       ),
                       Container(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
@@ -200,7 +201,7 @@ class _AddPost extends State<AddPost> {
                       Container(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                         child: getSubTitleMedium(
-                            "Description", blackbg, TextAlign.start),
+                            "Description".tr, blackbg, TextAlign.start),
                       ),
                       Container(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
@@ -213,7 +214,7 @@ class _AddPost extends State<AddPost> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text("Event Tag",
+                              Text("Event Tag".tr,
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontFamily: 'Poppins',
@@ -230,7 +231,7 @@ class _AddPost extends State<AddPost> {
                               Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("Event Reminder",
+                                    Text("Event Reminder".tr,
                                         style: TextStyle(
                                           fontSize: 16,
                                           fontFamily: 'Poppins',
@@ -252,7 +253,7 @@ class _AddPost extends State<AddPost> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Event Location",
+                                  Text("Event Location".tr,
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontFamily: 'Poppins',
@@ -269,7 +270,7 @@ class _AddPost extends State<AddPost> {
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Event Period",
+                                Text("Event Period".tr,
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontFamily: 'Poppins',
@@ -315,7 +316,7 @@ class _AddPost extends State<AddPost> {
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Event Attachment",
+                                Text("Event Attachment".tr,
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontFamily: 'Poppins',
@@ -324,10 +325,12 @@ class _AddPost extends State<AddPost> {
                                     )),
                                 const SetFileAttachment()
                               ])),
-                      GetInfoBox(
-                        page: "homepage",
-                        location: "add_event",
-                      )
+                      Container(
+                          padding: EdgeInsets.fromLTRB(20, paddingMD, 20, 0),
+                          child: GetInfoBox(
+                            page: "homepage",
+                            location: "add_event",
+                          ))
                     ]),
               )),
               SizedBox(
@@ -362,11 +365,8 @@ class _AddPost extends State<AddPost> {
                               var body = response[0]['body'];
 
                               if (status == "success") {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const BottomBar()),
-                                );
+                                Get.offAll(() => const BottomBar());
+
                                 showDialog<String>(
                                     context: context,
                                     builder: (BuildContext context) =>
@@ -407,9 +407,9 @@ class _AddPost extends State<AddPost> {
                     },
                     style: ButtonStyle(
                       backgroundColor:
-                          MaterialStatePropertyAll<Color>(primaryColor),
+                          MaterialStatePropertyAll<Color>(successbg),
                     ),
-                    child: const Text('Save Event'),
+                    child: Text('Save Event'.tr),
                   ))
             ],
           ),

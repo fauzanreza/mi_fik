@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
@@ -100,7 +101,7 @@ class _GetEditProfileState extends State<GetEditProfile> {
                 title: Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: 5, vertical: paddingSM),
-                    child: Text("Edit Profile",
+                    child: Text("Edit Profile".tr,
                         style: TextStyle(
                             fontSize: textMD + 4,
                             fontWeight: FontWeight.w500))),
@@ -128,11 +129,7 @@ class _GetEditProfileState extends State<GetEditProfile> {
                       var body = response[0]['body'];
 
                       if (status == "success") {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const ProfilePage()),
-                        );
+                        Get.to(() => const ProfilePage());
                         showDialog<String>(
                             context: context,
                             builder: (BuildContext context) =>
@@ -166,7 +163,7 @@ class _GetEditProfileState extends State<GetEditProfile> {
                     children: [
                       Icon(Icons.send, size: iconSM + 3, color: whitebg),
                       const Spacer(),
-                      Text("Submit",
+                      Text("Submit".tr,
                           style: TextStyle(
                               fontSize: textMD,
                               fontWeight: FontWeight.w500,

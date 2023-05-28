@@ -115,11 +115,11 @@ String getTagFilterContent(List<dynamic> tag) {
     return "all";
   } else {
     String res = "";
-    int count_tag = tag.length;
+    int countTag = tag.length;
     int i = 1;
 
     for (var e in tag) {
-      if (i != count_tag) {
+      if (i != countTag) {
         res += "${e['slug_name']},";
       } else {
         res += e['slug_name'];
@@ -237,7 +237,7 @@ String getLocationName(var loc) {
 }
 
 Widget getImageProfileContent(adminUname, userUname, adminImg, userImg) {
-  var url;
+  Widget url;
   if (adminUname != null) {
     if (adminImg != null) {
       url = Image.network(adminImg.toString());

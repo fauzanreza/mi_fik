@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Bars/top_bar.dart';
-import 'package:mi_fik/Pages/MainMenus/HomePage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/FAQPage/Usecases/get_question.dart';
 import 'package:mi_fik/Pages/SubMenus/FAQPage/Usecases/post_question.dart';
 
@@ -19,10 +20,7 @@ class _FAQPage extends State<FAQPage> {
 
     return Scaffold(
         appBar: getAppbar("Frequently Asked Question", () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const HomePage()),
-          );
+          Get.to(() => const BottomBar());
         }),
         body: const GetAllQuestion(),
         floatingActionButton: const PostQuestion());

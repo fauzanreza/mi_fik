@@ -9,8 +9,8 @@ class ContentHeaderModel {
   //Nullable
   String contentDesc;
   String contentImage;
-  var contentTag;
-  var contentLoc;
+  List<dynamic> contentTag;
+  List<dynamic> contentLoc;
 
   //Properties
   String createdAt;
@@ -70,7 +70,7 @@ List<ContentHeaderModel> contentHeaderModelFromJsonWPaginate(String jsonData) {
 class ContentDetailModel {
   String slugName;
   String contentTitle;
-  var contentTag;
+  List<dynamic> contentTag;
 
   //Nullable
   String adminUsernameCreated;
@@ -83,8 +83,8 @@ class ContentDetailModel {
 
   String contentDesc;
   String contentImage;
-  var contentAttach;
-  var contentLoc;
+  List<dynamic> contentAttach;
+  List<dynamic> contentLoc;
 
   //Properties
   String createdAt;
@@ -154,9 +154,9 @@ class ScheduleModel {
 
   //Nullable
   String contentDesc;
-  var contentTag;
-  var contentLoc;
-  var contentImage;
+  List<dynamic> contentTag;
+  List<dynamic> contentLoc;
+  String contentImage;
   String acUsername;
   String ucUsername;
   String acImage;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/MainMenus/CalendarPage/index.dart';
@@ -30,18 +31,19 @@ class BottomBarState extends State<BottomBar> {
           ),
           child: BottomNavigationBar(
             currentIndex: selectedIndex,
-            items: const <BottomNavigationBarItem>[
+            items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                icon: Icon(Icons.home), //Change if there's an asset.
-                label: 'Home',
+                icon: const Icon(Icons.home), //Change if there's an asset.
+                label: 'Home'.tr,
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.schedule), //Change if there's an asset.
-                label: 'Schedule',
+                icon: const Icon(Icons.schedule), //Change if there's an asset.
+                label: 'Schedule'.tr,
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.calendar_month), //Change if there's an asset.
-                label: 'Calendar',
+                icon: const Icon(
+                    Icons.calendar_month), //Change if there's an asset.
+                label: 'Calendar'.tr,
               ),
             ],
             backgroundColor: whitebg,

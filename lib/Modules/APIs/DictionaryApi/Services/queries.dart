@@ -1,7 +1,7 @@
+// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' show Client;
 import 'package:mi_fik/Modules/APIs/DictionaryApi/Models/queries.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class DictionaryQueryService {
   final String baseUrl = "https://mifik.id";
@@ -9,8 +9,6 @@ class DictionaryQueryService {
   Client client = Client();
 
   Future getDictionaryType(String type) async {
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token_key');
     final header = {
       'Accept': 'application/json',
     };

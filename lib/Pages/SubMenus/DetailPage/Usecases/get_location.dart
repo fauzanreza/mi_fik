@@ -13,7 +13,7 @@ import 'package:url_launcher/url_launcher.dart';
 class LocationButton extends StatefulWidget {
   LocationButton({Key key, this.passLocation, this.passSlugName})
       : super(key: key);
-  var passLocation;
+  List passLocation;
   final String passSlugName;
 
   @override

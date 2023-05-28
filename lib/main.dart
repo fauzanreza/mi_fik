@@ -5,9 +5,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Modules/APIs/DictionaryApi/Services/queries.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
+import 'package:mi_fik/Modules/Translators/dictionary.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
@@ -150,7 +152,10 @@ class _MyApp extends State<MyApp> {
             String tokens = snapshot.data;
             userService.putFirebase(tokens);
 
-            return MaterialApp(
+            return GetMaterialApp(
+              translations: Dictionaries(),
+              locale: const Locale("en", "US"),
+              fallbackLocale: const Locale("en", "US"),
               debugShowCheckedModeBanner: false,
               title: 'Mi-FIK',
               theme: ThemeData(
@@ -164,7 +169,10 @@ class _MyApp extends State<MyApp> {
         },
       );
     } else {
-      return MaterialApp(
+      return GetMaterialApp(
+        translations: Dictionaries(),
+        locale: const Locale("en", "US"),
+        fallbackLocale: const Locale("en", "US"),
         debugShowCheckedModeBanner: false,
         title: 'Mi-FIK',
         theme: ThemeData(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Button/navigation.dart';
 import 'package:mi_fik/Components/Dialogs/sign_out_dialog.dart';
@@ -80,48 +81,28 @@ class LeftBar extends StatelessWidget {
                                       ]),
                                 ),
                                 getSideBarTile(
-                                    fullWidth, Icons.person, "Profile", () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const ProfilePage()),
-                                  );
+                                    fullWidth, Icons.person, "Profile".tr, () {
+                                  Get.to(() => const ProfilePage());
                                 }),
                                 getSideBarTile(fullWidth, Icons.tag, "Role",
                                     () {
                                   selectedRole.clear();
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => const RolePage()),
-                                  );
+                                  Get.to(() => const RolePage());
                                 }),
                                 getSideBarTile(fullWidth,
                                     Icons.question_answer_outlined, "FAQ", () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => const FAQPage()),
-                                  );
+                                  Get.to(() => const FAQPage());
                                 }),
                                 getSideBarTile(
-                                    fullWidth, Icons.help_center, "Help", () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => const HelpPage()),
-                                  );
+                                    fullWidth, Icons.help_center, "Help".tr,
+                                    () {
+                                  Get.to(() => const HelpPage());
                                 }),
                               ]),
                         ),
-                        getSideBarTile(fullWidth, Icons.settings, "Setting",
+                        getSideBarTile(fullWidth, Icons.settings, "Setting".tr,
                             () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const SettingPage()),
-                          );
+                          Get.to(() => const SettingPage());
                         }),
                         Container(
                           width: fullWidth,
@@ -144,7 +125,7 @@ class LeftBar extends StatelessWidget {
                             },
                             icon: Icon(Icons.logout,
                                 size: textXLG, color: whitebg),
-                            label: Text("Log Out",
+                            label: Text("Log-Out".tr,
                                 style: TextStyle(
                                     color: whitebg, fontSize: textMD)),
                             style: ElevatedButton.styleFrom(),

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Button/navigation.dart';
 import 'package:mi_fik/Components/Forms/date_picker.dart';
@@ -78,13 +79,13 @@ class _SetControl extends State<SetControl> {
                               icon: const Icon(Icons.close),
                               tooltip: 'Back',
                               onPressed: () {
-                                Navigator.pop(context);
+                                Get.back();
                               },
                             ),
                           ),
                           Container(
                               padding: EdgeInsets.only(left: paddingMD),
-                              child: getSubTitleMedium("Search by title",
+                              child: getSubTitleMedium("Search by title".tr,
                                   primaryColor, TextAlign.start)),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -131,12 +132,7 @@ class _SetControl extends State<SetControl> {
                                       color: whitebg,
                                       onPressed: () {
                                         searchingContent = null;
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const BottomBar()),
-                                        );
+                                        Get.to(() => const BottomBar());
                                       },
                                     ),
                                   )),
@@ -149,7 +145,7 @@ class _SetControl extends State<SetControl> {
                           Container(
                               padding: EdgeInsets.only(
                                   left: paddingMD, top: paddingSM),
-                              child: getSubTitleMedium("Filter by date",
+                              child: getSubTitleMedium("Filter by date".tr,
                                   primaryColor, TextAlign.start)),
                           Container(
                             padding: EdgeInsets.only(left: paddingSM),
@@ -203,12 +199,7 @@ class _SetControl extends State<SetControl> {
                                         onPressed: () {
                                           filterDateStart = null;
                                           filterDateEnd = null;
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const BottomBar()),
-                                          );
+                                          Get.to(() => const BottomBar());
                                         },
                                       ),
                                     )),
@@ -223,7 +214,7 @@ class _SetControl extends State<SetControl> {
                               padding: EdgeInsets.only(
                                   left: paddingMD, top: paddingSM),
                               child: getSubTitleMedium(
-                                  "Sorting", primaryColor, TextAlign.start)),
+                                  "Sorting".tr, primaryColor, TextAlign.start)),
                           Container(
                             padding: EdgeInsets.only(left: paddingMD),
                             child: DropdownButton<String>(
@@ -254,7 +245,7 @@ class _SetControl extends State<SetControl> {
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text("Filter by tag",
+                                Text("Filter by tag".tr,
                                     style: TextStyle(
                                         color: primaryColor,
                                         fontWeight: FontWeight.bold,
@@ -262,13 +253,8 @@ class _SetControl extends State<SetControl> {
                                 const Spacer(),
                                 outlinedButtonCustom(() {
                                   selectedTagFilterContent.clear();
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const BottomBar()),
-                                  );
-                                }, "Clear All", Icons.delete)
+                                  Get.to(() => const BottomBar());
+                                }, "Clear All".tr, Icons.delete)
                               ],
                             ),
                           ),
@@ -320,20 +306,14 @@ class _SetControl extends State<SetControl> {
                                 onPressed: () {
                                   searchingContent =
                                       widget.titleCtrl.text.trim();
-
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const BottomBar()),
-                                  );
+                                  Get.to(() => const BottomBar());
                                 },
                                 style: ButtonStyle(
                                   backgroundColor:
                                       MaterialStatePropertyAll<Color>(
                                           successbg),
                                 ),
-                                child: const Text('Apply Setting'),
+                                child: Text('Apply Setting'.tr),
                               ))
                         ],
                       ),

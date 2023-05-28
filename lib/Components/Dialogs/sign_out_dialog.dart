@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
 import 'package:mi_fik/Modules/APIs/AuthApi/Services/queries.dart';
@@ -64,19 +65,15 @@ class _SignOutDialog extends State<SignOutDialog> {
                 var code = response[0]['code'];
 
                 if (body == "Logout success" && code == 200) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const LoginPage()),
-                  );
+                  Get.to(() => const LoginPage());
+
                   showDialog<String>(
                       context: context,
                       builder: (BuildContext context) =>
                           SuccessDialog(text: body));
                 } else if (code == 401) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const LoginPage()),
-                  );
+                  Get.off(() => const LoginPage());
+
                   showDialog<String>(
                       context: context,
                       builder: (BuildContext context) =>
@@ -89,14 +86,8 @@ class _SignOutDialog extends State<SignOutDialog> {
                 }
               });
             } else {
-              showDialog<String>(
-                  context: context,
-                  builder: (BuildContext context) => FailedDialog(
-                      text: "Sign out failed, token does't exist"));
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const LoginPage()),
-              );
+              FailedDialog(text: "Sign out failed, token does't exist");
+              Get.to(() => const LoginPage());
             }
           },
           child: Text("Sign Out", style: TextStyle(color: whitebg)),

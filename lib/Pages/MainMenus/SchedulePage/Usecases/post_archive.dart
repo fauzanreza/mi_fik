@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
@@ -54,27 +55,27 @@ class _PostArchive extends State<PostArchive> {
               tooltip: 'Back',
               onPressed: () {
                 archiveNameCtrl.clear();
-                Navigator.pop(context);
+                Get.back();
               },
             ),
           ),
           Container(
               padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
-              child: Text("New Archive",
+              child: Text("New Archive".tr,
                   style: TextStyle(
                       color: primaryColor,
                       fontWeight: FontWeight.bold,
                       fontSize: textLG))),
           Container(
               padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
-              child: Text("Archive Name",
+              child: Text("Archive Name".tr,
                   style: TextStyle(color: blackbg, fontSize: textMD))),
           Container(
               padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
               child: getInputText(75, archiveNameCtrl, false)),
           Container(
               padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
-              child: Text("Description (optional)",
+              child: Text("Description (optional)".tr,
                   style: TextStyle(color: blackbg, fontSize: textMD))),
           Container(
               padding:
@@ -99,11 +100,8 @@ class _PostArchive extends State<PostArchive> {
                       var body = response[0]['body'];
 
                       if (status == "success") {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const BottomBar()),
-                        );
+                        Get.to(() => const BottomBar());
+
                         showDialog<String>(
                             context: context,
                             builder: (BuildContext context) =>
@@ -126,7 +124,7 @@ class _PostArchive extends State<PostArchive> {
                 style: ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll<Color>(successbg),
                 ),
-                child: const Text('Done'),
+                child: Text('Done'.tr),
               ))
         ],
       ),

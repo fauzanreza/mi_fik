@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
+import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Bars/top_bar.dart';
 import 'package:mi_fik/Components/Dialogs/nodata_dialog.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Models/queries.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/queries.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/MainMenus/HomePage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/ManageRolePage/Usecases/get_tag_category.dart';
 import 'package:mi_fik/Pages/SubMenus/ManageRolePage/Usecases/post_selected_role.dart';
 
@@ -58,14 +59,9 @@ class _RolePage extends State<RolePage> {
 
     if (contents == null) {
       return Scaffold(
-        appBar: getAppbar("Manage Role", () {
-          setState(() {
-            selectedRole.clear();
-          });
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const HomePage()),
-          );
+        appBar: getAppbar("Manage Role".tr, () {
+          selectedRole.clear();
+          Get.to(() => const BottomBar());
         }),
         body: const GetAllTagCategory(),
         floatingActionButton: FloatingActionButton(
@@ -94,14 +90,14 @@ class _RolePage extends State<RolePage> {
             }
           },
           backgroundColor: successbg,
-          tooltip: "Submit Chages",
+          tooltip: "Submit Changes".tr,
           child: const Icon(Icons.send),
         ),
       );
     } else {
       return Scaffold(
-        appBar: getAppbar("Manage Role", () {
-          Navigator.pop(context);
+        appBar: getAppbar("Manage Role".tr, () {
+          Get.back();
         }),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -122,7 +118,7 @@ class _RolePage extends State<RolePage> {
             //
           },
           backgroundColor: successbg,
-          tooltip: "Submit Chages",
+          tooltip: "Submit Changes".tr,
           child: const Icon(Icons.help_center),
         ),
       );

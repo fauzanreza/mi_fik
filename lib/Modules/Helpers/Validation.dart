@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -27,7 +28,7 @@ validateZero(val) {
 }
 
 validateDatetime(DateTime date) {
-  if (date != null && date != "null") {
+  if (date != null) {
     return DateFormat("yyyy-MM-dd HH:mm").format(date).toString();
   } else {
     return "null";
@@ -59,9 +60,9 @@ Future checkGps(var func) async {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        print('Location permissions are denied');
+        Get.snackbar("Alert", 'Location permissions are denied');
       } else if (permission == LocationPermission.deniedForever) {
-        print("'Location permissions are permanently denied");
+        Get.snackbar("Alert", 'Location permissions are permanently denied');
       } else {
         haspermission = true;
       }
@@ -73,7 +74,7 @@ Future checkGps(var func) async {
       func;
     }
   } else {
-    print("GPS Service is not enabled, turn on GPS location");
+    Get.snackbar("Alert", 'GPS Service is not enabled, turn on GPS location');
   }
 }
 

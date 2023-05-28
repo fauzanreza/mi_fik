@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Services/commands.dart';
@@ -151,7 +152,7 @@ class _ListArchive extends State<ListArchive> {
                       var body = response[0]['body'];
 
                       if (status == "success") {
-                        Navigator.pop(context);
+                        Get.back();
                         showDialog<String>(
                             barrierDismissible: true,
                             barrierColor: primaryColor.withOpacity(0.5),
@@ -179,7 +180,7 @@ class _ListArchive extends State<ListArchive> {
                                               'assets/icon/checklist.png'),
                                         ),
                                       ),
-                                      Text("Post Saved",
+                                      Text("Post Saved".tr,
                                           style: TextStyle(
                                               color: whitebg,
                                               fontWeight: FontWeight.bold,
@@ -206,7 +207,7 @@ class _ListArchive extends State<ListArchive> {
                   )),
                   backgroundColor: MaterialStatePropertyAll<Color>(successbg),
                 ),
-                child: Text('Save',
+                child: Text('Save'.tr,
                     style: TextStyle(
                         fontWeight: FontWeight.w500, fontSize: textMD)),
               ))

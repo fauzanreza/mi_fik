@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:full_screen_menu/full_screen_menu.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mi_fik/Modules/Firebases/Storages/Content/add_image.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
@@ -50,7 +51,8 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
                 items: [
                   FSMenuItem(
                       icon: Icon(Icons.camera, color: whitebg),
-                      text: Text('Camera', style: TextStyle(fontSize: textMD)),
+                      text:
+                          Text('Camera'.tr, style: TextStyle(fontSize: textMD)),
                       gradient: orangeGradient,
                       onTap: () {}),
                   FSMenuItem(
@@ -76,7 +78,7 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
                   FSMenuItem(
                     icon: Icon(Icons.image_outlined, color: whitebg),
                     gradient: orangeGradient,
-                    text: Text('Image Picker',
+                    text: Text('Image Picker'.tr,
                         style: TextStyle(fontSize: textMD)),
                     onTap: () async {
                       var file = await getImage();
@@ -101,7 +103,7 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
                   FSMenuItem(
                     icon: Icon(Icons.ondemand_video, color: whitebg),
                     gradient: orangeGradient,
-                    text: Text('Video Picker',
+                    text: Text('Video Picker'.tr,
                         style: TextStyle(fontSize: textMD)),
                     onTap: () async {
                       var file = await getVideo();
@@ -139,6 +141,7 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
         ),
       ),
       // Dont use const in this class
+      // ignore: prefer_const_constructors
       GetFileAttachment()
     ]);
   }

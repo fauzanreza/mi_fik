@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/top_bar.dart';
 import 'package:mi_fik/Pages/SubMenus/AboutPage/Usecases/get_about.dart';
 import 'package:mi_fik/Pages/SubMenus/AboutPage/Usecases/post_feedback.dart';
@@ -17,10 +18,13 @@ class _AboutPage extends State<AboutPage> {
     //double fullWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: getAppbar("About Us", () {
-        Navigator.pop(context);
+      appBar: getAppbar("About Us".tr, () {
+        Get.back();
       }),
-      body: ListView(children: const [GetAbout(), PostFeedback()]),
+      body: ListView(children: const [
+        GetAbout(),
+        PostFeedback(),
+      ]),
     );
   }
 }

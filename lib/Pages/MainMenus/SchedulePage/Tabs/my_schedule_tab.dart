@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Container/content.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
@@ -118,12 +119,8 @@ class _MySchedulePage extends State<MySchedulePage> {
                                   var body = response[0]['body'];
 
                                   if (status == "success") {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => DetailPage(
-                                              passSlug: content.slugName)),
-                                    );
+                                    Get.offAll(() =>
+                                        DetailPage(passSlug: content.slugName));
                                   } else {
                                     showDialog<String>(
                                         context: context,
@@ -137,9 +134,7 @@ class _MySchedulePage extends State<MySchedulePage> {
                               }
                             },
                             child: GetScheduleContainer(
-                                width: fullWidth,
-                                content: content,
-                                ctx: context))
+                                width: fullWidth, content: content))
                       ])))
                 ]);
               }).toList()));

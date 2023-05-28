@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/top_bar.dart';
 import 'package:mi_fik/Pages/SubMenus/HistoryPage/Usecases/get_my_history.dart';
 
@@ -16,8 +17,8 @@ class _HistoryPage extends State<HistoryPage> {
     //double fullWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: getAppbar("History", () {
-        Navigator.pop(context);
+      appBar: getAppbar("History".tr, () {
+        Get.back();
       }),
       body: const GetMyHistory(),
     );

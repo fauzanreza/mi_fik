@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Models/queries.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Services/queries.dart';
 
@@ -42,7 +43,6 @@ class _PostArchiveRelation extends State<PostArchiveRelation> {
             archieves.forEach((e) {
               listArchiveCheck.add({"slug_name": e.slug, "check": e.found});
             });
-            print(listArchiveCheck);
             return _buildListView(archieves);
           } else {
             return const Center(
@@ -70,9 +70,9 @@ class _PostArchiveRelation extends State<PostArchiveRelation> {
               builder: (BuildContext context) =>
                   ListArchive(archieves: archieves, passSlug: widget.passSlug)),
           style: ButtonStyle(
-            backgroundColor: MaterialStatePropertyAll<Color>(primaryColor),
+            backgroundColor: MaterialStatePropertyAll<Color>(successbg),
           ),
-          child: const Text('Save Event'),
+          child: Text('Save Event'.tr),
         ));
   }
 }
