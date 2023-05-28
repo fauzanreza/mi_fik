@@ -9,10 +9,10 @@ List listAttachment = [];
 List<Map<String, dynamic>> listArchiveCheck = [];
 
 // Selected
-var selectedArchiveName;
-var selectedArchiveDesc;
-var locCoordinateCtrl;
-var selectedArchiveSlug;
+String selectedArchiveName;
+String selectedArchiveDesc;
+String locCoordinateCtrl;
+String selectedArchiveSlug;
 var selectedRole = [];
 
 final selectedTag = [];

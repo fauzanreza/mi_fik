@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
@@ -39,17 +38,9 @@ class _DetailTask extends State<DetailTask> {
 
   @override
   Widget build(BuildContext context) {
-    double fullHeight = MediaQuery.of(context).size.height;
+    //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
     bool isLoading = false;
-
-    getDateText(date, type) {
-      if (date != null) {
-        return DateFormat("dd-MM-yy  HH:mm").format(date).toString();
-      } else {
-        return "Set Date $type";
-      }
-    }
 
     //Assign value to controller
     taskTitleCtrl.text = widget.data.contentTitle;

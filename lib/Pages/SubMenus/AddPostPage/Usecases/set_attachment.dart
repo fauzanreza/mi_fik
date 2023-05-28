@@ -141,6 +141,7 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
         ),
       ),
       // Dont use const in this class
+      // ignore: prefer_const_constructors
       GetFileAttachment()
     ]);
   }

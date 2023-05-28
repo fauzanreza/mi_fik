@@ -6,7 +6,7 @@ import 'package:mi_fik/Modules/Variables/style.dart';
 class TagSelectedArea extends StatefulWidget {
   TagSelectedArea({Key key, this.tag, this.type, this.action})
       : super(key: key);
-  var tag;
+  List tag;
   String type;
   final Function action;
 
@@ -19,7 +19,7 @@ class _TagSelectedArea extends State<TagSelectedArea> {
   Widget build(BuildContext context) {
     double fullWidth = MediaQuery.of(context).size.width;
 
-    if (widget.tag.length != 0) {
+    if (widget.tag.isNotEmpty) {
       return Container(
           margin: EdgeInsets.only(top: 10, right: paddingMD),
           width: fullWidth,

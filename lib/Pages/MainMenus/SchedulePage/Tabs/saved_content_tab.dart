@@ -209,7 +209,7 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
                           }
                         },
                         child: GetScheduleContainer(
-                            width: fullWidth, content: content, ctx: context))
+                            width: fullWidth, content: content))
                   ])));
             }
           }).toList())

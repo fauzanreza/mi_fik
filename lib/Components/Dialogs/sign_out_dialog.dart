@@ -86,10 +86,7 @@ class _SignOutDialog extends State<SignOutDialog> {
                 }
               });
             } else {
-              showDialog<String>(
-                  context: context,
-                  builder: (BuildContext context) => FailedDialog(
-                      text: "Sign out failed, token does't exist"));
+              FailedDialog(text: "Sign out failed, token does't exist");
               Get.to(() => const LoginPage());
             }
           },

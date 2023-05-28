@@ -134,9 +134,7 @@ class _MySchedulePage extends State<MySchedulePage> {
                               }
                             },
                             child: GetScheduleContainer(
-                                width: fullWidth,
-                                content: content,
-                                ctx: context))
+                                width: fullWidth, content: content))
                       ])))
                 ]);
               }).toList()));

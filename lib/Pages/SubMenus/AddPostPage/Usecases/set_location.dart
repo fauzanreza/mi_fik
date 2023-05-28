@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
@@ -13,7 +13,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class SetLocation extends StatefulWidget {
   SetLocation({Key key, this.locDetailCtrl}) : super(key: key);
-  var locDetailCtrl;
+  TextEditingController locDetailCtrl;
 
   @override
   _SetLocation createState() => _SetLocation();
@@ -48,17 +48,10 @@ class _SetLocation extends State<SetLocation>
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
-          showDialog<String>(
-              context: context,
-              builder: (BuildContext context) => FailedDialog(
-                  text: "Location permissions are denied", type: "addpost"));
+          Get.snackbar("Alert", "Location permissions are permently denied");
         } else if (permission == LocationPermission.deniedForever) {
           if (permission == LocationPermission.denied) {
-            showDialog<String>(
-                context: context,
-                builder: (BuildContext context) => FailedDialog(
-                    text: "Location permissions are permently denied",
-                    type: "addpost"));
+            Get.snackbar("Alert", "Location permissions are permently denied");
           }
         } else {
           haspermission = true;
@@ -74,11 +67,8 @@ class _SetLocation extends State<SetLocation>
       }
     } else {
       if (permission == LocationPermission.denied) {
-        showDialog<String>(
-            context: context,
-            builder: (BuildContext context) => FailedDialog(
-                text: "GPS Service is not enabled, turn on GPS location",
-                type: "addpost"));
+        Get.snackbar(
+            "Alert", "GPS Service is not enabled, turn on GPS location");
       }
     }
 

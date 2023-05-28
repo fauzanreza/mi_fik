@@ -55,9 +55,9 @@ class _GetInfoBox extends State<GetInfoBox> {
 
     Color getInfoColor(String type) {
       if (type == "tips") {
-        return Color(0xFFc6eff8);
+        return const Color(0xFFc6eff8);
       } else {
-        return Color(0xFFf7bdbd);
+        return const Color(0xFFf7bdbd);
       }
     }
 
@@ -65,7 +65,7 @@ class _GetInfoBox extends State<GetInfoBox> {
       padding: EdgeInsets.all(paddingMD),
       decoration: BoxDecoration(
           color: getInfoColor(contents.infoType),
-          borderRadius: BorderRadius.all(Radius.circular(12))),
+          borderRadius: const BorderRadius.all(Radius.circular(12))),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,

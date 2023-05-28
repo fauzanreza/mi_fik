@@ -365,7 +365,7 @@ class _AddPost extends State<AddPost> {
                               var body = response[0]['body'];
 
                               if (status == "success") {
-                                Get.to(() => const BottomBar());
+                                Get.offAll(() => const BottomBar());
 
                                 showDialog<String>(
                                     context: context,

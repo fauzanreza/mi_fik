@@ -2,15 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
-class NoDataDialog extends StatefulWidget {
+class NoDataDialog extends StatelessWidget {
   NoDataDialog({Key key, this.text}) : super(key: key);
   String text;
 
-  @override
-  _NoDataDialog createState() => _NoDataDialog();
-}
-
-class _NoDataDialog extends State<NoDataDialog> {
   @override
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
@@ -33,7 +28,7 @@ class _NoDataDialog extends State<NoDataDialog> {
               ),
               Container(
                   margin: const EdgeInsets.symmetric(vertical: 10),
-                  child: Text(widget.text,
+                  child: Text(text,
                       textAlign: TextAlign.center,
                       style: TextStyle(color: greybg, fontSize: textMD)))
             ]),

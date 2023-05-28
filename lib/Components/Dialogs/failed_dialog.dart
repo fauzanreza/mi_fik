@@ -4,7 +4,7 @@ import 'package:mi_fik/Modules/Variables/style.dart';
 
 class FailedDialog extends StatefulWidget {
   FailedDialog({Key key, this.text, this.type}) : super(key: key);
-  var text;
+  String text;
   String type;
 
   @override

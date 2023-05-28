@@ -43,7 +43,6 @@ class _PostArchiveRelation extends State<PostArchiveRelation> {
             archieves.forEach((e) {
               listArchiveCheck.add({"slug_name": e.slug, "check": e.found});
             });
-            print(listArchiveCheck);
             return _buildListView(archieves);
           } else {
             return const Center(

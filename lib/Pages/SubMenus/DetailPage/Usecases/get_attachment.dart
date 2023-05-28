@@ -7,7 +7,7 @@ import 'package:video_player/video_player.dart';
 
 class AttachButton extends StatefulWidget {
   AttachButton({Key key, this.passAttach}) : super(key: key);
-  var passAttach;
+  List passAttach;
 
   @override
   _AttachButton createState() => _AttachButton();
@@ -30,7 +30,7 @@ class _AttachButton extends State<AttachButton> {
       }
 
       //Get button attachment by its type.
-      Widget getButton() {
+      getButton() {
         if (attach['attach_type'] == "attachment_url") {
           return RichText(
             text: TextSpan(

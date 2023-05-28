@@ -144,7 +144,7 @@ Widget getTagShow(tag, dateStart, dateEnd) {
   }
 }
 
-String getDateText(DateTime date, String type, String view) {
+getDateText(DateTime date, String type, String view) {
   if (view == "datetime") {
     if (date != null) {
       return DateFormat("dd-MM-yy HH:mm").format(date).toString();
@@ -326,7 +326,7 @@ Future<void> getCurrentLocationDetails() async {
       locName = locationName;
       // print(locName);
     } else {
-      print('No placemarks found for the current location');
+      Get.snackbar("Alert", "No Placemark is found");
       locName = 'Invalid Location';
     }
   } catch (e) {

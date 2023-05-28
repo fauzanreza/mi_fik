@@ -207,10 +207,8 @@ class _GetHomePageEventContainer extends State<GetHomePageEventContainer> {
 class GetScheduleContainer extends StatelessWidget {
   final double width;
   var content;
-  var ctx;
 
-  GetScheduleContainer({Key key, this.width, this.content, this.ctx})
-      : super(key: key);
+  GetScheduleContainer({Key key, this.width, this.content}) : super(key: key);
 
   //Get icon based on event or task
   Widget getIcon(type, dateStart, dateEnd) {
