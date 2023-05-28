@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Bars/top_bar.dart';
 import 'package:mi_fik/Pages/MainMenus/HomePage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/FAQPage/Usecases/post_question.dart';
 import 'package:mi_fik/Pages/SubMenus/MyFAQPage/Usecases/get_my_faq.dart';
+import 'package:mi_fik/Pages/SubMenus/ProfilePage/index.dart';
 
 class MyFAQPage extends StatefulWidget {
   const MyFAQPage({Key key}) : super(key: key);
@@ -19,10 +22,7 @@ class _MyFAQPage extends State<MyFAQPage> {
 
     return Scaffold(
         appBar: getAppbar("My Question", () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const HomePage()),
-          );
+          Get.to(() => const ProfilePage());
         }),
         body: const GetMyFAQ(),
         floatingActionButton: const PostQuestion());

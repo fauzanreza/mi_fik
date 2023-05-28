@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
@@ -104,8 +105,8 @@ class _AddPost extends State<AddPost> {
                                       locCoordinateCtrl = null;
                                       contentAttImage = null;
                                       listAttachment = [];
-                                      Navigator.pop(context);
-                                      Navigator.pop(context);
+                                      Get.back();
+                                      Get.back();
                                     },
                                     child: Text(
                                       "Yes, Discard Change",
@@ -121,7 +122,7 @@ class _AddPost extends State<AddPost> {
                                         padding:
                                             EdgeInsets.all(paddingMD * 0.8)),
                                     onPressed: () {
-                                      Navigator.pop(context);
+                                      Get.back();
                                     },
                                     child: Text(
                                       "Cancel",
@@ -136,7 +137,7 @@ class _AddPost extends State<AddPost> {
               });
             });
       } else {
-        Navigator.pop(context);
+        Get.back();
       }
     }
 
@@ -364,11 +365,8 @@ class _AddPost extends State<AddPost> {
                               var body = response[0]['body'];
 
                               if (status == "success") {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const BottomBar()),
-                                );
+                                Get.to(() => const BottomBar());
+
                                 showDialog<String>(
                                     context: context,
                                     builder: (BuildContext context) =>

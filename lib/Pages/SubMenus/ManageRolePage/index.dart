@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
+import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Bars/top_bar.dart';
 import 'package:mi_fik/Components/Dialogs/nodata_dialog.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Models/queries.dart';
@@ -59,13 +61,8 @@ class _RolePage extends State<RolePage> {
     if (contents == null) {
       return Scaffold(
         appBar: getAppbar("Manage Role", () {
-          setState(() {
-            selectedRole.clear();
-          });
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const HomePage()),
-          );
+          selectedRole.clear();
+          Get.to(() => const BottomBar());
         }),
         body: const GetAllTagCategory(),
         floatingActionButton: FloatingActionButton(
@@ -101,7 +98,7 @@ class _RolePage extends State<RolePage> {
     } else {
       return Scaffold(
         appBar: getAppbar("Manage Role", () {
-          Navigator.pop(context);
+          Get.back();
         }),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

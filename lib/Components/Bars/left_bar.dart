@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Button/navigation.dart';
 import 'package:mi_fik/Components/Dialogs/sign_out_dialog.dart';
@@ -81,47 +82,26 @@ class LeftBar extends StatelessWidget {
                                 ),
                                 getSideBarTile(
                                     fullWidth, Icons.person, "Profile", () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const ProfilePage()),
-                                  );
+                                  Get.to(() => const ProfilePage());
                                 }),
                                 getSideBarTile(fullWidth, Icons.tag, "Role",
                                     () {
                                   selectedRole.clear();
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => const RolePage()),
-                                  );
+                                  Get.to(() => const RolePage());
                                 }),
                                 getSideBarTile(fullWidth,
                                     Icons.question_answer_outlined, "FAQ", () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => const FAQPage()),
-                                  );
+                                  Get.to(() => const FAQPage());
                                 }),
                                 getSideBarTile(
                                     fullWidth, Icons.help_center, "Help", () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => const HelpPage()),
-                                  );
+                                  Get.to(() => const HelpPage());
                                 }),
                               ]),
                         ),
                         getSideBarTile(fullWidth, Icons.settings, "Setting",
                             () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const SettingPage()),
-                          );
+                          Get.to(() => const SettingPage());
                         }),
                         Container(
                           width: fullWidth,

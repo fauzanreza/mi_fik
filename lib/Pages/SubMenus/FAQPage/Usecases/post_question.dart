@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
@@ -63,7 +64,7 @@ class _PostQuestion extends State<PostQuestion> {
                         icon: const Icon(Icons.close),
                         tooltip: 'Back',
                         onPressed: () {
-                          Navigator.pop(context);
+                          Get.back();
                         },
                       ),
                     ),
@@ -120,21 +121,15 @@ class _PostQuestion extends State<PostQuestion> {
                                 var body = response[0]['body'];
 
                                 if (status == "success") {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => const FAQPage()),
-                                  );
+                                  Get.to(() => const FAQPage());
+
                                   showDialog<String>(
                                       context: context,
                                       builder: (BuildContext context) =>
                                           SuccessDialog(text: body));
                                 } else {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => const FAQPage()),
-                                  );
+                                  Get.to(() => const FAQPage());
+
                                   showDialog<String>(
                                       context: context,
                                       builder: (BuildContext context) =>

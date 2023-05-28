@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Button/navigation.dart';
 import 'package:mi_fik/Components/Forms/date_picker.dart';
@@ -78,7 +79,7 @@ class _SetControl extends State<SetControl> {
                               icon: const Icon(Icons.close),
                               tooltip: 'Back',
                               onPressed: () {
-                                Navigator.pop(context);
+                                Get.back();
                               },
                             ),
                           ),
@@ -131,12 +132,7 @@ class _SetControl extends State<SetControl> {
                                       color: whitebg,
                                       onPressed: () {
                                         searchingContent = null;
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const BottomBar()),
-                                        );
+                                        Get.to(() => const BottomBar());
                                       },
                                     ),
                                   )),
@@ -203,12 +199,7 @@ class _SetControl extends State<SetControl> {
                                         onPressed: () {
                                           filterDateStart = null;
                                           filterDateEnd = null;
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const BottomBar()),
-                                          );
+                                          Get.to(() => const BottomBar());
                                         },
                                       ),
                                     )),
@@ -262,12 +253,7 @@ class _SetControl extends State<SetControl> {
                                 const Spacer(),
                                 outlinedButtonCustom(() {
                                   selectedTagFilterContent.clear();
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const BottomBar()),
-                                  );
+                                  Get.to(() => const BottomBar());
                                 }, "Clear All", Icons.delete)
                               ],
                             ),
@@ -320,13 +306,7 @@ class _SetControl extends State<SetControl> {
                                 onPressed: () {
                                   searchingContent =
                                       widget.titleCtrl.text.trim();
-
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const BottomBar()),
-                                  );
+                                  Get.to(() => const BottomBar());
                                 },
                                 style: ButtonStyle(
                                   backgroundColor:

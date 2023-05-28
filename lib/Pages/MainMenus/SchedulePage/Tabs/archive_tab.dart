@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Skeletons/archive_1.dart';
@@ -74,11 +75,7 @@ class _ArchivePage extends State<ArchivePage> {
                         selectedArchiveDesc = archive.archiveDesc;
                         selectedArchiveSlug = archive.slug;
                       });
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const BottomBar()),
-                      );
+                      Get.to(() => const BottomBar());
                     },
                     child: Container(
                         width: fullWidth * 0.7,

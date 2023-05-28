@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
@@ -174,12 +175,8 @@ class _GetHomePageEventContainer extends State<GetHomePageEventContainer> {
                       var body = response[0]['body'];
 
                       if (status == "success") {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => DetailPage(
-                                  passSlug: widget.content.slugName)),
-                        );
+                        Get.to(() =>
+                            DetailPage(passSlug: widget.content.slugName));
                       } else {
                         showDialog<String>(
                             context: context,

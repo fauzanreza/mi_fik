@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
@@ -81,13 +82,8 @@ class _DeleteArchive extends State<DeleteArchive> {
                                           selectedArchiveSlug = null;
                                           selectedArchiveName = null;
                                           selectedArchiveDesc = null;
+                                          Get.to(() => const BottomBar());
 
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const BottomBar()),
-                                          );
                                           showDialog<String>(
                                               context: context,
                                               builder: (BuildContext context) =>
@@ -116,7 +112,7 @@ class _DeleteArchive extends State<DeleteArchive> {
                                         padding:
                                             EdgeInsets.all(paddingMD * 0.8)),
                                     onPressed: () {
-                                      Navigator.pop(context);
+                                      Get.back();
                                     },
                                     child: Text(
                                       "Cancel",

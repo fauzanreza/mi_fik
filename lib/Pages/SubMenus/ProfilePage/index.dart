@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Backgrounds/custom.dart';
 import 'package:mi_fik/Components/Bars/top_bar.dart';
 import 'package:mi_fik/Components/Button/navigation.dart';
@@ -25,7 +26,7 @@ class _ProfilePage extends State<ProfilePage> {
 
     return Scaffold(
         appBar: getAppbar("Profile", () {
-          Navigator.pop(context);
+          Get.back();
         }),
         body: CustomPaint(
             painter: CirclePainter(),
@@ -48,27 +49,15 @@ class _ProfilePage extends State<ProfilePage> {
                         children: [
                           const ShowRole(),
                           getProfileButton(() {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const MyFAQPage()),
-                            );
+                            Get.to(() => const MyFAQPage());
                           }, Icons.question_answer, "My Question",
                               Icons.keyboard_arrow_right),
                           getProfileButton(() {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const HistoryPage()),
-                            );
+                            Get.to(() => const HistoryPage());
                           }, Icons.history, "History",
                               Icons.keyboard_arrow_right),
                           getProfileButton(() {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const AboutPage()),
-                            );
+                            Get.to(() => const AboutPage());
                           }, Icons.info, "About Us",
                               Icons.keyboard_arrow_right),
                           Container(

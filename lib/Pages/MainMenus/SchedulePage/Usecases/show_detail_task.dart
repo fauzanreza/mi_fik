@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
@@ -67,11 +68,7 @@ class _DetailTask extends State<DetailTask> {
               icon: const Icon(Icons.close),
               tooltip: 'Back',
               onPressed: () {
-                // Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const BottomBar()),
-                );
+                Get.to(() => const BottomBar());
               },
             ),
           ),
@@ -168,11 +165,8 @@ class _DetailTask extends State<DetailTask> {
                             var body = response[0]['body'];
 
                             if (status == "success") {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const BottomBar()),
-                              );
+                              Get.to(() => const BottomBar());
+
                               showDialog<String>(
                                   context: context,
                                   builder: (BuildContext context) =>

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
@@ -114,14 +115,9 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
           Row(
             children: [
               outlinedButtonCustom(() {
-                setState(() {
-                  selectedArchiveSlug = null;
-                  selectedArchiveName = null;
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const BottomBar()),
-                  );
-                });
+                selectedArchiveSlug = null;
+                selectedArchiveName = null;
+                Get.to(() => const BottomBar());
               }, "Back to Archive", Icons.arrow_back),
               const Spacer(),
               DeleteArchive(slug: widget.slug, name: widget.name),
@@ -157,12 +153,8 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
                                 var body = response[0]['body'];
 
                                 if (status == "success") {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => DetailPage(
-                                            passSlug: content.slugName)),
-                                  );
+                                  Get.to(() =>
+                                      DetailPage(passSlug: content.slugName));
                                 } else {
                                   showDialog<String>(
                                       context: context,
@@ -230,14 +222,9 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
           Row(
             children: [
               outlinedButtonCustom(() {
-                setState(() {
-                  selectedArchiveSlug = null;
-                  selectedArchiveName = null;
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const BottomBar()),
-                  );
-                });
+                selectedArchiveSlug = null;
+                selectedArchiveName = null;
+                Get.to(() => const BottomBar());
               }, "Back to Archive", Icons.arrow_back),
               const Spacer(),
               DeleteArchive(slug: selectedArchiveSlug),

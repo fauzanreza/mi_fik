@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/Usecases/show_side_bar.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Bars/left_bar.dart';
@@ -49,10 +50,7 @@ class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
     setState(() {
       slctSchedule = slctSchedule.add(Duration(days: newValue));
     });
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const BottomBar()),
-    );
+    Get.to(() => const BottomBar());
   }
 
   getArchiveView(slctd) {

@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Modules/APIs/DictionaryApi/Services/queries.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
@@ -150,7 +151,7 @@ class _MyApp extends State<MyApp> {
             String tokens = snapshot.data;
             userService.putFirebase(tokens);
 
-            return MaterialApp(
+            return GetMaterialApp(
               debugShowCheckedModeBanner: false,
               title: 'Mi-FIK',
               theme: ThemeData(
@@ -164,7 +165,7 @@ class _MyApp extends State<MyApp> {
         },
       );
     } else {
-      return MaterialApp(
+      return GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Mi-FIK',
         theme: ThemeData(

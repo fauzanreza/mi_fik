@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Services/commands.dart';
@@ -151,7 +152,7 @@ class _ListArchive extends State<ListArchive> {
                       var body = response[0]['body'];
 
                       if (status == "success") {
-                        Navigator.pop(context);
+                        Get.back();
                         showDialog<String>(
                             barrierDismissible: true,
                             barrierColor: primaryColor.withOpacity(0.5),

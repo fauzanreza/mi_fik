@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
@@ -54,7 +55,7 @@ class _PostArchive extends State<PostArchive> {
               tooltip: 'Back',
               onPressed: () {
                 archiveNameCtrl.clear();
-                Navigator.pop(context);
+                Get.back();
               },
             ),
           ),
@@ -99,11 +100,8 @@ class _PostArchive extends State<PostArchive> {
                       var body = response[0]['body'];
 
                       if (status == "success") {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const BottomBar()),
-                        );
+                        Get.to(() => const BottomBar());
+
                         showDialog<String>(
                             context: context,
                             builder: (BuildContext context) =>

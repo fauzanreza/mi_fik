@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/top_bar.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
@@ -17,7 +18,7 @@ class _SettingPage extends State<SettingPage> {
 
     return Scaffold(
       appBar: getAppbar("Setting", () {
-        Navigator.pop(context);
+        Get.back();
       }),
       body: ListView(
         children: [
