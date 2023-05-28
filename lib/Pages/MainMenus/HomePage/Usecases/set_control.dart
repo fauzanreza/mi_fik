@@ -85,7 +85,7 @@ class _SetControl extends State<SetControl> {
                           ),
                           Container(
                               padding: EdgeInsets.only(left: paddingMD),
-                              child: getSubTitleMedium("Search by title",
+                              child: getSubTitleMedium("Search by title".tr,
                                   primaryColor, TextAlign.start)),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -145,7 +145,7 @@ class _SetControl extends State<SetControl> {
                           Container(
                               padding: EdgeInsets.only(
                                   left: paddingMD, top: paddingSM),
-                              child: getSubTitleMedium("Filter by date",
+                              child: getSubTitleMedium("Filter by date".tr,
                                   primaryColor, TextAlign.start)),
                           Container(
                             padding: EdgeInsets.only(left: paddingSM),
@@ -214,7 +214,7 @@ class _SetControl extends State<SetControl> {
                               padding: EdgeInsets.only(
                                   left: paddingMD, top: paddingSM),
                               child: getSubTitleMedium(
-                                  "Sorting", primaryColor, TextAlign.start)),
+                                  "Sorting".tr, primaryColor, TextAlign.start)),
                           Container(
                             padding: EdgeInsets.only(left: paddingMD),
                             child: DropdownButton<String>(
@@ -245,7 +245,7 @@ class _SetControl extends State<SetControl> {
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text("Filter by tag",
+                                Text("Filter by tag".tr,
                                     style: TextStyle(
                                         color: primaryColor,
                                         fontWeight: FontWeight.bold,
@@ -254,7 +254,7 @@ class _SetControl extends State<SetControl> {
                                 outlinedButtonCustom(() {
                                   selectedTagFilterContent.clear();
                                   Get.to(() => const BottomBar());
-                                }, "Clear All", Icons.delete)
+                                }, "Clear All".tr, Icons.delete)
                               ],
                             ),
                           ),
@@ -313,7 +313,7 @@ class _SetControl extends State<SetControl> {
                                       MaterialStatePropertyAll<Color>(
                                           successbg),
                                 ),
-                                child: const Text('Apply Setting'),
+                                child: Text('Apply Setting'.tr),
                               ))
                         ],
                       ),

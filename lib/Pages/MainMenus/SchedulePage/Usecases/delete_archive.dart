@@ -99,7 +99,7 @@ class _DeleteArchive extends State<DeleteArchive> {
                                       });
                                     },
                                     child: Text(
-                                      "Yes, Delete archive",
+                                      "Yes, Delete archive".tr,
                                       style: TextStyle(
                                         color: whitebg,
                                       ),
@@ -115,7 +115,7 @@ class _DeleteArchive extends State<DeleteArchive> {
                                       Get.back();
                                     },
                                     child: Text(
-                                      "Cancel",
+                                      "Cancel".tr,
                                       style: TextStyle(
                                         color: whitebg,
                                       ),

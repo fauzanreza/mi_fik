@@ -68,7 +68,7 @@ class _DetailTask extends State<DetailTask> {
               icon: const Icon(Icons.close),
               tooltip: 'Back',
               onPressed: () {
-                Get.to(() => const BottomBar());
+                Get.back();
               },
             ),
           ),
@@ -165,7 +165,7 @@ class _DetailTask extends State<DetailTask> {
                             var body = response[0]['body'];
 
                             if (status == "success") {
-                              Get.to(() => const BottomBar());
+                              Get.offAll(() => const BottomBar());
 
                               showDialog<String>(
                                   context: context,
@@ -192,7 +192,7 @@ class _DetailTask extends State<DetailTask> {
                         backgroundColor:
                             MaterialStatePropertyAll<Color>(primaryColor),
                       ),
-                      child: const Text('Save'),
+                      child: Text('Save'.tr),
                     ))
               ],
             ),

@@ -75,7 +75,7 @@ class _ArchivePage extends State<ArchivePage> {
                         selectedArchiveDesc = archive.archiveDesc;
                         selectedArchiveSlug = archive.slug;
                       });
-                      Get.to(() => const BottomBar());
+                      Get.offAll(const BottomBar());
                     },
                     child: Container(
                         width: fullWidth * 0.7,

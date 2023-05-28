@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/Translators/service.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
@@ -39,6 +40,10 @@ class _SetLanguage extends State<SetLanguage> {
                 langctrl.switchLang('en', 'US');
                 slctLang = value;
               });
+              showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) =>
+                      SuccessDialog(text: "Language changed to English"));
             },
           ),
         ),
@@ -53,6 +58,10 @@ class _SetLanguage extends State<SetLanguage> {
                 langctrl.switchLang('id', 'ID');
                 slctLang = value;
               });
+              showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => SuccessDialog(
+                      text: "Bahasa diganti ke bahasa Indonesia"));
             },
           ),
         ),

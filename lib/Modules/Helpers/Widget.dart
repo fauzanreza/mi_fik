@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -296,7 +297,7 @@ Widget getPeriodDateWidget(dateStart, dateEnd) {
                   child: Icon(Icons.circle, size: 14, color: dangerColor),
                 ),
                 TextSpan(
-                    text: " Live",
+                    text: "Live".tr,
                     style: TextStyle(
                         color: dangerColor, fontWeight: FontWeight.w500)),
               ],

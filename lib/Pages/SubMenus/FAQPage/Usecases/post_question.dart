@@ -71,12 +71,13 @@ class _PostQuestion extends State<PostQuestion> {
                     Container(
                         padding: EdgeInsets.only(left: paddingMD),
                         alignment: Alignment.centerLeft,
-                        child: getTitleLarge("Ask a question", primaryColor)),
+                        child:
+                            getTitleLarge("Ask a question".tr, primaryColor)),
                     Container(
                       padding: EdgeInsets.only(left: paddingMD),
                       alignment: Alignment.centerLeft,
                       child: getSubTitleMedium(
-                          "Question Body", blackbg, TextAlign.start),
+                          "Question Body".tr, blackbg, TextAlign.start),
                     ),
                     Container(
                         padding:
@@ -84,7 +85,7 @@ class _PostQuestion extends State<PostQuestion> {
                         child: getInputDesc(255, 5, quBodyCtrl, false)),
                     Container(
                       padding: EdgeInsets.only(left: paddingSM),
-                      child: Text("What do you think improvement should be",
+                      child: Text("What do you think improvement should be".tr,
                           style: TextStyle(
                             fontSize: textMD - 1,
                             fontFamily: 'Poppins',
@@ -158,7 +159,7 @@ class _PostQuestion extends State<PostQuestion> {
         );
       },
       backgroundColor: successbg,
-      tooltip: "Ask a question",
+      tooltip: "Ask a question".tr,
       child: const Icon(Icons.headset_mic),
     );
   }

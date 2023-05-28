@@ -292,14 +292,17 @@ String getRandomString(int length) {
 }
 
 String getTotalArchive(event, task) {
+  String ev = "Events";
+  String ts = "Tasks";
+
   if ((event != 0) && (task == 0)) {
-    return "$event Events";
+    return "$event ${ev.tr}";
   } else if ((event == 0) && (task != 0)) {
-    return "$task Task";
+    return "$task ${ts.tr}";
   } else if ((event > 0) && (task > 0)) {
-    return "$event Events, $task Task";
+    return "$event ${ev.tr}, $task ${ts.tr}";
   } else {
-    return "No event and task attached";
+    return "No event and task attached".tr;
   }
 }
 

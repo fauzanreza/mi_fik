@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Models/queries.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Services/queries.dart';
 
@@ -72,7 +73,7 @@ class _PostArchiveRelation extends State<PostArchiveRelation> {
           style: ButtonStyle(
             backgroundColor: MaterialStatePropertyAll<Color>(successbg),
           ),
-          child: const Text('Save Event'),
+          child: Text('Save Event'.tr),
         ));
   }
 }

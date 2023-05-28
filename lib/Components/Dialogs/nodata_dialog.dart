@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class NoDataDialog extends StatefulWidget {
@@ -17,7 +18,7 @@ class _NoDataDialog extends State<NoDataDialog> {
 
     return AlertDialog(
       contentPadding: const EdgeInsets.all(10),
-      title: const Text('Warning'),
+      title: Text('Warning'.tr),
       content: SizedBox(
         width: fullWidth,
         height: 210,

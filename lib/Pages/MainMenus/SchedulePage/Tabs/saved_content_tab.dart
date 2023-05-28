@@ -117,8 +117,8 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
               outlinedButtonCustom(() {
                 selectedArchiveSlug = null;
                 selectedArchiveName = null;
-                Get.to(() => const BottomBar());
-              }, "Back to Archive", Icons.arrow_back),
+                Get.offAll(() => const BottomBar());
+              }, "Back to Archive".tr, Icons.arrow_back),
               const Spacer(),
               DeleteArchive(slug: widget.slug, name: widget.name),
               EditArchive(
@@ -224,8 +224,8 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
               outlinedButtonCustom(() {
                 selectedArchiveSlug = null;
                 selectedArchiveName = null;
-                Get.to(() => const BottomBar());
-              }, "Back to Archive", Icons.arrow_back),
+                Get.offAll(() => const BottomBar());
+              }, "Back to Archive".tr, Icons.arrow_back),
               const Spacer(),
               DeleteArchive(slug: selectedArchiveSlug),
               EditArchive(

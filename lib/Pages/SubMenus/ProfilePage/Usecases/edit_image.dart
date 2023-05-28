@@ -107,14 +107,14 @@ class _EditImageState extends State<EditImage> {
                         items: [
                           FSMenuItem(
                               icon: Icon(Icons.camera, color: whitebg),
-                              text: Text('Camera',
+                              text: Text('Camera'.tr,
                                   style: TextStyle(fontSize: textMD)),
                               gradient: orangeGradient,
                               onTap: () {}),
                           FSMenuItem(
                             icon: Icon(Icons.folder, color: whitebg),
                             gradient: orangeGradient,
-                            text: Text('File Picker',
+                            text: Text('File Picker'.tr,
                                 style: TextStyle(fontSize: textMD)),
                             onTap: () async {
                               var file = await getImage();

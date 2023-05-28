@@ -81,7 +81,7 @@ class LeftBar extends StatelessWidget {
                                       ]),
                                 ),
                                 getSideBarTile(
-                                    fullWidth, Icons.person, "Profile", () {
+                                    fullWidth, Icons.person, "Profile".tr, () {
                                   Get.to(() => const ProfilePage());
                                 }),
                                 getSideBarTile(fullWidth, Icons.tag, "Role",
@@ -94,12 +94,13 @@ class LeftBar extends StatelessWidget {
                                   Get.to(() => const FAQPage());
                                 }),
                                 getSideBarTile(
-                                    fullWidth, Icons.help_center, "Help", () {
+                                    fullWidth, Icons.help_center, "Help".tr,
+                                    () {
                                   Get.to(() => const HelpPage());
                                 }),
                               ]),
                         ),
-                        getSideBarTile(fullWidth, Icons.settings, "Setting",
+                        getSideBarTile(fullWidth, Icons.settings, "Setting".tr,
                             () {
                           Get.to(() => const SettingPage());
                         }),
@@ -124,7 +125,7 @@ class LeftBar extends StatelessWidget {
                             },
                             icon: Icon(Icons.logout,
                                 size: textXLG, color: whitebg),
-                            label: Text("Log Out",
+                            label: Text("Log-Out".tr,
                                 style: TextStyle(
                                     color: whitebg, fontSize: textMD)),
                             style: ElevatedButton.styleFrom(),

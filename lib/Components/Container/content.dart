@@ -408,7 +408,7 @@ class _GetAttachmentContainer extends State<GetAttachmentContainer> {
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             getExpansion(widget.others),
-            getSubTitleMedium("Attachment Name", blackbg, TextAlign.start),
+            getSubTitleMedium("Attachment Name".tr, blackbg, TextAlign.start),
             getInputTextAtt(75, widget.id, 'attach_name'),
             getOthers(widget.others)
           ])),

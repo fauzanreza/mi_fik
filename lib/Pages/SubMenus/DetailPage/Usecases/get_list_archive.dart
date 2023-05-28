@@ -180,7 +180,7 @@ class _ListArchive extends State<ListArchive> {
                                               'assets/icon/checklist.png'),
                                         ),
                                       ),
-                                      Text("Post Saved",
+                                      Text("Post Saved".tr,
                                           style: TextStyle(
                                               color: whitebg,
                                               fontWeight: FontWeight.bold,
@@ -207,7 +207,7 @@ class _ListArchive extends State<ListArchive> {
                   )),
                   backgroundColor: MaterialStatePropertyAll<Color>(successbg),
                 ),
-                child: Text('Save',
+                child: Text('Save'.tr,
                     style: TextStyle(
                         fontWeight: FontWeight.w500, fontSize: textMD)),
               ))

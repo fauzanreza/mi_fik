@@ -67,7 +67,7 @@ class _PostTask extends State<PostTask> {
           ),
           Container(
             padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-            child: Text("New Task",
+            child: Text("New Task".tr,
                 style: TextStyle(
                     color: primaryColor,
                     fontWeight: FontWeight.bold,
@@ -75,14 +75,14 @@ class _PostTask extends State<PostTask> {
           ),
           Container(
               padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
-              child: Text("Title",
+              child: Text("Title".tr,
                   style: TextStyle(color: blackbg, fontSize: textMD))),
           Container(
               padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
               child: getInputText(75, taskTitleCtrl, false)),
           Container(
               padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
-              child: Text("Notes (Optional)",
+              child: Text("Notes (optional)".tr,
                   style: TextStyle(color: blackbg, fontSize: textMD))),
           Container(
               padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),

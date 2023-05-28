@@ -76,7 +76,7 @@ class _EditArchive extends State<EditArchive> {
                       },
                     ),
                   ),
-                  Text("Edit Archive",
+                  Text("Edit Archive".tr,
                       style: TextStyle(
                           color: primaryColor,
                           fontWeight: FontWeight.bold,
@@ -119,7 +119,7 @@ class _EditArchive extends State<EditArchive> {
                               if (status == "success") {
                                 selectedArchiveName = archive.archiveName;
                                 selectedArchiveDesc = archive.archiveDesc;
-                                Get.to(() => const BottomBar());
+                                Get.offAll(() => const BottomBar());
 
                                 showDialog<String>(
                                     context: context,

@@ -70,7 +70,7 @@ class _PostFeedback extends State<PostFeedback> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Event Reminder",
+                      Text("Event Reminder".tr,
                           style: TextStyle(
                             fontSize: 14,
                             fontFamily: 'Poppins',

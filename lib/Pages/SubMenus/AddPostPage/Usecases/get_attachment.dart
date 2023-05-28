@@ -1,5 +1,6 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Container/content.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
@@ -70,7 +71,8 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
               others: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  getSubTitleMedium("Attachment URL", blackbg, TextAlign.start),
+                  getSubTitleMedium(
+                      "Attachment URL".tr, blackbg, TextAlign.start),
                   getInputTextAtt(75, e['id'], 'attach_url'),
                 ],
               ));

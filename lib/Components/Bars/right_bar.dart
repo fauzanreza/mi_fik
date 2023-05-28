@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/Usecases/get_notif.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
@@ -26,7 +27,7 @@ class RightBar extends StatelessWidget {
               children: [
                 Container(
                     margin: EdgeInsets.only(bottom: paddingMD, left: marginSM),
-                    child: Text("Notification",
+                    child: Text("Notification".tr,
                         style: TextStyle(
                             color: whitebg,
                             fontSize: textLG,

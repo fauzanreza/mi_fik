@@ -119,7 +119,7 @@ class _MySchedulePage extends State<MySchedulePage> {
                                   var body = response[0]['body'];
 
                                   if (status == "success") {
-                                    Get.to(() =>
+                                    Get.offAll(() =>
                                         DetailPage(passSlug: content.slugName));
                                   } else {
                                     showDialog<String>(

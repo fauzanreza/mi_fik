@@ -129,9 +129,9 @@ class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
             overlayOpacity: 0.4,
             children: [
               getSpeeDialChild(
-                  "New Task", context, PostTask(), Icons.note_add_outlined),
+                  "New Task".tr, context, PostTask(), Icons.note_add_outlined),
               getSpeeDialChild(
-                  "New Archive", context, PostArchive(), Icons.folder)
+                  "New Archive".tr, context, PostArchive(), Icons.folder)
             ]));
   }
 }
