@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:full_screen_menu/full_screen_menu.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Modules/Firebases/Storages/Content/add_image.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -38,6 +39,28 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
     //double fullHeight = MediaQuery.of(context).size.height;
     //double fullWidth = MediaQuery.of(context).size.width;
     bool isLoading;
+
+    uploadFile(var bytes, XFile file, String type, int max) async {
+      if ((bytes.lengthInBytes / (1024 * 1024)) <= max) {
+        await fireServicePost.sendImageContent(file, type).then((value) {
+          listAttachment.add({
+            "id": const Uuid().v4().substring(0, 8),
+            "attach_type": type,
+            "attach_name": null,
+            "attach_url": value
+          });
+        });
+        FullScreenMenu.hide();
+        setState(() {});
+      } else {
+        FullScreenMenu.hide();
+        showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => FailedDialog(
+                text: "Upload failed, the file size must below $maxImage mb",
+                type: "openevent"));
+      }
+    }
 
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Container(
@@ -85,18 +108,9 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
                       var type = "attachment_image";
 
                       if (file != null) {
-                        await fireServicePost
-                            .sendImageContent(file, type)
-                            .then((value) {
-                          listAttachment.add({
-                            "id": const Uuid().v4().substring(0, 8),
-                            "attach_type": type,
-                            "attach_name": null,
-                            "attach_url": value
-                          });
-                        });
-                        FullScreenMenu.hide();
-                        setState(() {});
+                        final bytes = await file.readAsBytes();
+
+                        uploadFile(bytes, file, type, maxImage);
                       }
                     },
                   ),
@@ -110,18 +124,9 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
                       var type = "attachment_video";
 
                       if (file != null) {
-                        await fireServicePost
-                            .sendImageContent(file, type)
-                            .then((value) {
-                          listAttachment.add({
-                            "id": const Uuid().v4().substring(0, 8),
-                            "attach_type": type,
-                            "attach_name": null,
-                            "attach_url": value
-                          });
-                        });
-                        FullScreenMenu.hide();
-                        setState(() {});
+                        final bytes = await file.readAsBytes();
+
+                        uploadFile(bytes, file, type, maxVideo);
                       }
                     },
                   ),

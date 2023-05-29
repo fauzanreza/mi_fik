@@ -20,6 +20,9 @@ var slctQuestionType = "event";
 var slctFeedbackType = "feedback_design";
 var slctAttachmentType = "image";
 var slctReminderType = "reminder_3_hour_before";
+int maxImage = 4;
+int maxVideo = 20;
+int maxDoc = 15;
 
 enum LangList { en, id }
 

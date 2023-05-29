@@ -108,8 +108,7 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
                 setState(() {
                   listAttachment.removeAt(i);
                 });
-                Get.snackbar("Alert".tr,
-                    "Attachment removed. Can't located uploaded file".tr,
+                Get.snackbar("Alert".tr, "Attachment removed".tr,
                     backgroundColor: whitebg);
               },
               others: Column(
