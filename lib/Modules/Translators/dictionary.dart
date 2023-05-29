@@ -74,7 +74,10 @@ class Dictionaries extends Translations {
           'Post Saved': 'Post Saved',
           'Yes, Delete archive': 'Yes, Delete archive',
           'Cancel': 'Cancel',
-          'Yes, Discard Change': 'Yes, Discard Change'
+          'Yes, Discard Change': 'Yes, Discard Change',
+          'Session lost, please sign in again':
+              'Session lost, please sign in again',
+          'Alert': 'Alert'
         },
         'id_ID': {
           'Good Morning': 'Selamat Pagi',
@@ -147,7 +150,10 @@ class Dictionaries extends Translations {
           'Post Saved': 'Event tersimpan',
           'Yes, Delete archive': 'Ya, Hapus arsip',
           'Cancel': 'Batalkan',
-          'Yes, Discard Change': 'Ya, Batalkan perubahan'
+          'Yes, Discard Change': 'Ya, Batalkan perubahan',
+          'Session lost, please sign in again':
+              'Waktu sesi habis, silahkan masuk kembali',
+          'Alert': 'Perhatian'
         },
       };
 }

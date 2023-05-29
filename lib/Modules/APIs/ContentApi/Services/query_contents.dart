@@ -1,9 +1,12 @@
 // ignore: depend_on_referenced_packages
+import 'package:get/get.dart';
 import 'package:http/http.dart' show Client;
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
+import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ContentQueriesService {
@@ -27,6 +30,10 @@ class ContentQueriesService {
         headers: header);
     if (response.statusCode == 200) {
       return contentHeaderModelFromJsonWPaginate(response.body);
+    } else if (response.statusCode == 401) {
+      Get.offAll(() => const LoginPage());
+      Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
+          backgroundColor: whitebg);
     } else {
       return null;
     }
@@ -44,6 +51,10 @@ class ContentQueriesService {
         .get(Uri.parse("$emuUrl/api/v1/content/slug/$slug"), headers: header);
     if (response.statusCode == 200) {
       return contentDetailModelFromJson(response.body);
+    } else if (response.statusCode == 401) {
+      Get.offAll(() => const LoginPage());
+      Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
+          backgroundColor: whitebg);
     } else {
       return null;
     }
@@ -63,6 +74,10 @@ class ContentQueriesService {
         headers: header);
     if (response.statusCode == 200) {
       return scheduleModelFromJsonWPaginate(response.body);
+    } else if (response.statusCode == 401) {
+      Get.offAll(() => const LoginPage());
+      Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
+          backgroundColor: whitebg);
     } else {
       return null;
     }
@@ -82,6 +97,10 @@ class ContentQueriesService {
         headers: header);
     if (response.statusCode == 200) {
       return scheduleTotalModelFromJson(response.body);
+    } else if (response.statusCode == 401) {
+      Get.offAll(() => const LoginPage());
+      Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
+          backgroundColor: whitebg);
     } else {
       return null;
     }

@@ -65,7 +65,7 @@ class _SignOutDialog extends State<SignOutDialog> {
                 var code = response[0]['code'];
 
                 if (body == "Logout success" && code == 200) {
-                  Get.to(() => const LoginPage());
+                  Get.off(() => const LoginPage());
 
                   showDialog<String>(
                       context: context,
@@ -86,8 +86,12 @@ class _SignOutDialog extends State<SignOutDialog> {
                 }
               });
             } else {
-              FailedDialog(text: "Sign out failed, token does't exist");
-              Get.to(() => const LoginPage());
+              Get.off(() => const LoginPage());
+
+              showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) =>
+                      SuccessDialog(text: "Sign out success"));
             }
           },
           child: Text("Sign Out", style: TextStyle(color: whitebg)),
