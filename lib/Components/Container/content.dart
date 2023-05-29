@@ -315,12 +315,21 @@ class GetScheduleContainer extends StatelessWidget {
 }
 
 class GetAttachmentContainer extends StatefulWidget {
-  GetAttachmentContainer({Key key, this.data, this.item, this.others, this.id})
+  GetAttachmentContainer(
+      {Key key,
+      this.data,
+      this.item,
+      this.others,
+      this.id,
+      this.idx,
+      this.action})
       : super(key: key);
   var data;
   var item;
   var others;
   String id;
+  int idx;
+  var action;
 
   @override
   _GetAttachmentContainer createState() => _GetAttachmentContainer();
@@ -397,7 +406,7 @@ class _GetAttachmentContainer extends State<GetAttachmentContainer> {
               bottomRight: Radius.circular(paddingMD))),
       child: Container(
           width: double.infinity,
-          padding: EdgeInsets.all(paddingSM),
+          padding: EdgeInsets.fromLTRB(paddingSM, 0, paddingSM, paddingSM),
           decoration: BoxDecoration(
             border: Border(
               left: BorderSide(width: 4, color: successbg),
@@ -408,7 +417,23 @@ class _GetAttachmentContainer extends State<GetAttachmentContainer> {
             getExpansion(widget.others),
             getSubTitleMedium("Attachment Name".tr, blackbg, TextAlign.start),
             getInputTextAtt(75, widget.id, 'attach_name'),
-            getOthers(widget.others)
+            getOthers(widget.others),
+            Row(
+              children: [
+                Ink(
+                  padding: EdgeInsets.zero,
+                  decoration: ShapeDecoration(
+                    color: primaryColor,
+                    shape: const CircleBorder(),
+                  ),
+                  child: IconButton(
+                    icon: const Icon(Icons.delete),
+                    color: dangerColor,
+                    onPressed: widget.action,
+                  ),
+                ),
+              ],
+            ),
           ])),
     );
   }

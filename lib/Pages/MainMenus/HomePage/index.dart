@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mi_fik/Components/Backgrounds/custom.dart';
 import 'package:mi_fik/Components/Bars/Usecases/show_side_bar.dart';
@@ -77,51 +78,57 @@ class _HomePage extends State<HomePage> {
           if (snapshot.connectionState == ConnectionState.done) {
             String role = snapshot.data.role;
 
-            return Scaffold(
-              key: scaffoldKey,
-              drawer: const LeftBar(),
-              drawerScrimColor: primaryColor.withOpacity(0.35),
-              endDrawer: const RightBar(),
-              body: CustomPaint(
-                  painter: CirclePainter(),
-                  child: ListView(
-                      padding: EdgeInsets.only(top: fullHeight * 0.04),
-                      children: [
-                        showSideBar(scaffoldKey, whitebg),
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 15),
-                          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                getGreeting(getToday("part"), whitebg),
-                                getTitleJumbo(getToday("clock"), whitebg),
-                                SizedBox(height: fullHeight * 0.05),
-                                Row(
+            return WillPopScope(
+                onWillPop: () {
+                  SystemNavigator.pop();
+                },
+                child: Scaffold(
+                  key: scaffoldKey,
+                  drawer: const LeftBar(),
+                  drawerScrimColor: primaryColor.withOpacity(0.35),
+                  endDrawer: const RightBar(),
+                  body: CustomPaint(
+                      painter: CirclePainter(),
+                      child: ListView(
+                          padding: EdgeInsets.only(top: fullHeight * 0.04),
+                          children: [
+                            showSideBar(scaffoldKey, whitebg),
+                            Container(
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 15),
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    getSubTitleMedium(getToday("date"), whitebg,
-                                        TextAlign.start),
-                                    const Spacer(),
-                                    const GetLocation()
-                                  ],
-                                )
-                              ]),
-                        ),
-                        Container(
-                            //height: double.infinity,
-                            margin: const EdgeInsets.only(top: 10.0),
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            decoration: BoxDecoration(
-                              color: mainbg,
-                              borderRadius: BorderRadius.only(
-                                  topLeft: roundedLG, topRight: roundedLG),
+                                    getGreeting(getToday("part"), whitebg),
+                                    getTitleJumbo(getToday("clock"), whitebg),
+                                    SizedBox(height: fullHeight * 0.05),
+                                    Row(
+                                      children: [
+                                        getSubTitleMedium(getToday("date"),
+                                            whitebg, TextAlign.start),
+                                        const Spacer(),
+                                        const GetLocation()
+                                      ],
+                                    )
+                                  ]),
                             ),
-                            child: const IntrinsicHeight(
-                              child: GetContent(),
-                            ))
-                      ])),
-              floatingActionButton: getRoleFeature(role),
-            );
+                            Container(
+                                //height: double.infinity,
+                                margin: const EdgeInsets.only(top: 10.0),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                decoration: BoxDecoration(
+                                  color: mainbg,
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: roundedLG, topRight: roundedLG),
+                                ),
+                                child: const IntrinsicHeight(
+                                  child: GetContent(),
+                                ))
+                          ])),
+                  floatingActionButton: getRoleFeature(role),
+                ));
           } else {
             return const SizedBox();
           }

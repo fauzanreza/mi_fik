@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mi_fik/Components/Bars/Usecases/show_side_bar.dart';
 import 'package:mi_fik/Components/Bars/left_bar.dart';
 import 'package:mi_fik/Components/Bars/right_bar.dart';
@@ -46,32 +47,33 @@ class _CalendarPageState extends State<CalendarPage> {
     double fullHeight = MediaQuery.of(context).size.height;
     //double fullWidth = MediaQuery.of(context).size.width;
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        key: scaffoldKey,
-        drawer: const LeftBar(),
-        drawerScrimColor: primaryColor.withOpacity(0.35),
-        endDrawer: const RightBar(),
-        body: ListView(
-          padding: EdgeInsets.only(top: fullHeight * 0.04),
-          children: [
-            showSideBar(scaffoldKey, primaryColor),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                ShowCalendar(
-                  active: selectedDay,
-                  format: format,
-                  setActionday: updateDay,
-                  setActionformat: updateFormat,
-                ),
-                DayHeader(selectedDay: selectedDay),
-              ],
-            ),
-          ],
-        ),
-      ),
+    return WillPopScope(
+      onWillPop: () {
+        SystemNavigator.pop();
+      },
+      child: Scaffold(
+          key: scaffoldKey,
+          drawer: const LeftBar(),
+          drawerScrimColor: primaryColor.withOpacity(0.35),
+          endDrawer: const RightBar(),
+          body: ListView(
+            padding: EdgeInsets.only(top: fullHeight * 0.04),
+            children: [
+              showSideBar(scaffoldKey, primaryColor),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  ShowCalendar(
+                    active: selectedDay,
+                    format: format,
+                    setActionday: updateDay,
+                    setActionformat: updateFormat,
+                  ),
+                  DayHeader(selectedDay: selectedDay),
+                ],
+              ),
+            ],
+          )),
     );
   }
 }

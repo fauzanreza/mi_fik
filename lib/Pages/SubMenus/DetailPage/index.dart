@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/query_contents.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
@@ -241,7 +242,7 @@ class _DetailPage extends State<DetailPage> {
               color: whitebg,
               onPressed: () {
                 listArchiveCheck = [];
-                Get.back();
+                Get.offAll(() => const BottomBar());
               },
             ),
           )),

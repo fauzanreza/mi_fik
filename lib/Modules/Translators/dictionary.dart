@@ -74,7 +74,13 @@ class Dictionaries extends Translations {
           'Post Saved': 'Post Saved',
           'Yes, Delete archive': 'Yes, Delete archive',
           'Cancel': 'Cancel',
-          'Yes, Discard Change': 'Yes, Discard Change'
+          'Yes, Discard Change': 'Yes, Discard Change',
+          'Session lost, please sign in again':
+              'Session lost, please sign in again',
+          'Alert': 'Alert',
+          'Attachment removed': 'Attachment removed',
+          "Attachment removed. Can't located uploaded file":
+              "Attachment removed. Can't located uploaded file"
         },
         'id_ID': {
           'Good Morning': 'Selamat Pagi',
@@ -147,7 +153,13 @@ class Dictionaries extends Translations {
           'Post Saved': 'Event tersimpan',
           'Yes, Delete archive': 'Ya, Hapus arsip',
           'Cancel': 'Batalkan',
-          'Yes, Discard Change': 'Ya, Batalkan perubahan'
+          'Yes, Discard Change': 'Ya, Batalkan perubahan',
+          'Session lost, please sign in again':
+              'Waktu sesi habis, silahkan masuk kembali',
+          'Alert': 'Perhatian',
+          'Attachment removed': 'Tautan dihapus',
+          "Attachment removed. Can't located uploaded file":
+              "Tautan dihapus. Tidak dapat mendeteksi file unggahan"
         },
       };
 }
