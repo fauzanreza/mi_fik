@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/Usecases/show_side_bar.dart';
@@ -77,61 +78,68 @@ class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
       getArchiveView(selectedArchiveSlug)
     ];
 
-    return Scaffold(
-        key: scaffoldKey,
-        drawer: const LeftBar(),
-        drawerScrimColor: primaryColor.withOpacity(0.35),
-        endDrawer: const RightBar(),
-        body: ListView(
-            padding: EdgeInsets.only(top: fullHeight * 0.04), //Check this!!!
-            children: [
-              showSideBar(scaffoldKey, primaryColor),
-              Container(
-                padding: const EdgeInsets.all(10),
-                child:
-                    Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
-                  getGreeting(getToday("part"), primaryColor),
-                  const Spacer(),
-                  getSubTitleMedium(getToday("date"), blackbg, TextAlign.start)
+    return WillPopScope(
+        onWillPop: () {
+          SystemNavigator.pop();
+        },
+        child: Scaffold(
+            key: scaffoldKey,
+            drawer: const LeftBar(),
+            drawerScrimColor: primaryColor.withOpacity(0.35),
+            endDrawer: const RightBar(),
+            body: ListView(
+                padding:
+                    EdgeInsets.only(top: fullHeight * 0.04), //Check this!!!
+                children: [
+                  showSideBar(scaffoldKey, primaryColor),
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          getGreeting(getToday("part"), primaryColor),
+                          const Spacer(),
+                          getSubTitleMedium(
+                              getToday("date"), blackbg, TextAlign.start)
+                        ]),
+                  ),
+                  GetWeeklyNavigator(active: slctSchedule, action: navigateDay),
+                  Container(
+                    margin: const EdgeInsets.only(top: 10),
+                    child: TabBar(
+                        controller: tabController,
+                        labelColor: greybg,
+                        indicatorColor: primaryColor,
+                        labelStyle: TextStyle(
+                            fontSize: textMD, fontWeight: FontWeight.w500),
+                        indicatorPadding:
+                            EdgeInsets.symmetric(horizontal: fullWidth * 0.1),
+                        tabs: List.generate(tabColSchedule.length, (index) {
+                          return Tab(text: tabColSchedule[index]['title']);
+                        })),
+                  ),
+                  SizedBox(
+                    height: fullHeight * 0.7,
+                    child: TabBarView(
+                      controller: tabController,
+                      children: List.generate(tabColSchedule.length, (index) {
+                        return tabColSchedule[index]['class'];
+                      }),
+                    ),
+                  )
                 ]),
-              ),
-              GetWeeklyNavigator(active: slctSchedule, action: navigateDay),
-              Container(
-                margin: const EdgeInsets.only(top: 10),
-                child: TabBar(
-                    controller: tabController,
-                    labelColor: greybg,
-                    indicatorColor: primaryColor,
-                    labelStyle: TextStyle(
-                        fontSize: textMD, fontWeight: FontWeight.w500),
-                    indicatorPadding:
-                        EdgeInsets.symmetric(horizontal: fullWidth * 0.1),
-                    tabs: List.generate(tabColSchedule.length, (index) {
-                      return Tab(text: tabColSchedule[index]['title']);
-                    })),
-              ),
-              SizedBox(
-                height: fullHeight * 0.7,
-                child: TabBarView(
-                  controller: tabController,
-                  children: List.generate(tabColSchedule.length, (index) {
-                    return tabColSchedule[index]['class'];
-                  }),
-                ),
-              )
-            ]),
-        floatingActionButton: SpeedDial(
-            activeIcon: Icons.close,
-            icon: Icons.add,
-            iconTheme: IconThemeData(color: whitebg),
-            backgroundColor: primaryColor,
-            overlayColor: primaryColor,
-            overlayOpacity: 0.4,
-            children: [
-              getSpeeDialChild(
-                  "New Task".tr, context, PostTask(), Icons.note_add_outlined),
-              getSpeeDialChild(
-                  "New Archive".tr, context, PostArchive(), Icons.folder)
-            ]));
+            floatingActionButton: SpeedDial(
+                activeIcon: Icons.close,
+                icon: Icons.add,
+                iconTheme: IconThemeData(color: whitebg),
+                backgroundColor: primaryColor,
+                overlayColor: primaryColor,
+                overlayOpacity: 0.4,
+                children: [
+                  getSpeeDialChild("New Task".tr, context, PostTask(),
+                      Icons.note_add_outlined),
+                  getSpeeDialChild(
+                      "New Archive".tr, context, PostArchive(), Icons.folder)
+                ])));
   }
 }

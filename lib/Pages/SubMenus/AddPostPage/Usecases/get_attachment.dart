@@ -31,6 +31,36 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
     bool isLoading;
+    int i = 0;
+
+    resetItem(int idx) async {
+      if (listAttachment[idx]["attach_url"].toString().isURL) {
+        return await fireServiceDelete
+            .deleteImageContent(listAttachment[idx]["attach_url"])
+            .then((value) {
+          if (value == true) {
+            setState(() {
+              listAttachment.removeAt(idx);
+            });
+            Get.snackbar("Alert".tr, "Attachment removed".tr,
+                backgroundColor: whitebg);
+          } else {
+            setState(() {
+              listAttachment.removeAt(idx);
+            });
+            Get.snackbar("Alert".tr,
+                "Attachment removed. Can't located uploaded file".tr,
+                backgroundColor: whitebg);
+          }
+        });
+      } else {
+        setState(() {
+          listAttachment.removeAt(idx);
+        });
+        Get.snackbar("Alert".tr, "Attachment removed".tr,
+            backgroundColor: whitebg);
+      }
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -39,6 +69,9 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
           return GetAttachmentContainer(
               data: e,
               others: null,
+              action: () async {
+                resetItem(i);
+              },
               id: e['id'],
               item: Container(
                   alignment: Alignment.center,
@@ -52,6 +85,9 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
               data: e,
               others: null,
               id: e['id'],
+              action: () async {
+                resetItem(i);
+              },
               item: Container(
                   alignment: Alignment.center,
                   margin: EdgeInsets.symmetric(vertical: paddingMD),
@@ -68,6 +104,14 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
               data: e,
               item: const SizedBox(),
               id: e['id'],
+              action: () {
+                setState(() {
+                  listAttachment.removeAt(i);
+                });
+                Get.snackbar("Alert".tr,
+                    "Attachment removed. Can't located uploaded file".tr,
+                    backgroundColor: whitebg);
+              },
               others: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -77,6 +121,7 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
                 ],
               ));
         }
+        i++;
       }).toList(),
     );
   }
