@@ -82,7 +82,7 @@ class _DeleteArchive extends State<DeleteArchive> {
                                           selectedArchiveSlug = null;
                                           selectedArchiveName = null;
                                           selectedArchiveDesc = null;
-                                          Get.to(() => const BottomBar());
+                                          Get.offAll(const BottomBar());
 
                                           showDialog<String>(
                                               context: context,

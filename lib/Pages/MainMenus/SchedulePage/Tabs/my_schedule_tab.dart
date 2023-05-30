@@ -39,7 +39,7 @@ class _MySchedulePage extends State<MySchedulePage> {
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
-        future: queryService.getSchedule(),
+        future: queryService.getSchedule(slctSchedule),
         builder: (BuildContext context,
             AsyncSnapshot<List<ScheduleModel>> snapshot) {
           if (snapshot.hasError) {

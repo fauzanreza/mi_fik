@@ -168,7 +168,7 @@ class _PostTask extends State<PostTask> {
                       var body = response[0]['body'];
 
                       if (status == "success") {
-                        Get.to(() => const BottomBar());
+                        Get.back();
 
                         showDialog<String>(
                             context: context,

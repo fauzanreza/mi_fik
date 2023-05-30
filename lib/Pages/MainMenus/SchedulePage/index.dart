@@ -7,9 +7,6 @@ import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Bars/left_bar.dart';
 import 'package:mi_fik/Components/Bars/right_bar.dart';
 import 'package:mi_fik/Components/Button/navigation.dart';
-import 'package:mi_fik/Components/Typography/show_greeting.dart';
-import 'package:mi_fik/Components/Typography/title.dart';
-import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Translators/service.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -58,7 +55,8 @@ class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
 
   getArchiveView(slctd) {
     if (slctd == null) {
-      return {"title": "Archive".tr, "class": const ArchivePage()};
+      // ignore: prefer_const_constructors
+      return {"title": "Archive".tr, "class": ArchivePage()};
     } else {
       return {
         "title": selectedArchiveName,
@@ -74,7 +72,8 @@ class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
     double fullWidth = MediaQuery.of(context).size.width;
 
     var tabColSchedule = [
-      {"title": "My Schedule".tr, "class": const MySchedulePage()},
+      // ignore: prefer_const_constructors
+      {"title": "My Schedule".tr, "class": MySchedulePage()},
       getArchiveView(selectedArchiveSlug)
     ];
 
@@ -92,32 +91,30 @@ class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
                     EdgeInsets.only(top: fullHeight * 0.04), //Check this!!!
                 children: [
                   showSideBar(scaffoldKey, primaryColor),
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          getGreeting(getToday("part"), primaryColor),
-                          const Spacer(),
-                          getSubTitleMedium(
-                              getToday("date"), blackbg, TextAlign.start)
-                        ]),
-                  ),
+                  // Container(
+                  //   padding: const EdgeInsets.all(10),
+                  //   child: Row(
+                  //       crossAxisAlignment: CrossAxisAlignment.end,
+                  //       children: [
+                  //         getGreeting(getToday("part"), primaryColor),
+                  //         const Spacer(),
+                  //         getSubTitleMedium(
+                  //             getToday("date"), blackbg, TextAlign.start)
+                  //       ]),
+                  // ),
                   GetWeeklyNavigator(active: slctSchedule, action: navigateDay),
-                  Container(
-                    margin: const EdgeInsets.only(top: 10),
-                    child: TabBar(
-                        controller: tabController,
-                        labelColor: greybg,
-                        indicatorColor: primaryColor,
-                        labelStyle: TextStyle(
-                            fontSize: textMD, fontWeight: FontWeight.w500),
-                        indicatorPadding:
-                            EdgeInsets.symmetric(horizontal: fullWidth * 0.1),
-                        tabs: List.generate(tabColSchedule.length, (index) {
-                          return Tab(text: tabColSchedule[index]['title']);
-                        })),
-                  ),
+                  TabBar(
+                      controller: tabController,
+                      labelColor: greybg,
+                      indicatorColor: primaryColor,
+                      labelStyle: TextStyle(
+                          fontSize: textMD, fontWeight: FontWeight.w500),
+                      indicatorPadding:
+                          EdgeInsets.symmetric(horizontal: fullWidth * 0.1),
+                      tabs: List.generate(tabColSchedule.length, (index) {
+                        return Tab(text: tabColSchedule[index]['title']);
+                      })),
+
                   SizedBox(
                     height: fullHeight * 0.7,
                     child: TabBarView(

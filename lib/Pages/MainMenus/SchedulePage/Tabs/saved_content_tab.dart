@@ -111,6 +111,7 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
 
     if (contents != null) {
       return ListView(
+        padding: EdgeInsets.only(bottom: paddingLg),
         children: [
           Row(
             children: [

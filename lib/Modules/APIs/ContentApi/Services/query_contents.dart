@@ -60,7 +60,7 @@ class ContentQueriesService {
     }
   }
 
-  Future<List<ScheduleModel>> getSchedule() async {
+  Future<List<ScheduleModel>> getSchedule(DateTime date) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token_key');
     final header = {
@@ -70,7 +70,7 @@ class ContentQueriesService {
 
     final response = await client.get(
         Uri.parse(
-            "$emuUrl/api/v1/content/date/${DateFormat("yyyy-MM-dd").format(slctSchedule)}"),
+            "$emuUrl/api/v1/content/date/${DateFormat("yyyy-MM-dd").format(date)}"),
         headers: header);
     if (response.statusCode == 200) {
       return scheduleModelFromJsonWPaginate(response.body);
@@ -83,7 +83,7 @@ class ContentQueriesService {
     }
   }
 
-  Future<List<ScheduleTotalModel>> getTotalSchedule() async {
+  Future<List<ScheduleTotalModel>> getTotalSchedule(DateTime date) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token_key');
     final header = {
@@ -93,7 +93,7 @@ class ContentQueriesService {
 
     final response = await client.get(
         Uri.parse(
-            "$emuUrl/api/v1/content/date/${DateFormat("yyyy-MM-dd").format(slctSchedule)}"),
+            "$emuUrl/api/v1/content/date/${DateFormat("yyyy-MM-dd").format(date)}"),
         headers: header);
     if (response.statusCode == 200) {
       return scheduleTotalModelFromJson(response.body);
