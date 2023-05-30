@@ -35,24 +35,6 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
     commandService = ContentCommandsService();
   }
 
-  // void updateSorting(String newValue) {
-  //   setState(() {
-  //     sortingHomepageContent = newValue;
-  //   });
-  // }
-
-  void updateDateStart(DateTime newValue) {
-    setState(() {
-      filterDateStart = newValue;
-    });
-  }
-
-  void updateDateEnd(DateTime newValue) {
-    setState(() {
-      filterDateEnd = newValue;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
@@ -157,12 +139,7 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
           children: [
             getTitleLarge("What's New".tr, greybg),
             const Spacer(),
-            SetControl(
-                titleCtrl: titleCtrl,
-                setDateStartCtrl: updateDateStart,
-                setDateEndCtrl: updateDateEnd,
-                dateStart: filterDateStart,
-                dateEnd: filterDateEnd),
+            SetControl(titleCtrl: titleCtrl),
           ],
         ),
       ),
