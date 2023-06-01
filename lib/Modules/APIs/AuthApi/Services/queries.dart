@@ -24,7 +24,6 @@ class AuthQueriesService {
     );
 
     if (response.statusCode == 200) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
       var respondeDecode = jsonDecode(response.body);
       await prefs.clear();
 

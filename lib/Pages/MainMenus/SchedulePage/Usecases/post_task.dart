@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get/get.dart';
-import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
 import 'package:mi_fik/Components/Forms/date_picker.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/command_tasks.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_tasks.dart';
+import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Helpers/info.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
@@ -98,8 +98,7 @@ class _PostTask extends State<PostTask> {
 
                   DatePicker.showDateTimePicker(context,
                       showTitleActions: true,
-                      minTime:
-                          DateTime(now.year, now.month, now.day), //Tomorrow
+                      minTime: DateTime(now.year, now.month, now.day),
                       maxTime: DateTime(now.year + 1, now.month, now.day),
                       onConfirm: (date) {
                     setState(() {
@@ -112,14 +111,15 @@ class _PostTask extends State<PostTask> {
 
                   DatePicker.showDateTimePicker(context,
                       showTitleActions: true,
-                      minTime:
-                          DateTime(now.year, now.month, now.day), //Tomorrow
+                      minTime: getMinEndTime(dateStartCtrl),
                       maxTime: DateTime(now.year + 1, now.month, now.day),
                       onConfirm: (date) {
                     setState(() {
                       dateEndCtrl = date;
                     });
-                  }, currentTime: now, locale: LocaleType.en);
+                  },
+                      currentTime: getMinEndTime(dateStartCtrl),
+                      locale: LocaleType.en);
                 }, "End", "datetime"),
                 Wrap(children: <Widget>[
                   TextButton(
@@ -168,7 +168,7 @@ class _PostTask extends State<PostTask> {
                       var body = response[0]['body'];
 
                       if (status == "success") {
-                        Get.to(() => const BottomBar());
+                        Get.back();
 
                         showDialog<String>(
                             context: context,
@@ -192,7 +192,7 @@ class _PostTask extends State<PostTask> {
                 style: ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll<Color>(successbg),
                 ),
-                child: Text('Done'.tr),
+                child: Text('Done'.tr, style: TextStyle(fontSize: textMD)),
               ))
         ],
       ),

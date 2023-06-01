@@ -53,7 +53,7 @@ class _GetMyHistory extends State<GetMyHistory> {
     // double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
-    if (contents.isNotEmpty) {
+    if (contents != null) {
       return ListView.builder(
           padding: EdgeInsets.only(bottom: paddingMD),
           itemCount: contents.length,

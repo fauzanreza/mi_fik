@@ -24,9 +24,12 @@ class UserQueriesService {
     if (response.statusCode == 200) {
       return userProfileModelFromJson(response.body);
     } else if (response.statusCode == 401) {
+      await prefs.clear();
+
       Get.offAll(() => const LoginPage());
       Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
           backgroundColor: whitebg);
+      return null;
     } else {
       return null;
     }
@@ -44,6 +47,13 @@ class UserQueriesService {
         .get(Uri.parse("$emuUrl/api/v1/user/request/my"), headers: header);
     if (response.statusCode == 200) {
       return userRequestModelFromJson(response.body);
+    } else if (response.statusCode == 401) {
+      await prefs.clear();
+
+      Get.offAll(() => const LoginPage());
+      Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
+          backgroundColor: whitebg);
+      return null;
     } else {
       return null;
     }

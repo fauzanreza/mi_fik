@@ -333,3 +333,12 @@ Future<void> getCurrentLocationDetails() async {
     return e;
   }
 }
+
+DateTime getMinEndTime(DateTime ds) {
+  final now = DateTime.now();
+  if (ds != null) {
+    return DateTime(ds.year, ds.month, ds.day, ds.hour, ds.minute + 1);
+  } else {
+    return DateTime(now.year, now.month, now.day);
+  }
+}

@@ -207,7 +207,8 @@ class _DetailPage extends State<DetailPage> {
                     getAttach(contents[0].contentAttach),
                     Container(
                       alignment: Alignment.centerLeft,
-                      margin: EdgeInsets.symmetric(horizontal: paddingSM),
+                      margin: EdgeInsets.fromLTRB(
+                          paddingSM, paddingMD, paddingSM, 0),
                       child:
                           getTag(contents[0].contentTag, fullHeight, contents),
                     ),

@@ -76,6 +76,8 @@ dependencies:
   provider: ^6.0.5
   get: ^4.6.5
   font_awesome_flutter: ^10.4.0
+  pdfx: ^2.3.0
+  internet_file: ^1.2.0
 
 dev_dependencies:
   flutter_test:

@@ -6,6 +6,7 @@ import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/query_contents.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/MainMenus/CalendarPage/Usecases/show_daily_event.dart';
 
@@ -31,7 +32,7 @@ class _DayHeader extends State<DayHeader> with TickerProviderStateMixin {
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
-        future: apiService.getTotalSchedule(),
+        future: apiService.getTotalSchedule(slctCalendar),
         builder: (BuildContext context,
             AsyncSnapshot<List<ScheduleTotalModel>> snapshot) {
           if (snapshot.hasError) {

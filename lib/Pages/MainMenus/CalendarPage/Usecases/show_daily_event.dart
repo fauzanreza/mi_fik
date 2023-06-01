@@ -38,7 +38,7 @@ class _DayEvent extends State<DayEvent> with TickerProviderStateMixin {
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
-        future: queryService.getSchedule(),
+        future: queryService.getSchedule(slctCalendar),
         builder: (BuildContext context,
             AsyncSnapshot<List<ScheduleModel>> snapshot) {
           if (snapshot.hasError) {

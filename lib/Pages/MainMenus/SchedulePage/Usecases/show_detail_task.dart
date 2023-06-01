@@ -12,6 +12,7 @@ import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_tasks.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/delete_task.dart';
 
 class DetailTask extends StatefulWidget {
   DetailTask({Key key, this.data}) : super(key: key);
@@ -132,6 +133,36 @@ class _DetailTask extends State<DetailTask> {
                           slctReminderType = newValue;
                         });
                       }, true, "reminder_")),
+                  SizedBox(
+                    width: paddingMD,
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.delete, color: dangerColor),
+                    tooltip: 'Delete Task',
+                    onPressed: () {
+                      String id = widget.data.id;
+                      Get.back();
+
+                      showDialog<String>(
+                          context: context,
+                          barrierColor: primaryColor.withOpacity(0.5),
+                          builder: (BuildContext context) {
+                            return StatefulBuilder(
+                                builder: (context, setState) {
+                              return AlertDialog(
+                                  insetPadding: EdgeInsets.all(paddingMD),
+                                  contentPadding: EdgeInsets.all(paddingMD),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.all(roundedLG)),
+                                  content: DeleteTask(
+                                    id: widget.data.id,
+                                    name: widget.data.contentTitle,
+                                  ));
+                            });
+                          });
+                    },
+                  )
                 ]),
                 Container(
                     margin: EdgeInsets.only(top: paddingMD),

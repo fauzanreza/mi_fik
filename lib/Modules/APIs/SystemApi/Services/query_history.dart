@@ -25,9 +25,12 @@ class HistoryQueriesService {
     if (response.statusCode == 200) {
       return historyJsonWPaginate(response.body);
     } else if (response.statusCode == 401) {
+      await prefs.clear();
+
       Get.offAll(() => const LoginPage());
       Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
           backgroundColor: whitebg);
+      return null;
     } else {
       return null;
     }

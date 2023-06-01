@@ -25,9 +25,11 @@ class ArchiveQueriesService {
     if (response.statusCode == 200) {
       return archiveModelFromJson(response.body);
     } else if (response.statusCode == 401) {
+      await prefs.clear();
       Get.offAll(() => const LoginPage());
       Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
           backgroundColor: whitebg);
+      return null;
     } else {
       return null;
     }
@@ -49,6 +51,7 @@ class ArchiveQueriesService {
       Get.offAll(() => const LoginPage());
       Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
           backgroundColor: whitebg);
+      return null;
     } else {
       return null;
     }

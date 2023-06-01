@@ -100,7 +100,7 @@ class _PostArchive extends State<PostArchive> {
                       var body = response[0]['body'];
 
                       if (status == "success") {
-                        Get.to(() => const BottomBar());
+                        Get.back();
 
                         showDialog<String>(
                             context: context,

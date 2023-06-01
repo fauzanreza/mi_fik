@@ -1,7 +1,9 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/get_pdf.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
 
@@ -31,7 +33,8 @@ class _AttachButton extends State<AttachButton> {
 
       //Get button attachment by its type.
       getButton() {
-        if (attach['attach_type'] == "attachment_url") {
+        if (attach['attach_type'] == "attachment_url" &&
+            attach['attach_type'] == "attachment_doc") {
           return RichText(
             text: TextSpan(
               children: [
@@ -77,6 +80,28 @@ class _AttachButton extends State<AttachButton> {
               ),
               autoPlay: false,
               looping: false,
+            ),
+          );
+        } else if (attach['attach_type'] == "attachment_doc") {
+          return RichText(
+            text: TextSpan(
+              children: [
+                WidgetSpan(
+                  child: Icon(Icons.picture_as_pdf,
+                      size: iconLG, color: primaryColor),
+                ),
+                TextSpan(
+                    text: " ${getButtonText(attach)}",
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        Get.to(AttachmentDocPage(
+                            url: attach['attach_url'].toString()));
+                      },
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: blackbg,
+                        fontSize: textSM + 2)),
+              ],
             ),
           );
         }

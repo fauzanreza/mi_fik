@@ -40,6 +40,7 @@ DateTime filterDateEnd;
 var selectedTagFilterContent = [];
 
 DateTime slctSchedule = DateTime.now();
+DateTime slctCalendar = DateTime.now();
 
 // Filled by API dictionary
 List<String> questionTypeOpt = [];

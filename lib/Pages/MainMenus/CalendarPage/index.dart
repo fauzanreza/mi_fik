@@ -20,15 +20,15 @@ class _CalendarPageState extends State<CalendarPage> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   CalendarFormat format = CalendarFormat.month;
-  DateTime selectedDay = slctSchedule;
-  DateTime focusedDay = slctSchedule;
+  DateTime selectedDay = slctCalendar;
+  DateTime focusedDay = slctCalendar;
 
   void updateDay(DateTime newSelectDay, DateTime newFocusDay) {
     setState(
       () {
         selectedDay = newSelectDay;
         focusedDay = newFocusDay;
-        slctSchedule = newSelectDay;
+        slctCalendar = newSelectDay;
         selectedIndex = 2;
       },
     );

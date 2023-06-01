@@ -9,6 +9,7 @@ import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/command_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_contents.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
+import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Helpers/info.dart';
 import 'package:mi_fik/Modules/Helpers/template.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
@@ -299,15 +300,17 @@ class _AddPost extends State<AddPost> {
 
                                     DatePicker.showDateTimePicker(context,
                                         showTitleActions: true,
-                                        minTime: DateTime(now.year, now.month,
-                                            now.day), //Tomorrow
+                                        minTime: getMinEndTime(dateStartCtrl),
                                         maxTime: DateTime(
                                             now.year + 1, now.month, now.day),
                                         onConfirm: (date) {
                                       setState(() {
                                         dateEndCtrl = date;
                                       });
-                                    }, currentTime: now, locale: LocaleType.en);
+                                    },
+                                        currentTime:
+                                            getMinEndTime(dateStartCtrl),
+                                        locale: LocaleType.en);
                                   }, "End", "datetime"),
                                 ])
                               ])),
@@ -403,7 +406,6 @@ class _AddPost extends State<AddPost> {
                                     "Create event failed, date period must be selected",
                                 type: "addevent"));
                       }
-                      // print(jsonEncode(selectedTag).toString());
                     },
                     style: ButtonStyle(
                       backgroundColor:
