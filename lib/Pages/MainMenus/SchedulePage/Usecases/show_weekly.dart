@@ -46,6 +46,10 @@ class GetWeeklyNavigator extends StatelessWidget {
               return Row(children: [
                 GestureDetector(
                     onTap: () {
+                      if (selectedArchiveSlug != null) {
+                        selectedArchiveSlug = null;
+                        selectedArchiveName = null;
+                      }
                       slctSchedule = DateTime.now();
 
                       Get.offAll(() => const BottomBar());

@@ -10,7 +10,6 @@ import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/queries.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/ProfilePage/index.dart';
 
 class GetEditProfile extends StatefulWidget {

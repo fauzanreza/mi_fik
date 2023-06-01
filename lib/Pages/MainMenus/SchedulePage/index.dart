@@ -48,6 +48,12 @@ class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
 
   void navigateDay(int newValue) {
     setState(() {
+      if (selectedArchiveSlug != null) {
+        selectedArchiveSlug = null;
+        selectedArchiveName = null;
+      }
+      tabController = TabController(
+          length: 2, vsync: this, initialIndex: getStartIndex(null));
       slctSchedule = slctSchedule.add(Duration(days: newValue));
     });
     Get.to(() => const BottomBar());
