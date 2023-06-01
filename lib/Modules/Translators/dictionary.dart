@@ -80,7 +80,8 @@ class Dictionaries extends Translations {
           'Alert': 'Alert',
           'Attachment removed': 'Attachment removed',
           "Attachment removed. Can't located uploaded file":
-              "Attachment removed. Can't located uploaded file"
+              "Attachment removed. Can't located uploaded file",
+          'Yes, Delete task': 'Yes, Delete task',
         },
         'id_ID': {
           'Good Morning': 'Selamat Pagi',
@@ -159,7 +160,8 @@ class Dictionaries extends Translations {
           'Alert': 'Perhatian',
           'Attachment removed': 'Tautan dihapus',
           "Attachment removed. Can't located uploaded file":
-              "Tautan dihapus. Tidak dapat mendeteksi file unggahan"
+              "Tautan dihapus. Tidak dapat mendeteksi file unggahan",
+          'Yes, Delete task': 'Ya, Hapus tugas',
         },
       };
 }
