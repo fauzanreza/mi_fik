@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/ProfilePage/Usecases/edit_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,8 +15,16 @@ class ShowProfile extends StatelessWidget {
     final username = prefs.getString('username_key');
     final image = prefs.getString('image_key');
     final role = prefs.getString('role_general_key');
-    return UserProfileLeftBar(
-        username: username, image: image, roleGeneral: role);
+
+    if (role != null && image != null && username != null) {
+      return UserProfileLeftBar(
+          username: username, image: image, roleGeneral: role);
+    } else {
+      Get.offAll(() => const LoginPage());
+      Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
+          backgroundColor: whitebg);
+      return null;
+    }
   }
 
   @override
@@ -25,7 +35,8 @@ class ShowProfile extends StatelessWidget {
     return FutureBuilder<UserProfileLeftBar>(
         future: getToken(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.connectionState == ConnectionState.done &&
+              snapshot.hasData) {
             String username = snapshot.data.username;
             String image = snapshot.data.image;
             String role = snapshot.data.roleGeneral;

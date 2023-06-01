@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ShowRole extends StatelessWidget {
@@ -13,7 +14,15 @@ class ShowRole extends StatelessWidget {
   Future<Role> getToken() async {
     final prefs = await SharedPreferences.getInstance();
     final roles = prefs.getString('role_list_key');
-    return Role(role: roles);
+
+    if (roles != null) {
+      return Role(role: roles);
+    } else {
+      Get.offAll(() => const LoginPage());
+      Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
+          backgroundColor: whitebg);
+      return null;
+    }
   }
 
   @override
@@ -21,7 +30,8 @@ class ShowRole extends StatelessWidget {
     return FutureBuilder<Role>(
         future: getToken(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.connectionState == ConnectionState.done &&
+              snapshot.hasData) {
             var roles = jsonDecode(snapshot.data.role);
 
             return Card(

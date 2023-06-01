@@ -12,6 +12,7 @@ import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Variables/dummy.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SetControl extends StatefulWidget {
@@ -26,7 +27,15 @@ class _SetControl extends State<SetControl> {
   Future<Role> getToken() async {
     final prefs = await SharedPreferences.getInstance();
     final roles = prefs.getString('role_list_key');
-    return Role(role: roles);
+
+    if (roles != null) {
+      return Role(role: roles);
+    } else {
+      Get.offAll(() => const LoginPage());
+      Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
+          backgroundColor: whitebg);
+      return null;
+    }
   }
 
   @override
@@ -37,7 +46,8 @@ class _SetControl extends State<SetControl> {
     return FutureBuilder<Role>(
         future: getToken(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.connectionState == ConnectionState.done &&
+              snapshot.hasData) {
             var roles = jsonDecode(snapshot.data.role);
 
             double fullHeight = MediaQuery.of(context).size.height;
