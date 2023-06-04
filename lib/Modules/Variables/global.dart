@@ -13,6 +13,7 @@ String selectedArchiveName;
 String selectedArchiveDesc;
 String locCoordinateCtrl;
 String selectedArchiveSlug;
+bool isCheckedRegister = false;
 var selectedRole = [];
 
 final selectedTag = [];
