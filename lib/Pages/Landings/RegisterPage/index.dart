@@ -49,7 +49,7 @@ class _RegisterPage extends State<RegisterPage> {
               color: background,
             ),
           ),
-          child: const SetProfileData()),
+          child: SetProfileData()),
     ),
     PageModel(
       widget: DecoratedBox(
@@ -59,7 +59,7 @@ class _RegisterPage extends State<RegisterPage> {
               color: background,
             ),
           ),
-          child: const SetProfileImage()),
+          child: SetProfileImage()),
     ),
     PageModel(
       widget: DecoratedBox(
