@@ -12,7 +12,8 @@ import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/ManageRolePage/index.dart';
 
 class PostSelectedRole extends StatefulWidget {
-  const PostSelectedRole({Key key}) : super(key: key);
+  PostSelectedRole({Key key, this.back}) : super(key: key);
+  var back;
 
   @override
   _PostSelectedRole createState() => _PostSelectedRole();
@@ -41,8 +42,11 @@ class _PostSelectedRole extends State<PostSelectedRole> {
             icon: const Icon(Icons.close),
             tooltip: 'Back',
             onPressed: () {
-              selectedRole.clear();
-              Get.to(() => const RolePage());
+              if (widget.back == null) {
+                Get.back();
+              } else {
+                Get.offAll(() => const RolePage());
+              }
             },
           ),
         ),
@@ -56,7 +60,11 @@ class _PostSelectedRole extends State<PostSelectedRole> {
                 InkWell(
                   onTap: () {
                     selectedRole.clear();
-                    Get.to(() => const RolePage());
+                    if (widget.back == null) {
+                      Get.back();
+                    } else {
+                      Get.offAll(() => const RolePage());
+                    }
                   },
                   child: Container(
                     width: 105,

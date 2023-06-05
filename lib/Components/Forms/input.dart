@@ -35,8 +35,8 @@ Widget getInputText(int len, var ctrl, bool secure) {
   );
 }
 
-Widget getInputTextRegis(int len, var ctrl, String type, var ctx,
-    AuthCommandsService api, var refresh) {
+Widget getInputTextRegis(
+    int len, String type, var ctx, AuthCommandsService api, var refresh) {
   void checkAccount() async {
     RegisteredModel data = RegisteredModel(
       username: usernameAvaiabilityCheck.trim(),
@@ -72,7 +72,6 @@ Widget getInputTextRegis(int len, var ctrl, String type, var ctx,
       cursorColor: blackbg,
       maxLength: len,
       autofocus: false,
-      controller: ctrl,
       onSubmitted: (val) {
         if (type == "username") {
           usernameAvaiabilityCheck = val;
@@ -80,6 +79,12 @@ Widget getInputTextRegis(int len, var ctrl, String type, var ctx,
         } else if (type == "email") {
           emailAvaiabilityCheck = val;
           checkAccount();
+        } else if (type == "pass") {
+          passRegisCtrl = val;
+        } else if (type == "lname") {
+          lnameRegisCtrl = val;
+        } else if (type == "fname") {
+          fnameRegisCtrl = val;
         }
       },
       decoration: InputDecoration(

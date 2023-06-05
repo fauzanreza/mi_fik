@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
-import 'package:mi_fik/Modules/APIs/AuthApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/AuthApi/Services/commands.dart';
-import 'package:mi_fik/Modules/APIs/AuthApi/Validators/commands.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
@@ -15,29 +13,12 @@ class SetProfileData extends StatefulWidget {
 }
 
 class _SetProfileData extends State<SetProfileData> {
-  TextEditingController usernameCtrl;
-  TextEditingController emailCtrl;
-  TextEditingController passCtrl;
-  int validCtrl;
-  TextEditingController fnameCtrl;
-  TextEditingController lnameCtrl;
-
   AuthCommandsService apiService;
 
   @override
   void initState() {
     super.initState();
     apiService = AuthCommandsService();
-  }
-
-  @override
-  void dispose() {
-    usernameCtrl.dispose();
-    emailCtrl.dispose();
-    passCtrl.dispose();
-    fnameCtrl.dispose();
-    lnameCtrl.dispose();
-    super.dispose();
   }
 
   void refresh() {
@@ -54,11 +35,17 @@ class _SetProfileData extends State<SetProfileData> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             getSubTitleMedium("Password", blackbg, TextAlign.left),
-            getInputText(35, passCtrl, true),
+            getInputTextRegis(35, "pass", context, null, refresh),
             getSubTitleMedium("First Name", blackbg, TextAlign.left),
-            getInputText(35, fnameCtrl, false),
+            getInputTextRegis(35, "fname", context, null, refresh),
             getSubTitleMedium("Last Name", blackbg, TextAlign.left),
-            getInputText(35, lnameCtrl, false)
+            getInputTextRegis(35, "lname", context, null, refresh),
+            getSubTitleMedium("Valid Until", blackbg, TextAlign.left),
+            getDropDownMain(slctValidUntil, validUntil, (String newValue) {
+              setState(() {
+                slctValidUntil = newValue;
+              });
+            }, false, null),
           ],
         );
       } else {
@@ -79,29 +66,21 @@ class _SetProfileData extends State<SetProfileData> {
       }
     }
 
-    return ListView(
-      children: [
-        Container(
-          height: fullHeight * 0.75,
-          padding: EdgeInsets.all(paddingMD),
-          margin:
-              EdgeInsets.fromLTRB(paddingMD, paddingLg, paddingMD, paddingMD),
-          decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-              color: whitebg),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            getTitleLarge("Profile Data", primaryColor),
-            getSubTitleMedium("Username", blackbg, TextAlign.left),
-            getInputTextRegis(
-                30, usernameCtrl, "username", context, apiService, refresh),
-            getSubTitleMedium("Email", blackbg, TextAlign.left),
-            getInputTextRegis(
-                30, emailCtrl, "email", context, apiService, refresh),
-            getDataDetailForm(checkAvaiabilityRegis)
-          ]),
-        )
-      ],
+    return Container(
+      height: fullHeight * 0.75,
+      padding: EdgeInsets.all(paddingMD),
+      margin: EdgeInsets.fromLTRB(paddingMD, paddingLg, paddingMD, paddingMD),
+      decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+          color: whitebg),
+      child: ListView(children: [
+        getTitleLarge("Profile Data", primaryColor),
+        getSubTitleMedium("Username", blackbg, TextAlign.left),
+        getInputTextRegis(30, "username", context, apiService, refresh),
+        getSubTitleMedium("Email", blackbg, TextAlign.left),
+        getInputTextRegis(30, "email", context, apiService, refresh),
+        getDataDetailForm(checkAvaiabilityRegis),
+      ]),
     );
   }
 }

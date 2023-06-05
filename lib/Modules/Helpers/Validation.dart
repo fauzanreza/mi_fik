@@ -16,6 +16,7 @@ int emailMaxLength = 75;
 
 int usernameMinLength = 6;
 int emailMinLength = 10;
+int passwordMinLength = 6;
 
 validateNull(val) {
   if (val != null) {

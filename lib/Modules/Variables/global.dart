@@ -9,15 +9,26 @@ List listAttachment = [];
 List<Map<String, dynamic>> listArchiveCheck = [];
 
 // Selected
-String usernameAvaiabilityCheck = "";
-String emailAvaiabilityCheck = "";
 String selectedArchiveName;
 String selectedArchiveDesc;
 String locCoordinateCtrl;
 String selectedArchiveSlug;
+
+//Regis only
+int indexRegis = 0;
 bool isCheckedRegister = false;
+bool isFillForm = false;
+bool isChooseRole = false;
 String uploadedImage;
 bool checkAvaiabilityRegis = false;
+
+String usernameAvaiabilityCheck = "";
+String emailAvaiabilityCheck = "";
+
+String passRegisCtrl;
+int validRegisCtrl;
+String fnameRegisCtrl;
+String lnameRegisCtrl;
 
 var selectedRole = [];
 
@@ -26,6 +37,7 @@ var slctQuestionType = "event";
 var slctFeedbackType = "feedback_design";
 var slctAttachmentType = "image";
 var slctReminderType = "reminder_3_hour_before";
+var slctValidUntil = "2023";
 int maxImage = 4;
 int maxVideo = 20;
 int maxDoc = 15;
@@ -53,6 +65,7 @@ List<String> questionTypeOpt = [];
 List<String> feedbackTypeOpt = [];
 List<String> attachmentTypeOpt = [];
 List<String> reminderTypeOpt = [];
+List<String> validUntil = ["2019", "2020", "2021", "2022", "2023"];
 
 // Class and object
 class UserProfileLeftBar {
