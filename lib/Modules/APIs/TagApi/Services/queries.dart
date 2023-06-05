@@ -1,10 +1,6 @@
 // ignore: depend_on_referenced_packages
-import 'package:get/get.dart';
 import 'package:http/http.dart' show Client;
 import 'package:mi_fik/Modules/APIs/TagApi/Models/queries.dart';
-import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class TagQueriesService {
   final String baseUrl = "https://mifik.id";

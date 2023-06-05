@@ -12,6 +12,11 @@ int fnameLength = 30;
 int lnameLength = 30;
 int passwordLength = 50;
 
+int emailMaxLength = 75;
+
+int usernameMinLength = 6;
+int emailMinLength = 10;
+
 validateNull(val) {
   if (val != null) {
     return val.toString();

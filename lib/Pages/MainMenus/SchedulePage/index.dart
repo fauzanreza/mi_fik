@@ -85,7 +85,7 @@ class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
 
     return WillPopScope(
         onWillPop: () {
-          SystemNavigator.pop();
+          return SystemNavigator.pop();
         },
         child: Scaffold(
             key: scaffoldKey,

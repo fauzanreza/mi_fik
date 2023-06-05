@@ -84,7 +84,7 @@ class _PostLogin extends State<PostLogin> {
                     );
 
                     Map<String, dynamic> valid =
-                        LoginValidator.validateLogin(data);
+                        AuthValidator.validateLogin(data);
                     if (valid['status']) {
                       apiService.postLogin(data).then((response) {
                         setState(() => isLoading = false);

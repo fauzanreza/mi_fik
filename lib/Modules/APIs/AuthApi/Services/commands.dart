@@ -82,4 +82,33 @@ class AuthCommandsService {
       ];
     }
   }
+
+  Future<List<Map<String, dynamic>>> postCheckUser(RegisteredModel data) async {
+    final header = {
+      'Accept': 'application/json',
+      'content-type': 'application/json'
+    };
+
+    final response = await client.post(
+      Uri.parse("$emuUrl/api/v1/check/user"),
+      headers: header,
+      body: registeredModelToJson(data),
+    );
+
+    var responseData = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      return [
+        {"message": "success", "body": responseData['result']}
+      ];
+    } else if (response.statusCode == 422 || response.statusCode == 401) {
+      return [
+        {"message": "failed", "body": responseData['result']}
+      ];
+    } else {
+      return [
+        {"message": "failed", "body": "Unknown error"}
+      ];
+    }
+  }
 }

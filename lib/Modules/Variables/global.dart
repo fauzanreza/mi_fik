@@ -9,12 +9,15 @@ List listAttachment = [];
 List<Map<String, dynamic>> listArchiveCheck = [];
 
 // Selected
+String usernameAvaiabilityCheck = "";
+String emailAvaiabilityCheck = "";
 String selectedArchiveName;
 String selectedArchiveDesc;
 String locCoordinateCtrl;
 String selectedArchiveSlug;
 bool isCheckedRegister = false;
 String uploadedImage;
+bool checkAvaiabilityRegis = false;
 
 var selectedRole = [];
 

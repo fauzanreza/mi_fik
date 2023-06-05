@@ -12,14 +12,17 @@ class GetWaiting extends StatefulWidget {
 class _GetWaiting extends State<GetWaiting> {
   @override
   Widget build(BuildContext context) {
+    double fullHeight = MediaQuery.of(context).size.height;
+
     return ListView(
       children: [
         Container(
+          height: fullHeight * 0.75,
           padding: EdgeInsets.all(paddingMD),
           margin:
               EdgeInsets.fromLTRB(paddingMD, paddingLg, paddingMD, paddingMD),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
               color: whitebg),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [

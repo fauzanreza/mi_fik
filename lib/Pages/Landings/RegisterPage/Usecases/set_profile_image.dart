@@ -12,6 +12,8 @@ import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SetProfileImage extends StatefulWidget {
+  const SetProfileImage({Key key}) : super(key: key);
+
   @override
   _SetProfileImage createState() => _SetProfileImage();
 }
@@ -82,11 +84,12 @@ class _SetProfileImage extends State<SetProfileImage> {
             return ListView(
               children: [
                 Container(
+                  height: fullHeight * 0.75,
                   padding: EdgeInsets.all(paddingMD),
                   margin: EdgeInsets.fromLTRB(
                       paddingMD, paddingLg, paddingMD, paddingMD),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
                       color: whitebg),
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,

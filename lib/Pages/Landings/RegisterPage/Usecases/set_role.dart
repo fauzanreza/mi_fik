@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/ManageRolePage/Usecases/get_tag_category.dart';
-import 'package:mi_fik/Pages/SubMenus/ManageRolePage/Usecases/post_selected_role.dart';
 
 class SetRole extends StatefulWidget {
   const SetRole({Key key}) : super(key: key);
@@ -19,7 +18,7 @@ class _SetRole extends State<SetRole> {
     return ListView(
       children: [
         Container(
-          height: fullHeight * 0.7,
+          height: fullHeight * 0.75,
           padding: EdgeInsets.all(paddingMD),
           margin:
               EdgeInsets.fromLTRB(paddingMD, paddingLg, paddingMD, paddingMD),
