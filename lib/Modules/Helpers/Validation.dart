@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Validation variable
@@ -60,9 +61,11 @@ Future checkGps(var func) async {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        Get.snackbar("Alert", 'Location permissions are denied');
+        Get.snackbar("Alert", 'Location permissions are denied',
+            backgroundColor: whitebg);
       } else if (permission == LocationPermission.deniedForever) {
-        Get.snackbar("Alert", 'Location permissions are permanently denied');
+        Get.snackbar("Alert", 'Location permissions are permanently denied',
+            backgroundColor: whitebg);
       } else {
         haspermission = true;
       }
@@ -74,7 +77,8 @@ Future checkGps(var func) async {
       func;
     }
   } else {
-    Get.snackbar("Alert", 'GPS Service is not enabled, turn on GPS location');
+    Get.snackbar("Alert", 'GPS Service is not enabled, turn on GPS location',
+        backgroundColor: whitebg);
   }
 }
 

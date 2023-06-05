@@ -326,7 +326,7 @@ Future<void> getCurrentLocationDetails() async {
       locName = locationName;
       // print(locName);
     } else {
-      Get.snackbar("Alert", "No Placemark is found");
+      Get.snackbar("Alert", "No Placemark is found", backgroundColor: whitebg);
       locName = 'Invalid Location';
     }
   } catch (e) {

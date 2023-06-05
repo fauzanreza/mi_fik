@@ -26,7 +26,7 @@ class _RegisterPage extends State<RegisterPage> {
           decoration: BoxDecoration(
             border: Border.all(
               width: 0.0,
-              color: background,
+              color: Colors.transparent,
             ),
           ),
           child: const GetWelcoming()),
@@ -36,7 +36,7 @@ class _RegisterPage extends State<RegisterPage> {
           decoration: BoxDecoration(
             border: Border.all(
               width: 0.0,
-              color: background,
+              color: Colors.transparent,
             ),
           ),
           child: const GetTerms()),
@@ -44,10 +44,7 @@ class _RegisterPage extends State<RegisterPage> {
     PageModel(
       widget: DecoratedBox(
           decoration: BoxDecoration(
-            border: Border.all(
-              width: 0.0,
-              color: background,
-            ),
+            border: Border.all(width: 0.0, color: Colors.transparent),
           ),
           child: SetProfileData()),
     ),
@@ -56,7 +53,7 @@ class _RegisterPage extends State<RegisterPage> {
           decoration: BoxDecoration(
             border: Border.all(
               width: 0.0,
-              color: background,
+              color: Colors.transparent,
             ),
           ),
           child: SetProfileImage()),
@@ -66,7 +63,7 @@ class _RegisterPage extends State<RegisterPage> {
           decoration: BoxDecoration(
             border: Border.all(
               width: 0.0,
-              color: background,
+              color: Colors.transparent,
             ),
           ),
           child: const SetRole()),
@@ -76,7 +73,7 @@ class _RegisterPage extends State<RegisterPage> {
           decoration: BoxDecoration(
             border: Border.all(
               width: 0.0,
-              color: background,
+              color: Colors.transparent,
             ),
           ),
           child: const GetWaiting()),
@@ -97,10 +94,7 @@ class _RegisterPage extends State<RegisterPage> {
       child: InkWell(
         borderRadius: defaultSkipButtonBorderRadius,
         onTap: () {
-          if (setIndex != null) {
-            index = 2;
-            setIndex(2);
-          }
+          setIndex(index++);
         },
         child: Padding(
           padding: defaultSkipButtonPadding,
@@ -153,14 +147,10 @@ class _RegisterPage extends State<RegisterPage> {
             footerBuilder: (context, dragDistance, pagesLength, setIndex) {
               return DecoratedBox(
                 decoration: BoxDecoration(
-                  color: background,
-                  border: Border.all(
-                    width: 0.0,
-                    color: background,
-                  ),
+                  border: Border.all(width: 0.0, color: Colors.transparent),
                 ),
                 child: ColoredBox(
-                  color: background,
+                  color: Colors.transparent,
                   child: Padding(
                     padding: const EdgeInsets.all(45.0),
                     child: Row(
@@ -170,14 +160,16 @@ class _RegisterPage extends State<RegisterPage> {
                           netDragPercent: dragDistance,
                           pagesLength: pagesLength,
                           indicator: Indicator(
-                            indicatorDesign: IndicatorDesign.line(
-                              lineDesign: LineDesign(
-                                lineType: DesignType.line_uniform,
+                            activeIndicator: ActiveIndicator(color: whitebg),
+                            closedIndicator: ClosedIndicator(color: successbg),
+                            indicatorDesign: IndicatorDesign.polygon(
+                              polygonDesign: PolygonDesign(
+                                polygon: DesignType.polygon_circle,
                               ),
                             ),
                           ),
                         ),
-                        index == pagesLength - 1
+                        index == pagesLength
                             ? _signupButton
                             : _skipButton(setIndex: setIndex)
                       ],

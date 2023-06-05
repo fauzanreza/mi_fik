@@ -13,7 +13,8 @@ class DeleteImage {
         await prefs.setString('image_key', "null");
         return true;
       } catch (e) {
-        return e;
+        await prefs.setString('image_key', "null");
+        return true;
       }
     } else {
       return false;

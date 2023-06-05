@@ -14,6 +14,8 @@ String selectedArchiveDesc;
 String locCoordinateCtrl;
 String selectedArchiveSlug;
 bool isCheckedRegister = false;
+String uploadedImage;
+
 var selectedRole = [];
 
 final selectedTag = [];

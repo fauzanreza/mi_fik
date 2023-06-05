@@ -63,7 +63,9 @@ class _RolePage extends State<RolePage> {
           selectedRole.clear();
           Get.to(() => const BottomBar());
         }),
-        body: const GetAllTagCategory(),
+        body: Container(
+            margin: EdgeInsets.symmetric(horizontal: paddingSM),
+            child: const GetAllTagCategory()),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             if (selectedRole.isEmpty) {
