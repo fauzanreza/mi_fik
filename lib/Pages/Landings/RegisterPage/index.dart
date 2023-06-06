@@ -74,7 +74,7 @@ class _RegisterPage extends State<RegisterPage> {
                 return Container(
                     height: height * 0.4,
                     padding: MediaQuery.of(context).viewInsets,
-                    child: PostSelectedRole(back: null));
+                    child: PostSelectedRole(back: null, isLogged: false));
               },
             );
           } else if (selectedRole.isEmpty && !isFillForm && indexRegis == 3) {

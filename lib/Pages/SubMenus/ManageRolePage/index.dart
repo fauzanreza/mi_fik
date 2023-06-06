@@ -86,7 +86,8 @@ class _RolePage extends State<RolePage> {
                   return Container(
                       height: fullHeight * 0.4,
                       padding: MediaQuery.of(context).viewInsets,
-                      child: PostSelectedRole(back: RolePage()));
+                      child: PostSelectedRole(
+                          back: const RolePage(), isLogged: true));
                 },
               );
             }

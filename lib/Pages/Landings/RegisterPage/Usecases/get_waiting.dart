@@ -18,16 +18,24 @@ class _GetWaiting extends State<GetWaiting> {
       children: [
         Container(
           height: fullHeight * 0.75,
-          padding: EdgeInsets.all(paddingMD),
+          padding: EdgeInsets.symmetric(
+              horizontal: paddingMD, vertical: paddingLg * 2),
           margin:
               EdgeInsets.fromLTRB(paddingMD, paddingLg, paddingMD, paddingMD),
           decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(10)),
               color: whitebg),
           child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
             getTitleLarge("Your account has registered", primaryColor),
-            getSubTitleMedium("Please wait until", primaryColor, TextAlign.left)
+            ClipRRect(
+              child: Image.asset('assets/icon/usermanage.png',
+                  width: fullHeight * 0.3),
+            ),
+            getSubTitleMedium(
+                "Please wait until your account has been approved by admin",
+                blackbg,
+                TextAlign.center)
           ]),
         )
       ],

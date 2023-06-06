@@ -8,6 +8,7 @@ import 'package:mi_fik/Modules/APIs/UserApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
 import 'package:mi_fik/Modules/Firebases/Storages/User/add_image.dart';
 import 'package:mi_fik/Modules/Firebases/Storages/User/remove_image.dart';
+import 'package:mi_fik/Modules/Helpers/info.dart';
 import 'package:mi_fik/Modules/Helpers/widget.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -222,7 +223,13 @@ class _SetProfileImage extends State<SetProfileImage> {
                                               width: fullWidth * 0.085),
                                         )))),
                           ],
-                        )
+                        ),
+                        Container(
+                            padding: EdgeInsets.fromLTRB(0, paddingMD, 0, 0),
+                            child: GetInfoBox(
+                              page: "register",
+                              location: "add_profile_pic",
+                            )),
                       ]),
                 )
               ],
