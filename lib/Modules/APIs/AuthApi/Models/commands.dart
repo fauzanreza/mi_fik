@@ -16,3 +16,20 @@ String loginModelToJson(LoginModel data) {
   final jsonData = data.toJson();
   return json.encode(jsonData);
 }
+
+// Usecase check registered account
+class RegisteredModel {
+  String username;
+  String email;
+
+  RegisteredModel({this.username, this.email});
+
+  Map<String, dynamic> toJson() {
+    return {"username": username, "email": email};
+  }
+}
+
+String registeredModelToJson(RegisteredModel data) {
+  final jsonData = data.toJson();
+  return json.encode(jsonData);
+}

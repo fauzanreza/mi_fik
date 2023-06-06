@@ -32,7 +32,7 @@ class _RolePage extends State<RolePage> {
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
-        future: apiQuery.getMyReq(),
+        future: apiQuery.getMyReq(true),
         builder: (BuildContext context,
             AsyncSnapshot<List<UserRequestModel>> snapshot) {
           if (snapshot.hasError) {
@@ -63,7 +63,9 @@ class _RolePage extends State<RolePage> {
           selectedRole.clear();
           Get.to(() => const BottomBar());
         }),
-        body: const GetAllTagCategory(),
+        body: Container(
+            margin: EdgeInsets.symmetric(horizontal: paddingSM),
+            child: const GetAllTagCategory()),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             if (selectedRole.isEmpty) {
@@ -84,7 +86,8 @@ class _RolePage extends State<RolePage> {
                   return Container(
                       height: fullHeight * 0.4,
                       padding: MediaQuery.of(context).viewInsets,
-                      child: const PostSelectedRole());
+                      child: PostSelectedRole(
+                          back: const RolePage(), isLogged: true));
                 },
               );
             }

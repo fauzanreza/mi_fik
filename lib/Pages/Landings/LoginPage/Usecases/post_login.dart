@@ -9,6 +9,7 @@ import 'package:mi_fik/Modules/APIs/AuthApi/Services/commands.dart';
 import 'package:mi_fik/Modules/APIs/AuthApi/Validators/commands.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/Landings/RegisterPage/index.dart';
 
@@ -84,16 +85,31 @@ class _PostLogin extends State<PostLogin> {
                     );
 
                     Map<String, dynamic> valid =
-                        LoginValidator.validateLogin(data);
+                        AuthValidator.validateLogin(data);
                     if (valid['status']) {
                       apiService.postLogin(data).then((response) {
                         setState(() => isLoading = false);
                         var status = response[0]['message'];
                         var body = response[0]['body'];
+                        var acc = response[0]['access'];
 
                         if (status == "success") {
-                          Get.to(() => const BottomBar());
-                          userService.putFirebase(token);
+                          if (acc) {
+                            Get.to(() => const BottomBar());
+                            userService.putFirebase(token);
+                          } else {
+                            usernameAvaiabilityCheck = body['username'];
+                            emailAvaiabilityCheck = body['email'];
+                            passRegisCtrl = body['password'];
+                            fnameRegisCtrl = body['first_name'];
+                            lnameRegisCtrl = body['last_name'];
+                            validRegisCtrl = int.parse(body['valid_until']);
+
+                            Get.to(() => RegisterPage(
+                                  isLogged: true,
+                                ));
+                            userService.putFirebase(token);
+                          }
                         } else {
                           showDialog<String>(
                               context: context,
@@ -132,7 +148,9 @@ class _PostLogin extends State<PostLogin> {
                       foregroundColor: primaryColor, // foreground
                     ),
                     onPressed: () {
-                      Get.to(() => const RegisterPage());
+                      Get.to(() => RegisterPage(
+                            isLogged: false,
+                          ));
                     },
                     child: const Text('Register now'),
                   )

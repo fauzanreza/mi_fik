@@ -48,10 +48,12 @@ class _SetLocation extends State<SetLocation>
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
-          Get.snackbar("Alert", "Location permissions are permently denied");
+          Get.snackbar("Alert", "Location permissions are permently denied",
+              backgroundColor: whitebg);
         } else if (permission == LocationPermission.deniedForever) {
           if (permission == LocationPermission.denied) {
-            Get.snackbar("Alert", "Location permissions are permently denied");
+            Get.snackbar("Alert", "Location permissions are permently denied",
+                backgroundColor: whitebg);
           }
         } else {
           haspermission = true;

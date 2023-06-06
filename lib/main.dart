@@ -14,6 +14,7 @@ import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:mi_fik/Pages/Landings/RegisterPage/index.dart';
 import 'package:mi_fik/firebase_options.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -49,17 +50,25 @@ Future<void> main() async {
   if (shouldUseFirestoreEmulator) {
     FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
   }
+
   final prefs = await SharedPreferences.getInstance();
   if (prefs.containsKey("token_key")) {
-    runApp(MyApp(signed: true));
+    if (prefs.containsKey("role_general_key")) {
+      isFinishedRegis = true;
+    } else {
+      isFinishedRegis = false;
+    }
+
+    runApp(MyApp(signed: true, finishRegis: isFinishedRegis));
   } else {
-    runApp(MyApp(signed: false));
+    runApp(MyApp(signed: false, finishRegis: isFinishedRegis));
   }
 }
 
 class MyApp extends StatefulWidget {
-  MyApp({Key key, this.signed}) : super(key: key);
+  MyApp({Key key, this.signed, this.finishRegis}) : super(key: key);
   bool signed;
+  bool finishRegis;
 
   @override
   _MyApp createState() => _MyApp();
@@ -152,17 +161,31 @@ class _MyApp extends State<MyApp> {
             String tokens = snapshot.data;
             userService.putFirebase(tokens);
 
-            return GetMaterialApp(
-              translations: Dictionaries(),
-              locale: const Locale("en", "US"),
-              fallbackLocale: const Locale("en", "US"),
-              debugShowCheckedModeBanner: false,
-              title: 'Mi-FIK',
-              theme: ThemeData(
-                primarySwatch: Colors.blue,
-              ),
-              home: const BottomBar(),
-            );
+            if (widget.finishRegis) {
+              return GetMaterialApp(
+                translations: Dictionaries(),
+                locale: const Locale("en", "US"),
+                fallbackLocale: const Locale("en", "US"),
+                debugShowCheckedModeBanner: false,
+                title: 'Mi-FIK',
+                theme: ThemeData(
+                  primarySwatch: Colors.blue,
+                ),
+                home: const BottomBar(),
+              );
+            } else {
+              return GetMaterialApp(
+                translations: Dictionaries(),
+                locale: const Locale("en", "US"),
+                fallbackLocale: const Locale("en", "US"),
+                debugShowCheckedModeBanner: false,
+                title: 'Mi-FIK',
+                theme: ThemeData(
+                  primarySwatch: Colors.blue,
+                ),
+                home: RegisterPage(isLogged: true),
+              );
+            }
           } else {
             return const CircularProgressIndicator();
           }

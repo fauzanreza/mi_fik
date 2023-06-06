@@ -9,10 +9,13 @@ import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/Landings/RegisterPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/ManageRolePage/index.dart';
 
 class PostSelectedRole extends StatefulWidget {
-  const PostSelectedRole({Key key}) : super(key: key);
+  PostSelectedRole({Key key, this.back, this.isLogged}) : super(key: key);
+  var back;
+  bool isLogged;
 
   @override
   _PostSelectedRole createState() => _PostSelectedRole();
@@ -41,8 +44,11 @@ class _PostSelectedRole extends State<PostSelectedRole> {
             icon: const Icon(Icons.close),
             tooltip: 'Back',
             onPressed: () {
-              selectedRole.clear();
-              Get.to(() => const RolePage());
+              if (widget.back == null) {
+                Get.back();
+              } else {
+                Get.offAll(() => const RolePage());
+              }
             },
           ),
         ),
@@ -56,7 +62,11 @@ class _PostSelectedRole extends State<PostSelectedRole> {
                 InkWell(
                   onTap: () {
                     selectedRole.clear();
-                    Get.to(() => const RolePage());
+                    if (widget.back == null) {
+                      Get.back();
+                    } else {
+                      Get.offAll(() => const RolePage());
+                    }
                   },
                   child: Container(
                     width: 105,
@@ -97,11 +107,21 @@ class _PostSelectedRole extends State<PostSelectedRole> {
                         var body = response[0]['body'];
 
                         if (status == "success") {
-                          Get.to(() => const BottomBar());
-                          showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  SuccessDialog(text: body));
+                          if (widget.isLogged) {
+                            Get.to(() => const BottomBar());
+                            showDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    SuccessDialog(text: body));
+                          } else {
+                            setState(() {
+                              indexRegis = 5;
+                              isFinishedRegis = true;
+                            });
+                            Get.offAll(() => RegisterPage());
+                            Get.snackbar("Success", "Role request has sended",
+                                backgroundColor: whitebg);
+                          }
                         } else {
                           showDialog<String>(
                               context: context,

@@ -63,6 +63,14 @@ getImageHeader(url) {
   }
 }
 
+getImageUser(url) {
+  if (url != null && url != "null") {
+    return NetworkImage(url);
+  } else {
+    return const AssetImage('assets/icon/default_lecturer.png');
+  }
+}
+
 Widget getDescHeaderWidget(String desc, Color clr) {
   if (desc.trim() != "" && desc != "null") {
     return Container(

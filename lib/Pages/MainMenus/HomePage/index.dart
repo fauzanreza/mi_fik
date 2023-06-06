@@ -80,7 +80,7 @@ class _HomePage extends State<HomePage> {
 
             return WillPopScope(
                 onWillPop: () {
-                  SystemNavigator.pop();
+                  return SystemNavigator.pop();
                 },
                 child: Scaffold(
                   key: scaffoldKey,

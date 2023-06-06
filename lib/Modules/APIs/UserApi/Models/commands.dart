@@ -22,6 +22,40 @@ String editUserProfileModelToJson(EditUserProfileModel data) {
   return json.encode(jsonData);
 }
 
+// Usecase register profile
+class RegisterModel {
+  String username;
+  String password;
+  String email;
+  String firstName;
+  String lastName;
+  int validUntil;
+
+  RegisterModel(
+      {this.username,
+      this.password,
+      this.email,
+      this.firstName,
+      this.lastName,
+      this.validUntil});
+
+  Map<String, dynamic> toJson() {
+    return {
+      "username": username,
+      "email": email,
+      "password": password,
+      "first_name": firstName,
+      "last_name": lastName,
+      "valid_until": validUntil,
+    };
+  }
+}
+
+String registerModelToJson(RegisterModel data) {
+  final jsonData = data.toJson();
+  return json.encode(jsonData);
+}
+
 // Usecase add new request
 class AddNewReqModel {
   String userRole;

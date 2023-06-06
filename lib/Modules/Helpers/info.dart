@@ -79,6 +79,7 @@ class _GetInfoBox extends State<GetInfoBox> {
             Text(ucFirst(contents.infoType), style: TextStyle(color: blackbg))
           ],
         ),
+        SizedBox(height: paddingSM),
         HtmlWidget(contents.infoBody),
       ]),
     );

@@ -13,6 +13,24 @@ String selectedArchiveName;
 String selectedArchiveDesc;
 String locCoordinateCtrl;
 String selectedArchiveSlug;
+
+//Regis only
+int indexRegis = 0;
+bool isCheckedRegister = false;
+bool isFillForm = false;
+bool isChooseRole = false;
+String uploadedImageRegis;
+bool checkAvaiabilityRegis = false;
+bool isFinishedRegis = false;
+
+String usernameAvaiabilityCheck = "";
+String emailAvaiabilityCheck = "";
+
+String passRegisCtrl;
+int validRegisCtrl;
+String fnameRegisCtrl;
+String lnameRegisCtrl;
+
 var selectedRole = [];
 
 final selectedTag = [];
@@ -20,6 +38,7 @@ var slctQuestionType = "event";
 var slctFeedbackType = "feedback_design";
 var slctAttachmentType = "image";
 var slctReminderType = "reminder_3_hour_before";
+var slctValidUntil = "2023";
 int maxImage = 4;
 int maxVideo = 20;
 int maxDoc = 15;
@@ -47,6 +66,7 @@ List<String> questionTypeOpt = [];
 List<String> feedbackTypeOpt = [];
 List<String> attachmentTypeOpt = [];
 List<String> reminderTypeOpt = [];
+List<String> validUntil = ["2019", "2020", "2021", "2022", "2023"];
 
 // Class and object
 class UserProfileLeftBar {
@@ -55,6 +75,23 @@ class UserProfileLeftBar {
   final String roleGeneral;
 
   UserProfileLeftBar({this.username, this.image, this.roleGeneral});
+}
+
+class ProfileData {
+  final String username;
+  final String image;
+  final String email;
+  final String pass;
+  final String fname;
+  final String lname;
+
+  ProfileData(
+      {this.username,
+      this.image,
+      this.email,
+      this.pass,
+      this.fname,
+      this.lname});
 }
 
 class Role {

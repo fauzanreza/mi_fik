@@ -159,4 +159,37 @@ class UserCommandsService {
       ];
     }
   }
+
+  Future<List<Map<String, dynamic>>> postUser(RegisterModel data) async {
+    final header = {
+      'Accept': 'application/json',
+      'content-type': 'application/json',
+    };
+
+    final response = await client.post(
+      Uri.parse("$emuUrl/api/v1/register"),
+      headers: header,
+      body: registerModelToJson(data),
+    );
+
+    var responseData = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      return [
+        {
+          "message": "success",
+          "body": responseData["message"],
+        }
+      ];
+    } else if (response.statusCode == 422 || response.statusCode == 401) {
+      // Validation failed
+      return [
+        {"message": "failed", "body": responseData['result']}
+      ];
+    } else {
+      return [
+        {"message": "failed", "body": "Unknown error"}
+      ];
+    }
+  }
 }
