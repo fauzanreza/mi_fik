@@ -36,7 +36,7 @@ Widget getInputText(int len, var ctrl, bool secure) {
 }
 
 Widget getInputTextRegis(int len, String type, var ctx, AuthCommandsService api,
-    var refresh, String hint) {
+    var refresh, String hint, bool check) {
   void checkAccount() async {
     RegisteredModel data = RegisteredModel(
       username: usernameAvaiabilityCheck.trim(),
@@ -66,6 +66,14 @@ Widget getInputTextRegis(int len, String type, var ctx, AuthCommandsService api,
     }
   }
 
+  bool getEnabledEditing(bool check) {
+    if (check) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   return Container(
     padding: EdgeInsets.only(top: paddingXSM * 0.2),
     child: TextField(
@@ -91,6 +99,7 @@ Widget getInputTextRegis(int len, String type, var ctx, AuthCommandsService api,
         contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
         fillColor: mainbg,
         filled: true,
+        enabled: getEnabledEditing(check),
         hintText: hint,
         border: InputBorder.none,
         enabledBorder: OutlineInputBorder(

@@ -39,13 +39,13 @@ class _SetProfileData extends State<SetProfileData> {
           children: [
             getSubTitleMedium("Password", blackbg, TextAlign.left),
             getInputTextRegis(
-                35, "pass", context, null, refresh, passRegisCtrl),
+                35, "pass", context, null, refresh, passRegisCtrl, isFillForm),
             getSubTitleMedium("First Name", blackbg, TextAlign.left),
-            getInputTextRegis(
-                35, "fname", context, null, refresh, fnameRegisCtrl),
+            getInputTextRegis(35, "fname", context, null, refresh,
+                fnameRegisCtrl, isFillForm),
             getSubTitleMedium("Last Name", blackbg, TextAlign.left),
-            getInputTextRegis(
-                35, "lname", context, null, refresh, lnameRegisCtrl),
+            getInputTextRegis(35, "lname", context, null, refresh,
+                lnameRegisCtrl, isFillForm),
             getSubTitleMedium("Valid Until", blackbg, TextAlign.left),
             getDropDownMain(slctValidUntil, validUntil, (String newValue) {
               setState(() {
@@ -84,7 +84,6 @@ class _SetProfileData extends State<SetProfileData> {
             fname: data['first_name'],
             lname: data['last_name']);
       } else {
-        final data = prefs.getString('profile_data_key');
         return ProfileData(
             username: null,
             email: null,
@@ -115,10 +114,10 @@ class _SetProfileData extends State<SetProfileData> {
         getTitleLarge("Profile Data", primaryColor),
         getSubTitleMedium("Username", blackbg, TextAlign.left),
         getInputTextRegis(30, "username", context, apiService, refresh,
-            usernameAvaiabilityCheck),
+            usernameAvaiabilityCheck, isFillForm),
         getSubTitleMedium("Email", blackbg, TextAlign.left),
-        getInputTextRegis(
-            30, "email", context, apiService, refresh, emailAvaiabilityCheck),
+        getInputTextRegis(30, "email", context, apiService, refresh,
+            emailAvaiabilityCheck, isFillForm),
         getDataDetailForm(checkAvaiabilityRegis),
       ]),
     );

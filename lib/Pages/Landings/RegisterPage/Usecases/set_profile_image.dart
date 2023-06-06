@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
+import 'package:mi_fik/Modules/APIs/UserApi/Models/commands.dart';
+import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
 import 'package:mi_fik/Modules/Firebases/Storages/User/add_image.dart';
 import 'package:mi_fik/Modules/Firebases/Storages/User/remove_image.dart';
 import 'package:mi_fik/Modules/Helpers/widget.dart';
@@ -21,11 +23,14 @@ class SetProfileImage extends StatefulWidget {
 class _SetProfileImage extends State<SetProfileImage> {
   PostImage fireServicePost;
   DeleteImage fireServiceDelete;
+  UserCommandsService commandService;
+
   XFile file;
 
   @override
   void initState() {
     super.initState();
+    commandService = UserCommandsService();
     fireServicePost = PostImage();
     fireServiceDelete = DeleteImage();
   }
@@ -44,6 +49,7 @@ class _SetProfileImage extends State<SetProfileImage> {
 
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
+    bool isLoading;
 
     return FutureBuilder<UserProfileLeftBar>(
         future: getToken(),
@@ -60,13 +66,30 @@ class _SetProfileImage extends State<SetProfileImage> {
                     onTap: () async {
                       await fireServiceDelete.deleteImageUser().then((value) {
                         if (value == true) {
-                          FullScreenMenu.hide();
-                          setState(() {
-                            uploadedImage = null;
+                          EditUserImageModel data =
+                              EditUserImageModel(imageUrl: null);
+
+                          commandService.putProfileImage(data).then((response) {
+                            setState(() => isLoading = false);
+                            var status = response[0]['message'];
+                            var body = response[0]['body'];
+
+                            if (status == "success") {
+                              FullScreenMenu.hide();
+                              setState(() {
+                                uploadedImageRegis = null;
+                              });
+                              Get.snackbar(
+                                  "Success", "Uploaded Image has been removed",
+                                  backgroundColor: whitebg);
+                            } else {
+                              FullScreenMenu.hide();
+                              showDialog<String>(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      FailedDialog(text: body));
+                            }
                           });
-                          Get.snackbar(
-                              "Success", "Uploaded Image has been removed",
-                              backgroundColor: whitebg);
                         } else {
                           FullScreenMenu.hide();
                           showDialog<String>(
@@ -105,8 +128,10 @@ class _SetProfileImage extends State<SetProfileImage> {
                               width: 200,
                               margin: EdgeInsets.symmetric(vertical: paddingLg),
                               decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(100)),
                                 image: DecorationImage(
-                                  image: getImageUser(uploadedImage),
+                                  image: getImageUser(uploadedImageRegis),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -141,10 +166,36 @@ class _SetProfileImage extends State<SetProfileImage> {
                                                 await fireServicePost
                                                     .sendImageUser(file)
                                                     .then((value) {
-                                                  setState(() {
-                                                    uploadedImage = value;
+                                                  EditUserImageModel data =
+                                                      EditUserImageModel(
+                                                          imageUrl: value);
+
+                                                  commandService
+                                                      .putProfileImage(data)
+                                                      .then((response) {
+                                                    setState(() =>
+                                                        isLoading = false);
+                                                    var status =
+                                                        response[0]['message'];
+                                                    var body =
+                                                        response[0]['body'];
+
+                                                    if (status == "success") {
+                                                      setState(() {
+                                                        uploadedImageRegis =
+                                                            value;
+                                                      });
+                                                      FullScreenMenu.hide();
+                                                    } else {
+                                                      FullScreenMenu.hide();
+                                                      showDialog<String>(
+                                                          context: context,
+                                                          builder: (BuildContext
+                                                                  context) =>
+                                                              FailedDialog(
+                                                                  text: body));
+                                                    }
                                                   });
-                                                  FullScreenMenu.hide();
                                                 });
                                               }
                                             },

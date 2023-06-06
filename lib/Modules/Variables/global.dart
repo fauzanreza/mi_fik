@@ -19,7 +19,7 @@ int indexRegis = 0;
 bool isCheckedRegister = false;
 bool isFillForm = false;
 bool isChooseRole = false;
-String uploadedImage;
+String uploadedImageRegis;
 bool checkAvaiabilityRegis = false;
 bool isFinishedRegis = false;
 

@@ -36,6 +36,7 @@ class _GetWelcoming extends State<GetWelcoming> {
                 isChooseRole = false;
                 checkAvaiabilityRegis = false;
                 isFinishedRegis = false;
+                uploadedImageRegis = null;
                 final prefs = await SharedPreferences.getInstance();
                 await prefs.clear();
 
