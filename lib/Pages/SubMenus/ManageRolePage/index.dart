@@ -32,7 +32,7 @@ class _RolePage extends State<RolePage> {
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
-        future: apiQuery.getMyReq(),
+        future: apiQuery.getMyReq(true),
         builder: (BuildContext context,
             AsyncSnapshot<List<UserRequestModel>> snapshot) {
           if (snapshot.hasError) {

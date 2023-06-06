@@ -98,7 +98,6 @@ class _PostLogin extends State<PostLogin> {
                             Get.to(() => const BottomBar());
                             userService.putFirebase(token);
                           } else {
-                            indexRegis = 5;
                             usernameAvaiabilityCheck = body['username'];
                             emailAvaiabilityCheck = body['email'];
                             passRegisCtrl = body['password'];
@@ -106,7 +105,9 @@ class _PostLogin extends State<PostLogin> {
                             lnameRegisCtrl = body['last_name'];
                             validRegisCtrl = int.parse(body['valid_until']);
 
-                            Get.to(() => const RegisterPage());
+                            Get.to(() => RegisterPage(
+                                  isLogged: true,
+                                ));
                             userService.putFirebase(token);
                           }
                         } else {
@@ -147,7 +148,9 @@ class _PostLogin extends State<PostLogin> {
                       foregroundColor: primaryColor, // foreground
                     ),
                     onPressed: () {
-                      Get.to(() => const RegisterPage());
+                      Get.to(() => RegisterPage(
+                            isLogged: false,
+                          ));
                     },
                     child: const Text('Register now'),
                   )

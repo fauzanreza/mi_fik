@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class GetWelcoming extends StatefulWidget {
   const GetWelcoming({Key key}) : super(key: key);
@@ -16,11 +20,62 @@ class _GetWelcoming extends State<GetWelcoming> {
 
     return ListView(
       children: [
+        Row(
+          children: [
+            InkWell(
+              onTap: () async {
+                indexRegis = 0;
+                usernameAvaiabilityCheck = "";
+                emailAvaiabilityCheck = "";
+                passRegisCtrl = "";
+                fnameRegisCtrl = "";
+                lnameRegisCtrl = "";
+                validRegisCtrl = 2023;
+                isCheckedRegister = false;
+                isFillForm = false;
+                isChooseRole = false;
+                checkAvaiabilityRegis = false;
+                isFinishedRegis = false;
+                final prefs = await SharedPreferences.getInstance();
+                await prefs.clear();
+
+                Get.offAll(() => const LoginPage());
+              },
+              child: Container(
+                margin: EdgeInsets.only(
+                    left: paddingMD, right: paddingMD, top: paddingLg),
+                padding: EdgeInsets.all(paddingSM - 2),
+                width: 180,
+                decoration: BoxDecoration(
+                    color: dangerColor,
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color.fromARGB(255, 128, 128, 128)
+                            .withOpacity(0.3),
+                        blurRadius: 10.0,
+                        spreadRadius: 0.0,
+                        offset: const Offset(
+                          5.0,
+                          5.0,
+                        ),
+                      )
+                    ],
+                    borderRadius: const BorderRadius.all(Radius.circular(10))),
+                child: Row(
+                  children: [
+                    Icon(Icons.arrow_back, color: whitebg, size: iconMD),
+                    SizedBox(width: paddingSM),
+                    Text("Back to Sign In",
+                        style: TextStyle(color: whitebg, fontSize: textMD))
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
         Container(
-          height: fullHeight * 0.75,
           padding: EdgeInsets.all(paddingMD),
-          margin:
-              EdgeInsets.fromLTRB(paddingMD, paddingLg, paddingMD, paddingMD),
+          margin: EdgeInsets.all(paddingMD),
           decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(10)),
               color: whitebg),

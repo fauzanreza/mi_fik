@@ -35,8 +35,8 @@ Widget getInputText(int len, var ctrl, bool secure) {
   );
 }
 
-Widget getInputTextRegis(
-    int len, String type, var ctx, AuthCommandsService api, var refresh) {
+Widget getInputTextRegis(int len, String type, var ctx, AuthCommandsService api,
+    var refresh, String hint) {
   void checkAccount() async {
     RegisteredModel data = RegisteredModel(
       username: usernameAvaiabilityCheck.trim(),
@@ -91,6 +91,7 @@ Widget getInputTextRegis(
         contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
         fillColor: mainbg,
         filled: true,
+        hintText: hint,
         border: InputBorder.none,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),

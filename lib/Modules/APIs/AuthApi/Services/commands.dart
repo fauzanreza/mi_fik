@@ -1,8 +1,13 @@
 import 'dart:convert';
 
 // ignore: depend_on_referenced_packages
+import 'package:get/get.dart';
 import 'package:http/http.dart' show Client;
 import 'package:mi_fik/Modules/APIs/AuthApi/Models/commands.dart';
+import 'package:mi_fik/Modules/APIs/UserApi/Models/queries.dart';
+import 'package:mi_fik/Modules/APIs/UserApi/Services/queries.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
+import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthCommandsService {
@@ -66,6 +71,40 @@ class AuthCommandsService {
           ];
         } else {
           // Not yet accepted and doesnt have a role
+          // So it redirect to register page
+          isFillForm = true;
+          isCheckedRegister = true;
+          checkAvaiabilityRegis = true;
+          usernameAvaiabilityCheck = responseData['result']['username'];
+          emailAvaiabilityCheck = responseData['result']['email'];
+          passRegisCtrl = responseData['result']['password'];
+          fnameRegisCtrl = responseData['result']['first_name'];
+          lnameRegisCtrl = responseData['result']['last_name'];
+
+          //Check if user had pending request
+          final token = responseData['token'];
+          final header = {
+            'Accept': 'application/json',
+            'Authorization': "Bearer $token",
+          };
+
+          final resReq = await client.get(
+              Uri.parse("$emuUrl/api/v1/user/request/my"),
+              headers: header);
+          if (resReq.statusCode == 200) {
+            indexRegis = 5;
+          } else if (resReq.statusCode == 404) {
+            indexRegis = 4;
+          } else if (resReq.statusCode == 401) {
+            Get.snackbar(
+                "Alert".tr, "Failed to validate request, please try again".tr,
+                backgroundColor: whitebg);
+          } else {
+            indexRegis = 4;
+          }
+
+          await prefs.setString(
+              'profile_data_key', jsonEncode(responseData['result']));
           return [
             {
               "message": "success",

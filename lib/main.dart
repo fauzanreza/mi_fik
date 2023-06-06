@@ -183,7 +183,7 @@ class _MyApp extends State<MyApp> {
                 theme: ThemeData(
                   primarySwatch: Colors.blue,
                 ),
-                home: const RegisterPage(),
+                home: RegisterPage(isLogged: true),
               );
             }
           } else {

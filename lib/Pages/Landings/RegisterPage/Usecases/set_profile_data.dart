@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/APIs/AuthApi/Services/commands.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SetProfileData extends StatefulWidget {
   const SetProfileData({Key key}) : super(key: key);
@@ -35,11 +38,14 @@ class _SetProfileData extends State<SetProfileData> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             getSubTitleMedium("Password", blackbg, TextAlign.left),
-            getInputTextRegis(35, "pass", context, null, refresh),
+            getInputTextRegis(
+                35, "pass", context, null, refresh, passRegisCtrl),
             getSubTitleMedium("First Name", blackbg, TextAlign.left),
-            getInputTextRegis(35, "fname", context, null, refresh),
+            getInputTextRegis(
+                35, "fname", context, null, refresh, fnameRegisCtrl),
             getSubTitleMedium("Last Name", blackbg, TextAlign.left),
-            getInputTextRegis(35, "lname", context, null, refresh),
+            getInputTextRegis(
+                35, "lname", context, null, refresh, lnameRegisCtrl),
             getSubTitleMedium("Valid Until", blackbg, TextAlign.left),
             getDropDownMain(slctValidUntil, validUntil, (String newValue) {
               setState(() {
@@ -66,6 +72,38 @@ class _SetProfileData extends State<SetProfileData> {
       }
     }
 
+    Future<ProfileData> getToken() async {
+      final prefs = await SharedPreferences.getInstance();
+      if (isFillForm) {
+        final data = jsonDecode(prefs.getString('profile_data_key'));
+        return ProfileData(
+            username: data['username'],
+            email: data['email'],
+            pass: data['password'],
+            image: data['image_url'],
+            fname: data['first_name'],
+            lname: data['last_name']);
+      } else {
+        final data = prefs.getString('profile_data_key');
+        return ProfileData(
+            username: null,
+            email: null,
+            pass: null,
+            image: null,
+            fname: null,
+            lname: null);
+      }
+    }
+
+    //return
+    // FutureBuilder<ProfileData>(
+    //     future: getToken(),
+    //     builder: (context, snapshot) {
+    //       if (snapshot.connectionState == ConnectionState.done) {
+    //         if (isFillForm) {
+    //           usernameAvaiabilityCheck = snapshot.data.username;
+    //         } else {}
+
     return Container(
       height: fullHeight * 0.75,
       padding: EdgeInsets.all(paddingMD),
@@ -76,11 +114,17 @@ class _SetProfileData extends State<SetProfileData> {
       child: ListView(children: [
         getTitleLarge("Profile Data", primaryColor),
         getSubTitleMedium("Username", blackbg, TextAlign.left),
-        getInputTextRegis(30, "username", context, apiService, refresh),
+        getInputTextRegis(30, "username", context, apiService, refresh,
+            usernameAvaiabilityCheck),
         getSubTitleMedium("Email", blackbg, TextAlign.left),
-        getInputTextRegis(30, "email", context, apiService, refresh),
+        getInputTextRegis(
+            30, "email", context, apiService, refresh, emailAvaiabilityCheck),
         getDataDetailForm(checkAvaiabilityRegis),
       ]),
     );
+    //   } else {
+    //     return const SizedBox();
+    //   }
+    // });
   }
 }

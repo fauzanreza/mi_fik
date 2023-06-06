@@ -22,7 +22,8 @@ import 'package:mi_fik/Pages/SubMenus/ManageRolePage/Usecases/post_selected_role
 import 'package:onboarding/onboarding.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({Key key}) : super(key: key);
+  RegisterPage({Key key, this.isLogged}) : super(key: key);
+  bool isLogged;
 
   @override
   _RegisterPage createState() => _RegisterPage();
@@ -44,32 +45,6 @@ class _RegisterPage extends State<RegisterPage> {
 
     authService = AuthCommandsService();
     materialButton = _skipButton();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      maintainBottomViewPadding: false,
-      child: FutureBuilder(
-        future: apiQuery.getMyReq(),
-        builder: (BuildContext context,
-            AsyncSnapshot<List<UserRequestModel>> snapshot) {
-          if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                  "Something wrong with message: ${snapshot.error.toString()}"),
-            );
-          } else if (snapshot.connectionState == ConnectionState.done) {
-            List<UserRequestModel> contents = snapshot.data;
-            return _buildListView(contents);
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
-      ),
-    );
   }
 
   Material _skipButton({void Function(int) setIndex, double height}) {
@@ -103,45 +78,66 @@ class _RegisterPage extends State<RegisterPage> {
               },
             );
           } else if (selectedRole.isEmpty && !isFillForm && indexRegis == 3) {
-            RegisterModel regisData = RegisterModel(
-                username: usernameAvaiabilityCheck.trim(),
-                email: emailAvaiabilityCheck.trim(),
-                password: passRegisCtrl.trim(),
-                firstName: fnameRegisCtrl.trim(),
-                lastName: lnameRegisCtrl.trim(),
-                validUntil: 2024 // fow now
-                );
+            if (usernameAvaiabilityCheck != null &&
+                emailAvaiabilityCheck != null &&
+                passRegisCtrl != null &&
+                fnameRegisCtrl != null &&
+                lnameRegisCtrl != null) {
+              RegisterModel regisData = RegisterModel(
+                  username: usernameAvaiabilityCheck.trim(),
+                  email: emailAvaiabilityCheck.trim(),
+                  password: passRegisCtrl.trim(),
+                  firstName: fnameRegisCtrl.trim(),
+                  lastName: lnameRegisCtrl.trim(),
+                  validUntil: 2024 // fow now
+                  );
 
-            Map<String, dynamic> valid = UserValidator.validateRegis(regisData);
-            if (valid['status']) {
-              apiService.postUser(regisData).then((response) {
-                var status = response[0]['message'];
-                var body = response[0]['body'];
+              Map<String, dynamic> valid =
+                  UserValidator.validateRegis(regisData);
+              if (valid['status']) {
+                apiService.postUser(regisData).then((response) {
+                  var status = response[0]['message'];
+                  var body = response[0]['body'];
 
-                if (status == "success") {
-                  LoginModel loginData = LoginModel(
-                      username: usernameAvaiabilityCheck.trim(),
-                      password: passRegisCtrl.trim());
-                  authService.postLogin(loginData).then((value) {
-                    setIndex(indexRegis++);
+                  if (status == "success") {
+                    LoginModel loginData = LoginModel(
+                        username: usernameAvaiabilityCheck.trim(),
+                        password: passRegisCtrl.trim());
+                    authService.postLogin(loginData).then((value) {
+                      setIndex(indexRegis++);
+                      setState(() {
+                        isFillForm = true;
+                      });
+
+                      Get.snackbar("Success", "Account has been registered",
+                          backgroundColor: whitebg);
+                    });
+                  } else {
                     setState(() {
-                      isFillForm = true;
+                      isFillForm = false;
                     });
 
-                    Get.snackbar("Success", "Account has been registered",
-                        backgroundColor: whitebg);
-                  });
-                } else {
-                  setState(() {
-                    isFillForm = false;
-                  });
-
-                  showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context) =>
-                          FailedDialog(text: body, type: "register"));
-                }
-              });
+                    showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) =>
+                            FailedDialog(text: body, type: "register"));
+                  }
+                });
+              }
+            } else {
+              if (checkAvaiabilityRegis) {
+                showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => FailedDialog(
+                        text: "Please fill the remaining field",
+                        type: "register"));
+              } else {
+                showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => FailedDialog(
+                        text: "Please register your account first",
+                        type: "register"));
+              }
             }
           } else {
             setIndex(indexRegis++);
@@ -177,14 +173,9 @@ class _RegisterPage extends State<RegisterPage> {
   }
 
   @override
-  Widget _buildListView(List<UserRequestModel> contents) {
+  Widget build(BuildContext context) {
     double fullHeight = MediaQuery.of(context).size.height;
-    //double fullWidth = MediaQuery.of(context).size.width;
-    if (contents == null) {
-      indexRegis = 4;
-    } else {
-      indexRegis = 5;
-    }
+
     final onboardingPagesList = [
       PageModel(
         widget: DecoratedBox(

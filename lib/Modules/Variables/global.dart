@@ -77,6 +77,23 @@ class UserProfileLeftBar {
   UserProfileLeftBar({this.username, this.image, this.roleGeneral});
 }
 
+class ProfileData {
+  final String username;
+  final String image;
+  final String email;
+  final String pass;
+  final String fname;
+  final String lname;
+
+  ProfileData(
+      {this.username,
+      this.image,
+      this.email,
+      this.pass,
+      this.fname,
+      this.lname});
+}
+
 class Role {
   final String role;
 

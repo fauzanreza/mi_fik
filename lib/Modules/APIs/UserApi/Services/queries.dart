@@ -35,7 +35,7 @@ class UserQueriesService {
     }
   }
 
-  Future<List<UserRequestModel>> getMyReq() async {
+  Future<List<UserRequestModel>> getMyReq(bool isLogged) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token_key');
     final header = {
@@ -48,14 +48,40 @@ class UserQueriesService {
     if (response.statusCode == 200) {
       return userRequestModelFromJson(response.body);
     } else if (response.statusCode == 401) {
-      await prefs.clear();
+      if (isLogged) {
+        await prefs.clear();
 
-      Get.offAll(() => const LoginPage());
-      Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
-          backgroundColor: whitebg);
+        Get.offAll(() => const LoginPage());
+        Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
+            backgroundColor: whitebg);
+      }
+
       return null;
     } else {
       return null;
+    }
+  }
+
+  Future<bool> getMyReqV2(bool isLogged) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token_key');
+    final header = {
+      'Accept': 'application/json',
+      'Authorization': "Bearer $token",
+    };
+
+    final response = await client
+        .get(Uri.parse("$emuUrl/api/v1/user/request/my"), headers: header);
+    if (response.statusCode == 200) {
+      return true;
+    } else if (response.statusCode == 401) {
+      Get.snackbar(
+          "Alert".tr, "Failed to validate request, please try again".tr,
+          backgroundColor: whitebg);
+
+      return false;
+    } else {
+      return false;
     }
   }
 }
