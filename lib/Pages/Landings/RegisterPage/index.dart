@@ -3,8 +3,12 @@ import 'package:get/get.dart';
 import 'package:mi_fik/Components/Backgrounds/custom.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/nodata_dialog.dart';
+import 'package:mi_fik/Modules/APIs/AuthApi/Models/commands.dart';
+import 'package:mi_fik/Modules/APIs/AuthApi/Services/commands.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Models/commands.dart';
+import 'package:mi_fik/Modules/APIs/UserApi/Models/queries.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
+import 'package:mi_fik/Modules/APIs/UserApi/Services/queries.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Validators/commands.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -28,13 +32,44 @@ class _RegisterPage extends State<RegisterPage> {
   Material materialButton;
 
   UserCommandsService apiService;
+  UserQueriesService apiQuery;
+
+  AuthCommandsService authService;
 
   @override
   void initState() {
     super.initState();
     apiService = UserCommandsService();
+    apiQuery = UserQueriesService();
+
+    authService = AuthCommandsService();
     materialButton = _skipButton();
-    indexRegis = 0;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      maintainBottomViewPadding: false,
+      child: FutureBuilder(
+        future: apiQuery.getMyReq(),
+        builder: (BuildContext context,
+            AsyncSnapshot<List<UserRequestModel>> snapshot) {
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(
+                  "Something wrong with message: ${snapshot.error.toString()}"),
+            );
+          } else if (snapshot.connectionState == ConnectionState.done) {
+            List<UserRequestModel> contents = snapshot.data;
+            return _buildListView(contents);
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
+      ),
+    );
   }
 
   Material _skipButton({void Function(int) setIndex, double height}) {
@@ -43,7 +78,7 @@ class _RegisterPage extends State<RegisterPage> {
       color: successbg,
       child: InkWell(
         borderRadius: defaultSkipButtonBorderRadius,
-        onTap: () {
+        onTap: () async {
           if (selectedRole.isEmpty && !isChooseRole && indexRegis == 5) {
             showDialog<String>(
                 context: context,
@@ -68,24 +103,38 @@ class _RegisterPage extends State<RegisterPage> {
               },
             );
           } else if (selectedRole.isEmpty && !isFillForm && indexRegis == 3) {
-            RegisterModel data = RegisterModel(
-              username: usernameAvaiabilityCheck.trim(),
-              email: emailAvaiabilityCheck.trim(),
-            );
+            RegisterModel regisData = RegisterModel(
+                username: usernameAvaiabilityCheck.trim(),
+                email: emailAvaiabilityCheck.trim(),
+                password: passRegisCtrl.trim(),
+                firstName: fnameRegisCtrl.trim(),
+                lastName: lnameRegisCtrl.trim(),
+                validUntil: 2024 // fow now
+                );
 
-            Map<String, dynamic> valid = UserValidator.validateRegis(data);
+            Map<String, dynamic> valid = UserValidator.validateRegis(regisData);
             if (valid['status']) {
-              apiService.postUser(data).then((response) {
+              apiService.postUser(regisData).then((response) {
                 var status = response[0]['message'];
                 var body = response[0]['body'];
 
                 if (status == "success") {
-                  isFillForm = true;
+                  LoginModel loginData = LoginModel(
+                      username: usernameAvaiabilityCheck.trim(),
+                      password: passRegisCtrl.trim());
+                  authService.postLogin(loginData).then((value) {
+                    setIndex(indexRegis++);
+                    setState(() {
+                      isFillForm = true;
+                    });
 
-                  Get.snackbar("Success", "Account has been registered",
-                      backgroundColor: whitebg);
+                    Get.snackbar("Success", "Account has been registered",
+                        backgroundColor: whitebg);
+                  });
                 } else {
-                  isFillForm = false;
+                  setState(() {
+                    isFillForm = false;
+                  });
 
                   showDialog<String>(
                       context: context,
@@ -128,9 +177,14 @@ class _RegisterPage extends State<RegisterPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget _buildListView(List<UserRequestModel> contents) {
     double fullHeight = MediaQuery.of(context).size.height;
     //double fullWidth = MediaQuery.of(context).size.width;
+    if (contents == null) {
+      indexRegis = 4;
+    } else {
+      indexRegis = 5;
+    }
     final onboardingPagesList = [
       PageModel(
         widget: DecoratedBox(
@@ -204,7 +258,7 @@ class _RegisterPage extends State<RegisterPage> {
             onPageChange: (int pageIndex) {
               indexRegis = pageIndex;
             },
-            startPageIndex: 0,
+            startPageIndex: indexRegis,
             footerBuilder: (context, dragDistance, pagesLength, setIndex) {
               return DecoratedBox(
                 decoration: BoxDecoration(

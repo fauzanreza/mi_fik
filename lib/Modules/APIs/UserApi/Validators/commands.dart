@@ -1,4 +1,3 @@
-import 'package:mi_fik/Modules/APIs/AuthApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Models/commands.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
 
@@ -40,7 +39,7 @@ class UserValidator {
     if (data.firstName.isEmpty) {
       return {"status": false, "message": "First name can't be empty"};
     }
-    if (data.firstName.length < fnameLength) {
+    if (data.firstName.length > fnameLength) {
       return {
         "status": false,
         "message": "First name should below $fnameLength character"

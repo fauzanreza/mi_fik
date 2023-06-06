@@ -21,6 +21,7 @@ bool isFillForm = false;
 bool isChooseRole = false;
 String uploadedImage;
 bool checkAvaiabilityRegis = false;
+bool isFinishedRegis = false;
 
 String usernameAvaiabilityCheck = "";
 String emailAvaiabilityCheck = "";

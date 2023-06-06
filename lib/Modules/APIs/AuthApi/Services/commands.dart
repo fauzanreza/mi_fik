@@ -27,40 +27,54 @@ class AuthCommandsService {
 
     if (response.statusCode == 200) {
       if (responseData['role'] != 1) {
-        var roles = responseData['result']['role'];
-
         final prefs = await SharedPreferences.getInstance();
-        await prefs.setString('token_key', responseData['token']);
+
         await prefs.setString('id_key', responseData['result']['id']);
         await prefs.setString(
             'username_key', responseData['result']['username']);
         await prefs.setString(
             'image_key', responseData['result']['image_url'].toString());
-        await prefs.setString('role_list_key', jsonEncode(roles));
+        await prefs.setString('token_key', responseData['token']);
 
-        var passRoleGeneral = "";
-        roles.forEach((e) {
-          if (e['slug_name'] == "lecturer") {
-            passRoleGeneral = "Lecturer";
-            return;
-          } else if (e['slug_name'] == "student") {
-            passRoleGeneral = "Student";
-            return;
-          } else if (e['slug_name'] == "staff") {
-            passRoleGeneral = "Staff";
-            return;
-          }
-        });
-        await prefs.setString('role_general_key', passRoleGeneral);
+        if (responseData['result']['role'] != null) {
+          var roles = responseData['result']['role'];
+          var passRoleGeneral = "";
+          roles.forEach((e) {
+            if (e['slug_name'] == "lecturer") {
+              passRoleGeneral = "Lecturer";
+              return;
+            } else if (e['slug_name'] == "student") {
+              passRoleGeneral = "Student";
+              return;
+            } else if (e['slug_name'] == "staff") {
+              passRoleGeneral = "Staff";
+              return;
+            }
+          });
+          await prefs.setString('role_general_key', passRoleGeneral);
+          await prefs.setString('role_list_key', jsonEncode(roles));
 
-        // Lecturer or student role
-        return [
-          {
-            "message": "success",
-            "body": responseData['result'],
-            "token": responseData['token']
-          }
-        ];
+          // Lecturer or student role
+          // Has been accepted and have a role
+          return [
+            {
+              "message": "success",
+              "body": responseData['result'],
+              "token": responseData['token'],
+              "access": true
+            }
+          ];
+        } else {
+          // Not yet accepted and doesnt have a role
+          return [
+            {
+              "message": "success",
+              "body": responseData['result'],
+              "token": responseData['token'],
+              "access": false,
+            }
+          ];
+        }
       } else {
         // Admin role
         return [
