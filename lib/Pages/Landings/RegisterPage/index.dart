@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mi_fik/Components/Backgrounds/custom.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/nodata_dialog.dart';
 import 'package:mi_fik/Modules/APIs/AuthApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/AuthApi/Services/commands.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Models/commands.dart';
-import 'package:mi_fik/Modules/APIs/UserApi/Models/queries.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/queries.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Validators/commands.dart';
@@ -30,7 +28,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPage extends State<RegisterPage> {
-  Material materialButton;
+  Widget materialButton;
 
   UserCommandsService apiService;
   UserQueriesService apiQuery;
@@ -47,21 +45,18 @@ class _RegisterPage extends State<RegisterPage> {
     materialButton = _skipButton();
   }
 
-  Material _skipButton({void Function(int) setIndex, double height}) {
-    return Material(
-      borderRadius: defaultSkipButtonBorderRadius,
-      color: successbg,
-      child: InkWell(
+  Widget _skipButton({void Function(int) setIndex, double height}) {
+    return InkWell(
         borderRadius: defaultSkipButtonBorderRadius,
         onTap: () async {
-          if (selectedRole.isEmpty && !isChooseRole && indexRegis == 5) {
+          if (selectedRole.isEmpty && !isChooseRole && indexRegis == 4) {
             showDialog<String>(
                 context: context,
                 builder: (BuildContext context) =>
                     NoDataDialog(text: "You haven't selected any tag yet"));
           } else if (selectedRole.isNotEmpty &&
               !isChooseRole &&
-              indexRegis == 5) {
+              indexRegis == 4) {
             showModalBottomSheet<void>(
               context: context,
               isDismissible: false,
@@ -77,12 +72,12 @@ class _RegisterPage extends State<RegisterPage> {
                     child: PostSelectedRole(back: null, isLogged: false));
               },
             );
-          } else if (selectedRole.isEmpty && !isFillForm && indexRegis == 3) {
-            if (usernameAvaiabilityCheck != null &&
-                emailAvaiabilityCheck != null &&
-                passRegisCtrl != null &&
-                fnameRegisCtrl != null &&
-                lnameRegisCtrl != null) {
+          } else if (selectedRole.isEmpty && !isFillForm && indexRegis == 2) {
+            if (usernameAvaiabilityCheck.trim() != "" &&
+                emailAvaiabilityCheck.trim() != "" &&
+                passRegisCtrl.trim() != "" &&
+                fnameRegisCtrl.trim() != "" &&
+                lnameRegisCtrl.trim() != "") {
               RegisterModel regisData = RegisterModel(
                   username: usernameAvaiabilityCheck.trim(),
                   email: emailAvaiabilityCheck.trim(),
@@ -139,22 +134,58 @@ class _RegisterPage extends State<RegisterPage> {
                         type: "register"));
               }
             }
+          } else if (!isCheckedRegister && indexRegis == 1) {
+            showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => FailedDialog(
+                    text: "You haven't accept the terms & condition",
+                    type: "register"));
           } else {
-            setIndex(indexRegis++);
+            setState(() {
+              setIndex(indexRegis++);
+            });
           }
         },
-        child: Padding(
-          padding: defaultSkipButtonPadding,
-          child: Text(
-            'Next',
-            style: TextStyle(fontSize: textMD, color: whitebg),
-          ),
-        ),
-      ),
-    );
+        child: Container(
+          padding: EdgeInsets.symmetric(
+              horizontal: paddingMD, vertical: paddingSM * 0.5),
+          decoration: BoxDecoration(
+              color: whitebg,
+              border: Border.all(color: successbg, width: 2),
+              boxShadow: [
+                BoxShadow(
+                  color:
+                      const Color.fromARGB(255, 128, 128, 128).withOpacity(0.3),
+                  blurRadius: 10.0,
+                  spreadRadius: 1.0,
+                  offset: const Offset(
+                    5.0,
+                    5.0,
+                  ),
+                )
+              ],
+              borderRadius: const BorderRadius.all(Radius.circular(10))),
+          child: Row(children: [
+            Icon(
+              Icons.arrow_forward_rounded,
+              size: iconLG,
+              color: successbg,
+            ),
+            SizedBox(
+              width: paddingSM,
+            ),
+            Text(
+              'Next',
+              style: TextStyle(
+                  fontSize: textMD,
+                  color: successbg,
+                  fontWeight: FontWeight.w500),
+            ),
+          ]),
+        ));
   }
 
-  Material get _signupButton {
+  Widget _signupButton() {
     return Material(
       borderRadius: defaultProceedButtonBorderRadius,
       color: successbg,
@@ -242,50 +273,49 @@ class _RegisterPage extends State<RegisterPage> {
           return false;
         },
         child: Scaffold(
-            body: CustomPaint(
-          painter: CirclePainterSide(),
-          child: Onboarding(
-            pages: onboardingPagesList,
-            onPageChange: (int pageIndex) {
+            body: Onboarding(
+          pages: onboardingPagesList,
+          onPageChange: (int pageIndex) {
+            setState(() {
               indexRegis = pageIndex;
-            },
-            startPageIndex: indexRegis,
-            footerBuilder: (context, dragDistance, pagesLength, setIndex) {
-              return DecoratedBox(
-                decoration: BoxDecoration(
-                  border: Border.all(width: 0.0, color: Colors.transparent),
-                ),
-                child: ColoredBox(
-                  color: Colors.transparent,
-                  child: Padding(
-                    padding: const EdgeInsets.all(45.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CustomIndicator(
-                          netDragPercent: dragDistance,
-                          pagesLength: pagesLength,
-                          indicator: Indicator(
-                            activeIndicator: ActiveIndicator(color: whitebg),
-                            closedIndicator: ClosedIndicator(color: successbg),
-                            indicatorDesign: IndicatorDesign.polygon(
-                              polygonDesign: PolygonDesign(
-                                polygon: DesignType.polygon_circle,
-                              ),
+            });
+          },
+          startPageIndex: indexRegis,
+          footerBuilder: (context, dragDistance, pagesLength, setIndex) {
+            return DecoratedBox(
+              decoration: BoxDecoration(
+                border: Border.all(width: 0.0, color: Colors.transparent),
+              ),
+              child: ColoredBox(
+                color: Colors.transparent,
+                child: Padding(
+                  padding: const EdgeInsets.all(45.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CustomIndicator(
+                        netDragPercent: dragDistance,
+                        pagesLength: pagesLength,
+                        indicator: Indicator(
+                          closedIndicator: ClosedIndicator(color: primaryColor),
+                          activeIndicator:
+                              ActiveIndicator(color: greybg.withOpacity(0.25)),
+                          indicatorDesign: IndicatorDesign.polygon(
+                            polygonDesign: PolygonDesign(
+                              polygon: DesignType.polygon_circle,
                             ),
                           ),
                         ),
-                        indexRegis == pagesLength
-                            ? _signupButton
-                            : _skipButton(
-                                setIndex: setIndex, height: fullHeight)
-                      ],
-                    ),
+                      ),
+                      indexRegis == pagesLength
+                          ? _signupButton()
+                          : _skipButton(setIndex: setIndex, height: fullHeight)
+                    ],
                   ),
                 ),
-              );
-            },
-          ),
+              ),
+            );
+          },
         )));
   }
 }

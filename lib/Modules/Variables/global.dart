@@ -22,14 +22,15 @@ bool isChooseRole = false;
 String uploadedImageRegis;
 bool checkAvaiabilityRegis = false;
 bool isFinishedRegis = false;
+bool isWaiting = false;
 
 String usernameAvaiabilityCheck = "";
 String emailAvaiabilityCheck = "";
 
-String passRegisCtrl;
+String passRegisCtrl = "";
 int validRegisCtrl;
-String fnameRegisCtrl;
-String lnameRegisCtrl;
+String fnameRegisCtrl = "";
+String lnameRegisCtrl = "";
 
 var selectedRole = [];
 

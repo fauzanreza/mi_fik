@@ -92,6 +92,7 @@ class AuthCommandsService {
               Uri.parse("$emuUrl/api/v1/user/request/my"),
               headers: header);
           if (resReq.statusCode == 200) {
+            isWaiting = true;
             indexRegis = 5;
           } else if (resReq.statusCode == 404) {
             indexRegis = 4;
