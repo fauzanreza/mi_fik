@@ -139,30 +139,24 @@ class _PostLogin extends State<PostLogin> {
             Container(
                 alignment: Alignment.center,
                 margin: EdgeInsets.only(top: paddingSM * 2),
-                child: Wrap(
-                    alignment: WrapAlignment.center,
-                    runSpacing: 5,
-                    spacing: 5,
-                    children: [
-                      const Spacer(),
-                      Container(
-                          padding: EdgeInsets.symmetric(vertical: paddingMD),
-                          child: const Text("already have an account?")),
-                      const Spacer(),
-                      TextButton(
-                        style: TextButton.styleFrom(
-                            foregroundColor: primaryColor,
-                            padding: EdgeInsets.symmetric(
-                                vertical: paddingMD, horizontal: paddingSM)),
-                        onPressed: () {
-                          Get.to(() => RegisterPage(
-                                isLogged: false,
-                              ));
-                        },
-                        child: const Text('Register now'),
-                      ),
-                      const Spacer(),
-                    ]))
+                child: Wrap(runSpacing: 5, spacing: 5, children: [
+                  Container(
+                      padding: EdgeInsets.symmetric(vertical: paddingMD),
+                      child: const Text("already have an account?")),
+                  const Spacer(),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                        foregroundColor: primaryColor,
+                        padding: EdgeInsets.symmetric(
+                            vertical: paddingMD, horizontal: paddingSM)),
+                    onPressed: () {
+                      Get.to(() => RegisterPage(
+                            isLogged: false,
+                          ));
+                    },
+                    child: const Text('Register now'),
+                  ),
+                ]))
           ]),
     );
   }

@@ -161,7 +161,9 @@ class _PostTask extends State<PostTask> {
                       dateEnd: validateDatetime(dateEndCtrl),
                       reminder: slctReminderType);
 
-                  if (data.taskTitle.isNotEmpty) {
+                  if (data.taskTitle.isNotEmpty &&
+                      dateStartCtrl != null &&
+                      dateEndCtrl != null) {
                     taskService.addTask(data).then((response) {
                       setState(() => isLoading = false);
                       var status = response[0]['message'];

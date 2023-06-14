@@ -154,6 +154,7 @@ class ScheduleModel {
 
   //Nullable
   String contentDesc;
+  String imageUrl;
   List<dynamic> contentTag;
   List<dynamic> contentLoc;
   String contentImage;
@@ -189,6 +190,7 @@ class ScheduleModel {
       this.totalViews,
       this.createdAt,
       this.updatedAt,
+      this.imageUrl,
       this.reminder});
 
   factory ScheduleModel.fromJson(Map<String, dynamic> map) {
@@ -211,6 +213,7 @@ class ScheduleModel {
       updatedAt: map["updated_at"],
       totalViews: map["total_views"].toString(),
       reminder: map["content_reminder"],
+      imageUrl: map["image_url"],
     );
   }
 }

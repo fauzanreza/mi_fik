@@ -97,74 +97,78 @@ class _EditImageState extends State<EditImage> {
               }
             }
 
-            return Positioned(
-                top: 110,
-                left: 120,
-                child: InkWell(
-                    onTap: () {
-                      FullScreenMenu.show(
-                        context,
-                        items: [
-                          FSMenuItem(
-                              icon: Icon(Icons.camera, color: whitebg),
-                              text: Text('Camera'.tr,
-                                  style: TextStyle(fontSize: textMD)),
-                              gradient: orangeGradient,
-                              onTap: () {}),
-                          FSMenuItem(
-                            icon: Icon(Icons.folder, color: whitebg),
-                            gradient: orangeGradient,
-                            text: Text('File Picker'.tr,
-                                style: TextStyle(fontSize: textMD)),
-                            onTap: () async {
-                              var file = await getImage();
+            return WillPopScope(
+                onWillPop: () {
+                  FullScreenMenu.hide();
+                },
+                child: Positioned(
+                    top: 110,
+                    left: 120,
+                    child: InkWell(
+                        onTap: () {
+                          FullScreenMenu.show(
+                            context,
+                            items: [
+                              FSMenuItem(
+                                  icon: Icon(Icons.camera, color: whitebg),
+                                  text: Text('Camera'.tr,
+                                      style: TextStyle(fontSize: textMD)),
+                                  gradient: orangeGradient,
+                                  onTap: () {}),
+                              FSMenuItem(
+                                icon: Icon(Icons.folder, color: whitebg),
+                                gradient: orangeGradient,
+                                text: Text('File Picker'.tr,
+                                    style: TextStyle(fontSize: textMD)),
+                                onTap: () async {
+                                  var file = await getImage();
 
-                              if (file != null) {
-                                await fireServicePost
-                                    .sendImageUser(file)
-                                    .then((value) {
-                                  EditUserImageModel data =
-                                      EditUserImageModel(imageUrl: value);
+                                  if (file != null) {
+                                    await fireServicePost
+                                        .sendImageUser(file)
+                                        .then((value) {
+                                      EditUserImageModel data =
+                                          EditUserImageModel(imageUrl: value);
 
-                                  commandService
-                                      .putProfileImage(data)
-                                      .then((response) {
-                                    setState(() => isLoading = false);
-                                    var status = response[0]['message'];
-                                    var body = response[0]['body'];
+                                      commandService
+                                          .putProfileImage(data)
+                                          .then((response) {
+                                        setState(() => isLoading = false);
+                                        var status = response[0]['message'];
+                                        var body = response[0]['body'];
 
-                                    if (status == "success") {
-                                      FullScreenMenu.hide();
-                                      Get.to(() => const ProfilePage());
-                                    } else {
-                                      FullScreenMenu.hide();
-                                      showDialog<String>(
-                                          context: context,
-                                          builder: (BuildContext context) =>
-                                              FailedDialog(text: body));
-                                    }
-                                  });
-                                });
-                              }
-                            },
-                          ),
-                          getResetImageProfile(image)
-                        ],
-                      );
-                    },
-                    child: Container(
-                        padding: EdgeInsets.all(paddingXSM * 0.8),
-                        decoration: BoxDecoration(
-                            border: Border.all(width: 3, color: whitebg),
-                            color: infoColor,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(25))),
-                        child: ClipRRect(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(12)),
-                          child: Image.asset('assets/icon/camera.png',
-                              width: fullWidth * 0.085),
-                        ))));
+                                        if (status == "success") {
+                                          FullScreenMenu.hide();
+                                          Get.to(() => const ProfilePage());
+                                        } else {
+                                          FullScreenMenu.hide();
+                                          showDialog<String>(
+                                              context: context,
+                                              builder: (BuildContext context) =>
+                                                  FailedDialog(text: body));
+                                        }
+                                      });
+                                    });
+                                  }
+                                },
+                              ),
+                              getResetImageProfile(image)
+                            ],
+                          );
+                        },
+                        child: Container(
+                            padding: EdgeInsets.all(paddingXSM * 0.8),
+                            decoration: BoxDecoration(
+                                border: Border.all(width: 3, color: whitebg),
+                                color: infoColor,
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(25))),
+                            child: ClipRRect(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(12)),
+                              child: Image.asset('assets/icon/camera.png',
+                                  width: fullWidth * 0.085),
+                            )))));
           } else {
             return const Center(child: CircularProgressIndicator());
           }

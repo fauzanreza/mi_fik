@@ -130,7 +130,9 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
                               passSlugContent = content.slugName;
                             },
                             child: GetHomePageEventContainer(
-                                width: fullWidth, content: content))
+                                width: fullWidth,
+                                content: content,
+                                servc: commandService))
                       ],
                     ),
                   ));
