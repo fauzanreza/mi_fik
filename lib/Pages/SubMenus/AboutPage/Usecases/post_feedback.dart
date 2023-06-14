@@ -63,31 +63,27 @@ class _PostFeedback extends State<PostFeedback> {
               location: "add_feedback",
             ),
             SizedBox(height: paddingSM),
+            Align(
+                alignment: Alignment.centerLeft,
+                child: Text("What do you think the improvment should be".tr,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontFamily: 'Poppins',
+                      color: blackbg,
+                      fontWeight: FontWeight.w500,
+                    ))),
             Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Event Reminder".tr,
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontFamily: 'Poppins',
-                            color: blackbg,
-                            fontWeight: FontWeight.w500,
-                          )),
-                      Container(
-                          margin: EdgeInsets.only(bottom: paddingMD),
-                          child:
-                              getDropDownMain(slctFeedbackType, feedbackTypeOpt,
-                                  (String newValue) {
-                            setState(() {
-                              slctFeedbackType = newValue;
-                            });
-                          }, true, "feedback_")),
-                    ],
-                  ),
+                  Container(
+                      margin: EdgeInsets.symmetric(vertical: paddingXSM),
+                      child: getDropDownMain(slctFeedbackType, feedbackTypeOpt,
+                          (String newValue) {
+                        setState(() {
+                          slctFeedbackType = newValue;
+                        });
+                      }, true, "feedback_")),
                   const Spacer(),
                   InkWell(
                       onTap: () async {

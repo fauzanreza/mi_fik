@@ -49,6 +49,7 @@ class Dictionaries extends Translations {
           'Title': 'Title',
           'Live': 'Live',
           'Save Event': 'Save Event',
+          'Save Location': 'Save Location',
           'Description': 'Description',
           'Event Tag': 'Event Tag',
           'Event Location': 'Event Location',
@@ -82,6 +83,10 @@ class Dictionaries extends Translations {
           "Attachment removed. Can't located uploaded file":
               "Attachment removed. Can't located uploaded file",
           'Yes, Delete task': 'Yes, Delete task',
+          'What do you think the improvment should be':
+              'What do you think the improvment should be',
+          'Selected Location': 'Selected Location',
+          'Could not open the map': 'Could not open the map'
         },
         'id_ID': {
           'Good Morning': 'Selamat Pagi',
@@ -129,6 +134,7 @@ class Dictionaries extends Translations {
           'Title': 'Judul',
           'Live': 'Berlangsung',
           'Save Event': 'Simpan Event',
+          'Save Location': 'Simpan Lokasi',
           'Description': 'Deskripsi',
           'Event Tag': 'Tag Event',
           'Event Location': 'Lokasi Event',
@@ -162,6 +168,10 @@ class Dictionaries extends Translations {
           "Attachment removed. Can't located uploaded file":
               "Tautan dihapus. Tidak dapat mendeteksi file unggahan",
           'Yes, Delete task': 'Ya, Hapus tugas',
+          'What do you think the improvment should be':
+              'Menurut mu, apa yang perlu ditingkatkan',
+          'Selected Location': 'Lokasi Terpilih',
+          'Could not open the map': 'Gagal membuka Maps'
         },
       };
 }

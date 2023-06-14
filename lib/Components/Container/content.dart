@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -214,17 +215,17 @@ class GetScheduleContainer extends StatelessWidget {
   Widget getIcon(type, dateStart, dateEnd) {
     if (type == 1) {
       //Event or content
-      return Icon(
-        Icons.event_note_outlined,
+      return FaIcon(
+        FontAwesomeIcons.calendarDay,
         color: getColor(DateTime.parse(dateStart), DateTime.parse(dateEnd)),
-        size: 38,
+        size: iconLG + 5,
       );
     } else if (type == 2) {
       //Task
       return Icon(
         Icons.task,
         color: getColor(DateTime.parse(dateStart), DateTime.parse(dateEnd)),
-        size: 38,
+        size: iconLG + 7,
       );
     } else {
       return const SizedBox();
@@ -241,6 +242,8 @@ class GetScheduleContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double fullWidth = MediaQuery.of(context).size.width;
+
     return Container(
       width: width * 0.82,
       padding:
@@ -265,50 +268,56 @@ class GetScheduleContainer extends StatelessWidget {
       ),
       child: Padding(
           padding: const EdgeInsets.all(4),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  content.contentTitle,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  style: GoogleFonts.poppins(
-                    color: getColor(DateTime.parse(content.dateStart),
-                        DateTime.parse(content.dateEnd)),
-                    fontSize: textSM,
-                    fontWeight: FontWeight.bold,
+          child: Stack(children: [
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    content.contentTitle,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: GoogleFonts.poppins(
+                      color: getColor(DateTime.parse(content.dateStart),
+                          DateTime.parse(content.dateEnd)),
+                      fontSize: textSM,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                // getLocation(content.contentLoc),
-                //Width doesnt enough
-                const Spacer(),
-                Text(
-                  DateFormat("HH : mm a")
-                      .format(DateTime.parse(content.dateStart)),
-                  style: GoogleFonts.poppins(
-                    color: getColor(DateTime.parse(content.dateStart),
-                        DateTime.parse(content.dateEnd)),
-                    fontWeight: FontWeight.w500,
-                    fontSize: textSM,
+                  // getLocation(content.contentLoc),
+                  //Width doesnt enough
+                  const Spacer(),
+                  Text(
+                    DateFormat("HH : mm a")
+                        .format(DateTime.parse(content.dateStart)),
+                    style: GoogleFonts.poppins(
+                      color: getColor(DateTime.parse(content.dateStart),
+                          DateTime.parse(content.dateEnd)),
+                      fontWeight: FontWeight.w500,
+                      fontSize: textSM,
+                    ),
                   ),
-                ),
-              ],
-            ),
-            getOngoingDesc(DateTime.parse(content.dateStart),
-                DateTime.parse(content.dateEnd), content.contentDesc),
-            Container(
-                margin: const EdgeInsets.symmetric(vertical: 15),
-                child: getTagShow(
-                    content.contentTag, content.dateStart, content.dateEnd)),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 10),
-              child: getLocation(
-                  content.contentLoc,
-                  getColor(DateTime.parse(content.dateStart),
-                      DateTime.parse(content.dateEnd))),
-            )
+                ],
+              ),
+              getOngoingDesc(DateTime.parse(content.dateStart),
+                  DateTime.parse(content.dateEnd), content.contentDesc),
+              Container(
+                  margin: const EdgeInsets.symmetric(vertical: 15),
+                  child: getTagShow(
+                      content.contentTag, content.dateStart, content.dateEnd)),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 10),
+                child: getLocation(
+                    content.contentLoc,
+                    getColor(DateTime.parse(content.dateStart),
+                        DateTime.parse(content.dateEnd))),
+              ),
+            ]),
+            Positioned(
+                bottom: 0,
+                right: 0,
+                child: getIcon(
+                    content.dataFrom, content.dateStart, content.dateEnd))
           ])),
     );
   }

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -55,11 +56,11 @@ class _LocationButton extends State<LocationButton>
       distanceFilter: 100,
     );
 
-    String imgurl =
-        "https://leonardhors.site/public/assets/img/87409344219_PAS_FOTO_2.jpg";
-    bytes = (await NetworkAssetBundle(Uri.parse(imgurl)).load(imgurl))
-        .buffer
-        .asUint8List();
+    // String imgurl =
+    //     "https://leonardhors.site/public/assets/img/87409344219_PAS_FOTO_2.jpg";
+    // bytes = (await NetworkAssetBundle(Uri.parse(imgurl)).load(imgurl))
+    //     .buffer
+    //     .asUint8List();
   }
 
   @override
@@ -92,6 +93,7 @@ class _LocationButton extends State<LocationButton>
                       child: GoogleMap(
                         myLocationButtonEnabled: false,
                         zoomControlsEnabled: false,
+                        myLocationEnabled: true,
                         initialCameraPosition: initialCameraPosition,
                         onMapCreated: (controller) =>
                             googleMapController = controller,
@@ -106,16 +108,16 @@ class _LocationButton extends State<LocationButton>
                                 BitmapDescriptor.hueOrange),
                             position: LatLng(lat, lng),
                           ),
-                          Marker(
-                            markerId: const MarkerId("0"),
-                            infoWindow: const InfoWindow(title: "You"),
+                          // Marker(
+                          //   markerId: const MarkerId("0"),
+                          //   infoWindow: const InfoWindow(title: "You"),
 
-                            // icon: BitmapDescriptor.defaultMarkerWithHue(
-                            //     BitmapDescriptor.hueRed),
-                            icon: BitmapDescriptor.fromBytes(bytes),
-                            position: LatLng(
-                                double.parse(mylat), double.parse(mylong)),
-                          )
+                          //   icon: BitmapDescriptor.defaultMarkerWithHue(
+                          //       BitmapDescriptor.hueOrange),
+                          //   // icon: BitmapDescriptor.fromBytes(bytes),
+                          //   position: LatLng(
+                          //       double.parse(mylat), double.parse(mylong)),
+                          // )
                         },
                       ),
                     ),
@@ -133,7 +135,9 @@ class _LocationButton extends State<LocationButton>
                             if (await canLaunchUrl(Uri.parse(googleUrl))) {
                               await launchUrl(Uri.parse(googleUrl));
                             } else {
-                              throw 'Could not open the map.';
+                              Get.snackbar("Error", "Could not open the map".tr,
+                                  backgroundColor: whitebg);
+                              // throw 'Could not open the map'.tr;
                             }
                           },
                           style: ButtonStyle(

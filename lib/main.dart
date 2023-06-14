@@ -132,15 +132,15 @@ class _MyApp extends State<MyApp> {
     });
 
     // Get dictionary collection
-    dctService.getDictionaryType("QST-001");
-    dctService.getDictionaryType("FBC-001");
-    dctService.getDictionaryType("ATT-001");
-    dctService.getDictionaryType("SLC-001");
 
     getToken();
   }
 
   getToken() async {
+    await dctService.getDictionaryType("QST-001");
+    await dctService.getDictionaryType("FBC-001");
+    await dctService.getDictionaryType("ATT-001");
+    await dctService.getDictionaryType("SLC-001");
     token = await FirebaseMessaging.instance.getToken();
     //print(token);
   }
