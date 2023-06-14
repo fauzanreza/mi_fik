@@ -11,6 +11,7 @@ import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/get_attachment.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/get_location.dart';
+import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/get_saved_status.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/post_archive_rel.dart';
 
 class DetailPage extends StatefulWidget {
@@ -133,36 +134,42 @@ class _DetailPage extends State<DetailPage> {
             padding: const EdgeInsets.only(bottom: 75),
             //crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              GestureDetector(
-                onTap: () => showDialog<String>(
-                  context: context,
-                  barrierColor: primaryColor.withOpacity(0.5),
-                  builder: (BuildContext context) => AlertDialog(
-                      contentPadding: EdgeInsets.zero,
-                      elevation: 0,
-                      backgroundColor: Colors.transparent,
-                      content: Container(
-                        height: fullHeight * 0.45,
-                        width: fullWidth,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: getImageHeader(contents[0].contentImage),
-                            fit: BoxFit.cover,
+              Stack(children: [
+                GestureDetector(
+                  onTap: () => showDialog<String>(
+                    context: context,
+                    barrierColor: primaryColor.withOpacity(0.5),
+                    builder: (BuildContext context) => AlertDialog(
+                        contentPadding: EdgeInsets.zero,
+                        elevation: 0,
+                        backgroundColor: Colors.transparent,
+                        content: Container(
+                          height: fullHeight * 0.45,
+                          width: fullWidth,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: getImageHeader(contents[0].contentImage),
+                              fit: BoxFit.cover,
+                            ),
+                            borderRadius: BorderRadius.circular(roundedLG2),
                           ),
-                          borderRadius: BorderRadius.circular(roundedLG2),
-                        ),
-                      )),
-                ),
-                child: Container(
-                  height: fullHeight * 0.3,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: getImageHeader(contents[0].contentImage),
-                      fit: BoxFit.cover,
+                        )),
+                  ),
+                  child: Container(
+                    height: fullHeight * 0.3,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: getImageHeader(contents[0].contentImage),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
-              ),
+                Positioned(
+                    right: 15,
+                    bottom: 35,
+                    child: GetSavedStatus(passSlug: widget.passSlug))
+              ]),
               Container(
                   transform: Matrix4.translationValues(0.0, -20.0, 0.0),
                   padding: EdgeInsets.symmetric(vertical: paddingMD),

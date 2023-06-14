@@ -77,7 +77,7 @@ class _SetControl extends State<SetControl> {
                               Container(
                                 alignment: Alignment.topRight,
                                 child: IconButton(
-                                  icon: const Icon(Icons.close),
+                                  icon: Icon(Icons.close, size: iconMD),
                                   tooltip: 'Back',
                                   onPressed: () {
                                     Get.back();
@@ -131,8 +131,7 @@ class _SetControl extends State<SetControl> {
                                           shape: const CircleBorder(),
                                         ),
                                         child: IconButton(
-                                          icon: Icon(Icons.close,
-                                              size: iconMD - 5),
+                                          icon: Icon(Icons.close, size: iconMD),
                                           color: whitebg,
                                           onPressed: () {
                                             searchingContent = null;
@@ -204,8 +203,8 @@ class _SetControl extends State<SetControl> {
                                             shape: const CircleBorder(),
                                           ),
                                           child: IconButton(
-                                            icon: Icon(Icons.close,
-                                                size: iconMD - 5),
+                                            icon:
+                                                Icon(Icons.close, size: iconMD),
                                             color: whitebg,
                                             onPressed: () {
                                               filterDateStart = null;

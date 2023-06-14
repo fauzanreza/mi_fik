@@ -98,7 +98,7 @@ class _RegisterPage extends State<RegisterPage> {
                     LoginModel loginData = LoginModel(
                         username: usernameAvaiabilityCheck.trim(),
                         password: passRegisCtrl.trim());
-                    authService.postLogin(loginData).then((value) {
+                    authService.postLogin(loginData, true).then((value) {
                       setIndex(indexRegis++);
                       setState(() {
                         isFillForm = true;

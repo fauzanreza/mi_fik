@@ -26,7 +26,6 @@ class SchedulePage extends StatefulWidget {
 
 class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  TabController tabController;
   LangCtrl langctrl = Get.put(LangCtrl());
 
   getStartIndex(String slug) {

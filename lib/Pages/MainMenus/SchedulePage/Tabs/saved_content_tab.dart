@@ -192,7 +192,10 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
               const Spacer(),
               DeleteArchive(slug: selectedArchiveSlug),
               EditArchive(
-                  slug: selectedArchiveSlug, archiveName: selectedArchiveName)
+                slug: selectedArchiveSlug,
+                archiveName: selectedArchiveName,
+                archiveDesc: selectedArchiveDesc,
+              )
             ],
           ),
           Container(

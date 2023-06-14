@@ -1,6 +1,7 @@
 // ignore: depend_on_referenced_packages
 import 'package:http/http.dart' show Client;
 import 'package:mi_fik/Modules/APIs/HelpApi/Models/queries.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HelpQueriesService {
   final String baseUrl = "https://mifik.id";
@@ -8,8 +9,11 @@ class HelpQueriesService {
   Client client = Client();
 
   Future<List<HelpTypeModel>> getHelpType() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token_key');
     final header = {
       'Accept': 'application/json',
+      'Authorization': "Bearer $token",
     };
 
     final response =

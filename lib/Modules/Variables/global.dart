@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 // Navigation
@@ -7,6 +8,7 @@ String passSlugContent;
 String locName;
 List listAttachment = [];
 List<Map<String, dynamic>> listArchiveCheck = [];
+TabController tabController;
 
 // Selected
 String selectedArchiveName;

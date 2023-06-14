@@ -87,7 +87,7 @@ class _PostLogin extends State<PostLogin> {
                     Map<String, dynamic> valid =
                         AuthValidator.validateLogin(data);
                     if (valid['status']) {
-                      apiService.postLogin(data).then((response) {
+                      apiService.postLogin(data, false).then((response) {
                         setState(() => isLoading = false);
                         var status = response[0]['message'];
                         var body = response[0]['body'];
@@ -138,23 +138,31 @@ class _PostLogin extends State<PostLogin> {
                 )),
             Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.symmetric(horizontal: paddingMD * 1.2),
                 margin: EdgeInsets.only(top: paddingSM * 2),
-                child: Row(children: [
-                  const Text("already have an account?"),
-                  const Spacer(),
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      foregroundColor: primaryColor, // foreground
-                    ),
-                    onPressed: () {
-                      Get.to(() => RegisterPage(
-                            isLogged: false,
-                          ));
-                    },
-                    child: const Text('Register now'),
-                  )
-                ]))
+                child: Wrap(
+                    alignment: WrapAlignment.center,
+                    runSpacing: 5,
+                    spacing: 5,
+                    children: [
+                      const Spacer(),
+                      Container(
+                          padding: EdgeInsets.symmetric(vertical: paddingMD),
+                          child: const Text("already have an account?")),
+                      const Spacer(),
+                      TextButton(
+                        style: TextButton.styleFrom(
+                            foregroundColor: primaryColor,
+                            padding: EdgeInsets.symmetric(
+                                vertical: paddingMD, horizontal: paddingSM)),
+                        onPressed: () {
+                          Get.to(() => RegisterPage(
+                                isLogged: false,
+                              ));
+                        },
+                        child: const Text('Register now'),
+                      ),
+                      const Spacer(),
+                    ]))
           ]),
     );
   }
