@@ -113,8 +113,21 @@ class _SetProfileImage extends State<SetProfileImage> {
                   margin: EdgeInsets.fromLTRB(
                       paddingMD, paddingLg, paddingMD, paddingMD),
                   decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      color: whitebg),
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    color: whitebg,
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color.fromARGB(255, 128, 128, 128)
+                            .withOpacity(0.3),
+                        blurRadius: 10.0,
+                        spreadRadius: 1.0,
+                        offset: const Offset(
+                          5.0,
+                          5.0,
+                        ),
+                      )
+                    ],
+                  ),
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -137,91 +150,98 @@ class _SetProfileImage extends State<SetProfileImage> {
                                 ),
                               ),
                             ),
-                            Positioned(
-                                bottom: fullHeight * 0.05,
-                                right: fullWidth * 0.005,
-                                child: InkWell(
-                                    onTap: () {
-                                      FullScreenMenu.show(
-                                        context,
-                                        items: [
-                                          FSMenuItem(
-                                              icon: Icon(Icons.camera,
-                                                  color: whitebg),
-                                              text: Text('Camera'.tr,
-                                                  style: TextStyle(
-                                                      fontSize: textMD)),
-                                              gradient: orangeGradient,
-                                              onTap: () {}),
-                                          FSMenuItem(
-                                            icon: Icon(Icons.folder,
-                                                color: whitebg),
-                                            gradient: orangeGradient,
-                                            text: Text('File Picker'.tr,
-                                                style: TextStyle(
-                                                    fontSize: textMD)),
-                                            onTap: () async {
-                                              var file = await getImage();
+                            WillPopScope(
+                                onWillPop: () {
+                                  FullScreenMenu.hide();
+                                },
+                                child: Positioned(
+                                    bottom: fullHeight * 0.05,
+                                    right: fullWidth * 0.005,
+                                    child: InkWell(
+                                        onTap: () {
+                                          FullScreenMenu.show(
+                                            context,
+                                            items: [
+                                              FSMenuItem(
+                                                  icon: Icon(Icons.camera,
+                                                      color: whitebg),
+                                                  text: Text('Camera'.tr,
+                                                      style: TextStyle(
+                                                          fontSize: textMD)),
+                                                  gradient: orangeGradient,
+                                                  onTap: () {}),
+                                              FSMenuItem(
+                                                icon: Icon(Icons.folder,
+                                                    color: whitebg),
+                                                gradient: orangeGradient,
+                                                text: Text('File Picker'.tr,
+                                                    style: TextStyle(
+                                                        fontSize: textMD)),
+                                                onTap: () async {
+                                                  var file = await getImage();
 
-                                              if (file != null) {
-                                                await fireServicePost
-                                                    .sendImageUser(file)
-                                                    .then((value) {
-                                                  EditUserImageModel data =
-                                                      EditUserImageModel(
-                                                          imageUrl: value);
+                                                  if (file != null) {
+                                                    await fireServicePost
+                                                        .sendImageUser(file)
+                                                        .then((value) {
+                                                      EditUserImageModel data =
+                                                          EditUserImageModel(
+                                                              imageUrl: value);
 
-                                                  commandService
-                                                      .putProfileImage(data)
-                                                      .then((response) {
-                                                    setState(() =>
-                                                        isLoading = false);
-                                                    var status =
-                                                        response[0]['message'];
-                                                    var body =
-                                                        response[0]['body'];
+                                                      commandService
+                                                          .putProfileImage(data)
+                                                          .then((response) {
+                                                        setState(() =>
+                                                            isLoading = false);
+                                                        var status = response[0]
+                                                            ['message'];
+                                                        var body =
+                                                            response[0]['body'];
 
-                                                    if (status == "success") {
-                                                      setState(() {
-                                                        uploadedImageRegis =
-                                                            value;
+                                                        if (status ==
+                                                            "success") {
+                                                          setState(() {
+                                                            uploadedImageRegis =
+                                                                value;
+                                                          });
+                                                          FullScreenMenu.hide();
+                                                        } else {
+                                                          FullScreenMenu.hide();
+                                                          showDialog<String>(
+                                                              context: context,
+                                                              builder: (BuildContext
+                                                                      context) =>
+                                                                  FailedDialog(
+                                                                      text:
+                                                                          body));
+                                                        }
                                                       });
-                                                      FullScreenMenu.hide();
-                                                    } else {
-                                                      FullScreenMenu.hide();
-                                                      showDialog<String>(
-                                                          context: context,
-                                                          builder: (BuildContext
-                                                                  context) =>
-                                                              FailedDialog(
-                                                                  text: body));
-                                                    }
-                                                  });
-                                                });
-                                              }
-                                            },
-                                          ),
-                                          getResetImageProfile(image)
-                                        ],
-                                      );
-                                    },
-                                    child: Container(
-                                        padding:
-                                            EdgeInsets.all(paddingXSM * 0.8),
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                                width: 3, color: whitebg),
-                                            color: infoColor,
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                                    Radius.circular(25))),
-                                        child: ClipRRect(
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(12)),
-                                          child: Image.asset(
-                                              'assets/icon/camera.png',
-                                              width: fullWidth * 0.085),
-                                        )))),
+                                                    });
+                                                  }
+                                                },
+                                              ),
+                                              getResetImageProfile(image)
+                                            ],
+                                          );
+                                        },
+                                        child: Container(
+                                            padding: EdgeInsets.all(
+                                                paddingXSM * 0.8),
+                                            decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    width: 3, color: whitebg),
+                                                color: infoColor,
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                        Radius.circular(25))),
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(12)),
+                                              child: Image.asset(
+                                                  'assets/icon/camera.png',
+                                                  width: fullWidth * 0.085),
+                                            ))))),
                           ],
                         ),
                         Container(

@@ -85,12 +85,7 @@ class _SetProfileData extends State<SetProfileData> {
             lname: data['last_name']);
       } else {
         return ProfileData(
-            username: null,
-            email: null,
-            pass: null,
-            image: null,
-            fname: null,
-            lname: null);
+            username: "", email: "", pass: "", image: "", fname: "", lname: "");
       }
     }
 
@@ -106,10 +101,23 @@ class _SetProfileData extends State<SetProfileData> {
     return Container(
       height: fullHeight * 0.75,
       padding: EdgeInsets.all(paddingMD),
-      margin: EdgeInsets.fromLTRB(paddingMD, paddingLg, paddingMD, paddingMD),
+      margin: EdgeInsets.fromLTRB(
+          paddingMD, paddingLg * 1.75, paddingMD, paddingMD),
       decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(10)),
-          color: whitebg),
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        color: whitebg,
+        boxShadow: [
+          BoxShadow(
+            color: const Color.fromARGB(255, 128, 128, 128).withOpacity(0.3),
+            blurRadius: 10.0,
+            spreadRadius: 1.0,
+            offset: const Offset(
+              5.0,
+              5.0,
+            ),
+          )
+        ],
+      ),
       child: ListView(children: [
         getTitleLarge("Profile Data", primaryColor),
         getSubTitleMedium("Username", blackbg, TextAlign.left),

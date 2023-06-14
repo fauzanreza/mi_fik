@@ -368,6 +368,11 @@ class _AddPost extends State<AddPost> {
                               var body = response[0]['body'];
 
                               if (status == "success") {
+                                selectedTag.clear();
+                                locDetailCtrl.clear();
+                                locCoordinateCtrl = null;
+                                contentAttImage = null;
+                                listAttachment = [];
                                 Get.offAll(() => const BottomBar());
 
                                 showDialog<String>(

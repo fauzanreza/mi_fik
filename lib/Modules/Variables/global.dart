@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 // Navigation
@@ -7,6 +8,7 @@ String passSlugContent;
 String locName;
 List listAttachment = [];
 List<Map<String, dynamic>> listArchiveCheck = [];
+TabController tabController;
 
 // Selected
 String selectedArchiveName;
@@ -22,14 +24,15 @@ bool isChooseRole = false;
 String uploadedImageRegis;
 bool checkAvaiabilityRegis = false;
 bool isFinishedRegis = false;
+bool isWaiting = false;
 
 String usernameAvaiabilityCheck = "";
 String emailAvaiabilityCheck = "";
 
-String passRegisCtrl;
+String passRegisCtrl = "";
 int validRegisCtrl;
-String fnameRegisCtrl;
-String lnameRegisCtrl;
+String fnameRegisCtrl = "";
+String lnameRegisCtrl = "";
 
 var selectedRole = [];
 

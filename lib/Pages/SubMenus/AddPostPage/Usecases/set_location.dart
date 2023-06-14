@@ -159,6 +159,7 @@ class _SetLocation extends State<SetLocation>
                         child: GoogleMap(
                           myLocationButtonEnabled: false,
                           zoomControlsEnabled: false,
+                          myLocationEnabled: true,
                           initialCameraPosition: _initialCameraPosition,
                           onMapCreated: (controller) =>
                               _googleMapController = controller,
@@ -170,8 +171,8 @@ class _SetLocation extends State<SetLocation>
                               setState(() {
                                 _coordinate = Marker(
                                   markerId: const MarkerId('origin'),
-                                  infoWindow: const InfoWindow(
-                                      title: 'Selected Location'),
+                                  infoWindow:
+                                      InfoWindow(title: 'Selected Location'.tr),
                                   icon: BitmapDescriptor.defaultMarkerWithHue(
                                       BitmapDescriptor.hueOrange),
                                   position: pos,
@@ -188,7 +189,53 @@ class _SetLocation extends State<SetLocation>
                           alignment: Alignment.centerLeft,
                           child: getSubTitleMedium(
                               "Location Name", blackbg, TextAlign.start)),
-                      getInputText(75, widget.locDetailCtrl, false)
+                      getInputText(75, widget.locDetailCtrl, false),
+                      SizedBox(
+                          width: fullWidth,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                  child: Container(
+                                      width: double.infinity,
+                                      height: btnHeightMD,
+                                      margin: EdgeInsets.symmetric(
+                                          vertical: paddingXSM),
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          Get.back();
+                                        },
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStatePropertyAll<Color>(
+                                                  successbg),
+                                        ),
+                                        child: Text('Save Location'.tr),
+                                      ))),
+                              const SizedBox(width: 20),
+                              Container(
+                                  height: btnHeightMD,
+                                  margin: EdgeInsets.symmetric(
+                                      vertical: paddingXSM),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      _coordinate = null;
+                                      widget.locDetailCtrl.clear();
+                                      locCoordinateCtrl = null;
+                                      Get.back();
+                                    },
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStatePropertyAll<Color>(
+                                              dangerColor),
+                                    ),
+                                    child: Icon(
+                                      Icons.delete,
+                                      color: whitebg,
+                                      size: iconLG,
+                                    ),
+                                  ))
+                            ],
+                          ))
                     ]),
                   ));
             });

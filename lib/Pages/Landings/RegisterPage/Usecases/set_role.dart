@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/ManageRolePage/Usecases/get_tag_category.dart';
 
@@ -15,22 +16,57 @@ class _SetRole extends State<SetRole> {
   Widget build(BuildContext context) {
     double fullHeight = MediaQuery.of(context).size.height;
 
+    Widget getPicker(bool status) {
+      if (status) {
+        return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+          SizedBox(
+            height: paddingLg,
+          ),
+          getSubTitleMedium(
+              "You can't request to modify your tag, because you still have awaiting request",
+              primaryColor,
+              TextAlign.center),
+          ClipRRect(
+            child:
+                Image.asset('assets/icon/sorry.png', width: fullHeight * 0.3),
+          ),
+          getSubTitleMedium(
+              "Please wait some moment or try to contact the Admin",
+              blackbg,
+              TextAlign.center)
+        ]);
+      } else {
+        return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          getTitleLarge("Choose Your Role", primaryColor),
+          const Expanded(child: GetAllTagCategory())
+        ]);
+      }
+    }
+
     return ListView(
       children: [
         Container(
-          height: fullHeight * 0.75,
-          padding: EdgeInsets.all(paddingMD),
-          margin:
-              EdgeInsets.fromLTRB(paddingMD, paddingLg, paddingMD, paddingMD),
-          decoration: BoxDecoration(
+            height: fullHeight * 0.75,
+            padding: EdgeInsets.all(paddingMD),
+            margin:
+                EdgeInsets.fromLTRB(paddingMD, paddingLg, paddingMD, paddingMD),
+            decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(10)),
-              color: whitebg),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            getTitleLarge("Choose Your Role", primaryColor),
-            const Expanded(child: GetAllTagCategory())
-          ]),
-        )
+              color: whitebg,
+              boxShadow: [
+                BoxShadow(
+                  color:
+                      const Color.fromARGB(255, 128, 128, 128).withOpacity(0.3),
+                  blurRadius: 10.0,
+                  spreadRadius: 1.0,
+                  offset: const Offset(
+                    5.0,
+                    5.0,
+                  ),
+                )
+              ],
+            ),
+            child: getPicker(isWaiting))
       ],
     );
   }

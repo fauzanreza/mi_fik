@@ -37,6 +37,7 @@ class _GetWelcoming extends State<GetWelcoming> {
                 checkAvaiabilityRegis = false;
                 isFinishedRegis = false;
                 uploadedImageRegis = null;
+                isWaiting = false;
                 final prefs = await SharedPreferences.getInstance();
                 await prefs.clear();
 
@@ -47,27 +48,16 @@ class _GetWelcoming extends State<GetWelcoming> {
                     left: paddingMD, right: paddingMD, top: paddingLg),
                 padding: EdgeInsets.all(paddingSM - 2),
                 width: 180,
-                decoration: BoxDecoration(
-                    color: dangerColor,
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color.fromARGB(255, 128, 128, 128)
-                            .withOpacity(0.3),
-                        blurRadius: 10.0,
-                        spreadRadius: 0.0,
-                        offset: const Offset(
-                          5.0,
-                          5.0,
-                        ),
-                      )
-                    ],
-                    borderRadius: const BorderRadius.all(Radius.circular(10))),
+                color: Colors.transparent,
                 child: Row(
                   children: [
-                    Icon(Icons.arrow_back, color: whitebg, size: iconMD),
+                    Icon(Icons.arrow_back, color: dangerColor, size: iconLG),
                     SizedBox(width: paddingSM),
                     Text("Back to Sign In",
-                        style: TextStyle(color: whitebg, fontSize: textMD))
+                        style: TextStyle(
+                            color: dangerColor,
+                            fontSize: textMD,
+                            fontWeight: FontWeight.w500))
                   ],
                 ),
               ),
@@ -78,8 +68,21 @@ class _GetWelcoming extends State<GetWelcoming> {
           padding: EdgeInsets.all(paddingMD),
           margin: EdgeInsets.all(paddingMD),
           decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-              color: whitebg),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            color: whitebg,
+            boxShadow: [
+              BoxShadow(
+                color:
+                    const Color.fromARGB(255, 128, 128, 128).withOpacity(0.3),
+                blurRadius: 10.0,
+                spreadRadius: 1.0,
+                offset: const Offset(
+                  5.0,
+                  5.0,
+                ),
+              )
+            ],
+          ),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             getTitleLarge("Welcoming", primaryColor),

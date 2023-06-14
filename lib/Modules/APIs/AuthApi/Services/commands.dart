@@ -16,7 +16,8 @@ class AuthCommandsService {
 
   Client client = Client();
 
-  Future<List<Map<String, dynamic>>> postLogin(LoginModel data) async {
+  Future<List<Map<String, dynamic>>> postLogin(
+      LoginModel data, bool isRegis) async {
     final header = {
       'Accept': 'application/json',
       'content-type': 'application/json'
@@ -88,19 +89,24 @@ class AuthCommandsService {
             'Authorization': "Bearer $token",
           };
 
-          final resReq = await client.get(
-              Uri.parse("$emuUrl/api/v1/user/request/my"),
-              headers: header);
-          if (resReq.statusCode == 200) {
-            indexRegis = 5;
-          } else if (resReq.statusCode == 404) {
-            indexRegis = 4;
-          } else if (resReq.statusCode == 401) {
-            Get.snackbar(
-                "Alert".tr, "Failed to validate request, please try again".tr,
-                backgroundColor: whitebg);
+          if (!isRegis) {
+            final resReq = await client.get(
+                Uri.parse("$emuUrl/api/v1/user/request/my"),
+                headers: header);
+            if (resReq.statusCode == 200) {
+              isWaiting = true;
+              indexRegis = 5;
+            } else if (resReq.statusCode == 404) {
+              indexRegis = 4;
+            } else if (resReq.statusCode == 401) {
+              Get.snackbar(
+                  "Alert".tr, "Failed to validate request, please try again".tr,
+                  backgroundColor: whitebg);
+            } else {
+              indexRegis = 4;
+            }
           } else {
-            indexRegis = 4;
+            indexRegis = 3;
           }
 
           await prefs.setString(

@@ -200,8 +200,8 @@ Widget getDropDownMain(String slct, List<String> opt,
           if (separate) {
             return DropdownMenuItem<String>(
               value: item,
-              child:
-                  Text(getSeparatedAfter(divider, item).replaceAll('_', ' ')),
+              child: Text(ucFirst(
+                  getSeparatedAfter(divider, item).replaceAll('_', ' '))),
             );
           } else {
             return DropdownMenuItem<String>(

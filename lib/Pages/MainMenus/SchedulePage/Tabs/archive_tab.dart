@@ -55,71 +55,75 @@ class _ArchivePage extends State<ArchivePage> {
 
     Widget getData(List<ArchiveModel> contents) {
       if (contents != null) {
-        return Column(
+        return ListView(
+            padding: EdgeInsets.only(bottom: paddingLg),
             children: contents.map((archive) {
-          return SizedBox(
-              width: fullWidth,
-              child: IntrinsicHeight(
-                  child: Stack(children: [
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: fullWidth * 0.05),
-                  width: 2.5,
-                  color: primaryColor,
-                ),
+              return SizedBox(
+                  width: fullWidth,
+                  child: IntrinsicHeight(
+                      child: Stack(children: [
+                    Container(
+                      margin:
+                          EdgeInsets.symmetric(horizontal: fullWidth * 0.05),
+                      width: 2.5,
+                      color: primaryColor,
+                    ),
 
-                //Open Archive w/ full container
-                GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedArchiveName = archive.archiveName;
-                        selectedArchiveDesc = archive.archiveDesc;
-                        selectedArchiveSlug = archive.slug;
-                      });
-                      Get.offAll(const BottomBar());
-                    },
-                    child: Container(
-                        width: fullWidth * 0.7,
-                        padding: EdgeInsets.symmetric(
-                            horizontal: paddingSM, vertical: paddingMD),
-                        margin: EdgeInsets.only(top: marginMT),
-                        transform: Matrix4.translationValues(55.0, 5.0, 0.0),
-                        decoration: BoxDecoration(
-                          color: whitebg,
-                          borderRadius: BorderRadius.all(roundedMd),
-                          boxShadow: [
-                            BoxShadow(
-                              color: const Color.fromARGB(255, 128, 128, 128)
-                                  .withOpacity(0.3),
-                              blurRadius: 10.0,
-                              spreadRadius: 0.0,
-                              offset: const Offset(
-                                5.0,
-                                5.0,
-                              ),
-                            )
-                          ],
-                        ),
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(archive.archiveName,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      color: blackbg,
-                                      fontSize: textSM,
-                                      fontWeight: FontWeight.w500)),
-                              SizedBox(height: paddingXSM),
-                              Text(
-                                  getTotalArchive(
-                                      archive.totalEvent, archive.totalTask),
-                                  style: TextStyle(
-                                    color: blackbg,
-                                    fontSize: textXSM,
-                                  )),
-                            ])))
-              ])));
-        }).toList());
+                    //Open Archive w/ full container
+                    GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selectedArchiveName = archive.archiveName;
+                            selectedArchiveDesc = archive.archiveDesc;
+                            selectedArchiveSlug = archive.slug;
+                          });
+                          Get.offAll(const BottomBar());
+                        },
+                        child: Container(
+                            width: fullWidth * 0.7,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: paddingSM, vertical: paddingMD),
+                            margin: EdgeInsets.only(top: marginMT),
+                            transform:
+                                Matrix4.translationValues(55.0, 5.0, 0.0),
+                            decoration: BoxDecoration(
+                              color: whitebg,
+                              borderRadius: BorderRadius.all(roundedMd),
+                              boxShadow: [
+                                BoxShadow(
+                                  color:
+                                      const Color.fromARGB(255, 128, 128, 128)
+                                          .withOpacity(0.3),
+                                  blurRadius: 10.0,
+                                  spreadRadius: 0.0,
+                                  offset: const Offset(
+                                    5.0,
+                                    5.0,
+                                  ),
+                                )
+                              ],
+                            ),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(archive.archiveName,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          color: blackbg,
+                                          fontSize: textSM,
+                                          fontWeight: FontWeight.w500)),
+                                  SizedBox(height: paddingXSM),
+                                  Text(
+                                      getTotalArchive(archive.totalEvent,
+                                          archive.totalTask),
+                                      style: TextStyle(
+                                        color: blackbg,
+                                        fontSize: textXSM,
+                                      )),
+                                ])))
+                  ])));
+            }).toList());
       } else {
         return SizedBox(
             height: fullHeight * 0.7,

@@ -23,8 +23,21 @@ class _GetWaiting extends State<GetWaiting> {
           margin:
               EdgeInsets.fromLTRB(paddingMD, paddingLg, paddingMD, paddingMD),
           decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-              color: whitebg),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            color: whitebg,
+            boxShadow: [
+              BoxShadow(
+                color:
+                    const Color.fromARGB(255, 128, 128, 128).withOpacity(0.3),
+                blurRadius: 10.0,
+                spreadRadius: 1.0,
+                offset: const Offset(
+                  5.0,
+                  5.0,
+                ),
+              )
+            ],
+          ),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
             getTitleLarge("Your account has registered", primaryColor),
