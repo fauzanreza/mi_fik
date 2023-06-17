@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Models/queries.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Services/queries.dart';
-
-import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class GetSavedStatus extends StatefulWidget {
-  GetSavedStatus({Key key, this.passSlug}) : super(key: key);
+  GetSavedStatus({Key key, this.passSlug, this.ctx}) : super(key: key);
   String passSlug;
+  String ctx;
 
   @override
   _GetSavedStatus createState() => _GetSavedStatus();
@@ -28,7 +27,7 @@ class _GetSavedStatus extends State<GetSavedStatus> {
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
-        future: apiService.getMyArchive(widget.passSlug, "Event"),
+        future: apiService.getMyArchive(widget.passSlug, widget.ctx),
         builder:
             (BuildContext context, AsyncSnapshot<List<ArchiveModel>> snapshot) {
           if (snapshot.hasError) {

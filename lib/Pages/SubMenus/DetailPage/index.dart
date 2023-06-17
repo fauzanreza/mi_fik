@@ -173,7 +173,8 @@ class _DetailPage extends State<DetailPage> {
                     Positioned(
                         right: 15,
                         bottom: 35,
-                        child: GetSavedStatus(passSlug: widget.passSlug))
+                        child: GetSavedStatus(
+                            passSlug: widget.passSlug, ctx: "Event"))
                   ]),
                   Container(
                       transform: Matrix4.translationValues(0.0, -20.0, 0.0),

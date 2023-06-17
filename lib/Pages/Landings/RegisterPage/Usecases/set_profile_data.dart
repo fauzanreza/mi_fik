@@ -4,12 +4,27 @@ import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/APIs/AuthApi/Services/commands.dart';
+import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SetProfileData extends StatefulWidget {
-  const SetProfileData({Key key}) : super(key: key);
+  SetProfileData(
+      {Key key,
+      this.fnameMsg,
+      this.lnameMsg,
+      this.passMsg,
+      this.allMsg,
+      this.unameMsg,
+      this.emailMsg})
+      : super(key: key);
+  String fnameMsg = "";
+  String lnameMsg = "";
+  String unameMsg = "";
+  String allMsg = "";
+  String passMsg = "";
+  String emailMsg = "";
 
   @override
   _SetProfileData createState() => _SetProfileData();
@@ -38,12 +53,15 @@ class _SetProfileData extends State<SetProfileData> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             getSubTitleMedium("Password", blackbg, TextAlign.left),
+            getInputWarning(widget.passMsg),
             getInputTextRegis(
                 35, "pass", context, null, refresh, passRegisCtrl, isFillForm),
             getSubTitleMedium("First Name", blackbg, TextAlign.left),
+            getInputWarning(widget.fnameMsg),
             getInputTextRegis(35, "fname", context, null, refresh,
                 fnameRegisCtrl, isFillForm),
             getSubTitleMedium("Last Name", blackbg, TextAlign.left),
+            getInputWarning(widget.lnameMsg),
             getInputTextRegis(35, "lname", context, null, refresh,
                 lnameRegisCtrl, isFillForm),
             getSubTitleMedium("Valid Until", blackbg, TextAlign.left),
@@ -52,6 +70,7 @@ class _SetProfileData extends State<SetProfileData> {
                 slctValidUntil = newValue;
               });
             }, false, null),
+            getInputWarning(widget.allMsg),
           ],
         );
       } else {
@@ -121,9 +140,11 @@ class _SetProfileData extends State<SetProfileData> {
       child: ListView(children: [
         getTitleLarge("Profile Data", primaryColor),
         getSubTitleMedium("Username", blackbg, TextAlign.left),
+        getInputWarning(widget.unameMsg),
         getInputTextRegis(30, "username", context, apiService, refresh,
             usernameAvaiabilityCheck, isFillForm),
         getSubTitleMedium("Email", blackbg, TextAlign.left),
+        getInputWarning(widget.emailMsg),
         getInputTextRegis(30, "email", context, apiService, refresh,
             emailAvaiabilityCheck, isFillForm),
         getDataDetailForm(checkAvaiabilityRegis),

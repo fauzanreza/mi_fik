@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
+import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class GetTerms extends StatefulWidget {
-  const GetTerms({Key key}) : super(key: key);
+  GetTerms({Key key, this.checkMsg}) : super(key: key);
+  String checkMsg;
 
   @override
   _GetTerms createState() => _GetTerms();
@@ -75,6 +77,7 @@ class _GetTerms extends State<GetTerms> {
               Text("I agree to the terms and condition on this app",
                   style: TextStyle(fontSize: textMD - 2))
             ]),
+            getInputWarning(widget.checkMsg),
           ]),
         )
       ],

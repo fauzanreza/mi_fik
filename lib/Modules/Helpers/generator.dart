@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -271,6 +272,31 @@ Widget getHourChipLine(String dateStart, double width) {
           ))
         ],
       ));
+}
+
+Widget getInputWarning(String text) {
+  if (text.trim() != "") {
+    return Container(
+        margin: EdgeInsets.symmetric(vertical: paddingXSM / 2),
+        child: RichText(
+          text: TextSpan(
+            children: [
+              WidgetSpan(
+                child: Icon(
+                  FontAwesomeIcons.triangleExclamation,
+                  size: iconSM - 2,
+                  color: dangerColor,
+                ),
+              ),
+              TextSpan(
+                  text: " $text",
+                  style: TextStyle(color: dangerColor, fontSize: textSM)),
+            ],
+          ),
+        ));
+  } else {
+    return SizedBox();
+  }
 }
 
 Widget getHourText(String date, var margin, var align) {

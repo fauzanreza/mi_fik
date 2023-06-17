@@ -13,6 +13,7 @@ import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/delete_task.dart';
+import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/get_saved_status.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/post_archive_rel.dart';
 
 class DetailTask extends StatefulWidget {
@@ -52,19 +53,29 @@ class _DetailTask extends State<DetailTask> {
     dateEndCtrl ??= DateTime.parse(widget.data.dateEnd);
 
     return SizedBox(
-        height: 560,
+        height: 580,
         width: fullWidth,
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Container(
-            alignment: Alignment.topRight,
-            child: IconButton(
-              icon: const Icon(Icons.close),
-              tooltip: 'Back',
-              onPressed: () {
-                Get.back();
-              },
-            ),
+          Row(
+            children: [
+              Container(
+                  margin: EdgeInsets.only(left: paddingXSM),
+                  child: GetSavedStatus(
+                      passSlug: widget.data.slugName, ctx: "Task")),
+              const Spacer(),
+              Container(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                  icon: const Icon(Icons.close),
+                  tooltip: 'Back',
+                  onPressed: () {
+                    Get.back();
+                  },
+                ),
+              ),
+            ],
           ),
+          SizedBox(height: paddingMD),
           Container(
             padding: EdgeInsets.only(left: paddingSM),
             child: getSubTitleMedium("Title", blackbg, TextAlign.start),

@@ -8,6 +8,7 @@ import 'package:mi_fik/Modules/APIs/AuthApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/AuthApi/Services/commands.dart';
 import 'package:mi_fik/Modules/APIs/AuthApi/Validators/commands.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
+import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -25,6 +26,9 @@ class _PostLogin extends State<PostLogin> {
   var passCtrl = TextEditingController();
   AuthCommandsService apiService;
   UserCommandsService userService;
+  String usernameMsg = "";
+  String passMsg = "";
+  String allMsg = "";
 
   @override
   void dispose() {
@@ -66,10 +70,13 @@ class _PostLogin extends State<PostLogin> {
             ),
             Text("Username",
                 style: TextStyle(color: blackbg, fontSize: textMD)),
+            getInputWarning(usernameMsg),
             getInputText(lnameLength, usernameCtrl, false),
             Text("Password",
                 style: TextStyle(color: blackbg, fontSize: textMD)),
+            getInputWarning(passMsg),
             getInputText(passwordLength, passCtrl, true),
+            getInputWarning(allMsg),
             Container(
                 margin: EdgeInsets.only(top: paddingSM),
                 padding: EdgeInsets.zero,
@@ -78,6 +85,9 @@ class _PostLogin extends State<PostLogin> {
                 child: ElevatedButton(
                   onPressed: () async {
                     String token = await FirebaseMessaging.instance.getToken();
+                    usernameMsg = "";
+                    passMsg = "";
+                    allMsg = "";
 
                     LoginModel data = LoginModel(
                       username: usernameCtrl.text.trim(),
@@ -116,8 +126,29 @@ class _PostLogin extends State<PostLogin> {
                               builder: (BuildContext context) =>
                                   FailedDialog(text: body, type: "login"));
 
-                          usernameCtrl.clear();
-                          passCtrl.clear();
+                          if (body is! String) {
+                            if (body['username'] != null) {
+                              usernameMsg = body['username'][0];
+
+                              if (body['username'].length > 1) {
+                                for (String e in body['username']) {
+                                  usernameMsg += e;
+                                }
+                              }
+                            }
+
+                            if (body['password'] != null) {
+                              passMsg = body['password'][0];
+
+                              if (body['password'].length > 1) {
+                                for (String e in body['password']) {
+                                  passMsg += e;
+                                }
+                              }
+                            }
+                          } else {
+                            allMsg = body;
+                          }
                         }
                       });
                     } else {

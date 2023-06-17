@@ -35,6 +35,14 @@ class _RegisterPage extends State<RegisterPage> {
 
   AuthCommandsService authService;
 
+  String checkMsg = "";
+  String passMsg = "";
+  String fnameMsg = "";
+  String lnameMsg = "";
+  String unameMsg = "";
+  String emailMsg = "";
+  String allMsg = "";
+
   @override
   void initState() {
     super.initState();
@@ -110,6 +118,39 @@ class _RegisterPage extends State<RegisterPage> {
                   } else {
                     setState(() {
                       isFillForm = false;
+                      if (body is! String) {
+                        if (body['first_name'] != null) {
+                          fnameMsg = body['first_name'][0];
+
+                          if (body['first_name'].length > 1) {
+                            for (String e in body['first_name']) {
+                              fnameMsg += e;
+                            }
+                          }
+                        }
+
+                        if (body['last_name'] != null) {
+                          fnameMsg = body['last_name'][0];
+
+                          if (body['last_name'].length > 1) {
+                            for (String e in body['last_name']) {
+                              lnameMsg += e;
+                            }
+                          }
+                        }
+
+                        if (body['password'] != null) {
+                          passMsg = body['password'][0];
+
+                          if (body['password'].length > 1) {
+                            for (String e in body['password']) {
+                              passMsg += e;
+                            }
+                          }
+                        }
+                      } else {
+                        allMsg = body;
+                      }
                     });
 
                     showDialog<String>(
@@ -135,6 +176,9 @@ class _RegisterPage extends State<RegisterPage> {
               }
             }
           } else if (!isCheckedRegister && indexRegis == 1) {
+            setState(() {
+              checkMsg = "You haven't accept the terms & condition";
+            });
             showDialog<String>(
                 context: context,
                 builder: (BuildContext context) => FailedDialog(
@@ -142,6 +186,9 @@ class _RegisterPage extends State<RegisterPage> {
                     type: "register"));
           } else {
             setState(() {
+              if (isCheckedRegister) {
+                checkMsg = "";
+              }
               setIndex(indexRegis++);
             });
           }
@@ -226,14 +273,21 @@ class _RegisterPage extends State<RegisterPage> {
                 color: Colors.transparent,
               ),
             ),
-            child: const GetTerms()),
+            child: GetTerms(checkMsg: checkMsg)),
       ),
       PageModel(
         widget: DecoratedBox(
             decoration: BoxDecoration(
               border: Border.all(width: 0.0, color: Colors.transparent),
             ),
-            child: const SetProfileData()),
+            child: SetProfileData(
+              allMsg: allMsg,
+              fnameMsg: fnameMsg,
+              lnameMsg: lnameMsg,
+              emailMsg: emailMsg,
+              passMsg: passMsg,
+              unameMsg: unameMsg,
+            )),
       ),
       PageModel(
         widget: DecoratedBox(

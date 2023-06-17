@@ -26,6 +26,8 @@ bool checkAvaiabilityRegis = false;
 bool isFinishedRegis = false;
 bool isWaiting = false;
 
+String checkMsg = "";
+
 String usernameAvaiabilityCheck = "";
 String emailAvaiabilityCheck = "";
 
