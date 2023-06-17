@@ -30,7 +30,7 @@ class _ArchivePage extends State<ArchivePage> {
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
-        future: apiService.getMyArchive("%20"),
+        future: apiService.getMyArchive("%20", "%20"),
         builder:
             (BuildContext context, AsyncSnapshot<List<ArchiveModel>> snapshot) {
           if (snapshot.hasError) {

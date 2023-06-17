@@ -241,7 +241,12 @@ class _DetailPage extends State<DetailPage> {
                 ]),
             Positioned(
               bottom: 10,
-              child: PostArchiveRelation(passSlug: contents[0].slugName),
+              child: PostArchiveRelation(
+                passSlug: contents[0].slugName,
+                margin: EdgeInsets.symmetric(
+                    horizontal: paddingSM, vertical: paddingXSM),
+                ctx: "Event",
+              ),
             ),
           ]),
           floatingActionButtonLocation: FloatingActionButtonLocation.startTop,

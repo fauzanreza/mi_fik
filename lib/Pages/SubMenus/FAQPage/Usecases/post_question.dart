@@ -85,7 +85,7 @@ class _PostQuestion extends State<PostQuestion> {
                         child: getInputDesc(255, 5, quBodyCtrl, false)),
                     Container(
                       padding: EdgeInsets.only(left: paddingSM),
-                      child: Text("What do you think improvement should be".tr,
+                      child: Text("Question Type".tr,
                           style: TextStyle(
                             fontSize: textMD - 1,
                             fontFamily: 'Poppins',

@@ -86,7 +86,9 @@ class Dictionaries extends Translations {
           'What do you think the improvment should be':
               'What do you think the improvment should be',
           'Selected Location': 'Selected Location',
-          'Could not open the map': 'Could not open the map'
+          'Could not open the map': 'Could not open the map',
+          'Question Type': 'Question Type',
+          'Save Changes': 'Save Changes'
         },
         'id_ID': {
           'Good Morning': 'Selamat Pagi',
@@ -171,7 +173,9 @@ class Dictionaries extends Translations {
           'What do you think the improvment should be':
               'Menurut mu, apa yang perlu ditingkatkan',
           'Selected Location': 'Lokasi Terpilih',
-          'Could not open the map': 'Gagal membuka Maps'
+          'Could not open the map': 'Gagal membuka Maps',
+          'Question Type': 'Tipe Pertanyaan',
+          'Save Changes': 'Simpan Perubahan'
         },
       };
 }

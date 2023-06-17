@@ -125,7 +125,7 @@ class ArchiveCommandsService {
   }
 
   Future<List<Map<String, dynamic>>> multiActionArchiveRel(
-      MultiRelationArchiveModel data, String slug) async {
+      MultiRelationArchiveModel data, String slug, String type) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token_key');
 
@@ -136,7 +136,7 @@ class ArchiveCommandsService {
     };
 
     final response = await client.post(
-      Uri.parse("$emuUrl/api/v1/archive/multirel/$slug"),
+      Uri.parse("$emuUrl/api/v1/archive/multirel/$slug/$type"),
       headers: header,
       body: multiActionArchiveModelToJson(data),
     );
@@ -156,6 +156,7 @@ class ArchiveCommandsService {
         {"message": "failed", "body": responseData['result']}
       ];
     } else {
+      print(responseData);
       return [
         {"message": "failed", "body": "Unknown error"}
       ];

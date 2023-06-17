@@ -28,7 +28,7 @@ class _GetSavedStatus extends State<GetSavedStatus> {
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
-        future: apiService.getMyArchive(widget.passSlug),
+        future: apiService.getMyArchive(widget.passSlug, "Event"),
         builder:
             (BuildContext context, AsyncSnapshot<List<ArchiveModel>> snapshot) {
           if (snapshot.hasError) {

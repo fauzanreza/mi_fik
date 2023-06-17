@@ -13,6 +13,7 @@ import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/delete_task.dart';
+import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/post_archive_rel.dart';
 
 class DetailTask extends StatefulWidget {
   DetailTask({Key key, this.data}) : super(key: key);
@@ -51,7 +52,7 @@ class _DetailTask extends State<DetailTask> {
     dateEndCtrl ??= DateTime.parse(widget.data.dateEnd);
 
     return SizedBox(
-        height: 500,
+        height: 560,
         width: fullWidth,
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Container(
@@ -214,8 +215,12 @@ class _DetailTask extends State<DetailTask> {
                         backgroundColor:
                             MaterialStatePropertyAll<Color>(primaryColor),
                       ),
-                      child: Text('Save'.tr),
-                    ))
+                      child: Text('Save Changes'.tr),
+                    )),
+                SizedBox(
+                  height: paddingMD,
+                ),
+                PostArchiveRelation(passSlug: widget.data.slugName, ctx: "Task")
               ],
             ),
           ),

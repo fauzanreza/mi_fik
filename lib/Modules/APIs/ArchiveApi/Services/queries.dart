@@ -12,7 +12,7 @@ class ArchiveQueriesService {
   final String emuUrl = "http://10.0.2.2:8000";
   Client client = Client();
 
-  Future<List<ArchiveModel>> getMyArchive(String find) async {
+  Future<List<ArchiveModel>> getMyArchive(String find, String type) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token_key');
     final header = {
@@ -20,7 +20,8 @@ class ArchiveQueriesService {
       'Authorization': "Bearer $token",
     };
 
-    final response = await client.get(Uri.parse("$emuUrl/api/v1/archive/$find"),
+    final response = await client.get(
+        Uri.parse("$emuUrl/api/v1/archive/$find/type/$type"),
         headers: header);
     if (response.statusCode == 200) {
       return archiveModelFromJson(response.body);
