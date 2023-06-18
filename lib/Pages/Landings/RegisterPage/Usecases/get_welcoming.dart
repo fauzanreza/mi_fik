@@ -10,13 +10,13 @@ class GetWelcoming extends StatefulWidget {
   const GetWelcoming({Key key}) : super(key: key);
 
   @override
-  _GetWelcoming createState() => _GetWelcoming();
+  StateGetWelcoming createState() => StateGetWelcoming();
 }
 
-class _GetWelcoming extends State<GetWelcoming> {
+class StateGetWelcoming extends State<GetWelcoming> {
   @override
   Widget build(BuildContext context) {
-    double fullHeight = MediaQuery.of(context).size.height;
+    //double fullHeight = MediaQuery.of(context).size.height;
 
     return ListView(
       children: [

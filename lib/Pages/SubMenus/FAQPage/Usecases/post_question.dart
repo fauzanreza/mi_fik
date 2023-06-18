@@ -6,19 +6,25 @@ import 'package:mi_fik/Components/Forms/input.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/APIs/QuestionApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/QuestionApi/Services/commands.dart';
+import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/FAQPage/index.dart';
+import 'package:mi_fik/Pages/SubMenus/MyFAQPage/index.dart';
 
 class PostQuestion extends StatefulWidget {
-  const PostQuestion({Key key}) : super(key: key);
+  const PostQuestion({Key key, this.from}) : super(key: key);
+  final String from;
 
   @override
-  _PostQuestion createState() => _PostQuestion();
+  StatePostQuestion createState() => StatePostQuestion();
 }
 
-class _PostQuestion extends State<PostQuestion> {
+class StatePostQuestion extends State<PostQuestion> {
   QuestionCommandsService apiService;
+  String qbodyMsg = "";
+  String qtypeMsg = "";
+  String allMsg = "";
 
   final quBodyCtrl = TextEditingController();
 
@@ -80,12 +86,15 @@ class _PostQuestion extends State<PostQuestion> {
                           "Question Body".tr, blackbg, TextAlign.start),
                     ),
                     Container(
+                        padding: EdgeInsets.only(left: paddingSM),
+                        child: getInputWarning(qbodyMsg)),
+                    Container(
                         padding:
                             EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
                         child: getInputDesc(255, 5, quBodyCtrl, false)),
                     Container(
                       padding: EdgeInsets.only(left: paddingSM),
-                      child: Text("What do you think improvement should be".tr,
+                      child: Text("Question Type".tr,
                           style: TextStyle(
                             fontSize: textMD - 1,
                             fontFamily: 'Poppins',
@@ -93,6 +102,9 @@ class _PostQuestion extends State<PostQuestion> {
                             fontWeight: FontWeight.w500,
                           )),
                     ),
+                    Container(
+                        padding: EdgeInsets.only(left: paddingSM),
+                        child: getInputWarning(qtypeMsg)),
                     Container(
                         margin: EdgeInsets.only(bottom: paddingMD),
                         padding: EdgeInsets.only(left: paddingSM),
@@ -103,6 +115,9 @@ class _PostQuestion extends State<PostQuestion> {
                             slctQuestionType = newValue;
                           });
                         }, false, null)),
+                    Container(
+                        padding: EdgeInsets.only(left: paddingSM),
+                        child: getInputWarning(allMsg)),
                     SizedBox(
                         width: fullWidth,
                         height: btnHeightMD,
@@ -122,29 +137,65 @@ class _PostQuestion extends State<PostQuestion> {
                                 var body = response[0]['body'];
 
                                 if (status == "success") {
-                                  Get.to(() => const FAQPage());
+                                  if (widget.from == "myfaq") {
+                                    Get.offAll(() => const MyFAQPage());
+                                  } else {
+                                    Get.offAll(() => const FAQPage());
+                                  }
 
                                   showDialog<String>(
                                       context: context,
                                       builder: (BuildContext context) =>
                                           SuccessDialog(text: body));
+                                  quBodyCtrl.clear();
                                 } else {
-                                  Get.to(() => const FAQPage());
+                                  qbodyMsg = "";
+                                  qtypeMsg = "";
+                                  allMsg = "";
 
+                                  Get.back();
                                   showDialog<String>(
                                       context: context,
                                       builder: (BuildContext context) =>
                                           FailedDialog(
-                                              text: body, type: "req"));
+                                              text: body, type: "faq"));
+                                  setState(() {
+                                    if (body is! String) {
+                                      if (body['question_body'] != null) {
+                                        qbodyMsg = body['question_body'][0];
+
+                                        if (body['question_body'].length > 1) {
+                                          for (String e
+                                              in body['question_body']) {
+                                            qbodyMsg += e;
+                                          }
+                                        }
+                                      }
+
+                                      if (body['question_type'] != null) {
+                                        qtypeMsg = body['question_type'][0];
+
+                                        if (body['question_type'].length > 1) {
+                                          for (String e
+                                              in body['question_type']) {
+                                            qtypeMsg += e;
+                                          }
+                                        }
+                                      }
+                                    } else {
+                                      allMsg = body;
+                                    }
+                                  });
                                 }
                               });
                             } else {
                               showDialog<String>(
                                   context: context,
-                                  builder: (BuildContext context) => FailedDialog(
-                                      text:
-                                          "Request failed, you haven't chosen any tag yet",
-                                      type: "req"));
+                                  builder: (BuildContext context) =>
+                                      const FailedDialog(
+                                          text:
+                                              "Request failed, you haven't chosen any type yet",
+                                          type: "faq"));
                             }
                           },
                           style: ButtonStyle(

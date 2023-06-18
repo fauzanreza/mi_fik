@@ -15,13 +15,14 @@ import 'package:mi_fik/Pages/MainMenus/HomePage/Usecases/set_control.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/index.dart';
 
 class GetContent extends StatefulWidget {
-  const GetContent({Key key}) : super(key: key);
+  const GetContent({Key key, this.page}) : super(key: key);
+  final int page;
 
   @override
-  _GetContent createState() => _GetContent();
+  StateGetContent createState() => StateGetContent();
 }
 
-class _GetContent extends State<GetContent> with TickerProviderStateMixin {
+class StateGetContent extends State<GetContent> with TickerProviderStateMixin {
   ContentQueriesService queryService;
   ContentCommandsService commandService;
 
@@ -48,7 +49,7 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
             sortingHomepageContent,
             getWhereDateFilter(filterDateStart, filterDateEnd),
             getFindFilter(searchingContent),
-            1),
+            widget.page),
         builder: (BuildContext context,
             AsyncSnapshot<List<ContentHeaderModel>> snapshot) {
           if (snapshot.hasError) {

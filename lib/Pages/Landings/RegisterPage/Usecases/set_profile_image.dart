@@ -18,10 +18,10 @@ class SetProfileImage extends StatefulWidget {
   const SetProfileImage({Key key}) : super(key: key);
 
   @override
-  _SetProfileImage createState() => _SetProfileImage();
+  StateSetProfileImage createState() => StateSetProfileImage();
 }
 
-class _SetProfileImage extends State<SetProfileImage> {
+class StateSetProfileImage extends State<SetProfileImage> {
   PostImage fireServicePost;
   DeleteImage fireServiceDelete;
   UserCommandsService commandService;
@@ -96,7 +96,8 @@ class _SetProfileImage extends State<SetProfileImage> {
                           showDialog<String>(
                               context: context,
                               builder: (BuildContext context) =>
-                                  FailedDialog(text: "Failed to reset image"));
+                                  const FailedDialog(
+                                      text: "Failed to reset image"));
                         }
                       });
                     });
@@ -246,7 +247,7 @@ class _SetProfileImage extends State<SetProfileImage> {
                         ),
                         Container(
                             padding: EdgeInsets.fromLTRB(0, paddingMD, 0, 0),
-                            child: GetInfoBox(
+                            child: const GetInfoBox(
                               page: "register",
                               location: "add_profile_pic",
                             )),

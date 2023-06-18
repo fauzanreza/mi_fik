@@ -8,10 +8,10 @@ class GetAllTagCategory extends StatefulWidget {
   const GetAllTagCategory({Key key}) : super(key: key);
 
   @override
-  _GetAllTagCategory createState() => _GetAllTagCategory();
+  StateGetAllTagCategory createState() => StateGetAllTagCategory();
 }
 
-class _GetAllTagCategory extends State<GetAllTagCategory> {
+class StateGetAllTagCategory extends State<GetAllTagCategory> {
   TagQueriesService apiQuery;
 
   @override

@@ -8,14 +8,17 @@ import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/get_list_archive.dart';
 
 class PostArchiveRelation extends StatefulWidget {
-  PostArchiveRelation({Key key, this.passSlug}) : super(key: key);
-  String passSlug;
+  const PostArchiveRelation({Key key, this.passSlug, this.margin, this.ctx})
+      : super(key: key);
+  final String passSlug;
+  final String ctx;
+  final margin;
 
   @override
-  _PostArchiveRelation createState() => _PostArchiveRelation();
+  StatePostArchiveRelation createState() => StatePostArchiveRelation();
 }
 
-class _PostArchiveRelation extends State<PostArchiveRelation> {
+class StatePostArchiveRelation extends State<PostArchiveRelation> {
   ArchiveQueriesService apiService;
 
   @override
@@ -29,7 +32,7 @@ class _PostArchiveRelation extends State<PostArchiveRelation> {
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
-        future: apiService.getMyArchive(widget.passSlug),
+        future: apiService.getMyArchive(widget.passSlug, widget.ctx),
         builder:
             (BuildContext context, AsyncSnapshot<List<ArchiveModel>> snapshot) {
           if (snapshot.hasError) {
@@ -40,9 +43,9 @@ class _PostArchiveRelation extends State<PostArchiveRelation> {
           } else if (snapshot.connectionState == ConnectionState.done) {
             List<ArchiveModel> archieves = snapshot.data;
             listArchiveCheck = [];
-            archieves.forEach((e) {
+            for (var e in archieves) {
               listArchiveCheck.add({"slug_name": e.slug, "check": e.found});
-            });
+            }
             return _buildListView(archieves);
           } else {
             return const Center(
@@ -61,18 +64,19 @@ class _PostArchiveRelation extends State<PostArchiveRelation> {
     return Container(
         width: fullWidth * 0.9,
         height: btnHeightMD,
-        margin:
-            EdgeInsets.symmetric(horizontal: paddingSM, vertical: paddingXSM),
+        margin: widget.margin,
         child: ElevatedButton(
           onPressed: () => showDialog<String>(
               context: context,
               barrierColor: primaryColor.withOpacity(0.5),
-              builder: (BuildContext context) =>
-                  ListArchive(archieves: archieves, passSlug: widget.passSlug)),
+              builder: (BuildContext context) => ListArchive(
+                  archieves: archieves,
+                  passSlug: widget.passSlug,
+                  type: widget.ctx)),
           style: ButtonStyle(
             backgroundColor: MaterialStatePropertyAll<Color>(successbg),
           ),
-          child: Text('Save Event'.tr),
+          child: Text('Save ${widget.ctx}'.tr),
         ));
   }
 }

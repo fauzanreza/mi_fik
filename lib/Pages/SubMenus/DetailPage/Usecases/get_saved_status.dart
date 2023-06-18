@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Models/queries.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Services/queries.dart';
-
-import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class GetSavedStatus extends StatefulWidget {
-  GetSavedStatus({Key key, this.passSlug}) : super(key: key);
-  String passSlug;
+  const GetSavedStatus({Key key, this.passSlug, this.ctx}) : super(key: key);
+  final String passSlug;
+  final String ctx;
 
   @override
-  _GetSavedStatus createState() => _GetSavedStatus();
+  StateGetSavedStatus createState() => StateGetSavedStatus();
 }
 
-class _GetSavedStatus extends State<GetSavedStatus> {
+class StateGetSavedStatus extends State<GetSavedStatus> {
   ArchiveQueriesService apiService;
   bool found = false;
 
@@ -28,7 +27,7 @@ class _GetSavedStatus extends State<GetSavedStatus> {
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
-        future: apiService.getMyArchive(widget.passSlug),
+        future: apiService.getMyArchive(widget.passSlug, widget.ctx),
         builder:
             (BuildContext context, AsyncSnapshot<List<ArchiveModel>> snapshot) {
           if (snapshot.hasError) {
@@ -59,7 +58,7 @@ class _GetSavedStatus extends State<GetSavedStatus> {
 
   Widget _buildListView(List<ArchiveModel> archieves) {
     //double fullHeight = MediaQuery.of(context).size.height;
-    double fullWidth = MediaQuery.of(context).size.width;
+    //double fullWidth = MediaQuery.of(context).size.width;
 
     if (found) {
       return Container(

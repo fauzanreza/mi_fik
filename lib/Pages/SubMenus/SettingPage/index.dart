@@ -7,10 +7,10 @@ class SettingPage extends StatefulWidget {
   const SettingPage({Key key}) : super(key: key);
 
   @override
-  _SettingPage createState() => _SettingPage();
+  StateSettingPage createState() => StateSettingPage();
 }
 
-class _SettingPage extends State<SettingPage> {
+class StateSettingPage extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;

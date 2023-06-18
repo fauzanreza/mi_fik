@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -181,44 +182,6 @@ Widget getLocation(loc, textColor) {
   }
 }
 
-Widget getUploadDate(DateTime date) {
-  //Initial variable.
-  final now = DateTime.now();
-  final today = DateTime(now.year, now.month, now.day);
-  final justNowHour = DateTime(now.hour);
-  final justNowMinute = DateFormat("mm").format(now);
-  final yesterday = DateTime(now.year, now.month, now.day - 1);
-  final content = DateTime(date.year, date.month, date.day);
-  final contentHour = DateTime(date.hour);
-  final contentMinute = DateFormat("mm").format(date);
-
-  var result = "";
-
-  if (content == today) {
-    if (justNowHour == contentHour) {
-      int diff = int.parse((justNowMinute).toString()) -
-          int.parse((contentMinute).toString());
-      if (diff > 10) {
-        result = "$diff min ago";
-      } else {
-        result = "Just Now";
-      }
-    } else {
-      result = "Today at ${DateFormat("HH:mm").format(date).toString()}";
-    }
-  } else if (content == yesterday) {
-    result = "Yesterday at ${DateFormat("HH:mm").format(date).toString()}";
-  } else {
-    result = DateFormat("dd/MM/yy HH:mm").format(date).toString();
-  }
-
-  return Text(result,
-      style: TextStyle(
-        color: whitebg,
-        fontWeight: FontWeight.w500,
-      ));
-}
-
 Widget getHourChipLine(String dateStart, double width) {
   DateTime date = DateTime.parse(dateStart);
 
@@ -271,6 +234,31 @@ Widget getHourChipLine(String dateStart, double width) {
           ))
         ],
       ));
+}
+
+Widget getInputWarning(String text) {
+  if (text.trim() != "") {
+    return Container(
+        margin: EdgeInsets.symmetric(vertical: paddingXSM / 2),
+        child: RichText(
+          text: TextSpan(
+            children: [
+              WidgetSpan(
+                child: Icon(
+                  FontAwesomeIcons.triangleExclamation,
+                  size: iconSM - 2,
+                  color: dangerColor,
+                ),
+              ),
+              TextSpan(
+                  text: " $text",
+                  style: TextStyle(color: dangerColor, fontSize: textSM)),
+            ],
+          ),
+        ));
+  } else {
+    return const SizedBox();
+  }
 }
 
 Widget getHourText(String date, var margin, var align) {

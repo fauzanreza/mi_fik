@@ -18,10 +18,10 @@ class PostTask extends StatefulWidget {
   String text;
 
   @override
-  _PostTask createState() => _PostTask();
+  StatePostTask createState() => StatePostTask();
 }
 
-class _PostTask extends State<PostTask> {
+class StatePostTask extends State<PostTask> {
   TaskCommandsService taskService;
 
   final taskTitleCtrl = TextEditingController();
@@ -141,7 +141,7 @@ class _PostTask extends State<PostTask> {
                 ]),
                 Container(
                     padding: EdgeInsets.fromLTRB(0, paddingMD, 0, 0),
-                    child: GetInfoBox(
+                    child: const GetInfoBox(
                       page: "homepage",
                       location: "add_task",
                     ))
@@ -186,7 +186,7 @@ class _PostTask extends State<PostTask> {
                   } else {
                     showDialog<String>(
                         context: context,
-                        builder: (BuildContext context) => FailedDialog(
+                        builder: (BuildContext context) => const FailedDialog(
                             text: "Create archive failed, field can't be empty",
                             type: "addtask"));
                   }

@@ -66,15 +66,15 @@ Future<void> main() async {
 }
 
 class MyApp extends StatefulWidget {
-  MyApp({Key key, this.signed, this.finishRegis}) : super(key: key);
-  bool signed;
-  bool finishRegis;
+  const MyApp({Key key, this.signed, this.finishRegis}) : super(key: key);
+  final bool signed;
+  final bool finishRegis;
 
   @override
-  _MyApp createState() => _MyApp();
+  StateMyApp createState() => StateMyApp();
 }
 
-class _MyApp extends State<MyApp> {
+class StateMyApp extends State<MyApp> {
   DictionaryQueryService dctService;
   UserCommandsService userService;
 
@@ -183,7 +183,7 @@ class _MyApp extends State<MyApp> {
                 theme: ThemeData(
                   primarySwatch: Colors.blue,
                 ),
-                home: RegisterPage(isLogged: true),
+                home: const RegisterPage(isLogged: true),
               );
             }
           } else {

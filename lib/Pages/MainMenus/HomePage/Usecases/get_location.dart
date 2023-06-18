@@ -6,10 +6,10 @@ class GetLocation extends StatefulWidget {
   const GetLocation({Key key}) : super(key: key);
 
   @override
-  _GetLocation createState() => _GetLocation();
+  StateGetLocation createState() => StateGetLocation();
 }
 
-class _GetLocation extends State<GetLocation> {
+class StateGetLocation extends State<GetLocation> {
   @override
   Widget build(BuildContext context) {
     return RichText(

@@ -9,10 +9,10 @@ class FAQPage extends StatefulWidget {
   const FAQPage({Key key}) : super(key: key);
 
   @override
-  _FAQPage createState() => _FAQPage();
+  StateFAQPage createState() => StateFAQPage();
 }
 
-class _FAQPage extends State<FAQPage> {
+class StateFAQPage extends State<FAQPage> {
   @override
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
@@ -23,6 +23,6 @@ class _FAQPage extends State<FAQPage> {
           Get.to(() => const BottomBar());
         }),
         body: const GetAllQuestion(),
-        floatingActionButton: const PostQuestion());
+        floatingActionButton: const PostQuestion(from: "faq"));
   }
 }

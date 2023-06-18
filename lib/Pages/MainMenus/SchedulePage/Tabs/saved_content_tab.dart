@@ -17,18 +17,26 @@ import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/delete_archive.dart
 import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/edit_archive.dart';
 
 class SavedContent extends StatefulWidget {
-  SavedContent({Key key, this.slug, this.name, this.desc}) : super(key: key);
-  String slug;
-  String name;
-  String desc;
+  const SavedContent({Key key, this.slug, this.name, this.desc})
+      : super(key: key);
+  final String slug;
+  final String name;
+  final String desc;
 
   @override
-  _SavedContent createState() => _SavedContent();
+  StateSavedContent createState() => StateSavedContent();
 }
 
-class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
+class StateSavedContent extends State<SavedContent>
+    with TickerProviderStateMixin {
   ArchiveQueriesService queryService;
   ContentCommandsService commandService;
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
+
+  Future<void> refreshData() async {
+    setState(() {});
+  }
 
   String hourChipBefore;
 
@@ -72,32 +80,79 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
     bool isLoading;
 
     if (contents != null) {
-      return ListView(
-        padding: EdgeInsets.only(bottom: paddingLg),
-        children: [
-          Row(
+      return RefreshIndicator(
+          key: _refreshIndicatorKey,
+          onRefresh: refreshData,
+          child: ListView(
+            padding: EdgeInsets.only(bottom: paddingLg),
             children: [
-              outlinedButtonCustom(() {
-                selectedArchiveSlug = null;
-                selectedArchiveName = null;
-                Get.offAll(() => const BottomBar());
-              }, "Back to Archive".tr, Icons.arrow_back),
-              const Spacer(),
-              DeleteArchive(slug: widget.slug, name: widget.name),
-              EditArchive(
-                  slug: widget.slug,
-                  archiveName: widget.name,
-                  archiveDesc: widget.desc)
-            ],
-          ),
-          Column(
-              children: contents.map((content) {
-            if (content.dataFrom == 1) {
-              return SizedBox(
-                  width: fullWidth,
-                  child: IntrinsicHeight(
-                    child: Stack(
-                      children: [
+              Row(
+                children: [
+                  outlinedButtonCustom(() {
+                    selectedArchiveSlug = null;
+                    selectedArchiveName = null;
+                    Get.offAll(() => const BottomBar());
+                  }, "Back to Archive".tr, Icons.arrow_back),
+                  const Spacer(),
+                  DeleteArchive(slug: widget.slug, name: widget.name),
+                  EditArchive(
+                      slug: widget.slug,
+                      archiveName: widget.name,
+                      archiveDesc: widget.desc)
+                ],
+              ),
+              Column(
+                  children: contents.map((content) {
+                if (content.dataFrom == 1) {
+                  return SizedBox(
+                      width: fullWidth,
+                      child: IntrinsicHeight(
+                        child: Stack(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: fullWidth * 0.03),
+                              width: 2.5,
+                              color: primaryColor,
+                            ),
+
+                            // Open content w/ full container
+                            GestureDetector(
+                                onTap: () {
+                                  commandService
+                                      .postContentView(content.slugName)
+                                      .then((response) {
+                                    setState(() => isLoading = false);
+                                    var status = response[0]['message'];
+                                    var body = response[0]['body'];
+
+                                    if (status == "success") {
+                                      Get.to(() => DetailPage(
+                                          passSlug: content.slugName));
+                                    } else {
+                                      showDialog<String>(
+                                          context: context,
+                                          builder: (BuildContext context) =>
+                                              FailedDialog(
+                                                  text: body,
+                                                  type: "openevent"));
+                                    }
+                                  });
+
+                                  passSlugContent = content.slugName;
+                                },
+                                child: GetHomePageEventContainer(
+                                    width: fullWidth,
+                                    content: content,
+                                    servc: commandService))
+                          ],
+                        ),
+                      ));
+                } else {
+                  return SizedBox(
+                      width: fullWidth,
+                      child: IntrinsicHeight(
+                          child: Stack(children: [
                         Container(
                           margin: EdgeInsets.symmetric(
                               horizontal: fullWidth * 0.03),
@@ -108,78 +163,35 @@ class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
                         // Open content w/ full container
                         GestureDetector(
                             onTap: () {
-                              commandService
-                                  .postContentView(content.slugName)
-                                  .then((response) {
-                                setState(() => isLoading = false);
-                                var status = response[0]['message'];
-                                var body = response[0]['body'];
-
-                                if (status == "success") {
-                                  Get.to(() =>
-                                      DetailPage(passSlug: content.slugName));
-                                } else {
-                                  showDialog<String>(
-                                      context: context,
-                                      builder: (BuildContext context) =>
-                                          FailedDialog(
-                                              text: body, type: "openevent"));
-                                }
-                              });
-
-                              passSlugContent = content.slugName;
+                              if (content.dataFrom == 2) {
+                                showDialog<String>(
+                                    context: context,
+                                    barrierColor: primaryColor.withOpacity(0.5),
+                                    builder: (BuildContext context) {
+                                      return StatefulBuilder(
+                                          builder: (context, setState) {
+                                        return AlertDialog(
+                                            insetPadding:
+                                                EdgeInsets.all(paddingXSM),
+                                            contentPadding:
+                                                EdgeInsets.all(paddingXSM),
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    roundedLG)),
+                                            content: DetailTask(
+                                              data: content,
+                                            ));
+                                      });
+                                    });
+                              }
                             },
-                            child: GetHomePageEventContainer(
-                                width: fullWidth,
-                                content: content,
-                                servc: commandService))
-                      ],
-                    ),
-                  ));
-            } else {
-              return SizedBox(
-                  width: fullWidth,
-                  child: IntrinsicHeight(
-                      child: Stack(children: [
-                    Container(
-                      margin:
-                          EdgeInsets.symmetric(horizontal: fullWidth * 0.03),
-                      width: 2.5,
-                      color: primaryColor,
-                    ),
-
-                    // Open content w/ full container
-                    GestureDetector(
-                        onTap: () {
-                          if (content.dataFrom == 2) {
-                            showDialog<String>(
-                                context: context,
-                                barrierColor: primaryColor.withOpacity(0.5),
-                                builder: (BuildContext context) {
-                                  return StatefulBuilder(
-                                      builder: (context, setState) {
-                                    return AlertDialog(
-                                        insetPadding:
-                                            EdgeInsets.all(paddingXSM),
-                                        contentPadding:
-                                            EdgeInsets.all(paddingXSM),
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.all(roundedLG)),
-                                        content: DetailTask(
-                                          data: content,
-                                        ));
-                                  });
-                                });
-                          }
-                        },
-                        child: GetScheduleContainer(
-                            width: fullWidth, content: content))
-                  ])));
-            }
-          }).toList())
-        ],
-      );
+                            child: GetScheduleContainer(
+                                width: fullWidth, content: content))
+                      ])));
+                }
+              }).toList())
+            ],
+          ));
     } else {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,

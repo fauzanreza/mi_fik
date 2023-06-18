@@ -10,10 +10,10 @@ class SetLanguage extends StatefulWidget {
   const SetLanguage({Key key}) : super(key: key);
 
   @override
-  _SetLanguage createState() => _SetLanguage();
+  StateSetLanguage createState() => StateSetLanguage();
 }
 
-class _SetLanguage extends State<SetLanguage> {
+class StateSetLanguage extends State<SetLanguage> {
   LangCtrl langctrl = Get.put(LangCtrl());
 
   @override
@@ -43,7 +43,7 @@ class _SetLanguage extends State<SetLanguage> {
               showDialog<String>(
                   context: context,
                   builder: (BuildContext context) =>
-                      SuccessDialog(text: "Language changed to English"));
+                      const SuccessDialog(text: "Language changed to English"));
             },
           ),
         ),
@@ -60,7 +60,7 @@ class _SetLanguage extends State<SetLanguage> {
               });
               showDialog<String>(
                   context: context,
-                  builder: (BuildContext context) => SuccessDialog(
+                  builder: (BuildContext context) => const SuccessDialog(
                       text: "Bahasa diganti ke bahasa Indonesia"));
             },
           ),

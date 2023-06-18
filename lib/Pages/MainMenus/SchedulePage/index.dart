@@ -21,10 +21,11 @@ class SchedulePage extends StatefulWidget {
   const SchedulePage({Key key}) : super(key: key);
 
   @override
-  _SchedulePage createState() => _SchedulePage();
+  StateSchedulePage createState() => StateSchedulePage();
 }
 
-class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
+class StateSchedulePage extends State<SchedulePage>
+    with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   LangCtrl langctrl = Get.put(LangCtrl());
 

@@ -8,10 +8,10 @@ class SetRole extends StatefulWidget {
   const SetRole({Key key}) : super(key: key);
 
   @override
-  _SetRole createState() => _SetRole();
+  StateSetRole createState() => StateSetRole();
 }
 
-class _SetRole extends State<SetRole> {
+class StateSetRole extends State<SetRole> {
   @override
   Widget build(BuildContext context) {
     double fullHeight = MediaQuery.of(context).size.height;

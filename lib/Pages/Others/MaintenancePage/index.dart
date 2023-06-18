@@ -7,10 +7,10 @@ class MaintenancePage extends StatefulWidget {
   const MaintenancePage({Key key}) : super(key: key);
 
   @override
-  _MaintenancePage createState() => _MaintenancePage();
+  StateMaintenancePage createState() => StateMaintenancePage();
 }
 
-class _MaintenancePage extends State<MaintenancePage> {
+class StateMaintenancePage extends State<MaintenancePage> {
   @override
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;

@@ -12,14 +12,14 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class SetLocation extends StatefulWidget {
-  SetLocation({Key key, this.locDetailCtrl}) : super(key: key);
-  TextEditingController locDetailCtrl;
+  const SetLocation({Key key, this.locDetailCtrl}) : super(key: key);
+  final TextEditingController locDetailCtrl;
 
   @override
-  _SetLocation createState() => _SetLocation();
+  StateSetLocation createState() => StateSetLocation();
 }
 
-class _SetLocation extends State<SetLocation>
+class StateSetLocation extends State<SetLocation>
     with SingleTickerProviderStateMixin {
   //Initial variable.
   //_MapsPageState(passIdFakses);

@@ -9,20 +9,23 @@ import 'package:mi_fik/Components/Forms/input.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/command_tasks.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_tasks.dart';
+import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/delete_task.dart';
+import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/get_saved_status.dart';
+import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/post_archive_rel.dart';
 
 class DetailTask extends StatefulWidget {
-  DetailTask({Key key, this.data}) : super(key: key);
-  var data;
+  const DetailTask({Key key, this.data}) : super(key: key);
+  final data;
 
   @override
-  _DetailTask createState() => _DetailTask();
+  StateDetailTask createState() => StateDetailTask();
 }
 
-class _DetailTask extends State<DetailTask> {
+class StateDetailTask extends State<DetailTask> {
   TaskCommandsService taskService;
 
   //Initial variable
@@ -51,19 +54,29 @@ class _DetailTask extends State<DetailTask> {
     dateEndCtrl ??= DateTime.parse(widget.data.dateEnd);
 
     return SizedBox(
-        height: 500,
+        height: 630,
         width: fullWidth,
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Container(
-            alignment: Alignment.topRight,
-            child: IconButton(
-              icon: const Icon(Icons.close),
-              tooltip: 'Back',
-              onPressed: () {
-                Get.back();
-              },
-            ),
+          Row(
+            children: [
+              Container(
+                  margin: EdgeInsets.only(left: paddingXSM),
+                  child: GetSavedStatus(
+                      passSlug: widget.data.slugName, ctx: "Task")),
+              const Spacer(),
+              Container(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                  icon: const Icon(Icons.close),
+                  tooltip: 'Back',
+                  onPressed: () {
+                    Get.back();
+                  },
+                ),
+              ),
+            ],
           ),
+          SizedBox(height: paddingMD),
           Container(
             padding: EdgeInsets.only(left: paddingSM),
             child: getSubTitleMedium("Title", blackbg, TextAlign.start),
@@ -140,7 +153,6 @@ class _DetailTask extends State<DetailTask> {
                     icon: Icon(Icons.delete, color: dangerColor),
                     tooltip: 'Delete Task',
                     onPressed: () {
-                      String id = widget.data.id;
                       Get.back();
 
                       showDialog<String>(
@@ -204,7 +216,7 @@ class _DetailTask extends State<DetailTask> {
                         } else {
                           showDialog<String>(
                               context: context,
-                              builder: (BuildContext context) => FailedDialog(
+                              builder: (BuildContext context) => const FailedDialog(
                                   text:
                                       "Create archive failed, field can't be empty",
                                   type: "addtask"));
@@ -214,11 +226,28 @@ class _DetailTask extends State<DetailTask> {
                         backgroundColor:
                             MaterialStatePropertyAll<Color>(primaryColor),
                       ),
-                      child: Text('Save'.tr),
-                    ))
+                      child: Text('Save Changes'.tr),
+                    )),
+                SizedBox(
+                  height: paddingMD,
+                ),
+                PostArchiveRelation(
+                    passSlug: widget.data.slugName, ctx: "Task"),
               ],
             ),
           ),
+          Container(
+              padding: EdgeInsets.fromLTRB(paddingMD, paddingSM, 0, 0),
+              child: getSubTitleMedium(
+                  "Created At : ${getItemTimeString(widget.data.createdAt)}",
+                  greybg,
+                  TextAlign.left)),
+          Container(
+              padding: EdgeInsets.fromLTRB(paddingMD, paddingXSM, 0, 0),
+              child: getSubTitleMedium(
+                  "Last Updated : ${getItemTimeString(widget.data.updatedAt)}",
+                  greybg,
+                  TextAlign.left))
         ]));
   }
 }

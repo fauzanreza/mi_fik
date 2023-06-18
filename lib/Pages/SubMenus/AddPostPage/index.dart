@@ -27,10 +27,10 @@ class AddPost extends StatefulWidget {
   const AddPost({Key key}) : super(key: key);
 
   @override
-  _AddPost createState() => _AddPost();
+  StateAddPost createState() => StateAddPost();
 }
 
-class _AddPost extends State<AddPost> {
+class StateAddPost extends State<AddPost> {
   String result = '';
 
   ContentCommandsService apiCommand;
@@ -330,7 +330,7 @@ class _AddPost extends State<AddPost> {
                               ])),
                       Container(
                           padding: EdgeInsets.fromLTRB(20, paddingMD, 20, 0),
-                          child: GetInfoBox(
+                          child: const GetInfoBox(
                             page: "homepage",
                             location: "add_event",
                           ))
@@ -390,15 +390,16 @@ class _AddPost extends State<AddPost> {
                           } else {
                             showDialog<String>(
                                 context: context,
-                                builder: (BuildContext context) => FailedDialog(
-                                    text:
-                                        "Create event failed, field can't be empty",
-                                    type: "addevent"));
+                                builder: (BuildContext context) =>
+                                    const FailedDialog(
+                                        text:
+                                            "Create event failed, field can't be empty",
+                                        type: "addevent"));
                           }
                         } else {
                           showDialog<String>(
                               context: context,
-                              builder: (BuildContext context) => FailedDialog(
+                              builder: (BuildContext context) => const FailedDialog(
                                   text:
                                       "Create event failed, tag must be selected",
                                   type: "addevent"));
@@ -406,7 +407,7 @@ class _AddPost extends State<AddPost> {
                       } else {
                         showDialog<String>(
                             context: context,
-                            builder: (BuildContext context) => FailedDialog(
+                            builder: (BuildContext context) => const FailedDialog(
                                 text:
                                     "Create event failed, date period must be selected",
                                 type: "addevent"));

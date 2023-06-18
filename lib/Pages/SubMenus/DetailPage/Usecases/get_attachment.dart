@@ -8,14 +8,14 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
 
 class AttachButton extends StatefulWidget {
-  AttachButton({Key key, this.passAttach}) : super(key: key);
-  List passAttach;
+  const AttachButton({Key key, this.passAttach}) : super(key: key);
+  final List passAttach;
 
   @override
-  _AttachButton createState() => _AttachButton();
+  StateAttachButton createState() => StateAttachButton();
 }
 
-class _AttachButton extends State<AttachButton> {
+class StateAttachButton extends State<AttachButton> {
   @override
   Widget build(BuildContext context) {
     double fullWidth = MediaQuery.of(context).size.width;

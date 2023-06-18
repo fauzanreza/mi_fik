@@ -1,5 +1,5 @@
-// ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
+// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' show Client;
 import 'package:mi_fik/Modules/APIs/SystemApi/Models/query_notification.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';

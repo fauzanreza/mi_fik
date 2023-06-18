@@ -159,7 +159,7 @@ class _GetEditProfileState extends State<GetEditProfile> {
                     } else {
                       showDialog<String>(
                           context: context,
-                          builder: (BuildContext context) => FailedDialog(
+                          builder: (BuildContext context) => const FailedDialog(
                               text: "Edit failed, field can't be empty",
                               type: "editacc"));
                     }

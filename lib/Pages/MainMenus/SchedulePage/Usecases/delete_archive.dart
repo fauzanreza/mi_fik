@@ -9,15 +9,15 @@ import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class DeleteArchive extends StatefulWidget {
-  DeleteArchive({Key key, this.slug, this.name}) : super(key: key);
-  String slug;
-  String name;
+  const DeleteArchive({Key key, this.slug, this.name}) : super(key: key);
+  final String slug;
+  final String name;
 
   @override
-  _DeleteArchive createState() => _DeleteArchive();
+  StateDeleteArchive createState() => StateDeleteArchive();
 }
 
-class _DeleteArchive extends State<DeleteArchive> {
+class StateDeleteArchive extends State<DeleteArchive> {
   ArchiveCommandsService apiService;
 
   @override

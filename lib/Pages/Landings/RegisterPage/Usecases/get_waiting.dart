@@ -6,10 +6,10 @@ class GetWaiting extends StatefulWidget {
   const GetWaiting({Key key}) : super(key: key);
 
   @override
-  _GetWaiting createState() => _GetWaiting();
+  StateGetWaiting createState() => StateGetWaiting();
 }
 
-class _GetWaiting extends State<GetWaiting> {
+class StateGetWaiting extends State<GetWaiting> {
   @override
   Widget build(BuildContext context) {
     double fullHeight = MediaQuery.of(context).size.height;

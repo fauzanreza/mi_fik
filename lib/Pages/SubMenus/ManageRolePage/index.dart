@@ -15,10 +15,10 @@ class RolePage extends StatefulWidget {
   const RolePage({Key key}) : super(key: key);
 
   @override
-  _RolePage createState() => _RolePage();
+  StateRolePage createState() => StateRolePage();
 }
 
-class _RolePage extends State<RolePage> {
+class StateRolePage extends State<RolePage> {
   UserQueriesService apiQuery;
 
   @override
@@ -71,8 +71,8 @@ class _RolePage extends State<RolePage> {
             if (selectedRole.isEmpty) {
               showDialog<String>(
                   context: context,
-                  builder: (BuildContext context) =>
-                      NoDataDialog(text: "You haven't selected any tag yet"));
+                  builder: (BuildContext context) => const NoDataDialog(
+                      text: "You haven't selected any tag yet"));
             } else {
               showModalBottomSheet<void>(
                 context: context,
@@ -86,8 +86,8 @@ class _RolePage extends State<RolePage> {
                   return Container(
                       height: fullHeight * 0.4,
                       padding: MediaQuery.of(context).viewInsets,
-                      child: PostSelectedRole(
-                          back: const RolePage(), isLogged: true));
+                      child: const PostSelectedRole(
+                          back: RolePage(), isLogged: true));
                 },
               );
             }

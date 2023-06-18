@@ -11,10 +11,10 @@ class GetHelpByType extends StatefulWidget {
   final String passType;
 
   @override
-  _GetHelpByType createState() => _GetHelpByType();
+  StateGetHelpByType createState() => StateGetHelpByType();
 }
 
-class _GetHelpByType extends State<GetHelpByType> {
+class StateGetHelpByType extends State<GetHelpByType> {
   HelpQueriesService apiQuery;
 
   @override

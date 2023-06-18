@@ -10,12 +10,14 @@ class GetMyHistory extends StatefulWidget {
   const GetMyHistory({Key key}) : super(key: key);
 
   @override
-  _GetMyHistory createState() => _GetMyHistory();
+  StateGetMyHistory createState() => StateGetMyHistory();
 }
 
-class _GetMyHistory extends State<GetMyHistory> {
+class StateGetMyHistory extends State<GetMyHistory> {
   HistoryQueriesService apiQuery;
   int page = 1;
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
 
   @override
   void initState() {
@@ -23,35 +25,45 @@ class _GetMyHistory extends State<GetMyHistory> {
     apiQuery = HistoryQueriesService();
   }
 
+  Future<void> refreshData() async {
+    page = 1;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       maintainBottomViewPadding: false,
-      child: FutureBuilder(
-        future: apiQuery.getMyHistory(page),
-        builder:
-            (BuildContext context, AsyncSnapshot<List<HistoryModel>> snapshot) {
-          if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                  "Something wrong with message: ${snapshot.error.toString()}"),
-            );
-          } else if (snapshot.connectionState == ConnectionState.done) {
-            List<HistoryModel> contents = snapshot.data;
-            return _buildListView(contents);
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
+      child: RefreshIndicator(
+        key: _refreshIndicatorKey,
+        onRefresh: refreshData,
+        child: FutureBuilder(
+          future: apiQuery.getMyHistory(page),
+          builder: (BuildContext context,
+              AsyncSnapshot<List<HistoryModel>> snapshot) {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text(
+                  "Something wrong with message: ${snapshot.error.toString()}",
+                ),
+              );
+            } else if (snapshot.connectionState == ConnectionState.done) {
+              List<HistoryModel> contents = snapshot.data;
+              return _buildListView(contents);
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
+        ),
       ),
     );
   }
 
   Widget _buildListView(List<HistoryModel> contents) {
     // double fullHeight = MediaQuery.of(context).size.height;
-    double fullWidth = MediaQuery.of(context).size.width;
+    //double fullWidth = MediaQuery.of(context).size.width;
 
     if (contents != null) {
       return ListView.builder(

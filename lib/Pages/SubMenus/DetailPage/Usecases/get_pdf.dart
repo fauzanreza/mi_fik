@@ -5,14 +5,14 @@ import 'package:mi_fik/Components/Bars/top_bar.dart';
 import 'package:pdfx/pdfx.dart';
 
 class AttachmentDocPage extends StatefulWidget {
-  AttachmentDocPage({Key key, this.url}) : super(key: key);
-  String url;
+  const AttachmentDocPage({Key key, this.url}) : super(key: key);
+  final String url;
 
   @override
-  _AttachmentDocPage createState() => _AttachmentDocPage();
+  StateAttachmentDocPage createState() => StateAttachmentDocPage();
 }
 
-class _AttachmentDocPage extends State<AttachmentDocPage> {
+class StateAttachmentDocPage extends State<AttachmentDocPage> {
   @override
   Widget build(BuildContext context) {
     final pdfController = PdfController(

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class SuccessDialog extends StatelessWidget {
-  SuccessDialog({Key key, this.text}) : super(key: key);
-  String text;
+  const SuccessDialog({Key key, this.text}) : super(key: key);
+  final String text;
 
   @override
   Widget build(BuildContext context) {

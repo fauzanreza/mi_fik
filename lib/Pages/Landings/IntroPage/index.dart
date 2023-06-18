@@ -6,10 +6,10 @@ class IntroPage extends StatefulWidget {
   const IntroPage({Key key}) : super(key: key);
 
   @override
-  _IntroPage createState() => _IntroPage();
+  StateIntroPage createState() => StateIntroPage();
 }
 
-class _IntroPage extends State<IntroPage> {
+class StateIntroPage extends State<IntroPage> {
   final selectedRole = [];
 
   int _index = 0;

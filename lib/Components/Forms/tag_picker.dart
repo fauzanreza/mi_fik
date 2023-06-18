@@ -4,17 +4,17 @@ import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class TagSelectedArea extends StatefulWidget {
-  TagSelectedArea({Key key, this.tag, this.type, this.action})
+  const TagSelectedArea({Key key, this.tag, this.type, this.action})
       : super(key: key);
-  List tag;
-  String type;
+  final List tag;
+  final String type;
   final Function action;
 
   @override
-  _TagSelectedArea createState() => _TagSelectedArea();
+  StateTagSelectedArea createState() => StateTagSelectedArea();
 }
 
-class _TagSelectedArea extends State<TagSelectedArea> {
+class StateTagSelectedArea extends State<TagSelectedArea> {
   @override
   Widget build(BuildContext context) {
     double fullWidth = MediaQuery.of(context).size.width;

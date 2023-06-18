@@ -11,10 +11,10 @@ class SignOutDialog extends StatefulWidget {
   const SignOutDialog({Key key}) : super(key: key);
 
   @override
-  _SignOutDialog createState() => _SignOutDialog();
+  StateSignOutDialog createState() => StateSignOutDialog();
 }
 
-class _SignOutDialog extends State<SignOutDialog> {
+class StateSignOutDialog extends State<SignOutDialog> {
   AuthQueriesService apiService;
 
   @override
@@ -77,7 +77,7 @@ class _SignOutDialog extends State<SignOutDialog> {
                   showDialog<String>(
                       context: context,
                       builder: (BuildContext context) =>
-                          SuccessDialog(text: "Sign out success"));
+                          const SuccessDialog(text: "Sign out success"));
                 } else {
                   showDialog<String>(
                       context: context,
@@ -91,7 +91,7 @@ class _SignOutDialog extends State<SignOutDialog> {
               showDialog<String>(
                   context: context,
                   builder: (BuildContext context) =>
-                      SuccessDialog(text: "Sign out success"));
+                      const SuccessDialog(text: "Sign out success"));
             }
           },
           child: Text("Sign Out", style: TextStyle(color: whitebg)),

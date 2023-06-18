@@ -10,6 +10,11 @@ List listAttachment = [];
 List<Map<String, dynamic>> listArchiveCheck = [];
 TabController tabController;
 
+//Schedule Page
+String archiveNameMsg = "";
+String archiveDescMsg = "";
+String allArchiveMsg = "";
+
 // Selected
 String selectedArchiveName;
 String selectedArchiveDesc;
@@ -25,6 +30,8 @@ String uploadedImageRegis;
 bool checkAvaiabilityRegis = false;
 bool isFinishedRegis = false;
 bool isWaiting = false;
+
+String checkMsg = "";
 
 String usernameAvaiabilityCheck = "";
 String emailAvaiabilityCheck = "";

@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class NoDataDialog extends StatelessWidget {
-  NoDataDialog({Key key, this.text}) : super(key: key);
-  String text;
+  const NoDataDialog({Key key, this.text}) : super(key: key);
+  final String text;
 
   @override
   Widget build(BuildContext context) {

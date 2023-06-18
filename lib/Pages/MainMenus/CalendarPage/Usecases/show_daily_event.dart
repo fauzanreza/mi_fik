@@ -17,10 +17,10 @@ class DayEvent extends StatefulWidget {
   const DayEvent({Key key}) : super(key: key);
 
   @override
-  _DayEvent createState() => _DayEvent();
+  StateDayEvent createState() => StateDayEvent();
 }
 
-class _DayEvent extends State<DayEvent> with TickerProviderStateMixin {
+class StateDayEvent extends State<DayEvent> with TickerProviderStateMixin {
   ContentQueriesService queryService;
   ContentCommandsService commandService;
 

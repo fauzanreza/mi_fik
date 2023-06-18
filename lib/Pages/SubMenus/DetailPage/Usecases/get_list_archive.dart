@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Services/commands.dart';
@@ -11,15 +12,17 @@ import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/index.dart';
 
 class ListArchive extends StatefulWidget {
-  ListArchive({Key key, this.archieves, this.passSlug}) : super(key: key);
-  var archieves;
-  String passSlug;
+  const ListArchive({Key key, this.archieves, this.passSlug, this.type})
+      : super(key: key);
+  final archieves;
+  final String passSlug;
+  final String type;
 
   @override
-  _ListArchive createState() => _ListArchive();
+  StateListArchive createState() => StateListArchive();
 }
 
-class _ListArchive extends State<ListArchive> {
+class StateListArchive extends State<ListArchive> {
   ArchiveCommandsService apiCommand;
 
   @override
@@ -60,7 +63,8 @@ class _ListArchive extends State<ListArchive> {
                       color: whitebg,
                       borderRadius: BorderRadius.all(roundedMd)),
                   child: ListView.builder(
-                      padding: EdgeInsets.zero,
+                      padding: EdgeInsets.symmetric(
+                          vertical: 0, horizontal: paddingXSM / 2),
                       itemCount: widget.archieves.length,
                       itemBuilder: (context, index) {
                         i++;
@@ -162,15 +166,21 @@ class _ListArchive extends State<ListArchive> {
                       //Validator
                       if (data.list != null) {
                         apiCommand
-                            .multiActionArchiveRel(data, widget.passSlug)
+                            .multiActionArchiveRel(
+                                data, widget.passSlug, widget.type)
                             .then((response) {
                           setState(() => isLoading = false);
                           var status = response[0]['message'];
                           var body = response[0]['body'];
 
                           if (status == "success") {
-                            Get.offAll(
-                                () => DetailPage(passSlug: widget.passSlug));
+                            if (widget.type == "Event") {
+                              Get.offAll(
+                                  () => DetailPage(passSlug: widget.passSlug));
+                            } else {
+                              Get.offAll(() => const BottomBar());
+                            }
+
                             showDialog<String>(
                                 barrierDismissible: true,
                                 barrierColor: primaryColor.withOpacity(0.5),
@@ -222,8 +232,10 @@ class _ListArchive extends State<ListArchive> {
                       } else {
                         showDialog<String>(
                             context: context,
-                            builder: (BuildContext context) => FailedDialog(
-                                text: "Nothing has changed", type: "editacc"));
+                            builder: (BuildContext context) =>
+                                const FailedDialog(
+                                    text: "Nothing has changed",
+                                    type: "editacc"));
                       }
                     },
                     style: ButtonStyle(

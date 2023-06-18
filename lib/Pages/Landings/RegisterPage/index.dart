@@ -20,20 +20,28 @@ import 'package:mi_fik/Pages/SubMenus/ManageRolePage/Usecases/post_selected_role
 import 'package:onboarding/onboarding.dart';
 
 class RegisterPage extends StatefulWidget {
-  RegisterPage({Key key, this.isLogged}) : super(key: key);
-  bool isLogged;
+  const RegisterPage({Key key, this.isLogged}) : super(key: key);
+  final bool isLogged;
 
   @override
-  _RegisterPage createState() => _RegisterPage();
+  StateRegisterPage createState() => StateRegisterPage();
 }
 
-class _RegisterPage extends State<RegisterPage> {
+class StateRegisterPage extends State<RegisterPage> {
   Widget materialButton;
 
   UserCommandsService apiService;
   UserQueriesService apiQuery;
 
   AuthCommandsService authService;
+
+  String checkMsg = "";
+  String passMsg = "";
+  String fnameMsg = "";
+  String lnameMsg = "";
+  String unameMsg = "";
+  String emailMsg = "";
+  String allMsg = "";
 
   @override
   void initState() {
@@ -52,8 +60,8 @@ class _RegisterPage extends State<RegisterPage> {
           if (selectedRole.isEmpty && !isChooseRole && indexRegis == 4) {
             showDialog<String>(
                 context: context,
-                builder: (BuildContext context) =>
-                    NoDataDialog(text: "You haven't selected any tag yet"));
+                builder: (BuildContext context) => const NoDataDialog(
+                    text: "You haven't selected any tag yet"));
           } else if (selectedRole.isNotEmpty &&
               !isChooseRole &&
               indexRegis == 4) {
@@ -101,6 +109,10 @@ class _RegisterPage extends State<RegisterPage> {
                     authService.postLogin(loginData, true).then((value) {
                       setIndex(indexRegis++);
                       setState(() {
+                        fnameMsg = "";
+                        lnameMsg = "";
+                        passMsg = "";
+                        allMsg = "";
                         isFillForm = true;
                       });
 
@@ -110,6 +122,39 @@ class _RegisterPage extends State<RegisterPage> {
                   } else {
                     setState(() {
                       isFillForm = false;
+                      if (body is! String) {
+                        if (body['first_name'] != null) {
+                          fnameMsg = body['first_name'][0];
+
+                          if (body['first_name'].length > 1) {
+                            for (String e in body['first_name']) {
+                              fnameMsg += e;
+                            }
+                          }
+                        }
+
+                        if (body['last_name'] != null) {
+                          fnameMsg = body['last_name'][0];
+
+                          if (body['last_name'].length > 1) {
+                            for (String e in body['last_name']) {
+                              lnameMsg += e;
+                            }
+                          }
+                        }
+
+                        if (body['password'] != null) {
+                          passMsg = body['password'][0];
+
+                          if (body['password'].length > 1) {
+                            for (String e in body['password']) {
+                              passMsg += e;
+                            }
+                          }
+                        }
+                      } else {
+                        allMsg = body;
+                      }
                     });
 
                     showDialog<String>(
@@ -121,27 +166,69 @@ class _RegisterPage extends State<RegisterPage> {
               }
             } else {
               if (checkAvaiabilityRegis) {
+                setState(() {
+                  unameMsg = "";
+                  emailMsg = "";
+                  if (fnameRegisCtrl.trim() == "") {
+                    fnameMsg = "First Name can't be empty";
+                  } else {
+                    fnameMsg = "";
+                  }
+                  if (lnameRegisCtrl.trim() == "") {
+                    lnameMsg = "Last Name can't be empty";
+                  } else {
+                    lnameMsg = "";
+                  }
+                  if (passRegisCtrl.trim() == "") {
+                    passMsg = "Password can't be empty";
+                  } else {
+                    passMsg = "";
+                  }
+                });
                 showDialog<String>(
                     context: context,
-                    builder: (BuildContext context) => FailedDialog(
+                    builder: (BuildContext context) => const FailedDialog(
                         text: "Please fill the remaining field",
                         type: "register"));
               } else {
+                if (usernameAvaiabilityCheck.trim() == "" ||
+                    emailAvaiabilityCheck.trim() == "") {
+                  setState(() {
+                    if (usernameAvaiabilityCheck.trim() == "") {
+                      unameMsg = "Username can't be empty";
+                    }
+                    if (emailAvaiabilityCheck.trim() == "") {
+                      emailMsg = "Email can't be empty";
+                    }
+                  });
+                } else {
+                  setState(() {
+                    unameMsg = "Username is invalid";
+                    emailMsg = "Email is invalid";
+                  });
+                }
+
                 showDialog<String>(
                     context: context,
-                    builder: (BuildContext context) => FailedDialog(
+                    builder: (BuildContext context) => const FailedDialog(
                         text: "Please register your account first",
                         type: "register"));
               }
             }
           } else if (!isCheckedRegister && indexRegis == 1) {
+            setState(() {
+              checkMsg = "You haven't accept the terms & condition";
+            });
             showDialog<String>(
                 context: context,
-                builder: (BuildContext context) => FailedDialog(
+                builder: (BuildContext context) => const FailedDialog(
                     text: "You haven't accept the terms & condition",
                     type: "register"));
           } else {
             setState(() {
+              if (isCheckedRegister) {
+                checkMsg = "";
+              }
               setIndex(indexRegis++);
             });
           }
@@ -226,14 +313,21 @@ class _RegisterPage extends State<RegisterPage> {
                 color: Colors.transparent,
               ),
             ),
-            child: const GetTerms()),
+            child: GetTerms(checkMsg: checkMsg)),
       ),
       PageModel(
         widget: DecoratedBox(
             decoration: BoxDecoration(
               border: Border.all(width: 0.0, color: Colors.transparent),
             ),
-            child: const SetProfileData()),
+            child: SetProfileData(
+              allMsg: allMsg,
+              fnameMsg: fnameMsg,
+              lnameMsg: lnameMsg,
+              emailMsg: emailMsg,
+              passMsg: passMsg,
+              unameMsg: unameMsg,
+            )),
       ),
       PageModel(
         widget: DecoratedBox(
