@@ -4,13 +4,15 @@ import 'package:intl/intl.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
-Widget getUploadDateWidget(date) {
+Widget getUploadDateWidget(DateTime date) {
   //Initial variable.
   final now = DateTime.now();
   final today = DateTime(now.year, now.month, now.day);
   final justNowHour = DateTime(now.hour);
   final justNowMinute = DateFormat("mm").format(now);
   final yesterday = DateTime(now.year, now.month, now.day - 1);
+  date = DateTime.parse(
+      getLocalConvertedDate(DateFormat('yyyy-MM-dd HH:mm:ss').format(date)));
   final content = DateTime(date.year, date.month, date.day);
   final contentHour = DateTime(date.hour);
   final contentMinute = DateFormat("mm").format(date);

@@ -9,6 +9,7 @@ import 'package:mi_fik/Components/Forms/input.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/command_tasks.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_tasks.dart';
+import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -53,7 +54,7 @@ class StateDetailTask extends State<DetailTask> {
     dateEndCtrl ??= DateTime.parse(widget.data.dateEnd);
 
     return SizedBox(
-        height: 580,
+        height: 630,
         width: fullWidth,
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(
@@ -230,10 +231,23 @@ class StateDetailTask extends State<DetailTask> {
                 SizedBox(
                   height: paddingMD,
                 ),
-                PostArchiveRelation(passSlug: widget.data.slugName, ctx: "Task")
+                PostArchiveRelation(
+                    passSlug: widget.data.slugName, ctx: "Task"),
               ],
             ),
           ),
+          Container(
+              padding: EdgeInsets.fromLTRB(paddingMD, paddingSM, 0, 0),
+              child: getSubTitleMedium(
+                  "Created At : ${getItemTimeString(widget.data.createdAt)}",
+                  greybg,
+                  TextAlign.left)),
+          Container(
+              padding: EdgeInsets.fromLTRB(paddingMD, paddingXSM, 0, 0),
+              child: getSubTitleMedium(
+                  "Last Updated : ${getItemTimeString(widget.data.updatedAt)}",
+                  greybg,
+                  TextAlign.left))
         ]));
   }
 }
