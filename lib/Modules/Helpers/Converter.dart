@@ -222,6 +222,19 @@ String getMessageResponseFromObject(val, type) {
           res += "${remindErr.join('\n')}";
         }
       }
+    } else if (type == "faq") {
+      if (val.containsKey('question_body')) {
+        var qbody = val['question_body'];
+        if (qbody != null) {
+          res += "${qbody.join('\n')}";
+        }
+      }
+      if (val.containsKey('question_type')) {
+        var qtype = val['question_type'];
+        if (qtype != null) {
+          res += "${qtype.join('\n')}";
+        }
+      }
     }
 
     return res;

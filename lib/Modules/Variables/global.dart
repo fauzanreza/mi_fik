@@ -10,6 +10,11 @@ List listAttachment = [];
 List<Map<String, dynamic>> listArchiveCheck = [];
 TabController tabController;
 
+//Schedule Page
+String archiveNameMsg = "";
+String archiveDescMsg = "";
+String allArchiveMsg = "";
+
 // Selected
 String selectedArchiveName;
 String selectedArchiveDesc;

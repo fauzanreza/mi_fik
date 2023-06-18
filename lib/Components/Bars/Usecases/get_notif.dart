@@ -15,6 +15,12 @@ class GetNotification extends StatefulWidget {
 class _GetNotification extends State<GetNotification>
     with TickerProviderStateMixin {
   NotificationQueriesService apiService;
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
+
+  Future<void> refreshData() async {
+    setState(() {});
+  }
 
   @override
   void initState() {
@@ -53,39 +59,45 @@ class _GetNotification extends State<GetNotification>
     //double fullHeight = MediaQuery.of(context).size.height;
     //double fullWidth = MediaQuery.of(context).size.width;
 
-    return Column(
-        children: notifs.map((notif) {
-      return Container(
-          margin: EdgeInsets.only(
-              bottom: paddingXSM, left: paddingSM, right: paddingSM),
-          padding: EdgeInsets.symmetric(vertical: paddingXSM),
-          decoration: BoxDecoration(
-            color: whitebg,
-            borderRadius: BorderRadius.all(roundedMd),
-          ),
-          child: ListTile(
-            title: Text(notif.notifTitle,
-                style: TextStyle(
-                    color: blackbg,
-                    fontWeight: FontWeight.bold,
-                    fontSize: textSM + 1)),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(notif.notifBody,
-                    style: TextStyle(color: blackbg, fontSize: textSM)),
-                const SizedBox(height: 5),
-                Text(getItemTimeString(notif.createdAt),
-                    style: TextStyle(color: greybg, fontSize: textSM))
-              ],
-            ),
-            trailing: IconButton(
-              icon: Icon(Icons.chevron_right_rounded,
-                  color: primaryColor, size: iconXL),
-              tooltip: 'See Detail',
-              onPressed: () {},
-            ),
-          ));
-    }).toList());
+    return RefreshIndicator(
+        key: _refreshIndicatorKey,
+        onRefresh: refreshData,
+        child: ListView.builder(
+            itemCount: notifs.length,
+            padding: EdgeInsets.symmetric(
+                vertical: paddingMD, horizontal: paddingXSM / 2),
+            itemBuilder: (context, index) {
+              return Container(
+                  margin: EdgeInsets.only(
+                      bottom: paddingXSM, left: paddingSM, right: paddingSM),
+                  padding: EdgeInsets.symmetric(vertical: paddingXSM),
+                  decoration: BoxDecoration(
+                    color: whitebg,
+                    borderRadius: BorderRadius.all(roundedMd),
+                  ),
+                  child: ListTile(
+                    title: Text(notifs[index].notifTitle,
+                        style: TextStyle(
+                            color: blackbg,
+                            fontWeight: FontWeight.bold,
+                            fontSize: textSM + 1)),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(notifs[index].notifBody,
+                            style: TextStyle(color: blackbg, fontSize: textSM)),
+                        const SizedBox(height: 5),
+                        Text(getItemTimeString(notifs[index].createdAt),
+                            style: TextStyle(color: greybg, fontSize: textSM))
+                      ],
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(Icons.chevron_right_rounded,
+                          color: primaryColor, size: iconXL),
+                      tooltip: 'See Detail',
+                      onPressed: () {},
+                    ),
+                  ));
+            }));
   }
 }

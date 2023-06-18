@@ -23,6 +23,6 @@ class _MyFAQPage extends State<MyFAQPage> {
           Get.to(() => const ProfilePage());
         }),
         body: const GetMyFAQ(),
-        floatingActionButton: const PostQuestion());
+        floatingActionButton: PostQuestion(from: "myfaq"));
   }
 }
