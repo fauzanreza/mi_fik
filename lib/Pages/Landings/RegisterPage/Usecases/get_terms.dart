@@ -9,10 +9,10 @@ class GetTerms extends StatefulWidget {
   String checkMsg;
 
   @override
-  _GetTerms createState() => _GetTerms();
+  StateGetTerms createState() => StateGetTerms();
 }
 
-class _GetTerms extends State<GetTerms> {
+class StateGetTerms extends State<GetTerms> {
   Color getColor(Set<MaterialState> states) {
     const Set<MaterialState> interactiveStates = <MaterialState>{
       MaterialState.pressed,

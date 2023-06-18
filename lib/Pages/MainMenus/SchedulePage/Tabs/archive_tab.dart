@@ -13,10 +13,10 @@ class ArchivePage extends StatefulWidget {
   const ArchivePage({Key key}) : super(key: key);
 
   @override
-  _ArchivePage createState() => _ArchivePage();
+  StateArchivePage createState() => StateArchivePage();
 }
 
-class _ArchivePage extends State<ArchivePage> {
+class StateArchivePage extends State<ArchivePage> {
   ArchiveQueriesService apiService;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();

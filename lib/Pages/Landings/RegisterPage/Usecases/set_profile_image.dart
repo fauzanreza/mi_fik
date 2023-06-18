@@ -18,10 +18,10 @@ class SetProfileImage extends StatefulWidget {
   const SetProfileImage({Key key}) : super(key: key);
 
   @override
-  _SetProfileImage createState() => _SetProfileImage();
+  StateSetProfileImage createState() => StateSetProfileImage();
 }
 
-class _SetProfileImage extends State<SetProfileImage> {
+class StateSetProfileImage extends State<SetProfileImage> {
   PostImage fireServicePost;
   DeleteImage fireServiceDelete;
   UserCommandsService commandService;

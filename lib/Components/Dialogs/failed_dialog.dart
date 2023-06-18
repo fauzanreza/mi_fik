@@ -9,10 +9,10 @@ class FailedDialog extends StatefulWidget {
   String type;
 
   @override
-  _FailedDialog createState() => _FailedDialog();
+  StateFailedDialog createState() => StateFailedDialog();
 }
 
-class _FailedDialog extends State<FailedDialog> {
+class StateFailedDialog extends State<FailedDialog> {
   @override
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;

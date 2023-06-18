@@ -14,10 +14,10 @@ class DeleteArchive extends StatefulWidget {
   String name;
 
   @override
-  _DeleteArchive createState() => _DeleteArchive();
+  StateDeleteArchive createState() => StateDeleteArchive();
 }
 
-class _DeleteArchive extends State<DeleteArchive> {
+class StateDeleteArchive extends State<DeleteArchive> {
   ArchiveCommandsService apiService;
 
   @override

@@ -23,10 +23,11 @@ class GetHomePageEventContainer extends StatefulWidget {
   var servc;
 
   @override
-  _GetHomePageEventContainer createState() => _GetHomePageEventContainer();
+  StateGetHomePageEventContainer createState() =>
+      StateGetHomePageEventContainer();
 }
 
-class _GetHomePageEventContainer extends State<GetHomePageEventContainer> {
+class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
   Widget getUsername(u1, u2) {
     String username = " ";
     if (u1 != null) {
@@ -242,7 +243,7 @@ class GetScheduleContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double fullWidth = MediaQuery.of(context).size.width;
+    //double fullWidth = MediaQuery.of(context).size.width;
 
     return Container(
       width: width * 0.82,
@@ -341,10 +342,10 @@ class GetAttachmentContainer extends StatefulWidget {
   var action;
 
   @override
-  _GetAttachmentContainer createState() => _GetAttachmentContainer();
+  StateGetAttachmentContainer createState() => StateGetAttachmentContainer();
 }
 
-class _GetAttachmentContainer extends State<GetAttachmentContainer> {
+class StateGetAttachmentContainer extends State<GetAttachmentContainer> {
   var attachmentNameCtrl = TextEditingController();
   var attachmentURLCtrl = TextEditingController();
 

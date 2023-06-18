@@ -9,10 +9,10 @@ class GetSavedStatus extends StatefulWidget {
   String ctx;
 
   @override
-  _GetSavedStatus createState() => _GetSavedStatus();
+  StateGetSavedStatus createState() => StateGetSavedStatus();
 }
 
-class _GetSavedStatus extends State<GetSavedStatus> {
+class StateGetSavedStatus extends State<GetSavedStatus> {
   ArchiveQueriesService apiService;
   bool found = false;
 
@@ -58,7 +58,7 @@ class _GetSavedStatus extends State<GetSavedStatus> {
 
   Widget _buildListView(List<ArchiveModel> archieves) {
     //double fullHeight = MediaQuery.of(context).size.height;
-    double fullWidth = MediaQuery.of(context).size.width;
+    //double fullWidth = MediaQuery.of(context).size.width;
 
     if (found) {
       return Container(

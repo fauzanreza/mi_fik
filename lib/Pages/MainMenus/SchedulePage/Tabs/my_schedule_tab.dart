@@ -18,10 +18,10 @@ class MySchedulePage extends StatefulWidget {
   const MySchedulePage({Key key}) : super(key: key);
 
   @override
-  _MySchedulePage createState() => _MySchedulePage();
+  StateMySchedulePage createState() => StateMySchedulePage();
 }
 
-class _MySchedulePage extends State<MySchedulePage> {
+class StateMySchedulePage extends State<MySchedulePage> {
   ContentQueriesService queryService;
   ContentCommandsService commandService;
 

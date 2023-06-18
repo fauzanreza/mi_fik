@@ -11,10 +11,10 @@ class TagSelectedArea extends StatefulWidget {
   final Function action;
 
   @override
-  _TagSelectedArea createState() => _TagSelectedArea();
+  StateTagSelectedArea createState() => StateTagSelectedArea();
 }
 
-class _TagSelectedArea extends State<TagSelectedArea> {
+class StateTagSelectedArea extends State<TagSelectedArea> {
   @override
   Widget build(BuildContext context) {
     double fullWidth = MediaQuery.of(context).size.width;

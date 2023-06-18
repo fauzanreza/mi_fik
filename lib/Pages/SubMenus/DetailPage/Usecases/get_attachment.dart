@@ -12,10 +12,10 @@ class AttachButton extends StatefulWidget {
   List passAttach;
 
   @override
-  _AttachButton createState() => _AttachButton();
+  StateAttachButton createState() => StateAttachButton();
 }
 
-class _AttachButton extends State<AttachButton> {
+class StateAttachButton extends State<AttachButton> {
   @override
   Widget build(BuildContext context) {
     double fullWidth = MediaQuery.of(context).size.width;

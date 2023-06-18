@@ -16,10 +16,10 @@ class SetLocation extends StatefulWidget {
   TextEditingController locDetailCtrl;
 
   @override
-  _SetLocation createState() => _SetLocation();
+  StateSetLocation createState() => StateSetLocation();
 }
 
-class _SetLocation extends State<SetLocation>
+class StateSetLocation extends State<SetLocation>
     with SingleTickerProviderStateMixin {
   //Initial variable.
   //_MapsPageState(passIdFakses);

@@ -295,7 +295,7 @@ Widget getInputWarning(String text) {
           ),
         ));
   } else {
-    return SizedBox();
+    return const SizedBox();
   }
 }
 

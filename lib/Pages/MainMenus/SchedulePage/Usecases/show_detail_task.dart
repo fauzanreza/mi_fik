@@ -21,10 +21,10 @@ class DetailTask extends StatefulWidget {
   var data;
 
   @override
-  _DetailTask createState() => _DetailTask();
+  StateDetailTask createState() => StateDetailTask();
 }
 
-class _DetailTask extends State<DetailTask> {
+class StateDetailTask extends State<DetailTask> {
   TaskCommandsService taskService;
 
   //Initial variable
@@ -152,7 +152,6 @@ class _DetailTask extends State<DetailTask> {
                     icon: Icon(Icons.delete, color: dangerColor),
                     tooltip: 'Delete Task',
                     onPressed: () {
-                      String id = widget.data.id;
                       Get.back();
 
                       showDialog<String>(

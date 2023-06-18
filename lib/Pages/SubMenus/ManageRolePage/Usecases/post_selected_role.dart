@@ -18,10 +18,10 @@ class PostSelectedRole extends StatefulWidget {
   bool isLogged;
 
   @override
-  _PostSelectedRole createState() => _PostSelectedRole();
+  StatePostSelectedRole createState() => StatePostSelectedRole();
 }
 
-class _PostSelectedRole extends State<PostSelectedRole> {
+class StatePostSelectedRole extends State<PostSelectedRole> {
   UserCommandsService apiService;
 
   @override

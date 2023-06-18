@@ -18,10 +18,10 @@ class LocationButton extends StatefulWidget {
   final String passSlugName;
 
   @override
-  _LocationButton createState() => _LocationButton();
+  StateLocationButton createState() => StateLocationButton();
 }
 
-class _LocationButton extends State<LocationButton>
+class StateLocationButton extends State<LocationButton>
     with SingleTickerProviderStateMixin {
   //Initial variable.
   //_MapsPageState(passIdFakses);

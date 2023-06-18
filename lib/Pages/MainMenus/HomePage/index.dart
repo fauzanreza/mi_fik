@@ -24,10 +24,10 @@ class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
 
   @override
-  _HomePage createState() => _HomePage();
+  StateHomePage createState() => StateHomePage();
 }
 
-class _HomePage extends State<HomePage> {
+class StateHomePage extends State<HomePage> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   int page = 1;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =

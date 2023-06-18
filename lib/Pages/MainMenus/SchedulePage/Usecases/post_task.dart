@@ -18,10 +18,10 @@ class PostTask extends StatefulWidget {
   String text;
 
   @override
-  _PostTask createState() => _PostTask();
+  StatePostTask createState() => StatePostTask();
 }
 
-class _PostTask extends State<PostTask> {
+class StatePostTask extends State<PostTask> {
   TaskCommandsService taskService;
 
   final taskTitleCtrl = TextEditingController();

@@ -15,10 +15,10 @@ class DayHeader extends StatefulWidget {
   DateTime selectedDay;
 
   @override
-  _DayHeader createState() => _DayHeader();
+  StateDayHeader createState() => StateDayHeader();
 }
 
-class _DayHeader extends State<DayHeader> with TickerProviderStateMixin {
+class StateDayHeader extends State<DayHeader> with TickerProviderStateMixin {
   ContentQueriesService apiService;
 
   @override

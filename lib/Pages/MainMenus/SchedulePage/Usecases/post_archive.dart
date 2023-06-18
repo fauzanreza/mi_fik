@@ -16,10 +16,10 @@ class PostArchive extends StatefulWidget {
   String text;
 
   @override
-  _PostArchive createState() => _PostArchive();
+  StatePostArchive createState() => StatePostArchive();
 }
 
-class _PostArchive extends State<PostArchive> {
+class StatePostArchive extends State<PostArchive> {
   ArchiveCommandsService archiveService;
   final archiveNameCtrl = TextEditingController();
   final archiveDescCtrl = TextEditingController();

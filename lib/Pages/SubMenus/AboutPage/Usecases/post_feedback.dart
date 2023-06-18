@@ -16,10 +16,10 @@ class PostFeedback extends StatefulWidget {
   const PostFeedback({Key key}) : super(key: key);
 
   @override
-  _PostFeedback createState() => _PostFeedback();
+  StatePostFeedback createState() => StatePostFeedback();
 }
 
-class _PostFeedback extends State<PostFeedback> {
+class StatePostFeedback extends State<PostFeedback> {
   FeedbackCommandsService apiService;
   final fbBodyCtrl = TextEditingController();
   int rateCtrl;

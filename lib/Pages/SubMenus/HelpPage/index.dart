@@ -9,10 +9,10 @@ class HelpPage extends StatefulWidget {
   const HelpPage({Key key}) : super(key: key);
 
   @override
-  _HelpPage createState() => _HelpPage();
+  StateHelpPage createState() => StateHelpPage();
 }
 
-class _HelpPage extends State<HelpPage> {
+class StateHelpPage extends State<HelpPage> {
   @override
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;

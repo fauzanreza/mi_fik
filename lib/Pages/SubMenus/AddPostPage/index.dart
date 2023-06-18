@@ -27,10 +27,10 @@ class AddPost extends StatefulWidget {
   const AddPost({Key key}) : super(key: key);
 
   @override
-  _AddPost createState() => _AddPost();
+  StateAddPost createState() => StateAddPost();
 }
 
-class _AddPost extends State<AddPost> {
+class StateAddPost extends State<AddPost> {
   String result = '';
 
   ContentCommandsService apiCommand;

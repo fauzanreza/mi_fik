@@ -19,10 +19,10 @@ class ListArchive extends StatefulWidget {
   String type;
 
   @override
-  _ListArchive createState() => _ListArchive();
+  StateListArchive createState() => StateListArchive();
 }
 
-class _ListArchive extends State<ListArchive> {
+class StateListArchive extends State<ListArchive> {
   ArchiveCommandsService apiCommand;
 
   @override

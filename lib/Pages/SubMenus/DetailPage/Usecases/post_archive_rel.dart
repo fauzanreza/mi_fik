@@ -15,10 +15,10 @@ class PostArchiveRelation extends StatefulWidget {
   var margin;
 
   @override
-  _PostArchiveRelation createState() => _PostArchiveRelation();
+  StatePostArchiveRelation createState() => StatePostArchiveRelation();
 }
 
-class _PostArchiveRelation extends State<PostArchiveRelation> {
+class StatePostArchiveRelation extends State<PostArchiveRelation> {
   ArchiveQueriesService apiService;
 
   @override
@@ -43,9 +43,9 @@ class _PostArchiveRelation extends State<PostArchiveRelation> {
           } else if (snapshot.connectionState == ConnectionState.done) {
             List<ArchiveModel> archieves = snapshot.data;
             listArchiveCheck = [];
-            archieves.forEach((e) {
+            for (var e in archieves) {
               listArchiveCheck.add({"slug_name": e.slug, "check": e.found});
-            });
+            }
             return _buildListView(archieves);
           } else {
             return const Center(

@@ -23,10 +23,11 @@ class SavedContent extends StatefulWidget {
   String desc;
 
   @override
-  _SavedContent createState() => _SavedContent();
+  StateSavedContent createState() => StateSavedContent();
 }
 
-class _SavedContent extends State<SavedContent> with TickerProviderStateMixin {
+class StateSavedContent extends State<SavedContent>
+    with TickerProviderStateMixin {
   ArchiveQueriesService queryService;
   ContentCommandsService commandService;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =

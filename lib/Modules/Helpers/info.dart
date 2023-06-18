@@ -1,12 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mi_fik/Modules/APIs/SystemApi/Models/query_info.dart';
 import 'package:mi_fik/Modules/APIs/SystemApi/Services/query_info.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
-import 'package:get/get.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class GetInfoBox extends StatefulWidget {
@@ -15,10 +12,10 @@ class GetInfoBox extends StatefulWidget {
   String location;
 
   @override
-  _GetInfoBox createState() => _GetInfoBox();
+  StateGetInfoBox createState() => StateGetInfoBox();
 }
 
-class _GetInfoBox extends State<GetInfoBox> {
+class StateGetInfoBox extends State<GetInfoBox> {
   InfoQueriesService apiQuery;
 
   @override

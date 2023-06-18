@@ -17,10 +17,10 @@ class EditArchive extends StatefulWidget {
   String archiveDesc;
 
   @override
-  _EditArchive createState() => _EditArchive();
+  StateEditArchive createState() => StateEditArchive();
 }
 
-class _EditArchive extends State<EditArchive> {
+class StateEditArchive extends State<EditArchive> {
   ArchiveCommandsService apiService;
   final archiveNameCtrl = TextEditingController();
   final archiveDescCtrl = TextEditingController();

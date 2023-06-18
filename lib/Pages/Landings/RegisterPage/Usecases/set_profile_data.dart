@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
@@ -7,7 +5,6 @@ import 'package:mi_fik/Modules/APIs/AuthApi/Services/commands.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SetProfileData extends StatefulWidget {
   SetProfileData(
@@ -27,10 +24,10 @@ class SetProfileData extends StatefulWidget {
   String emailMsg = "";
 
   @override
-  _SetProfileData createState() => _SetProfileData();
+  StateSetProfileData createState() => StateSetProfileData();
 }
 
-class _SetProfileData extends State<SetProfileData> {
+class StateSetProfileData extends State<SetProfileData> {
   AuthCommandsService apiService;
 
   @override
@@ -107,22 +104,22 @@ class _SetProfileData extends State<SetProfileData> {
       }
     }
 
-    Future<ProfileData> getToken() async {
-      final prefs = await SharedPreferences.getInstance();
-      if (isFillForm) {
-        final data = jsonDecode(prefs.getString('profile_data_key'));
-        return ProfileData(
-            username: data['username'],
-            email: data['email'],
-            pass: data['password'],
-            image: data['image_url'],
-            fname: data['first_name'],
-            lname: data['last_name']);
-      } else {
-        return ProfileData(
-            username: "", email: "", pass: "", image: "", fname: "", lname: "");
-      }
-    }
+    // Future<ProfileData> getToken() async {
+    //   final prefs = await SharedPreferences.getInstance();
+    //   if (isFillForm) {
+    //     final data = jsonDecode(prefs.getString('profile_data_key'));
+    //     return ProfileData(
+    //         username: data['username'],
+    //         email: data['email'],
+    //         pass: data['password'],
+    //         image: data['image_url'],
+    //         fname: data['first_name'],
+    //         lname: data['last_name']);
+    //   } else {
+    //     return ProfileData(
+    //         username: "", email: "", pass: "", image: "", fname: "", lname: "");
+    //   }
+    // }
 
     //return
     // FutureBuilder<ProfileData>(

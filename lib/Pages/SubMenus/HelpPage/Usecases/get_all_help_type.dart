@@ -10,10 +10,10 @@ class GetAllHelpType extends StatefulWidget {
   const GetAllHelpType({Key key}) : super(key: key);
 
   @override
-  _GetAllHelpType createState() => _GetAllHelpType();
+  StateGetAllHelpType createState() => StateGetAllHelpType();
 }
 
-class _GetAllHelpType extends State<GetAllHelpType> {
+class StateGetAllHelpType extends State<GetAllHelpType> {
   HelpQueriesService apiQuery;
 
   @override

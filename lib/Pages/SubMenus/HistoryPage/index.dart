@@ -7,10 +7,10 @@ class HistoryPage extends StatefulWidget {
   const HistoryPage({Key key}) : super(key: key);
 
   @override
-  _HistoryPage createState() => _HistoryPage();
+  StateHistoryPage createState() => StateHistoryPage();
 }
 
-class _HistoryPage extends State<HistoryPage> {
+class StateHistoryPage extends State<HistoryPage> {
   @override
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;

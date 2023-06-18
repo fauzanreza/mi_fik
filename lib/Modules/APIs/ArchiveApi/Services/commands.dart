@@ -156,7 +156,6 @@ class ArchiveCommandsService {
         {"message": "failed", "body": responseData['result']}
       ];
     } else {
-      print(responseData);
       return [
         {"message": "failed", "body": "Unknown error"}
       ];

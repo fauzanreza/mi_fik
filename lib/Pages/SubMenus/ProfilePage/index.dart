@@ -16,10 +16,10 @@ class ProfilePage extends StatefulWidget {
   const ProfilePage({Key key}) : super(key: key);
 
   @override
-  _ProfilePage createState() => _ProfilePage();
+  StateProfilePage createState() => StateProfilePage();
 }
 
-class _ProfilePage extends State<ProfilePage> {
+class StateProfilePage extends State<ProfilePage> {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 

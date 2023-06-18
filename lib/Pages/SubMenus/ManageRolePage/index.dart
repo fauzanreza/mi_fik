@@ -15,10 +15,10 @@ class RolePage extends StatefulWidget {
   const RolePage({Key key}) : super(key: key);
 
   @override
-  _RolePage createState() => _RolePage();
+  StateRolePage createState() => StateRolePage();
 }
 
-class _RolePage extends State<RolePage> {
+class StateRolePage extends State<RolePage> {
   UserQueriesService apiQuery;
 
   @override

@@ -12,10 +12,10 @@ class GetMyFAQ extends StatefulWidget {
   const GetMyFAQ({Key key}) : super(key: key);
 
   @override
-  _GetMyFAQ createState() => _GetMyFAQ();
+  StateGetMyFAQ createState() => StateGetMyFAQ();
 }
 
-class _GetMyFAQ extends State<GetMyFAQ> {
+class StateGetMyFAQ extends State<GetMyFAQ> {
   QuestionQueriesService apiQuery;
   int page = 1;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =

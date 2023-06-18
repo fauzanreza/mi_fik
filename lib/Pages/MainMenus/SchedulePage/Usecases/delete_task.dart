@@ -12,10 +12,10 @@ class DeleteTask extends StatefulWidget {
   String name;
 
   @override
-  _DeleteTask createState() => _DeleteTask();
+  StateDeleteTask createState() => StateDeleteTask();
 }
 
-class _DeleteTask extends State<DeleteTask> {
+class StateDeleteTask extends State<DeleteTask> {
   TaskCommandsService taskService;
 
   @override

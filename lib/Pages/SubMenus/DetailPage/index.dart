@@ -19,10 +19,10 @@ class DetailPage extends StatefulWidget {
   final String passSlug;
 
   @override
-  _DetailPage createState() => _DetailPage();
+  StateDetailPage createState() => StateDetailPage();
 }
 
-class _DetailPage extends State<DetailPage> {
+class StateDetailPage extends State<DetailPage> {
   ContentQueriesService apiQuery;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();

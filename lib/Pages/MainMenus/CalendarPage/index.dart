@@ -13,10 +13,10 @@ class CalendarPage extends StatefulWidget {
   const CalendarPage({Key key}) : super(key: key);
 
   @override
-  _CalendarPageState createState() => _CalendarPageState();
+  StateCalendarPageState createState() => StateCalendarPageState();
 }
 
-class _CalendarPageState extends State<CalendarPage> {
+class StateCalendarPageState extends State<CalendarPage> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();

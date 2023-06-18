@@ -9,10 +9,10 @@ class GetAllQuestion extends StatefulWidget {
   const GetAllQuestion({Key key}) : super(key: key);
 
   @override
-  _GetAllQuestion createState() => _GetAllQuestion();
+  StateGetAllQuestion createState() => StateGetAllQuestion();
 }
 
-class _GetAllQuestion extends State<GetAllQuestion> {
+class StateGetAllQuestion extends State<GetAllQuestion> {
   QuestionQueriesService apiQuery;
 
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =

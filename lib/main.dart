@@ -71,10 +71,10 @@ class MyApp extends StatefulWidget {
   bool finishRegis;
 
   @override
-  _MyApp createState() => _MyApp();
+  StateMyApp createState() => StateMyApp();
 }
 
-class _MyApp extends State<MyApp> {
+class StateMyApp extends State<MyApp> {
   DictionaryQueryService dctService;
   UserCommandsService userService;
 

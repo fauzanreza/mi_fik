@@ -9,10 +9,10 @@ class AttachmentDocPage extends StatefulWidget {
   String url;
 
   @override
-  _AttachmentDocPage createState() => _AttachmentDocPage();
+  StateAttachmentDocPage createState() => StateAttachmentDocPage();
 }
 
-class _AttachmentDocPage extends State<AttachmentDocPage> {
+class StateAttachmentDocPage extends State<AttachmentDocPage> {
   @override
   Widget build(BuildContext context) {
     final pdfController = PdfController(

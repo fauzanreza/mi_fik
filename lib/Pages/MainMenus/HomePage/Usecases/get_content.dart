@@ -19,10 +19,10 @@ class GetContent extends StatefulWidget {
   int page;
 
   @override
-  _GetContent createState() => _GetContent();
+  StateGetContent createState() => StateGetContent();
 }
 
-class _GetContent extends State<GetContent> with TickerProviderStateMixin {
+class StateGetContent extends State<GetContent> with TickerProviderStateMixin {
   ContentQueriesService queryService;
   ContentCommandsService commandService;
 

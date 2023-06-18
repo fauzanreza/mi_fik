@@ -9,10 +9,10 @@ class GetAllTagByCategory extends StatefulWidget {
   String slug;
 
   @override
-  _GetAllTagByCategory createState() => _GetAllTagByCategory();
+  StateGetAllTagByCategory createState() => StateGetAllTagByCategory();
 }
 
-class _GetAllTagByCategory extends State<GetAllTagByCategory> {
+class StateGetAllTagByCategory extends State<GetAllTagByCategory> {
   TagQueriesService apiQuery;
 
   @override

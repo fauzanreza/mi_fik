@@ -20,10 +20,10 @@ class SetControl extends StatefulWidget {
   final TextEditingController titleCtrl;
 
   @override
-  _SetControl createState() => _SetControl();
+  StateSetControl createState() => StateSetControl();
 }
 
-class _SetControl extends State<SetControl> {
+class StateSetControl extends State<SetControl> {
   Future<Role> getToken() async {
     final prefs = await SharedPreferences.getInstance();
     final roles = prefs.getString('role_list_key');

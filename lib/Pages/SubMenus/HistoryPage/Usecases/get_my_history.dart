@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:mi_fik/Components/Container/nodata.dart';
 
 import 'package:mi_fik/Modules/APIs/SystemApi/Models/query_history.dart';
@@ -11,10 +10,10 @@ class GetMyHistory extends StatefulWidget {
   const GetMyHistory({Key key}) : super(key: key);
 
   @override
-  _GetMyHistory createState() => _GetMyHistory();
+  StateGetMyHistory createState() => StateGetMyHistory();
 }
 
-class _GetMyHistory extends State<GetMyHistory> {
+class StateGetMyHistory extends State<GetMyHistory> {
   HistoryQueriesService apiQuery;
   int page = 1;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
@@ -51,7 +50,7 @@ class _GetMyHistory extends State<GetMyHistory> {
               List<HistoryModel> contents = snapshot.data;
               return _buildListView(contents);
             } else {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             }
@@ -63,7 +62,7 @@ class _GetMyHistory extends State<GetMyHistory> {
 
   Widget _buildListView(List<HistoryModel> contents) {
     // double fullHeight = MediaQuery.of(context).size.height;
-    double fullWidth = MediaQuery.of(context).size.width;
+    //double fullWidth = MediaQuery.of(context).size.width;
 
     if (contents != null) {
       return ListView.builder(

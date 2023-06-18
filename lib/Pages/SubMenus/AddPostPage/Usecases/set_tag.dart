@@ -11,10 +11,10 @@ class ChooseTag extends StatefulWidget {
   const ChooseTag({Key key}) : super(key: key);
 
   @override
-  _ChooseTag createState() => _ChooseTag();
+  StateChooseTag createState() => StateChooseTag();
 }
 
-class _ChooseTag extends State<ChooseTag> {
+class StateChooseTag extends State<ChooseTag> {
   int pageTag = 1;
 
   Future<Role> getToken() async {

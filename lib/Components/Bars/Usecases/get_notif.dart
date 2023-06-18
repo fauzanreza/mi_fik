@@ -9,10 +9,10 @@ class GetNotification extends StatefulWidget {
   const GetNotification({Key key}) : super(key: key);
 
   @override
-  _GetNotification createState() => _GetNotification();
+  StateGetNotification createState() => StateGetNotification();
 }
 
-class _GetNotification extends State<GetNotification>
+class StateGetNotification extends State<GetNotification>
     with TickerProviderStateMixin {
   NotificationQueriesService apiService;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =

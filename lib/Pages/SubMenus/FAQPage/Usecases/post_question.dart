@@ -17,10 +17,10 @@ class PostQuestion extends StatefulWidget {
   String from;
 
   @override
-  _PostQuestion createState() => _PostQuestion();
+  StatePostQuestion createState() => StatePostQuestion();
 }
 
-class _PostQuestion extends State<PostQuestion> {
+class StatePostQuestion extends State<PostQuestion> {
   QuestionCommandsService apiService;
   String qbodyMsg = "";
   String qtypeMsg = "";

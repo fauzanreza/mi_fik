@@ -8,10 +8,10 @@ class AboutPage extends StatefulWidget {
   const AboutPage({Key key}) : super(key: key);
 
   @override
-  _AboutPage createState() => _AboutPage();
+  StateAboutPage createState() => StateAboutPage();
 }
 
-class _AboutPage extends State<AboutPage> {
+class StateAboutPage extends State<AboutPage> {
   @override
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;

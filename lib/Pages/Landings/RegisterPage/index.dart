@@ -24,10 +24,10 @@ class RegisterPage extends StatefulWidget {
   bool isLogged;
 
   @override
-  _RegisterPage createState() => _RegisterPage();
+  StateRegisterPage createState() => StateRegisterPage();
 }
 
-class _RegisterPage extends State<RegisterPage> {
+class StateRegisterPage extends State<RegisterPage> {
   Widget materialButton;
 
   UserCommandsService apiService;

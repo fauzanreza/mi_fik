@@ -32,7 +32,7 @@ class RightBar extends StatelessWidget {
                             color: whitebg,
                             fontSize: textLG,
                             fontWeight: FontWeight.w500))),
-                Expanded(
+                const Expanded(
                   child: GetNotification(),
                 )
               ],
