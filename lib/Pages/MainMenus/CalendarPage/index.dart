@@ -18,6 +18,8 @@ class CalendarPage extends StatefulWidget {
 
 class _CalendarPageState extends State<CalendarPage> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
 
   CalendarFormat format = CalendarFormat.month;
   DateTime selectedDay = slctCalendar;
@@ -42,6 +44,10 @@ class _CalendarPageState extends State<CalendarPage> {
     );
   }
 
+  Future<void> refreshData() async {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     double fullHeight = MediaQuery.of(context).size.height;
@@ -56,24 +62,27 @@ class _CalendarPageState extends State<CalendarPage> {
           drawer: const LeftBar(),
           drawerScrimColor: primaryColor.withOpacity(0.35),
           endDrawer: const RightBar(),
-          body: ListView(
-            padding: EdgeInsets.only(top: fullHeight * 0.04),
-            children: [
-              showSideBar(scaffoldKey, primaryColor),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+          body: RefreshIndicator(
+              key: _refreshIndicatorKey,
+              onRefresh: refreshData,
+              child: ListView(
+                padding: EdgeInsets.only(top: fullHeight * 0.04),
                 children: [
-                  ShowCalendar(
-                    active: selectedDay,
-                    format: format,
-                    setActionday: updateDay,
-                    setActionformat: updateFormat,
+                  showSideBar(scaffoldKey, primaryColor),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      ShowCalendar(
+                        active: selectedDay,
+                        format: format,
+                        setActionday: updateDay,
+                        setActionformat: updateFormat,
+                      ),
+                      DayHeader(selectedDay: selectedDay),
+                    ],
                   ),
-                  DayHeader(selectedDay: selectedDay),
                 ],
-              ),
-            ],
-          )),
+              ))),
     );
   }
 }

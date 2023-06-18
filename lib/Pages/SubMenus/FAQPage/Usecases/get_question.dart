@@ -15,6 +15,13 @@ class GetAllQuestion extends StatefulWidget {
 class _GetAllQuestion extends State<GetAllQuestion> {
   QuestionQueriesService apiQuery;
 
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
+
+  Future<void> refreshData() async {
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
@@ -24,27 +31,30 @@ class _GetAllQuestion extends State<GetAllQuestion> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      maintainBottomViewPadding: false,
-      child: FutureBuilder(
-        future: apiQuery.getActiveFAQ(),
-        builder: (BuildContext context,
-            AsyncSnapshot<List<QuestionBodyModel>> snapshot) {
-          if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                  "Something wrong with message: ${snapshot.error.toString()}"),
-            );
-          } else if (snapshot.connectionState == ConnectionState.done) {
-            List<QuestionBodyModel> contents = snapshot.data;
-            return _buildListView(contents);
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
-      ),
-    );
+        maintainBottomViewPadding: false,
+        child: RefreshIndicator(
+          key: _refreshIndicatorKey,
+          onRefresh: refreshData,
+          child: FutureBuilder(
+            future: apiQuery.getActiveFAQ(),
+            builder: (BuildContext context,
+                AsyncSnapshot<List<QuestionBodyModel>> snapshot) {
+              if (snapshot.hasError) {
+                return Center(
+                  child: Text(
+                      "Something wrong with message: ${snapshot.error.toString()}"),
+                );
+              } else if (snapshot.connectionState == ConnectionState.done) {
+                List<QuestionBodyModel> contents = snapshot.data;
+                return _buildListView(contents);
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            },
+          ),
+        ));
   }
 
   Widget _buildListView(List<QuestionBodyModel> contents) {

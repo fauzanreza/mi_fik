@@ -26,6 +26,8 @@ class SchedulePage extends StatefulWidget {
 
 class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
   LangCtrl langctrl = Get.put(LangCtrl());
 
   getStartIndex(String slug) {
@@ -71,6 +73,10 @@ class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
     }
   }
 
+  Future<void> refreshData() async {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     double fullHeight = MediaQuery.of(context).size.height;
@@ -91,45 +97,50 @@ class _SchedulePage extends State<SchedulePage> with TickerProviderStateMixin {
             drawer: const LeftBar(),
             drawerScrimColor: primaryColor.withOpacity(0.35),
             endDrawer: const RightBar(),
-            body: ListView(
-                padding:
-                    EdgeInsets.only(top: fullHeight * 0.04), //Check this!!!
-                children: [
-                  showSideBar(scaffoldKey, primaryColor),
-                  // Container(
-                  //   padding: const EdgeInsets.all(10),
-                  //   child: Row(
-                  //       crossAxisAlignment: CrossAxisAlignment.end,
-                  //       children: [
-                  //         getGreeting(getToday("part"), primaryColor),
-                  //         const Spacer(),
-                  //         getSubTitleMedium(
-                  //             getToday("date"), blackbg, TextAlign.start)
-                  //       ]),
-                  // ),
-                  GetWeeklyNavigator(active: slctSchedule, action: navigateDay),
-                  TabBar(
-                      controller: tabController,
-                      labelColor: greybg,
-                      indicatorColor: primaryColor,
-                      labelStyle: TextStyle(
-                          fontSize: textMD, fontWeight: FontWeight.w500),
-                      indicatorPadding:
-                          EdgeInsets.symmetric(horizontal: fullWidth * 0.1),
-                      tabs: List.generate(tabColSchedule.length, (index) {
-                        return Tab(text: tabColSchedule[index]['title']);
-                      })),
+            body: RefreshIndicator(
+                key: _refreshIndicatorKey,
+                onRefresh: refreshData,
+                child: ListView(
+                    padding:
+                        EdgeInsets.only(top: fullHeight * 0.04), //Check this!!!
+                    children: [
+                      showSideBar(scaffoldKey, primaryColor),
+                      // Container(
+                      //   padding: const EdgeInsets.all(10),
+                      //   child: Row(
+                      //       crossAxisAlignment: CrossAxisAlignment.end,
+                      //       children: [
+                      //         getGreeting(getToday("part"), primaryColor),
+                      //         const Spacer(),
+                      //         getSubTitleMedium(
+                      //             getToday("date"), blackbg, TextAlign.start)
+                      //       ]),
+                      // ),
+                      GetWeeklyNavigator(
+                          active: slctSchedule, action: navigateDay),
+                      TabBar(
+                          controller: tabController,
+                          labelColor: greybg,
+                          indicatorColor: primaryColor,
+                          labelStyle: TextStyle(
+                              fontSize: textMD, fontWeight: FontWeight.w500),
+                          indicatorPadding:
+                              EdgeInsets.symmetric(horizontal: fullWidth * 0.1),
+                          tabs: List.generate(tabColSchedule.length, (index) {
+                            return Tab(text: tabColSchedule[index]['title']);
+                          })),
 
-                  SizedBox(
-                    height: fullHeight * 0.7,
-                    child: TabBarView(
-                      controller: tabController,
-                      children: List.generate(tabColSchedule.length, (index) {
-                        return tabColSchedule[index]['class'];
-                      }),
-                    ),
-                  )
-                ]),
+                      SizedBox(
+                        height: fullHeight * 0.7,
+                        child: TabBarView(
+                          controller: tabController,
+                          children:
+                              List.generate(tabColSchedule.length, (index) {
+                            return tabColSchedule[index]['class'];
+                          }),
+                        ),
+                      )
+                    ])),
             floatingActionButton: SpeedDial(
                 activeIcon: Icons.close,
                 icon: Icons.add,

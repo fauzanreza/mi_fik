@@ -109,6 +109,10 @@ class _RegisterPage extends State<RegisterPage> {
                     authService.postLogin(loginData, true).then((value) {
                       setIndex(indexRegis++);
                       setState(() {
+                        fnameMsg = "";
+                        lnameMsg = "";
+                        passMsg = "";
+                        allMsg = "";
                         isFillForm = true;
                       });
 
@@ -162,12 +166,48 @@ class _RegisterPage extends State<RegisterPage> {
               }
             } else {
               if (checkAvaiabilityRegis) {
+                setState(() {
+                  unameMsg = "";
+                  emailMsg = "";
+                  if (fnameRegisCtrl.trim() == "") {
+                    fnameMsg = "First Name can't be empty";
+                  } else {
+                    fnameMsg = "";
+                  }
+                  if (lnameRegisCtrl.trim() == "") {
+                    lnameMsg = "Last Name can't be empty";
+                  } else {
+                    lnameMsg = "";
+                  }
+                  if (passRegisCtrl.trim() == "") {
+                    passMsg = "Password can't be empty";
+                  } else {
+                    passMsg = "";
+                  }
+                });
                 showDialog<String>(
                     context: context,
                     builder: (BuildContext context) => FailedDialog(
                         text: "Please fill the remaining field",
                         type: "register"));
               } else {
+                if (usernameAvaiabilityCheck.trim() == "" ||
+                    emailAvaiabilityCheck.trim() == "") {
+                  setState(() {
+                    if (usernameAvaiabilityCheck.trim() == "") {
+                      unameMsg = "Username can't be empty";
+                    }
+                    if (emailAvaiabilityCheck.trim() == "") {
+                      emailMsg = "Email can't be empty";
+                    }
+                  });
+                } else {
+                  setState(() {
+                    unameMsg = "Username is invalid";
+                    emailMsg = "Email is invalid";
+                  });
+                }
+
                 showDialog<String>(
                     context: context,
                     builder: (BuildContext context) => FailedDialog(

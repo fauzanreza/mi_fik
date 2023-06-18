@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Container/nodata.dart';
 
 import 'package:mi_fik/Modules/APIs/SystemApi/Models/query_history.dart';
@@ -16,6 +17,8 @@ class GetMyHistory extends StatefulWidget {
 class _GetMyHistory extends State<GetMyHistory> {
   HistoryQueriesService apiQuery;
   int page = 1;
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
 
   @override
   void initState() {
@@ -23,28 +26,37 @@ class _GetMyHistory extends State<GetMyHistory> {
     apiQuery = HistoryQueriesService();
   }
 
-  @override
+  Future<void> refreshData() async {
+    page = 1;
+    setState(() {});
+  }
+
   Widget build(BuildContext context) {
     return SafeArea(
       maintainBottomViewPadding: false,
-      child: FutureBuilder(
-        future: apiQuery.getMyHistory(page),
-        builder:
-            (BuildContext context, AsyncSnapshot<List<HistoryModel>> snapshot) {
-          if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                  "Something wrong with message: ${snapshot.error.toString()}"),
-            );
-          } else if (snapshot.connectionState == ConnectionState.done) {
-            List<HistoryModel> contents = snapshot.data;
-            return _buildListView(contents);
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
+      child: RefreshIndicator(
+        key: _refreshIndicatorKey,
+        onRefresh: refreshData,
+        child: FutureBuilder(
+          future: apiQuery.getMyHistory(page),
+          builder: (BuildContext context,
+              AsyncSnapshot<List<HistoryModel>> snapshot) {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text(
+                  "Something wrong with message: ${snapshot.error.toString()}",
+                ),
+              );
+            } else if (snapshot.connectionState == ConnectionState.done) {
+              List<HistoryModel> contents = snapshot.data;
+              return _buildListView(contents);
+            } else {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
+        ),
       ),
     );
   }

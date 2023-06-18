@@ -29,12 +29,19 @@ class HomePage extends StatefulWidget {
 
 class _HomePage extends State<HomePage> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  int page = 1;
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
 
   Future<Role> getTokenNLoc() async {
     final prefs = await SharedPreferences.getInstance();
     final role = prefs.getString('role_general_key');
     await checkGps(getCurrentLocationDetails());
     return Role(role: role);
+  }
+
+  Future<void> refreshData() async {
+    setState(() {});
   }
 
   @override
@@ -89,44 +96,51 @@ class _HomePage extends State<HomePage> {
                   endDrawer: const RightBar(),
                   body: CustomPaint(
                       painter: CirclePainter(),
-                      child: ListView(
-                          padding: EdgeInsets.only(top: fullHeight * 0.04),
-                          children: [
-                            showSideBar(scaffoldKey, whitebg),
-                            Container(
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 15),
-                              child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    getGreeting(getToday("part"), whitebg),
-                                    getTitleJumbo(getToday("clock"), whitebg),
-                                    SizedBox(height: fullHeight * 0.05),
-                                    Row(
+                      child: RefreshIndicator(
+                          key: _refreshIndicatorKey,
+                          onRefresh: refreshData,
+                          child: ListView(
+                              padding: EdgeInsets.only(top: fullHeight * 0.04),
+                              children: [
+                                showSideBar(scaffoldKey, whitebg),
+                                Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        getSubTitleMedium(getToday("date"),
-                                            whitebg, TextAlign.start),
-                                        const Spacer(),
-                                        const GetLocation()
-                                      ],
-                                    )
-                                  ]),
-                            ),
-                            Container(
-                                //height: double.infinity,
-                                margin: const EdgeInsets.only(top: 10.0),
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                decoration: BoxDecoration(
-                                  color: mainbg,
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: roundedLG, topRight: roundedLG),
+                                        getGreeting(getToday("part"), whitebg),
+                                        getTitleJumbo(
+                                            getToday("clock"), whitebg),
+                                        SizedBox(height: fullHeight * 0.05),
+                                        Row(
+                                          children: [
+                                            getSubTitleMedium(getToday("date"),
+                                                whitebg, TextAlign.start),
+                                            const Spacer(),
+                                            const GetLocation()
+                                          ],
+                                        )
+                                      ]),
                                 ),
-                                child: const IntrinsicHeight(
-                                  child: GetContent(),
-                                ))
-                          ])),
+                                Container(
+                                    //height: double.infinity,
+                                    margin: const EdgeInsets.only(top: 10.0),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    decoration: BoxDecoration(
+                                      color: mainbg,
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: roundedLG,
+                                          topRight: roundedLG),
+                                    ),
+                                    child: IntrinsicHeight(
+                                      child: GetContent(page: page),
+                                    ))
+                              ]))),
                   floatingActionButton: getRoleFeature(role),
                 ));
           } else {

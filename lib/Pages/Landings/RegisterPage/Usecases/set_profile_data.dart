@@ -52,6 +52,14 @@ class _SetProfileData extends State<SetProfileData> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            getSubTitleMedium("Username", blackbg, TextAlign.left),
+            getInputWarning(widget.unameMsg),
+            getInputTextRegis(30, "username", context, apiService, refresh,
+                usernameAvaiabilityCheck, isCheckedRegister),
+            getSubTitleMedium("Email", blackbg, TextAlign.left),
+            getInputWarning(widget.emailMsg),
+            getInputTextRegis(30, "email", context, apiService, refresh,
+                emailAvaiabilityCheck, isCheckedRegister),
             getSubTitleMedium("Password", blackbg, TextAlign.left),
             getInputWarning(widget.passMsg),
             getInputTextRegis(
@@ -78,6 +86,14 @@ class _SetProfileData extends State<SetProfileData> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            getSubTitleMedium("Username", blackbg, TextAlign.left),
+            getInputWarning(widget.unameMsg),
+            getInputTextRegis(30, "username", context, apiService, refresh,
+                usernameAvaiabilityCheck, isFillForm),
+            getSubTitleMedium("Email", blackbg, TextAlign.left),
+            getInputWarning(widget.emailMsg),
+            getInputTextRegis(30, "email", context, apiService, refresh,
+                emailAvaiabilityCheck, isFillForm),
             ClipRRect(
               child: Image.asset('assets/icon/check_user.png',
                   width: fullHeight * 0.25),
@@ -139,14 +155,6 @@ class _SetProfileData extends State<SetProfileData> {
       ),
       child: ListView(children: [
         getTitleLarge("Profile Data", primaryColor),
-        getSubTitleMedium("Username", blackbg, TextAlign.left),
-        getInputWarning(widget.unameMsg),
-        getInputTextRegis(30, "username", context, apiService, refresh,
-            usernameAvaiabilityCheck, isFillForm),
-        getSubTitleMedium("Email", blackbg, TextAlign.left),
-        getInputWarning(widget.emailMsg),
-        getInputTextRegis(30, "email", context, apiService, refresh,
-            emailAvaiabilityCheck, isFillForm),
         getDataDetailForm(checkAvaiabilityRegis),
       ]),
     );

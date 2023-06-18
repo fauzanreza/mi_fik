@@ -4,8 +4,6 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' show Client;
 import 'package:mi_fik/Modules/APIs/AuthApi/Models/commands.dart';
-import 'package:mi_fik/Modules/APIs/UserApi/Models/queries.dart';
-import 'package:mi_fik/Modules/APIs/UserApi/Services/queries.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
