@@ -13,8 +13,8 @@ import 'package:mi_fik/Pages/SubMenus/FAQPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/MyFAQPage/index.dart';
 
 class PostQuestion extends StatefulWidget {
-  PostQuestion({Key key, this.from}) : super(key: key);
-  String from;
+  const PostQuestion({Key key, this.from}) : super(key: key);
+  final String from;
 
   @override
   StatePostQuestion createState() => StatePostQuestion();
@@ -191,10 +191,11 @@ class StatePostQuestion extends State<PostQuestion> {
                             } else {
                               showDialog<String>(
                                   context: context,
-                                  builder: (BuildContext context) => FailedDialog(
-                                      text:
-                                          "Request failed, you haven't chosen any type yet",
-                                      type: "faq"));
+                                  builder: (BuildContext context) =>
+                                      const FailedDialog(
+                                          text:
+                                              "Request failed, you haven't chosen any type yet",
+                                          type: "faq"));
                             }
                           },
                           style: ButtonStyle(

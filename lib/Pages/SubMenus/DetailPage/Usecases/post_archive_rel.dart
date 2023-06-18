@@ -8,11 +8,11 @@ import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/get_list_archive.dart';
 
 class PostArchiveRelation extends StatefulWidget {
-  PostArchiveRelation({Key key, this.passSlug, this.margin, this.ctx})
+  const PostArchiveRelation({Key key, this.passSlug, this.margin, this.ctx})
       : super(key: key);
-  String passSlug;
-  String ctx;
-  var margin;
+  final String passSlug;
+  final String ctx;
+  final margin;
 
   @override
   StatePostArchiveRelation createState() => StatePostArchiveRelation();

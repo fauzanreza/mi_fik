@@ -88,7 +88,8 @@ class _EditImageState extends State<EditImage> {
                           showDialog<String>(
                               context: context,
                               builder: (BuildContext context) =>
-                                  FailedDialog(text: "Failed to reset image"));
+                                  const FailedDialog(
+                                      text: "Failed to reset image"));
                         }
                       });
                     });

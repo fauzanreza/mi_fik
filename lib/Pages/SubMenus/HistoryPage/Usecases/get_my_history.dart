@@ -30,6 +30,7 @@ class StateGetMyHistory extends State<GetMyHistory> {
     setState(() {});
   }
 
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       maintainBottomViewPadding: false,

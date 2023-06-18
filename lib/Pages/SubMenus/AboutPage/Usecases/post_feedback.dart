@@ -58,7 +58,7 @@ class StatePostFeedback extends State<PostFeedback> {
             }),
             getInputDesc(255, 3, fbBodyCtrl, false),
             SizedBox(height: paddingMD),
-            GetInfoBox(
+            const GetInfoBox(
               page: "landing",
               location: "add_feedback",
             ),
@@ -119,9 +119,11 @@ class StatePostFeedback extends State<PostFeedback> {
                         } else {
                           showDialog<String>(
                               context: context,
-                              builder: (BuildContext context) => FailedDialog(
-                                  text: "Add feedback, field can't be empty",
-                                  type: "addfeedback"));
+                              builder: (BuildContext context) =>
+                                  const FailedDialog(
+                                      text:
+                                          "Add feedback, field can't be empty",
+                                      type: "addfeedback"));
                         }
                       },
                       child: Container(

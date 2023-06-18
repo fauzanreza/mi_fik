@@ -12,8 +12,8 @@ import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class PostArchive extends StatefulWidget {
-  PostArchive({Key key, this.text}) : super(key: key);
-  String text;
+  const PostArchive({Key key, this.text}) : super(key: key);
+  final String text;
 
   @override
   StatePostArchive createState() => StatePostArchive();
@@ -157,7 +157,7 @@ class StatePostArchive extends State<PostArchive> {
                     Get.back();
                     showDialog<String>(
                         context: context,
-                        builder: (BuildContext context) => FailedDialog(
+                        builder: (BuildContext context) => const FailedDialog(
                             text: "Create archive failed, field can't be empty",
                             type: "addarchive"));
                     allArchiveMsg =

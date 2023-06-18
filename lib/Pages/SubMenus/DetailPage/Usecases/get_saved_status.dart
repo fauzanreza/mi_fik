@@ -4,9 +4,9 @@ import 'package:mi_fik/Modules/APIs/ArchiveApi/Services/queries.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class GetSavedStatus extends StatefulWidget {
-  GetSavedStatus({Key key, this.passSlug, this.ctx}) : super(key: key);
-  String passSlug;
-  String ctx;
+  const GetSavedStatus({Key key, this.passSlug, this.ctx}) : super(key: key);
+  final String passSlug;
+  final String ctx;
 
   @override
   StateGetSavedStatus createState() => StateGetSavedStatus();

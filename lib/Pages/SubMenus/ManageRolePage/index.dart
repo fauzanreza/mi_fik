@@ -71,8 +71,8 @@ class StateRolePage extends State<RolePage> {
             if (selectedRole.isEmpty) {
               showDialog<String>(
                   context: context,
-                  builder: (BuildContext context) =>
-                      NoDataDialog(text: "You haven't selected any tag yet"));
+                  builder: (BuildContext context) => const NoDataDialog(
+                      text: "You haven't selected any tag yet"));
             } else {
               showModalBottomSheet<void>(
                 context: context,
@@ -86,8 +86,8 @@ class StateRolePage extends State<RolePage> {
                   return Container(
                       height: fullHeight * 0.4,
                       padding: MediaQuery.of(context).viewInsets,
-                      child: PostSelectedRole(
-                          back: const RolePage(), isLogged: true));
+                      child: const PostSelectedRole(
+                          back: RolePage(), isLogged: true));
                 },
               );
             }

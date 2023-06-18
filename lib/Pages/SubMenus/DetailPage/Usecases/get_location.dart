@@ -12,9 +12,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LocationButton extends StatefulWidget {
-  LocationButton({Key key, this.passLocation, this.passSlugName})
+  const LocationButton({Key key, this.passLocation, this.passSlugName})
       : super(key: key);
-  List passLocation;
+  final List passLocation;
   final String passSlugName;
 
   @override

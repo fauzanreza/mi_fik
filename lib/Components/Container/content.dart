@@ -16,11 +16,12 @@ import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/index.dart';
 
 class GetHomePageEventContainer extends StatefulWidget {
-  GetHomePageEventContainer({Key key, this.width, this.content, this.servc})
+  const GetHomePageEventContainer(
+      {Key key, this.width, this.content, this.servc})
       : super(key: key);
   final double width;
-  var content;
-  var servc;
+  final content;
+  final servc;
 
   @override
   StateGetHomePageEventContainer createState() =>
@@ -208,9 +209,10 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
 
 class GetScheduleContainer extends StatelessWidget {
   final double width;
-  var content;
+  final content;
 
-  GetScheduleContainer({Key key, this.width, this.content}) : super(key: key);
+  const GetScheduleContainer({Key key, this.width, this.content})
+      : super(key: key);
 
   //Get icon based on event or task
   Widget getIcon(type, dateStart, dateEnd) {
@@ -325,7 +327,7 @@ class GetScheduleContainer extends StatelessWidget {
 }
 
 class GetAttachmentContainer extends StatefulWidget {
-  GetAttachmentContainer(
+  const GetAttachmentContainer(
       {Key key,
       this.data,
       this.item,
@@ -334,12 +336,12 @@ class GetAttachmentContainer extends StatefulWidget {
       this.idx,
       this.action})
       : super(key: key);
-  var data;
-  var item;
-  var others;
-  String id;
-  int idx;
-  var action;
+  final data;
+  final item;
+  final others;
+  final String id;
+  final int idx;
+  final action;
 
   @override
   StateGetAttachmentContainer createState() => StateGetAttachmentContainer();

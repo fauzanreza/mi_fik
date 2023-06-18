@@ -17,8 +17,8 @@ import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/get_saved_status.dart'
 import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/post_archive_rel.dart';
 
 class DetailTask extends StatefulWidget {
-  DetailTask({Key key, this.data}) : super(key: key);
-  var data;
+  const DetailTask({Key key, this.data}) : super(key: key);
+  final data;
 
   @override
   StateDetailTask createState() => StateDetailTask();
@@ -215,7 +215,7 @@ class StateDetailTask extends State<DetailTask> {
                         } else {
                           showDialog<String>(
                               context: context,
-                              builder: (BuildContext context) => FailedDialog(
+                              builder: (BuildContext context) => const FailedDialog(
                                   text:
                                       "Create archive failed, field can't be empty",
                                   type: "addtask"));

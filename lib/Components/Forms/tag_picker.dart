@@ -4,10 +4,10 @@ import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class TagSelectedArea extends StatefulWidget {
-  TagSelectedArea({Key key, this.tag, this.type, this.action})
+  const TagSelectedArea({Key key, this.tag, this.type, this.action})
       : super(key: key);
-  List tag;
-  String type;
+  final List tag;
+  final String type;
   final Function action;
 
   @override

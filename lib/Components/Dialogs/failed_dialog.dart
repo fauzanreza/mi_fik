@@ -3,10 +3,10 @@ import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class FailedDialog extends StatefulWidget {
-  FailedDialog({Key key, this.text, this.type}) : super(key: key);
+  const FailedDialog({Key key, this.text, this.type}) : super(key: key);
   // ignore: prefer_typing_uninitialized_variables
-  var text; // Can be string or list
-  String type;
+  final text; // Can be string or list
+  final String type;
 
   @override
   StateFailedDialog createState() => StateFailedDialog();

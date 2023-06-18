@@ -13,9 +13,9 @@ import 'package:mi_fik/Pages/Landings/RegisterPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/ManageRolePage/index.dart';
 
 class PostSelectedRole extends StatefulWidget {
-  PostSelectedRole({Key key, this.back, this.isLogged}) : super(key: key);
-  var back;
-  bool isLogged;
+  const PostSelectedRole({Key key, this.back, this.isLogged}) : super(key: key);
+  final back;
+  final bool isLogged;
 
   @override
   StatePostSelectedRole createState() => StatePostSelectedRole();
@@ -118,7 +118,7 @@ class StatePostSelectedRole extends State<PostSelectedRole> {
                               indexRegis = 5;
                               isFinishedRegis = true;
                             });
-                            Get.offAll(() => RegisterPage());
+                            Get.offAll(() => const RegisterPage());
                             Get.snackbar("Success", "Role request has sended",
                                 backgroundColor: whitebg);
                           }
@@ -137,7 +137,7 @@ class StatePostSelectedRole extends State<PostSelectedRole> {
                     } else {
                       showDialog<String>(
                           context: context,
-                          builder: (BuildContext context) => FailedDialog(
+                          builder: (BuildContext context) => const FailedDialog(
                               text:
                                   "Request failed, you haven't chosen any tag yet",
                               type: "req"));

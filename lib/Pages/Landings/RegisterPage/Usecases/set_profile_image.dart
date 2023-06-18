@@ -96,7 +96,8 @@ class StateSetProfileImage extends State<SetProfileImage> {
                           showDialog<String>(
                               context: context,
                               builder: (BuildContext context) =>
-                                  FailedDialog(text: "Failed to reset image"));
+                                  const FailedDialog(
+                                      text: "Failed to reset image"));
                         }
                       });
                     });
@@ -246,7 +247,7 @@ class StateSetProfileImage extends State<SetProfileImage> {
                         ),
                         Container(
                             padding: EdgeInsets.fromLTRB(0, paddingMD, 0, 0),
-                            child: GetInfoBox(
+                            child: const GetInfoBox(
                               page: "register",
                               location: "add_profile_pic",
                             )),

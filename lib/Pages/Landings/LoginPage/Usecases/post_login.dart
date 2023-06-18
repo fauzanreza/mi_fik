@@ -18,10 +18,10 @@ class PostLogin extends StatefulWidget {
   const PostLogin({Key key}) : super(key: key);
 
   @override
-  _PostLogin createState() => _PostLogin();
+  StatePostLogin createState() => StatePostLogin();
 }
 
-class _PostLogin extends State<PostLogin> {
+class StatePostLogin extends State<PostLogin> {
   var usernameCtrl = TextEditingController();
   var passCtrl = TextEditingController();
   AuthCommandsService apiService;
@@ -115,7 +115,7 @@ class _PostLogin extends State<PostLogin> {
                             lnameRegisCtrl = body['last_name'];
                             validRegisCtrl = int.parse(body['valid_until']);
 
-                            Get.to(() => RegisterPage(
+                            Get.to(() => const RegisterPage(
                                   isLogged: true,
                                 ));
                             userService.putFirebase(token);
@@ -181,7 +181,7 @@ class _PostLogin extends State<PostLogin> {
                         padding: EdgeInsets.symmetric(
                             vertical: paddingMD, horizontal: paddingSM)),
                     onPressed: () {
-                      Get.to(() => RegisterPage(
+                      Get.to(() => const RegisterPage(
                             isLogged: false,
                           ));
                     },

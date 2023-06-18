@@ -7,9 +7,9 @@ import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_tasks.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class DeleteTask extends StatefulWidget {
-  DeleteTask({Key key, this.id, this.name}) : super(key: key);
-  String id;
-  String name;
+  const DeleteTask({Key key, this.id, this.name}) : super(key: key);
+  final String id;
+  final String name;
 
   @override
   StateDeleteTask createState() => StateDeleteTask();

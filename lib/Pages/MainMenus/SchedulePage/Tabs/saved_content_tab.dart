@@ -17,10 +17,11 @@ import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/delete_archive.dart
 import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/edit_archive.dart';
 
 class SavedContent extends StatefulWidget {
-  SavedContent({Key key, this.slug, this.name, this.desc}) : super(key: key);
-  String slug;
-  String name;
-  String desc;
+  const SavedContent({Key key, this.slug, this.name, this.desc})
+      : super(key: key);
+  final String slug;
+  final String name;
+  final String desc;
 
   @override
   StateSavedContent createState() => StateSavedContent();

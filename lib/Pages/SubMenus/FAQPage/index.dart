@@ -23,6 +23,6 @@ class StateFAQPage extends State<FAQPage> {
           Get.to(() => const BottomBar());
         }),
         body: const GetAllQuestion(),
-        floatingActionButton: PostQuestion(from: "faq"));
+        floatingActionButton: const PostQuestion(from: "faq"));
   }
 }

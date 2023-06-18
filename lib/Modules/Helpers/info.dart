@@ -7,9 +7,9 @@ import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class GetInfoBox extends StatefulWidget {
-  GetInfoBox({Key key, this.page, this.location}) : super(key: key);
-  String page;
-  String location;
+  const GetInfoBox({Key key, this.page, this.location}) : super(key: key);
+  final String page;
+  final String location;
 
   @override
   StateGetInfoBox createState() => StateGetInfoBox();

@@ -12,8 +12,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class SetLocation extends StatefulWidget {
-  SetLocation({Key key, this.locDetailCtrl}) : super(key: key);
-  TextEditingController locDetailCtrl;
+  const SetLocation({Key key, this.locDetailCtrl}) : super(key: key);
+  final TextEditingController locDetailCtrl;
 
   @override
   StateSetLocation createState() => StateSetLocation();

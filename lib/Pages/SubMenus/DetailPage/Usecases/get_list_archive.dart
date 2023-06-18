@@ -12,11 +12,11 @@ import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/index.dart';
 
 class ListArchive extends StatefulWidget {
-  ListArchive({Key key, this.archieves, this.passSlug, this.type})
+  const ListArchive({Key key, this.archieves, this.passSlug, this.type})
       : super(key: key);
-  var archieves;
-  String passSlug;
-  String type;
+  final archieves;
+  final String passSlug;
+  final String type;
 
   @override
   StateListArchive createState() => StateListArchive();
@@ -232,8 +232,10 @@ class StateListArchive extends State<ListArchive> {
                       } else {
                         showDialog<String>(
                             context: context,
-                            builder: (BuildContext context) => FailedDialog(
-                                text: "Nothing has changed", type: "editacc"));
+                            builder: (BuildContext context) =>
+                                const FailedDialog(
+                                    text: "Nothing has changed",
+                                    type: "editacc"));
                       }
                     },
                     style: ButtonStyle(

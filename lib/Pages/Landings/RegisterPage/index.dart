@@ -20,8 +20,8 @@ import 'package:mi_fik/Pages/SubMenus/ManageRolePage/Usecases/post_selected_role
 import 'package:onboarding/onboarding.dart';
 
 class RegisterPage extends StatefulWidget {
-  RegisterPage({Key key, this.isLogged}) : super(key: key);
-  bool isLogged;
+  const RegisterPage({Key key, this.isLogged}) : super(key: key);
+  final bool isLogged;
 
   @override
   StateRegisterPage createState() => StateRegisterPage();
@@ -60,8 +60,8 @@ class StateRegisterPage extends State<RegisterPage> {
           if (selectedRole.isEmpty && !isChooseRole && indexRegis == 4) {
             showDialog<String>(
                 context: context,
-                builder: (BuildContext context) =>
-                    NoDataDialog(text: "You haven't selected any tag yet"));
+                builder: (BuildContext context) => const NoDataDialog(
+                    text: "You haven't selected any tag yet"));
           } else if (selectedRole.isNotEmpty &&
               !isChooseRole &&
               indexRegis == 4) {
@@ -187,7 +187,7 @@ class StateRegisterPage extends State<RegisterPage> {
                 });
                 showDialog<String>(
                     context: context,
-                    builder: (BuildContext context) => FailedDialog(
+                    builder: (BuildContext context) => const FailedDialog(
                         text: "Please fill the remaining field",
                         type: "register"));
               } else {
@@ -210,7 +210,7 @@ class StateRegisterPage extends State<RegisterPage> {
 
                 showDialog<String>(
                     context: context,
-                    builder: (BuildContext context) => FailedDialog(
+                    builder: (BuildContext context) => const FailedDialog(
                         text: "Please register your account first",
                         type: "register"));
               }
@@ -221,7 +221,7 @@ class StateRegisterPage extends State<RegisterPage> {
             });
             showDialog<String>(
                 context: context,
-                builder: (BuildContext context) => FailedDialog(
+                builder: (BuildContext context) => const FailedDialog(
                     text: "You haven't accept the terms & condition",
                     type: "register"));
           } else {

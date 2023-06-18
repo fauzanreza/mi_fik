@@ -66,9 +66,9 @@ Future<void> main() async {
 }
 
 class MyApp extends StatefulWidget {
-  MyApp({Key key, this.signed, this.finishRegis}) : super(key: key);
-  bool signed;
-  bool finishRegis;
+  const MyApp({Key key, this.signed, this.finishRegis}) : super(key: key);
+  final bool signed;
+  final bool finishRegis;
 
   @override
   StateMyApp createState() => StateMyApp();
@@ -183,7 +183,7 @@ class StateMyApp extends State<MyApp> {
                 theme: ThemeData(
                   primarySwatch: Colors.blue,
                 ),
-                home: RegisterPage(isLogged: true),
+                home: const RegisterPage(isLogged: true),
               );
             }
           } else {

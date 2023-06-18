@@ -77,7 +77,7 @@ class StateSignOutDialog extends State<SignOutDialog> {
                   showDialog<String>(
                       context: context,
                       builder: (BuildContext context) =>
-                          SuccessDialog(text: "Sign out success"));
+                          const SuccessDialog(text: "Sign out success"));
                 } else {
                   showDialog<String>(
                       context: context,
@@ -91,7 +91,7 @@ class StateSignOutDialog extends State<SignOutDialog> {
               showDialog<String>(
                   context: context,
                   builder: (BuildContext context) =>
-                      SuccessDialog(text: "Sign out success"));
+                      const SuccessDialog(text: "Sign out success"));
             }
           },
           child: Text("Sign Out", style: TextStyle(color: whitebg)),

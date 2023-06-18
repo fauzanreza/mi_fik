@@ -15,8 +15,8 @@ import 'package:mi_fik/Pages/MainMenus/HomePage/Usecases/set_control.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/index.dart';
 
 class GetContent extends StatefulWidget {
-  GetContent({Key key, this.page}) : super(key: key);
-  int page;
+  const GetContent({Key key, this.page}) : super(key: key);
+  final int page;
 
   @override
   StateGetContent createState() => StateGetContent();

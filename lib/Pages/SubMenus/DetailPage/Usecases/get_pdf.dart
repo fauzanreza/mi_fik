@@ -5,8 +5,8 @@ import 'package:mi_fik/Components/Bars/top_bar.dart';
 import 'package:pdfx/pdfx.dart';
 
 class AttachmentDocPage extends StatefulWidget {
-  AttachmentDocPage({Key key, this.url}) : super(key: key);
-  String url;
+  const AttachmentDocPage({Key key, this.url}) : super(key: key);
+  final String url;
 
   @override
   StateAttachmentDocPage createState() => StateAttachmentDocPage();

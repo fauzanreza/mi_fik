@@ -10,11 +10,11 @@ import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class EditArchive extends StatefulWidget {
-  EditArchive({Key key, this.slug, this.archiveName, this.archiveDesc})
+  const EditArchive({Key key, this.slug, this.archiveName, this.archiveDesc})
       : super(key: key);
-  String slug;
-  String archiveName;
-  String archiveDesc;
+  final String slug;
+  final String archiveName;
+  final String archiveDesc;
 
   @override
   StateEditArchive createState() => StateEditArchive();
@@ -136,9 +136,10 @@ class StateEditArchive extends State<EditArchive> {
                           } else {
                             showDialog<String>(
                                 context: context,
-                                builder: (BuildContext context) => FailedDialog(
-                                    text:
-                                        "Edit archive failed, field can't be empty"));
+                                builder: (BuildContext context) =>
+                                    const FailedDialog(
+                                        text:
+                                            "Edit archive failed, field can't be empty"));
                           }
                         },
                         style: ButtonStyle(

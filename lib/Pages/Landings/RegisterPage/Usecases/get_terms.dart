@@ -5,8 +5,8 @@ import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class GetTerms extends StatefulWidget {
-  GetTerms({Key key, this.checkMsg}) : super(key: key);
-  String checkMsg;
+  const GetTerms({Key key, this.checkMsg}) : super(key: key);
+  final String checkMsg;
 
   @override
   StateGetTerms createState() => StateGetTerms();

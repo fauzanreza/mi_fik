@@ -5,8 +5,8 @@ import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class GetAllTagByCategory extends StatefulWidget {
-  GetAllTagByCategory({Key key, this.slug}) : super(key: key);
-  String slug;
+  const GetAllTagByCategory({Key key, this.slug}) : super(key: key);
+  final String slug;
 
   @override
   StateGetAllTagByCategory createState() => StateGetAllTagByCategory();

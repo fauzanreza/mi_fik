@@ -11,8 +11,8 @@ import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/MainMenus/CalendarPage/Usecases/show_daily_event.dart';
 
 class DayHeader extends StatefulWidget {
-  DayHeader({Key key, this.selectedDay}) : super(key: key);
-  DateTime selectedDay;
+  const DayHeader({Key key, this.selectedDay}) : super(key: key);
+  final DateTime selectedDay;
 
   @override
   StateDayHeader createState() => StateDayHeader();
