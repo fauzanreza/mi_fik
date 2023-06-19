@@ -36,7 +36,7 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
     } else if (u2 != null) {
       username = "@$u2";
     } else {
-      username = "Unknown User";
+      username = "Unknown User".tr;
     }
     return Text(username,
         maxLines: 1,

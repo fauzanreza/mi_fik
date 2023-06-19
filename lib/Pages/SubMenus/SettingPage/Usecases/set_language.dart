@@ -5,6 +5,7 @@ import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/Translators/service.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SetLanguage extends StatefulWidget {
   const SetLanguage({Key key}) : super(key: key);
@@ -15,9 +16,19 @@ class SetLanguage extends StatefulWidget {
 
 class StateSetLanguage extends State<SetLanguage> {
   LangCtrl langctrl = Get.put(LangCtrl());
+  LangList slctLang = LangList.en;
+
+  getActiveLang() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    if (prefs.getString("lang_key") == "id") {
+      slctLang = LangList.id;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    getActiveLang();
     //double fullHeight = MediaQuery.of(context).size.height;
     //double fullWidth = MediaQuery.of(context).size.width;
 
@@ -35,10 +46,13 @@ class StateSetLanguage extends State<SetLanguage> {
           leading: Radio<LangList>(
             value: LangList.en,
             groupValue: slctLang,
-            onChanged: (LangList value) {
+            onChanged: (LangList value) async {
+              final prefs = await SharedPreferences.getInstance();
+              await prefs.setString('lang_key', "en");
+
               setState(() {
-                langctrl.switchLang('en', 'US');
                 slctLang = value;
+                langctrl.switchLang('en', 'US');
               });
               showDialog<String>(
                   context: context,
@@ -53,10 +67,13 @@ class StateSetLanguage extends State<SetLanguage> {
           leading: Radio<LangList>(
             value: LangList.id,
             groupValue: slctLang,
-            onChanged: (LangList value) {
+            onChanged: (LangList value) async {
+              final prefs = await SharedPreferences.getInstance();
+              await prefs.setString('lang_key', "id");
+
               setState(() {
-                langctrl.switchLang('id', 'ID');
                 slctLang = value;
+                langctrl.switchLang('id', 'ID');
               });
               showDialog<String>(
                   context: context,

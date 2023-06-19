@@ -134,7 +134,11 @@ class AuthCommandsService {
       ];
     } else {
       return [
-        {"message": "failed", "body": "Unknown error", "token": null}
+        {
+          "message": "failed",
+          "body": "Unknown error, please contact the admin".tr,
+          "token": null
+        }
       ];
     }
   }
@@ -163,7 +167,10 @@ class AuthCommandsService {
       ];
     } else {
       return [
-        {"message": "failed", "body": "Unknown error"}
+        {
+          "message": "failed",
+          "body": "Unknown error, please contact the admin".tr
+        }
       ];
     }
   }

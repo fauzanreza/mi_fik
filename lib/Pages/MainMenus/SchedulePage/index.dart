@@ -141,8 +141,8 @@ class StateSchedulePage extends State<SchedulePage>
                 children: [
                   getSpeeDialChild("New Task".tr, context, PostTask(),
                       Icons.note_add_outlined),
-                  getSpeeDialChild(
-                      "New Archive".tr, context, PostArchive(), Icons.folder)
+                  getSpeeDialChild("New Archive".tr, context,
+                      const PostArchive(), Icons.folder)
                 ])));
   }
 }

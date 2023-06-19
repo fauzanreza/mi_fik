@@ -88,7 +88,10 @@ class Dictionaries extends Translations {
           'Selected Location': 'Selected Location',
           'Could not open the map': 'Could not open the map',
           'Question Type': 'Question Type',
-          'Save Changes': 'Save Changes'
+          'Save Changes': 'Save Changes',
+          'Unknown error, please contact the admin':
+              'Unknown error, please contact the admin',
+          'Unknown User': 'Unknown User'
         },
         'id_ID': {
           'Good Morning': 'Selamat Pagi',
@@ -175,7 +178,10 @@ class Dictionaries extends Translations {
           'Selected Location': 'Lokasi Terpilih',
           'Could not open the map': 'Gagal membuka Maps',
           'Question Type': 'Tipe Pertanyaan',
-          'Save Changes': 'Simpan Perubahan'
+          'Save Changes': 'Simpan Perubahan',
+          'Unknown error, please contact the admin':
+              'Kegagalan sistem, segera hubungi admin',
+          'Unknown User': 'Tak dikenal'
         },
       };
 }

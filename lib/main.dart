@@ -52,6 +52,11 @@ Future<void> main() async {
   }
 
   final prefs = await SharedPreferences.getInstance();
+  String langKey = "en";
+  if (prefs.containsKey("lang_key")) {
+    langKey = prefs.getString("lang_key");
+  }
+
   if (prefs.containsKey("token_key")) {
     if (prefs.containsKey("role_general_key")) {
       isFinishedRegis = true;
@@ -59,16 +64,18 @@ Future<void> main() async {
       isFinishedRegis = false;
     }
 
-    runApp(MyApp(signed: true, finishRegis: isFinishedRegis));
+    runApp(MyApp(signed: true, finishRegis: isFinishedRegis, lang: langKey));
   } else {
-    runApp(MyApp(signed: false, finishRegis: isFinishedRegis));
+    runApp(MyApp(signed: false, finishRegis: isFinishedRegis, lang: langKey));
   }
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key key, this.signed, this.finishRegis}) : super(key: key);
+  const MyApp({Key key, this.signed, this.finishRegis, this.lang})
+      : super(key: key);
   final bool signed;
   final bool finishRegis;
+  final String lang;
 
   @override
   StateMyApp createState() => StateMyApp();
@@ -153,6 +160,16 @@ class StateMyApp extends State<MyApp> {
       DeviceOrientation.portraitDown,
     ]);
 
+    String langCode = "en";
+    slctLang = LangList.en;
+    String countryCode = "US";
+
+    if (widget.lang == "id") {
+      langCode = "id";
+      countryCode = "ID";
+      slctLang = LangList.id;
+    }
+
     if (widget.signed) {
       return FutureBuilder<String>(
         future: FirebaseMessaging.instance.getToken(),
@@ -164,8 +181,8 @@ class StateMyApp extends State<MyApp> {
             if (widget.finishRegis) {
               return GetMaterialApp(
                 translations: Dictionaries(),
-                locale: const Locale("en", "US"),
-                fallbackLocale: const Locale("en", "US"),
+                locale: Locale(langCode, countryCode),
+                fallbackLocale: Locale(langCode, countryCode),
                 debugShowCheckedModeBanner: false,
                 title: 'Mi-FIK',
                 theme: ThemeData(
@@ -176,8 +193,8 @@ class StateMyApp extends State<MyApp> {
             } else {
               return GetMaterialApp(
                 translations: Dictionaries(),
-                locale: const Locale("en", "US"),
-                fallbackLocale: const Locale("en", "US"),
+                locale: Locale(langCode, countryCode),
+                fallbackLocale: Locale(langCode, countryCode),
                 debugShowCheckedModeBanner: false,
                 title: 'Mi-FIK',
                 theme: ThemeData(

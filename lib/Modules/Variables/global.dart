@@ -55,7 +55,7 @@ int maxDoc = 15;
 
 enum LangList { en, id }
 
-LangList slctLang = LangList.en;
+LangList slctLang;
 
 int selectedIndex = 0;
 
