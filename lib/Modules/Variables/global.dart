@@ -62,7 +62,7 @@ int selectedIndex = 0;
 // Starting Variables
 String sortingHomepageContent = "Desc";
 String filteringTag = "all";
-String searchingContent;
+String searchingContent = "";
 String contentAttImage;
 DateTime filterDateStart;
 DateTime filterDateEnd;

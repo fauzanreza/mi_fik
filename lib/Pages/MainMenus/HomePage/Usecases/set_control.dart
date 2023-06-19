@@ -40,9 +40,9 @@ class StateSetControl extends State<SetControl> {
 
   @override
   Widget build(BuildContext context) {
-    if (searchingContent != null) {
-      widget.titleCtrl.text = searchingContent;
-    }
+    // if (searchingContent != null) {
+    //   widget.titleCtrl.text = searchingContent;
+    // }
     return FutureBuilder<Role>(
         future: getToken(),
         builder: (context, snapshot) {
@@ -73,6 +73,7 @@ class StateSetControl extends State<SetControl> {
                         padding: MediaQuery.of(context).viewInsets,
                         child: Stack(children: [
                           ListView(
+                            padding: EdgeInsets.only(bottom: paddingLg),
                             children: <Widget>[
                               Container(
                                 alignment: Alignment.topRight,
@@ -134,7 +135,7 @@ class StateSetControl extends State<SetControl> {
                                           icon: Icon(Icons.close, size: iconMD),
                                           color: whitebg,
                                           onPressed: () {
-                                            searchingContent = null;
+                                            searchingContent = "";
                                             Get.offAll(() => const BottomBar());
                                           },
                                         ),
@@ -284,6 +285,7 @@ class StateSetControl extends State<SetControl> {
                                                 "tag_name": tag['tag_name']
                                               });
                                             });
+                                            setState(() {});
                                           },
                                           icon: Icon(
                                             Icons.circle,

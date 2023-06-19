@@ -80,8 +80,7 @@ class StateSetProfileData extends State<SetProfileData> {
         );
       } else {
         return Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             getSubTitleMedium("Username", blackbg, TextAlign.left),
             getInputWarning(widget.unameMsg),
@@ -91,10 +90,12 @@ class StateSetProfileData extends State<SetProfileData> {
             getInputWarning(widget.emailMsg),
             getInputTextRegis(30, "email", context, apiService, refresh,
                 emailAvaiabilityCheck, isFillForm),
-            ClipRRect(
-              child: Image.asset('assets/icon/check_user.png',
-                  width: fullHeight * 0.25),
-            ),
+            Align(
+                alignment: Alignment.center,
+                child: ClipRRect(
+                  child: Image.asset('assets/icon/check_user.png',
+                      width: fullHeight * 0.25),
+                )),
             const Text(
               "Before you can fill the other form. We must validate your username and email first",
               textAlign: TextAlign.center,

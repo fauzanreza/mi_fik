@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Container/content.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
@@ -131,6 +132,54 @@ class StateGetContent extends State<GetContent> with TickerProviderStateMixin {
       }
     }
 
+    Widget getActiveFilterText() {
+      String order = "";
+      String date = "";
+      String title = "";
+      String tags = "";
+
+      // Title
+      if (searchingContent.trim() != "") {
+        title = ', Title like "$searchingContent"';
+      }
+
+      // Ordering
+      if (sortingHomepageContent == "Desc") {
+        order = "Descending";
+      } else {
+        order = "Ascending";
+      }
+
+      // Date filtering
+      if (filterDateStart != null && filterDateEnd != null) {
+        date =
+            ", Start from ${DateFormat("dd MMM yy").format(filterDateStart)} until ${DateFormat("dd MMM yy").format(filterDateEnd)}";
+      }
+
+      // Tags
+      if (selectedTagFilterContent.isNotEmpty) {
+        int i = 0;
+        int max = selectedTagFilterContent.length;
+        selectedTagFilterContent.forEach((e) {
+          if (i == 0) {
+            tags += ", ${e['tag_name']}, ";
+          } else if (i == max - 1) {
+            tags += "${e['tag_name']}";
+          } else {
+            tags += "${e['tag_name']}, ";
+          }
+
+          i++;
+        });
+      }
+
+      String res = "Active filters : $order $date $title $tags";
+
+      return Text(res.replaceAll("  ", " ").replaceAll(" ,", ", "),
+          style: TextStyle(
+              color: greybg, fontSize: textSM, fontWeight: FontWeight.w500));
+    }
+
     return Column(children: [
       Container(
         transform: Matrix4.translationValues(0, -10, 0),
@@ -138,8 +187,16 @@ class StateGetContent extends State<GetContent> with TickerProviderStateMixin {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            getTitleLarge("What's New".tr, greybg),
-            const Spacer(),
+            Expanded(
+                child: Container(
+                    padding: EdgeInsets.fromLTRB(paddingXSM, 0, 0, 0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        getTitleLarge("What's New".tr, greybg),
+                        getActiveFilterText(),
+                      ],
+                    ))),
             SetControl(titleCtrl: titleCtrl),
           ],
         ),

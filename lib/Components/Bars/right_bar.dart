@@ -26,7 +26,7 @@ class RightBar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                    margin: EdgeInsets.only(bottom: paddingMD, left: marginSM),
+                    margin: EdgeInsets.only(left: marginMD),
                     child: Text("Notification".tr,
                         style: TextStyle(
                             color: whitebg,
