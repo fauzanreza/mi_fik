@@ -60,8 +60,8 @@ class StateRegisterPage extends State<RegisterPage> {
           if (selectedRole.isEmpty && !isChooseRole && indexRegis == 4) {
             showDialog<String>(
                 context: context,
-                builder: (BuildContext context) => const NoDataDialog(
-                    text: "You haven't selected any tag yet"));
+                builder: (BuildContext context) =>
+                    NoDataDialog(text: "You haven't selected any tag yet".tr));
           } else if (selectedRole.isNotEmpty &&
               !isChooseRole &&
               indexRegis == 4) {

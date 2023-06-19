@@ -140,20 +140,25 @@ class StateGetContent extends State<GetContent> with TickerProviderStateMixin {
 
       // Title
       if (searchingContent.trim() != "") {
-        title = ', Title like "$searchingContent"';
+        String titleText = "Title like".tr;
+
+        title = ', $titleText "$searchingContent"';
       }
 
       // Ordering
       if (sortingHomepageContent == "Desc") {
-        order = "Descending";
+        order = "Descending".tr;
       } else {
-        order = "Ascending";
+        order = "Ascending".tr;
       }
 
       // Date filtering
       if (filterDateStart != null && filterDateEnd != null) {
+        String filterText = "Start from".tr;
+        String untilText = "until".tr;
+
         date =
-            ", Start from ${DateFormat("dd MMM yy").format(filterDateStart)} until ${DateFormat("dd MMM yy").format(filterDateEnd)}";
+            ", $filterText ${DateFormat("dd MMM yy").format(filterDateStart)} $untilText ${DateFormat("dd MMM yy").format(filterDateEnd)}";
       }
 
       // Tags

@@ -91,7 +91,21 @@ class Dictionaries extends Translations {
           'Save Changes': 'Save Changes',
           'Unknown error, please contact the admin':
               'Unknown error, please contact the admin',
-          'Unknown User': 'Unknown User'
+          'Unknown User': 'Unknown User',
+          'Descending': 'Descending',
+          'Ascending': 'Ascending',
+          'Title like': 'Title like',
+          'Start from': 'Start from',
+          'until': 'until',
+          ' Saved': ' Saved',
+          'Version': 'Version',
+          'First Name': 'First Name',
+          'Last Name': 'Last Name',
+          'Valid Until': 'Valid Until',
+          'Frequently Asked Question': 'Frequently Asked Question',
+          "You haven't selected any tag yet":
+              "You haven't selected any tag yet",
+          'No role available': 'No role available'
         },
         'id_ID': {
           'Good Morning': 'Selamat Pagi',
@@ -115,7 +129,7 @@ class Dictionaries extends Translations {
           'Today': 'Hari ini',
           'Yesterday': 'Kemarin',
           'Tommorow': 'Besok',
-          'Role Saya': 'Role Saya',
+          'My Roles': 'Role Saya',
           'History': 'Riwayat',
           'My Question': 'Pertanyaan Saya',
           'About Us': 'Tentang Kami',
@@ -181,7 +195,21 @@ class Dictionaries extends Translations {
           'Save Changes': 'Simpan Perubahan',
           'Unknown error, please contact the admin':
               'Kegagalan sistem, segera hubungi admin',
-          'Unknown User': 'Tak dikenal'
+          'Unknown User': 'Tak dikenal',
+          'Descending': 'Menurun',
+          'Ascending': 'Menaik',
+          'Title like': 'Judul seperti',
+          'Start from': 'Mulai dari',
+          'until': 'hingga',
+          ' Saved': ' Tersimpan',
+          'Version': 'Versi',
+          'First Name': 'Nama Depan',
+          'Last Name': 'Nama Belakang',
+          'Valid Until': 'Valid Hingga',
+          'Frequently Asked Question': 'Pertanyaan Populer',
+          "You haven't selected any tag yet":
+              "Anda belum memilih tag sama sekali",
+          'No role available': 'Tidak ada role yang tersedia'
         },
       };
 }

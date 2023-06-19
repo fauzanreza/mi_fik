@@ -128,7 +128,7 @@ class StatePostTask extends State<PostTask> {
                       foregroundColor: primaryColor,
                     ),
                     onPressed: () {},
-                    child: const Text('Reminder :'),
+                    child: Text('Reminder'.tr),
                   ),
                   Container(
                       padding: EdgeInsets.only(left: paddingXSM),

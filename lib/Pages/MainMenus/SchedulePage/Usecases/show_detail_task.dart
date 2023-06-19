@@ -135,7 +135,7 @@ class StateDetailTask extends State<DetailTask> {
                       foregroundColor: primaryColor,
                     ),
                     onPressed: () {},
-                    child: const Text('Reminder :'),
+                    child: Text('Reminder'.tr),
                   ),
                   Container(
                       padding: EdgeInsets.only(left: paddingXSM),

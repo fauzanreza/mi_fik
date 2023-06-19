@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Models/queries.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Services/queries.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -86,7 +87,7 @@ class StateGetSavedStatus extends State<GetSavedStatus> {
               child: Icon(Icons.check, color: whitebg, size: iconMD),
             ),
             TextSpan(
-                text: " Saved",
+                text: " Saved".tr,
                 style: TextStyle(
                     color: whitebg,
                     fontWeight: FontWeight.w500,

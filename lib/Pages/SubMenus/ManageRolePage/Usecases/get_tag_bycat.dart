@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Modules/APIs/TagApi/Models/queries.dart';
 import 'package:mi_fik/Modules/APIs/TagApi/Services/queries.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
@@ -81,7 +82,7 @@ class StateGetAllTagByCategory extends State<GetAllTagByCategory> {
             }
           }).toList());
     } else {
-      return const Center(child: Text("No role available"));
+      return Center(child: Text("No role available".tr));
     }
   }
 }

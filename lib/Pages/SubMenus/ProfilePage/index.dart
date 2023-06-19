@@ -31,6 +31,7 @@ class StateProfilePage extends State<ProfilePage> {
   Widget build(BuildContext context) {
     double fullHeight = MediaQuery.of(context).size.height;
     //double fullWidth = MediaQuery.of(context).size.width;
+    String versionText = "Version".tr;
 
     return Scaffold(
         appBar: getAppbar("Profile".tr, () {
@@ -75,7 +76,7 @@ class StateProfilePage extends State<ProfilePage> {
                                   Icons.keyboard_arrow_right),
                               Container(
                                 margin: EdgeInsets.only(top: paddingMD * 2),
-                                child: Text("Version 1.0",
+                                child: Text("$versionText 1.0",
                                     style: TextStyle(fontSize: textSM)),
                               ),
                               getSignOutButtonWide(context)
