@@ -1,32 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
-import 'package:mi_fik/Modules/Models/Archive/Archive.dart';
-import 'package:mi_fik/Modules/Services/ArchieveServices.dart';
-import 'package:mi_fik/Modules/Variables/dummy.dart';
+import 'package:mi_fik/Components/Forms/input.dart';
+import 'package:mi_fik/Modules/APIs/ArchiveApi/Models/commands.dart';
+import 'package:mi_fik/Modules/APIs/ArchiveApi/Services/commands.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class EditArchive extends StatefulWidget {
-  EditArchive({Key key, this.id, this.archiveName}) : super(key: key);
-  String id;
-  String archiveName;
+  const EditArchive({Key key, this.slug, this.archiveName, this.archiveDesc})
+      : super(key: key);
+  final String slug;
+  final String archiveName;
+  final String archiveDesc;
 
   @override
-  _EditArchive createState() => _EditArchive();
+  StateEditArchive createState() => StateEditArchive();
 }
 
-class _EditArchive extends State<EditArchive> {
-  ArchieveService apiService;
-
-  //Initial variable
+class StateEditArchive extends State<EditArchive> {
+  ArchiveCommandsService apiService;
   final archiveNameCtrl = TextEditingController();
+  final archiveDescCtrl = TextEditingController();
+
+  @override
+  void dispose() {
+    archiveNameCtrl.dispose();
+    archiveDescCtrl.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
     super.initState();
-    apiService = ArchieveService();
+    apiService = ArchiveCommandsService();
   }
 
   @override
@@ -49,6 +58,7 @@ class _EditArchive extends State<EditArchive> {
           isScrollControlled: true,
           builder: (BuildContext context) {
             archiveNameCtrl.text = widget.archiveName;
+            archiveDescCtrl.text = widget.archiveDesc;
 
             return Padding(
               padding: MediaQuery.of(context).viewInsets,
@@ -62,97 +72,81 @@ class _EditArchive extends State<EditArchive> {
                       icon: const Icon(Icons.close),
                       tooltip: 'Back',
                       onPressed: () {
-                        archiveNameCtrl.clear();
-                        Navigator.pop(context);
+                        Get.back();
                       },
                     ),
                   ),
-                  Text("Edit Archive",
+                  Text("Edit Archive".tr,
                       style: TextStyle(
                           color: primaryColor,
                           fontWeight: FontWeight.bold,
                           fontSize: textLG)),
                   Container(
-                    margin: EdgeInsets.symmetric(vertical: paddingXSM),
-                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                    child: TextField(
-                      cursorColor: Colors.white,
-                      controller: archiveNameCtrl,
-                      maxLength: 75,
-                      autofocus: true,
-                      decoration: InputDecoration(
-                          hintText: 'Title',
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: const BorderSide(
-                                width: 1, color: Color(0xFFFB8C00)),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: const BorderSide(
-                                width: 1, color: Color(0xFFFB8C00)),
-                          ),
-                          fillColor: Colors.white,
-                          filled: true),
-                    ),
-                  ),
+                      alignment: Alignment.topLeft,
+                      padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
+                      child: Text("Archive Name".tr,
+                          style: TextStyle(color: blackbg, fontSize: textMD))),
+                  Container(
+                      padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
+                      child: getInputText(75, archiveNameCtrl, false)),
+                  Container(
+                      alignment: Alignment.topLeft,
+                      padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
+                      child: Text("Description (optional)".tr,
+                          style: TextStyle(color: blackbg, fontSize: textMD))),
+                  Container(
+                      padding: EdgeInsets.fromLTRB(
+                          paddingSM, 10, paddingSM, paddingMD * 2),
+                      child: getInputDesc(255, 3, archiveDescCtrl, false)),
                   SizedBox(
-                      // transform: Matrix4.translationValues(
-                      //     0.0, fullHeight * 0.94, 0.0),
                       width: fullWidth,
                       height: btnHeightMD,
                       child: ElevatedButton(
                         onPressed: () async {
-                          //Mapping.
-                          ArchiveModel archive = ArchiveModel(
-                              archieveName: archiveNameCtrl.text.toString(),
-                              idUser: passIdUser.toString());
+                          EditArchiveModel archive = EditArchiveModel(
+                              archiveName: archiveNameCtrl.text.trim(),
+                              archiveDesc: archiveDescCtrl.text.trim(),
+                              archiveNameOld: widget.archiveName);
 
-                          //Validator
-                          if (archive.archieveName.isNotEmpty) {
+                          if (archive.archiveName.isNotEmpty) {
                             apiService
-                                .editArchive(archive, widget.id)
-                                .then((isError) {
+                                .editArchive(archive, widget.slug)
+                                .then((response) {
                               setState(() => isLoading = false);
-                              if (isError) {
+                              var status = response[0]['message'];
+                              var body = response[0]['body'];
+
+                              if (status == "success") {
+                                selectedArchiveName = archive.archiveName;
+                                selectedArchiveDesc = archive.archiveDesc;
+                                Get.offAll(() => const BottomBar());
+
                                 showDialog<String>(
                                     context: context,
                                     builder: (BuildContext context) =>
-                                        FailedDialog(
-                                            text: "Edit archive failed"));
+                                        SuccessDialog(text: body));
                               } else {
                                 showDialog<String>(
                                     context: context,
                                     builder: (BuildContext context) =>
-                                        SuccessDialog(
-                                            text: "Edit archive success"));
-
-                                archiveNameCtrl.clear();
-                                selectedIndex = 0;
-                                selectedArchiveId = null;
-                                selectedArchiveName = null;
-
-                                //For now. need to be fixed soon!!!
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const BottomBar()),
-                                );
+                                        FailedDialog(
+                                            text: body, type: "addarchive"));
                               }
                             });
                           } else {
                             showDialog<String>(
                                 context: context,
-                                builder: (BuildContext context) => FailedDialog(
-                                    text:
-                                        "Create archive failed, field can't be empty"));
+                                builder: (BuildContext context) =>
+                                    const FailedDialog(
+                                        text:
+                                            "Edit archive failed, field can't be empty"));
                           }
                         },
                         style: ButtonStyle(
                           backgroundColor:
-                              MaterialStatePropertyAll<Color>(primaryColor),
+                              MaterialStatePropertyAll<Color>(successbg),
                         ),
-                        child: const Text('Done'),
+                        child: Text('Done'.tr),
                       ))
                 ],
               ),

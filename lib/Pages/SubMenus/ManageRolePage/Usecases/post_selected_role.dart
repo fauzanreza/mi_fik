@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
@@ -8,16 +9,19 @@ import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/Landings/RegisterPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/ManageRolePage/index.dart';
 
 class PostSelectedRole extends StatefulWidget {
-  const PostSelectedRole({Key key}) : super(key: key);
+  const PostSelectedRole({Key key, this.back, this.isLogged}) : super(key: key);
+  final back;
+  final bool isLogged;
 
   @override
-  _PostSelectedRole createState() => _PostSelectedRole();
+  StatePostSelectedRole createState() => StatePostSelectedRole();
 }
 
-class _PostSelectedRole extends State<PostSelectedRole> {
+class StatePostSelectedRole extends State<PostSelectedRole> {
   UserCommandsService apiService;
 
   @override
@@ -28,8 +32,8 @@ class _PostSelectedRole extends State<PostSelectedRole> {
 
   @override
   Widget build(BuildContext context) {
-    double fullHeight = MediaQuery.of(context).size.height;
-    double fullWidth = MediaQuery.of(context).size.width;
+    //double fullHeight = MediaQuery.of(context).size.height;
+    //double fullWidth = MediaQuery.of(context).size.width;
     bool isLoading = false;
 
     return ListView(
@@ -40,7 +44,11 @@ class _PostSelectedRole extends State<PostSelectedRole> {
             icon: const Icon(Icons.close),
             tooltip: 'Back',
             onPressed: () {
-              Navigator.pop(context);
+              if (widget.back == null) {
+                Get.back();
+              } else {
+                Get.offAll(() => const RolePage());
+              }
             },
           ),
         ),
@@ -53,13 +61,12 @@ class _PostSelectedRole extends State<PostSelectedRole> {
               children: [
                 InkWell(
                   onTap: () {
-                    setState(() {
-                      selectedRole.clear();
-                    });
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const RolePage()),
-                    );
+                    selectedRole.clear();
+                    if (widget.back == null) {
+                      Get.back();
+                    } else {
+                      Get.offAll(() => const RolePage());
+                    }
                   },
                   child: Container(
                     width: 105,
@@ -100,15 +107,21 @@ class _PostSelectedRole extends State<PostSelectedRole> {
                         var body = response[0]['body'];
 
                         if (status == "success") {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const BottomBar()),
-                          );
-                          showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  SuccessDialog(text: body));
+                          if (widget.isLogged) {
+                            Get.to(() => const BottomBar());
+                            showDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    SuccessDialog(text: body));
+                          } else {
+                            setState(() {
+                              indexRegis = 5;
+                              isFinishedRegis = true;
+                            });
+                            Get.offAll(() => const RegisterPage());
+                            Get.snackbar("Success", "Role request has sended",
+                                backgroundColor: whitebg);
+                          }
                         } else {
                           showDialog<String>(
                               context: context,
@@ -118,17 +131,13 @@ class _PostSelectedRole extends State<PostSelectedRole> {
                           setState(() {
                             selectedRole.clear();
                           });
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const RolePage()),
-                          );
+                          Get.to(() => const RolePage());
                         }
                       });
                     } else {
                       showDialog<String>(
                           context: context,
-                          builder: (BuildContext context) => FailedDialog(
+                          builder: (BuildContext context) => const FailedDialog(
                               text:
                                   "Request failed, you haven't chosen any tag yet",
                               type: "req"));
@@ -148,7 +157,7 @@ class _PostSelectedRole extends State<PostSelectedRole> {
                       children: [
                         Icon(Icons.send, size: iconSM + 3, color: whitebg),
                         const Spacer(),
-                        Text("Submit",
+                        Text("Submit".tr,
                             style: TextStyle(
                                 fontSize: textMD,
                                 fontWeight: FontWeight.w500,

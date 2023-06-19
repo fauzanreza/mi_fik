@@ -10,9 +10,9 @@ class ContentModel {
   //Nullable
   String contentDesc;
   String contentImage;
-  var contentTag;
-  var contentLoc;
-  var contentAttach;
+  String contentTag;
+  String contentLoc;
+  String contentAttach;
 
   //Properties
   String createdAt;

@@ -3,15 +3,16 @@ import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class FailedDialog extends StatefulWidget {
-  FailedDialog({Key key, this.text, this.type}) : super(key: key);
-  var text;
-  String type;
+  const FailedDialog({Key key, this.text, this.type}) : super(key: key);
+  // ignore: prefer_typing_uninitialized_variables
+  final text; // Can be string or list
+  final String type;
 
   @override
-  _FailedDialog createState() => _FailedDialog();
+  StateFailedDialog createState() => StateFailedDialog();
 }
 
-class _FailedDialog extends State<FailedDialog> {
+class StateFailedDialog extends State<FailedDialog> {
   @override
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;

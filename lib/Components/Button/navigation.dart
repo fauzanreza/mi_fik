@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Dialogs/sign_out_dialog.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
@@ -12,7 +13,7 @@ Widget getSignOutButtonWide(var ctx) {
       },
       child: Container(
         margin: EdgeInsets.symmetric(
-            vertical: paddingMD * 2, horizontal: paddingXSM - 5),
+            vertical: paddingMD, horizontal: paddingXSM - 5),
         padding:
             EdgeInsets.symmetric(horizontal: paddingMD, vertical: paddingSM),
         decoration: BoxDecoration(
@@ -21,7 +22,7 @@ Widget getSignOutButtonWide(var ctx) {
         child: Row(children: [
           Icon(Icons.logout, size: iconMD, color: whitebg),
           const Spacer(),
-          Text("Log-Out",
+          Text("Log-Out".tr,
               style: TextStyle(
                   fontSize: textMD,
                   fontWeight: FontWeight.w500,
@@ -53,4 +54,52 @@ getSpeeDialChild(String title, var ctx, var cls, var icon) {
       );
     },
   );
+}
+
+Widget getSideBarTile(double width, IconData icon, String title, var action) {
+  return Container(
+    width: width,
+    margin: EdgeInsets.only(left: paddingXSM, right: paddingXSM),
+    alignment: Alignment.centerLeft,
+    child: TextButton.icon(
+      onPressed: action,
+      icon: Icon(icon, size: textXLG, color: whitebg),
+      label: Text(title, style: TextStyle(color: whitebg, fontSize: textMD)),
+      style: ElevatedButton.styleFrom(),
+    ),
+  );
+}
+
+Widget outlinedButtonCustom(var action, String title, IconData icon) {
+  return TextButton.icon(
+    onPressed: action,
+    label: Text(title,
+        style: TextStyle(
+            color: dangerColor, fontSize: textMD, fontWeight: FontWeight.w500)),
+    icon: Icon(icon, color: dangerColor),
+  );
+}
+
+Widget getProfileButton(
+    var action, IconData iconStart, String title, IconData iconEnd) {
+  return InkWell(
+      onTap: action,
+      child: Card(
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: mainbg, width: 1),
+          borderRadius: BorderRadius.circular(6),
+        ),
+        child: Container(
+            padding: EdgeInsets.symmetric(
+                horizontal: paddingSM, vertical: paddingMD),
+            child: Row(
+              children: [
+                Icon(iconStart, color: greybg, size: iconLG),
+                const SizedBox(width: 35),
+                Text(title, style: TextStyle(fontSize: textMD - 1)),
+                const Spacer(),
+                Icon(iconEnd, color: greybg, size: iconLG),
+              ],
+            )),
+      ));
 }

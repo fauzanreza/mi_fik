@@ -1,23 +1,21 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/get_pdf.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
 
 class AttachButton extends StatefulWidget {
-  AttachButton({Key key, this.passAttach}) : super(key: key);
-  var passAttach;
+  const AttachButton({Key key, this.passAttach}) : super(key: key);
+  final List passAttach;
 
   @override
-  _AttachButton createState() => _AttachButton();
+  StateAttachButton createState() => StateAttachButton();
 }
 
-class _AttachButton extends State<AttachButton> {
-  final VideoPlayerController _controller = VideoPlayerController.network(
-    'https://firebasestorage.googleapis.com/v0/b/mifik-ad2d9.appspot.com/o/attachment_video%2F9ba74548-a6ec-497b-b943-64dcb77c578c?alt=media&token=72ec5618-2fd2-4596-abf8-2f6b06513b42',
-  );
-
+class StateAttachButton extends State<AttachButton> {
   @override
   Widget build(BuildContext context) {
     double fullWidth = MediaQuery.of(context).size.width;
@@ -34,8 +32,9 @@ class _AttachButton extends State<AttachButton> {
       }
 
       //Get button attachment by its type.
-      Widget getButton() {
-        if (attach['attach_type'] == "attachment_url") {
+      getButton() {
+        if (attach['attach_type'] == "attachment_url" &&
+            attach['attach_type'] == "attachment_doc") {
           return RichText(
             text: TextSpan(
               children: [
@@ -43,7 +42,7 @@ class _AttachButton extends State<AttachButton> {
                   child: Icon(Icons.link, size: iconMD, color: primaryColor),
                 ),
                 TextSpan(
-                    text: getButtonText(attach),
+                    text: " ${getButtonText(attach)}",
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
                         launchUrl(Uri.parse(attach['attach_url'].toString()));
@@ -51,7 +50,7 @@ class _AttachButton extends State<AttachButton> {
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
                         color: blackbg,
-                        fontSize: textSM)),
+                        fontSize: textSM + 2)),
               ],
             ),
           );
@@ -74,13 +73,35 @@ class _AttachButton extends State<AttachButton> {
             ),
           );
         } else if (attach['attach_type'] == "attachment_video") {
-          //Do something.
-
           return Chewie(
             controller: ChewieController(
-              videoPlayerController: _controller,
-              autoPlay: true,
-              looping: true,
+              videoPlayerController: VideoPlayerController.network(
+                attach['attach_url'].toString(),
+              ),
+              autoPlay: false,
+              looping: false,
+            ),
+          );
+        } else if (attach['attach_type'] == "attachment_doc") {
+          return RichText(
+            text: TextSpan(
+              children: [
+                WidgetSpan(
+                  child: Icon(Icons.picture_as_pdf,
+                      size: iconLG, color: primaryColor),
+                ),
+                TextSpan(
+                    text: " ${getButtonText(attach)}",
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        Get.to(AttachmentDocPage(
+                            url: attach['attach_url'].toString()));
+                      },
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: blackbg,
+                        fontSize: textSM + 2)),
+              ],
             ),
           );
         }

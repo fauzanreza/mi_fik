@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
@@ -12,13 +12,14 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class SetLocation extends StatefulWidget {
-  const SetLocation({Key key}) : super(key: key);
+  const SetLocation({Key key, this.locDetailCtrl}) : super(key: key);
+  final TextEditingController locDetailCtrl;
 
   @override
-  _SetLocation createState() => _SetLocation();
+  StateSetLocation createState() => StateSetLocation();
 }
 
-class _SetLocation extends State<SetLocation>
+class StateSetLocation extends State<SetLocation>
     with SingleTickerProviderStateMixin {
   //Initial variable.
   //_MapsPageState(passIdFakses);
@@ -28,7 +29,7 @@ class _SetLocation extends State<SetLocation>
   bool haspermission = false;
   LocationPermission permission;
   Position position;
-  double my_long = 0, my_lat = 0;
+  double mylong = 0, mylat = 0;
   StreamSubscription<Position> positionStream;
   Uint8List bytes;
 
@@ -47,17 +48,12 @@ class _SetLocation extends State<SetLocation>
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
-          showDialog<String>(
-              context: context,
-              builder: (BuildContext context) => FailedDialog(
-                  text: "Location permissions are denied", type: "addpost"));
+          Get.snackbar("Alert", "Location permissions are permently denied",
+              backgroundColor: whitebg);
         } else if (permission == LocationPermission.deniedForever) {
           if (permission == LocationPermission.denied) {
-            showDialog<String>(
-                context: context,
-                builder: (BuildContext context) => FailedDialog(
-                    text: "Location permissions are permently denied",
-                    type: "addpost"));
+            Get.snackbar("Alert", "Location permissions are permently denied",
+                backgroundColor: whitebg);
           }
         } else {
           haspermission = true;
@@ -73,11 +69,8 @@ class _SetLocation extends State<SetLocation>
       }
     } else {
       if (permission == LocationPermission.denied) {
-        showDialog<String>(
-            context: context,
-            builder: (BuildContext context) => FailedDialog(
-                text: "GPS Service is not enabled, turn on GPS location",
-                type: "addpost"));
+        Get.snackbar(
+            "Alert", "GPS Service is not enabled, turn on GPS location");
       }
     }
 
@@ -88,8 +81,8 @@ class _SetLocation extends State<SetLocation>
     position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
 
-    my_long = position.longitude;
-    my_lat = position.latitude;
+    mylong = position.longitude;
+    mylat = position.latitude;
 
     // setState(() {
     //   //refresh UI
@@ -103,8 +96,8 @@ class _SetLocation extends State<SetLocation>
     StreamSubscription<Position> positionStream =
         Geolocator.getPositionStream(locationSettings: locationSettings)
             .listen((Position position) {
-      my_long = position.longitude;
-      my_lat = position.latitude;
+      mylong = position.longitude;
+      mylat = position.latitude;
 
       setState(() {});
     });
@@ -130,7 +123,7 @@ class _SetLocation extends State<SetLocation>
 
     //Maps starting point.
     final _initialCameraPosition = CameraPosition(
-      target: LatLng(my_lat, my_long),
+      target: LatLng(mylat, mylong),
       zoom: 14,
     );
 
@@ -166,6 +159,7 @@ class _SetLocation extends State<SetLocation>
                         child: GoogleMap(
                           myLocationButtonEnabled: false,
                           zoomControlsEnabled: false,
+                          myLocationEnabled: true,
                           initialCameraPosition: _initialCameraPosition,
                           onMapCreated: (controller) =>
                               _googleMapController = controller,
@@ -177,8 +171,8 @@ class _SetLocation extends State<SetLocation>
                               setState(() {
                                 _coordinate = Marker(
                                   markerId: const MarkerId('origin'),
-                                  infoWindow: const InfoWindow(
-                                      title: 'Selected Location'),
+                                  infoWindow:
+                                      InfoWindow(title: 'Selected Location'.tr),
                                   icon: BitmapDescriptor.defaultMarkerWithHue(
                                       BitmapDescriptor.hueOrange),
                                   position: pos,
@@ -190,35 +184,68 @@ class _SetLocation extends State<SetLocation>
                           }),
                         ),
                       ),
+                      SizedBox(height: paddingMD),
                       Container(
-                          padding: EdgeInsets.zero,
-                          margin: EdgeInsets.only(top: paddingMD),
+                          alignment: Alignment.centerLeft,
+                          child: getSubTitleMedium(
+                              "Location Name", blackbg, TextAlign.start)),
+                      getInputText(75, widget.locDetailCtrl, false),
+                      SizedBox(
                           width: fullWidth,
-                          height: btnHeightMD - 10,
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              //....
-                            },
-                            style: ButtonStyle(
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              )),
-                              backgroundColor:
-                                  MaterialStatePropertyAll<Color>(primaryColor),
-                            ),
-                            child: const Text('Event Location'),
-                          )),
-                      getSubTitleMedium("Location Name", blackbg),
-                      getInputText(75, locDetailCtrl, false)
+                          child: Row(
+                            children: [
+                              Expanded(
+                                  child: Container(
+                                      width: double.infinity,
+                                      height: btnHeightMD,
+                                      margin: EdgeInsets.symmetric(
+                                          vertical: paddingXSM),
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          Get.back();
+                                        },
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStatePropertyAll<Color>(
+                                                  successbg),
+                                        ),
+                                        child: Text('Save Location'.tr),
+                                      ))),
+                              const SizedBox(width: 20),
+                              Container(
+                                  height: btnHeightMD,
+                                  margin: EdgeInsets.symmetric(
+                                      vertical: paddingXSM),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      _coordinate = null;
+                                      widget.locDetailCtrl.clear();
+                                      locCoordinateCtrl = null;
+                                      Get.back();
+                                    },
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStatePropertyAll<Color>(
+                                              dangerColor),
+                                    ),
+                                    child: Icon(
+                                      Icons.delete,
+                                      color: whitebg,
+                                      size: iconLG,
+                                    ),
+                                  ))
+                            ],
+                          ))
                     ]),
                   ));
             });
           }).then((_) => setState(() {})), //Check this again !!!!
-      icon: Icon(Icons.location_on_outlined, size: 22, color: primaryColor),
-      label: Text(getButtonText(locCoordinateCtrl, locDetailCtrl.text),
-          style: TextStyle(fontSize: textMD, color: primaryColor)),
+      icon: Icon(Icons.location_on_outlined, size: 22, color: semiblackbg),
+      label: Text(getButtonText(locCoordinateCtrl, widget.locDetailCtrl.text),
+          style: TextStyle(
+              fontSize: textMD,
+              color: semiblackbg,
+              fontWeight: FontWeight.w400)),
     );
   }
 

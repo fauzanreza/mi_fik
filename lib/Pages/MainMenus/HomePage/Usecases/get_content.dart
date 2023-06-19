@@ -1,50 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Container/content.dart';
+import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Skeletons/content_1.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
+import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/query_contents.dart';
+import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/MainMenus/HomePage/Usecases/set_control.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/index.dart';
 
 class GetContent extends StatefulWidget {
-  const GetContent({Key key}) : super(key: key);
+  const GetContent({Key key, this.page}) : super(key: key);
+  final int page;
 
   @override
-  _GetContent createState() => _GetContent();
+  StateGetContent createState() => StateGetContent();
 }
 
-class _GetContent extends State<GetContent> with TickerProviderStateMixin {
-  ContentQueriesService apiService;
+class StateGetContent extends State<GetContent> with TickerProviderStateMixin {
+  ContentQueriesService queryService;
+  ContentCommandsService commandService;
+
   //Initial variable
   final titleCtrl = TextEditingController();
-  DateTime dateStartCtrl;
-  DateTime dateEndCtrl;
 
   @override
   void initState() {
     super.initState();
-    apiService = ContentQueriesService();
-  }
-
-  // void updateSorting(String newValue) {
-  //   setState(() {
-  //     sortingHomepageContent = newValue;
-  //   });
-  // }
-
-  void updateDateStart(DateTime newValue) {
-    setState(() {
-      dateStartCtrl = newValue;
-    });
-  }
-
-  void updateDateEnd(DateTime newValue) {
-    setState(() {
-      dateEndCtrl = newValue;
-    });
+    queryService = ContentQueriesService();
+    commandService = ContentCommandsService();
   }
 
   @override
@@ -55,8 +44,12 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
-        future: apiService.getAllContentHeader(
-            "all", sortingHomepageContent, "all", " ", 1),
+        future: queryService.getAllContentHeader(
+            getTagFilterContent(selectedTagFilterContent),
+            sortingHomepageContent,
+            getWhereDateFilter(filterDateStart, filterDateEnd),
+            getFindFilter(searchingContent),
+            widget.page),
         builder: (BuildContext context,
             AsyncSnapshot<List<ContentHeaderModel>> snapshot) {
           if (snapshot.hasError) {
@@ -76,8 +69,67 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
   }
 
   Widget _buildListView(List<ContentHeaderModel> contents) {
-    //double fullHeight = MediaQuery.of(context).size.height;
+    double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
+
+    Widget getData(List<ContentHeaderModel> contents) {
+      bool isLoading;
+      if (contents != null) {
+        return Container(
+            constraints: BoxConstraints(minHeight: fullHeight * 0.8),
+            child: Column(
+                children: contents.map((content) {
+              return SizedBox(
+                  width: fullWidth,
+                  child: IntrinsicHeight(
+                    child: Stack(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.symmetric(
+                              horizontal: fullWidth * 0.03),
+                          width: 2.5,
+                          color: primaryColor,
+                        ),
+
+                        // Open content w/ full container
+                        GestureDetector(
+                            onTap: () {
+                              commandService
+                                  .postContentView(content.slugName)
+                                  .then((response) {
+                                setState(() => isLoading = false);
+                                var status = response[0]['message'];
+                                var body = response[0]['body'];
+
+                                if (status == "success") {
+                                  Get.to(() =>
+                                      DetailPage(passSlug: content.slugName));
+                                } else {
+                                  showDialog<String>(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          FailedDialog(
+                                              text: body, type: "openevent"));
+                                }
+                              });
+
+                              passSlugContent = content.slugName;
+                            },
+                            child: GetHomePageEventContainer(
+                                width: fullWidth,
+                                content: content,
+                                servc: commandService))
+                      ],
+                    ),
+                  ));
+            }).toList()));
+      } else {
+        return SizedBox(
+            height: fullHeight * 0.7,
+            child: getMessageImageNoData("assets/icon/nodata2.png",
+                "Sorry but we not found specific event", fullWidth));
+      }
+    }
 
     return Column(children: [
       Container(
@@ -86,69 +138,13 @@ class _GetContent extends State<GetContent> with TickerProviderStateMixin {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            getTitleLarge("What's New", greybg),
+            getTitleLarge("What's New".tr, greybg),
             const Spacer(),
-            // SortingButton(
-            //   active: sortingHomepageContent,
-            //   action: updateSorting,
-            // ),
-            ControlPanel(
-                titleCtrl: titleCtrl,
-                setDateStartCtrl: updateDateStart,
-                setDateEndCtrl: updateDateEnd,
-                dateStart: dateStartCtrl,
-                dateEnd: dateEndCtrl)
+            SetControl(titleCtrl: titleCtrl),
           ],
         ),
       ),
-      Column(
-          children: contents.map((content) {
-        return SizedBox(
-            width: fullWidth,
-            child: IntrinsicHeight(
-              child: Stack(
-                children: [
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: fullWidth * 0.03),
-                    width: 2.5,
-                    color: primaryColor,
-                  ),
-
-                  //    CONTENT DOT????
-
-                  // Container(
-                  //   width: 20,
-                  //   margin: EdgeInsets.symmetric(
-                  //       horizontal: fullWidth * 0.01),
-                  //   transform: Matrix4.translationValues(
-                  //       0.0, -15.0, 0.0),
-                  //   decoration: BoxDecoration(
-                  //       color: mainbg,
-                  //       shape: BoxShape.circle,
-                  //       border: Border.all(
-                  //         color: primaryColor,
-                  //         width: 2.5,
-                  //       )),
-                  // ),
-
-                  // Open content w/ full container
-                  GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  DetailPage(passSlug: content.slugName)),
-                        );
-
-                        passSlugContent = content.slugName;
-                      },
-                      child: GetHomePageEventContainer(
-                          width: fullWidth, content: content))
-                ],
-              ),
-            ));
-      }).toList())
+      getData(contents)
     ]);
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Forms/tag_picker.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -10,10 +11,10 @@ class ChooseTag extends StatefulWidget {
   const ChooseTag({Key key}) : super(key: key);
 
   @override
-  _ChooseTag createState() => _ChooseTag();
+  StateChooseTag createState() => StateChooseTag();
 }
 
-class _ChooseTag extends State<ChooseTag> {
+class StateChooseTag extends State<ChooseTag> {
   int pageTag = 1;
 
   Future<Role> getToken() async {
@@ -29,7 +30,7 @@ class _ChooseTag extends State<ChooseTag> {
   @override
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
-    double fullWidth = MediaQuery.of(context).size.width;
+    //double fullWidth = MediaQuery.of(context).size.width;
 
     Widget getControlButton(type) {
       if (type == "more") {
@@ -44,7 +45,7 @@ class _ChooseTag extends State<ChooseTag> {
               },
               icon: Icon(Icons.navigate_next, color: primaryColor),
               label: Text(
-                "More",
+                "More".tr,
                 style: TextStyle(color: primaryColor),
               ),
             ));
@@ -59,7 +60,7 @@ class _ChooseTag extends State<ChooseTag> {
               },
               icon: Icon(Icons.navigate_before, color: primaryColor),
               label: Text(
-                "Previous",
+                "Previous".tr,
                 style: TextStyle(color: primaryColor),
               ),
             ));
@@ -117,9 +118,9 @@ class _ChooseTag extends State<ChooseTag> {
                   ),
                   Row(
                     children: [
-                      getControlButton("previous"),
+                      getControlButton("previous".tr),
                       const Spacer(),
-                      getControlButton("more"),
+                      getControlButton("more".tr),
                     ],
                   ),
                   TagSelectedArea(

@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
-Widget getUploadDateWidget(date) {
+Widget getUploadDateWidget(DateTime date) {
   //Initial variable.
   final now = DateTime.now();
   final today = DateTime(now.year, now.month, now.day);
   final justNowHour = DateTime(now.hour);
   final justNowMinute = DateFormat("mm").format(now);
   final yesterday = DateTime(now.year, now.month, now.day - 1);
+  date = DateTime.parse(
+      getLocalConvertedDate(DateFormat('yyyy-MM-dd HH:mm:ss').format(date)));
   final content = DateTime(date.year, date.month, date.day);
   final contentHour = DateTime(date.hour);
   final contentMinute = DateFormat("mm").format(date);
@@ -55,21 +58,29 @@ Widget getViewWidget(total) {
 }
 
 getImageHeader(url) {
-  if (url.trim() != "" && url != "null") {
+  if (url != null && url != "null") {
     return NetworkImage(url);
   } else {
-    return const AssetImage('assets/content/content-2.jpg');
+    return const AssetImage('assets/icon/default_content.jpg');
   }
 }
 
-Widget getDescHeaderWidget(desc) {
+getImageUser(url) {
+  if (url != null && url != "null") {
+    return NetworkImage(url);
+  } else {
+    return const AssetImage('assets/icon/default_lecturer.png');
+  }
+}
+
+Widget getDescHeaderWidget(String desc, Color clr) {
   if (desc.trim() != "" && desc != "null") {
     return Container(
         margin: const EdgeInsets.only(top: 5),
         child: Text(removeHtmlTags(desc),
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(color: blackbg, fontSize: textSM)));
+            style: TextStyle(color: clr, fontSize: textSM)));
   } else {
     return Container(
         margin: const EdgeInsets.only(top: 5),
@@ -77,9 +88,7 @@ Widget getDescHeaderWidget(desc) {
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
-                color: blackbg,
-                fontSize: textSM,
-                fontStyle: FontStyle.italic)));
+                color: clr, fontSize: textSM, fontStyle: FontStyle.italic)));
   }
 }
 
@@ -220,15 +229,12 @@ Widget getContentHour(dateStart, dateEnd) {
         children: [
           //Content date start & end
           WidgetSpan(
-            child: Icon(Icons.access_time, size: 22, color: primaryColor),
+            child: Icon(Icons.access_time, size: 20, color: blackbg),
           ),
           TextSpan(
               text:
-                  " ${DateFormat("hh:mm a").format(DateTime.parse(dateStart))} - ${DateFormat("hh:mm a").format(DateTime.parse(dateEnd))} WIB",
-              style: TextStyle(
-                  color: primaryColor,
-                  fontSize: textMD,
-                  fontWeight: FontWeight.w500)),
+                  " ${DateFormat("hh:mm a").format(DateTime.parse(dateStart))} - ${DateFormat("hh:mm a").format(DateTime.parse(dateEnd))}",
+              style: TextStyle(color: blackbg, fontSize: textMD)),
         ],
       ),
     );
@@ -301,7 +307,7 @@ Widget getPeriodDateWidget(dateStart, dateEnd) {
                   child: Icon(Icons.circle, size: 14, color: dangerColor),
                 ),
                 TextSpan(
-                    text: " Live",
+                    text: "Live".tr,
                     style: TextStyle(
                         color: dangerColor, fontWeight: FontWeight.w500)),
               ],

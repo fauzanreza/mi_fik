@@ -61,9 +61,25 @@ dependencies:
   shared_preferences: ^2.1.0
   flutter_widget_from_html: ^0.10.0
 
+  # Notif
+  flutter_local_notifications: ^12.0.3
+  firebase_messaging: ^13.0.1
+
   # Others
   intl: ^0.17.0
   url_launcher: ^6.1.5
+  firebase_crashlytics: ^2.9.0
+  full_screen_menu: ^1.0.0
+  image_picker: ^0.8.5+3
+  geocoding: ^2.1.0
+  uuid: ^3.0.7
+  provider: ^6.0.5
+  get: ^4.6.5
+  font_awesome_flutter: ^10.4.0
+  pdfx: ^2.3.0
+  internet_file: ^1.2.0
+  onboarding: ^3.1.0
+  get_storage: ^2.1.1
 
 dev_dependencies:
   flutter_test:

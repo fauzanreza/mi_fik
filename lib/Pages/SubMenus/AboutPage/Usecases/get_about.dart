@@ -9,10 +9,10 @@ class GetAbout extends StatefulWidget {
   const GetAbout({Key key}) : super(key: key);
 
   @override
-  _GetAbout createState() => _GetAbout();
+  StateGetAbout createState() => StateGetAbout();
 }
 
-class _GetAbout extends State<GetAbout> {
+class StateGetAbout extends State<GetAbout> {
   HelpQueriesService apiQuery;
 
   @override

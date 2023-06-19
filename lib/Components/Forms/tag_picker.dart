@@ -4,22 +4,22 @@ import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class TagSelectedArea extends StatefulWidget {
-  TagSelectedArea({Key key, this.tag, this.type, this.action})
+  const TagSelectedArea({Key key, this.tag, this.type, this.action})
       : super(key: key);
-  var tag;
-  String type;
+  final List tag;
+  final String type;
   final Function action;
 
   @override
-  _TagSelectedArea createState() => _TagSelectedArea();
+  StateTagSelectedArea createState() => StateTagSelectedArea();
 }
 
-class _TagSelectedArea extends State<TagSelectedArea> {
+class StateTagSelectedArea extends State<TagSelectedArea> {
   @override
   Widget build(BuildContext context) {
     double fullWidth = MediaQuery.of(context).size.width;
 
-    if (widget.tag.length != 0) {
+    if (widget.tag.isNotEmpty) {
       return Container(
           margin: EdgeInsets.only(top: 10, right: paddingMD),
           width: fullWidth,
@@ -53,12 +53,18 @@ class _TagSelectedArea extends State<TagSelectedArea> {
                             selectedRole.removeWhere(
                                 (item) => item['slug_name'] == tg['slug_name']);
                           });
-                          widget.action();
+                          //widget.action();
+                        } else if (widget.type == "filter") {
+                          setState(() {
+                            selectedTagFilterContent.removeWhere(
+                                (item) => item['slug_name'] == tg['slug_name']);
+                          });
+                          // widget.action(); i dont know why tf this shit can run as the others
                         }
                       },
                       icon: Icon(
                         Icons.close,
-                        color: Colors.red.withOpacity(0.7),
+                        color: dangerColor.withOpacity(0.7),
                       ),
                       label: Text(tg['tag_name'],
                           style:

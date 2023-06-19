@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/Usecases/get_notif.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
@@ -25,26 +26,15 @@ class RightBar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                    margin: EdgeInsets.only(bottom: marginMD, left: marginSM),
-                    child: Text("Notification",
+                    margin: EdgeInsets.only(bottom: paddingMD, left: marginSM),
+                    child: Text("Notification".tr,
                         style: TextStyle(
                             color: whitebg,
                             fontSize: textLG,
                             fontWeight: FontWeight.w500))),
-                Expanded(
-                    child: ListView(
-                  padding: EdgeInsets.zero,
-                  children: [
-                    Container(
-                        margin: const EdgeInsets.all(10),
-                        child: Text("Today",
-                            style: TextStyle(
-                                color: whitebg,
-                                fontSize: textMD,
-                                fontWeight: FontWeight.w500))),
-                    const GetNotification()
-                  ],
-                ))
+                const Expanded(
+                  child: GetNotification(),
+                )
               ],
             )));
   }

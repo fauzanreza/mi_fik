@@ -8,10 +8,10 @@ class GetAllTagCategory extends StatefulWidget {
   const GetAllTagCategory({Key key}) : super(key: key);
 
   @override
-  _GetAllTagCategory createState() => _GetAllTagCategory();
+  StateGetAllTagCategory createState() => StateGetAllTagCategory();
 }
 
-class _GetAllTagCategory extends State<GetAllTagCategory> {
+class StateGetAllTagCategory extends State<GetAllTagCategory> {
   TagQueriesService apiQuery;
 
   @override
@@ -48,16 +48,13 @@ class _GetAllTagCategory extends State<GetAllTagCategory> {
 
   Widget _buildListView(List<TagCategoryModel> contents) {
     //double fullHeight = MediaQuery.of(context).size.height;
-    double fullWidth = MediaQuery.of(context).size.width;
+    //double fullWidth = MediaQuery.of(context).size.width;
 
     return ListView.builder(
         itemCount: contents.length,
         padding: const EdgeInsets.all(10),
         itemBuilder: (context, index) {
           return Container(
-            margin: EdgeInsets.only(
-                left: paddingSM, right: paddingSM, top: paddingSM),
-            padding: EdgeInsets.all(paddingSM),
             decoration: BoxDecoration(
                 color: whitebg,
                 borderRadius: const BorderRadius.all(Radius.circular(10))),

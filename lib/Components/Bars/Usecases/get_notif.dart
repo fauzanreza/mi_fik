@@ -9,12 +9,18 @@ class GetNotification extends StatefulWidget {
   const GetNotification({Key key}) : super(key: key);
 
   @override
-  _GetNotification createState() => _GetNotification();
+  StateGetNotification createState() => StateGetNotification();
 }
 
-class _GetNotification extends State<GetNotification>
+class StateGetNotification extends State<GetNotification>
     with TickerProviderStateMixin {
   NotificationQueriesService apiService;
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
+
+  Future<void> refreshData() async {
+    setState(() {});
+  }
 
   @override
   void initState() {
@@ -51,63 +57,47 @@ class _GetNotification extends State<GetNotification>
 
   Widget _buildListView(List<NotificationModel> notifs) {
     //double fullHeight = MediaQuery.of(context).size.height;
-    double fullWidth = MediaQuery.of(context).size.width;
+    //double fullWidth = MediaQuery.of(context).size.width;
 
-    return Column(
-        children: notifs.map((notif) {
-      return Container(
-          margin: EdgeInsets.only(
-              bottom: paddingXSM, left: paddingXSM, right: paddingXSM),
-          padding: EdgeInsets.all(paddingSM),
-          decoration: BoxDecoration(
-            color: whitebg,
-            borderRadius: BorderRadius.all(roundedMd),
-          ),
-          child: Stack(
-            children: [
-              SizedBox(
-                width: fullWidth * 0.6, //Check this ...
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                              text: getNotifSender(
-                                  notif.adminName, notif.userName),
-                              style: TextStyle(
-                                  color: blackbg,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: textSM + 1)),
-                          TextSpan(
-                              text: ' ${notif.notifBody}',
-                              style: TextStyle(
-                                  color: blackbg, fontSize: textSM + 1)),
-                        ],
-                      ),
+    return RefreshIndicator(
+        key: _refreshIndicatorKey,
+        onRefresh: refreshData,
+        child: ListView.builder(
+            itemCount: notifs.length,
+            padding: EdgeInsets.symmetric(
+                vertical: paddingMD, horizontal: paddingXSM / 2),
+            itemBuilder: (context, index) {
+              return Container(
+                  margin: EdgeInsets.only(
+                      bottom: paddingXSM, left: paddingSM, right: paddingSM),
+                  padding: EdgeInsets.symmetric(vertical: paddingXSM),
+                  decoration: BoxDecoration(
+                    color: whitebg,
+                    borderRadius: BorderRadius.all(roundedMd),
+                  ),
+                  child: ListTile(
+                    title: Text(notifs[index].notifTitle,
+                        style: TextStyle(
+                            color: blackbg,
+                            fontWeight: FontWeight.bold,
+                            fontSize: textSM + 1)),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(notifs[index].notifBody,
+                            style: TextStyle(color: blackbg, fontSize: textSM)),
+                        const SizedBox(height: 5),
+                        Text(getItemTimeString(notifs[index].createdAt),
+                            style: TextStyle(color: greybg, fontSize: textSM))
+                      ],
                     ),
-                    Container(
-                        margin: EdgeInsets.symmetric(vertical: marginMT * 0.4),
-                        child: Text(getItemTimeString(notif.createdAt),
-                            style:
-                                TextStyle(color: greybg, fontSize: textSM + 1)))
-                  ],
-                ),
-              ),
-              Container(
-                transform:
-                    Matrix4.translationValues(fullWidth * 0.525, 0.0, 0.0),
-                child: IconButton(
-                  icon: Icon(Icons.chevron_right_rounded,
-                      color: primaryColor, size: 32),
-                  tooltip: 'See Detail',
-                  onPressed: () {},
-                ),
-              ),
-            ],
-          ));
-    }).toList());
+                    trailing: IconButton(
+                      icon: Icon(Icons.chevron_right_rounded,
+                          color: primaryColor, size: iconXL),
+                      tooltip: 'See Detail',
+                      onPressed: () {},
+                    ),
+                  ));
+            }));
   }
 }

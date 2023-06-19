@@ -9,7 +9,12 @@ class ShowCalendar extends StatelessWidget {
   final Function(DateTime, DateTime) setActionday;
 
   const ShowCalendar(
-      {this.active, this.format, this.setActionformat, this.setActionday});
+      {Key key,
+      this.active,
+      this.format,
+      this.setActionformat,
+      this.setActionday})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +47,12 @@ class ShowCalendar extends StatelessWidget {
           shape: BoxShape.circle,
         ),
         todayTextStyle: TextStyle(color: primaryColor),
-        selectedTextStyle: const TextStyle(color: Colors.white),
-        holidayTextStyle: const TextStyle(color: Colors.red),
-        weekendTextStyle: const TextStyle(color: Colors.red),
+        selectedTextStyle: TextStyle(color: whitebg),
+        holidayTextStyle: TextStyle(color: dangerColor),
+        weekendTextStyle: TextStyle(color: dangerColor),
       ),
-      daysOfWeekStyle: const DaysOfWeekStyle(
-        weekendStyle: TextStyle(color: Colors.red),
+      daysOfWeekStyle: DaysOfWeekStyle(
+        weekendStyle: TextStyle(color: dangerColor),
       ),
       headerStyle: const HeaderStyle(
         formatButtonVisible: false,

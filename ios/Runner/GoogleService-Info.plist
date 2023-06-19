@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>38302719013-i50pbvolrpdb4hkc3m0r4jd8k8ctgc7g.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.38302719013-i50pbvolrpdb4hkc3m0r4jd8k8ctgc7g</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAfEBYpASgyX5bWltIHOq1qjFuJQXwM8qg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>38302719013</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.miFik</string>
+	<key>PROJECT_ID</key>
+	<string>mifik-83723</string>
+	<key>STORAGE_BUCKET</key>
+	<string>mifik-83723.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:38302719013:ios:6c89c4d61110c555d573cc</string>
+</dict>
+</plist>

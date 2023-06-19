@@ -19,8 +19,9 @@ Widget getTitleJumbo(String title, var color) {
   );
 }
 
-Widget getSubTitleMedium(String title, var color) {
+Widget getSubTitleMedium(String title, var color, TextAlign align) {
   return Text(title,
+      textAlign: align,
       style: TextStyle(
           color: color, fontSize: textMD, fontWeight: FontWeight.w500));
 }

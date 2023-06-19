@@ -45,10 +45,6 @@ class CirclePainter extends CustomPainter {
         Offset(size.width * 0.07, size.height * 0.25), 38, paint2);
     canvas.drawCircle(
         Offset(size.width * 0.07, size.height * 0.25), 36.5, paint1);
-
-    // paint.color = const Color(0xFF0a0c10);
-
-    // canvas.drawPath(path, paint);
   }
 
   @override
@@ -148,10 +144,6 @@ class CirclePainterSide extends CustomPainter {
         Offset(size.width * 0.13, size.height * 0.88), 38, paint2);
     canvas.drawCircle(
         Offset(size.width * 0.13, size.height * 0.88), 36.5, paint1);
-
-    // paint.color = const Color(0xFF0a0c10);
-
-    // canvas.drawPath(path, paint);
   }
 
   @override
@@ -204,10 +196,6 @@ class CirclePainterSideWhite extends CustomPainter {
         Offset(size.width * 0.06, size.height * 0.88), 38, paint2);
     canvas.drawCircle(
         Offset(size.width * 0.06, size.height * 0.88), 36.5, paint1);
-
-    // paint.color = const Color(0xFF0a0c10);
-
-    // canvas.drawPath(path, paint);
   }
 
   @override
