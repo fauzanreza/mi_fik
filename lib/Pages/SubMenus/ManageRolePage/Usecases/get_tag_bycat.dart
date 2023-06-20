@@ -47,9 +47,18 @@ class StateGetAllTagByCategory extends State<GetAllTagByCategory> {
             if (contain.isEmpty || selectedRole.isEmpty) {
               return ElevatedButton(
                 onPressed: () {
+                  String tagNameState = "";
+                  String slugState = "";
+                  if (isModel) {
+                    tagNameState = e.tagName;
+                    slugState = e.slug;
+                  } else {
+                    tagNameState = e['tag_name'];
+                    slugState = e['slug_name'];
+                  }
                   setState(() {
-                    selectedRole
-                        .add({"slug_name": e.slug, "tag_name": tagName});
+                    selectedRole.add(
+                        {"slug_name": slugState, "tag_name": tagNameState});
                   });
                 },
                 style: ButtonStyle(

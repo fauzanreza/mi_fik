@@ -22,7 +22,7 @@ class NoDataDialog extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(60),
+                borderRadius: roundedErrImage,
                 child: Image.asset('assets/icon/nodata.png',
                     width: fullWidth * 0.45),
               ),

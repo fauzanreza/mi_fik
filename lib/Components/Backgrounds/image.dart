@@ -9,10 +9,10 @@ Widget getProfileImageSideBar(double width, double size, String url) {
       margin: EdgeInsets.all(paddingXSM),
       decoration: BoxDecoration(
         color: whitebg,
-        borderRadius: const BorderRadius.all(Radius.circular(100)),
+        borderRadius: BorderRadius.all(roundedCircle),
       ),
       child: ClipRRect(
-        borderRadius: const BorderRadius.all(Radius.circular(100)),
+        borderRadius: BorderRadius.all(roundedCircle),
         child: Image.network(url, width: width * size),
       ),
     );
@@ -22,10 +22,10 @@ Widget getProfileImageSideBar(double width, double size, String url) {
       margin: EdgeInsets.all(paddingXSM),
       decoration: BoxDecoration(
         color: whitebg,
-        borderRadius: const BorderRadius.all(Radius.circular(100)),
+        borderRadius: BorderRadius.all(roundedCircle),
       ),
       child: ClipRRect(
-        borderRadius: const BorderRadius.all(Radius.circular(100)),
+        borderRadius: BorderRadius.all(roundedCircle),
         child: Image.asset('assets/icon/default_lecturer.png',
             width: width * size),
       ),
@@ -39,15 +39,14 @@ Widget getProfileImageContent(var url) {
       margin: const EdgeInsets.symmetric(horizontal: 10.0),
       width: iconXL,
       child: ClipRRect(
-          borderRadius: BorderRadius.circular(25),
-          child: Image.network(url)), //For now.
+          borderRadius: roundedImage, child: Image.network(url)), //For now.
     );
   } else {
     return Container(
         margin: const EdgeInsets.symmetric(horizontal: 10.0),
         width: iconXL,
         child: ClipRRect(
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: roundedImage,
             child: Image.asset('assets/icon/default_lecturer.png')));
   }
 }

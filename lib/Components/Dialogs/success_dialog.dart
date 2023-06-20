@@ -21,7 +21,7 @@ class SuccessDialog extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(60),
+                borderRadius: roundedErrImage,
                 child: Image.asset('assets/icon/Success.png', width: 120),
               ),
               Container(

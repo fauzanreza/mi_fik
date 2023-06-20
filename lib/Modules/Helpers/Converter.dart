@@ -279,7 +279,6 @@ Widget getImageProfileContent(adminUname, userUname, adminImg, userImg) {
   return Container(
     margin: const EdgeInsets.symmetric(horizontal: 10.0),
     width: iconXL,
-    child: ClipRRect(
-        borderRadius: BorderRadius.circular(25), child: url), //For now.
+    child: ClipRRect(borderRadius: roundedImage, child: url), //For now.
   );
 }

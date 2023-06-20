@@ -72,8 +72,7 @@ class StateWaitingPage extends State<WaitingPage> {
                         decoration: BoxDecoration(
                             color: successbg,
                             border: Border.all(color: whitebg, width: 2),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(100))),
+                            borderRadius: BorderRadius.all(roundedCircle)),
                         child: IconButton(
                           icon: const Icon(Icons.mail),
                           color: whitebg,

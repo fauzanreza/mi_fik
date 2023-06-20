@@ -29,7 +29,7 @@ class StateFailedDialog extends State<FailedDialog> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(60),
+                borderRadius: roundedErrImage,
                 child: Image.asset('assets/icon/Failed.png', width: 120),
               ),
               Container(
