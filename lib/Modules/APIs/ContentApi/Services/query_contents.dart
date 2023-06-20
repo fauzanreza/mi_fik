@@ -32,7 +32,7 @@ class ContentQueriesService {
         return contentHeaderModelFromJsonWPaginate(
             prefs.getString("content-sess"));
       } else {
-        return contentHeaderModelFromJsonWPaginate(null);
+        return null;
       }
     } else {
       if (isOffline) {
@@ -81,7 +81,7 @@ class ContentQueriesService {
         return contentDetailModelFromJson(
             prefs.getString("content-detail-$slug-sess"));
       } else {
-        return contentDetailModelFromJson(null);
+        return null;
       }
     } else {
       if (isOffline) {
@@ -129,7 +129,7 @@ class ContentQueriesService {
         return scheduleModelFromJsonWPaginate(
             prefs.getString("schedule-$dateStr-sess"));
       } else {
-        return scheduleModelFromJsonWPaginate(null);
+        return null;
       }
     } else {
       if (isOffline) {
@@ -178,7 +178,7 @@ class ContentQueriesService {
         return scheduleTotalModelFromJson(
             prefs.getString("scheduletotal-$dateStr-sess"));
       } else {
-        return scheduleTotalModelFromJson(null);
+        return null;
       }
     } else {
       if (isOffline) {

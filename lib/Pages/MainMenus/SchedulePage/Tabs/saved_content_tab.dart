@@ -216,7 +216,7 @@ class StateSavedContent extends State<SavedContent>
               alignment: Alignment.center,
               height: fullHeight * 0.7,
               child: getMessageImageNoData("assets/icon/nodata.png",
-                  "No event / task saved in this archive", fullWidth))
+                  "No event / task saved in this archive".tr, fullWidth))
         ],
       );
     }

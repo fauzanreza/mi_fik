@@ -29,7 +29,7 @@ class ArchiveQueriesService {
         return archiveModelFromJson(
             prefs.getString("archive-sess-$find-$type"));
       } else {
-        return archiveModelFromJson(null);
+        return null;
       }
     } else {
       if (isOffline) {
@@ -63,23 +63,46 @@ class ArchiveQueriesService {
 
   Future<List<ScheduleModel>> getArchiveContent(String slug) async {
     final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token_key');
-    final header = {
-      'Accept': 'application/json',
-      'Authorization': "Bearer $token",
-    };
-
-    final response = await client
-        .get(Uri.parse("$emuUrl/api/v1/archive/by/$slug"), headers: header);
-    if (response.statusCode == 200) {
-      return scheduleModelFromJsonWPaginate(response.body);
-    } else if (response.statusCode == 401) {
-      Get.offAll(() => const LoginPage());
-      Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
-          backgroundColor: whitebg);
-      return null;
+    final connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      if (prefs.containsKey("archivecontent-$slug-sess")) {
+        if (!isOffline) {
+          Get.snackbar(
+              "Warning".tr, "Lost connection, all data shown are local".tr,
+              backgroundColor: whitebg);
+          isOffline = true;
+        }
+        return scheduleModelFromJsonWPaginate(
+            prefs.getString("archivecontent-$slug-sess"));
+      } else {
+        return null;
+      }
     } else {
-      return null;
+      if (isOffline) {
+        Get.snackbar("Warning".tr, "Welcome back, all data are now realtime".tr,
+            backgroundColor: whitebg);
+        isOffline = false;
+      }
+
+      final token = prefs.getString('token_key');
+      final header = {
+        'Accept': 'application/json',
+        'Authorization': "Bearer $token",
+      };
+
+      final response = await client
+          .get(Uri.parse("$emuUrl/api/v1/archive/by/$slug"), headers: header);
+      if (response.statusCode == 200) {
+        prefs.setString("archivecontent-$slug-sess", response.body);
+        return scheduleModelFromJsonWPaginate(response.body);
+      } else if (response.statusCode == 401) {
+        Get.offAll(() => const LoginPage());
+        Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
+            backgroundColor: whitebg);
+        return null;
+      } else {
+        return null;
+      }
     }
   }
 }

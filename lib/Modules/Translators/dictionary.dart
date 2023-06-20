@@ -110,7 +110,16 @@ class Dictionaries extends Translations {
           'Lost connection, all data shown are local':
               'Lost connection, all data shown are local',
           'Welcome back, all data are now realtime':
-              'Welcome back, all data are now realtime'
+              'Welcome back, all data are now realtime',
+          'Help not found': 'Help not found',
+          'Failed to load data': 'Failed to load data',
+          'No event / task saved in this archive':
+              'No event / task saved in this archive',
+          "You haven't created any Archive": "You haven't created any Archive",
+          'No event / task for today, have a good rest':
+              'No event / task for today, have a good rest',
+          "Sorry but we not found specific event":
+              "Sorry but we not found specific event"
         },
         'id_ID': {
           'Good Morning': 'Selamat Pagi',
@@ -219,7 +228,15 @@ class Dictionaries extends Translations {
           'Lost connection, all data shown are local':
               'Koneksi gagal, data yang ditampilkan adalah lokal',
           'Welcome back, all data are now realtime':
-              'Selamat datang kembali, semua data kembali online'
+              'Selamat datang kembali, semua data kembali online',
+          'Help not found': 'Bantuan tidak ditemukan',
+          'Failed to load data': 'Gagal meload data',
+          'No event / task saved in this archive':
+              'Tidak ada event atau tugas yang tersimpan pada arsip',
+          "You haven't created any Archive": "Anda belum membuat arsip",
+          'No event / task for today, have a good rest':
+              'Tidak ada event atau tugas hari ini, silahkan beristirahat',
+          "Sorry but we not found specific event": "Maaf, event tidak ditemukan"
         },
       };
 }

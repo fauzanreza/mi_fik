@@ -138,7 +138,7 @@ class StateArchivePage extends State<ArchivePage> {
         return SizedBox(
             height: fullHeight * 0.7,
             child: getMessageImageNoData("assets/icon/nodata2.png",
-                "You haven't created any Archive", fullWidth));
+                "You haven't created any Archive".tr, fullWidth));
       }
     }
 

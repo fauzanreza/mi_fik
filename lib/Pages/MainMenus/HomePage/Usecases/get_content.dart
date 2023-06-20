@@ -125,10 +125,17 @@ class StateGetContent extends State<GetContent> with TickerProviderStateMixin {
                   ));
             }).toList()));
       } else {
-        return SizedBox(
-            height: fullHeight * 0.7,
-            child: getMessageImageNoData("assets/icon/nodata2.png",
-                "Sorry but we not found specific event", fullWidth));
+        if (isOffline) {
+          return SizedBox(
+              height: fullHeight * 0.7,
+              child: getMessageImageNoData("assets/icon/badnet.png",
+                  "Failed to load data".tr, fullWidth));
+        } else {
+          return SizedBox(
+              height: fullHeight * 0.7,
+              child: getMessageImageNoData("assets/icon/nodata2.png",
+                  "Sorry but we not found specific event".tr, fullWidth));
+        }
       }
     }
 

@@ -177,7 +177,7 @@ class StateGetMyFAQ extends State<GetMyFAQ> {
                 }
               }));
     } else {
-      return Center(child: getNoDataContainer("Message not found"));
+      return Center(child: getNoDataContainer("Message not found", 120));
     }
   }
 }
