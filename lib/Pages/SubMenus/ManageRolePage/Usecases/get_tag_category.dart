@@ -85,8 +85,10 @@ class StateGetAllTagCategory extends State<GetAllTagCategory> {
               contents = snapshot.data;
               var lst = [];
               for (var element in contents) {
-                lst.add(
-                    {"slug_name": element.slug, "dct_name": element.dctName});
+                if (element.slug != "general-role") {
+                  lst.add(
+                      {"slug_name": element.slug, "dct_name": element.dctName});
+                }
               }
 
               box.write("tag-cat", jsonEncode(lst));

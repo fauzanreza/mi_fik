@@ -119,7 +119,13 @@ class Dictionaries extends Translations {
           'No event / task for today, have a good rest':
               'No event / task for today, have a good rest',
           "Sorry but we not found specific event":
-              "Sorry but we not found specific event"
+              "Sorry but we not found specific event",
+          "Are you sure want to request remove":
+              "Are you sure want to request remove",
+          "Request failed, you haven't chosen any tag yet":
+              "Request failed, you haven't chosen any tag yet",
+          "Request failed, you can't remove general role":
+              "Request failed, you can't remove general role"
         },
         'id_ID': {
           'Good Morning': 'Selamat Pagi',
@@ -236,7 +242,14 @@ class Dictionaries extends Translations {
           "You haven't created any Archive": "Anda belum membuat arsip",
           'No event / task for today, have a good rest':
               'Tidak ada event atau tugas hari ini, silahkan beristirahat',
-          "Sorry but we not found specific event": "Maaf, event tidak ditemukan"
+          "Sorry but we not found specific event":
+              "Maaf, event tidak ditemukan",
+          "Are you sure want to request remove":
+              "Apakah Anda yakin ingin mengirim permintaan untuk menghapus",
+          "Request failed, you haven't chosen any tag yet":
+              "Permintaan role gagal, Anda sama sekali belum memilih",
+          "Request failed, you can't remove general role":
+              "Permintaan role gagal, role utama tidak boleh diubah"
         },
       };
 }

@@ -137,9 +137,10 @@ class StatePostSelectedRole extends State<PostSelectedRole> {
                     } else {
                       showDialog<String>(
                           context: context,
-                          builder: (BuildContext context) => const FailedDialog(
+                          builder: (BuildContext context) => FailedDialog(
                               text:
-                                  "Request failed, you haven't chosen any tag yet",
+                                  "Request failed, you haven't chosen any tag yet"
+                                      .tr,
                               type: "req"));
                     }
                   },
