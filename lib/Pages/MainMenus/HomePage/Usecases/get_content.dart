@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Container/content.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
@@ -124,11 +125,72 @@ class StateGetContent extends State<GetContent> with TickerProviderStateMixin {
                   ));
             }).toList()));
       } else {
-        return SizedBox(
-            height: fullHeight * 0.7,
-            child: getMessageImageNoData("assets/icon/nodata2.png",
-                "Sorry but we not found specific event", fullWidth));
+        if (isOffline) {
+          return SizedBox(
+              height: fullHeight * 0.7,
+              child: getMessageImageNoData("assets/icon/badnet.png",
+                  "Failed to load data".tr, fullWidth));
+        } else {
+          return SizedBox(
+              height: fullHeight * 0.7,
+              child: getMessageImageNoData("assets/icon/nodata2.png",
+                  "Sorry but we not found specific event".tr, fullWidth));
+        }
       }
+    }
+
+    Widget getActiveFilterText() {
+      String order = "";
+      String date = "";
+      String title = "";
+      String tags = "";
+
+      // Title
+      if (searchingContent.trim() != "") {
+        String titleText = "Title like".tr;
+
+        title = ', $titleText "$searchingContent"';
+      }
+
+      // Ordering
+      if (sortingHomepageContent == "Desc") {
+        order = "Descending".tr;
+      } else {
+        order = "Ascending".tr;
+      }
+
+      // Date filtering
+      if (filterDateStart != null && filterDateEnd != null) {
+        String filterText = "Start from".tr;
+        String untilText = "until".tr;
+
+        date =
+            ", $filterText ${DateFormat("dd MMM yy").format(filterDateStart)} $untilText ${DateFormat("dd MMM yy").format(filterDateEnd)}";
+      }
+
+      // Tags
+      if (selectedTagFilterContent.isNotEmpty) {
+        int i = 0;
+        int max = selectedTagFilterContent.length;
+        selectedTagFilterContent.forEach((e) {
+          if (i == 0) {
+            tags += ", ${e['tag_name']}, ";
+          } else if (i == max - 1) {
+            tags += "${e['tag_name']}";
+          } else {
+            tags += "${e['tag_name']}, ";
+          }
+
+          i++;
+        });
+      }
+
+      String actvText = "Active filters".tr;
+      String res = "$actvText : $order $date $title $tags";
+
+      return Text(res.replaceAll("  ", " ").replaceAll(" ,", ", "),
+          style: TextStyle(
+              color: greybg, fontSize: textSM, fontWeight: FontWeight.w500));
     }
 
     return Column(children: [
@@ -138,8 +200,16 @@ class StateGetContent extends State<GetContent> with TickerProviderStateMixin {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            getTitleLarge("What's New".tr, greybg),
-            const Spacer(),
+            Expanded(
+                child: Container(
+                    padding: EdgeInsets.fromLTRB(paddingXSM, 0, 0, 0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        getTitleLarge("What's New".tr, greybg),
+                        getActiveFilterText(),
+                      ],
+                    ))),
             SetControl(titleCtrl: titleCtrl),
           ],
         ),

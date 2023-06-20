@@ -174,7 +174,9 @@ class StatePostLogin extends State<PostLogin> {
                   Container(
                       padding: EdgeInsets.symmetric(vertical: paddingMD),
                       child: const Text("already have an account?")),
-                  const Spacer(),
+                  SizedBox(
+                    width: paddingMD,
+                  ),
                   TextButton(
                     style: TextButton.styleFrom(
                         foregroundColor: primaryColor,

@@ -227,7 +227,7 @@ Widget getHourChipLine(String dateStart, double width) {
           getLiveText(date),
           Expanded(
               child: Container(
-            margin: const EdgeInsets.only(left: 15, right: 15, top: 7.5),
+            margin: EdgeInsets.fromLTRB(paddingSM, paddingXSM, paddingSM, 0),
             color: primaryColor,
             height: 2,
             width: width,

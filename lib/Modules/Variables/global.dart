@@ -9,6 +9,7 @@ String locName;
 List listAttachment = [];
 List<Map<String, dynamic>> listArchiveCheck = [];
 TabController tabController;
+bool isOffline = false;
 
 //Schedule Page
 String archiveNameMsg = "";
@@ -55,14 +56,14 @@ int maxDoc = 15;
 
 enum LangList { en, id }
 
-LangList slctLang = LangList.en;
+LangList slctLang;
 
 int selectedIndex = 0;
 
 // Starting Variables
 String sortingHomepageContent = "Desc";
 String filteringTag = "all";
-String searchingContent;
+String searchingContent = "";
 String contentAttImage;
 DateTime filterDateStart;
 DateTime filterDateEnd;

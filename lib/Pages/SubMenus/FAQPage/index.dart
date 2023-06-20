@@ -19,7 +19,7 @@ class StateFAQPage extends State<FAQPage> {
     //double fullWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-        appBar: getAppbar("Frequently Asked Question", () {
+        appBar: getAppbar("Frequently Asked Question".tr, () {
           Get.to(() => const BottomBar());
         }),
         body: const GetAllQuestion(),

@@ -157,7 +157,7 @@ class StateAddPost extends State<AddPost> {
                       fullWidth * 0.03, fullHeight * 0.05, 0.0),
                   decoration: BoxDecoration(
                     color: primaryColor,
-                    borderRadius: const BorderRadius.all(Radius.circular(100)),
+                    borderRadius: BorderRadius.all(roundedCircle),
                     boxShadow: [
                       BoxShadow(
                         color: const Color.fromARGB(255, 67, 67, 67)

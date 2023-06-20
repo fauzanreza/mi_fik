@@ -32,6 +32,31 @@ class StateGetInfoBox extends State<GetInfoBox> {
     }
   }
 
+  Widget getElement(String infoType, String infoBody) {
+    return Container(
+      padding: EdgeInsets.all(paddingMD),
+      decoration: BoxDecoration(
+          color: getInfoColor(infoType),
+          borderRadius: const BorderRadius.all(Radius.circular(12))),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(
+              Icons.info,
+              color: blackbg,
+              size: iconMD,
+            ),
+            SizedBox(width: paddingXSM / 2),
+            Text(ucFirst(infoType), style: TextStyle(color: blackbg))
+          ],
+        ),
+        SizedBox(height: paddingSM),
+        HtmlWidget(infoBody),
+      ]),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     GetStorage box = GetStorage();
@@ -40,28 +65,7 @@ class StateGetInfoBox extends State<GetInfoBox> {
       String infoType = box.read("${widget.page}-${widget.location}-type");
       String infoBody = box.read("${widget.page}-${widget.location}-body");
 
-      return Container(
-        padding: EdgeInsets.all(paddingMD),
-        decoration: BoxDecoration(
-            color: getInfoColor(infoType),
-            borderRadius: const BorderRadius.all(Radius.circular(12))),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Icon(
-                Icons.info,
-                color: blackbg,
-                size: iconMD,
-              ),
-              SizedBox(width: paddingXSM / 2),
-              Text(ucFirst(infoType), style: TextStyle(color: blackbg))
-            ],
-          ),
-          SizedBox(height: paddingSM),
-          HtmlWidget(infoBody),
-        ]),
-      );
+      return getElement(infoType, infoBody);
     } else {
       return SafeArea(
         maintainBottomViewPadding: false,
@@ -93,30 +97,6 @@ class StateGetInfoBox extends State<GetInfoBox> {
   }
 
   Widget _buildListView(InfoModel contents) {
-    // double fullHeight = MediaQuery.of(context).size.height;
-    //double fullWidth = MediaQuery.of(context).size.width;
-
-    return Container(
-      padding: EdgeInsets.all(paddingMD),
-      decoration: BoxDecoration(
-          color: getInfoColor(contents.infoType),
-          borderRadius: const BorderRadius.all(Radius.circular(12))),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(
-              Icons.info,
-              color: blackbg,
-              size: iconMD,
-            ),
-            SizedBox(width: paddingXSM / 2),
-            Text(ucFirst(contents.infoType), style: TextStyle(color: blackbg))
-          ],
-        ),
-        SizedBox(height: paddingSM),
-        HtmlWidget(contents.infoBody),
-      ]),
-    );
+    return getElement(contents.infoType, contents.infoBody);
   }
 }

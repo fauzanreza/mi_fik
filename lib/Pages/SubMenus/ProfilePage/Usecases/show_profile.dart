@@ -43,7 +43,8 @@ class ShowProfile extends StatelessWidget {
 
             return Container(
               width: fullWidth,
-              padding: const EdgeInsets.only(top: 10, right: 10, left: 10),
+              padding:
+                  EdgeInsets.fromLTRB(paddingXSM, paddingXSM, paddingXSM, 0),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,

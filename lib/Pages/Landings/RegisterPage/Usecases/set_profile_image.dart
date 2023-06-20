@@ -143,8 +143,7 @@ class StateSetProfileImage extends State<SetProfileImage> {
                               width: 200,
                               margin: EdgeInsets.symmetric(vertical: paddingLg),
                               decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(100)),
+                                borderRadius: BorderRadius.all(roundedCircle),
                                 image: DecorationImage(
                                   image: getImageUser(uploadedImageRegis),
                                   fit: BoxFit.cover,

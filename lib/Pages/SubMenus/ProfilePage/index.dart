@@ -31,6 +31,7 @@ class StateProfilePage extends State<ProfilePage> {
   Widget build(BuildContext context) {
     double fullHeight = MediaQuery.of(context).size.height;
     //double fullWidth = MediaQuery.of(context).size.width;
+    String versionText = "Version".tr;
 
     return Scaffold(
         appBar: getAppbar("Profile".tr, () {
@@ -46,41 +47,40 @@ class StateProfilePage extends State<ProfilePage> {
                     children: [
                       const ShowProfile(),
                       const GetEditProfile(),
-                      Container(
-                          height: fullHeight * 0.7,
-                          margin: const EdgeInsets.only(top: 10.0),
-                          padding: EdgeInsets.only(
-                              top: paddingMD,
-                              left: paddingSM,
-                              right: paddingSM),
-                          decoration: BoxDecoration(
-                            color: mainbg,
-                            borderRadius: BorderRadius.only(
-                                topLeft: roundedLG, topRight: roundedLG),
-                          ),
-                          child: Column(
-                            children: [
-                              const ShowRole(),
-                              getProfileButton(() {
-                                Get.to(() => const MyFAQPage());
-                              }, Icons.question_answer, "My Question".tr,
-                                  Icons.keyboard_arrow_right),
-                              getProfileButton(() {
-                                Get.to(() => const HistoryPage());
-                              }, Icons.history, "History".tr,
-                                  Icons.keyboard_arrow_right),
-                              getProfileButton(() {
-                                Get.to(() => const AboutPage());
-                              }, Icons.info, "About Us".tr,
-                                  Icons.keyboard_arrow_right),
-                              Container(
-                                margin: EdgeInsets.only(top: paddingMD * 2),
-                                child: Text("Version 1.0",
-                                    style: TextStyle(fontSize: textSM)),
+                      Expanded(
+                          child: Container(
+                              // height: fullHeight * 0.7,
+                              margin: const EdgeInsets.only(top: 10.0),
+                              padding: EdgeInsets.fromLTRB(
+                                  paddingSM, paddingMD, paddingSM, paddingLg),
+                              decoration: BoxDecoration(
+                                color: mainbg,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: roundedLG, topRight: roundedLG),
                               ),
-                              getSignOutButtonWide(context)
-                            ],
-                          )),
+                              child: Column(
+                                children: [
+                                  const ShowRole(),
+                                  getProfileButton(() {
+                                    Get.to(() => const MyFAQPage());
+                                  }, Icons.question_answer, "My Question".tr,
+                                      Icons.keyboard_arrow_right),
+                                  getProfileButton(() {
+                                    Get.to(() => const HistoryPage());
+                                  }, Icons.history, "History".tr,
+                                      Icons.keyboard_arrow_right),
+                                  getProfileButton(() {
+                                    Get.to(() => const AboutPage());
+                                  }, Icons.info, "About Us".tr,
+                                      Icons.keyboard_arrow_right),
+                                  Container(
+                                    margin: EdgeInsets.only(top: paddingMD * 2),
+                                    child: Text("$versionText 1.0",
+                                        style: TextStyle(fontSize: textSM)),
+                                  ),
+                                  getSignOutButtonWide(context)
+                                ],
+                              ))),
                     ]))));
   }
 }

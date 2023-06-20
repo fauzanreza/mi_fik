@@ -145,10 +145,17 @@ class StateMySchedulePage extends State<MySchedulePage> {
                 ]);
               }).toList()));
     } else {
-      return SizedBox(
-          height: fullHeight * 0.7,
-          child: getMessageImageNoData("assets/icon/empty.png",
-              "No event / task for today, have a good rest", fullWidth));
+      if (isOffline) {
+        return SizedBox(
+            height: fullHeight * 0.7,
+            child: getMessageImageNoData(
+                "assets/icon/badnet.png", "Failed to load data".tr, fullWidth));
+      } else {
+        return SizedBox(
+            height: fullHeight * 0.7,
+            child: getMessageImageNoData("assets/icon/empty.png",
+                "No event / task for today, have a good rest".tr, fullWidth));
+      }
     }
   }
 }

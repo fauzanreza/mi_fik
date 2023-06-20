@@ -114,7 +114,7 @@ class StateGetMyHistory extends State<GetMyHistory> {
                 ));
           });
     } else {
-      return Center(child: getNoDataContainer("History not found"));
+      return Center(child: getNoDataContainer("History not found", 120));
     }
   }
 }

@@ -88,7 +88,44 @@ class Dictionaries extends Translations {
           'Selected Location': 'Selected Location',
           'Could not open the map': 'Could not open the map',
           'Question Type': 'Question Type',
-          'Save Changes': 'Save Changes'
+          'Save Changes': 'Save Changes',
+          'Unknown error, please contact the admin':
+              'Unknown error, please contact the admin',
+          'Unknown User': 'Unknown User',
+          'Descending': 'Descending',
+          'Ascending': 'Ascending',
+          'Title like': 'Title like',
+          'Start from': 'Start from',
+          'until': 'until',
+          ' Saved': ' Saved',
+          'Version': 'Version',
+          'First Name': 'First Name',
+          'Last Name': 'Last Name',
+          'Valid Until': 'Valid Until',
+          'Frequently Asked Question': 'Frequently Asked Question',
+          "You haven't selected any tag yet":
+              "You haven't selected any tag yet",
+          'No role available': 'No role available',
+          'Active filters': 'Active filters',
+          'Lost connection, all data shown are local':
+              'Lost connection, all data shown are local',
+          'Welcome back, all data are now realtime':
+              'Welcome back, all data are now realtime',
+          'Help not found': 'Help not found',
+          'Failed to load data': 'Failed to load data',
+          'No event / task saved in this archive':
+              'No event / task saved in this archive',
+          "You haven't created any Archive": "You haven't created any Archive",
+          'No event / task for today, have a good rest':
+              'No event / task for today, have a good rest',
+          "Sorry but we not found specific event":
+              "Sorry but we not found specific event",
+          "Are you sure want to request remove":
+              "Are you sure want to request remove",
+          "Request failed, you haven't chosen any tag yet":
+              "Request failed, you haven't chosen any tag yet",
+          "Request failed, you can't remove general role":
+              "Request failed, you can't remove general role"
         },
         'id_ID': {
           'Good Morning': 'Selamat Pagi',
@@ -112,7 +149,7 @@ class Dictionaries extends Translations {
           'Today': 'Hari ini',
           'Yesterday': 'Kemarin',
           'Tommorow': 'Besok',
-          'Role Saya': 'Role Saya',
+          'My Roles': 'Role Saya',
           'History': 'Riwayat',
           'My Question': 'Pertanyaan Saya',
           'About Us': 'Tentang Kami',
@@ -175,7 +212,44 @@ class Dictionaries extends Translations {
           'Selected Location': 'Lokasi Terpilih',
           'Could not open the map': 'Gagal membuka Maps',
           'Question Type': 'Tipe Pertanyaan',
-          'Save Changes': 'Simpan Perubahan'
+          'Save Changes': 'Simpan Perubahan',
+          'Unknown error, please contact the admin':
+              'Kegagalan sistem, segera hubungi admin',
+          'Unknown User': 'Tak dikenal',
+          'Descending': 'Menurun',
+          'Ascending': 'Menaik',
+          'Title like': 'Judul seperti',
+          'Start from': 'Mulai dari',
+          'until': 'hingga',
+          ' Saved': ' Tersimpan',
+          'Version': 'Versi',
+          'First Name': 'Nama Depan',
+          'Last Name': 'Nama Belakang',
+          'Valid Until': 'Valid Hingga',
+          'Frequently Asked Question': 'Pertanyaan Populer',
+          "You haven't selected any tag yet":
+              "Anda belum memilih tag sama sekali",
+          'No role available': 'Tidak ada role yang tersedia',
+          'Active filters': 'Filter aktif',
+          'Lost connection, all data shown are local':
+              'Koneksi gagal, data yang ditampilkan adalah lokal',
+          'Welcome back, all data are now realtime':
+              'Selamat datang kembali, semua data kembali online',
+          'Help not found': 'Bantuan tidak ditemukan',
+          'Failed to load data': 'Gagal meload data',
+          'No event / task saved in this archive':
+              'Tidak ada event atau tugas yang tersimpan pada arsip',
+          "You haven't created any Archive": "Anda belum membuat arsip",
+          'No event / task for today, have a good rest':
+              'Tidak ada event atau tugas hari ini, silahkan beristirahat',
+          "Sorry but we not found specific event":
+              "Maaf, event tidak ditemukan",
+          "Are you sure want to request remove":
+              "Apakah Anda yakin ingin mengirim permintaan untuk menghapus",
+          "Request failed, you haven't chosen any tag yet":
+              "Permintaan role gagal, Anda sama sekali belum memilih",
+          "Request failed, you can't remove general role":
+              "Permintaan role gagal, role utama tidak boleh diubah"
         },
       };
 }

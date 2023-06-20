@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:get/get.dart';
 // ignore: depend_on_referenced_packages
 import 'package:http/http.dart' show Client;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -38,7 +38,10 @@ class AuthQueriesService {
       ];
     } else {
       return [
-        {"message": "failed", "body": "Unknown error"}
+        {
+          "message": "failed",
+          "body": "Unknown error, please contact the admin".tr
+        }
       ];
     }
   }
