@@ -9,6 +9,7 @@ String locName;
 List listAttachment = [];
 List<Map<String, dynamic>> listArchiveCheck = [];
 TabController tabController;
+bool isOffline = false;
 
 //Schedule Page
 String archiveNameMsg = "";

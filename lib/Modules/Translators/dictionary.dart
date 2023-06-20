@@ -106,7 +106,11 @@ class Dictionaries extends Translations {
           "You haven't selected any tag yet":
               "You haven't selected any tag yet",
           'No role available': 'No role available',
-          'Active filters': 'Active filters'
+          'Active filters': 'Active filters',
+          'Lost connection, all data shown are local':
+              'Lost connection, all data shown are local',
+          'Welcome back, all data are now realtime':
+              'Welcome back, all data are now realtime'
         },
         'id_ID': {
           'Good Morning': 'Selamat Pagi',
@@ -211,7 +215,11 @@ class Dictionaries extends Translations {
           "You haven't selected any tag yet":
               "Anda belum memilih tag sama sekali",
           'No role available': 'Tidak ada role yang tersedia',
-          'Active filters': 'Filter aktif'
+          'Active filters': 'Filter aktif',
+          'Lost connection, all data shown are local':
+              'Koneksi gagal, data yang ditampilkan adalah lokal',
+          'Welcome back, all data are now realtime':
+              'Selamat datang kembali, semua data kembali online'
         },
       };
 }
