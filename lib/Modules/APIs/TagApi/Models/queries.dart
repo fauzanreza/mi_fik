@@ -21,6 +21,27 @@ List<TagCategoryModel> tagCategoryModelFromJson(String jsonData) {
       data['data'].map((item) => TagCategoryModel.fromJson(item)));
 }
 
+// Usecase Get my tag
+class MyTagModel {
+  String slug;
+  String tagName;
+
+  MyTagModel({this.slug, this.tagName});
+
+  factory MyTagModel.fromJson(Map<String, dynamic> map) {
+    return MyTagModel(
+      slug: map["slug_name"],
+      tagName: map["tag_name"],
+    );
+  }
+}
+
+List<MyTagModel> myTagModelFromJson(String jsonData) {
+  final data = json.decode(jsonData);
+  return List<MyTagModel>.from(
+      data['data'].map((item) => MyTagModel.fromJson(item)));
+}
+
 // Usecase Get all tag category
 class TagAllModel {
   String slug;
