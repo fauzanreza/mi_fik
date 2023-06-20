@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 // ignore: depend_on_referenced_packages
 import 'package:http/http.dart' show Client;
 import 'package:mi_fik/Modules/APIs/AuthApi/Models/commands.dart';
@@ -19,6 +20,7 @@ class AuthCommandsService {
       'Accept': 'application/json',
       'content-type': 'application/json'
     };
+    GetStorage box = GetStorage();
 
     final response = await client.post(
       Uri.parse("$emuUrl/api/v1/login"),
@@ -59,6 +61,7 @@ class AuthCommandsService {
 
           // Lecturer or student role
           // Has been accepted and have a role
+          box.erase();
           return [
             {
               "message": "success",
@@ -108,6 +111,7 @@ class AuthCommandsService {
 
           await prefs.setString(
               'profile_data_key', jsonEncode(responseData['result']));
+          box.erase();
           return [
             {
               "message": "success",

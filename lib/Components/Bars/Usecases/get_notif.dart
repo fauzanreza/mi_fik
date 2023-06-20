@@ -68,8 +68,8 @@ class StateGetNotification extends State<GetNotification>
                 vertical: paddingMD, horizontal: paddingXSM / 2),
             itemBuilder: (context, index) {
               return Container(
-                  margin: EdgeInsets.only(
-                      bottom: paddingXSM, left: paddingSM, right: paddingSM),
+                  margin:
+                      EdgeInsets.fromLTRB(paddingSM, 0, paddingSM, paddingXSM),
                   padding: EdgeInsets.symmetric(vertical: paddingXSM),
                   decoration: BoxDecoration(
                     color: whitebg,

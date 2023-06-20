@@ -374,8 +374,8 @@ class StateGetAttachmentContainer extends State<GetAttachmentContainer> {
                 TextAlign.start));
       } else {
         return ExpansionTile(
-            childrenPadding: EdgeInsets.only(
-                left: paddingSM, bottom: paddingSM, right: paddingSM),
+            childrenPadding:
+                EdgeInsets.fromLTRB(paddingSM, 0, paddingSM, paddingSM),
             initiallyExpanded: false,
             trailing: Icon(Icons.remove_red_eye_outlined, color: blackbg),
             iconColor: null,

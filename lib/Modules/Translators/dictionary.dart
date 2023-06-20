@@ -105,7 +105,8 @@ class Dictionaries extends Translations {
           'Frequently Asked Question': 'Frequently Asked Question',
           "You haven't selected any tag yet":
               "You haven't selected any tag yet",
-          'No role available': 'No role available'
+          'No role available': 'No role available',
+          'Active filters': 'Active filters'
         },
         'id_ID': {
           'Good Morning': 'Selamat Pagi',
@@ -209,7 +210,8 @@ class Dictionaries extends Translations {
           'Frequently Asked Question': 'Pertanyaan Populer',
           "You haven't selected any tag yet":
               "Anda belum memilih tag sama sekali",
-          'No role available': 'Tidak ada role yang tersedia'
+          'No role available': 'Tidak ada role yang tersedia',
+          'Active filters': 'Filter aktif'
         },
       };
 }

@@ -38,7 +38,6 @@ class StateGetAllTagCategory extends State<GetAllTagCategory> {
             dctName = contents[index]['dct_name'];
             slug = contents[index]['slug_name'];
           }
-          print(slug);
 
           return Container(
             padding: EdgeInsets.all(paddingXSM),
@@ -84,7 +83,13 @@ class StateGetAllTagCategory extends State<GetAllTagCategory> {
               );
             } else if (snapshot.connectionState == ConnectionState.done) {
               contents = snapshot.data;
-              box.write("tag-cat", jsonEncode(contents));
+              var lst = [];
+              for (var element in contents) {
+                lst.add(
+                    {"slug_name": element.slug, "dct_name": element.dctName});
+              }
+
+              box.write("tag-cat", jsonEncode(lst));
               return _buildListView(contents);
             } else {
               return const Center(

@@ -178,7 +178,8 @@ class StateGetContent extends State<GetContent> with TickerProviderStateMixin {
         });
       }
 
-      String res = "Active filters : $order $date $title $tags";
+      String actvText = "Active filters".tr;
+      String res = "$actvText : $order $date $title $tags";
 
       return Text(res.replaceAll("  ", " ").replaceAll(" ,", ", "),
           style: TextStyle(
