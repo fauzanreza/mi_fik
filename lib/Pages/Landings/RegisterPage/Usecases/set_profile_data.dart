@@ -68,6 +68,8 @@ class StateSetProfileData extends State<SetProfileData> {
                   usernameAvaiabilityCheck = "";
                   usernameCtrl.clear();
                   emailCtrl.clear();
+                  widget.unameMsg = "";
+                  widget.emailMsg = "";
                   emailAvaiabilityCheck = "";
                   checkAvaiabilityRegis = false;
                   refreshPage(refresh);
@@ -140,7 +142,7 @@ class StateSetProfileData extends State<SetProfileData> {
                 margin: EdgeInsets.only(top: paddingSM),
                 alignment: Alignment.center,
                 child: ElevatedButton.icon(
-                  onPressed: () async {
+                  onPressed: () {
                     RegisteredModel data = RegisteredModel(
                       username: usernameAvaiabilityCheck.trim(),
                       email: emailAvaiabilityCheck.trim(),
@@ -155,6 +157,8 @@ class StateSetProfileData extends State<SetProfileData> {
 
                         if (status == "success") {
                           checkAvaiabilityRegis = true;
+                          widget.unameMsg = "";
+                          widget.emailMsg = "";
                           refreshPage(refresh);
                           Get.snackbar(
                               "Success", "Username and Email is available",
@@ -237,7 +241,7 @@ class StateSetProfileData extends State<SetProfileData> {
         color: whitebg,
         boxShadow: [
           BoxShadow(
-            color: const Color.fromARGB(255, 128, 128, 128).withOpacity(0.3),
+            color: greybg.withOpacity(0.35),
             blurRadius: 10.0,
             spreadRadius: 1.0,
             offset: const Offset(

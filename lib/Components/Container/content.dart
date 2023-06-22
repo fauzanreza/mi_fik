@@ -78,7 +78,7 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
           borderRadius: BorderRadius.all(roundedMd),
           boxShadow: [
             BoxShadow(
-              color: const Color.fromARGB(255, 128, 128, 128).withOpacity(0.3),
+              color: greybg.withOpacity(0.35),
               blurRadius: 10.0,
               spreadRadius: 0.0,
               offset: const Offset(
@@ -99,6 +99,7 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   fit: BoxFit.fitWidth,
+                  filterQuality: FilterQuality.low,
                   image: getImageHeader(widget.content.contentImage),
                   colorFilter: ColorFilter.mode(
                       Colors.black.withOpacity(0.5), BlendMode.darken),
@@ -259,7 +260,7 @@ class GetScheduleContainer extends StatelessWidget {
             DateTime.parse(content.dateStart), DateTime.parse(content.dateEnd)),
         boxShadow: [
           BoxShadow(
-            color: const Color.fromARGB(255, 128, 128, 128).withOpacity(0.3),
+            color: greybg.withOpacity(0.35),
             blurRadius: 10.0,
             spreadRadius: 0.0,
             offset: const Offset(
@@ -403,7 +404,7 @@ class StateGetAttachmentContainer extends State<GetAttachmentContainer> {
       decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: const Color.fromARGB(255, 128, 128, 128).withOpacity(0.3),
+              color: greybg.withOpacity(0.35),
               blurRadius: 10.0,
               spreadRadius: 0.0,
               offset: const Offset(

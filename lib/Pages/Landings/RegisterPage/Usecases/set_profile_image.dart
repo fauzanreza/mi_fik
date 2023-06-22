@@ -118,8 +118,7 @@ class StateSetProfileImage extends State<SetProfileImage> {
                     color: whitebg,
                     boxShadow: [
                       BoxShadow(
-                        color: const Color.fromARGB(255, 128, 128, 128)
-                            .withOpacity(0.3),
+                        color: greybg.withOpacity(0.35),
                         blurRadius: 10.0,
                         spreadRadius: 1.0,
                         offset: const Offset(

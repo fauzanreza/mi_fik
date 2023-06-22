@@ -79,8 +79,7 @@ class StateGetMyHistory extends State<GetMyHistory> {
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color.fromARGB(255, 128, 128, 128)
-                          .withOpacity(0.2),
+                      color: greybg.withOpacity(0.2),
                       blurRadius: 4.0,
                       spreadRadius: 0.0,
                       offset: const Offset(

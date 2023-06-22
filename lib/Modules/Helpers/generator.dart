@@ -26,7 +26,7 @@ getToday(String type) {
 getShadow(String type) {
   if (type == "high") {
     return BoxShadow(
-      color: const Color.fromARGB(255, 128, 128, 128).withOpacity(0.4),
+      color: greybg.withOpacity(0.4),
       blurRadius: 14.0,
       spreadRadius: 2.0,
       offset: const Offset(
@@ -36,7 +36,7 @@ getShadow(String type) {
     );
   } else if (type == "med") {
     return BoxShadow(
-      color: const Color.fromARGB(255, 128, 128, 128).withOpacity(0.3),
+      color: greybg.withOpacity(0.35),
       blurRadius: 10.0,
       spreadRadius: 0.0,
       offset: const Offset(

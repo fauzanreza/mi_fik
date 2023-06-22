@@ -193,9 +193,21 @@ class StateDetailPage extends State<DetailPage> {
                             transform:
                                 Matrix4.translationValues(0.0, -20.0, 0.0),
                             padding: EdgeInsets.symmetric(vertical: paddingMD),
-                            decoration: const BoxDecoration(
+                            alignment: Alignment.topCenter,
+                            constraints: BoxConstraints(
+                              minHeight: fullHeight * 0.75,
+                            ),
+                            decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: greybg.withOpacity(0.35),
+                                    blurRadius: 10.0,
+                                    spreadRadius: 0.0,
+                                    offset: const Offset(0, -2),
+                                  ),
+                                ],
                                 color: Colors.white,
-                                borderRadius: BorderRadius.only(
+                                borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(20),
                                   topRight: Radius.circular(20),
                                 )),

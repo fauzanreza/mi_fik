@@ -108,6 +108,7 @@ class StateRegisterPage extends State<RegisterPage> {
 
               Map<String, dynamic> valid =
                   UserValidator.validateRegis(regisData);
+
               if (valid['status']) {
                 apiService.postUser(regisData).then((response) {
                   var status = response[0]['message'];
@@ -174,6 +175,18 @@ class StateRegisterPage extends State<RegisterPage> {
                             FailedDialog(text: body, type: "register"));
                   }
                 });
+              } else {
+                if (valid['loc'] == "username") {
+                  unameMsg = valid['message'];
+                } else if (valid['loc'] == "first_name") {
+                  fnameMsg = valid['message'];
+                } else if (valid['loc'] == "password") {
+                  passMsg = valid['message'];
+                }
+                showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) =>
+                        FailedDialog(text: valid['message'], type: "regis"));
               }
             } else {
               if (checkAvaiabilityRegis) {
@@ -252,8 +265,7 @@ class StateRegisterPage extends State<RegisterPage> {
               border: Border.all(color: successbg, width: 2),
               boxShadow: [
                 BoxShadow(
-                  color:
-                      const Color.fromARGB(255, 128, 128, 128).withOpacity(0.3),
+                  color: greybg.withOpacity(0.35),
                   blurRadius: 10.0,
                   spreadRadius: 1.0,
                   offset: const Offset(
@@ -375,52 +387,55 @@ class StateRegisterPage extends State<RegisterPage> {
     return WillPopScope(
         onWillPop: () async {
           // Do something LOL
-          return false;
+          return await false;
         },
         child: Scaffold(
+            resizeToAvoidBottomInset: false,
             body: Onboarding(
-          pages: onboardingPagesList,
-          onPageChange: (int pageIndex) {
-            setState(() {
-              indexRegis = pageIndex;
-            });
-          },
-          startPageIndex: indexRegis,
-          footerBuilder: (context, dragDistance, pagesLength, setIndex) {
-            return DecoratedBox(
-              decoration: BoxDecoration(
-                border: Border.all(width: 0.0, color: Colors.transparent),
-              ),
-              child: ColoredBox(
-                color: Colors.transparent,
-                child: Padding(
-                  padding: const EdgeInsets.all(45.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CustomIndicator(
-                        netDragPercent: dragDistance,
-                        pagesLength: pagesLength,
-                        indicator: Indicator(
-                          closedIndicator: ClosedIndicator(color: primaryColor),
-                          activeIndicator:
-                              ActiveIndicator(color: greybg.withOpacity(0.25)),
-                          indicatorDesign: IndicatorDesign.polygon(
-                            polygonDesign: PolygonDesign(
-                              polygon: DesignType.polygon_circle,
+              pages: onboardingPagesList,
+              onPageChange: (int pageIndex) {
+                setState(() {
+                  indexRegis = pageIndex;
+                });
+              },
+              startPageIndex: indexRegis,
+              footerBuilder: (context, dragDistance, pagesLength, setIndex) {
+                return DecoratedBox(
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 0.0, color: Colors.transparent),
+                  ),
+                  child: ColoredBox(
+                    color: Colors.transparent,
+                    child: Padding(
+                      padding: const EdgeInsets.all(45.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CustomIndicator(
+                            netDragPercent: dragDistance,
+                            pagesLength: pagesLength,
+                            indicator: Indicator(
+                              closedIndicator:
+                                  ClosedIndicator(color: primaryColor),
+                              activeIndicator: ActiveIndicator(
+                                  color: greybg.withOpacity(0.25)),
+                              indicatorDesign: IndicatorDesign.polygon(
+                                polygonDesign: PolygonDesign(
+                                  polygon: DesignType.polygon_circle,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
+                          indexRegis == pagesLength
+                              ? _signupButton()
+                              : _skipButton(
+                                  setIndex: setIndex, height: fullHeight)
+                        ],
                       ),
-                      indexRegis == pagesLength
-                          ? _signupButton()
-                          : _skipButton(setIndex: setIndex, height: fullHeight)
-                    ],
+                    ),
                   ),
-                ),
-              ),
-            );
-          },
-        )));
+                );
+              },
+            )));
   }
 }

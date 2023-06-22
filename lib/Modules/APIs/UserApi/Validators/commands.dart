@@ -4,45 +4,65 @@ import 'package:mi_fik/Modules/Helpers/validation.dart';
 class UserValidator {
   static Map<String, dynamic> validateRegis(RegisterModel data) {
     if (data.username.isEmpty) {
-      return {"status": false, "message": "Username can't be empty"};
+      return {
+        "status": false,
+        "message": "Username can't be empty",
+        "loc": "username"
+      };
     }
     if (data.username.length < usernameMinLength ||
         data.username.length > usernameLength) {
       return {
         "status": false,
         "message":
-            "Username should be around $usernameMinLength up to $usernameLength character"
+            "Username should be around $usernameMinLength up to $usernameLength character",
+        "loc": "username"
       };
     }
     if (data.email.isEmpty) {
-      return {"status": false, "message": "Email can't be empty"};
+      return {
+        "status": false,
+        "message": "Email can't be empty",
+        "loc": "email"
+      };
     }
     if (data.email.length < emailMinLength ||
         data.email.length > emailMaxLength) {
       return {
         "status": false,
         "message":
-            "Email should be around $emailMinLength up to $emailMaxLength character"
+            "Email should be around $emailMinLength up to $emailMaxLength character",
+        "loc": "email"
       };
     }
     if (data.password.isEmpty) {
-      return {"status": false, "message": "Password can't be empty"};
+      return {
+        "status": false,
+        "message": "Password can't be empty",
+        "loc": "password"
+      };
     }
     if (data.password.length < passwordMinLength ||
         data.password.length > passwordLength) {
       return {
         "status": false,
         "message":
-            "Password should be around $passwordMinLength up to $passwordLength character"
+            "Password should be around $passwordMinLength up to $passwordLength character",
+        "loc": "password"
       };
     }
     if (data.firstName.isEmpty) {
-      return {"status": false, "message": "First name can't be empty"};
+      return {
+        "status": false,
+        "message": "First name can't be empty",
+        "loc": "last_name"
+      };
     }
     if (data.firstName.length > fnameLength) {
       return {
         "status": false,
-        "message": "First name should below $fnameLength character"
+        "message": "First name should below $fnameLength character",
+        "loc": "last_name"
       };
     }
     return {"status": true, "message": "Validation success"};

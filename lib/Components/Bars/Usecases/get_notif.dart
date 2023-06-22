@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Skeletons/content_1.dart';
 import 'package:mi_fik/Modules/APIs/SystemApi/Models/query_notification.dart';
 import 'package:mi_fik/Modules/APIs/SystemApi/Services/query_notification.dart';
@@ -56,8 +57,8 @@ class StateGetNotification extends State<GetNotification>
   }
 
   Widget _buildListView(List<NotificationModel> notifs) {
-    //double fullHeight = MediaQuery.of(context).size.height;
-    //double fullWidth = MediaQuery.of(context).size.width;
+    double fullHeight = MediaQuery.of(context).size.height;
+    double fullWidth = MediaQuery.of(context).size.width;
 
     return RefreshIndicator(
         key: _refreshIndicatorKey,
@@ -95,7 +96,69 @@ class StateGetNotification extends State<GetNotification>
                       icon: Icon(Icons.chevron_right_rounded,
                           color: primaryColor, size: iconXL),
                       tooltip: 'See Detail',
-                      onPressed: () {},
+                      onPressed: () {
+                        showDialog<String>(
+                            context: context,
+                            barrierColor: primaryColor.withOpacity(0.5),
+                            builder: (BuildContext context) {
+                              return StatefulBuilder(
+                                  builder: (context, setState) {
+                                return AlertDialog(
+                                    insetPadding: EdgeInsets.all(paddingXSM),
+                                    contentPadding: EdgeInsets.all(paddingXSM),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.all(roundedLG)),
+                                    content: SizedBox(
+                                        height: fullHeight * 0.75,
+                                        width: fullWidth,
+                                        child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                alignment: Alignment.topRight,
+                                                child: IconButton(
+                                                  icon: const Icon(Icons.close),
+                                                  tooltip: 'Back',
+                                                  onPressed: () {
+                                                    Get.back();
+                                                  },
+                                                ),
+                                              ),
+                                              Expanded(
+                                                  child: ListView(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: paddingXSM),
+                                                children: [
+                                                  Text(notifs[index].notifTitle,
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w500)),
+                                                  SizedBox(
+                                                    height: paddingLg,
+                                                  ),
+                                                  Text(notifs[index].notifBody),
+                                                  SizedBox(
+                                                    height: paddingLg,
+                                                  ),
+                                                ],
+                                              )),
+                                              Container(
+                                                alignment: Alignment.topRight,
+                                                child: Text(
+                                                    getItemTimeString(
+                                                        notifs[index]
+                                                            .createdAt),
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: textMD)),
+                                              )
+                                            ])));
+                              });
+                            });
+                      },
                     ),
                   ));
             }));
