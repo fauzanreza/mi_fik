@@ -46,11 +46,24 @@ class StateRegisterPage extends State<RegisterPage> {
   @override
   void initState() {
     super.initState();
+    fillValidUntil();
     apiService = UserCommandsService();
     apiQuery = UserQueriesService();
 
     authService = AuthCommandsService();
     materialButton = _skipButton();
+  }
+
+  fillValidUntil() {
+    DateTime now = DateTime.now();
+    var yearColl = [];
+    for (int i = 1; i <= 5; i++) {
+      yearColl.add(now.year + i);
+      yearColl.add(now.year - i);
+    }
+    yearColl.add(2023);
+    yearColl.sort();
+    validUntil = yearColl.map((e) => e.toString()).toList();
   }
 
   Widget _skipButton({void Function(int) setIndex, double height}) {
@@ -84,16 +97,14 @@ class StateRegisterPage extends State<RegisterPage> {
             if (usernameAvaiabilityCheck.trim() != "" &&
                 emailAvaiabilityCheck.trim() != "" &&
                 passRegisCtrl.trim() != "" &&
-                fnameRegisCtrl.trim() != "" &&
-                lnameRegisCtrl.trim() != "") {
+                fnameRegisCtrl.trim() != "") {
               RegisterModel regisData = RegisterModel(
                   username: usernameAvaiabilityCheck.trim(),
                   email: emailAvaiabilityCheck.trim(),
                   password: passRegisCtrl.trim(),
                   firstName: fnameRegisCtrl.trim(),
                   lastName: lnameRegisCtrl.trim(),
-                  validUntil: 2024 // fow now
-                  );
+                  validUntil: int.parse(slctValidUntil));
 
               Map<String, dynamic> valid =
                   UserValidator.validateRegis(regisData);

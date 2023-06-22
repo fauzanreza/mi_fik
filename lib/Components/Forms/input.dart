@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
-import 'package:mi_fik/Modules/APIs/AuthApi/Models/commands.dart';
-import 'package:mi_fik/Modules/APIs/AuthApi/Services/commands.dart';
-import 'package:mi_fik/Modules/APIs/AuthApi/Validators/commands.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -35,37 +30,8 @@ Widget getInputText(int len, var ctrl, bool secure) {
   );
 }
 
-Widget getInputTextRegis(int len, String type, var ctx, AuthCommandsService api,
-    var refresh, String hint, bool check) {
-  void checkAccount() async {
-    RegisteredModel data = RegisteredModel(
-      username: usernameAvaiabilityCheck.trim(),
-      email: emailAvaiabilityCheck.trim(),
-    );
-
-    Map<String, dynamic> valid = AuthValidator.validateAccount(data);
-    if (valid['status']) {
-      api.postCheckUser(data).then((response) {
-        var status = response[0]['message'];
-        var body = response[0]['body'];
-
-        if (status == "success") {
-          checkAvaiabilityRegis = true;
-          refreshPage(refresh);
-          Get.snackbar("Success", "Username and Email is available",
-              backgroundColor: whitebg);
-        } else {
-          checkAvaiabilityRegis = false;
-          refreshPage(refresh);
-          showDialog<String>(
-              context: ctx,
-              builder: (BuildContext context) =>
-                  FailedDialog(text: body, type: "login"));
-        }
-      });
-    }
-  }
-
+Widget getInputTextRegis(
+    int len, String type, var ctrl, var refresh, String hint, bool check) {
   bool getEnabledEditing(bool check) {
     if (check) {
       return false;
@@ -80,13 +46,12 @@ Widget getInputTextRegis(int len, String type, var ctx, AuthCommandsService api,
       cursorColor: blackbg,
       maxLength: len,
       autofocus: false,
-      onSubmitted: (val) {
+      controller: ctrl,
+      onChanged: (val) {
         if (type == "username") {
           usernameAvaiabilityCheck = val;
-          checkAccount();
         } else if (type == "email") {
           emailAvaiabilityCheck = val;
-          checkAccount();
         } else if (type == "pass") {
           passRegisCtrl = val;
         } else if (type == "lname") {

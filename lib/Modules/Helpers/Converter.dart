@@ -247,6 +247,19 @@ String getMessageResponseFromObject(val, type) {
           res += "${qtype.join('\n')}";
         }
       }
+    } else if (type == "regis") {
+      if (val.containsKey('email')) {
+        var email = val['email'];
+        if (email != null) {
+          res += "${email.join('\n')}";
+        }
+      }
+      if (val.containsKey('username')) {
+        var username = val['question_type'];
+        if (username != null) {
+          res += "${username.join('\n')}";
+        }
+      }
     }
 
     return res;

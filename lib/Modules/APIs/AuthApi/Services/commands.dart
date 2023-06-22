@@ -160,6 +160,7 @@ class AuthCommandsService {
     );
 
     var responseData = jsonDecode(response.body);
+    print(responseData);
 
     if (response.statusCode == 200) {
       return [
