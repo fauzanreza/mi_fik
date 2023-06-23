@@ -13,20 +13,54 @@ class GetNotification extends StatefulWidget {
   StateGetNotification createState() => StateGetNotification();
 }
 
-class StateGetNotification extends State<GetNotification>
-    with TickerProviderStateMixin {
+class StateGetNotification extends State<GetNotification> {
   NotificationQueriesService apiService;
+  int page = 1;
+  List<NotificationModel> contents = [];
+  bool isLoading = false;
+  ScrollController scrollCtrl;
+
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
-
-  Future<void> refreshData() async {
-    setState(() {});
-  }
 
   @override
   void initState() {
     super.initState();
+    scrollCtrl = ScrollController()
+      ..addListener(() {
+        if (scrollCtrl.offset == scrollCtrl.position.maxScrollExtent) {
+          loadMoreNotif();
+        }
+      });
+
     apiService = NotificationQueriesService();
+    loadMoreNotif();
+  }
+
+  Future<void> loadMoreNotif() async {
+    if (!isLoading) {
+      setState(() {
+        isLoading = true;
+      });
+
+      List<NotificationModel> newHistory =
+          await apiService.getAllNotification(page);
+      if (newHistory != null) {
+        page++;
+        contents.addAll(newHistory);
+      }
+
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  Future<void> refreshData() async {
+    page = 1;
+    contents.clear();
+
+    loadMoreNotif();
   }
 
   @override
@@ -35,134 +69,121 @@ class StateGetNotification extends State<GetNotification>
     //double fullWidth = MediaQuery.of(context).size.width;
 
     return SafeArea(
+      key: _refreshIndicatorKey,
       maintainBottomViewPadding: false,
-      child: FutureBuilder(
-        future: apiService.getAllNotification(1),
-        builder: (BuildContext context,
-            AsyncSnapshot<List<NotificationModel>> snapshot) {
-          if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                  "Something wrong with message: ${snapshot.error.toString()}"),
-            );
-          } else if (snapshot.connectionState == ConnectionState.done) {
-            List<NotificationModel> notifs = snapshot.data;
-            return _buildListView(notifs);
-          } else {
-            return const ContentSkeleton1();
-          }
-        },
+      child: RefreshIndicator(
+        onRefresh: refreshData,
+        child: ListView.builder(
+          padding: EdgeInsets.only(bottom: paddingSM),
+          itemCount: contents.length + 1,
+          controller: scrollCtrl,
+          itemBuilder: (BuildContext context, int index) {
+            if (index < contents.length) {
+              return _buildNotifItem(contents[index]);
+            } else if (isLoading) {
+              return const ContentSkeleton1();
+            } else {
+              return Container(
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.symmetric(vertical: paddingMD),
+                  child: Text("No more item to show".tr,
+                      style: TextStyle(fontSize: textSM + 1, color: whitebg)));
+            }
+          },
+        ),
       ),
     );
   }
 
-  Widget _buildListView(List<NotificationModel> notifs) {
+  Widget _buildNotifItem(NotificationModel notifs) {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
-    return RefreshIndicator(
-        key: _refreshIndicatorKey,
-        onRefresh: refreshData,
-        child: ListView.builder(
-            itemCount: notifs.length,
-            padding: EdgeInsets.symmetric(
-                vertical: paddingMD, horizontal: paddingXSM / 2),
-            itemBuilder: (context, index) {
-              return Container(
-                  margin:
-                      EdgeInsets.fromLTRB(paddingSM, 0, paddingSM, paddingXSM),
-                  padding: EdgeInsets.symmetric(vertical: paddingXSM),
-                  decoration: BoxDecoration(
-                    color: whitebg,
-                    borderRadius: BorderRadius.all(roundedMd),
-                  ),
-                  child: ListTile(
-                    title: Text(notifs[index].notifTitle,
-                        style: TextStyle(
-                            color: blackbg,
-                            fontWeight: FontWeight.bold,
-                            fontSize: textSM + 1)),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(notifs[index].notifBody,
-                            style: TextStyle(color: blackbg, fontSize: textSM)),
-                        const SizedBox(height: 5),
-                        Text(getItemTimeString(notifs[index].createdAt),
-                            style: TextStyle(color: greybg, fontSize: textSM))
-                      ],
-                    ),
-                    trailing: IconButton(
-                      icon: Icon(Icons.chevron_right_rounded,
-                          color: primaryColor, size: iconXL),
-                      tooltip: 'See Detail',
-                      onPressed: () {
-                        showDialog<String>(
-                            context: context,
-                            barrierColor: primaryColor.withOpacity(0.5),
-                            builder: (BuildContext context) {
-                              return StatefulBuilder(
-                                  builder: (context, setState) {
-                                return AlertDialog(
-                                    insetPadding: EdgeInsets.all(paddingXSM),
-                                    contentPadding: EdgeInsets.all(paddingXSM),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.all(roundedLG)),
-                                    content: SizedBox(
-                                        height: fullHeight * 0.75,
-                                        width: fullWidth,
-                                        child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                alignment: Alignment.topRight,
-                                                child: IconButton(
-                                                  icon: const Icon(Icons.close),
-                                                  tooltip: 'Back',
-                                                  onPressed: () {
-                                                    Get.back();
-                                                  },
-                                                ),
-                                              ),
-                                              Expanded(
-                                                  child: ListView(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: paddingXSM),
-                                                children: [
-                                                  Text(notifs[index].notifTitle,
-                                                      style: const TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w500)),
-                                                  SizedBox(
-                                                    height: paddingLg,
-                                                  ),
-                                                  Text(notifs[index].notifBody),
-                                                  SizedBox(
-                                                    height: paddingLg,
-                                                  ),
-                                                ],
-                                              )),
-                                              Container(
-                                                margin:
-                                                    EdgeInsets.all(paddingXSM),
-                                                alignment: Alignment.topRight,
-                                                child: Text(
-                                                    getItemTimeString(
-                                                        notifs[index]
-                                                            .createdAt),
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontSize: textMD)),
-                                              )
-                                            ])));
-                              });
-                            });
-                      },
-                    ),
-                  ));
-            }));
+    return Container(
+        margin: EdgeInsets.fromLTRB(paddingSM, 0, paddingSM, paddingXSM),
+        padding: EdgeInsets.symmetric(vertical: paddingXSM),
+        decoration: BoxDecoration(
+          color: whitebg,
+          borderRadius: BorderRadius.all(roundedMd),
+        ),
+        child: ListTile(
+          title: Text(notifs.notifTitle,
+              style: TextStyle(
+                  color: blackbg,
+                  fontWeight: FontWeight.bold,
+                  fontSize: textSM + 1)),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(notifs.notifBody,
+                  style: TextStyle(color: blackbg, fontSize: textSM)),
+              const SizedBox(height: 5),
+              Text(getItemTimeString(notifs.createdAt),
+                  style: TextStyle(color: greybg, fontSize: textSM))
+            ],
+          ),
+          trailing: IconButton(
+            icon: Icon(Icons.chevron_right_rounded,
+                color: primaryColor, size: iconXL),
+            tooltip: 'See Detail',
+            onPressed: () {
+              showDialog<String>(
+                  context: context,
+                  barrierColor: primaryColor.withOpacity(0.5),
+                  builder: (BuildContext context) {
+                    return StatefulBuilder(builder: (context, setState) {
+                      return AlertDialog(
+                          insetPadding: EdgeInsets.all(paddingXSM),
+                          contentPadding: EdgeInsets.all(paddingXSM),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(roundedLG)),
+                          content: SizedBox(
+                              height: fullHeight * 0.75,
+                              width: fullWidth,
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      alignment: Alignment.topRight,
+                                      child: IconButton(
+                                        icon: const Icon(Icons.close),
+                                        tooltip: 'Back',
+                                        onPressed: () {
+                                          Get.back();
+                                        },
+                                      ),
+                                    ),
+                                    Expanded(
+                                        child: ListView(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: paddingXSM),
+                                      children: [
+                                        Text(notifs.notifTitle,
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.w500)),
+                                        SizedBox(
+                                          height: paddingLg,
+                                        ),
+                                        Text(notifs.notifBody),
+                                        SizedBox(
+                                          height: paddingLg,
+                                        ),
+                                      ],
+                                    )),
+                                    Container(
+                                      margin: EdgeInsets.all(paddingXSM),
+                                      alignment: Alignment.topRight,
+                                      child: Text(
+                                          getItemTimeString(notifs.createdAt),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: textMD)),
+                                    )
+                                  ])));
+                    });
+                  });
+            },
+          ),
+        ));
   }
 }
