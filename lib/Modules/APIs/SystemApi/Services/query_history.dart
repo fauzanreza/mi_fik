@@ -1,7 +1,9 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
 // ignore: depend_on_referenced_packages
 import 'package:http/http.dart' show Client;
 import 'package:mi_fik/Modules/APIs/SystemApi/Models/query_history.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,26 +15,47 @@ class HistoryQueriesService {
 
   Future<List<HistoryModel>> getMyHistory(int page) async {
     final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token_key');
-    final header = {
-      'Accept': 'application/json',
-      'Authorization': "Bearer $token",
-    };
-
-    final response = await client.get(
-        Uri.parse("$emuUrl/api/v1/history/my?page=$page"),
-        headers: header);
-    if (response.statusCode == 200) {
-      return historyJsonWPaginate(response.body);
-    } else if (response.statusCode == 401) {
-      await prefs.clear();
-
-      Get.offAll(() => const LoginPage());
-      Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
-          backgroundColor: whitebg);
-      return null;
+    final connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      if (prefs.containsKey("myhistory-$page-sess")) {
+        if (!isOffline) {
+          Get.snackbar(
+              "Warning".tr, "Lost connection, all data shown are local".tr,
+              backgroundColor: whitebg);
+          isOffline = true;
+        }
+        return historyJsonWPaginate(prefs.getString("myhistory-$page-sess"));
+      } else {
+        return null;
+      }
     } else {
-      return null;
+      if (isOffline) {
+        Get.snackbar("Warning".tr, "Welcome back, all data are now realtime".tr,
+            backgroundColor: whitebg);
+        isOffline = false;
+      }
+      final token = prefs.getString('token_key');
+      final header = {
+        'Accept': 'application/json',
+        'Authorization': "Bearer $token",
+      };
+
+      final response = await client.get(
+          Uri.parse("$emuUrl/api/v1/history/my?page=$page"),
+          headers: header);
+      if (response.statusCode == 200) {
+        prefs.setString("myhistory-$page-sess", response.body);
+        return historyJsonWPaginate(response.body);
+      } else if (response.statusCode == 401) {
+        await prefs.clear();
+
+        Get.offAll(() => const LoginPage());
+        Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
+            backgroundColor: whitebg);
+        return null;
+      } else {
+        return null;
+      }
     }
   }
 }

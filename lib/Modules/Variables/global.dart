@@ -77,7 +77,7 @@ List<String> questionTypeOpt = [];
 List<String> feedbackTypeOpt = [];
 List<String> attachmentTypeOpt = [];
 List<String> reminderTypeOpt = [];
-List<String> validUntil = ["2019", "2020", "2021", "2022", "2023"];
+List<String> validUntil = ["2023"];
 
 // Class and object
 class UserProfileLeftBar {

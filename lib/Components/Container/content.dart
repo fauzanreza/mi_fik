@@ -45,26 +45,6 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
             color: greybg, fontWeight: FontWeight.w400, fontSize: textSM - 1));
   }
 
-  Widget getProfileImage(u1, u2, i1, i2) {
-    String image;
-    if (u1 != null) {
-      if (i1 != null) {
-        image = i1;
-      } else {
-        image = null;
-      }
-    } else if (u2 != null) {
-      if (i2 != null) {
-        image = i2;
-      } else {
-        image = null;
-      }
-    } else {
-      image = null;
-    }
-    return getProfileImageContent(image);
-  }
-
   @override
   Widget build(BuildContext context) {
     bool isLoading;
@@ -78,7 +58,7 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
           borderRadius: BorderRadius.all(roundedMd),
           boxShadow: [
             BoxShadow(
-              color: const Color.fromARGB(255, 128, 128, 128).withOpacity(0.3),
+              color: greybg.withOpacity(0.35),
               blurRadius: 10.0,
               spreadRadius: 0.0,
               offset: const Offset(
@@ -99,6 +79,7 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   fit: BoxFit.fitWidth,
+                  filterQuality: FilterQuality.low,
                   image: getImageHeader(widget.content.contentImage),
                   colorFilter: ColorFilter.mode(
                       Colors.black.withOpacity(0.5), BlendMode.darken),
@@ -245,7 +226,7 @@ class GetScheduleContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //double fullWidth = MediaQuery.of(context).size.width;
+    double fullWidth = MediaQuery.of(context).size.width;
 
     return Container(
       width: width * 0.82,
@@ -259,7 +240,7 @@ class GetScheduleContainer extends StatelessWidget {
             DateTime.parse(content.dateStart), DateTime.parse(content.dateEnd)),
         boxShadow: [
           BoxShadow(
-            color: const Color.fromARGB(255, 128, 128, 128).withOpacity(0.3),
+            color: greybg.withOpacity(0.35),
             blurRadius: 10.0,
             spreadRadius: 0.0,
             offset: const Offset(
@@ -276,19 +257,19 @@ class GetScheduleContainer extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(
-                    content.contentTitle,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: GoogleFonts.poppins(
-                      color: getColor(DateTime.parse(content.dateStart),
-                          DateTime.parse(content.dateEnd)),
-                      fontSize: textSM,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  // getLocation(content.contentLoc),
-                  //Width doesnt enough
+                  Container(
+                      constraints: BoxConstraints(maxWidth: fullWidth * 0.6),
+                      child: Text(
+                        "${content.contentTitle} asodkas aosdkad aosdkas",
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: GoogleFonts.poppins(
+                          color: getColor(DateTime.parse(content.dateStart),
+                              DateTime.parse(content.dateEnd)),
+                          fontSize: textSM,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )),
                   const Spacer(),
                   Text(
                     DateFormat("HH : mm a")
@@ -403,7 +384,7 @@ class StateGetAttachmentContainer extends State<GetAttachmentContainer> {
       decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: const Color.fromARGB(255, 128, 128, 128).withOpacity(0.3),
+              color: greybg.withOpacity(0.35),
               blurRadius: 10.0,
               spreadRadius: 0.0,
               offset: const Offset(

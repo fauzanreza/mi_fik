@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get/get.dart';
+import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
 import 'package:mi_fik/Components/Forms/date_picker.dart';
@@ -170,7 +171,7 @@ class StatePostTask extends State<PostTask> {
                       var body = response[0]['body'];
 
                       if (status == "success") {
-                        Get.back();
+                        Get.offAll(const BottomBar());
 
                         showDialog<String>(
                             context: context,

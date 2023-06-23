@@ -17,32 +17,73 @@ class StateGetWelcoming extends State<GetWelcoming> {
   @override
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
+    double fullWidth = MediaQuery.of(context).size.height;
 
     return ListView(
       children: [
         Row(
           children: [
             InkWell(
-              onTap: () async {
-                indexRegis = 0;
-                usernameAvaiabilityCheck = "";
-                emailAvaiabilityCheck = "";
-                passRegisCtrl = "";
-                fnameRegisCtrl = "";
-                lnameRegisCtrl = "";
-                validRegisCtrl = 2023;
-                isCheckedRegister = false;
-                isFillForm = false;
-                isChooseRole = false;
-                checkAvaiabilityRegis = false;
-                isFinishedRegis = false;
-                uploadedImageRegis = null;
-                isWaiting = false;
-                final prefs = await SharedPreferences.getInstance();
-                await prefs.clear();
+              onTap: () => showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                        contentPadding: const EdgeInsets.all(10),
+                        title: Text('Warning'.tr),
+                        content: SizedBox(
+                          width: fullWidth,
+                          height: 50,
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    child: Text(
+                                        "Are you sure want to close the registration?"
+                                            .tr,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: greybg, fontSize: textMD)))
+                              ]),
+                        ),
+                        actions: <Widget>[
+                          ElevatedButton(
+                            style: ButtonStyle(
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(roundedMd2),
+                              )),
+                              backgroundColor:
+                                  MaterialStatePropertyAll<Color>(dangerColor),
+                            ),
+                            onPressed: () async {
+                              indexRegis = 0;
+                              usernameAvaiabilityCheck = "";
+                              emailAvaiabilityCheck = "";
+                              passRegisCtrl = "";
+                              fnameRegisCtrl = "";
+                              lnameRegisCtrl = "";
+                              validRegisCtrl = 2023;
+                              isCheckedRegister = false;
+                              isFillForm = false;
+                              isChooseRole = false;
+                              checkAvaiabilityRegis = false;
+                              isFinishedRegis = false;
+                              uploadedImageRegis = null;
+                              isWaiting = false;
+                              final prefs =
+                                  await SharedPreferences.getInstance();
+                              await prefs.clear();
 
-                Get.offAll(() => const LoginPage());
-              },
+                              Get.offAll(() => const LoginPage());
+                            },
+                            child: Text("Yes".tr,
+                                style: TextStyle(color: whitebg)),
+                          )
+                        ],
+                      )),
               child: Container(
                 margin: EdgeInsets.only(
                     left: paddingMD, right: paddingMD, top: paddingLg),
@@ -72,8 +113,7 @@ class StateGetWelcoming extends State<GetWelcoming> {
             color: whitebg,
             boxShadow: [
               BoxShadow(
-                color:
-                    const Color.fromARGB(255, 128, 128, 128).withOpacity(0.3),
+                color: greybg.withOpacity(0.35),
                 blurRadius: 10.0,
                 spreadRadius: 1.0,
                 offset: const Offset(

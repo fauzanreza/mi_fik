@@ -97,6 +97,12 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
                           VideoPlayerController.network(e['attach_url']),
                       autoPlay: false,
                       looping: false,
+                      errorBuilder: (context, errorMessage) {
+                        return Text(
+                          errorMessage,
+                          style: TextStyle(color: blackbg),
+                        );
+                      },
                     ),
                   )));
         } else if (e['attach_type'] == "attachment_url") {

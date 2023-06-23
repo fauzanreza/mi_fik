@@ -6,7 +6,6 @@ import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/query_contents.dart';
-import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Helpers/widget.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -193,9 +192,21 @@ class StateDetailPage extends State<DetailPage> {
                             transform:
                                 Matrix4.translationValues(0.0, -20.0, 0.0),
                             padding: EdgeInsets.symmetric(vertical: paddingMD),
-                            decoration: const BoxDecoration(
+                            alignment: Alignment.topCenter,
+                            constraints: BoxConstraints(
+                              minHeight: fullHeight * 0.75,
+                            ),
+                            decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: greybg.withOpacity(0.35),
+                                    blurRadius: 10.0,
+                                    spreadRadius: 0.0,
+                                    offset: const Offset(0, -2),
+                                  ),
+                                ],
                                 color: Colors.white,
-                                borderRadius: BorderRadius.only(
+                                borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(20),
                                   topRight: Radius.circular(20),
                                 )),
@@ -207,7 +218,7 @@ class StateDetailPage extends State<DetailPage> {
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    getImageProfileContent(
+                                    getProfileImage(
                                         contents[0].adminUsernameCreated,
                                         contents[0].userUsernameCreated,
                                         contents[0].adminImageCreated,

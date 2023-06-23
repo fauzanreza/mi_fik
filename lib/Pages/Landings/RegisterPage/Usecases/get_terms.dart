@@ -27,7 +27,7 @@ class StateGetTerms extends State<GetTerms> {
 
   @override
   Widget build(BuildContext context) {
-    // double fullWidth = MediaQuery.of(context).size.width;
+    double fullWidth = MediaQuery.of(context).size.width;
     double fullHeight = MediaQuery.of(context).size.height;
 
     return ListView(
@@ -42,8 +42,7 @@ class StateGetTerms extends State<GetTerms> {
             color: whitebg,
             boxShadow: [
               BoxShadow(
-                color:
-                    const Color.fromARGB(255, 128, 128, 128).withOpacity(0.3),
+                color: greybg.withOpacity(0.35),
                 blurRadius: 10.0,
                 spreadRadius: 1.0,
                 offset: const Offset(
@@ -74,8 +73,11 @@ class StateGetTerms extends State<GetTerms> {
                   });
                 },
               ),
-              Text("I agree to the terms and condition on this app",
-                  style: TextStyle(fontSize: textMD - 2))
+              Container(
+                  constraints: BoxConstraints(maxWidth: fullWidth * 0.6),
+                  margin: EdgeInsets.only(top: paddingXSM),
+                  child: Text("I agree to the terms and condition on this app",
+                      style: TextStyle(fontSize: textMD - 2.5)))
             ]),
             getInputWarning(widget.checkMsg),
           ]),

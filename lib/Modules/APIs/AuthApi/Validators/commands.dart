@@ -14,7 +14,11 @@ class AuthValidator {
 
   static Map<String, dynamic> validateAccount(RegisteredModel data) {
     if (data.username.isEmpty) {
-      return {"status": false, "message": "Username can't be empty"};
+      return {
+        "status": false,
+        "message": "Username can't be empty",
+        "loc": "username"
+      };
     }
     if (data.username.length < usernameMinLength ||
         data.username.length > usernameLength) {
@@ -25,7 +29,11 @@ class AuthValidator {
       };
     }
     if (data.email.isEmpty) {
-      return {"status": false, "message": "Email can't be empty"};
+      return {
+        "status": false,
+        "message": "Email can't be empty",
+        "loc": "email"
+      };
     }
     if (data.email.length < emailMinLength ||
         data.email.length > emailMaxLength) {

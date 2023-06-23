@@ -7,6 +7,9 @@ import 'package:mi_fik/Components/Bars/left_bar.dart';
 import 'package:mi_fik/Components/Bars/right_bar.dart';
 import 'package:mi_fik/Components/Button/navigation.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
+import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
+import 'package:mi_fik/Modules/APIs/ContentApi/Services/query_contents.dart';
+import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
@@ -28,8 +31,11 @@ class HomePage extends StatefulWidget {
 }
 
 class StateHomePage extends State<HomePage> {
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  ContentQueriesService queryService;
   int page = 1;
+  List<ContentHeaderModel> contents = [];
+  bool isLoading = false;
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
@@ -41,12 +47,195 @@ class StateHomePage extends State<HomePage> {
   }
 
   Future<void> refreshData() async {
-    setState(() {});
+    page = 1;
+    contents.clear();
+    loadMoreContent();
+  }
+
+  ScrollController scrollCtrl;
+
+  @override
+  void initState() {
+    super.initState();
+    queryService = ContentQueriesService();
+    scrollCtrl = ScrollController()
+      ..addListener(() {
+        if (scrollCtrl.offset == scrollCtrl.position.maxScrollExtent) {
+          loadMoreContent();
+        }
+      });
+    loadMoreContent();
+  }
+
+  Future<void> loadMoreContent() async {
+    if (!isLoading) {
+      setState(() {
+        isLoading = true;
+      });
+
+      List<ContentHeaderModel> newHistory =
+          await queryService.getAllContentHeader(
+              getTagFilterContent(selectedTagFilterContent),
+              sortingHomepageContent,
+              getWhereDateFilter(filterDateStart, filterDateEnd),
+              getFindFilter(searchingContent),
+              page++);
+      if (newHistory != null) {
+        contents.addAll(newHistory);
+      }
+
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    //scrollCtrl.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     double fullHeight = MediaQuery.of(context).size.height;
+    //double fullWidth = MediaQuery.of(context).size.width;
+
+    return WillPopScope(
+        onWillPop: () {
+          return SystemNavigator.pop();
+        },
+        child: Scaffold(
+          key: scaffoldKey,
+          drawer: const LeftBar(),
+          drawerScrimColor: primaryColor.withOpacity(0.35),
+          endDrawer: const RightBar(),
+          body: CustomPaint(
+              painter: CirclePainter(),
+              child: RefreshIndicator(
+                  key: _refreshIndicatorKey,
+                  onRefresh: refreshData,
+                  child: ListView.builder(
+                      padding: EdgeInsets.only(top: fullHeight * 0.04),
+                      itemCount: 1,
+                      controller: scrollCtrl,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Column(children: [
+                          showSideBar(scaffoldKey, whitebg),
+                          Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 15),
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  getGreeting(getToday("part"), whitebg),
+                                  getTitleJumbo(getToday("clock"), whitebg),
+                                  SizedBox(height: fullHeight * 0.05),
+                                  Row(
+                                    children: [
+                                      getSubTitleMedium(getToday("date"),
+                                          whitebg, TextAlign.start),
+                                      const Spacer(),
+                                      const GetLocation()
+                                    ],
+                                  )
+                                ]),
+                          ),
+                          Container(
+                            //height: double.infinity,
+                            margin: const EdgeInsets.only(top: 10.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            decoration: BoxDecoration(
+                              color: mainbg,
+                              borderRadius: BorderRadius.only(
+                                  topLeft: roundedLG, topRight: roundedLG),
+                            ),
+                            child: GetContent(
+                                scrollCtrl: scrollCtrl, item: contents),
+                          )
+                        ]);
+                      }))),
+          floatingActionButton: const GetRoleFeature(),
+        ));
+  }
+}
+
+class GetRoleFeature extends StatefulWidget {
+  const GetRoleFeature({Key key}) : super(key: key);
+
+  @override
+  StateGetRole createState() => StateGetRole();
+}
+
+class StateGetRole extends State<GetRoleFeature> {
+  ContentQueriesService queryService;
+  int page = 1;
+  List<ContentHeaderModel> contents = [];
+  bool isLoading = false;
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
+
+  Future<Role> getTokenNLoc() async {
+    final prefs = await SharedPreferences.getInstance();
+    final role = prefs.getString('role_general_key');
+    await checkGps(getCurrentLocationDetails());
+    return Role(role: role);
+  }
+
+  Future<void> refreshData() async {
+    page = 1;
+    contents.clear();
+    loadMoreContent();
+  }
+
+  ScrollController scrollCtrl;
+
+  @override
+  void initState() {
+    super.initState();
+    queryService = ContentQueriesService();
+    scrollCtrl = ScrollController()
+      ..addListener(() {
+        if (scrollCtrl.offset == scrollCtrl.position.maxScrollExtent) {
+          loadMoreContent();
+        }
+      });
+    loadMoreContent();
+  }
+
+  Future<void> loadMoreContent() async {
+    if (!isLoading) {
+      setState(() {
+        isLoading = true;
+      });
+
+      List<ContentHeaderModel> newHistory =
+          await queryService.getAllContentHeader(
+              getTagFilterContent(selectedTagFilterContent),
+              sortingHomepageContent,
+              getWhereDateFilter(filterDateStart, filterDateEnd),
+              getFindFilter(searchingContent),
+              page++);
+      if (newHistory != null) {
+        contents.addAll(newHistory);
+      }
+
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    //scrollCtrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    //double fullHeight = MediaQuery.of(context).size.height;
     //double fullWidth = MediaQuery.of(context).size.width;
 
     return FutureBuilder<Role>(
@@ -84,65 +273,7 @@ class StateHomePage extends State<HomePage> {
 
           if (snapshot.connectionState == ConnectionState.done) {
             String role = snapshot.data.role;
-
-            return WillPopScope(
-                onWillPop: () {
-                  return SystemNavigator.pop();
-                },
-                child: Scaffold(
-                  key: scaffoldKey,
-                  drawer: const LeftBar(),
-                  drawerScrimColor: primaryColor.withOpacity(0.35),
-                  endDrawer: const RightBar(),
-                  body: CustomPaint(
-                      painter: CirclePainter(),
-                      child: RefreshIndicator(
-                          key: _refreshIndicatorKey,
-                          onRefresh: refreshData,
-                          child: ListView(
-                              padding: EdgeInsets.only(top: fullHeight * 0.04),
-                              children: [
-                                showSideBar(scaffoldKey, whitebg),
-                                Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 15),
-                                  child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        getGreeting(getToday("part"), whitebg),
-                                        getTitleJumbo(
-                                            getToday("clock"), whitebg),
-                                        SizedBox(height: fullHeight * 0.05),
-                                        Row(
-                                          children: [
-                                            getSubTitleMedium(getToday("date"),
-                                                whitebg, TextAlign.start),
-                                            const Spacer(),
-                                            const GetLocation()
-                                          ],
-                                        )
-                                      ]),
-                                ),
-                                Container(
-                                    //height: double.infinity,
-                                    margin: const EdgeInsets.only(top: 10.0),
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10),
-                                    decoration: BoxDecoration(
-                                      color: mainbg,
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: roundedLG,
-                                          topRight: roundedLG),
-                                    ),
-                                    child: IntrinsicHeight(
-                                      child: GetContent(page: page),
-                                    ))
-                              ]))),
-                  floatingActionButton: getRoleFeature(role),
-                ));
+            return getRoleFeature(role);
           } else {
             return const SizedBox();
           }

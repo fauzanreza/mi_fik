@@ -1,19 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:skeletons/skeletons.dart';
 
 Widget getProfileImageSideBar(double width, double size, String url) {
   if (url != null && url != "null") {
     return Container(
       padding: const EdgeInsets.all(3),
       margin: EdgeInsets.all(paddingXSM),
+      // width: width * 0.3,
+      // height: width * 0.3,
       decoration: BoxDecoration(
         color: whitebg,
         borderRadius: BorderRadius.all(roundedCircle),
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.all(roundedCircle),
-        child: Image.network(url, width: width * size),
+        child: Image.network(
+          url,
+          width: width * size,
+          fit: BoxFit.cover,
+          filterQuality: FilterQuality.low,
+          height: width * size,
+          loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) return child;
+            return SkeletonAvatar(
+              style: SkeletonAvatarStyle(
+                width: width * size,
+                height: width * size,
+              ),
+            );
+          },
+        ),
       ),
     );
   } else {
@@ -33,13 +51,50 @@ Widget getProfileImageSideBar(double width, double size, String url) {
   }
 }
 
+Widget getProfileImage(u1, u2, i1, i2) {
+  String image;
+  if (u1 != null) {
+    if (i1 != null) {
+      image = i1;
+    } else {
+      image = null;
+    }
+  } else if (u2 != null) {
+    if (i2 != null) {
+      image = i2;
+    } else {
+      image = null;
+    }
+  } else {
+    image = null;
+  }
+  return getProfileImageContent(image);
+}
+
 Widget getProfileImageContent(var url) {
   if (url != null && url != "null") {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10.0),
       width: iconXL,
+      height: iconXL,
       child: ClipRRect(
-          borderRadius: roundedImage, child: Image.network(url)), //For now.
+          borderRadius: roundedImage,
+          child: Image.network(
+            url,
+            width: iconXL,
+            fit: BoxFit.cover,
+            filterQuality: FilterQuality.low,
+            height: iconXL,
+            loadingBuilder: (context, child, loadingProgress) {
+              if (loadingProgress == null) return child;
+              return SkeletonAvatar(
+                style: SkeletonAvatarStyle(
+                  width: iconXL,
+                  height: iconXL,
+                ),
+              );
+            },
+          )),
     );
   } else {
     return Container(

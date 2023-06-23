@@ -18,8 +18,10 @@ String getSeparatedAfter(String divider, String value) {
 }
 
 String ucFirst(String val) {
-  String res = val[0].toUpperCase() + val.substring(1);
-
+  String res = "";
+  if (val != null) {
+    res = val[0].toUpperCase() + val.substring(1);
+  }
   return res;
 }
 
@@ -245,6 +247,19 @@ String getMessageResponseFromObject(val, type) {
         var qtype = val['question_type'];
         if (qtype != null) {
           res += "${qtype.join('\n')}";
+        }
+      }
+    } else if (type == "regis") {
+      if (val.containsKey('email')) {
+        var email = val['email'];
+        if (email != null) {
+          res += "${email.join('\n')}";
+        }
+      }
+      if (val.containsKey('username')) {
+        var username = val['question_type'];
+        if (username != null) {
+          res += "${username.join('\n')}";
         }
       }
     }

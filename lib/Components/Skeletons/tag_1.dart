@@ -22,8 +22,7 @@ class TagSkeleton1 extends StatelessWidget {
               borderRadius: BorderRadius.all(roundedMd),
               boxShadow: [
                 BoxShadow(
-                  color: const Color.fromARGB(255, 128, 128, 128)
-                      .withOpacity(0.25),
+                  color: greybg.withOpacity(0.25),
                   blurRadius: 10.0,
                   spreadRadius: 0.0,
                   offset: const Offset(
@@ -61,8 +60,7 @@ class TagSkeleton1 extends StatelessWidget {
               borderRadius: BorderRadius.all(roundedMd),
               boxShadow: [
                 BoxShadow(
-                  color: const Color.fromARGB(255, 128, 128, 128)
-                      .withOpacity(0.25),
+                  color: greybg.withOpacity(0.25),
                   blurRadius: 10.0,
                   spreadRadius: 0.0,
                   offset: const Offset(
@@ -100,8 +98,7 @@ class TagSkeleton1 extends StatelessWidget {
               borderRadius: BorderRadius.all(roundedMd),
               boxShadow: [
                 BoxShadow(
-                  color: const Color.fromARGB(255, 128, 128, 128)
-                      .withOpacity(0.25),
+                  color: greybg.withOpacity(0.25),
                   blurRadius: 10.0,
                   spreadRadius: 0.0,
                   offset: const Offset(

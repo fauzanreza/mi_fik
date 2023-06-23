@@ -16,6 +16,7 @@ import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mi_fik/Pages/Landings/RegisterPage/index.dart';
 import 'package:mi_fik/firebase_options.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> fireFCMHandler(RemoteMessage message) async {
@@ -24,6 +25,12 @@ Future<void> fireFCMHandler(RemoteMessage message) async {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Permission.notification.isDenied.then((value) {
+    if (value) {
+      Permission.notification.request();
+    }
+  });
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await Firebase.initializeApp();
 
   FirebaseMessaging.onBackgroundMessage(fireFCMHandler);
@@ -118,23 +125,58 @@ class StateMyApp extends State<MyApp> {
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      double fullHeight = MediaQuery.of(context).size.height;
+      double fullWidth = MediaQuery.of(context).size.width;
+
       RemoteNotification notification = message.notification;
       AndroidNotification android = message.notification?.android;
       if (notification != null && android != null) {
-        showDialog(
-          context: context,
-          builder: (_) {
-            return AlertDialog(
-              title: Text(notification.title ?? ""),
-              content: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [Text(notification.body ?? "")],
-                ),
-              ),
-            );
-          },
-        );
+        showDialog<String>(
+            context: context,
+            barrierColor: primaryColor.withOpacity(0.5),
+            builder: (BuildContext context) {
+              return StatefulBuilder(builder: (context, setState) {
+                return AlertDialog(
+                    insetPadding: EdgeInsets.all(paddingXSM),
+                    contentPadding: EdgeInsets.all(paddingXSM),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(roundedLG)),
+                    content: SizedBox(
+                        height: fullHeight * 0.75,
+                        width: fullWidth,
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                alignment: Alignment.topRight,
+                                child: IconButton(
+                                  icon: const Icon(Icons.close),
+                                  tooltip: 'Back',
+                                  onPressed: () {
+                                    Get.back();
+                                  },
+                                ),
+                              ),
+                              Expanded(
+                                  child: ListView(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: paddingXSM),
+                                children: [
+                                  Text(notification.title,
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.w500)),
+                                  SizedBox(
+                                    height: paddingLg,
+                                  ),
+                                  Text(notification.body),
+                                  SizedBox(
+                                    height: paddingLg,
+                                  ),
+                                ],
+                              )),
+                            ])));
+              });
+            });
       }
     });
 

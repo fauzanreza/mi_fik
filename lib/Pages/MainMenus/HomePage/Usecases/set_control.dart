@@ -82,9 +82,9 @@ class StateSetControl extends State<SetControl> {
 }
 
 class SheetFilter extends StatefulWidget {
-  SheetFilter({Key key, this.title, this.roles}) : super(key: key);
-  TextEditingController title;
-  var roles;
+  const SheetFilter({Key key, this.title, this.roles}) : super(key: key);
+  final TextEditingController title;
+  final roles;
 
   @override
   StateSheetFilter createState() => StateSheetFilter();

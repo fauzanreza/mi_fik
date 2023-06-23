@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
+import 'package:mi_fik/Modules/APIs/AuthApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/AuthApi/Services/commands.dart';
+import 'package:mi_fik/Modules/APIs/AuthApi/Validators/commands.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -30,6 +33,8 @@ class SetProfileData extends StatefulWidget {
 
 class StateSetProfileData extends State<SetProfileData> {
   AuthCommandsService apiService;
+  var usernameCtrl = TextEditingController();
+  var emailCtrl = TextEditingController();
 
   @override
   void initState() {
@@ -52,24 +57,56 @@ class StateSetProfileData extends State<SetProfileData> {
           children: [
             getSubTitleMedium("Username", blackbg, TextAlign.left),
             getInputWarning(widget.unameMsg),
-            getInputTextRegis(30, "username", context, apiService, refresh,
+            getInputTextRegis(30, "username", usernameCtrl, refresh,
                 usernameAvaiabilityCheck, isCheckedRegister),
             getSubTitleMedium("Email", blackbg, TextAlign.left),
             getInputWarning(widget.emailMsg),
-            getInputTextRegis(30, "email", context, apiService, refresh,
+            getInputTextRegis(30, "email", emailCtrl, refresh,
                 emailAvaiabilityCheck, isCheckedRegister),
+            InkWell(
+                onTap: () {
+                  usernameAvaiabilityCheck = "";
+                  usernameCtrl.clear();
+                  emailCtrl.clear();
+                  widget.unameMsg = "";
+                  widget.emailMsg = "";
+                  emailAvaiabilityCheck = "";
+                  checkAvaiabilityRegis = false;
+                  refreshPage(refresh);
+                  Get.snackbar("Success", "Username and Email is reset",
+                      backgroundColor: whitebg);
+                },
+                child: Container(
+                  margin: EdgeInsets.only(bottom: paddingMD),
+                  child: RichText(
+                      text: TextSpan(
+                    children: [
+                      WidgetSpan(
+                        child: Icon(Icons.refresh,
+                            size: iconMD + 2, color: dangerColor),
+                      ),
+                      TextSpan(
+                        style: TextStyle(
+                            color: dangerColor,
+                            fontSize: textMD,
+                            fontWeight: FontWeight.w500),
+                        text: " Reset Username and Email".tr,
+                      ),
+                    ],
+                  )),
+                )),
             getSubTitleMedium("Password", blackbg, TextAlign.left),
             getInputWarning(widget.passMsg),
             getInputTextRegis(
-                35, "pass", context, null, refresh, passRegisCtrl, isFillForm),
+                35, "pass", null, refresh, passRegisCtrl, isFillForm),
             getSubTitleMedium("First Name".tr, blackbg, TextAlign.left),
             getInputWarning(widget.fnameMsg),
-            getInputTextRegis(35, "fname", context, null, refresh,
-                fnameRegisCtrl, isFillForm),
+            getInputTextRegis(
+                35, "fname", null, refresh, fnameRegisCtrl, isFillForm),
             getSubTitleMedium("Last Name".tr, blackbg, TextAlign.left),
             getInputWarning(widget.lnameMsg),
-            getInputTextRegis(35, "lname", context, null, refresh,
-                lnameRegisCtrl, isFillForm),
+            getInputTextRegis(
+                35, "lname", null, refresh, lnameRegisCtrl, isFillForm),
             getSubTitleMedium("Valid Until".tr, blackbg, TextAlign.left),
             getDropDownMain(slctValidUntil, validUntil, (String newValue) {
               setState(() {
@@ -85,11 +122,11 @@ class StateSetProfileData extends State<SetProfileData> {
           children: [
             getSubTitleMedium("Username", blackbg, TextAlign.left),
             getInputWarning(widget.unameMsg),
-            getInputTextRegis(30, "username", context, apiService, refresh,
+            getInputTextRegis(30, "username", usernameCtrl, refresh,
                 usernameAvaiabilityCheck, isFillForm),
             getSubTitleMedium("Email", blackbg, TextAlign.left),
             getInputWarning(widget.emailMsg),
-            getInputTextRegis(30, "email", context, apiService, refresh,
+            getInputTextRegis(30, "email", emailCtrl, refresh,
                 emailAvaiabilityCheck, isFillForm),
             Align(
                 alignment: Alignment.center,
@@ -100,7 +137,69 @@ class StateSetProfileData extends State<SetProfileData> {
             const Text(
               "Before you can fill the other form. We must validate your username and email first",
               textAlign: TextAlign.center,
-            )
+            ),
+            Container(
+                margin: EdgeInsets.only(top: paddingSM),
+                alignment: Alignment.center,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    RegisteredModel data = RegisteredModel(
+                      username: usernameAvaiabilityCheck.trim(),
+                      email: emailAvaiabilityCheck.trim(),
+                    );
+
+                    Map<String, dynamic> valid =
+                        AuthValidator.validateAccount(data);
+                    if (valid['status']) {
+                      apiService.postCheckUser(data).then((response) {
+                        var status = response[0]['message'];
+                        var body = response[0]['body'];
+
+                        if (status == "success") {
+                          checkAvaiabilityRegis = true;
+                          widget.unameMsg = "";
+                          widget.emailMsg = "";
+                          refreshPage(refresh);
+                          Get.snackbar(
+                              "Success", "Username and Email is available",
+                              backgroundColor: whitebg);
+                        } else {
+                          checkAvaiabilityRegis = false;
+                          refreshPage(refresh);
+                          showDialog<String>(
+                              context: context,
+                              builder: (BuildContext context) =>
+                                  FailedDialog(text: body, type: "regis"));
+                        }
+                      });
+                    } else {
+                      if (valid['loc'] == "username") {
+                        widget.unameMsg = valid['message'];
+                      } else if (valid['loc'] == "email") {
+                        widget.emailMsg = valid['message'];
+                      }
+                      showDialog<String>(
+                          context: context,
+                          builder: (BuildContext context) => FailedDialog(
+                              text: valid['message'], type: "regis"));
+                    }
+                  },
+                  icon: Icon(
+                    Icons.search,
+                    size: iconLG - 2,
+                    color: whitebg,
+                  ),
+                  label:
+                      Text("Validate", style: TextStyle(fontSize: textMD - 2)),
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(roundedLG2),
+                    )),
+                    backgroundColor:
+                        MaterialStatePropertyAll<Color>(primaryColor),
+                  ),
+                ))
           ],
         );
       }
@@ -142,7 +241,7 @@ class StateSetProfileData extends State<SetProfileData> {
         color: whitebg,
         boxShadow: [
           BoxShadow(
-            color: const Color.fromARGB(255, 128, 128, 128).withOpacity(0.3),
+            color: greybg.withOpacity(0.35),
             blurRadius: 10.0,
             spreadRadius: 1.0,
             offset: const Offset(
