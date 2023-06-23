@@ -387,7 +387,7 @@ class StateRegisterPage extends State<RegisterPage> {
     return WillPopScope(
         onWillPop: () async {
           // Do something LOL
-          return await false;
+          return false;
         },
         child: Scaffold(
             resizeToAvoidBottomInset: false,

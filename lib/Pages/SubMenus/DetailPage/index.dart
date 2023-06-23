@@ -135,9 +135,6 @@ class StateDetailPage extends State<DetailPage> {
         }
       }
 
-      print(contents[0].adminImageCreated);
-      print(contents[0].userImageCreated);
-
       return WillPopScope(
           onWillPop: () {
             Get.offAll(() => const BottomBar());

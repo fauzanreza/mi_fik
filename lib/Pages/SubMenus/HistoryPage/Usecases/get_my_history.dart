@@ -6,7 +6,6 @@ import 'package:mi_fik/Modules/APIs/SystemApi/Models/query_history.dart';
 import 'package:mi_fik/Modules/APIs/SystemApi/Services/query_history.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:skeletons/skeletons.dart';
 
 class GetMyHistory extends StatefulWidget {
   GetMyHistory({Key key, this.scrollCtrl}) : super(key: key);
@@ -18,10 +17,11 @@ class GetMyHistory extends StatefulWidget {
 
 class StateGetMyHistory extends State<GetMyHistory> {
   HistoryQueriesService apiQuery;
-
   int page = 1;
   List<HistoryModel> contents = [];
   bool isLoading = false;
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
 
   @override
   void initState() {
@@ -58,12 +58,15 @@ class StateGetMyHistory extends State<GetMyHistory> {
 
   Future<void> refreshData() async {
     page = 1;
-    setState(() {});
+    contents.clear();
+
+    loadMoreHistory();
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      key: _refreshIndicatorKey,
       maintainBottomViewPadding: false,
       child: RefreshIndicator(
         onRefresh: refreshData,

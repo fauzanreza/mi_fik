@@ -12,7 +12,6 @@ class HistoryPage extends StatefulWidget {
 }
 
 class StateHistoryPage extends State<HistoryPage> {
-  bool showBackToTopButton = false;
   ScrollController scrollCtrl;
 
   @override

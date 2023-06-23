@@ -13,6 +13,14 @@ class MyFAQPage extends StatefulWidget {
 }
 
 class StateMyFAQPage extends State<MyFAQPage> {
+  ScrollController scrollCtrl;
+
+  @override
+  void dispose() {
+    //scrollCtrl.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
@@ -22,7 +30,7 @@ class StateMyFAQPage extends State<MyFAQPage> {
         appBar: getAppbar("My Question".tr, () {
           Get.to(() => const ProfilePage());
         }),
-        body: const GetMyFAQ(),
+        body: GetMyFAQ(scrollCtrl: scrollCtrl),
         floatingActionButton: const PostQuestion(from: "myfaq"));
   }
 }
