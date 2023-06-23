@@ -8,6 +8,7 @@ import 'package:mi_fik/Modules/APIs/TagApi/Services/queries.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
+import 'package:mi_fik/Modules/Helpers/info.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -55,7 +56,6 @@ class StateShowRole extends State<ShowRole> {
     );
   }
 
-  @override
   Widget _buildListView(List<MyTagModel> contents) {
     //double fullHeight = MediaQuery.of(context).size.height;
     bool isLoading = false;
@@ -219,6 +219,12 @@ class StateShowRole extends State<ShowRole> {
                       ),
                     );
                   }).toList()),
+              Container(
+                  padding: EdgeInsets.fromLTRB(0, paddingMD, 0, 0),
+                  child: const GetInfoBox(
+                    page: "profile",
+                    location: "delete_role_mobile",
+                  )),
               const Divider(thickness: 1.5)
             ]));
   }

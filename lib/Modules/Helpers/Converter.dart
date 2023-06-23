@@ -18,8 +18,10 @@ String getSeparatedAfter(String divider, String value) {
 }
 
 String ucFirst(String val) {
-  String res = val[0].toUpperCase() + val.substring(1);
-
+  String res = "";
+  if (val != null) {
+    res = val[0].toUpperCase() + val.substring(1);
+  }
   return res;
 }
 

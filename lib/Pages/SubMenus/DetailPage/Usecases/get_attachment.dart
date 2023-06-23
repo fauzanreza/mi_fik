@@ -110,17 +110,24 @@ class StateAttachButton extends State<AttachButton> {
                 ),
               ));
         } else if (attach['attach_type'] == "attachment_video") {
-          return Chewie(
-            controller: ChewieController(
-                aspectRatio: 16 / 9,
-                maxScale: 1 * 0.8,
-                videoPlayerController: VideoPlayerController.network(
-                  attach['attach_url'].toString(),
-                ),
-                autoPlay: false,
-                looping: false,
-                allowFullScreen: false),
-          );
+          return AspectRatio(
+              aspectRatio: 16 / 9,
+              child: Chewie(
+                controller: ChewieController(
+                    aspectRatio: 16 / 9,
+                    videoPlayerController: VideoPlayerController.network(
+                      attach['attach_url'].toString(),
+                    ),
+                    errorBuilder: (context, errorMessage) {
+                      return Text(
+                        errorMessage,
+                        style: TextStyle(color: blackbg),
+                      );
+                    },
+                    autoPlay: false,
+                    looping: false,
+                    allowFullScreen: false),
+              ));
         } else if (attach['attach_type'] == "attachment_doc") {
           return RichText(
             text: TextSpan(

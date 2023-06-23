@@ -27,7 +27,7 @@ class StateGetTerms extends State<GetTerms> {
 
   @override
   Widget build(BuildContext context) {
-    // double fullWidth = MediaQuery.of(context).size.width;
+    double fullWidth = MediaQuery.of(context).size.width;
     double fullHeight = MediaQuery.of(context).size.height;
 
     return ListView(
@@ -62,7 +62,7 @@ class StateGetTerms extends State<GetTerms> {
             Text(
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquet nec ullamcorper sit amet risus nullam eget felis. Nibh tellus molestie nunc non blandit massa enim. Dolor magna eget est lorem ipsum dolor sit amet. Maecenas ultricies mi eget mauris pharetra et ultrices. Purus sit amet volutpat consequat mauris nunc congue. Sed cras ornare arcu dui vivamus arcu felis bibendum ut. Mi ipsum faucibus vitae aliquet. Viverra justo nec ultrices dui sapien eget mi proin sed. Enim nulla aliquet porttitor lacus.",
                 style: TextStyle(fontSize: textMD - 2)),
-            Wrap(children: [
+            Row(children: [
               Checkbox(
                 checkColor: Colors.white,
                 fillColor: MaterialStateProperty.resolveWith(getColor),
@@ -74,7 +74,8 @@ class StateGetTerms extends State<GetTerms> {
                 },
               ),
               Container(
-                  margin: EdgeInsets.only(top: paddingSM),
+                  constraints: BoxConstraints(maxWidth: fullWidth * 0.6),
+                  margin: EdgeInsets.only(top: paddingXSM),
                   child: Text("I agree to the terms and condition on this app",
                       style: TextStyle(fontSize: textMD - 2.5)))
             ]),

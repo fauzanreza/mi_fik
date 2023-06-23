@@ -145,6 +145,8 @@ class StateGetNotification extends State<GetNotification>
                                                 ],
                                               )),
                                               Container(
+                                                margin:
+                                                    EdgeInsets.all(paddingXSM),
                                                 alignment: Alignment.topRight,
                                                 child: Text(
                                                     getItemTimeString(

@@ -56,7 +56,7 @@ class StateDetailTask extends State<DetailTask> {
     return SizedBox(
         height: 630,
         width: fullWidth,
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        child: ListView(padding: EdgeInsets.zero, children: [
           Row(
             children: [
               Container(

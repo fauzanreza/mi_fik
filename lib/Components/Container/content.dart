@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
@@ -226,7 +227,7 @@ class GetScheduleContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //double fullWidth = MediaQuery.of(context).size.width;
+    double fullWidth = MediaQuery.of(context).size.width;
 
     return Container(
       width: width * 0.82,
@@ -257,19 +258,19 @@ class GetScheduleContainer extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(
-                    content.contentTitle,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: GoogleFonts.poppins(
-                      color: getColor(DateTime.parse(content.dateStart),
-                          DateTime.parse(content.dateEnd)),
-                      fontSize: textSM,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  // getLocation(content.contentLoc),
-                  //Width doesnt enough
+                  Container(
+                      constraints: BoxConstraints(maxWidth: fullWidth * 0.6),
+                      child: Text(
+                        "${content.contentTitle} asodkas aosdkad aosdkas",
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: GoogleFonts.poppins(
+                          color: getColor(DateTime.parse(content.dateStart),
+                              DateTime.parse(content.dateEnd)),
+                          fontSize: textSM,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )),
                   const Spacer(),
                   Text(
                     DateFormat("HH : mm a")

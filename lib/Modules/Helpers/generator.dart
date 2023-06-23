@@ -163,20 +163,31 @@ getDateText(DateTime date, String type, String view) {
 
 Widget getLocation(loc, textColor) {
   if (loc != null) {
-    var location = loc[0]['detail'];
+    String location = "";
+    if (loc[0]['detail'] != null) {
+      location = loc[0]['detail'];
+    } else {
+      location = loc[1]['detail'];
+    }
 
-    return RichText(
-      text: TextSpan(
-        children: [
-          WidgetSpan(
-            child: Icon(Icons.location_on_outlined, color: textColor, size: 18),
+    return Container(
+        margin: EdgeInsets.only(bottom: paddingXSM),
+        child: RichText(
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          text: TextSpan(
+            children: [
+              WidgetSpan(
+                child: Icon(Icons.location_on_outlined,
+                    color: textColor, size: 18),
+              ),
+              TextSpan(
+                  text: " ${ucFirst(location)}",
+                  style:
+                      TextStyle(fontWeight: FontWeight.w500, color: textColor)),
+            ],
           ),
-          TextSpan(
-              text: " ${ucFirst(location)}",
-              style: TextStyle(fontWeight: FontWeight.w500, color: textColor)),
-        ],
-      ),
-    );
+        ));
   } else {
     return const SizedBox();
   }
