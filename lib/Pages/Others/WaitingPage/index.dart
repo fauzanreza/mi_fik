@@ -8,10 +8,10 @@ class WaitingPage extends StatefulWidget {
   const WaitingPage({Key key}) : super(key: key);
 
   @override
-  _WaitingPage createState() => _WaitingPage();
+  StateWaitingPage createState() => StateWaitingPage();
 }
 
-class _WaitingPage extends State<WaitingPage> {
+class StateWaitingPage extends State<WaitingPage> {
   @override
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
@@ -72,11 +72,10 @@ class _WaitingPage extends State<WaitingPage> {
                         decoration: BoxDecoration(
                             color: successbg,
                             border: Border.all(color: whitebg, width: 2),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(100))),
+                            borderRadius: BorderRadius.all(roundedCircle)),
                         child: IconButton(
                           icon: const Icon(Icons.mail),
-                          color: Colors.white,
+                          color: whitebg,
                           onPressed: () {},
                         ),
                       ),

@@ -1,5 +1,6 @@
 import 'dart:convert';
-
+import 'package:get/get.dart';
+// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' show Client;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -22,21 +23,25 @@ class AuthQueriesService {
       headers: header,
     );
 
-    var respondeDecode = jsonDecode(response.body);
-
     if (response.statusCode == 200) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var respondeDecode = jsonDecode(response.body);
       await prefs.clear();
+
       return [
-        {"message": "success", "body": respondeDecode["message"], "token": null}
+        {"message": "success", "body": respondeDecode["message"], "code": 200}
       ];
     } else if (response.statusCode == 401) {
+      var respondeDecode = jsonDecode(response.body);
+
       return [
-        {"message": "failed", "body": respondeDecode["message"], "token": null}
+        {"message": "failed", "body": respondeDecode["message"], "code": 401}
       ];
     } else {
       return [
-        {"message": "failed", "body": "Unknown error", "token": null}
+        {
+          "message": "failed",
+          "body": "Unknown error, please contact the admin".tr
+        }
       ];
     }
   }

@@ -7,7 +7,7 @@ var infoColor = const Color(0xFF009FF9);
 var mainbg = const Color.fromARGB(255, 232, 232, 232);
 var whitebg = const Color(0xFFFFFFFF);
 var blackbg = const Color(0xFF414141);
-var semiblackbg = const Color(0xFF5b5b5b);
+var semiblackbg = const Color(0xFF212529);
 var greybg = const Color.fromARGB(255, 118, 118, 118);
 var successbg = const Color(0xFF6EC25B);
 
@@ -16,6 +16,9 @@ var semiPrimaryBg = const Color(0xFFFADFb9);
 // Border Radius
 var roundedLG = const Radius.circular(18); //For navbar, ...
 var roundedMd = const Radius.circular(10); //For container, ...
+var roundedCircle = const Radius.circular(100);
+var roundedImage = BorderRadius.circular(25);
+var roundedErrImage = BorderRadius.circular(60);
 double roundedMd2 = 10; //For container, ...
 double roundedLG2 = 14; //For container, ...
 
@@ -38,11 +41,13 @@ double marginSM = 8; //For detail content (MT)
 double marginHZ = 4; //For horizontal listview
 
 // Padding
+double paddingLg = 35;
 double paddingMD = 20;
 double paddingSM = 15;
 double paddingXSM = 10;
 
 // Icon size
-double iconLG = 32; //For floating add btn, ...
-double iconMD = 26; //For link or file btn, ...
+double iconXL = 32; //For floating add btn, ...
+double iconLG = 24; //For floating add btn, ...
+double iconMD = 18; //For link or file btn, ...
 double iconSM = 15; //For content header ...

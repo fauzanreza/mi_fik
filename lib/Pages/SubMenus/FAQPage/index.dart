@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Bars/top_bar.dart';
 import 'package:mi_fik/Pages/SubMenus/FAQPage/Usecases/get_question.dart';
 import 'package:mi_fik/Pages/SubMenus/FAQPage/Usecases/post_question.dart';
@@ -7,18 +9,20 @@ class FAQPage extends StatefulWidget {
   const FAQPage({Key key}) : super(key: key);
 
   @override
-  _FAQPage createState() => _FAQPage();
+  StateFAQPage createState() => StateFAQPage();
 }
 
-class _FAQPage extends State<FAQPage> {
+class StateFAQPage extends State<FAQPage> {
   @override
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
     //double fullWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-        appBar: getAppbar("Frequently Asked Question"),
+        appBar: getAppbar("Frequently Asked Question".tr, () {
+          Get.to(() => const BottomBar());
+        }),
         body: const GetAllQuestion(),
-        floatingActionButton: PostQuestion());
+        floatingActionButton: const PostQuestion(from: "faq"));
   }
 }

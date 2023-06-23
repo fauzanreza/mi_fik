@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 Widget getGreeting(String hours, var clr) {
@@ -11,7 +12,7 @@ Widget getGreeting(String hours, var clr) {
   } else if (hour > 17 && hour <= 24) {
     greet = "Good Night";
   }
-  return Text(greet,
+  return Text(greet.tr,
       style:
           TextStyle(color: clr, fontWeight: FontWeight.w500, fontSize: textXL));
 }

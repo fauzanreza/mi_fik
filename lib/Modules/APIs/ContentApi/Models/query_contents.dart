@@ -9,8 +9,8 @@ class ContentHeaderModel {
   //Nullable
   String contentDesc;
   String contentImage;
-  var contentTag;
-  var contentLoc;
+  List<dynamic> contentTag;
+  List<dynamic> contentLoc;
 
   //Properties
   String createdAt;
@@ -70,7 +70,7 @@ List<ContentHeaderModel> contentHeaderModelFromJsonWPaginate(String jsonData) {
 class ContentDetailModel {
   String slugName;
   String contentTitle;
-  var contentTag;
+  List<dynamic> contentTag;
 
   //Nullable
   String adminUsernameCreated;
@@ -78,10 +78,13 @@ class ContentDetailModel {
   String adminUsernameUpdated;
   String userUsernameUpdated;
 
+  String adminImageCreated;
+  String userImageCreated;
+
   String contentDesc;
   String contentImage;
-  var contentAttach;
-  var contentLoc;
+  List<dynamic> contentAttach;
+  List<dynamic> contentLoc;
 
   //Properties
   String createdAt;
@@ -100,6 +103,8 @@ class ContentDetailModel {
       this.userUsernameCreated,
       this.adminUsernameUpdated,
       this.userUsernameUpdated,
+      this.adminImageCreated,
+      this.userImageCreated,
       this.contentImage,
       this.contentAttach,
       this.dateStart,
@@ -122,6 +127,8 @@ class ContentDetailModel {
       userUsernameCreated: map["user_username_created"],
       adminUsernameUpdated: map["admin_username_updated"],
       userUsernameUpdated: map["user_username_updated"],
+      adminImageCreated: map["admin_image_created"],
+      userImageCreated: map["user_image_created"],
       dateStart: map["content_date_start"],
       dateEnd: map["content_date_end"],
       contentTag: map["content_tag"],
@@ -147,13 +154,23 @@ class ScheduleModel {
 
   //Nullable
   String contentDesc;
-  var contentTag;
-  var contentLoc;
+  String imageUrl;
+  List<dynamic> contentTag;
+  List<dynamic> contentLoc;
+  String contentImage;
+  String acUsername;
+  String ucUsername;
+  String acImage;
+  String ucImage;
 
   //Properties
+  String createdAt;
+  String updatedAt;
   String dateStart;
   String dateEnd;
   int dataFrom;
+  String totalViews;
+  String reminder;
 
   ScheduleModel(
       {this.id,
@@ -164,7 +181,17 @@ class ScheduleModel {
       this.dateStart,
       this.dateEnd,
       this.contentTag,
-      this.dataFrom});
+      this.contentImage,
+      this.dataFrom,
+      this.acUsername,
+      this.ucImage,
+      this.acImage,
+      this.ucUsername,
+      this.totalViews,
+      this.createdAt,
+      this.updatedAt,
+      this.imageUrl,
+      this.reminder});
 
   factory ScheduleModel.fromJson(Map<String, dynamic> map) {
     return ScheduleModel(
@@ -174,9 +201,19 @@ class ScheduleModel {
       contentDesc: map["content_desc"].toString(),
       contentTag: map["content_tag"],
       contentLoc: map["content_loc"],
+      contentImage: map["content_image"],
       dateStart: map["content_date_start"],
       dateEnd: map["content_date_end"],
       dataFrom: map["data_from"],
+      acUsername: map["admin_username_created"],
+      ucUsername: map["user_username_created"],
+      acImage: map["admin_image_created"],
+      ucImage: map["user_image_created"],
+      createdAt: map["created_at"],
+      updatedAt: map["updated_at"],
+      totalViews: map["total_views"].toString(),
+      reminder: map["content_reminder"],
+      imageUrl: map["image_url"],
     );
   }
 }

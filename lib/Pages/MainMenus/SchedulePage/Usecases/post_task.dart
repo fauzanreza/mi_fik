@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:mi_fik/Components/Bars/bottom_bar.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
 import 'package:mi_fik/Components/Forms/date_picker.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/command_tasks.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_tasks.dart';
+import 'package:mi_fik/Modules/Helpers/generator.dart';
+import 'package:mi_fik/Modules/Helpers/info.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class PostTask extends StatefulWidget {
@@ -15,10 +18,10 @@ class PostTask extends StatefulWidget {
   String text;
 
   @override
-  _PostTask createState() => _PostTask();
+  StatePostTask createState() => StatePostTask();
 }
 
-class _PostTask extends State<PostTask> {
+class StatePostTask extends State<PostTask> {
   TaskCommandsService taskService;
 
   final taskTitleCtrl = TextEditingController();
@@ -58,13 +61,13 @@ class _PostTask extends State<PostTask> {
               icon: const Icon(Icons.close),
               tooltip: 'Back',
               onPressed: () {
-                Navigator.pop(context);
+                Get.back();
               },
             ),
           ),
           Container(
             padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-            child: Text("New Task",
+            child: Text("New Task".tr,
                 style: TextStyle(
                     color: primaryColor,
                     fontWeight: FontWeight.bold,
@@ -72,14 +75,14 @@ class _PostTask extends State<PostTask> {
           ),
           Container(
               padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
-              child: Text("Title",
+              child: Text("Title".tr,
                   style: TextStyle(color: blackbg, fontSize: textMD))),
           Container(
               padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
               child: getInputText(75, taskTitleCtrl, false)),
           Container(
               padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
-              child: Text("Notes (Optional)",
+              child: Text("Notes (optional)".tr,
                   style: TextStyle(color: blackbg, fontSize: textMD))),
           Container(
               padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
@@ -95,8 +98,7 @@ class _PostTask extends State<PostTask> {
 
                   DatePicker.showDateTimePicker(context,
                       showTitleActions: true,
-                      minTime:
-                          DateTime(now.year, now.month, now.day), //Tomorrow
+                      minTime: DateTime(now.year, now.month, now.day),
                       maxTime: DateTime(now.year + 1, now.month, now.day),
                       onConfirm: (date) {
                     setState(() {
@@ -109,39 +111,40 @@ class _PostTask extends State<PostTask> {
 
                   DatePicker.showDateTimePicker(context,
                       showTitleActions: true,
-                      minTime:
-                          DateTime(now.year, now.month, now.day), //Tomorrow
+                      minTime: getMinEndTime(dateStartCtrl),
                       maxTime: DateTime(now.year + 1, now.month, now.day),
                       onConfirm: (date) {
                     setState(() {
                       dateEndCtrl = date;
                     });
-                  }, currentTime: now, locale: LocaleType.en);
+                  },
+                      currentTime: getMinEndTime(dateStartCtrl),
+                      locale: LocaleType.en);
                 }, "End", "datetime"),
                 Wrap(children: <Widget>[
                   TextButton(
                     style: TextButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 16),
-                      foregroundColor: const Color(0xFFFB8C00),
+                      foregroundColor: primaryColor,
                     ),
                     onPressed: () {},
-                    child: const Text('Reminder :'),
+                    child: Text('Reminder'.tr),
                   ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: const Color(0xFFFB8C00),
-                      backgroundColor: Colors.white,
-                      side: const BorderSide(
-                        width: 1.0,
-                        color: Color(0xFFFB8C00),
-                      ),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0)),
-                    ),
-                    onPressed: () {},
-                    child: const Text('1 Hour Before'),
-                  ),
+                  Container(
+                      padding: EdgeInsets.only(left: paddingXSM),
+                      child: getDropDownMain(slctReminderType, reminderTypeOpt,
+                          (String newValue) {
+                        setState(() {
+                          slctReminderType = newValue;
+                        });
+                      }, true, "reminder_")),
                 ]),
+                Container(
+                    padding: EdgeInsets.fromLTRB(0, paddingMD, 0, 0),
+                    child: const GetInfoBox(
+                      page: "homepage",
+                      location: "add_task",
+                    ))
               ],
             ),
           ),
@@ -151,28 +154,24 @@ class _PostTask extends State<PostTask> {
               height: btnHeightMD,
               child: ElevatedButton(
                 onPressed: () async {
-                  //Mapping.
                   AddTaskModel data = AddTaskModel(
-                      taskTitle: taskTitleCtrl.text,
-                      taskDesc: taskDescCtrl.text,
+                      taskTitle: taskTitleCtrl.text.trim(),
+                      taskDesc: taskDescCtrl.text.trim(),
                       dateStart: validateDatetime(dateStartCtrl),
                       dateEnd: validateDatetime(dateEndCtrl),
-                      reminder: "reminder_1_day_before" // For now.
-                      );
+                      reminder: slctReminderType);
 
-                  //Validator
-                  if (data.taskTitle.isNotEmpty) {
+                  if (data.taskTitle.isNotEmpty &&
+                      dateStartCtrl != null &&
+                      dateEndCtrl != null) {
                     taskService.addTask(data).then((response) {
                       setState(() => isLoading = false);
                       var status = response[0]['message'];
                       var body = response[0]['body'];
 
                       if (status == "success") {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const BottomBar()),
-                        );
+                        Get.back();
+
                         showDialog<String>(
                             context: context,
                             builder: (BuildContext context) =>
@@ -187,7 +186,7 @@ class _PostTask extends State<PostTask> {
                   } else {
                     showDialog<String>(
                         context: context,
-                        builder: (BuildContext context) => FailedDialog(
+                        builder: (BuildContext context) => const FailedDialog(
                             text: "Create archive failed, field can't be empty",
                             type: "addtask"));
                   }
@@ -195,7 +194,7 @@ class _PostTask extends State<PostTask> {
                 style: ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll<Color>(successbg),
                 ),
-                child: const Text('Done'),
+                child: Text('Done'.tr, style: TextStyle(fontSize: textMD)),
               ))
         ],
       ),

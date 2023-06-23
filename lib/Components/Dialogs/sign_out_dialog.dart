@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
 import 'package:mi_fik/Modules/APIs/AuthApi/Services/queries.dart';
@@ -10,10 +11,10 @@ class SignOutDialog extends StatefulWidget {
   const SignOutDialog({Key key}) : super(key: key);
 
   @override
-  _SignOutDialog createState() => _SignOutDialog();
+  StateSignOutDialog createState() => StateSignOutDialog();
 }
 
-class _SignOutDialog extends State<SignOutDialog> {
+class StateSignOutDialog extends State<SignOutDialog> {
   AuthQueriesService apiService;
 
   @override
@@ -61,16 +62,22 @@ class _SignOutDialog extends State<SignOutDialog> {
               apiService.getSignOut().then((response) {
                 setState(() => isLoading = false);
                 var body = response[0]['body'];
+                var code = response[0]['code'];
 
-                if (body == "Logout success") {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const LoginPage()),
-                  );
+                if (body == "Logout success" && code == 200) {
+                  Get.off(() => const LoginPage());
+
                   showDialog<String>(
                       context: context,
                       builder: (BuildContext context) =>
                           SuccessDialog(text: body));
+                } else if (code == 401) {
+                  Get.off(() => const LoginPage());
+
+                  showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) =>
+                          const SuccessDialog(text: "Sign out success"));
                 } else {
                   showDialog<String>(
                       context: context,
@@ -79,14 +86,12 @@ class _SignOutDialog extends State<SignOutDialog> {
                 }
               });
             } else {
+              Get.off(() => const LoginPage());
+
               showDialog<String>(
                   context: context,
-                  builder: (BuildContext context) => FailedDialog(
-                      text: "Sign out failed, token does't exist"));
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const LoginPage()),
-              );
+                  builder: (BuildContext context) =>
+                      const SuccessDialog(text: "Sign out success"));
             }
           },
           child: Text("Sign Out", style: TextStyle(color: whitebg)),

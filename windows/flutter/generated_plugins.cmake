@@ -3,7 +3,9 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  connectivity_plus
   geolocator_windows
+  pdfx
   url_launcher_windows
 )
 

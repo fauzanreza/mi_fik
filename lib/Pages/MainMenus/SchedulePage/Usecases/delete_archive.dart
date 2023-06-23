@@ -1,28 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
-import 'package:mi_fik/Modules/Models/Archive/Archive.dart';
-import 'package:mi_fik/Modules/Services/ArchieveServices.dart';
-import 'package:mi_fik/Modules/Variables/dummy.dart';
+import 'package:mi_fik/Modules/APIs/ArchiveApi/Models/commands.dart';
+import 'package:mi_fik/Modules/APIs/ArchiveApi/Services/commands.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class DeleteArchive extends StatefulWidget {
-  DeleteArchive({Key key, this.id}) : super(key: key);
-  String id;
+  const DeleteArchive({Key key, this.slug, this.name}) : super(key: key);
+  final String slug;
+  final String name;
 
   @override
-  _DeleteArchive createState() => _DeleteArchive();
+  StateDeleteArchive createState() => StateDeleteArchive();
 }
 
-class _DeleteArchive extends State<DeleteArchive> {
-  ArchieveService apiService;
+class StateDeleteArchive extends State<DeleteArchive> {
+  ArchiveCommandsService apiService;
 
   @override
   void initState() {
     super.initState();
-    apiService = ArchieveService();
+    apiService = ArchiveCommandsService();
   }
 
   @override
@@ -62,49 +63,43 @@ class _DeleteArchive extends State<DeleteArchive> {
                                   TextButton(
                                     style: TextButton.styleFrom(
                                         backgroundColor:
-                                            Colors.red.withOpacity(0.8),
+                                            dangerColor.withOpacity(0.8),
                                         padding:
                                             EdgeInsets.all(paddingMD * 0.8)),
                                     onPressed: () async {
-                                      //Mapping.
-                                      ArchiveModel archive = ArchiveModel(
-                                          idUser: passIdUser.toString());
+                                      DeleteArchiveModel archive =
+                                          DeleteArchiveModel(
+                                              archiveName: widget.name);
 
                                       apiService
-                                          .deleteArchive(archive, widget.id)
-                                          .then((isError) {
+                                          .deleteArchive(archive, widget.slug)
+                                          .then((response) {
                                         setState(() => isLoading = false);
-                                        if (isError) {
+                                        var status = response[0]['message'];
+                                        var body = response[0]['body'];
+
+                                        if (status == "success") {
+                                          selectedArchiveSlug = null;
+                                          selectedArchiveName = null;
+                                          selectedArchiveDesc = null;
+                                          Get.offAll(const BottomBar());
+
+                                          showDialog<String>(
+                                              context: context,
+                                              builder: (BuildContext context) =>
+                                                  SuccessDialog(text: body));
+                                        } else {
                                           showDialog<String>(
                                               context: context,
                                               builder: (BuildContext context) =>
                                                   FailedDialog(
-                                                      text:
-                                                          "Delete archive failed"));
-                                        } else {
-                                          selectedIndex = 0;
-                                          selectedArchiveId = null;
-                                          selectedArchiveName = null;
-
-                                          //For now. need to be fixed soon!!!
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const BottomBar()),
-                                          );
-
-                                          showDialog<String>(
-                                              context: context,
-                                              builder: (BuildContext context) =>
-                                                  SuccessDialog(
-                                                      text:
-                                                          "Delete archive success"));
+                                                      text: body,
+                                                      type: "addarchive"));
                                         }
                                       });
                                     },
                                     child: Text(
-                                      "Yes, Delete archive",
+                                      "Yes, Delete archive".tr,
                                       style: TextStyle(
                                         color: whitebg,
                                       ),
@@ -117,10 +112,10 @@ class _DeleteArchive extends State<DeleteArchive> {
                                         padding:
                                             EdgeInsets.all(paddingMD * 0.8)),
                                     onPressed: () {
-                                      Navigator.pop(context);
+                                      Get.back();
                                     },
                                     child: Text(
-                                      "Cancel",
+                                      "Cancel".tr,
                                       style: TextStyle(
                                         color: whitebg,
                                       ),

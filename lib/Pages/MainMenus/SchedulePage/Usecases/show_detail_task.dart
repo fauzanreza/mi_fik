@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:intl/intl.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
@@ -9,18 +9,23 @@ import 'package:mi_fik/Components/Forms/input.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/command_tasks.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_tasks.dart';
+import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/delete_task.dart';
+import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/get_saved_status.dart';
+import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/post_archive_rel.dart';
 
 class DetailTask extends StatefulWidget {
-  DetailTask({Key key, this.data}) : super(key: key);
-  var data;
+  const DetailTask({Key key, this.data}) : super(key: key);
+  final data;
 
   @override
-  _DetailTask createState() => _DetailTask();
+  StateDetailTask createState() => StateDetailTask();
 }
 
-class _DetailTask extends State<DetailTask> {
+class StateDetailTask extends State<DetailTask> {
   TaskCommandsService taskService;
 
   //Initial variable
@@ -37,17 +42,9 @@ class _DetailTask extends State<DetailTask> {
 
   @override
   Widget build(BuildContext context) {
-    double fullHeight = MediaQuery.of(context).size.height;
+    //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
     bool isLoading = false;
-
-    getDateText(date, type) {
-      if (date != null) {
-        return DateFormat("dd-MM-yy  HH:mm").format(date).toString();
-      } else {
-        return "Set Date $type";
-      }
-    }
 
     //Assign value to controller
     taskTitleCtrl.text = widget.data.contentTitle;
@@ -57,27 +54,32 @@ class _DetailTask extends State<DetailTask> {
     dateEndCtrl ??= DateTime.parse(widget.data.dateEnd);
 
     return SizedBox(
-        height:
-            fullHeight * 0.6, //Pop up height based on fullwidth (Square maps).
+        height: 630,
         width: fullWidth,
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Container(
-            alignment: Alignment.topRight,
-            child: IconButton(
-              icon: const Icon(Icons.close),
-              tooltip: 'Back',
-              onPressed: () {
-                // Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const BottomBar()),
-                );
-              },
-            ),
+          Row(
+            children: [
+              Container(
+                  margin: EdgeInsets.only(left: paddingXSM),
+                  child: GetSavedStatus(
+                      passSlug: widget.data.slugName, ctx: "Task")),
+              const Spacer(),
+              Container(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                  icon: const Icon(Icons.close),
+                  tooltip: 'Back',
+                  onPressed: () {
+                    Get.back();
+                  },
+                ),
+              ),
+            ],
           ),
+          SizedBox(height: paddingMD),
           Container(
             padding: EdgeInsets.only(left: paddingSM),
-            child: getSubTitleMedium("Task Name", blackbg),
+            child: getSubTitleMedium("Title", blackbg, TextAlign.start),
           ),
           Container(
             padding: EdgeInsets.symmetric(horizontal: paddingSM),
@@ -85,7 +87,8 @@ class _DetailTask extends State<DetailTask> {
           ),
           Container(
             padding: EdgeInsets.only(left: paddingSM),
-            child: getSubTitleMedium("Notes (Optional)", blackbg),
+            child:
+                getSubTitleMedium("Notes (Optional)", blackbg, TextAlign.start),
           ),
           Container(
             padding: EdgeInsets.symmetric(horizontal: paddingSM),
@@ -129,38 +132,62 @@ class _DetailTask extends State<DetailTask> {
                   TextButton(
                     style: TextButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 16),
-                      foregroundColor: const Color(0xFFFB8C00),
+                      foregroundColor: primaryColor,
                     ),
                     onPressed: () {},
-                    child: const Text('Reminder :'),
+                    child: Text('Reminder'.tr),
                   ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: const Color(0xFFFB8C00),
-                      backgroundColor: Colors.white,
-                      side: const BorderSide(
-                        width: 1.0,
-                        color: Color(0xFFFB8C00),
-                      ),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0)),
-                    ),
-                    onPressed: () {},
-                    child: const Text('1 Hour Before'),
+                  Container(
+                      padding: EdgeInsets.only(left: paddingXSM),
+                      child:
+                          getDropDownMain(widget.data.reminder, reminderTypeOpt,
+                              (String newValue) {
+                        setState(() {
+                          slctReminderType = newValue;
+                        });
+                      }, true, "reminder_")),
+                  SizedBox(
+                    width: paddingMD,
                   ),
+                  IconButton(
+                    icon: Icon(Icons.delete, color: dangerColor),
+                    tooltip: 'Delete Task',
+                    onPressed: () {
+                      Get.back();
+
+                      showDialog<String>(
+                          context: context,
+                          barrierColor: primaryColor.withOpacity(0.5),
+                          builder: (BuildContext context) {
+                            return StatefulBuilder(
+                                builder: (context, setState) {
+                              return AlertDialog(
+                                  insetPadding: EdgeInsets.all(paddingMD),
+                                  contentPadding: EdgeInsets.all(paddingMD),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.all(roundedLG)),
+                                  content: DeleteTask(
+                                    id: widget.data.id,
+                                    name: widget.data.contentTitle,
+                                  ));
+                            });
+                          });
+                    },
+                  )
                 ]),
                 Container(
-                    margin: EdgeInsets.only(top: paddingXSM),
+                    margin: EdgeInsets.only(top: paddingMD),
                     width: fullWidth,
                     height: btnHeightMD,
                     child: ElevatedButton(
                       onPressed: () async {
                         AddTaskModel task = AddTaskModel(
-                            taskTitle: taskTitleCtrl.text.toString(),
-                            taskDesc: taskDescCtrl.text.toString(),
+                            taskTitle: taskTitleCtrl.text.trim(),
+                            taskDesc: taskDescCtrl.text.trim(),
                             dateStart: validateDatetime(dateStartCtrl),
                             dateEnd: validateDatetime(dateEndCtrl),
-                            reminder: "reminder_1_day_before");
+                            reminder: slctReminderType);
 
                         //Validator
                         if (task.taskTitle.isNotEmpty) {
@@ -172,11 +199,8 @@ class _DetailTask extends State<DetailTask> {
                             var body = response[0]['body'];
 
                             if (status == "success") {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const BottomBar()),
-                              );
+                              Get.offAll(() => const BottomBar());
+
                               showDialog<String>(
                                   context: context,
                                   builder: (BuildContext context) =>
@@ -187,13 +211,12 @@ class _DetailTask extends State<DetailTask> {
                                   builder: (BuildContext context) =>
                                       FailedDialog(
                                           text: body, type: "addtask"));
-                              print(task.dateEnd);
                             }
                           });
                         } else {
                           showDialog<String>(
                               context: context,
-                              builder: (BuildContext context) => FailedDialog(
+                              builder: (BuildContext context) => const FailedDialog(
                                   text:
                                       "Create archive failed, field can't be empty",
                                   type: "addtask"));
@@ -203,11 +226,28 @@ class _DetailTask extends State<DetailTask> {
                         backgroundColor:
                             MaterialStatePropertyAll<Color>(primaryColor),
                       ),
-                      child: const Text('Save'),
-                    ))
+                      child: Text('Save Changes'.tr),
+                    )),
+                SizedBox(
+                  height: paddingMD,
+                ),
+                PostArchiveRelation(
+                    passSlug: widget.data.slugName, ctx: "Task"),
               ],
             ),
           ),
+          Container(
+              padding: EdgeInsets.fromLTRB(paddingMD, paddingSM, 0, 0),
+              child: getSubTitleMedium(
+                  "Created At : ${getItemTimeString(widget.data.createdAt)}",
+                  greybg,
+                  TextAlign.left)),
+          Container(
+              padding: EdgeInsets.fromLTRB(paddingMD, paddingXSM, 0, 0),
+              child: getSubTitleMedium(
+                  "Last Updated : ${getItemTimeString(widget.data.updatedAt)}",
+                  greybg,
+                  TextAlign.left))
         ]));
   }
 }

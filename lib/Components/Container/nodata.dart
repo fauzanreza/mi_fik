@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
-Widget getNoDataContainer(String title) {
+Widget getNoDataContainer(String title, double size) {
   return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ClipRRect(
-          borderRadius: BorderRadius.circular(60),
-          child: Image.asset('assets/icon/sorry.png', width: 120),
+          borderRadius: roundedErrImage,
+          child: Image.asset('assets/icon/sorry.png', width: size),
         ),
         Container(
             margin: const EdgeInsets.symmetric(vertical: 10),

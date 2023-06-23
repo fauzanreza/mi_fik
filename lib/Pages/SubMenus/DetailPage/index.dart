@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mi_fik/Components/Backgrounds/image.dart';
+import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/query_contents.dart';
+import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Helpers/widget.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/SubMenus/DetailPage/Attach.dart';
-import 'package:mi_fik/Pages/SubMenus/DetailPage/Location.dart';
+import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/get_attachment.dart';
+import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/get_location.dart';
+import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/get_saved_status.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/post_archive_rel.dart';
 
 class DetailPage extends StatefulWidget {
@@ -14,16 +20,22 @@ class DetailPage extends StatefulWidget {
   final String passSlug;
 
   @override
-  _DetailPage createState() => _DetailPage();
+  StateDetailPage createState() => StateDetailPage();
 }
 
-class _DetailPage extends State<DetailPage> {
+class StateDetailPage extends State<DetailPage> {
   ContentQueriesService apiQuery;
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
 
   @override
   void initState() {
     super.initState();
     apiQuery = ContentQueriesService();
+  }
+
+  Future<void> refreshData() async {
+    setState(() {});
   }
 
   @override
@@ -56,212 +68,309 @@ class _DetailPage extends State<DetailPage> {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
-    //Convert date.
-    Widget getContentDate(dateStart, dateEnd) {
-      if (dateStart != null && dateEnd != null) {
-        dateStart = DateTime.parse(dateStart);
-        dateEnd = DateTime.parse(dateEnd);
+    if (contents != null) {
+      //Convert date.
+      Widget getContentDate(dateStart, dateEnd) {
+        if (dateStart != null && dateEnd != null) {
+          dateStart = DateTime.parse(dateStart);
+          dateEnd = DateTime.parse(dateEnd);
 
-        //Initial variable.
-        var monthStart = DateFormat("MM").format(dateStart).toString();
-        var dayStart = DateFormat("dd").format(dateStart).toString();
-        var yearStart = DateFormat("yyyy").format(dateStart).toString();
-        var monthEnd = DateFormat("MM").format(dateEnd).toString();
-        var dayEnd = DateFormat("dd").format(dateEnd).toString();
-        var yearEnd = DateFormat("yyyy").format(dateEnd).toString();
-        var result = "";
+          //Initial variable.
+          var monthStart = DateFormat("MM").format(dateStart).toString();
+          var dayStart = DateFormat("dd").format(dateStart).toString();
+          var yearStart = DateFormat("yyyy").format(dateStart).toString();
+          var monthEnd = DateFormat("MM").format(dateEnd).toString();
+          var dayEnd = DateFormat("dd").format(dateEnd).toString();
+          var yearEnd = DateFormat("yyyy").format(dateEnd).toString();
+          var result = "";
 
-        if (yearStart == yearEnd) {
-          if (monthStart == monthEnd) {
-            if (dayStart == dayEnd) {
-              result =
-                  "$dayStart ${DateFormat("MMM").format(dateStart)} $yearStart";
+          if (yearStart == yearEnd) {
+            if (monthStart == monthEnd) {
+              if (dayStart == dayEnd) {
+                result =
+                    "$dayStart ${DateFormat("MMM").format(dateStart)} $yearStart";
+              } else {
+                result =
+                    "$dayStart-$dayEnd ${DateFormat("MMM").format(dateStart)} $yearStart";
+              }
             } else {
               result =
-                  "$dayStart-$dayEnd ${DateFormat("MMM").format(dateStart)} $yearStart";
+                  "$dayStart  ${DateFormat("MMM").format(dateStart)}-$dayEnd ${DateFormat("MMM").format(dateEnd)} $yearStart";
             }
           } else {
             result =
-                "$dayStart  ${DateFormat("MMM").format(dateStart)}-$dayEnd ${DateFormat("MMM").format(dateEnd)} $yearStart";
+                "$dayStart  ${DateFormat("MMM").format(dateStart)} $yearStart-$dayEnd ${DateFormat("MMM").format(dateEnd)} $yearEnd";
           }
-        } else {
-          result =
-              "$dayStart  ${DateFormat("MMM").format(dateStart)} $yearStart-$dayEnd ${DateFormat("MMM").format(dateEnd)} $yearEnd";
-        }
-        return RichText(
-          text: TextSpan(
-            children: [
-              WidgetSpan(
-                child:
-                    Icon(Icons.calendar_month, size: 22, color: primaryColor),
-              ),
-              TextSpan(
-                  text: result,
-                  style: TextStyle(
-                      color: primaryColor,
-                      fontSize: textMD,
-                      fontWeight: FontWeight.w500))
-            ],
-          ),
-        );
-      } else {
-        return const SizedBox();
-      }
-    }
-
-    //Get location name.
-    Widget getLocation(loc, slug) {
-      if (loc != null) {
-        return LocationButton(passLocation: loc, passSlugName: slug);
-      } else {
-        return const SizedBox();
-      }
-    }
-
-    //Get attachment file or link.
-    Widget getAttach(attach) {
-      if (attach != null) {
-        return AttachButton(passAttach: attach);
-      } else {
-        return const SizedBox();
-      }
-    }
-
-    return Scaffold(
-      body: Stack(
-        //crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          GestureDetector(
-            onTap: () => showDialog<String>(
-              context: context,
-              barrierColor: primaryColor.withOpacity(0.5),
-              builder: (BuildContext context) => AlertDialog(
-                  contentPadding: EdgeInsets.zero,
-                  elevation: 0, //Remove shadow.
-                  backgroundColor: Colors.transparent,
-                  content: Container(
-                    height: fullHeight * 0.45,
-                    width: fullWidth,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: getImageHeader(contents[0].contentImage),
-                        fit: BoxFit.cover,
-                      ),
-                      borderRadius: BorderRadius.circular(roundedLG2),
-                    ),
-                  )),
-            ),
-            child: Container(
-              height: fullHeight * 0.3,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: getImageHeader(contents[0].contentImage),
-                  fit: BoxFit.cover,
+          return RichText(
+            text: TextSpan(
+              children: [
+                WidgetSpan(
+                  child: Icon(Icons.calendar_month, size: 20, color: blackbg),
                 ),
-              ),
-            ),
-          ),
-          Container(
-            transform: Matrix4.translationValues(
-                fullWidth * 0.03, fullHeight * 0.03, 0.0),
-            decoration: BoxDecoration(
-              color: primaryColor,
-              borderRadius: const BorderRadius.all(Radius.circular(100)),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color.fromARGB(255, 67, 67, 67).withOpacity(0.3),
-                  blurRadius: 10.0,
-                  spreadRadius: 0.0,
-                  offset: const Offset(
-                    5.0,
-                    5.0,
-                  ),
-                )
+                TextSpan(
+                    text: " $result",
+                    style: TextStyle(color: blackbg, fontSize: textMD))
               ],
             ),
-            child: IconButton(
-              icon: Icon(Icons.arrow_back, size: iconMD),
-              color: Colors.white,
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: fullHeight * 0.28),
-            height: fullHeight * 0.8,
-            width: fullWidth,
-            padding: EdgeInsets.only(top: paddingMD),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(roundedLG2),
-              color: Colors.white,
-            ),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 20),
-                    padding: const EdgeInsets.only(bottom: 5),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                          width: iconLG,
-                          child: ClipRRect(
-                              borderRadius: BorderRadius.circular(25),
-                              child: Image.network(
-                                  "https://sci.telkomuniversity.ac.id/wp-content/uploads/2022/02/13.jpg")), //For now.
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(contents[0].contentTitle,
-                                style: TextStyle(
-                                    fontSize: textMD,
-                                    fontWeight: FontWeight.bold)),
-                            //Check this...
-                            //getSubtitle(contents[0].contentSubtitle),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                      child: ListView(padding: EdgeInsets.zero, children: [
-                    //Content Description.
-                    Container(
-                        margin: EdgeInsets.only(
-                            top: marginMT, left: marginMD, right: marginMD),
-                        child: HtmlWidget(contents[0].contentDesc)),
-                    //Attached file or link.
-                    getAttach(contents[0].contentAttach),
-                    //Tag holder.
-                    Container(
-                      margin: EdgeInsets.symmetric(
-                          vertical: marginMT, horizontal: marginMD),
-                      child:
-                          getTag(contents[0].contentTag, fullHeight, contents),
-                    ),
-                  ])),
-                  Container(
-                    margin: EdgeInsets.only(
-                        left: paddingXSM, right: paddingXSM, bottom: marginMD),
-                    child: Wrap(runSpacing: -5, spacing: 10, children: [
-                      getLocation(contents[0].contentLoc, contents[0].slugName),
-                      getContentDate(
-                          contents[0].dateStart, contents[0].dateEnd),
-                      getContentHour(contents[0].dateStart, contents[0].dateEnd)
-                    ]),
-                  ),
+          );
+        } else {
+          return const SizedBox();
+        }
+      }
 
-                  //Save content to archieve.
-                  PostArchiveRelation(passSlug: contents[0].slugName)
-                ]),
-          )
-        ],
-      ),
-    );
+      //Get location name.
+      Widget getLocation(loc, slug) {
+        if (loc != null) {
+          return LocationButton(passLocation: loc, passSlugName: slug);
+        } else {
+          return const SizedBox();
+        }
+      }
+
+      //Get attachment file or link.
+      Widget getAttach(attach) {
+        if (attach != null) {
+          return AttachButton(passAttach: attach);
+        } else {
+          return const SizedBox();
+        }
+      }
+
+      return WillPopScope(
+          onWillPop: () {
+            Get.offAll(() => const BottomBar());
+          },
+          child: Scaffold(
+            body: RefreshIndicator(
+                key: _refreshIndicatorKey,
+                onRefresh: refreshData,
+                child: Stack(alignment: Alignment.center, children: [
+                  ListView(
+                      padding: const EdgeInsets.only(bottom: 75),
+                      //crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Stack(children: [
+                          GestureDetector(
+                            onTap: () => showDialog<String>(
+                              context: context,
+                              barrierColor: primaryColor.withOpacity(0.5),
+                              builder: (BuildContext context) => AlertDialog(
+                                  contentPadding: EdgeInsets.zero,
+                                  elevation: 0,
+                                  backgroundColor: Colors.transparent,
+                                  content: Container(
+                                    height: fullHeight * 0.45,
+                                    width: fullWidth,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: getImageHeader(
+                                            contents[0].contentImage),
+                                        fit: BoxFit.cover,
+                                      ),
+                                      borderRadius:
+                                          BorderRadius.circular(roundedLG2),
+                                    ),
+                                  )),
+                            ),
+                            child: Container(
+                              height: fullHeight * 0.3,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image:
+                                      getImageHeader(contents[0].contentImage),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                              right: 15,
+                              bottom: 35,
+                              child: GetSavedStatus(
+                                  passSlug: widget.passSlug, ctx: "Event"))
+                        ]),
+                        Container(
+                            transform:
+                                Matrix4.translationValues(0.0, -20.0, 0.0),
+                            padding: EdgeInsets.symmetric(vertical: paddingMD),
+                            decoration: const BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(20),
+                                  topRight: Radius.circular(20),
+                                )),
+                            child: Column(children: [
+                              Container(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                padding: const EdgeInsets.only(bottom: 5),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    getImageProfileContent(
+                                        contents[0].adminUsernameCreated,
+                                        contents[0].userUsernameCreated,
+                                        contents[0].adminImageCreated,
+                                        contents[0].userImageCreated),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(contents[0].contentTitle,
+                                            style: TextStyle(
+                                                fontSize: textMD,
+                                                fontWeight: FontWeight.bold)),
+                                        //Check this...
+                                        //getSubtitle(contents[0].contentSubtitle),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              Container(
+                                  alignment: Alignment.centerLeft,
+                                  margin: EdgeInsets.symmetric(
+                                      horizontal: paddingSM),
+                                  child: HtmlWidget(contents[0].contentDesc)),
+                              const SizedBox(height: 20),
+                              getAttach(contents[0].contentAttach),
+                              Container(
+                                alignment: Alignment.centerLeft,
+                                margin: EdgeInsets.fromLTRB(
+                                    paddingSM, paddingMD, paddingSM, 0),
+                                child: getTag(contents[0].contentTag,
+                                    fullHeight, contents),
+                              ),
+                              const SizedBox(height: 20),
+                              Container(
+                                alignment: Alignment.centerLeft,
+                                margin:
+                                    EdgeInsets.symmetric(horizontal: paddingSM),
+                                child:
+                                    Wrap(runSpacing: 5, spacing: 10, children: [
+                                  getLocation(contents[0].contentLoc,
+                                      contents[0].slugName),
+                                  getContentDate(contents[0].dateStart,
+                                      contents[0].dateEnd),
+                                  getContentHour(contents[0].dateStart,
+                                      contents[0].dateEnd)
+                                ]),
+                              ),
+                            ])),
+                      ]),
+                  Positioned(
+                    bottom: 10,
+                    child: PostArchiveRelation(
+                      passSlug: contents[0].slugName,
+                      margin: EdgeInsets.symmetric(
+                          horizontal: paddingSM, vertical: paddingXSM),
+                      ctx: "Event",
+                    ),
+                  ),
+                ])),
+            floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+            floatingActionButton: Container(
+                margin: EdgeInsets.only(top: paddingMD),
+                child: FloatingActionButton(
+                  backgroundColor: primaryColor,
+                  onPressed: () {},
+                  child: IconButton(
+                    icon: Icon(Icons.arrow_back, size: iconLG),
+                    color: whitebg,
+                    onPressed: () {
+                      listArchiveCheck = [];
+                      Get.offAll(() => const BottomBar());
+                    },
+                  ),
+                )),
+          ));
+    } else {
+      return WillPopScope(
+          onWillPop: () {
+            Get.offAll(() => const BottomBar());
+          },
+          child: Scaffold(
+            body: RefreshIndicator(
+                key: _refreshIndicatorKey,
+                onRefresh: refreshData,
+                child: Stack(alignment: Alignment.center, children: [
+                  ListView(
+                      padding: const EdgeInsets.only(bottom: 75),
+                      //crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Stack(children: [
+                          GestureDetector(
+                            onTap: () => showDialog<String>(
+                              context: context,
+                              barrierColor: primaryColor.withOpacity(0.5),
+                              builder: (BuildContext context) => AlertDialog(
+                                  contentPadding: EdgeInsets.zero,
+                                  elevation: 0,
+                                  backgroundColor: Colors.transparent,
+                                  content: Container(
+                                    height: fullHeight * 0.45,
+                                    width: fullWidth,
+                                    decoration: BoxDecoration(
+                                      image: const DecorationImage(
+                                        image: AssetImage(
+                                            'assets/icon/default_content.jpg'),
+                                        fit: BoxFit.cover,
+                                      ),
+                                      borderRadius:
+                                          BorderRadius.circular(roundedLG2),
+                                    ),
+                                  )),
+                            ),
+                            child: Container(
+                              height: fullHeight * 0.3,
+                              decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                      'assets/icon/default_content.jpg'),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                              right: 15,
+                              bottom: 35,
+                              child: GetSavedStatus(
+                                  passSlug: widget.passSlug, ctx: "Event"))
+                        ]),
+                        Container(
+                            transform:
+                                Matrix4.translationValues(0.0, -20.0, 0.0),
+                            padding: EdgeInsets.symmetric(vertical: paddingMD),
+                            decoration: const BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(20),
+                                  topRight: Radius.circular(20),
+                                )),
+                            child: Center(
+                                child: getMessageImageNoData(
+                                    "assets/icon/badnet.png",
+                                    "Failed to load data".tr,
+                                    200))),
+                      ]),
+                ])),
+            floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+            floatingActionButton: Container(
+                margin: EdgeInsets.only(top: paddingMD),
+                child: FloatingActionButton(
+                  backgroundColor: primaryColor,
+                  onPressed: () {},
+                  child: IconButton(
+                    icon: Icon(Icons.arrow_back, size: iconLG),
+                    color: whitebg,
+                    onPressed: () {
+                      Get.offAll(() => const BottomBar());
+                    },
+                  ),
+                )),
+          ));
+    }
   }
 }

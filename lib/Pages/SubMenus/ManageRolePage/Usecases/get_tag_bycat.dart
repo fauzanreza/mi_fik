@@ -1,18 +1,22 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:mi_fik/Modules/APIs/TagApi/Models/queries.dart';
 import 'package:mi_fik/Modules/APIs/TagApi/Services/queries.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class GetAllTagByCategory extends StatefulWidget {
-  GetAllTagByCategory({Key key, this.slug}) : super(key: key);
-  String slug;
+  const GetAllTagByCategory({Key key, this.slug}) : super(key: key);
+  final String slug;
 
   @override
-  _GetAllTagByCategory createState() => _GetAllTagByCategory();
+  StateGetAllTagByCategory createState() => StateGetAllTagByCategory();
 }
 
-class _GetAllTagByCategory extends State<GetAllTagByCategory> {
+class StateGetAllTagByCategory extends State<GetAllTagByCategory> {
   TagQueriesService apiQuery;
 
   @override
@@ -21,62 +25,108 @@ class _GetAllTagByCategory extends State<GetAllTagByCategory> {
     apiQuery = TagQueriesService();
   }
 
+  Widget getElement(contents, bool isModel) {
+    if (contents != null) {
+      String tagName = "";
+      String slug = "";
+
+      return Wrap(
+          runSpacing: -5,
+          spacing: 5,
+          children: contents.map<Widget>((e) {
+            if (isModel) {
+              tagName = e.tagName;
+              slug = e.slug;
+            } else {
+              tagName = e['tag_name'];
+              slug = e['slug_name'];
+            }
+
+            var contain =
+                selectedRole.where((item) => item['slug_name'] == slug);
+            if (contain.isEmpty || selectedRole.isEmpty) {
+              return ElevatedButton(
+                onPressed: () {
+                  String tagNameState = "";
+                  String slugState = "";
+                  if (isModel) {
+                    tagNameState = e.tagName;
+                    slugState = e.slug;
+                  } else {
+                    tagNameState = e['tag_name'];
+                    slugState = e['slug_name'];
+                  }
+                  setState(() {
+                    selectedRole.add(
+                        {"slug_name": slugState, "tag_name": tagNameState});
+                  });
+                },
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(roundedLG2),
+                  )),
+                  backgroundColor:
+                      MaterialStatePropertyAll<Color>(primaryColor),
+                ),
+                child: Text(tagName, style: TextStyle(fontSize: textXSM)),
+              );
+            } else {
+              return const SizedBox();
+            }
+          }).toList());
+    } else {
+      return Center(child: Text("No role available".tr));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      maintainBottomViewPadding: false,
-      child: FutureBuilder(
-        future: apiQuery.getAllTagByCategory(widget.slug),
-        builder:
-            (BuildContext context, AsyncSnapshot<List<TagAllModel>> snapshot) {
-          if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                  "Something wrong with message: ${snapshot.error.toString()}"),
-            );
-          } else if (snapshot.connectionState == ConnectionState.done) {
-            List<TagAllModel> contents = snapshot.data;
-            return _buildListView(contents);
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
-      ),
-    );
+    GetStorage box = GetStorage();
+    List<TagAllModel> contents;
+
+    if (box.read("tag-bycat-${widget.slug}") == null) {
+      return SafeArea(
+        maintainBottomViewPadding: false,
+        child: FutureBuilder(
+          future: apiQuery.getAllTagByCategory(widget.slug),
+          builder: (BuildContext context,
+              AsyncSnapshot<List<TagAllModel>> snapshot) {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text(
+                    "Something wrong with message: ${snapshot.error.toString()}"),
+              );
+            } else if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasData) {
+                contents = snapshot.data;
+                var lst = [];
+                for (var element in contents) {
+                  lst.add(
+                      {"slug_name": element.slug, "tag_name": element.tagName});
+                }
+                box.write("tag-bycat-${widget.slug}", jsonEncode(lst));
+                return _buildListView(contents);
+              } else {
+                return Center(child: Text("No role available".tr));
+              }
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
+        ),
+      );
+    } else {
+      return getElement(
+          jsonDecode(box.read("tag-bycat-${widget.slug}")), false);
+    }
   }
 
   Widget _buildListView(List<TagAllModel> contents) {
     //double fullHeight = MediaQuery.of(context).size.height;
-    double fullWidth = MediaQuery.of(context).size.width;
-
-    return Wrap(
-        runSpacing: -5,
-        spacing: 5,
-        children: contents.map<Widget>((e) {
-          var contain =
-              selectedRole.where((item) => item['slug_name'] == e.slug);
-          if (contain.isEmpty || selectedRole.isEmpty) {
-            return ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  selectedRole
-                      .add({"slug_name": e.slug, "tag_name": e.tagName});
-                });
-              },
-              style: ButtonStyle(
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(roundedLG2),
-                )),
-                backgroundColor: MaterialStatePropertyAll<Color>(primaryColor),
-              ),
-              child: Text(e.tagName, style: TextStyle(fontSize: textXSM)),
-            );
-          } else {
-            return const SizedBox();
-          }
-        }).toList());
+    //double fullWidth = MediaQuery.of(context).size.width;
+    return getElement(contents, true);
   }
 }

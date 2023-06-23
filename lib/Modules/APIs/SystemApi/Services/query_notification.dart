@@ -1,7 +1,9 @@
+import 'package:get/get.dart';
+// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' show Client;
-import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/APIs/SystemApi/Models/query_notification.dart';
-import 'package:mi_fik/Modules/Helpers/converter.dart';
+import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationQueriesService {
@@ -22,6 +24,13 @@ class NotificationQueriesService {
         headers: header);
     if (response.statusCode == 200) {
       return notificationJsonWPaginate(response.body);
+    } else if (response.statusCode == 401) {
+      await prefs.clear();
+
+      Get.offAll(() => const LoginPage());
+      Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
+          backgroundColor: whitebg);
+      return null;
     } else {
       return null;
     }

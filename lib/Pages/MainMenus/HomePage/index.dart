@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Backgrounds/custom.dart';
 import 'package:mi_fik/Components/Bars/Usecases/show_side_bar.dart';
 import 'package:mi_fik/Components/Bars/left_bar.dart';
@@ -6,6 +8,7 @@ import 'package:mi_fik/Components/Bars/right_bar.dart';
 import 'package:mi_fik/Components/Button/navigation.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
+import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/MainMenus/HomePage/Usecases/get_content.dart';
@@ -21,16 +24,24 @@ class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
 
   @override
-  _HomePage createState() => _HomePage();
+  StateHomePage createState() => StateHomePage();
 }
 
-class _HomePage extends State<HomePage> {
+class StateHomePage extends State<HomePage> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  int page = 1;
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
 
-  Future<Role> getToken() async {
+  Future<Role> getTokenNLoc() async {
     final prefs = await SharedPreferences.getInstance();
     final role = prefs.getString('role_general_key');
+    await checkGps(getCurrentLocationDetails());
     return Role(role: role);
+  }
+
+  Future<void> refreshData() async {
+    setState(() {});
   }
 
   @override
@@ -39,7 +50,7 @@ class _HomePage extends State<HomePage> {
     //double fullWidth = MediaQuery.of(context).size.width;
 
     return FutureBuilder<Role>(
-        future: getToken(),
+        future: getTokenNLoc(),
         builder: (context, snapshot) {
           getRoleFeature(String role) {
             if (role != "Student") {
@@ -50,9 +61,9 @@ class _HomePage extends State<HomePage> {
                   overlayColor: primaryColor,
                   overlayOpacity: 0.4,
                   children: [
-                    getSpeeDialChild("New Task", context, PostTask(),
+                    getSpeeDialChild("New Task".tr, context, PostTask(),
                         Icons.note_add_outlined),
-                    getSpeeDialChild("New Post", context, AddPost(),
+                    getSpeeDialChild("New Post".tr, context, const AddPost(),
                         Icons.post_add_outlined),
                   ],
                   child: Icon(Icons.add, size: iconLG));
@@ -64,7 +75,7 @@ class _HomePage extends State<HomePage> {
                   overlayColor: primaryColor,
                   overlayOpacity: 0.4,
                   children: [
-                    getSpeeDialChild("New Task", context, PostTask(),
+                    getSpeeDialChild("New Task".tr, context, PostTask(),
                         Icons.note_add_outlined),
                   ],
                   child: Icon(Icons.add, size: iconLG));
@@ -74,51 +85,64 @@ class _HomePage extends State<HomePage> {
           if (snapshot.connectionState == ConnectionState.done) {
             String role = snapshot.data.role;
 
-            return Scaffold(
-              key: scaffoldKey,
-              drawer: const LeftBar(),
-              drawerScrimColor: primaryColor.withOpacity(0.35),
-              endDrawer: const RightBar(),
-              body: CustomPaint(
-                  painter: CirclePainter(),
-                  child: ListView(
-                      padding: EdgeInsets.only(top: fullHeight * 0.04),
-                      children: [
-                        showSideBar(scaffoldKey, whitebg),
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 15),
-                          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+            return WillPopScope(
+                onWillPop: () {
+                  return SystemNavigator.pop();
+                },
+                child: Scaffold(
+                  key: scaffoldKey,
+                  drawer: const LeftBar(),
+                  drawerScrimColor: primaryColor.withOpacity(0.35),
+                  endDrawer: const RightBar(),
+                  body: CustomPaint(
+                      painter: CirclePainter(),
+                      child: RefreshIndicator(
+                          key: _refreshIndicatorKey,
+                          onRefresh: refreshData,
+                          child: ListView(
+                              padding: EdgeInsets.only(top: fullHeight * 0.04),
                               children: [
-                                getGreeting(getToday("part"), whitebg),
-                                getTitleJumbo(getToday("clock"), whitebg),
-                                SizedBox(height: fullHeight * 0.05),
-                                Row(
-                                  children: [
-                                    getSubTitleMedium(
-                                        getToday("date"), whitebg),
-                                    const Spacer(),
-                                    LocationTitle()
-                                  ],
-                                )
-                              ]),
-                        ),
-                        Container(
-                            //height: double.infinity,
-                            margin: const EdgeInsets.only(top: 10.0),
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            decoration: BoxDecoration(
-                              color: mainbg,
-                              borderRadius: BorderRadius.only(
-                                  topLeft: roundedLG, topRight: roundedLG),
-                            ),
-                            child: const IntrinsicHeight(
-                              child: Flexible(child: GetContent()),
-                            ))
-                      ])),
-              floatingActionButton: getRoleFeature(role),
-            );
+                                showSideBar(scaffoldKey, whitebg),
+                                Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        getGreeting(getToday("part"), whitebg),
+                                        getTitleJumbo(
+                                            getToday("clock"), whitebg),
+                                        SizedBox(height: fullHeight * 0.05),
+                                        Row(
+                                          children: [
+                                            getSubTitleMedium(getToday("date"),
+                                                whitebg, TextAlign.start),
+                                            const Spacer(),
+                                            const GetLocation()
+                                          ],
+                                        )
+                                      ]),
+                                ),
+                                Container(
+                                    //height: double.infinity,
+                                    margin: const EdgeInsets.only(top: 10.0),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    decoration: BoxDecoration(
+                                      color: mainbg,
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: roundedLG,
+                                          topRight: roundedLG),
+                                    ),
+                                    child: IntrinsicHeight(
+                                      child: GetContent(page: page),
+                                    ))
+                              ]))),
+                  floatingActionButton: getRoleFeature(role),
+                ));
           } else {
             return const SizedBox();
           }

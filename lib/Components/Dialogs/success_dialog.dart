@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
-class SuccessDialog extends StatefulWidget {
-  SuccessDialog({Key key, this.text}) : super(key: key);
-  String text;
+class SuccessDialog extends StatelessWidget {
+  const SuccessDialog({Key key, this.text}) : super(key: key);
+  final String text;
 
-  @override
-  _SuccessDialog createState() => _SuccessDialog();
-}
-
-class _SuccessDialog extends State<SuccessDialog> {
   @override
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
@@ -26,12 +21,12 @@ class _SuccessDialog extends State<SuccessDialog> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(60),
+                borderRadius: roundedErrImage,
                 child: Image.asset('assets/icon/Success.png', width: 120),
               ),
               Container(
                   margin: const EdgeInsets.symmetric(vertical: 10),
-                  child: Text(widget.text,
+                  child: Text(text,
                       style: TextStyle(
                           color: greybg,
                           fontSize: 16,

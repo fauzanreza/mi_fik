@@ -1,26 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Container/content.dart';
+import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Skeletons/content_2.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
+import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/query_contents.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/show_detail_task.dart';
+import 'package:mi_fik/Pages/SubMenus/DetailPage/index.dart';
 
 class DayEvent extends StatefulWidget {
   const DayEvent({Key key}) : super(key: key);
 
   @override
-  _DayEvent createState() => _DayEvent();
+  StateDayEvent createState() => StateDayEvent();
 }
 
-class _DayEvent extends State<DayEvent> with TickerProviderStateMixin {
-  ContentQueriesService apiService;
-  String hourChipBefore;
+class StateDayEvent extends State<DayEvent> with TickerProviderStateMixin {
+  ContentQueriesService queryService;
+  ContentCommandsService commandService;
+
+  String hourChipBefore = "";
 
   @override
   void initState() {
     super.initState();
-    apiService = ContentQueriesService();
+    queryService = ContentQueriesService();
+    commandService = ContentCommandsService();
   }
 
   @override
@@ -28,7 +38,7 @@ class _DayEvent extends State<DayEvent> with TickerProviderStateMixin {
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
-        future: apiService.getSchedule(),
+        future: queryService.getSchedule(slctCalendar),
         builder: (BuildContext context,
             AsyncSnapshot<List<ScheduleModel>> snapshot) {
           if (snapshot.hasError) {
@@ -48,34 +58,95 @@ class _DayEvent extends State<DayEvent> with TickerProviderStateMixin {
   }
 
   Widget _buildListView(List<ScheduleModel> contents) {
-    //double fullHeight = MediaQuery.of(context).size.height;
+    double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
+    bool isLoading;
 
-    if ((contents != null) && (contents.isNotEmpty)) {
+    if (contents != null) {
       return Container(
           margin: const EdgeInsets.only(left: 15, top: 10),
           padding: const EdgeInsets.only(bottom: 15),
           child: Column(
               children: contents.map((content) {
+            getChipHour(String ds) {
+              String now = DateTime.parse(ds).hour.toString();
+
+              if (hourChipBefore == "" || hourChipBefore != now) {
+                hourChipBefore = now;
+                return getHourChipLine(content.dateStart, fullWidth);
+              } else {
+                return const SizedBox();
+              }
+            }
+
             return Column(children: [
-              getHourChip(content.dateStart, hourChipBefore, fullWidth),
-              GetScheduleContainer(
-                  width: fullWidth, content: content, ctx: context)
+              getChipHour(content.dateStart),
+              SizedBox(
+                  width: fullWidth,
+                  child: IntrinsicHeight(
+                      child: Stack(children: [
+                    GestureDetector(
+                        onTap: () {
+                          if (content.dataFrom == 2) {
+                            showDialog<String>(
+                                context: context,
+                                barrierColor: primaryColor.withOpacity(0.5),
+                                builder: (BuildContext context) {
+                                  return StatefulBuilder(
+                                      builder: (context, setState) {
+                                    return AlertDialog(
+                                        insetPadding:
+                                            EdgeInsets.all(paddingXSM),
+                                        contentPadding:
+                                            EdgeInsets.all(paddingXSM),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.all(roundedLG)),
+                                        content: DetailTask(
+                                          data: content,
+                                        ));
+                                  });
+                                });
+                          } else {
+                            commandService
+                                .postContentView(content.slugName)
+                                .then((response) {
+                              setState(() => isLoading = false);
+                              var status = response[0]['message'];
+                              var body = response[0]['body'];
+
+                              if (status == "success") {
+                                Get.to(() =>
+                                    DetailPage(passSlug: content.slugName));
+                              } else {
+                                showDialog<String>(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        FailedDialog(
+                                            text: body, type: "openevent"));
+                              }
+                            });
+
+                            passSlugContent = content.slugName;
+                          }
+                        },
+                        child: GetScheduleContainer(
+                            width: fullWidth, content: content))
+                  ])))
             ]);
           }).toList()));
     } else {
-      return Align(
-          alignment: Alignment.topCenter,
-          child: Column(
-            children: [
-              Image.asset('assets/icon/empty.png', width: fullWidth * 0.6),
-              Text("No Event/Task for today, have a good rest",
-                  style: TextStyle(
-                      color: primaryColor,
-                      fontWeight: FontWeight.w500,
-                      fontSize: textMD))
-            ],
-          ));
+      if (isOffline) {
+        return SizedBox(
+            height: fullHeight * 0.7,
+            child: getMessageImageNoData(
+                "assets/icon/badnet.png", "Failed to load data".tr, fullWidth));
+      } else {
+        return SizedBox(
+            height: fullHeight * 0.7,
+            child: getMessageImageNoData("assets/icon/empty.png",
+                "No event / task for today, have a good rest".tr, fullWidth));
+      }
     }
   }
 }

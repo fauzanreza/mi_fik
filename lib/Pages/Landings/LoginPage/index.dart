@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mi_fik/Components/Backgrounds/custom.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/Landings/LoginPage/Usecases/post_login.dart';
@@ -7,19 +8,18 @@ class LoginPage extends StatefulWidget {
   const LoginPage({Key key}) : super(key: key);
 
   @override
-  _LoginPage createState() => _LoginPage();
+  StateLoginPage createState() => StateLoginPage();
 }
 
-class _LoginPage extends State<LoginPage> {
+class StateLoginPage extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
     return WillPopScope(
-        onWillPop: () async {
-          // Do something LOL
-          return false;
+        onWillPop: () {
+          SystemNavigator.pop();
         },
         child: Scaffold(
             body: CustomPaint(

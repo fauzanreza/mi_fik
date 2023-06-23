@@ -1,36 +1,25 @@
 import 'dart:convert';
 
 class NotificationModel {
-  //Key
-  String id; //Primary
-
-  String notifType;
+  String notifTitle;
   String notifBody;
-  var notifSendTo;
 
   String createdAt;
   String adminName;
-  String userName;
 
   NotificationModel({
-    this.id,
-    this.notifType,
+    this.notifTitle,
     this.notifBody,
-    this.notifSendTo,
-    this.adminName,
-    this.userName,
     this.createdAt,
+    this.adminName,
   });
 
   factory NotificationModel.fromJson(Map<String, dynamic> map) {
     return NotificationModel(
-        id: map["id"],
-        notifType: map["notif_type"],
+        notifTitle: map["notif_title"],
         notifBody: map["notif_body"],
-        notifSendTo: map["notif_send_to"],
-        adminName: map["admins_fullname"],
-        userName: map["users_fullname"],
-        createdAt: map["created_at"]);
+        createdAt: map["created_at"],
+        adminName: map["admin_fullname"]);
   }
 }
 
