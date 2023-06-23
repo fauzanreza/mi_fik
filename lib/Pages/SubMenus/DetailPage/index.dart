@@ -6,7 +6,6 @@ import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/query_contents.dart';
-import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Helpers/widget.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -136,6 +135,9 @@ class StateDetailPage extends State<DetailPage> {
         }
       }
 
+      print(contents[0].adminImageCreated);
+      print(contents[0].userImageCreated);
+
       return WillPopScope(
           onWillPop: () {
             Get.offAll(() => const BottomBar());
@@ -219,7 +221,7 @@ class StateDetailPage extends State<DetailPage> {
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    getImageProfileContent(
+                                    getProfileImage(
                                         contents[0].adminUsernameCreated,
                                         contents[0].userUsernameCreated,
                                         contents[0].adminImageCreated,

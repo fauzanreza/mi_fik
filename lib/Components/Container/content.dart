@@ -45,26 +45,6 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
             color: greybg, fontWeight: FontWeight.w400, fontSize: textSM - 1));
   }
 
-  Widget getProfileImage(u1, u2, i1, i2) {
-    String image;
-    if (u1 != null) {
-      if (i1 != null) {
-        image = i1;
-      } else {
-        image = null;
-      }
-    } else if (u2 != null) {
-      if (i2 != null) {
-        image = i2;
-      } else {
-        image = null;
-      }
-    } else {
-      image = null;
-    }
-    return getProfileImageContent(image);
-  }
-
   @override
   Widget build(BuildContext context) {
     bool isLoading;

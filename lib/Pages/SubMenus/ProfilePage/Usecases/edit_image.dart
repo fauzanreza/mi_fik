@@ -1,8 +1,10 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:full_screen_menu/full_screen_menu.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
+import 'package:mi_fik/Components/Cameras/camera.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
@@ -115,7 +117,14 @@ class _EditImageState extends State<EditImage> {
                                   text: Text('Camera'.tr,
                                       style: TextStyle(fontSize: textMD)),
                                   gradient: orangeGradient,
-                                  onTap: () {}),
+                                  onTap: () async {
+                                    WidgetsFlutterBinding.ensureInitialized();
+                                    final cameras = await availableCameras();
+                                    FullScreenMenu.hide();
+                                    Get.to(() => CameraPage(
+                                          camera: cameras.first,
+                                        ));
+                                  }),
                               FSMenuItem(
                                 icon: Icon(Icons.folder, color: whitebg),
                                 gradient: orangeGradient,

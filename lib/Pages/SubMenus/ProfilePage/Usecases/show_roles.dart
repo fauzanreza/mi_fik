@@ -96,7 +96,7 @@ class StateShowRole extends State<ShowRole> {
                                   tag.slug != "staff") {
                                 return AlertDialog(
                                   contentPadding: const EdgeInsets.all(10),
-                                  title: const Text('Warning'),
+                                  title: Text('Warning'.tr),
                                   content: SizedBox(
                                     width: fullWidth,
                                     height: 80,

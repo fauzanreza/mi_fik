@@ -51,6 +51,26 @@ Widget getProfileImageSideBar(double width, double size, String url) {
   }
 }
 
+Widget getProfileImage(u1, u2, i1, i2) {
+  String image;
+  if (u1 != null) {
+    if (i1 != null) {
+      image = i1;
+    } else {
+      image = null;
+    }
+  } else if (u2 != null) {
+    if (i2 != null) {
+      image = i2;
+    } else {
+      image = null;
+    }
+  } else {
+    image = null;
+  }
+  return getProfileImageContent(image);
+}
+
 Widget getProfileImageContent(var url) {
   if (url != null && url != "null") {
     return Container(

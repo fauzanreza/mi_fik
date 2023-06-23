@@ -31,7 +31,7 @@ class StateSignOutDialog extends State<SignOutDialog> {
 
     return AlertDialog(
       contentPadding: const EdgeInsets.all(10),
-      title: const Text('Warning'),
+      title: Text('Warning'.tr),
       content: SizedBox(
         width: fullWidth,
         height: 50,

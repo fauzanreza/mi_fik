@@ -16,11 +16,13 @@ class GetAllTagCategory extends StatefulWidget {
 
 class StateGetAllTagCategory extends State<GetAllTagCategory> {
   TagQueriesService apiQuery;
+  GetStorage box = GetStorage();
 
   @override
   void initState() {
     super.initState();
     apiQuery = TagQueriesService();
+    box = GetStorage();
   }
 
   Widget getElement(contents, bool isModel) {
@@ -66,7 +68,6 @@ class StateGetAllTagCategory extends State<GetAllTagCategory> {
 
   @override
   Widget build(BuildContext context) {
-    GetStorage box = GetStorage();
     List<TagCategoryModel> contents;
 
     if (box.read("tag-cat") == null) {

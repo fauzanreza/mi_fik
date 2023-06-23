@@ -125,7 +125,11 @@ class Dictionaries extends Translations {
           "Request failed, you haven't chosen any tag yet":
               "Request failed, you haven't chosen any tag yet",
           "Request failed, you can't remove general role":
-              "Request failed, you can't remove general role"
+              "Request failed, you can't remove general role",
+          "Are you sure want to close the registration?":
+              "Are you sure want to close the registration?",
+          "Failed to capture image": "Failed to capture image",
+          "Preview Image": "Preview Image"
         },
         'id_ID': {
           'Good Morning': 'Selamat Pagi',
@@ -249,7 +253,11 @@ class Dictionaries extends Translations {
           "Request failed, you haven't chosen any tag yet":
               "Permintaan role gagal, Anda sama sekali belum memilih",
           "Request failed, you can't remove general role":
-              "Permintaan role gagal, role utama tidak boleh diubah"
+              "Permintaan role gagal, role utama tidak boleh diubah",
+          "Are you sure want to close the registration?":
+              "Apakah Anda yakin ingin membatalkan pendaftaran?",
+          "Failed to capture image": "Gagal mengambil gambar",
+          "Preview Image": "Hasil Gambar"
         },
       };
 }

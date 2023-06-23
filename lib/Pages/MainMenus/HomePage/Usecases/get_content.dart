@@ -172,7 +172,7 @@ class StateGetContent extends State<GetContent> with TickerProviderStateMixin {
       if (selectedTagFilterContent.isNotEmpty) {
         int i = 0;
         int max = selectedTagFilterContent.length;
-        selectedTagFilterContent.forEach((e) {
+        for (var e in selectedTagFilterContent) {
           if (i == 0) {
             tags += ", ${e['tag_name']}, ";
           } else if (i == max - 1) {
@@ -182,7 +182,7 @@ class StateGetContent extends State<GetContent> with TickerProviderStateMixin {
           }
 
           i++;
-        });
+        }
       }
 
       String actvText = "Active filters".tr;
