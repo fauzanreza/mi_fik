@@ -130,7 +130,10 @@ class Dictionaries extends Translations {
               "Are you sure want to close the registration?",
           "Failed to capture image": "Failed to capture image",
           "Preview Image": "Preview Image",
-          "No more item to show": "No more item to show"
+          "No more item to show": "No more item to show",
+          "Failed to upload, file doesnt exist":
+              "Failed to upload, file doesnt exist",
+          "Failed to reset image": "Failed to reset image"
         },
         'id_ID': {
           'Good Morning': 'Selamat Pagi',
@@ -259,7 +262,10 @@ class Dictionaries extends Translations {
               "Apakah Anda yakin ingin membatalkan pendaftaran?",
           "Failed to capture image": "Gagal mengambil gambar",
           "Preview Image": "Hasil Gambar",
-          "No more item to show": "Semua item telah ditampilkan"
+          "No more item to show": "Semua item telah ditampilkan",
+          "Failed to upload, file doesnt exist":
+              "Gagal mengunggah, file tidak ditemukan",
+          "Failed to reset image": "Gagal menghapus gambar"
         },
       };
 }

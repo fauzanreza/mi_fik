@@ -32,6 +32,10 @@ class _SetImageContentState extends State<SetImageContent> {
     return await ImagePicker().pickImage(source: ImageSource.gallery);
   }
 
+  Future<XFile> getCamera() async {
+    return await ImagePicker().pickImage(source: ImageSource.camera);
+  }
+
   @override
   Widget build(BuildContext context) {
     double fullHeight = MediaQuery.of(context).size.height;
@@ -95,7 +99,19 @@ class _SetImageContentState extends State<SetImageContent> {
                           text: Text('Camera'.tr,
                               style: TextStyle(fontSize: textMD)),
                           gradient: orangeGradient,
-                          onTap: () {}),
+                          onTap: () async {
+                            var file = await getCamera();
+
+                            if (file != null) {
+                              await fireServicePost
+                                  .sendImageContent(file, "content_image")
+                                  .then((value) {
+                                contentAttImage = value;
+                              });
+                              FullScreenMenu.hide();
+                              setState(() {});
+                            }
+                          }),
                       FSMenuItem(
                         icon: Icon(Icons.folder, color: whitebg),
                         gradient: orangeGradient,

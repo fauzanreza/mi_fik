@@ -1,7 +1,9 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:full_screen_menu/full_screen_menu.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mi_fik/Components/Cameras/captures.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Models/commands.dart';
@@ -168,7 +170,17 @@ class StateSetProfileImage extends State<SetProfileImage> {
                                                       style: TextStyle(
                                                           fontSize: textMD)),
                                                   gradient: orangeGradient,
-                                                  onTap: () {}),
+                                                  onTap: () async {
+                                                    WidgetsFlutterBinding
+                                                        .ensureInitialized();
+                                                    final cameras =
+                                                        await availableCameras();
+                                                    FullScreenMenu.hide();
+                                                    Get.to(() => CameraPage(
+                                                          camera: cameras.first,
+                                                          from: "register",
+                                                        ));
+                                                  }),
                                               FSMenuItem(
                                                 icon: Icon(Icons.folder,
                                                     color: whitebg),

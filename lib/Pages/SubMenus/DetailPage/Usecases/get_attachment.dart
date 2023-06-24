@@ -36,8 +36,7 @@ class StateAttachButton extends State<AttachButton> {
 
       //Get button attachment by its type.
       getButton() {
-        if (attach['attach_type'] == "attachment_url" &&
-            attach['attach_type'] == "attachment_doc") {
+        if (attach['attach_type'] == "attachment_url") {
           return RichText(
             text: TextSpan(
               children: [

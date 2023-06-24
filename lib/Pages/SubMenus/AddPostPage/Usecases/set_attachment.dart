@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:full_screen_menu/full_screen_menu.dart';
 import 'package:get/get.dart';
@@ -30,6 +33,10 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
     return await ImagePicker().pickImage(source: ImageSource.gallery);
   }
 
+  Future<XFile> getCamera() async {
+    return await ImagePicker().pickImage(source: ImageSource.camera);
+  }
+
   Future<XFile> getVideo() async {
     return await ImagePicker().pickVideo(source: ImageSource.gallery);
   }
@@ -40,7 +47,7 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
     //double fullWidth = MediaQuery.of(context).size.width;
     bool isLoading;
 
-    uploadFile(var bytes, XFile file, String type, int max) async {
+    uploadFile(var bytes, var file, String type, int max) async {
       if ((bytes.lengthInBytes / (1024 * 1024)) <= max) {
         await fireServicePost.sendImageContent(file, type).then((value) {
           listAttachment.add({
@@ -77,7 +84,16 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
                       text:
                           Text('Camera'.tr, style: TextStyle(fontSize: textMD)),
                       gradient: orangeGradient,
-                      onTap: () {}),
+                      onTap: () async {
+                        var file = await getCamera();
+                        var type = "attachment_image";
+
+                        if (file != null) {
+                          final bytes = await file.readAsBytes();
+
+                          uploadFile(bytes, file, type, maxImage);
+                        }
+                      }),
                   FSMenuItem(
                       icon: Icon(Icons.link, color: whitebg),
                       text: Text('URL', style: TextStyle(fontSize: textMD)),
@@ -95,9 +111,23 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
                       }),
                   FSMenuItem(
                       icon: Icon(Icons.document_scanner, color: whitebg),
-                      text: Text('Doc', style: TextStyle(fontSize: textMD)),
+                      text: Text('Pdf', style: TextStyle(fontSize: textMD)),
                       gradient: orangeGradient,
-                      onTap: () {}),
+                      onTap: () async {
+                        FilePickerResult result =
+                            await FilePicker.platform.pickFiles(
+                          type: FileType.custom,
+                          allowedExtensions: ['pdf'],
+                        );
+                        var type = "attachment_doc";
+                        File file = File(result.files.single.path);
+
+                        if (file != null) {
+                          final bytes = await file.readAsBytes();
+
+                          uploadFile(bytes, file, type, maxDoc);
+                        }
+                      }),
                   FSMenuItem(
                     icon: Icon(Icons.image_outlined, color: whitebg),
                     gradient: orangeGradient,

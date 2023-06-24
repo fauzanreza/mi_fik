@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
+import 'package:mi_fik/Components/Dialogs/bg_fcm_dialog.dart';
 import 'package:mi_fik/Modules/APIs/DictionaryApi/Services/queries.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
 import 'package:mi_fik/Modules/Translators/dictionary.dart';
@@ -15,12 +16,33 @@ import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mi_fik/Pages/Landings/RegisterPage/index.dart';
-import 'package:mi_fik/firebase_options.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+@pragma('vm:entry-point')
+//not finished
 Future<void> fireFCMHandler(RemoteMessage message) async {
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // final AndroidFlutterLocalNotificationsPlugin plugin =
+  //     FlutterLocalNotificationsPlugin().resolvePlatformSpecificImplementation<
+  //         AndroidFlutterLocalNotificationsPlugin>();
+
+  // if (plugin != null) {
+  //   await plugin.createNotificationChannel(channel);
+  // }
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  print("test");
+  showDialog<String>(
+    context: Get.context,
+    builder: (BuildContext context) => BgFcmDialog(
+      title: message.notification.title,
+      body: message.notification.body,
+    ),
+  );
+  //}
 }
 
 Future<void> main() async {
@@ -33,7 +55,7 @@ Future<void> main() async {
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await Firebase.initializeApp();
 
-  FirebaseMessaging.onBackgroundMessage(fireFCMHandler);
+  //FirebaseMessaging.onBackgroundMessage(fireFCMHandler);
   await FlutterLocalNotificationsPlugin()
       .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>()
@@ -70,6 +92,21 @@ Future<void> main() async {
     } else {
       isFinishedRegis = false;
     }
+
+    FirebaseMessaging.onBackgroundMessage(fireFCMHandler);
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      RemoteNotification notification = message.notification;
+      AndroidNotification android = message.notification?.android;
+      if (notification != null && android != null) {
+        showDialog<String>(
+          context: Get.context,
+          builder: (BuildContext context) => BgFcmDialog(
+            title: message.notification.title,
+            body: message.notification.body,
+          ),
+        );
+      }
+    });
 
     runApp(MyApp(signed: true, finishRegis: isFinishedRegis, lang: langKey));
   } else {
@@ -121,62 +158,6 @@ class StateMyApp extends State<MyApp> {
                 icon: "@mipmap/ic_launcher",
               ),
             ));
-      }
-    });
-
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      double fullHeight = MediaQuery.of(context).size.height;
-      double fullWidth = MediaQuery.of(context).size.width;
-
-      RemoteNotification notification = message.notification;
-      AndroidNotification android = message.notification?.android;
-      if (notification != null && android != null) {
-        showDialog<String>(
-            context: context,
-            barrierColor: primaryColor.withOpacity(0.5),
-            builder: (BuildContext context) {
-              return StatefulBuilder(builder: (context, setState) {
-                return AlertDialog(
-                    insetPadding: EdgeInsets.all(paddingXSM),
-                    contentPadding: EdgeInsets.all(paddingXSM),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(roundedLG)),
-                    content: SizedBox(
-                        height: fullHeight * 0.75,
-                        width: fullWidth,
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                alignment: Alignment.topRight,
-                                child: IconButton(
-                                  icon: const Icon(Icons.close),
-                                  tooltip: 'Back',
-                                  onPressed: () {
-                                    Get.back();
-                                  },
-                                ),
-                              ),
-                              Expanded(
-                                  child: ListView(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: paddingXSM),
-                                children: [
-                                  Text(notification.title,
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.w500)),
-                                  SizedBox(
-                                    height: paddingLg,
-                                  ),
-                                  Text(notification.body),
-                                  SizedBox(
-                                    height: paddingLg,
-                                  ),
-                                ],
-                              )),
-                            ])));
-              });
-            });
       }
     });
 

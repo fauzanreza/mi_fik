@@ -1,4 +1,5 @@
 import 'package:chewie/chewie.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_fik/Components/Container/content.dart';
@@ -7,6 +8,7 @@ import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/Firebases/Storages/Content/remove_image.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/get_pdf.dart';
 import 'package:video_player/video_player.dart';
 
 class GetFileAttachment extends StatefulWidget {
@@ -103,6 +105,38 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
                           style: TextStyle(color: blackbg),
                         );
                       },
+                    ),
+                  )));
+        } else if (e['attach_type'] == "attachment_doc") {
+          return GetAttachmentContainer(
+              data: e,
+              others: null,
+              id: e['id'],
+              action: () async {
+                resetItem(i);
+              },
+              item: Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.symmetric(vertical: paddingMD),
+                  child: RichText(
+                    text: TextSpan(
+                      children: [
+                        WidgetSpan(
+                          child: Icon(Icons.picture_as_pdf,
+                              size: iconLG, color: primaryColor),
+                        ),
+                        TextSpan(
+                            text: " PDF",
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Get.to(AttachmentDocPage(
+                                    url: e['attach_url'].toString()));
+                              },
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                color: blackbg,
+                                fontSize: textSM + 2)),
+                      ],
                     ),
                   )));
         } else if (e['attach_type'] == "attachment_url") {
