@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
@@ -31,15 +32,24 @@ class SetProfileData extends StatefulWidget {
   StateSetProfileData createState() => StateSetProfileData();
 }
 
-class StateSetProfileData extends State<SetProfileData> {
+class StateSetProfileData extends State<SetProfileData>
+    with SingleTickerProviderStateMixin {
   AuthCommandsService apiService;
   var usernameCtrl = TextEditingController();
   var emailCtrl = TextEditingController();
+  AnimationController lottieController;
 
   @override
   void initState() {
     super.initState();
+    lottieController = AnimationController(vsync: this);
     apiService = AuthCommandsService();
+  }
+
+  @override
+  void dispose() {
+    lottieController.dispose();
+    super.dispose();
   }
 
   void refresh() {
@@ -51,7 +61,7 @@ class StateSetProfileData extends State<SetProfileData> {
     double fullHeight = MediaQuery.of(context).size.height;
 
     Widget getDataDetailForm(bool status) {
-      if (status) {
+      if (status && !successValidateAnimation) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -65,6 +75,7 @@ class StateSetProfileData extends State<SetProfileData> {
                 emailAvaiabilityCheck, isCheckedRegister),
             InkWell(
                 onTap: () {
+                  lottieController.reset();
                   usernameAvaiabilityCheck = "";
                   usernameCtrl.clear();
                   emailCtrl.clear();
@@ -116,6 +127,32 @@ class StateSetProfileData extends State<SetProfileData> {
             getInputWarning(widget.allMsg),
           ],
         );
+      } else if (status && successValidateAnimation) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            getSubTitleMedium("Username", blackbg, TextAlign.left),
+            getInputWarning(widget.unameMsg),
+            getInputTextRegis(30, "username", usernameCtrl, refresh,
+                usernameAvaiabilityCheck, isFillForm),
+            getSubTitleMedium("Email", blackbg, TextAlign.left),
+            getInputWarning(widget.emailMsg),
+            getInputTextRegis(30, "email", emailCtrl, refresh,
+                emailAvaiabilityCheck, isFillForm),
+            Align(
+              alignment: Alignment.center,
+              child: Lottie.asset(
+                'assets/json/success-popup.json',
+                controller: lottieController,
+                onLoaded: (composition) {
+                  lottieController
+                    ..duration = composition.duration
+                    ..forward();
+                },
+              ),
+            ),
+          ],
+        );
       } else {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,13 +193,20 @@ class StateSetProfileData extends State<SetProfileData> {
                         var body = response[0]['body'];
 
                         if (status == "success") {
+                          successValidateAnimation = true;
                           checkAvaiabilityRegis = true;
+                          isCheckedRegister = true;
                           widget.unameMsg = "";
                           widget.emailMsg = "";
                           refreshPage(refresh);
-                          Get.snackbar(
-                              "Success", "Username and Email is available",
-                              backgroundColor: whitebg);
+
+                          Future.delayed(const Duration(seconds: 2), () {
+                            successValidateAnimation = false;
+                            refreshPage(refresh);
+                            Get.snackbar(
+                                "Success", "Username and Email is available",
+                                backgroundColor: whitebg);
+                          });
                         } else {
                           checkAvaiabilityRegis = false;
                           refreshPage(refresh);

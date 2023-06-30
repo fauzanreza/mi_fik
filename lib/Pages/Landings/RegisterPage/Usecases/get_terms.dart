@@ -28,12 +28,11 @@ class StateGetTerms extends State<GetTerms> {
   @override
   Widget build(BuildContext context) {
     double fullWidth = MediaQuery.of(context).size.width;
-    double fullHeight = MediaQuery.of(context).size.height;
+    //double fullHeight = MediaQuery.of(context).size.height;
 
     return ListView(
       children: [
         Container(
-          height: fullHeight * 0.75,
           padding: EdgeInsets.all(paddingMD),
           margin:
               EdgeInsets.fromLTRB(paddingMD, paddingLg, paddingMD, paddingMD),

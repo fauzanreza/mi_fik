@@ -100,42 +100,46 @@ Widget getTagShow(tag, dateStart, dateEnd) {
             children: tag.map<Widget>((content) {
               if (i < max) {
                 i++;
-                return RichText(
-                  text: TextSpan(
-                    children: [
-                      WidgetSpan(
-                        child: Icon(Icons.circle,
-                            size: textSM, color: Colors.blue), //for now.
+                return Container(
+                    margin: const EdgeInsets.only(bottom: 4),
+                    child: RichText(
+                      text: TextSpan(
+                        children: [
+                          WidgetSpan(
+                            child: Icon(Icons.circle,
+                                size: textSM, color: Colors.blue), //for now.
+                          ),
+                          TextSpan(
+                            text: " ${content['tag_name']}",
+                            style: GoogleFonts.poppins(
+                                color: getBgColor(DateTime.parse(dateStart),
+                                    DateTime.parse(dateEnd)),
+                                fontSize: textSM),
+                          ),
+                        ],
                       ),
-                      TextSpan(
-                        text: " ${content['tag_name']}",
-                        style: GoogleFonts.poppins(
-                            color: getBgColor(DateTime.parse(dateStart),
-                                DateTime.parse(dateEnd)),
-                            fontSize: textSM),
-                      ),
-                    ],
-                  ),
-                );
+                    ));
               } else if (i == max) {
                 i++;
-                return RichText(
-                  text: TextSpan(
-                    children: [
-                      WidgetSpan(
-                        child: Icon(Icons.more,
-                            size: textSM, color: Colors.blue), //for now.
+                return Container(
+                    margin: const EdgeInsets.only(bottom: 4),
+                    child: RichText(
+                      text: TextSpan(
+                        children: [
+                          WidgetSpan(
+                            child: Icon(Icons.more,
+                                size: textSM, color: Colors.blue), //for now.
+                          ),
+                          TextSpan(
+                            text: " See ${tag.length - max} More",
+                            style: GoogleFonts.poppins(
+                                color: getBgColor(DateTime.parse(dateStart),
+                                    DateTime.parse(dateEnd)),
+                                fontSize: textSM),
+                          ),
+                        ],
                       ),
-                      TextSpan(
-                        text: " See ${tag.length - max} More",
-                        style: GoogleFonts.poppins(
-                            color: getBgColor(DateTime.parse(dateStart),
-                                DateTime.parse(dateEnd)),
-                            fontSize: textSM),
-                      ),
-                    ],
-                  ),
-                );
+                    ));
               } else {
                 return const SizedBox();
               }
@@ -189,7 +193,8 @@ Widget getLocation(loc, textColor) {
           ),
         ));
   } else {
-    return const SizedBox();
+    return Container(
+        margin: EdgeInsets.only(bottom: paddingMD), child: const SizedBox());
   }
 }
 

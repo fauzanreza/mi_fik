@@ -58,6 +58,9 @@ class StateSetLanguage extends State<SetLanguage> {
                   context: context,
                   builder: (BuildContext context) =>
                       const SuccessDialog(text: "Language changed to English"));
+              Future.delayed(const Duration(seconds: 2), () {
+                Get.back();
+              });
             },
           ),
         ),
@@ -79,6 +82,9 @@ class StateSetLanguage extends State<SetLanguage> {
                   context: context,
                   builder: (BuildContext context) => const SuccessDialog(
                       text: "Bahasa diganti ke bahasa Indonesia"));
+              Future.delayed(const Duration(seconds: 2), () {
+                Get.back();
+              });
             },
           ),
         ),

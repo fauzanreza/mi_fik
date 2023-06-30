@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Modules/APIs/QuestionApi/Models/queries.dart';
 
 import 'package:mi_fik/Modules/APIs/QuestionApi/Services/queries.dart';
@@ -86,7 +87,7 @@ class StateGetAllQuestion extends State<GetAllQuestion> {
                   style: TextStyle(color: greybg)),
               children: [
                 Text(
-                  "Answer",
+                  "Answer".tr,
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: textMD,

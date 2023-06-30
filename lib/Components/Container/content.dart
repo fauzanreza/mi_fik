@@ -260,7 +260,7 @@ class GetScheduleContainer extends StatelessWidget {
                   Container(
                       constraints: BoxConstraints(maxWidth: fullWidth * 0.6),
                       child: Text(
-                        "${content.contentTitle} asodkas aosdkad aosdkas",
+                        "${content.contentTitle}",
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                         style: GoogleFonts.poppins(

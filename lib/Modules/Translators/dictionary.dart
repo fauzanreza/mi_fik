@@ -133,7 +133,12 @@ class Dictionaries extends Translations {
           "No more item to show": "No more item to show",
           "Failed to upload, file doesnt exist":
               "Failed to upload, file doesnt exist",
-          "Failed to reset image": "Failed to reset image"
+          "Failed to reset image": "Failed to reset image",
+          "Nothing has changed": "Nothing has changed",
+          "Event posted": "Event posted",
+          "Task saved": "Task saved",
+          "Archive Created": "Archive Created",
+          "Answer": "Answer"
         },
         'id_ID': {
           'Good Morning': 'Selamat Pagi',
@@ -265,7 +270,12 @@ class Dictionaries extends Translations {
           "No more item to show": "Semua item telah ditampilkan",
           "Failed to upload, file doesnt exist":
               "Gagal mengunggah, file tidak ditemukan",
-          "Failed to reset image": "Gagal menghapus gambar"
+          "Failed to reset image": "Gagal menghapus gambar",
+          "Nothing has changed": "Tidak ada yang diubah",
+          "Event posted": "Event berhasil diposting",
+          "Task saved": "Tugas disimpan",
+          "Archive Created": "Arsip dibuat",
+          "Answer": "Jawaban"
         },
       };
 }

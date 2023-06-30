@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/bg_fcm_dialog.dart';
 import 'package:mi_fik/Modules/APIs/DictionaryApi/Services/queries.dart';
@@ -34,7 +35,6 @@ Future<void> fireFCMHandler(RemoteMessage message) async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  print("test");
   showDialog<String>(
     context: Get.context,
     builder: (BuildContext context) => BgFcmDialog(
@@ -183,6 +183,37 @@ class StateMyApp extends State<MyApp> {
       DeviceOrientation.portraitDown,
     ]);
 
+    final TextTheme textTheme = TextTheme(
+      displayLarge: GoogleFonts.poppins(),
+      displayMedium: GoogleFonts.poppins(),
+      displaySmall: GoogleFonts.poppins(),
+      headlineLarge: GoogleFonts.poppins(),
+      headlineMedium: GoogleFonts.poppins(),
+      headlineSmall: GoogleFonts.poppins(),
+      titleLarge: GoogleFonts.poppins(),
+      titleMedium: GoogleFonts.poppins(),
+      titleSmall: GoogleFonts.poppins(),
+      bodyLarge: GoogleFonts.poppins(),
+      bodyMedium: GoogleFonts.poppins(),
+      bodySmall: GoogleFonts.poppins(),
+      labelLarge: GoogleFonts.poppins(),
+      labelMedium: GoogleFonts.poppins(),
+      labelSmall: GoogleFonts.poppins(),
+      // headline1: GoogleFonts.poppins(),
+      // headline2: GoogleFonts.poppins(),
+      // headline3: GoogleFonts.poppins(),
+      // headline4: GoogleFonts.poppins(),
+      // headline5: GoogleFonts.poppins(),
+      // headline6: GoogleFonts.poppins(),
+      // subtitle1: GoogleFonts.poppins(),
+      // subtitle2: GoogleFonts.poppins(),
+      // bodyText1: GoogleFonts.poppins(),
+      // bodyText2: GoogleFonts.poppins(),
+      // caption: GoogleFonts.poppins(),
+      // button: GoogleFonts.poppins(),
+      // overline: GoogleFonts.poppins(),
+    );
+
     String langCode = "en";
     slctLang = LangList.en;
     String countryCode = "US";
@@ -210,6 +241,7 @@ class StateMyApp extends State<MyApp> {
                 title: 'Mi-FIK',
                 theme: ThemeData(
                   primarySwatch: Colors.blue,
+                  textTheme: textTheme,
                 ),
                 home: const BottomBar(),
               );
@@ -222,6 +254,7 @@ class StateMyApp extends State<MyApp> {
                 title: 'Mi-FIK',
                 theme: ThemeData(
                   primarySwatch: Colors.blue,
+                  textTheme: textTheme,
                 ),
                 home: const RegisterPage(isLogged: true),
               );

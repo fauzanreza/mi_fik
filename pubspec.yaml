@@ -83,6 +83,7 @@ dependencies:
   connectivity_plus: ^4.0.1
   camera: ^0.10.5+2
   permission_handler: ^10.3.0
+  lottie: ^2.3.2
 
 dev_dependencies:
   flutter_test:
@@ -116,6 +117,7 @@ flutter:
   assets:
     - assets/content/
     - assets/icon/
+    - assets/json/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

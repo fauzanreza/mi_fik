@@ -42,3 +42,38 @@ class SuccessDialog extends StatelessWidget {
     );
   }
 }
+
+class SuccessDialogCustom extends StatelessWidget {
+  const SuccessDialogCustom({Key key, this.text}) : super(key: key);
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    //double fullHeight = MediaQuery.of(context).size.height;
+    double fullWidth = MediaQuery.of(context).size.width;
+
+    return AlertDialog(
+        contentPadding: EdgeInsets.zero,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        content: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Container(
+            width: fullWidth * 0.45,
+            padding: EdgeInsets.all(fullWidth * 0.1),
+            margin: EdgeInsets.only(bottom: marginMT),
+            decoration: BoxDecoration(
+              color: whitebg,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: ClipRRect(
+              child: Image.asset('assets/icon/checklist.png'),
+            ),
+          ),
+          Text(text,
+              style: TextStyle(
+                  color: whitebg,
+                  fontWeight: FontWeight.bold,
+                  fontSize: textLG))
+        ]));
+  }
+}

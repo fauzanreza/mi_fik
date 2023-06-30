@@ -119,25 +119,22 @@ class _GetEditProfileState extends State<GetEditProfile> {
                     child: getSubTitleMedium(
                         "Last Name".tr, whitebg, TextAlign.start)),
                 getInputText(lnameLength, lNameCtrl, false),
-                Align(
-                    alignment: Alignment.centerLeft,
-                    child: getSubTitleMedium(
-                        "Password".tr, whitebg, TextAlign.start)),
-                getInputText(passwordLength, passCtrl, true),
+                // Align(
+                //     alignment: Alignment.centerLeft,
+                //     child: getSubTitleMedium(
+                //         "Password".tr, whitebg, TextAlign.start)),
+                // getInputText(passwordLength, passCtrl, true),
                 InkWell(
                   onTap: () async {
                     EditUserProfileModel data = EditUserProfileModel(
-                        password: passCtrl.text.trim(),
                         lastName: lNameCtrl.text.trim(),
                         firstName: fNameCtrl.text.trim());
 
                     //Validator
-                    if (data.password.isNotEmpty &&
-                        data.firstName.isNotEmpty &&
+                    if (data.firstName.isNotEmpty &&
                         data.lastName.isNotEmpty &&
                         data.firstName.length <= 35 &&
-                        data.lastName.length <= 35 &&
-                        data.password.length <= 50) {
+                        data.lastName.length <= 35) {
                       apiCommand.putProfileData(data).then((response) {
                         setState(() => isLoading = false);
                         var status = response[0]['message'];
@@ -149,6 +146,9 @@ class _GetEditProfileState extends State<GetEditProfile> {
                               context: context,
                               builder: (BuildContext context) =>
                                   SuccessDialog(text: body));
+                          Future.delayed(const Duration(seconds: 2), () {
+                            Get.back();
+                          });
                         } else {
                           showDialog<String>(
                               context: context,

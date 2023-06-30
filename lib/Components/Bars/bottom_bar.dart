@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/MainMenus/CalendarPage/index.dart';
@@ -47,7 +48,8 @@ class BottomBarState extends State<BottomBar> {
               ),
             ],
             backgroundColor: whitebg,
-            selectedLabelStyle: const TextStyle(fontSize: 14),
+            unselectedLabelStyle: GoogleFonts.poppins(),
+            selectedLabelStyle: GoogleFonts.poppins(fontSize: 14),
             selectedItemColor: primaryColor,
             unselectedItemColor: greybg,
             onTap: (index) {

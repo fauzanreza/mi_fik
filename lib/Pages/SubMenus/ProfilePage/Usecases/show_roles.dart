@@ -160,6 +160,11 @@ class StateShowRole extends State<ShowRole> {
                                                       (BuildContext context) =>
                                                           SuccessDialog(
                                                               text: body));
+                                              Future.delayed(
+                                                  const Duration(seconds: 2),
+                                                  () {
+                                                Get.back();
+                                              });
                                             } else {
                                               Get.offAll(
                                                   () => const ProfilePage());

@@ -205,6 +205,9 @@ class StateDetailTask extends State<DetailTask> {
                                   context: context,
                                   builder: (BuildContext context) =>
                                       SuccessDialog(text: body));
+                              Future.delayed(const Duration(seconds: 2), () {
+                                Get.back();
+                              });
                             } else {
                               showDialog<String>(
                                   context: context,

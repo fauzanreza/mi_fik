@@ -164,7 +164,7 @@ class StateDetailPage extends State<DetailPage> {
                                       image: DecorationImage(
                                         image: getImageHeader(
                                             contents[0].contentImage),
-                                        fit: BoxFit.cover,
+                                        fit: BoxFit.fill,
                                       ),
                                       borderRadius:
                                           BorderRadius.circular(roundedLG2),

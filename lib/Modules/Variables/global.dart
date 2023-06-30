@@ -31,6 +31,7 @@ String uploadedImageRegis;
 bool checkAvaiabilityRegis = false;
 bool isFinishedRegis = false;
 bool isWaiting = false;
+bool successValidateAnimation = false;
 
 String checkMsg = "";
 

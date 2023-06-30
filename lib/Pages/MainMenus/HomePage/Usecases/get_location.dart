@@ -12,6 +12,14 @@ class GetLocation extends StatefulWidget {
 class StateGetLocation extends State<GetLocation> {
   @override
   Widget build(BuildContext context) {
+    getLocationNull(String val) {
+      if (val == "null" || val == null) {
+        return " Not found";
+      } else {
+        return " $val";
+      }
+    }
+
     return RichText(
       text: TextSpan(
         children: [
@@ -23,7 +31,7 @@ class StateGetLocation extends State<GetLocation> {
             ),
           ),
           TextSpan(
-            text: " $locName",
+            text: getLocationNull(locName),
             style: TextStyle(color: whitebg, fontSize: textMD),
           ),
         ],
