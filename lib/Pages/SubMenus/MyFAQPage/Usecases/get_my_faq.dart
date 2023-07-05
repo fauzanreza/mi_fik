@@ -76,6 +76,7 @@ class StateGetMyFAQ extends State<GetMyFAQ> {
           padding: EdgeInsets.only(bottom: paddingSM),
           itemCount: contents.length + 1,
           controller: widget.scrollCtrl,
+          reverse: true,
           itemBuilder: (BuildContext context, int index) {
             if (index < contents.length) {
               return _buildFAQItem(contents[index]);
@@ -180,8 +181,8 @@ class StateGetMyFAQ extends State<GetMyFAQ> {
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  getMsgBody(content.msgBody),
-                  Text(content.msgReply)
+                  getMsgBody(content.msgReply),
+                  Text("${content.msgBody} ")
                 ])),
         getHourText(
             content.createdAt,

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -89,6 +90,6 @@ Future checkGps(var func) async {
 }
 
 bool isPassedDate(DateTime ds, DateTime de) {
-  DateTime now = DateTime.now();
+  DateTime now = DateTime.now().add(Duration(hours: getUTCHourOffset()));
   return now.isAfter(ds) && now.isBefore(de);
 }

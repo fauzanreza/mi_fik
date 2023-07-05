@@ -269,10 +269,14 @@ String getMessageResponseFromObject(val, type) {
 }
 
 String getLocationName(var loc) {
-  if (loc[0]['detail'] != null) {
-    return " ${ucFirst(loc[0]['detail'])}";
+  if (loc.length == 2) {
+    if (loc[0]['detail'] != null) {
+      return " ${ucFirst(loc[0]['detail'])}";
+    } else {
+      return " ${loc[1]['detail']}";
+    }
   } else {
-    return " ${loc[1]['detail']}";
+    return " Invalid";
   }
 }
 

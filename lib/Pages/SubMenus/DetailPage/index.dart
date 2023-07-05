@@ -140,6 +140,7 @@ class StateDetailPage extends State<DetailPage> {
             Get.offAll(() => const BottomBar());
           },
           child: Scaffold(
+            backgroundColor: whitebg,
             body: RefreshIndicator(
                 key: _refreshIndicatorKey,
                 onRefresh: refreshData,
@@ -196,17 +197,9 @@ class StateDetailPage extends State<DetailPage> {
                             constraints: BoxConstraints(
                               minHeight: fullHeight * 0.75,
                             ),
-                            decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: greybg.withOpacity(0.35),
-                                    blurRadius: 10.0,
-                                    spreadRadius: 0.0,
-                                    offset: const Offset(0, -2),
-                                  ),
-                                ],
+                            decoration: const BoxDecoration(
                                 color: Colors.white,
-                                borderRadius: const BorderRadius.only(
+                                borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(20),
                                   topRight: Radius.circular(20),
                                 )),
@@ -223,7 +216,8 @@ class StateDetailPage extends State<DetailPage> {
                                         contents[0].userUsernameCreated,
                                         contents[0].adminImageCreated,
                                         contents[0].userImageCreated),
-                                    Column(
+                                    Expanded(
+                                        child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
@@ -231,10 +225,8 @@ class StateDetailPage extends State<DetailPage> {
                                             style: TextStyle(
                                                 fontSize: textMD,
                                                 fontWeight: FontWeight.bold)),
-                                        //Check this...
-                                        //getSubtitle(contents[0].contentSubtitle),
                                       ],
-                                    )
+                                    ))
                                   ],
                                 ),
                               ),

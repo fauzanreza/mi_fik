@@ -7,7 +7,7 @@ class PostImageContent {
     String seed;
 
     if (imageFile != null) {
-      seed = const Uuid().v4();
+      seed = const Uuid().v1();
 
       Reference ref = FirebaseStorage.instance.ref(path).child(seed);
 

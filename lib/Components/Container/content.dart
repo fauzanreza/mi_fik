@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
@@ -201,14 +200,18 @@ class GetScheduleContainer extends StatelessWidget {
       //Event or content
       return FaIcon(
         FontAwesomeIcons.calendarDay,
-        color: getColor(DateTime.parse(dateStart), DateTime.parse(dateEnd)),
+        color: getColor(
+            DateTime.parse(dateStart).add(Duration(hours: getUTCHourOffset())),
+            DateTime.parse(dateEnd).add(Duration(hours: getUTCHourOffset()))),
         size: iconLG + 5,
       );
     } else if (type == 2) {
       //Task
       return Icon(
         Icons.task,
-        color: getColor(DateTime.parse(dateStart), DateTime.parse(dateEnd)),
+        color: getColor(
+            DateTime.parse(dateStart).add(Duration(hours: getUTCHourOffset())),
+            DateTime.parse(dateEnd).add(Duration(hours: getUTCHourOffset()))),
         size: iconLG + 7,
       );
     } else {
@@ -226,7 +229,7 @@ class GetScheduleContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double fullWidth = MediaQuery.of(context).size.width;
+    //double fullWidth = MediaQuery.of(context).size.width;
 
     return Container(
       width: width * 0.82,
@@ -237,7 +240,10 @@ class GetScheduleContainer extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: getBgColor(
-            DateTime.parse(content.dateStart), DateTime.parse(content.dateEnd)),
+            DateTime.parse(content.dateStart)
+                .add(Duration(hours: getUTCHourOffset())),
+            DateTime.parse(content.dateEnd)
+                .add(Duration(hours: getUTCHourOffset()))),
         boxShadow: [
           BoxShadow(
             color: greybg.withOpacity(0.35),
@@ -257,34 +263,44 @@ class GetScheduleContainer extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Container(
-                      constraints: BoxConstraints(maxWidth: fullWidth * 0.6),
+                  Expanded(
+                      // constraints: BoxConstraints(maxWidth: fullWidth * 0.6),
                       child: Text(
-                        "${content.contentTitle}",
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        style: GoogleFonts.poppins(
-                          color: getColor(DateTime.parse(content.dateStart),
-                              DateTime.parse(content.dateEnd)),
-                          fontSize: textSM,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      )),
-                  const Spacer(),
+                    "${content.contentTitle}",
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: TextStyle(
+                      color: getColor(
+                          DateTime.parse(content.dateStart)
+                              .add(Duration(hours: getUTCHourOffset())),
+                          DateTime.parse(content.dateEnd)
+                              .add(Duration(hours: getUTCHourOffset()))),
+                      fontSize: textSM,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )),
                   Text(
-                    DateFormat("HH : mm a")
-                        .format(DateTime.parse(content.dateStart)),
-                    style: GoogleFonts.poppins(
-                      color: getColor(DateTime.parse(content.dateStart),
-                          DateTime.parse(content.dateEnd)),
+                    DateFormat("HH : mm a").format(
+                        DateTime.parse(content.dateStart)
+                            .add(Duration(hours: getUTCHourOffset()))),
+                    style: TextStyle(
+                      color: getColor(
+                          DateTime.parse(content.dateStart)
+                              .add(Duration(hours: getUTCHourOffset())),
+                          DateTime.parse(content.dateEnd)
+                              .add(Duration(hours: getUTCHourOffset()))),
                       fontWeight: FontWeight.w500,
                       fontSize: textSM,
                     ),
                   ),
                 ],
               ),
-              getOngoingDesc(DateTime.parse(content.dateStart),
-                  DateTime.parse(content.dateEnd), content.contentDesc),
+              getOngoingDesc(
+                  DateTime.parse(content.dateStart)
+                      .add(Duration(hours: getUTCHourOffset())),
+                  DateTime.parse(content.dateEnd)
+                      .add(Duration(hours: getUTCHourOffset())),
+                  content.contentDesc),
               Container(
                   margin: const EdgeInsets.symmetric(vertical: 15),
                   child: getTagShow(
@@ -293,8 +309,11 @@ class GetScheduleContainer extends StatelessWidget {
                 margin: const EdgeInsets.symmetric(horizontal: 10),
                 child: getLocation(
                     content.contentLoc,
-                    getColor(DateTime.parse(content.dateStart),
-                        DateTime.parse(content.dateEnd))),
+                    getColor(
+                        DateTime.parse(content.dateStart)
+                            .add(Duration(hours: getUTCHourOffset())),
+                        DateTime.parse(content.dateEnd)
+                            .add(Duration(hours: getUTCHourOffset())))),
               ),
             ]),
             Positioned(

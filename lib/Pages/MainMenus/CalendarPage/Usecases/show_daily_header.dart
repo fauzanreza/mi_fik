@@ -76,7 +76,7 @@ class StateDayHeader extends State<DayHeader> with TickerProviderStateMixin {
               children: [
                 Text(
                   DateFormat("EEE").format(widget.selectedDay),
-                  style: GoogleFonts.poppins(
+                  style: TextStyle(
                     color: primaryColor,
                     fontSize: textMD,
                     //fontWeight: FontWeight.bold,
@@ -84,7 +84,7 @@ class StateDayHeader extends State<DayHeader> with TickerProviderStateMixin {
                 ),
                 Text(
                   DateFormat("d").format(widget.selectedDay),
-                  style: GoogleFonts.poppins(
+                  style: TextStyle(
                     color: primaryColor,
                     fontSize: textLG,
                     fontWeight: FontWeight.bold,
@@ -100,18 +100,16 @@ class StateDayHeader extends State<DayHeader> with TickerProviderStateMixin {
               children: [
                 Text(
                   getTodayCalendarHeader(widget.selectedDay),
-                  style: GoogleFonts.poppins(
+                  style: TextStyle(
                     color: Colors.grey,
                     fontSize: textLG,
-                    //fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
                   getTotalContext(contents),
-                  style: GoogleFonts.poppins(
+                  style: TextStyle(
                     color: Colors.grey,
                     fontSize: textSM,
-                    //fontWeight: FontWeight.bold,
                   ),
                 ),
               ],

@@ -273,6 +273,7 @@ class StateMyApp extends State<MyApp> {
         title: 'Mi-FIK',
         theme: ThemeData(
           primarySwatch: Colors.blue,
+          textTheme: textTheme,
         ),
         home: const LoginPage(),
       );

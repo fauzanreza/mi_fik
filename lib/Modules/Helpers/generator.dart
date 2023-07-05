@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Helpers/template.dart';
@@ -92,7 +91,10 @@ Widget getTagShow(tag, dateStart, dateEnd) {
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: getColor(DateTime.parse(dateStart), DateTime.parse(dateEnd)),
+          color: getColor(
+              DateTime.parse(dateStart)
+                  .add(Duration(hours: getUTCHourOffset())),
+              DateTime.parse(dateEnd).add(Duration(hours: getUTCHourOffset()))),
         ),
         child: Wrap(
             runSpacing: -5,
@@ -111,9 +113,12 @@ Widget getTagShow(tag, dateStart, dateEnd) {
                           ),
                           TextSpan(
                             text: " ${content['tag_name']}",
-                            style: GoogleFonts.poppins(
-                                color: getBgColor(DateTime.parse(dateStart),
-                                    DateTime.parse(dateEnd)),
+                            style: TextStyle(
+                                color: getBgColor(
+                                    DateTime.parse(dateStart).add(
+                                        Duration(hours: getUTCHourOffset())),
+                                    DateTime.parse(dateEnd).add(
+                                        Duration(hours: getUTCHourOffset()))),
                                 fontSize: textSM),
                           ),
                         ],
@@ -132,9 +137,12 @@ Widget getTagShow(tag, dateStart, dateEnd) {
                           ),
                           TextSpan(
                             text: " See ${tag.length - max} More",
-                            style: GoogleFonts.poppins(
-                                color: getBgColor(DateTime.parse(dateStart),
-                                    DateTime.parse(dateEnd)),
+                            style: TextStyle(
+                                color: getBgColor(
+                                    DateTime.parse(dateStart).add(
+                                        Duration(hours: getUTCHourOffset())),
+                                    DateTime.parse(dateEnd).add(
+                                        Duration(hours: getUTCHourOffset()))),
                                 fontSize: textSM),
                           ),
                         ],
@@ -199,7 +207,8 @@ Widget getLocation(loc, textColor) {
 }
 
 Widget getHourChipLine(String dateStart, double width) {
-  DateTime date = DateTime.parse(dateStart);
+  DateTime date =
+      DateTime.parse(dateStart).add(Duration(hours: getUTCHourOffset()));
 
   getLiveText(DateTime dt) {
     if (DateFormat("HH").format(DateTime.now()) ==
@@ -234,7 +243,7 @@ Widget getHourChipLine(String dateStart, double width) {
         children: [
           Text(
             '${date.hour}:00',
-            style: GoogleFonts.poppins(
+            style: TextStyle(
               color: greybg,
               fontSize: textSM,
               fontWeight: FontWeight.w500,
@@ -281,7 +290,9 @@ Widget getHourText(String date, var margin, var align) {
   return Container(
       margin: margin,
       alignment: align,
-      child: Text(getDBDateFormat("time", DateTime.parse(date)),
+      child: Text(
+          getDBDateFormat("time",
+              DateTime.parse(date).add(Duration(hours: getUTCHourOffset()))),
           style: TextStyle(fontSize: textSM)));
 }
 
@@ -345,4 +356,10 @@ DateTime getMinEndTime(DateTime ds) {
   } else {
     return DateTime(now.year, now.month, now.day);
   }
+}
+
+int getUTCHourOffset() {
+  DateTime now = DateTime.now();
+  Duration offset = now.timeZoneOffset;
+  return offset.inHours;
 }

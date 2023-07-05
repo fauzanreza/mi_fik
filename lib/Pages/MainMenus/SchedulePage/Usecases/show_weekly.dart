@@ -55,7 +55,6 @@ class GetWeeklyNavigator extends StatelessWidget {
                       Get.offAll(() => const BottomBar());
                     },
                     child: Container(
-                      width: 60,
                       height: 60,
                       margin: const EdgeInsets.only(right: 10, bottom: 10),
                       padding: EdgeInsets.symmetric(horizontal: paddingXSM),
@@ -79,7 +78,7 @@ class GetWeeklyNavigator extends StatelessWidget {
                                 child: FaIcon(
                                   FontAwesomeIcons.rotateLeft,
                                   color: whitebg,
-                                  size: iconMD * 1.25,
+                                  size: iconMD,
                                 ))
                           ]),
                     )),
