@@ -203,6 +203,21 @@ String getMessageResponseFromObject(val, type) {
           res += "${adescErr.join('\n')}";
         }
       }
+    } else if (type == "addevent") {
+      if (val.containsKey('content_title') != null) {
+        var ctitleErr = val['content_title'];
+
+        if (ctitleErr != null) {
+          res += "${ctitleErr.join('\n')}";
+        }
+      }
+      if (val.containsKey('content_desc') != null) {
+        var cdescErr = val['content_desc'];
+
+        if (cdescErr != null) {
+          res += "${cdescErr.join('\n')}";
+        }
+      }
     } else if (type == "addtask") {
       if (val.containsKey('task_title') != null) {
         var ttitleErr = val['task_title'];
@@ -298,6 +313,8 @@ Widget getImageProfileContent(adminUname, userUname, adminImg, userImg) {
   return Container(
     margin: const EdgeInsets.symmetric(horizontal: 10.0),
     width: iconXL,
-    child: ClipRRect(borderRadius: roundedImage, child: url), //For now.
+    child: ClipRRect(
+        borderRadius: BorderRadius.circular(roundedXLG + roundedMini),
+        child: url), //For now.
   );
 }

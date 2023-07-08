@@ -73,7 +73,7 @@ class StateGetMyFAQ extends State<GetMyFAQ> {
       child: RefreshIndicator(
         onRefresh: refreshData,
         child: ListView.builder(
-          padding: EdgeInsets.only(bottom: paddingSM),
+          padding: EdgeInsets.only(bottom: spaceXMD),
           itemCount: contents.length + 1,
           controller: widget.scrollCtrl,
           reverse: true,
@@ -85,7 +85,7 @@ class StateGetMyFAQ extends State<GetMyFAQ> {
             } else {
               return Container(
                   alignment: Alignment.center,
-                  padding: EdgeInsets.symmetric(vertical: paddingMD),
+                  padding: EdgeInsets.symmetric(vertical: spaceLG),
                   child: Text("No more item to show".tr,
                       style: TextStyle(fontSize: textSM)));
             }
@@ -102,8 +102,8 @@ class StateGetMyFAQ extends State<GetMyFAQ> {
     Widget getMsgBody(String text) {
       if (text != null) {
         return Container(
-            margin: EdgeInsets.only(bottom: paddingXSM),
-            padding: EdgeInsets.all(paddingXSM),
+            margin: EdgeInsets.only(bottom: spaceSM),
+            padding: EdgeInsets.all(spaceSM),
             width: double.infinity,
             decoration: const BoxDecoration(
                 color: Color(0xFFF5E6CB),
@@ -112,7 +112,7 @@ class StateGetMyFAQ extends State<GetMyFAQ> {
                 borderRadius: BorderRadius.only(
                     topRight: Radius.circular(14),
                     bottomRight: Radius.circular(14))),
-            child: Text(text, style: TextStyle(color: blackbg)));
+            child: Text(text, style: TextStyle(color: darkColor)));
       } else {
         return const SizedBox();
       }
@@ -136,9 +136,9 @@ class StateGetMyFAQ extends State<GetMyFAQ> {
         }
 
         return Container(
-            margin: EdgeInsets.only(top: paddingSM),
+            margin: EdgeInsets.only(top: spaceXMD),
             alignment: Alignment.center,
-            padding: EdgeInsets.symmetric(vertical: paddingXSM - 2),
+            padding: EdgeInsets.symmetric(vertical: spaceSM - 2),
             width: 105,
             decoration: const BoxDecoration(
                 color: Color(0xFFFADFB9),
@@ -155,16 +155,16 @@ class StateGetMyFAQ extends State<GetMyFAQ> {
         Container(
             alignment: Alignment.topLeft,
             width: fullWidth,
-            padding: EdgeInsets.all(paddingSM - 2),
+            padding: EdgeInsets.all(spaceXMD - 2),
             margin: EdgeInsets.only(
-                left: fullWidth * 0.2, right: paddingSM, top: paddingXSM),
+                left: fullWidth * 0.2, right: spaceXMD, top: spaceSM),
             decoration: const BoxDecoration(
                 color: Color(0xFFE88F34),
                 borderRadius: BorderRadius.all(Radius.circular(14))),
-            child: Text(content.msgBody, style: TextStyle(color: whitebg))),
+            child: Text(content.msgBody, style: TextStyle(color: whiteColor))),
         getHourText(
             content.createdAt,
-            EdgeInsets.only(right: paddingSM, top: paddingXSM / 2),
+            EdgeInsets.only(right: spaceXMD, top: spaceSM / 2),
             Alignment.centerRight)
       ]);
     } else {
@@ -172,9 +172,9 @@ class StateGetMyFAQ extends State<GetMyFAQ> {
         getDateChip(),
         Container(
             width: fullWidth,
-            padding: EdgeInsets.all(paddingSM - 2),
+            padding: EdgeInsets.all(spaceXMD - 2),
             margin: EdgeInsets.only(
-                right: fullWidth * 0.2, left: paddingSM, top: paddingXSM),
+                right: fullWidth * 0.2, left: spaceXMD, top: spaceSM),
             decoration: const BoxDecoration(
                 color: Color(0xFFE5E5EA),
                 borderRadius: BorderRadius.all(Radius.circular(14))),
@@ -186,7 +186,7 @@ class StateGetMyFAQ extends State<GetMyFAQ> {
                 ])),
         getHourText(
             content.createdAt,
-            EdgeInsets.only(left: paddingSM, top: paddingXSM / 2),
+            EdgeInsets.only(left: spaceXMD, top: spaceSM / 2),
             Alignment.centerLeft)
       ]);
     }

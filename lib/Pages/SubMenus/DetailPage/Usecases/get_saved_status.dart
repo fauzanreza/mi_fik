@@ -63,12 +63,11 @@ class StateGetSavedStatus extends State<GetSavedStatus> {
 
     if (found) {
       return Container(
-        padding:
-            EdgeInsets.symmetric(vertical: paddingXSM, horizontal: paddingSM),
+        padding: EdgeInsets.symmetric(vertical: spaceSM, horizontal: spaceXMD),
         decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: greybg.withOpacity(0.35),
+                color: shadowColor.withOpacity(0.35),
                 blurRadius: 10.0,
                 spreadRadius: 0.0,
                 offset: const Offset(
@@ -77,18 +76,18 @@ class StateGetSavedStatus extends State<GetSavedStatus> {
                 ),
               )
             ],
-            color: successbg,
+            color: successBG,
             borderRadius: const BorderRadius.all(Radius.circular(10))),
         child: RichText(
             text: TextSpan(
           children: [
             WidgetSpan(
-              child: Icon(Icons.check, color: whitebg, size: iconMD),
+              child: Icon(Icons.check, color: whiteColor, size: iconMD),
             ),
             TextSpan(
                 text: " Saved".tr,
                 style: TextStyle(
-                    color: whitebg,
+                    color: whiteColor,
                     fontWeight: FontWeight.w500,
                     fontSize: textSM + 1)),
           ],

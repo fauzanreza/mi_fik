@@ -44,7 +44,8 @@ class StateGetWelcoming extends State<GetWelcoming> {
                                             .tr,
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                            color: greybg, fontSize: textMD)))
+                                            color: shadowColor,
+                                            fontSize: textMD)))
                               ]),
                         ),
                         actions: <Widget>[
@@ -53,10 +54,10 @@ class StateGetWelcoming extends State<GetWelcoming> {
                               shape: MaterialStateProperty.all<
                                       RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(roundedMd2),
+                                borderRadius: BorderRadius.circular(roundedSM),
                               )),
                               backgroundColor:
-                                  MaterialStatePropertyAll<Color>(dangerColor),
+                                  MaterialStatePropertyAll<Color>(warningBG),
                             ),
                             onPressed: () async {
                               indexRegis = 0;
@@ -80,23 +81,23 @@ class StateGetWelcoming extends State<GetWelcoming> {
                               Get.offAll(() => const LoginPage());
                             },
                             child: Text("Yes".tr,
-                                style: TextStyle(color: whitebg)),
+                                style: TextStyle(color: whiteColor)),
                           )
                         ],
                       )),
               child: Container(
                 margin: EdgeInsets.only(
-                    left: paddingMD, right: paddingMD, top: paddingLg),
-                padding: EdgeInsets.all(paddingSM - 2),
+                    left: spaceLG, right: spaceLG, top: spaceJumbo),
+                padding: EdgeInsets.all(spaceXMD - 2),
                 width: 180,
                 color: Colors.transparent,
                 child: Row(
                   children: [
-                    Icon(Icons.arrow_back, color: dangerColor, size: iconLG),
-                    SizedBox(width: paddingSM),
+                    Icon(Icons.arrow_back, color: warningBG, size: iconLG),
+                    SizedBox(width: spaceXMD),
                     Text("Back to Sign In",
                         style: TextStyle(
-                            color: dangerColor,
+                            color: warningBG,
                             fontSize: textMD,
                             fontWeight: FontWeight.w500))
                   ],
@@ -106,14 +107,14 @@ class StateGetWelcoming extends State<GetWelcoming> {
           ],
         ),
         Container(
-          padding: EdgeInsets.all(paddingMD),
-          margin: EdgeInsets.all(paddingMD),
+          padding: EdgeInsets.all(spaceLG),
+          margin: EdgeInsets.all(spaceLG),
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(10)),
-            color: whitebg,
+            color: whiteColor,
             boxShadow: [
               BoxShadow(
-                color: greybg.withOpacity(0.35),
+                color: shadowColor.withOpacity(0.35),
                 blurRadius: 10.0,
                 spreadRadius: 1.0,
                 offset: const Offset(
@@ -129,7 +130,7 @@ class StateGetWelcoming extends State<GetWelcoming> {
             Text(
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquet nec ullamcorper sit amet risus nullam eget felis. Nibh tellus molestie nunc non blandit massa enim. Dolor magna eget est lorem ipsum dolor sit amet. Maecenas ultricies mi eget mauris pharetra et ultrices. Purus sit amet volutpat consequat mauris nunc congue. Sed cras ornare arcu dui vivamus arcu felis bibendum ut. Mi ipsum faucibus vitae aliquet. Viverra justo nec ultrices dui sapien eget mi proin sed. Enim nulla aliquet porttitor lacus.",
                 style: TextStyle(fontSize: textMD - 2)),
-            SizedBox(height: paddingMD),
+            SizedBox(height: spaceLG),
             Text(
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquet nec ullamcorper sit amet risus nullam eget felis. Nibh tellus molestie nunc non blandit massa enim. Dolor magna eget est lorem ipsum dolor sit amet. Maecenas ultricies mi eget mauris pharetra et ultrices. Purus sit amet volutpat consequat mauris nunc congue. Sed cras ornare arcu dui vivamus arcu felis bibendum ut. Mi ipsum faucibus vitae aliquet. Viverra justo nec ultrices dui sapien eget mi proin sed. Enim nulla aliquet porttitor lacus.",
                 style: TextStyle(fontSize: textMD - 2)),

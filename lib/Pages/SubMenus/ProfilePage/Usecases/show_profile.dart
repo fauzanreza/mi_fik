@@ -22,7 +22,7 @@ class ShowProfile extends StatelessWidget {
     } else {
       Get.offAll(() => const LoginPage());
       Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
-          backgroundColor: whitebg);
+          backgroundColor: whiteColor);
       return null;
     }
   }
@@ -43,8 +43,7 @@ class ShowProfile extends StatelessWidget {
 
             return Container(
               width: fullWidth,
-              padding:
-                  EdgeInsets.fromLTRB(paddingXSM, paddingXSM, paddingXSM, 0),
+              padding: EdgeInsets.fromLTRB(spaceSM, spaceSM, spaceSM, 0),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -57,16 +56,16 @@ class ShowProfile extends StatelessWidget {
                     ]),
                     Text(username,
                         style: TextStyle(
-                            color: whitebg,
+                            color: whiteColor,
                             fontSize: textLG,
                             fontWeight: FontWeight.w500)),
                     Container(
                         margin:
                             const EdgeInsets.only(top: 5, left: 5, right: 5),
                         padding: EdgeInsets.symmetric(
-                            vertical: paddingXSM / 2, horizontal: paddingSM),
+                            vertical: spaceSM / 2, horizontal: spaceXMD),
                         decoration: BoxDecoration(
-                            color: whitebg,
+                            color: whiteColor,
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(10))),
                         child: Text(role,

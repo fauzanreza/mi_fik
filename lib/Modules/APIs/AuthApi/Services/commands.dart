@@ -101,7 +101,7 @@ class AuthCommandsService {
             } else if (resReq.statusCode == 401) {
               Get.snackbar(
                   "Alert".tr, "Failed to validate request, please try again".tr,
-                  backgroundColor: whitebg);
+                  backgroundColor: whiteColor);
             } else {
               indexRegis = 4;
             }

@@ -27,12 +27,12 @@ class StateGetLocation extends State<GetLocation> {
             child: Icon(
               Icons.location_on_outlined,
               size: iconMD,
-              color: whitebg,
+              color: whiteColor,
             ),
           ),
           TextSpan(
             text: getLocationNull(locName),
-            style: TextStyle(color: whitebg, fontSize: textMD),
+            style: TextStyle(color: whiteColor, fontSize: textMD),
           ),
         ],
       ),

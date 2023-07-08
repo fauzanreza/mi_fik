@@ -33,15 +33,14 @@ class StateGetTerms extends State<GetTerms> {
     return ListView(
       children: [
         Container(
-          padding: EdgeInsets.all(paddingMD),
-          margin:
-              EdgeInsets.fromLTRB(paddingMD, paddingLg, paddingMD, paddingMD),
+          padding: EdgeInsets.all(spaceLG),
+          margin: EdgeInsets.fromLTRB(spaceLG, spaceJumbo, spaceLG, spaceLG),
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(10)),
-            color: whitebg,
+            color: whiteColor,
             boxShadow: [
               BoxShadow(
-                color: greybg.withOpacity(0.35),
+                color: shadowColor.withOpacity(0.35),
                 blurRadius: 10.0,
                 spreadRadius: 1.0,
                 offset: const Offset(
@@ -57,7 +56,7 @@ class StateGetTerms extends State<GetTerms> {
             Text(
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquet nec ullamcorper sit amet risus nullam eget felis. Nibh tellus molestie nunc non blandit massa enim. Dolor magna eget est lorem ipsum dolor sit amet. Maecenas ultricies mi eget mauris pharetra et ultrices. Purus sit amet volutpat consequat mauris nunc congue. Sed cras ornare arcu dui vivamus arcu felis bibendum ut. Mi ipsum faucibus vitae aliquet. Viverra justo nec ultrices dui sapien eget mi proin sed. Enim nulla aliquet porttitor lacus.",
                 style: TextStyle(fontSize: textMD - 2)),
-            SizedBox(height: paddingMD),
+            SizedBox(height: spaceLG),
             Text(
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquet nec ullamcorper sit amet risus nullam eget felis. Nibh tellus molestie nunc non blandit massa enim. Dolor magna eget est lorem ipsum dolor sit amet. Maecenas ultricies mi eget mauris pharetra et ultrices. Purus sit amet volutpat consequat mauris nunc congue. Sed cras ornare arcu dui vivamus arcu felis bibendum ut. Mi ipsum faucibus vitae aliquet. Viverra justo nec ultrices dui sapien eget mi proin sed. Enim nulla aliquet porttitor lacus.",
                 style: TextStyle(fontSize: textMD - 2)),
@@ -74,7 +73,7 @@ class StateGetTerms extends State<GetTerms> {
               ),
               Container(
                   constraints: BoxConstraints(maxWidth: fullWidth * 0.6),
-                  margin: EdgeInsets.only(top: paddingXSM),
+                  margin: EdgeInsets.only(top: spaceSM),
                   child: Text("I agree to the terms and condition on this app",
                       style: TextStyle(fontSize: textMD - 2.5)))
             ]),

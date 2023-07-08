@@ -21,7 +21,7 @@ class HelpQueriesService {
         if (!isOffline) {
           Get.snackbar(
               "Warning".tr, "Lost connection, all data shown are local".tr,
-              backgroundColor: whitebg);
+              backgroundColor: whiteColor);
           isOffline = true;
         }
         return helpTypeModelFromJson(prefs.getString("help-type-sess"));
@@ -31,7 +31,7 @@ class HelpQueriesService {
     } else {
       if (isOffline) {
         Get.snackbar("Warning".tr, "Welcome back, all data are now realtime".tr,
-            backgroundColor: whitebg);
+            backgroundColor: whiteColor);
         isOffline = false;
       }
       final token = prefs.getString('token_key');
@@ -61,7 +61,7 @@ class HelpQueriesService {
         if (!isOffline) {
           Get.snackbar(
               "Warning".tr, "Lost connection, all data shown are local".tr,
-              backgroundColor: whitebg);
+              backgroundColor: whiteColor);
           isOffline = true;
         }
         return helpBodyModelFromJsonWPaginate(
@@ -72,7 +72,7 @@ class HelpQueriesService {
     } else {
       if (isOffline) {
         Get.snackbar("Warning".tr, "Welcome back, all data are now realtime".tr,
-            backgroundColor: whitebg);
+            backgroundColor: whiteColor);
         isOffline = false;
       }
       final header = {
@@ -99,7 +99,7 @@ class HelpQueriesService {
         if (!isOffline) {
           Get.snackbar(
               "Warning".tr, "Lost connection, all data shown are local".tr,
-              backgroundColor: whitebg);
+              backgroundColor: whiteColor);
           isOffline = true;
         }
         return helpBodyModelFromJsonWPaginate(
@@ -110,7 +110,7 @@ class HelpQueriesService {
     } else {
       if (isOffline) {
         Get.snackbar("Warning".tr, "Welcome back, all data are now realtime".tr,
-            backgroundColor: whitebg);
+            backgroundColor: whiteColor);
         isOffline = false;
       }
       final header = {

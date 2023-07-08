@@ -47,12 +47,12 @@ class ShowCalendar extends StatelessWidget {
           shape: BoxShape.circle,
         ),
         todayTextStyle: TextStyle(color: primaryColor),
-        selectedTextStyle: TextStyle(color: whitebg),
-        holidayTextStyle: TextStyle(color: dangerColor),
-        weekendTextStyle: TextStyle(color: dangerColor),
+        selectedTextStyle: TextStyle(color: whiteColor),
+        holidayTextStyle: TextStyle(color: warningBG),
+        weekendTextStyle: TextStyle(color: warningBG),
       ),
       daysOfWeekStyle: DaysOfWeekStyle(
-        weekendStyle: TextStyle(color: dangerColor),
+        weekendStyle: TextStyle(color: warningBG),
       ),
       headerStyle: const HeaderStyle(
         formatButtonVisible: false,

@@ -28,7 +28,7 @@ class UserQueriesService {
 
       Get.offAll(() => const LoginPage());
       Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
-          backgroundColor: whitebg);
+          backgroundColor: whiteColor);
       return null;
     } else {
       return null;
@@ -53,7 +53,7 @@ class UserQueriesService {
 
         Get.offAll(() => const LoginPage());
         Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
-            backgroundColor: whitebg);
+            backgroundColor: whiteColor);
       }
 
       return null;

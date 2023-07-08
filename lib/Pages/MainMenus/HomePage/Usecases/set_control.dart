@@ -33,7 +33,7 @@ class StateSetControl extends State<SetControl> {
     } else {
       Get.offAll(() => const LoginPage());
       Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
-          backgroundColor: whitebg);
+          backgroundColor: whiteColor);
       return null;
     }
   }
@@ -58,7 +58,8 @@ class StateSetControl extends State<SetControl> {
                   isDismissible: false,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
-                          topLeft: roundedLG, topRight: roundedLG)),
+                          topLeft: Radius.circular(roundedLG),
+                          topRight: Radius.circular(roundedLG))),
                   barrierColor: primaryColor.withOpacity(0.5),
                   isScrollControlled: true,
                   builder: (BuildContext context) {
@@ -71,7 +72,7 @@ class StateSetControl extends State<SetControl> {
               },
               child: Icon(
                 Icons.filter_alt,
-                color: whitebg,
+                color: whiteColor,
               ),
             );
           } else {
@@ -101,7 +102,7 @@ class StateSheetFilter extends State<SheetFilter> {
         padding: MediaQuery.of(context).viewInsets,
         child: Stack(children: [
           ListView(
-            padding: EdgeInsets.only(bottom: paddingLg * 3),
+            padding: EdgeInsets.only(bottom: spaceJumbo * 3),
             children: <Widget>[
               Container(
                 alignment: Alignment.topRight,
@@ -114,7 +115,7 @@ class StateSheetFilter extends State<SheetFilter> {
                 ),
               ),
               Container(
-                  padding: EdgeInsets.only(left: paddingMD),
+                  padding: EdgeInsets.only(left: spaceLG),
                   child: getSubTitleMedium(
                       "Search by title".tr, primaryColor, TextAlign.start)),
               Row(
@@ -122,10 +123,10 @@ class StateSheetFilter extends State<SheetFilter> {
                 children: [
                   Container(
                     width: fullWidth * 0.8,
-                    margin: EdgeInsets.symmetric(vertical: paddingXSM),
-                    padding: EdgeInsets.only(left: paddingMD),
+                    margin: EdgeInsets.symmetric(vertical: spaceSM),
+                    padding: EdgeInsets.only(left: spaceLG),
                     child: TextField(
-                      cursorColor: whitebg,
+                      cursorColor: whiteColor,
                       maxLength: 75,
                       controller: widget.title,
                       autofocus: false,
@@ -141,24 +142,24 @@ class StateSheetFilter extends State<SheetFilter> {
                             borderSide:
                                 BorderSide(width: 1, color: primaryColor),
                           ),
-                          fillColor: whitebg,
+                          fillColor: whiteColor,
                           filled: true),
                     ),
                   ),
                   const Spacer(),
                   Container(
                       margin:
-                          EdgeInsets.only(right: marginMD, bottom: marginMD),
+                          EdgeInsets.only(right: spaceXLG, bottom: spaceXLG),
                       child: Ink(
                         height: 40,
                         width: 40,
                         decoration: ShapeDecoration(
-                          color: dangerColor,
+                          color: warningBG,
                           shape: const CircleBorder(),
                         ),
                         child: IconButton(
                           icon: Icon(Icons.close, size: iconMD),
-                          color: whitebg,
+                          color: whiteColor,
                           onPressed: () {
                             searchingContent = "";
                             Get.offAll(() => const BottomBar());
@@ -167,13 +168,13 @@ class StateSheetFilter extends State<SheetFilter> {
                       )),
                 ],
               ),
-              Divider(thickness: 1, indent: paddingMD, endIndent: paddingMD),
+              Divider(thickness: 1, indent: spaceLG, endIndent: spaceLG),
               Container(
-                  padding: EdgeInsets.only(left: paddingMD, top: paddingSM),
+                  padding: EdgeInsets.only(left: spaceLG, top: spaceXMD),
                   child: getSubTitleMedium(
                       "Filter by date".tr, primaryColor, TextAlign.start)),
               Container(
-                padding: EdgeInsets.only(left: paddingSM),
+                padding: EdgeInsets.only(left: spaceXMD),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -209,17 +210,17 @@ class StateSheetFilter extends State<SheetFilter> {
                     const Spacer(),
                     Container(
                         margin:
-                            EdgeInsets.only(right: marginMD, bottom: marginMD),
+                            EdgeInsets.only(right: spaceXLG, bottom: spaceXLG),
                         child: Ink(
                           height: 40,
                           width: 40,
                           decoration: ShapeDecoration(
-                            color: dangerColor,
+                            color: warningBG,
                             shape: const CircleBorder(),
                           ),
                           child: IconButton(
                             icon: Icon(Icons.close, size: iconMD),
-                            color: whitebg,
+                            color: whiteColor,
                             onPressed: () {
                               filterDateStart = null;
                               filterDateEnd = null;
@@ -230,18 +231,18 @@ class StateSheetFilter extends State<SheetFilter> {
                   ],
                 ),
               ),
-              Divider(thickness: 1, indent: paddingMD, endIndent: paddingMD),
+              Divider(thickness: 1, indent: spaceLG, endIndent: spaceLG),
               Container(
-                  padding: EdgeInsets.only(left: paddingMD, top: paddingSM),
+                  padding: EdgeInsets.only(left: spaceLG, top: spaceXMD),
                   child: getSubTitleMedium(
                       "Sorting".tr, primaryColor, TextAlign.start)),
               Container(
-                padding: EdgeInsets.only(left: paddingMD),
+                padding: EdgeInsets.only(left: spaceLG),
                 child: DropdownButton<String>(
                   value: sortingHomepageContent,
                   icon: const Icon(Icons.keyboard_arrow_down),
                   elevation: iconSM.toInt(),
-                  style: TextStyle(color: blackbg, fontSize: textMD),
+                  style: TextStyle(color: darkColor, fontSize: textMD),
                   onChanged: (String value) {
                     sortingHomepageContent = value;
                   },
@@ -254,9 +255,9 @@ class StateSheetFilter extends State<SheetFilter> {
                   }).toList(),
                 ),
               ),
-              Divider(thickness: 1, indent: paddingMD, endIndent: paddingMD),
+              Divider(thickness: 1, indent: spaceLG, endIndent: spaceLG),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: paddingSM),
+                padding: EdgeInsets.symmetric(horizontal: spaceXMD),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -274,7 +275,7 @@ class StateSheetFilter extends State<SheetFilter> {
                 ),
               ),
               Container(
-                  padding: EdgeInsets.only(left: paddingMD),
+                  padding: EdgeInsets.only(left: spaceLG),
                   child: Wrap(
                       runSpacing: -5,
                       spacing: 5,
@@ -298,7 +299,7 @@ class StateSheetFilter extends State<SheetFilter> {
                           style: ButtonStyle(
                             shape: MaterialStateProperty.all<
                                 RoundedRectangleBorder>(RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(roundedLG2),
+                              borderRadius: BorderRadius.circular(roundedMD),
                             )),
                             backgroundColor:
                                 MaterialStatePropertyAll<Color>(primaryColor),
@@ -306,7 +307,7 @@ class StateSheetFilter extends State<SheetFilter> {
                         );
                       }).toList())),
               Padding(
-                  padding: EdgeInsets.only(left: paddingSM),
+                  padding: EdgeInsets.only(left: spaceXMD),
                   child: TagSelectedArea(
                       tag: selectedTagFilterContent, type: "filter")),
             ],
@@ -314,7 +315,7 @@ class StateSheetFilter extends State<SheetFilter> {
           Positioned(
               bottom: 0,
               child: Container(
-                  margin: EdgeInsets.only(top: paddingXSM),
+                  margin: EdgeInsets.only(top: spaceSM),
                   width: fullWidth,
                   height: btnHeightMD,
                   child: ElevatedButton(
@@ -324,7 +325,7 @@ class StateSheetFilter extends State<SheetFilter> {
                     },
                     style: ButtonStyle(
                       backgroundColor:
-                          MaterialStatePropertyAll<Color>(successbg),
+                          MaterialStatePropertyAll<Color>(successBG),
                     ),
                     child: Text('Apply Setting'.tr),
                   )))

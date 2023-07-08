@@ -65,7 +65,7 @@ class StateArchivePage extends State<ArchivePage> {
             key: _refreshIndicatorKey,
             onRefresh: refreshData,
             child: ListView(
-                padding: EdgeInsets.only(bottom: paddingLg),
+                padding: EdgeInsets.only(bottom: spaceJumbo),
                 children: contents.map((archive) {
                   return SizedBox(
                       width: fullWidth,
@@ -91,13 +91,14 @@ class StateArchivePage extends State<ArchivePage> {
                             child: Container(
                                 width: fullWidth * 0.7,
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: paddingSM, vertical: paddingMD),
-                                margin: EdgeInsets.only(top: marginMT),
+                                    horizontal: spaceXMD, vertical: spaceLG),
+                                margin: EdgeInsets.only(top: spaceMD),
                                 transform:
                                     Matrix4.translationValues(55.0, 5.0, 0.0),
                                 decoration: BoxDecoration(
-                                  color: whitebg,
-                                  borderRadius: BorderRadius.all(roundedMd),
+                                  color: whiteColor,
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(roundedSM)),
                                   boxShadow: [
                                     BoxShadow(
                                       color: const Color.fromARGB(
@@ -120,15 +121,15 @@ class StateArchivePage extends State<ArchivePage> {
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
-                                              color: blackbg,
+                                              color: darkColor,
                                               fontSize: textSM,
                                               fontWeight: FontWeight.w500)),
-                                      SizedBox(height: paddingXSM),
+                                      SizedBox(height: spaceSM),
                                       Text(
                                           getTotalArchive(archive.totalEvent,
                                               archive.totalTask),
                                           style: TextStyle(
-                                            color: blackbg,
+                                            color: darkColor,
                                             fontSize: textXSM,
                                           )),
                                     ])))

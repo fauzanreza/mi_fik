@@ -84,8 +84,8 @@ class StateLocationButton extends State<LocationButton>
           onTap: () => showDialog<String>(
               context: context,
               builder: (BuildContext context) => AlertDialog(
-                  insetPadding: EdgeInsets.all(paddingSM),
-                  contentPadding: EdgeInsets.all(paddingMD),
+                  insetPadding: EdgeInsets.all(spaceXMD),
+                  contentPadding: EdgeInsets.all(spaceLG),
                   content: SizedBox(
                     height:
                         fullWidth, //Pop up height based on fullwidth (Square maps).
@@ -125,7 +125,7 @@ class StateLocationButton extends State<LocationButton>
                       ),
                       Container(
                           padding: EdgeInsets.zero,
-                          margin: EdgeInsets.only(top: paddingMD),
+                          margin: EdgeInsets.only(top: spaceLG),
                           width: fullWidth,
                           height: btnHeightMD - 10,
                           child: ElevatedButton(
@@ -139,7 +139,7 @@ class StateLocationButton extends State<LocationButton>
                               } else {
                                 Get.snackbar(
                                     "Error", "Could not open the map".tr,
-                                    backgroundColor: whitebg);
+                                    backgroundColor: whiteColor);
                                 // throw 'Could not open the map'.tr;
                               }
                             },
@@ -161,11 +161,11 @@ class StateLocationButton extends State<LocationButton>
               children: [
                 WidgetSpan(
                   child: Icon(Icons.location_on_outlined,
-                      size: 20, color: blackbg),
+                      size: 20, color: darkColor),
                 ),
                 TextSpan(
                     text: getLocationName(widget.passLocation),
-                    style: TextStyle(fontSize: textMD, color: blackbg)),
+                    style: TextStyle(fontSize: textMD, color: darkColor)),
               ],
             ),
           ));
@@ -182,11 +182,11 @@ class StateLocationButton extends State<LocationButton>
               children: [
                 WidgetSpan(
                   child: Icon(Icons.location_on_outlined,
-                      size: 20, color: blackbg),
+                      size: 20, color: darkColor),
                 ),
                 TextSpan(
                     text: getLocationName(widget.passLocation),
-                    style: TextStyle(fontSize: textMD, color: blackbg)),
+                    style: TextStyle(fontSize: textMD, color: darkColor)),
               ],
             ),
           ));

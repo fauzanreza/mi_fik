@@ -49,11 +49,11 @@ class StateSetLocation extends State<SetLocation>
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
           Get.snackbar("Alert", "Location permissions are permently denied",
-              backgroundColor: whitebg);
+              backgroundColor: whiteColor);
         } else if (permission == LocationPermission.deniedForever) {
           if (permission == LocationPermission.denied) {
             Get.snackbar("Alert", "Location permissions are permently denied",
-                backgroundColor: whitebg);
+                backgroundColor: whiteColor);
           }
         } else {
           haspermission = true;
@@ -148,8 +148,8 @@ class StateSetLocation extends State<SetLocation>
           builder: (BuildContext context) {
             return StatefulBuilder(builder: (context, setState) {
               return AlertDialog(
-                  insetPadding: EdgeInsets.all(paddingSM),
-                  contentPadding: EdgeInsets.all(paddingMD),
+                  insetPadding: EdgeInsets.all(spaceXMD),
+                  contentPadding: EdgeInsets.all(spaceLG),
                   content: SizedBox(
                     height: fullHeight *
                         0.6, //Pop up height based on fullwidth (Square maps).
@@ -184,11 +184,11 @@ class StateSetLocation extends State<SetLocation>
                           }),
                         ),
                       ),
-                      SizedBox(height: paddingMD),
+                      SizedBox(height: spaceLG),
                       Container(
                           alignment: Alignment.centerLeft,
                           child: getSubTitleMedium(
-                              "Location Name", blackbg, TextAlign.start)),
+                              "Location Name", darkColor, TextAlign.start)),
                       getInputText(75, widget.locDetailCtrl, false),
                       SizedBox(
                           width: fullWidth,
@@ -199,7 +199,7 @@ class StateSetLocation extends State<SetLocation>
                                       width: double.infinity,
                                       height: btnHeightMD,
                                       margin: EdgeInsets.symmetric(
-                                          vertical: paddingXSM),
+                                          vertical: spaceSM),
                                       child: ElevatedButton(
                                         onPressed: () {
                                           Get.back();
@@ -207,15 +207,15 @@ class StateSetLocation extends State<SetLocation>
                                         style: ButtonStyle(
                                           backgroundColor:
                                               MaterialStatePropertyAll<Color>(
-                                                  successbg),
+                                                  successBG),
                                         ),
                                         child: Text('Save Location'.tr),
                                       ))),
                               const SizedBox(width: 20),
                               Container(
                                   height: btnHeightMD,
-                                  margin: EdgeInsets.symmetric(
-                                      vertical: paddingXSM),
+                                  margin:
+                                      EdgeInsets.symmetric(vertical: spaceSM),
                                   child: ElevatedButton(
                                     onPressed: () {
                                       _coordinate = null;
@@ -226,11 +226,11 @@ class StateSetLocation extends State<SetLocation>
                                     style: ButtonStyle(
                                       backgroundColor:
                                           MaterialStatePropertyAll<Color>(
-                                              dangerColor),
+                                              warningBG),
                                     ),
                                     child: Icon(
                                       Icons.delete,
-                                      color: whitebg,
+                                      color: whiteColor,
                                       size: iconLG,
                                     ),
                                   ))
@@ -240,11 +240,11 @@ class StateSetLocation extends State<SetLocation>
                   ));
             });
           }).then((_) => setState(() {})), //Check this again !!!!
-      icon: Icon(Icons.location_on_outlined, size: 22, color: semiblackbg),
+      icon: Icon(Icons.location_on_outlined, size: 22, color: semidarkColor),
       label: Text(getButtonText(locCoordinateCtrl, widget.locDetailCtrl.text),
           style: TextStyle(
               fontSize: textMD,
-              color: semiblackbg,
+              color: semidarkColor,
               fontWeight: FontWeight.w400)),
     );
   }

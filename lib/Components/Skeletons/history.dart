@@ -18,12 +18,12 @@ class HistorySkeleton extends StatelessWidget {
             itemCount: 3,
             itemBuilder: (context, index) {
               return Container(
-                  margin:
-                      EdgeInsets.fromLTRB(paddingSM, paddingSM, paddingSM, 0),
+                  margin: EdgeInsets.fromLTRB(spaceXMD, spaceXMD, spaceXMD, 0),
                   child: SkeletonLine(
                       style: SkeletonLineStyle(
-                          height: paddingLg * 2,
-                          borderRadius: BorderRadius.all(roundedMd))));
+                          height: spaceJumbo * 2,
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(roundedSM)))));
             }));
   }
 }

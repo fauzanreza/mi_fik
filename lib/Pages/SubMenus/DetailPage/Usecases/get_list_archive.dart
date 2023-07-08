@@ -60,13 +60,14 @@ class StateListArchive extends State<ListArchive> {
               Container(
                   height: fullWidth * 1,
                   width: fullWidth,
-                  padding: EdgeInsets.all(paddingMD),
+                  padding: EdgeInsets.all(spaceLG),
                   decoration: BoxDecoration(
-                      color: whitebg,
-                      borderRadius: BorderRadius.all(roundedMd)),
+                      color: whiteColor,
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(roundedSM))),
                   child: ListView.builder(
                       padding: EdgeInsets.symmetric(
-                          vertical: 0, horizontal: paddingXSM / 2),
+                          vertical: 0, horizontal: spaceSM / 2),
                       itemCount: widget.archieves.length,
                       itemBuilder: (context, index) {
                         if (i < widget.archieves.length - 1) {
@@ -87,12 +88,12 @@ class StateListArchive extends State<ListArchive> {
                             child: Container(
                                 width: fullWidth,
                                 margin:
-                                    EdgeInsets.symmetric(vertical: marginHZ),
-                                padding: EdgeInsets.all(marginMT),
+                                    EdgeInsets.symmetric(vertical: spaceMini),
+                                padding: EdgeInsets.all(spaceMD),
                                 decoration: BoxDecoration(
-                                  color: whitebg,
+                                  color: whiteColor,
                                   borderRadius:
-                                      BorderRadius.circular(roundedMd2),
+                                      BorderRadius.circular(roundedSM),
                                   boxShadow: [
                                     BoxShadow(
                                       color: const Color.fromARGB(
@@ -121,11 +122,11 @@ class StateListArchive extends State<ListArchive> {
                                                 maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
                                                 style: TextStyle(
-                                                    color: blackbg,
+                                                    color: darkColor,
                                                     fontSize: textSM,
                                                     fontWeight:
                                                         FontWeight.w500))),
-                                        SizedBox(height: paddingXSM),
+                                        SizedBox(height: spaceSM),
                                         Text(
                                             getTotalArchive(
                                                 widget.archieves[index]
@@ -133,7 +134,7 @@ class StateListArchive extends State<ListArchive> {
                                                 widget.archieves[index]
                                                     .totalTask),
                                             style: TextStyle(
-                                              color: blackbg,
+                                              color: darkColor,
                                               fontSize: textXSM,
                                             )),
                                       ]),
@@ -161,7 +162,7 @@ class StateListArchive extends State<ListArchive> {
                   width: fullWidth,
                   height: btnHeightMD,
                   margin: EdgeInsets.only(
-                      left: marginMT, right: marginMT, bottom: btnHeightMD),
+                      left: spaceMD, right: spaceMD, bottom: btnHeightMD),
                   child: ElevatedButton(
                     onPressed: () async {
                       MultiRelationArchiveModel data =
@@ -218,10 +219,10 @@ class StateListArchive extends State<ListArchive> {
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(roundedLG2),
+                        borderRadius: BorderRadius.circular(roundedSM),
                       )),
                       backgroundColor:
-                          MaterialStatePropertyAll<Color>(successbg),
+                          MaterialStatePropertyAll<Color>(successBG),
                     ),
                     child: Text('Save'.tr,
                         style: TextStyle(

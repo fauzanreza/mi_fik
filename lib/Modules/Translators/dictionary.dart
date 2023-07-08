@@ -138,7 +138,12 @@ class Dictionaries extends Translations {
           "Event posted": "Event posted",
           "Task saved": "Task saved",
           "Archive Created": "Archive Created",
-          "Answer": "Answer"
+          "Answer": "Answer",
+          "This Event doesn't have description":
+              "This Event doesn't have description",
+          "Publish Event": "Publish Event",
+          "This Event doesn't have attachment":
+              "This Event doesn't have attachment"
         },
         'id_ID': {
           'Good Morning': 'Selamat Pagi',
@@ -275,7 +280,12 @@ class Dictionaries extends Translations {
           "Event posted": "Event berhasil diposting",
           "Task saved": "Tugas disimpan",
           "Archive Created": "Arsip dibuat",
-          "Answer": "Jawaban"
+          "Answer": "Jawaban",
+          "This Event doesn't have description":
+              "Event ini tidak memiliki deskripsi",
+          "Publish Event": "Simpan Event",
+          "This Event doesn't have attachment":
+              "Event ini tidak memiliki tautan"
         },
       };
 }

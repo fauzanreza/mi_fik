@@ -59,7 +59,7 @@ class _EditImageState extends State<EditImage> {
             Widget getResetImageProfile(String exist) {
               if (exist != null && exist != "null") {
                 return FSMenuItem(
-                    icon: Icon(Icons.refresh, color: whitebg),
+                    icon: Icon(Icons.refresh, color: whiteColor),
                     text: Text('Reset', style: TextStyle(fontSize: textMD)),
                     gradient: redGradient,
                     onTap: () async {
@@ -111,7 +111,7 @@ class _EditImageState extends State<EditImage> {
                             context,
                             items: [
                               FSMenuItem(
-                                  icon: Icon(Icons.camera, color: whitebg),
+                                  icon: Icon(Icons.camera, color: whiteColor),
                                   text: Text('Camera'.tr,
                                       style: TextStyle(fontSize: textMD)),
                                   gradient: orangeGradient,
@@ -125,7 +125,7 @@ class _EditImageState extends State<EditImage> {
                                         ));
                                   }),
                               FSMenuItem(
-                                icon: Icon(Icons.folder, color: whitebg),
+                                icon: Icon(Icons.folder, color: whiteColor),
                                 gradient: orangeGradient,
                                 text: Text('File Picker'.tr,
                                     style: TextStyle(fontSize: textMD)),
@@ -166,10 +166,10 @@ class _EditImageState extends State<EditImage> {
                           );
                         },
                         child: Container(
-                            padding: EdgeInsets.all(paddingXSM * 0.8),
+                            padding: EdgeInsets.all(spaceSM * 0.8),
                             decoration: BoxDecoration(
-                                border: Border.all(width: 3, color: whitebg),
-                                color: infoColor,
+                                border: Border.all(width: 3, color: whiteColor),
+                                color: infoBG,
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(25))),
                             child: ClipRRect(

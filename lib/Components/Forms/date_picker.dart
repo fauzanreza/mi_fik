@@ -7,7 +7,7 @@ Widget getDatePicker(
   return TextButton.icon(
     style: TextButton.styleFrom(
       textStyle: const TextStyle(fontSize: 16),
-      foregroundColor: blackbg,
+      foregroundColor: darkColor,
     ),
     onPressed: actionPressed,
     icon: const Icon(

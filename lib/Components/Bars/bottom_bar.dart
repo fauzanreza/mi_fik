@@ -27,8 +27,8 @@ class BottomBarState extends State<BottomBar> {
         body: _widgetOptions.elementAt(selectedIndex),
         bottomNavigationBar: ClipRRect(
           borderRadius: BorderRadius.only(
-            topRight: roundedLG,
-            topLeft: roundedLG,
+            topRight: Radius.circular(roundedLG),
+            topLeft: Radius.circular(roundedLG),
           ),
           child: BottomNavigationBar(
             currentIndex: selectedIndex,
@@ -47,11 +47,11 @@ class BottomBarState extends State<BottomBar> {
                 label: 'Calendar'.tr,
               ),
             ],
-            backgroundColor: whitebg,
+            backgroundColor: whiteColor,
             unselectedLabelStyle: GoogleFonts.poppins(),
             selectedLabelStyle: GoogleFonts.poppins(fontSize: 14),
             selectedItemColor: primaryColor,
-            unselectedItemColor: greybg,
+            unselectedItemColor: shadowColor,
             onTap: (index) {
               setState(() {
                 selectedIndex = index;

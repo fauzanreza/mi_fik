@@ -45,14 +45,14 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
               listAttachment.removeAt(idx);
             });
             Get.snackbar("Alert".tr, "Attachment removed".tr,
-                backgroundColor: whitebg);
+                backgroundColor: whiteColor);
           } else {
             setState(() {
               listAttachment.removeAt(idx);
             });
             Get.snackbar("Alert".tr,
                 "Attachment removed. Can't located uploaded file".tr,
-                backgroundColor: whitebg);
+                backgroundColor: whiteColor);
           }
         });
       } else {
@@ -60,7 +60,7 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
           listAttachment.removeAt(idx);
         });
         Get.snackbar("Alert".tr, "Attachment removed".tr,
-            backgroundColor: whitebg);
+            backgroundColor: whiteColor);
       }
     }
 
@@ -77,7 +77,7 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
               id: e['id'],
               item: Container(
                   alignment: Alignment.center,
-                  margin: EdgeInsets.symmetric(vertical: paddingMD),
+                  margin: EdgeInsets.symmetric(vertical: spaceLG),
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(12),
                       child: Image.network(e['attach_url'],
@@ -92,7 +92,7 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
               },
               item: Container(
                   alignment: Alignment.center,
-                  margin: EdgeInsets.symmetric(vertical: paddingMD),
+                  margin: EdgeInsets.symmetric(vertical: spaceLG),
                   child: Chewie(
                     controller: ChewieController(
                       videoPlayerController:
@@ -102,7 +102,7 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
                       errorBuilder: (context, errorMessage) {
                         return Text(
                           errorMessage,
-                          style: TextStyle(color: blackbg),
+                          style: TextStyle(color: darkColor),
                         );
                       },
                     ),
@@ -117,7 +117,7 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
               },
               item: Container(
                   alignment: Alignment.center,
-                  margin: EdgeInsets.symmetric(vertical: paddingMD),
+                  margin: EdgeInsets.symmetric(vertical: spaceLG),
                   child: RichText(
                     text: TextSpan(
                       children: [
@@ -134,7 +134,7 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
                               },
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
-                                color: blackbg,
+                                color: darkColor,
                                 fontSize: textSM + 2)),
                       ],
                     ),
@@ -149,13 +149,13 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
                   listAttachment.removeAt(i);
                 });
                 Get.snackbar("Alert".tr, "Attachment removed".tr,
-                    backgroundColor: whitebg);
+                    backgroundColor: whiteColor);
               },
               others: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   getSubTitleMedium(
-                      "Attachment URL".tr, blackbg, TextAlign.start),
+                      "Attachment URL".tr, darkColor, TextAlign.start),
                   getInputTextAtt(75, e['id'], 'attach_url'),
                 ],
               ));

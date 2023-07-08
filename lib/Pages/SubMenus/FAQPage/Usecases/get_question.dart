@@ -68,30 +68,30 @@ class StateGetAllQuestion extends State<GetAllQuestion> {
         itemBuilder: (context, index) {
           return Card(
             shape: RoundedRectangleBorder(
-              side: BorderSide(color: mainbg, width: 1),
+              side: BorderSide(color: hoverBG, width: 1),
               borderRadius: BorderRadius.circular(6),
             ),
             child: ExpansionTile(
               tilePadding:
-                  EdgeInsets.symmetric(vertical: 10, horizontal: paddingSM),
+                  EdgeInsets.symmetric(vertical: 10, horizontal: spaceXMD),
               childrenPadding: EdgeInsets.only(
-                  left: paddingSM, bottom: paddingSM, right: paddingSM),
+                  left: spaceXMD, bottom: spaceXMD, right: spaceXMD),
               initiallyExpanded: false,
               iconColor: primaryColor,
-              textColor: blackbg,
+              textColor: darkColor,
               expandedCrossAxisAlignment: CrossAxisAlignment.start,
               expandedAlignment: Alignment.topLeft,
               title: Text(ucFirst(contents[index].questionBody),
                   style: TextStyle(fontSize: textMD - 1)),
               subtitle: Text(ucFirst(contents[index].questionType),
-                  style: TextStyle(color: greybg)),
+                  style: TextStyle(color: shadowColor)),
               children: [
                 Text(
                   "Answer".tr,
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: textMD,
-                      color: successbg),
+                      color: successBG),
                 ),
                 Text(ucFirst(contents[index].questionAnswer))
               ],

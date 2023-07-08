@@ -83,7 +83,8 @@ class StateRegisterPage extends State<RegisterPage> {
               isDismissible: false,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
-                      topLeft: roundedLG, topRight: roundedLG)),
+                      topLeft: Radius.circular(roundedLG),
+                      topRight: Radius.circular(roundedLG))),
               barrierColor: primaryColor.withOpacity(0.5),
               isScrollControlled: true,
               builder: (BuildContext context) {
@@ -129,7 +130,7 @@ class StateRegisterPage extends State<RegisterPage> {
                       });
 
                       Get.snackbar("Success", "Account has been registered",
-                          backgroundColor: whitebg);
+                          backgroundColor: whiteColor);
                     });
                   } else {
                     setState(() {
@@ -259,13 +260,13 @@ class StateRegisterPage extends State<RegisterPage> {
         },
         child: Container(
           padding: EdgeInsets.symmetric(
-              horizontal: paddingMD, vertical: paddingSM * 0.5),
+              horizontal: spaceLG, vertical: spaceXMD * 0.5),
           decoration: BoxDecoration(
-              color: whitebg,
-              border: Border.all(color: successbg, width: 2),
+              color: whiteColor,
+              border: Border.all(color: successBG, width: 2),
               boxShadow: [
                 BoxShadow(
-                  color: greybg.withOpacity(0.35),
+                  color: shadowColor.withOpacity(0.35),
                   blurRadius: 10.0,
                   spreadRadius: 1.0,
                   offset: const Offset(
@@ -279,16 +280,16 @@ class StateRegisterPage extends State<RegisterPage> {
             Icon(
               Icons.arrow_forward_rounded,
               size: iconLG,
-              color: successbg,
+              color: successBG,
             ),
             SizedBox(
-              width: paddingSM,
+              width: spaceXMD,
             ),
             Text(
               'Next',
               style: TextStyle(
                   fontSize: textMD,
-                  color: successbg,
+                  color: successBG,
                   fontWeight: FontWeight.w500),
             ),
           ]),
@@ -298,7 +299,7 @@ class StateRegisterPage extends State<RegisterPage> {
   Widget _signupButton() {
     return Material(
       borderRadius: defaultProceedButtonBorderRadius,
-      color: successbg,
+      color: successBG,
       child: InkWell(
         borderRadius: defaultProceedButtonBorderRadius,
         onTap: () {},
@@ -306,7 +307,7 @@ class StateRegisterPage extends State<RegisterPage> {
           padding: defaultProceedButtonPadding,
           child: Text(
             'Explore Now',
-            style: TextStyle(fontSize: textMD, color: whitebg),
+            style: TextStyle(fontSize: textMD, color: whiteColor),
           ),
         ),
       ),
@@ -418,7 +419,7 @@ class StateRegisterPage extends State<RegisterPage> {
                               closedIndicator:
                                   ClosedIndicator(color: primaryColor),
                               activeIndicator: ActiveIndicator(
-                                  color: greybg.withOpacity(0.25)),
+                                  color: shadowColor.withOpacity(0.25)),
                               indicatorDesign: IndicatorDesign.polygon(
                                 polygonDesign: PolygonDesign(
                                   polygon: DesignType.polygon_circle,

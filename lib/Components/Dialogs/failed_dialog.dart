@@ -29,7 +29,8 @@ class StateFailedDialog extends State<FailedDialog> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ClipRRect(
-                borderRadius: roundedErrImage,
+                borderRadius:
+                    BorderRadius.circular(roundedJumbo + roundedJumbo),
                 child: Image.asset('assets/icon/Failed.png', width: 120),
               ),
               Container(
@@ -37,7 +38,7 @@ class StateFailedDialog extends State<FailedDialog> {
                   child: Text(
                       getMessageResponseFromObject(widget.text, widget.type),
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: greybg, fontSize: textMD)))
+                      style: TextStyle(color: shadowColor, fontSize: textMD)))
             ]),
       ),
       actions: <Widget>[

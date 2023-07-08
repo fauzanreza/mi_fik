@@ -65,11 +65,11 @@ class StateSetProfileData extends State<SetProfileData>
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            getSubTitleMedium("Username", blackbg, TextAlign.left),
+            getSubTitleMedium("Username", darkColor, TextAlign.left),
             getInputWarning(widget.unameMsg),
             getInputTextRegis(30, "username", usernameCtrl, refresh,
                 usernameAvaiabilityCheck, isCheckedRegister),
-            getSubTitleMedium("Email", blackbg, TextAlign.left),
+            getSubTitleMedium("Email", darkColor, TextAlign.left),
             getInputWarning(widget.emailMsg),
             getInputTextRegis(30, "email", emailCtrl, refresh,
                 emailAvaiabilityCheck, isCheckedRegister),
@@ -85,20 +85,20 @@ class StateSetProfileData extends State<SetProfileData>
                   checkAvaiabilityRegis = false;
                   refreshPage(refresh);
                   Get.snackbar("Success", "Username and Email is reset",
-                      backgroundColor: whitebg);
+                      backgroundColor: whiteColor);
                 },
                 child: Container(
-                  margin: EdgeInsets.only(bottom: paddingMD),
+                  margin: EdgeInsets.only(bottom: spaceLG),
                   child: RichText(
                       text: TextSpan(
                     children: [
                       WidgetSpan(
                         child: Icon(Icons.refresh,
-                            size: iconMD + 2, color: dangerColor),
+                            size: iconMD + 2, color: warningBG),
                       ),
                       TextSpan(
                         style: TextStyle(
-                            color: dangerColor,
+                            color: warningBG,
                             fontSize: textMD,
                             fontWeight: FontWeight.w500),
                         text: " Reset Username and Email".tr,
@@ -106,19 +106,19 @@ class StateSetProfileData extends State<SetProfileData>
                     ],
                   )),
                 )),
-            getSubTitleMedium("Password", blackbg, TextAlign.left),
+            getSubTitleMedium("Password", darkColor, TextAlign.left),
             getInputWarning(widget.passMsg),
             getInputTextRegis(
                 35, "pass", null, refresh, passRegisCtrl, isFillForm),
-            getSubTitleMedium("First Name".tr, blackbg, TextAlign.left),
+            getSubTitleMedium("First Name".tr, darkColor, TextAlign.left),
             getInputWarning(widget.fnameMsg),
             getInputTextRegis(
                 35, "fname", null, refresh, fnameRegisCtrl, isFillForm),
-            getSubTitleMedium("Last Name".tr, blackbg, TextAlign.left),
+            getSubTitleMedium("Last Name".tr, darkColor, TextAlign.left),
             getInputWarning(widget.lnameMsg),
             getInputTextRegis(
                 35, "lname", null, refresh, lnameRegisCtrl, isFillForm),
-            getSubTitleMedium("Valid Until".tr, blackbg, TextAlign.left),
+            getSubTitleMedium("Valid Until".tr, darkColor, TextAlign.left),
             getDropDownMain(slctValidUntil, validUntil, (String newValue) {
               setState(() {
                 slctValidUntil = newValue;
@@ -131,11 +131,11 @@ class StateSetProfileData extends State<SetProfileData>
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            getSubTitleMedium("Username", blackbg, TextAlign.left),
+            getSubTitleMedium("Username", darkColor, TextAlign.left),
             getInputWarning(widget.unameMsg),
             getInputTextRegis(30, "username", usernameCtrl, refresh,
                 usernameAvaiabilityCheck, isFillForm),
-            getSubTitleMedium("Email", blackbg, TextAlign.left),
+            getSubTitleMedium("Email", darkColor, TextAlign.left),
             getInputWarning(widget.emailMsg),
             getInputTextRegis(30, "email", emailCtrl, refresh,
                 emailAvaiabilityCheck, isFillForm),
@@ -157,11 +157,11 @@ class StateSetProfileData extends State<SetProfileData>
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            getSubTitleMedium("Username", blackbg, TextAlign.left),
+            getSubTitleMedium("Username", darkColor, TextAlign.left),
             getInputWarning(widget.unameMsg),
             getInputTextRegis(30, "username", usernameCtrl, refresh,
                 usernameAvaiabilityCheck, isFillForm),
-            getSubTitleMedium("Email", blackbg, TextAlign.left),
+            getSubTitleMedium("Email", darkColor, TextAlign.left),
             getInputWarning(widget.emailMsg),
             getInputTextRegis(30, "email", emailCtrl, refresh,
                 emailAvaiabilityCheck, isFillForm),
@@ -176,7 +176,7 @@ class StateSetProfileData extends State<SetProfileData>
               textAlign: TextAlign.center,
             ),
             Container(
-                margin: EdgeInsets.only(top: paddingSM),
+                margin: EdgeInsets.only(top: spaceXMD),
                 alignment: Alignment.center,
                 child: ElevatedButton.icon(
                   onPressed: () {
@@ -205,7 +205,7 @@ class StateSetProfileData extends State<SetProfileData>
                             refreshPage(refresh);
                             Get.snackbar(
                                 "Success", "Username and Email is available",
-                                backgroundColor: whitebg);
+                                backgroundColor: whiteColor);
                           });
                         } else {
                           checkAvaiabilityRegis = false;
@@ -231,14 +231,14 @@ class StateSetProfileData extends State<SetProfileData>
                   icon: Icon(
                     Icons.search,
                     size: iconLG - 2,
-                    color: whitebg,
+                    color: whiteColor,
                   ),
                   label:
                       Text("Validate", style: TextStyle(fontSize: textMD - 2)),
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(roundedLG2),
+                      borderRadius: BorderRadius.circular(roundedMD),
                     )),
                     backgroundColor:
                         MaterialStatePropertyAll<Color>(primaryColor),
@@ -277,15 +277,14 @@ class StateSetProfileData extends State<SetProfileData>
 
     return Container(
       height: fullHeight * 0.75,
-      padding: EdgeInsets.all(paddingMD),
-      margin: EdgeInsets.fromLTRB(
-          paddingMD, paddingLg * 1.75, paddingMD, paddingMD),
+      padding: EdgeInsets.all(spaceLG),
+      margin: EdgeInsets.fromLTRB(spaceLG, spaceJumbo * 1.75, spaceLG, spaceLG),
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(10)),
-        color: whitebg,
+        color: whiteColor,
         boxShadow: [
           BoxShadow(
-            color: greybg.withOpacity(0.35),
+            color: shadowColor.withOpacity(0.35),
             blurRadius: 10.0,
             spreadRadius: 1.0,
             offset: const Offset(

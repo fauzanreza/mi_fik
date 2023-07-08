@@ -88,11 +88,13 @@ class StateGetContent extends State<GetContent> {
 
       return Text(res.replaceAll("  ", " ").replaceAll(" ,", ", "),
           style: TextStyle(
-              color: greybg, fontSize: textSM, fontWeight: FontWeight.w500));
+              color: shadowColor,
+              fontSize: textSM,
+              fontWeight: FontWeight.w500));
     }
 
     return Container(
-        margin: EdgeInsets.only(top: paddingMD),
+        margin: EdgeInsets.only(top: spaceLG),
         constraints: BoxConstraints(minHeight: fullHeight * 0.8),
         child: Column(children: [
           Container(
@@ -103,11 +105,11 @@ class StateGetContent extends State<GetContent> {
               children: [
                 Expanded(
                     child: Container(
-                        padding: EdgeInsets.fromLTRB(paddingXSM, 0, 0, 0),
+                        padding: EdgeInsets.fromLTRB(spaceSM, 0, 0, 0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            getTitleLarge("What's New".tr, greybg),
+                            getTitleLarge("What's New".tr, shadowColor),
                             getActiveFilterText(),
                           ],
                         ))),

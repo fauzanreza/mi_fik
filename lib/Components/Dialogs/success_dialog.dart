@@ -21,14 +21,15 @@ class SuccessDialog extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ClipRRect(
-                borderRadius: roundedErrImage,
+                borderRadius:
+                    BorderRadius.circular(roundedJumbo + roundedJumbo),
                 child: Image.asset('assets/icon/Success.png', width: 120),
               ),
               Container(
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   child: Text(text,
                       style: TextStyle(
-                          color: greybg,
+                          color: shadowColor,
                           fontSize: 16,
                           fontWeight: FontWeight.w500)))
             ]),
@@ -60,9 +61,9 @@ class SuccessDialogCustom extends StatelessWidget {
           Container(
             width: fullWidth * 0.45,
             padding: EdgeInsets.all(fullWidth * 0.1),
-            margin: EdgeInsets.only(bottom: marginMT),
+            margin: EdgeInsets.only(bottom: spaceMD),
             decoration: BoxDecoration(
-              color: whitebg,
+              color: whiteColor,
               borderRadius: BorderRadius.circular(10),
             ),
             child: ClipRRect(
@@ -71,7 +72,7 @@ class SuccessDialogCustom extends StatelessWidget {
           ),
           Text(text,
               style: TextStyle(
-                  color: whitebg,
+                  color: whiteColor,
                   fontWeight: FontWeight.bold,
                   fontSize: textLG))
         ]));

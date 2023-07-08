@@ -99,16 +99,16 @@ class StateDayEvent extends State<DayEvent> with TickerProviderStateMixin {
                   width: 140,
                   decoration: BoxDecoration(
                       borderRadius:
-                          BorderRadius.all(Radius.circular(roundedMd2)),
-                      color: successbg),
-                  margin: EdgeInsets.only(top: paddingMD),
+                          BorderRadius.all(Radius.circular(roundedSM)),
+                      color: successBG),
+                  margin: EdgeInsets.only(top: spaceLG),
                   padding: EdgeInsets.symmetric(
-                      vertical: paddingXSM, horizontal: paddingMD),
+                      vertical: spaceSM, horizontal: spaceLG),
                   child: Row(children: [
                     FaIcon(FontAwesomeIcons.check,
-                        color: whitebg, size: iconSM),
+                        color: whiteColor, size: iconSM),
                     Text(" Has started",
-                        style: TextStyle(fontSize: textSM, color: whitebg))
+                        style: TextStyle(fontSize: textSM, color: whiteColor))
                   ]),
                 );
               } else {
@@ -133,13 +133,11 @@ class StateDayEvent extends State<DayEvent> with TickerProviderStateMixin {
                                   return StatefulBuilder(
                                       builder: (context, setState) {
                                     return AlertDialog(
-                                        insetPadding:
-                                            EdgeInsets.all(paddingXSM),
-                                        contentPadding:
-                                            EdgeInsets.all(paddingXSM),
+                                        insetPadding: EdgeInsets.all(spaceSM),
+                                        contentPadding: EdgeInsets.all(spaceSM),
                                         shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.all(roundedLG)),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(roundedLG))),
                                         content: DetailTask(
                                           data: content,
                                         ));

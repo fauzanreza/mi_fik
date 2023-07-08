@@ -84,26 +84,26 @@ class _GetEditProfileState extends State<GetEditProfile> {
           child: SingleChildScrollView(
               child: ExpansionTile(
                   childrenPadding: EdgeInsets.only(
-                      left: paddingSM, bottom: paddingSM, right: paddingSM),
+                      left: spaceXMD, bottom: spaceXMD, right: spaceXMD),
                   initiallyExpanded: false,
                   trailing: Container(
-                    padding: EdgeInsets.all(paddingXSM * 1),
+                    padding: EdgeInsets.all(spaceSM * 1),
                     decoration: BoxDecoration(
-                      color: infoColor,
+                      color: infoBG,
                       borderRadius: const BorderRadius.all(Radius.circular(20)),
-                      border: Border.all(width: 3, color: whitebg),
+                      border: Border.all(width: 3, color: whiteColor),
                     ),
-                    child: Icon(Icons.edit, color: whitebg),
+                    child: Icon(Icons.edit, color: whiteColor),
                   ),
                   iconColor: null,
-                  textColor: whitebg,
+                  textColor: whiteColor,
                   collapsedTextColor: primaryColor,
                   leading: null,
                   expandedCrossAxisAlignment: CrossAxisAlignment.end,
                   expandedAlignment: Alignment.topLeft,
                   title: Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: 5, vertical: paddingSM),
+                          horizontal: 5, vertical: spaceXMD),
                       child: Text("Edit Profile".tr,
                           style: TextStyle(
                               fontSize: textMD + 4,
@@ -112,17 +112,17 @@ class _GetEditProfileState extends State<GetEditProfile> {
                 Align(
                     alignment: Alignment.centerLeft,
                     child: getSubTitleMedium(
-                        "First Name".tr, whitebg, TextAlign.start)),
+                        "First Name".tr, whiteColor, TextAlign.start)),
                 getInputText(fnameLength, fNameCtrl, false),
                 Align(
                     alignment: Alignment.centerLeft,
                     child: getSubTitleMedium(
-                        "Last Name".tr, whitebg, TextAlign.start)),
+                        "Last Name".tr, whiteColor, TextAlign.start)),
                 getInputText(lnameLength, lNameCtrl, false),
                 // Align(
                 //     alignment: Alignment.centerLeft,
                 //     child: getSubTitleMedium(
-                //         "Password".tr, whitebg, TextAlign.start)),
+                //         "Password".tr, whiteColor, TextAlign.start)),
                 // getInputText(passwordLength, passCtrl, true),
                 InkWell(
                   onTap: () async {
@@ -166,23 +166,23 @@ class _GetEditProfileState extends State<GetEditProfile> {
                   },
                   child: Container(
                     width: 110,
-                    margin: EdgeInsets.only(top: paddingXSM),
+                    margin: EdgeInsets.only(top: spaceSM),
                     padding: EdgeInsets.symmetric(
-                        vertical: paddingXSM, horizontal: paddingXSM + 3),
+                        vertical: spaceSM, horizontal: spaceSM + 3),
                     decoration: BoxDecoration(
-                        border: Border.all(color: whitebg, width: 2),
-                        color: successbg,
+                        border: Border.all(color: whiteColor, width: 2),
+                        color: successBG,
                         borderRadius:
                             const BorderRadius.all(Radius.circular(10))),
                     child: Row(
                       children: [
-                        Icon(Icons.send, size: iconSM + 3, color: whitebg),
+                        Icon(Icons.send, size: iconSM + 3, color: whiteColor),
                         const Spacer(),
                         Text("Submit".tr,
                             style: TextStyle(
                                 fontSize: textMD,
                                 fontWeight: FontWeight.w500,
-                                color: whitebg))
+                                color: whiteColor))
                       ],
                     ),
                   ),

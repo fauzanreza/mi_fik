@@ -121,20 +121,20 @@ class StateHomePage extends State<HomePage> {
                       controller: scrollCtrl,
                       itemBuilder: (BuildContext context, int index) {
                         return Column(children: [
-                          showSideBar(scaffoldKey, whitebg),
+                          showSideBar(scaffoldKey, whiteColor),
                           Container(
                             margin: const EdgeInsets.symmetric(horizontal: 15),
                             child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  getGreeting(getToday("part"), whitebg),
-                                  getTitleJumbo(getToday("clock"), whitebg),
+                                  getGreeting(getToday("part"), whiteColor),
+                                  getTitleJumbo(getToday("clock"), whiteColor),
                                   SizedBox(height: fullHeight * 0.05),
                                   Row(
                                     children: [
                                       getSubTitleMedium(getToday("date"),
-                                          whitebg, TextAlign.start),
+                                          whiteColor, TextAlign.start),
                                       const Spacer(),
                                       const GetLocation()
                                     ],
@@ -146,9 +146,10 @@ class StateHomePage extends State<HomePage> {
                             margin: const EdgeInsets.only(top: 10.0),
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             decoration: BoxDecoration(
-                              color: mainbg,
+                              color: hoverBG,
                               borderRadius: BorderRadius.only(
-                                  topLeft: roundedLG, topRight: roundedLG),
+                                  topLeft: Radius.circular(roundedLG),
+                                  topRight: Radius.circular(roundedLG)),
                             ),
                             child: GetContent(
                                 scrollCtrl: scrollCtrl, item: contents),

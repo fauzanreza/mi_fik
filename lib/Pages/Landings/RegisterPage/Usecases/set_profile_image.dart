@@ -63,7 +63,7 @@ class StateSetProfileImage extends State<SetProfileImage> {
             Widget getResetImageProfile(String exist) {
               if (exist != null && exist != "null") {
                 return FSMenuItem(
-                    icon: Icon(Icons.refresh, color: whitebg),
+                    icon: Icon(Icons.refresh, color: whiteColor),
                     text: Text('Reset', style: TextStyle(fontSize: textMD)),
                     gradient: redGradient,
                     onTap: () async {
@@ -84,7 +84,7 @@ class StateSetProfileImage extends State<SetProfileImage> {
                               });
                               Get.snackbar(
                                   "Success", "Uploaded Image has been removed",
-                                  backgroundColor: whitebg);
+                                  backgroundColor: whiteColor);
                             } else {
                               FullScreenMenu.hide();
                               showDialog<String>(
@@ -112,15 +112,15 @@ class StateSetProfileImage extends State<SetProfileImage> {
               children: [
                 Container(
                   height: fullHeight * 0.75,
-                  padding: EdgeInsets.all(paddingMD),
+                  padding: EdgeInsets.all(spaceLG),
                   margin: EdgeInsets.fromLTRB(
-                      paddingMD, paddingLg, paddingMD, paddingMD),
+                      spaceLG, spaceJumbo, spaceLG, spaceLG),
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    color: whitebg,
+                    color: whiteColor,
                     boxShadow: [
                       BoxShadow(
-                        color: greybg.withOpacity(0.35),
+                        color: shadowColor.withOpacity(0.35),
                         blurRadius: 10.0,
                         spreadRadius: 1.0,
                         offset: const Offset(
@@ -142,9 +142,11 @@ class StateSetProfileImage extends State<SetProfileImage> {
                             Container(
                               height: 200,
                               width: 200,
-                              margin: EdgeInsets.symmetric(vertical: paddingLg),
+                              margin:
+                                  EdgeInsets.symmetric(vertical: spaceJumbo),
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(roundedCircle),
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(roundedLG)),
                                 image: DecorationImage(
                                   image: getImageUser(uploadedImageRegis),
                                   fit: BoxFit.cover,
@@ -165,7 +167,7 @@ class StateSetProfileImage extends State<SetProfileImage> {
                                             items: [
                                               FSMenuItem(
                                                   icon: Icon(Icons.camera,
-                                                      color: whitebg),
+                                                      color: whiteColor),
                                                   text: Text('Camera'.tr,
                                                       style: TextStyle(
                                                           fontSize: textMD)),
@@ -183,7 +185,7 @@ class StateSetProfileImage extends State<SetProfileImage> {
                                                   }),
                                               FSMenuItem(
                                                 icon: Icon(Icons.folder,
-                                                    color: whitebg),
+                                                    color: whiteColor),
                                                 gradient: orangeGradient,
                                                 text: Text('File Picker'.tr,
                                                     style: TextStyle(
@@ -236,12 +238,13 @@ class StateSetProfileImage extends State<SetProfileImage> {
                                           );
                                         },
                                         child: Container(
-                                            padding: EdgeInsets.all(
-                                                paddingXSM * 0.8),
+                                            padding:
+                                                EdgeInsets.all(spaceSM * 0.8),
                                             decoration: BoxDecoration(
                                                 border: Border.all(
-                                                    width: 3, color: whitebg),
-                                                color: infoColor,
+                                                    width: 3,
+                                                    color: whiteColor),
+                                                color: infoBG,
                                                 borderRadius:
                                                     const BorderRadius.all(
                                                         Radius.circular(25))),
@@ -256,7 +259,7 @@ class StateSetProfileImage extends State<SetProfileImage> {
                           ],
                         ),
                         Container(
-                            padding: EdgeInsets.fromLTRB(0, paddingMD, 0, 0),
+                            padding: EdgeInsets.fromLTRB(0, spaceLG, 0, 0),
                             child: const GetInfoBox(
                               page: "register",
                               location: "add_profile_pic",

@@ -7,7 +7,7 @@ Widget getAppbar(String title, var action) {
     flexibleSpace: Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [primaryColor, semiblackbg],
+          colors: [primaryColor, semidarkColor],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),

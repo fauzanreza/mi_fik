@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
@@ -104,11 +103,11 @@ class StateDetailPage extends State<DetailPage> {
             text: TextSpan(
               children: [
                 WidgetSpan(
-                  child: Icon(Icons.calendar_month, size: 20, color: blackbg),
+                  child: Icon(Icons.calendar_month, size: 20, color: darkColor),
                 ),
                 TextSpan(
                     text: " $result",
-                    style: TextStyle(color: blackbg, fontSize: textMD))
+                    style: TextStyle(color: darkColor, fontSize: textMD))
               ],
             ),
           );
@@ -127,11 +126,15 @@ class StateDetailPage extends State<DetailPage> {
       }
 
       //Get attachment file or link.
-      Widget getAttach(attach) {
-        if (attach != null) {
+      Widget getAttach(attach, width) {
+        if (attach != null && attach.isNotEmpty) {
           return AttachButton(passAttach: attach);
         } else {
-          return const SizedBox();
+          return Container(
+              alignment: Alignment.center,
+              margin: EdgeInsets.symmetric(horizontal: spaceXMD),
+              child: getMessageImageNoData("assets/icon/attachment.png",
+                  "This Event doesn't have attachment".tr, width));
         }
       }
 
@@ -140,7 +143,7 @@ class StateDetailPage extends State<DetailPage> {
             Get.offAll(() => const BottomBar());
           },
           child: Scaffold(
-            backgroundColor: whitebg,
+            backgroundColor: whiteColor,
             body: RefreshIndicator(
                 key: _refreshIndicatorKey,
                 onRefresh: refreshData,
@@ -168,7 +171,7 @@ class StateDetailPage extends State<DetailPage> {
                                         fit: BoxFit.fill,
                                       ),
                                       borderRadius:
-                                          BorderRadius.circular(roundedLG2),
+                                          BorderRadius.circular(roundedSM),
                                     ),
                                   )),
                             ),
@@ -192,14 +195,14 @@ class StateDetailPage extends State<DetailPage> {
                         Container(
                             transform:
                                 Matrix4.translationValues(0.0, -20.0, 0.0),
-                            padding: EdgeInsets.symmetric(vertical: paddingMD),
+                            padding: EdgeInsets.symmetric(vertical: spaceLG),
                             alignment: Alignment.topCenter,
                             constraints: BoxConstraints(
                               minHeight: fullHeight * 0.75,
                             ),
-                            decoration: const BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.only(
+                            decoration: BoxDecoration(
+                                color: whiteColor,
+                                borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(20),
                                   topRight: Radius.circular(20),
                                 )),
@@ -224,6 +227,7 @@ class StateDetailPage extends State<DetailPage> {
                                         Text(contents[0].contentTitle,
                                             style: TextStyle(
                                                 fontSize: textMD,
+                                                color: primaryColor,
                                                 fontWeight: FontWeight.bold)),
                                       ],
                                     ))
@@ -231,17 +235,27 @@ class StateDetailPage extends State<DetailPage> {
                                 ),
                               ),
                               const SizedBox(height: 20),
-                              Container(
-                                  alignment: Alignment.centerLeft,
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal: paddingSM),
-                                  child: HtmlWidget(contents[0].contentDesc)),
-                              const SizedBox(height: 20),
-                              getAttach(contents[0].contentAttach),
+                              getDescDetailWidget(
+                                  contents[0].contentDesc, fullWidth),
+                              Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(vertical: spaceXMD),
+                                  child: Divider(
+                                      thickness: 1,
+                                      indent: spaceLG,
+                                      endIndent: spaceLG)),
+                              getAttach(contents[0].contentAttach, fullWidth),
+                              Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(vertical: spaceXMD),
+                                  child: Divider(
+                                      thickness: 1,
+                                      indent: spaceLG,
+                                      endIndent: spaceLG)),
                               Container(
                                 alignment: Alignment.centerLeft,
                                 margin: EdgeInsets.fromLTRB(
-                                    paddingSM, paddingMD, paddingSM, 0),
+                                    spaceXMD, spaceXXSM, spaceXMD, 0),
                                 child: getTag(contents[0].contentTag,
                                     fullHeight, contents),
                               ),
@@ -249,7 +263,7 @@ class StateDetailPage extends State<DetailPage> {
                               Container(
                                 alignment: Alignment.centerLeft,
                                 margin:
-                                    EdgeInsets.symmetric(horizontal: paddingSM),
+                                    EdgeInsets.symmetric(horizontal: spaceXMD),
                                 child:
                                     Wrap(runSpacing: 5, spacing: 10, children: [
                                   getLocation(contents[0].contentLoc,
@@ -267,20 +281,23 @@ class StateDetailPage extends State<DetailPage> {
                     child: PostArchiveRelation(
                       passSlug: contents[0].slugName,
                       margin: EdgeInsets.symmetric(
-                          horizontal: paddingSM, vertical: paddingXSM),
+                          horizontal: spaceXMD, vertical: spaceSM),
                       ctx: "Event",
                     ),
                   ),
                 ])),
             floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
             floatingActionButton: Container(
-                margin: EdgeInsets.only(top: paddingMD),
+                margin: EdgeInsets.only(top: spaceLG),
+                decoration: BoxDecoration(
+                    borderRadius:
+                        BorderRadius.all(Radius.circular(roundedCircle))),
                 child: FloatingActionButton(
                   backgroundColor: primaryColor,
                   onPressed: () {},
                   child: IconButton(
                     icon: Icon(Icons.arrow_back, size: iconLG),
-                    color: whitebg,
+                    color: whiteColor,
                     onPressed: () {
                       listArchiveCheck = [];
                       Get.offAll(() => const BottomBar());
@@ -321,7 +338,7 @@ class StateDetailPage extends State<DetailPage> {
                                         fit: BoxFit.cover,
                                       ),
                                       borderRadius:
-                                          BorderRadius.circular(roundedLG2),
+                                          BorderRadius.circular(roundedSM),
                                     ),
                                   )),
                             ),
@@ -345,7 +362,7 @@ class StateDetailPage extends State<DetailPage> {
                         Container(
                             transform:
                                 Matrix4.translationValues(0.0, -20.0, 0.0),
-                            padding: EdgeInsets.symmetric(vertical: paddingMD),
+                            padding: EdgeInsets.symmetric(vertical: spaceLG),
                             decoration: const BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.only(
@@ -361,13 +378,16 @@ class StateDetailPage extends State<DetailPage> {
                 ])),
             floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
             floatingActionButton: Container(
-                margin: EdgeInsets.only(top: paddingMD),
+                margin: EdgeInsets.only(top: spaceLG),
+                decoration: BoxDecoration(
+                    borderRadius:
+                        BorderRadius.all(Radius.circular(roundedCircle))),
                 child: FloatingActionButton(
                   backgroundColor: primaryColor,
                   onPressed: () {},
                   child: IconButton(
                     icon: Icon(Icons.arrow_back, size: iconLG),
-                    color: whitebg,
+                    color: whiteColor,
                     onPressed: () {
                       Get.offAll(() => const BottomBar());
                     },

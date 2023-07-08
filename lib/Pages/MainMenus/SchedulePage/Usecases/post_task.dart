@@ -75,21 +75,21 @@ class StatePostTask extends State<PostTask> {
                     fontSize: textLG)),
           ),
           Container(
-              padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
+              padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
               child: Text("Title".tr,
-                  style: TextStyle(color: blackbg, fontSize: textMD))),
+                  style: TextStyle(color: darkColor, fontSize: textMD))),
           Container(
-              padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
+              padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
               child: getInputText(75, taskTitleCtrl, false)),
           Container(
-              padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
+              padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
               child: Text("Notes (optional)".tr,
-                  style: TextStyle(color: blackbg, fontSize: textMD))),
+                  style: TextStyle(color: darkColor, fontSize: textMD))),
           Container(
-              padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
+              padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
               child: getInputDesc(75, 5, taskDescCtrl, false)),
           Container(
-            padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
+            padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
             child: Wrap(
               runSpacing: -5,
               spacing: 5,
@@ -132,7 +132,7 @@ class StatePostTask extends State<PostTask> {
                     child: Text('Reminder'.tr),
                   ),
                   Container(
-                      padding: EdgeInsets.only(left: paddingXSM),
+                      padding: EdgeInsets.only(left: spaceSM),
                       child: getDropDownMain(slctReminderType, reminderTypeOpt,
                           (String newValue) {
                         setState(() {
@@ -141,7 +141,7 @@ class StatePostTask extends State<PostTask> {
                       }, true, "reminder_")),
                 ]),
                 Container(
-                    padding: EdgeInsets.fromLTRB(0, paddingMD, 0, 0),
+                    padding: EdgeInsets.fromLTRB(0, spaceLG, 0, 0),
                     child: const GetInfoBox(
                       page: "homepage",
                       location: "add_task",
@@ -150,7 +150,7 @@ class StatePostTask extends State<PostTask> {
             ),
           ),
           Container(
-              margin: EdgeInsets.only(top: paddingXSM),
+              margin: EdgeInsets.only(top: spaceSM),
               width: fullWidth,
               height: btnHeightMD,
               child: ElevatedButton(
@@ -196,7 +196,7 @@ class StatePostTask extends State<PostTask> {
                   }
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll<Color>(successbg),
+                  backgroundColor: MaterialStatePropertyAll<Color>(successBG),
                 ),
                 child: Text('Done'.tr, style: TextStyle(fontSize: textMD)),
               ))

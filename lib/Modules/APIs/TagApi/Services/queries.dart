@@ -62,7 +62,7 @@ class TagQueriesService {
     } else if (response.statusCode == 401) {
       Get.offAll(() => const LoginPage());
       Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
-          backgroundColor: whitebg);
+          backgroundColor: whiteColor);
       return null;
     } else {
       return null;

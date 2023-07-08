@@ -20,7 +20,7 @@ class StateSetRole extends State<SetRole> {
       if (status) {
         return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
           SizedBox(
-            height: paddingLg,
+            height: spaceJumbo,
           ),
           getSubTitleMedium(
               "You can't request to modify your tag, because you still have awaiting request",
@@ -32,7 +32,7 @@ class StateSetRole extends State<SetRole> {
           ),
           getSubTitleMedium(
               "Please wait some moment or try to contact the Admin",
-              blackbg,
+              darkColor,
               TextAlign.center)
         ]);
       } else {
@@ -47,15 +47,14 @@ class StateSetRole extends State<SetRole> {
       children: [
         Container(
             height: fullHeight * 0.75,
-            padding: EdgeInsets.all(paddingMD),
-            margin:
-                EdgeInsets.fromLTRB(paddingMD, paddingLg, paddingMD, paddingMD),
+            padding: EdgeInsets.all(spaceLG),
+            margin: EdgeInsets.fromLTRB(spaceLG, spaceJumbo, spaceLG, spaceLG),
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(10)),
-              color: whitebg,
+              color: whiteColor,
               boxShadow: [
                 BoxShadow(
-                  color: greybg.withOpacity(0.35),
+                  color: shadowColor.withOpacity(0.35),
                   blurRadius: 10.0,
                   spreadRadius: 1.0,
                   offset: const Offset(

@@ -22,11 +22,11 @@ class ArchiveSkeleton1 extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               margin: const EdgeInsets.symmetric(horizontal: 45),
               decoration: BoxDecoration(
-                color: whitebg,
-                borderRadius: BorderRadius.all(roundedMd),
+                color: whiteColor,
+                borderRadius: BorderRadius.all(Radius.circular(roundedSM)),
                 boxShadow: [
                   BoxShadow(
-                    color: greybg.withOpacity(0.35),
+                    color: shadowColor.withOpacity(0.35),
                     blurRadius: 10.0,
                     spreadRadius: 0.0,
                     offset: const Offset(
@@ -39,7 +39,7 @@ class ArchiveSkeleton1 extends StatelessWidget {
               child: SkeletonItem(
                   child: Column(
                 children: [
-                  SizedBox(height: paddingMD * 0.75),
+                  SizedBox(height: spaceLG * 0.75),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -57,7 +57,7 @@ class ArchiveSkeleton1 extends StatelessWidget {
                       )
                     ],
                   ),
-                  SizedBox(height: paddingMD * 0.75),
+                  SizedBox(height: spaceLG * 0.75),
                 ],
               )),
             ),

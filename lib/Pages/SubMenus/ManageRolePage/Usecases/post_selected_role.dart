@@ -53,10 +53,10 @@ class StatePostSelectedRole extends State<PostSelectedRole> {
           ),
         ),
         Padding(
-            padding: EdgeInsets.only(left: paddingSM),
+            padding: EdgeInsets.only(left: spaceXMD),
             child: TagSelectedArea(tag: selectedRole, type: "role")),
         Padding(
-            padding: EdgeInsets.symmetric(horizontal: paddingSM),
+            padding: EdgeInsets.symmetric(horizontal: spaceXMD),
             child: Row(
               children: [
                 InkWell(
@@ -70,23 +70,24 @@ class StatePostSelectedRole extends State<PostSelectedRole> {
                   },
                   child: Container(
                     width: 105,
-                    margin: EdgeInsets.only(top: paddingXSM),
+                    margin: EdgeInsets.only(top: spaceSM),
                     padding: EdgeInsets.symmetric(
-                        vertical: paddingXSM, horizontal: paddingXSM + 3),
+                        vertical: spaceSM, horizontal: spaceSM + 3),
                     decoration: BoxDecoration(
-                        border: Border.all(color: whitebg, width: 2),
-                        color: dangerColor,
+                        border: Border.all(color: whiteColor, width: 2),
+                        color: warningBG,
                         borderRadius:
                             const BorderRadius.all(Radius.circular(10))),
                     child: Row(
                       children: [
-                        Icon(Icons.restore, size: iconSM + 3, color: whitebg),
+                        Icon(Icons.restore,
+                            size: iconSM + 3, color: whiteColor),
                         const Spacer(),
                         Text("Reset",
                             style: TextStyle(
                                 fontSize: textMD,
                                 fontWeight: FontWeight.w500,
-                                color: whitebg))
+                                color: whiteColor))
                       ],
                     ),
                   ),
@@ -123,7 +124,7 @@ class StatePostSelectedRole extends State<PostSelectedRole> {
                             });
                             Get.offAll(() => const RegisterPage());
                             Get.snackbar("Success", "Role request has sended",
-                                backgroundColor: whitebg);
+                                backgroundColor: whiteColor);
                           }
                         } else {
                           showDialog<String>(
@@ -149,23 +150,23 @@ class StatePostSelectedRole extends State<PostSelectedRole> {
                   },
                   child: Container(
                     width: 110,
-                    margin: EdgeInsets.only(top: paddingXSM),
+                    margin: EdgeInsets.only(top: spaceSM),
                     padding: EdgeInsets.symmetric(
-                        vertical: paddingXSM, horizontal: paddingXSM + 3),
+                        vertical: spaceSM, horizontal: spaceSM + 3),
                     decoration: BoxDecoration(
-                        border: Border.all(color: whitebg, width: 2),
-                        color: successbg,
+                        border: Border.all(color: whiteColor, width: 2),
+                        color: successBG,
                         borderRadius:
                             const BorderRadius.all(Radius.circular(10))),
                     child: Row(
                       children: [
-                        Icon(Icons.send, size: iconSM + 3, color: whitebg),
+                        Icon(Icons.send, size: iconSM + 3, color: whiteColor),
                         const Spacer(),
                         Text("Submit".tr,
                             style: TextStyle(
                                 fontSize: textMD,
                                 fontWeight: FontWeight.w500,
-                                color: whitebg))
+                                color: whiteColor))
                       ],
                     ),
                   ),

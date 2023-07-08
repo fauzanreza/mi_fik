@@ -51,11 +51,11 @@ class StatePostLogin extends State<PostLogin> {
     bool isLoading = false;
 
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 30, horizontal: paddingSM),
+      padding: EdgeInsets.symmetric(vertical: 30, horizontal: spaceXMD),
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: fullHeight * 0.1),
       decoration: BoxDecoration(
-        color: whitebg,
-        borderRadius: BorderRadius.all(roundedLG),
+        color: whiteColor,
+        borderRadius: BorderRadius.all(Radius.circular(roundedLG)),
       ),
       child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -69,16 +69,16 @@ class StatePostLogin extends State<PostLogin> {
               ),
             ),
             Text("Username",
-                style: TextStyle(color: blackbg, fontSize: textMD)),
+                style: TextStyle(color: darkColor, fontSize: textMD)),
             getInputWarning(usernameMsg),
             getInputText(lnameLength, usernameCtrl, false),
             Text("Password",
-                style: TextStyle(color: blackbg, fontSize: textMD)),
+                style: TextStyle(color: darkColor, fontSize: textMD)),
             getInputWarning(passMsg),
             getInputText(passwordLength, passCtrl, true),
             getInputWarning(allMsg),
             Container(
-                margin: EdgeInsets.only(top: paddingSM),
+                margin: EdgeInsets.only(top: spaceXMD),
                 padding: EdgeInsets.zero,
                 width: fullWidth,
                 height: 45,
@@ -161,27 +161,27 @@ class StatePostLogin extends State<PostLogin> {
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(roundedLG2),
+                      borderRadius: BorderRadius.circular(roundedMD),
                     )),
-                    backgroundColor: MaterialStatePropertyAll<Color>(successbg),
+                    backgroundColor: MaterialStatePropertyAll<Color>(successBG),
                   ),
                   child: const Text('Sign In'),
                 )),
             Container(
                 alignment: Alignment.center,
-                margin: EdgeInsets.only(top: paddingSM * 2),
+                margin: EdgeInsets.only(top: spaceXMD * 2),
                 child: Wrap(runSpacing: 5, spacing: 5, children: [
                   Container(
-                      padding: EdgeInsets.symmetric(vertical: paddingMD),
+                      padding: EdgeInsets.symmetric(vertical: spaceLG),
                       child: const Text("already have an account?")),
                   SizedBox(
-                    width: paddingMD,
+                    width: spaceLG,
                   ),
                   TextButton(
                     style: TextButton.styleFrom(
                         foregroundColor: primaryColor,
                         padding: EdgeInsets.symmetric(
-                            vertical: paddingMD, horizontal: paddingSM)),
+                            vertical: spaceLG, horizontal: spaceXMD)),
                     onPressed: () {
                       Get.to(() => const RegisterPage(
                             isLogged: false,

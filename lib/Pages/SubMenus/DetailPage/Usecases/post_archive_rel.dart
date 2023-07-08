@@ -74,7 +74,7 @@ class StatePostArchiveRelation extends State<PostArchiveRelation> {
                   passSlug: widget.passSlug,
                   type: widget.ctx)),
           style: ButtonStyle(
-            backgroundColor: MaterialStatePropertyAll<Color>(successbg),
+            backgroundColor: MaterialStatePropertyAll<Color>(successBG),
           ),
           child: Text('Save ${widget.ctx}'.tr),
         ));

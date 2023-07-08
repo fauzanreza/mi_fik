@@ -80,7 +80,7 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
                 context,
                 items: [
                   FSMenuItem(
-                      icon: Icon(Icons.camera, color: whitebg),
+                      icon: Icon(Icons.camera, color: whiteColor),
                       text:
                           Text('Camera'.tr, style: TextStyle(fontSize: textMD)),
                       gradient: orangeGradient,
@@ -95,7 +95,7 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
                         }
                       }),
                   FSMenuItem(
-                      icon: Icon(Icons.link, color: whitebg),
+                      icon: Icon(Icons.link, color: whiteColor),
                       text: Text('URL', style: TextStyle(fontSize: textMD)),
                       gradient: orangeGradient,
                       onTap: () {
@@ -110,7 +110,7 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
                         setState(() {});
                       }),
                   FSMenuItem(
-                      icon: Icon(Icons.document_scanner, color: whitebg),
+                      icon: Icon(Icons.document_scanner, color: whiteColor),
                       text: Text('Pdf', style: TextStyle(fontSize: textMD)),
                       gradient: orangeGradient,
                       onTap: () async {
@@ -129,7 +129,7 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
                         }
                       }),
                   FSMenuItem(
-                    icon: Icon(Icons.image_outlined, color: whitebg),
+                    icon: Icon(Icons.image_outlined, color: whiteColor),
                     gradient: orangeGradient,
                     text: Text('Image Picker'.tr,
                         style: TextStyle(fontSize: textMD)),
@@ -145,7 +145,7 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
                     },
                   ),
                   FSMenuItem(
-                    icon: Icon(Icons.ondemand_video, color: whitebg),
+                    icon: Icon(Icons.ondemand_video, color: whiteColor),
                     gradient: orangeGradient,
                     text: Text('Video Picker'.tr,
                         style: TextStyle(fontSize: textMD)),
@@ -165,12 +165,12 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
             },
             icon: Icon(
               Icons.attach_file,
-              color: semiblackbg,
+              color: semidarkColor,
             ),
             label: Text("Insert Attachment",
                 style: TextStyle(
                     fontSize: textMD,
-                    color: semiblackbg,
+                    color: semidarkColor,
                     fontWeight: FontWeight.w400)),
           ),
         ),

@@ -54,7 +54,7 @@ class _ShowImageState extends State<ShowImage> {
           response = await commandService.putProfileImage(data);
         } else {
           Get.snackbar("Error".tr, "Failed to upload, file doesnt exist".tr,
-              backgroundColor: whitebg);
+              backgroundColor: whiteColor);
           Get.offAll(() => const ProfilePage());
         }
       } else if (widget.from == "addpost") {
@@ -85,7 +85,7 @@ class _ShowImageState extends State<ShowImage> {
           });
         } else {
           Get.snackbar("Error".tr, "Failed to upload, file doesnt exist".tr,
-              backgroundColor: whitebg);
+              backgroundColor: whiteColor);
           Get.offAll(() => const RegisterPage());
         }
       }
@@ -139,7 +139,7 @@ class _ShowImageState extends State<ShowImage> {
         child: Image.file(imageFile),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: successbg,
+        backgroundColor: successBG,
         onPressed: isLoading ? null : uploadImage, // Disable button if loading
         child: const Icon(Icons.save),
       ),

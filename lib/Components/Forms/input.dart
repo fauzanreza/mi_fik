@@ -5,16 +5,16 @@ import 'package:mi_fik/Modules/Variables/style.dart';
 
 Widget getInputText(int len, var ctrl, bool secure) {
   return Container(
-    padding: EdgeInsets.only(top: paddingXSM * 0.2),
+    padding: EdgeInsets.only(top: spaceSM * 0.2),
     child: TextField(
-      cursorColor: blackbg,
+      cursorColor: darkColor,
       maxLength: len,
       autofocus: false,
       controller: ctrl,
       obscureText: secure,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-        fillColor: mainbg,
+        fillColor: hoverBG,
         filled: true,
         border: InputBorder.none,
         enabledBorder: OutlineInputBorder(
@@ -41,9 +41,9 @@ Widget getInputTextRegis(
   }
 
   return Container(
-    padding: EdgeInsets.only(top: paddingXSM * 0.2),
+    padding: EdgeInsets.only(top: spaceSM * 0.2),
     child: TextField(
-      cursorColor: blackbg,
+      cursorColor: darkColor,
       maxLength: len,
       autofocus: false,
       controller: ctrl,
@@ -62,7 +62,7 @@ Widget getInputTextRegis(
       },
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-        fillColor: mainbg,
+        fillColor: hoverBG,
         filled: true,
         enabled: getEnabledEditing(check),
         hintText: hint,
@@ -86,9 +86,9 @@ void refreshPage(Function refreshCallback) {
 
 Widget getInputTextAtt(int len, String id, String obj) {
   return Container(
-    padding: EdgeInsets.only(top: paddingXSM * 0.2),
+    padding: EdgeInsets.only(top: spaceSM * 0.2),
     child: TextField(
-      cursorColor: blackbg,
+      cursorColor: darkColor,
       maxLength: len,
       autofocus: false,
       onChanged: (value) {
@@ -97,7 +97,7 @@ Widget getInputTextAtt(int len, String id, String obj) {
       },
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-        fillColor: mainbg,
+        fillColor: hoverBG,
         filled: true,
         border: InputBorder.none,
         enabledBorder: OutlineInputBorder(
@@ -115,9 +115,9 @@ Widget getInputTextAtt(int len, String id, String obj) {
 
 Widget getInputDesc(int len, int lines, var ctrl, bool secure) {
   return Container(
-    padding: EdgeInsets.only(top: paddingXSM * 0.2),
+    padding: EdgeInsets.only(top: spaceSM * 0.2),
     child: TextField(
-      cursorColor: blackbg,
+      cursorColor: darkColor,
       maxLength: len,
       autofocus: false,
       controller: ctrl,
@@ -125,7 +125,7 @@ Widget getInputDesc(int len, int lines, var ctrl, bool secure) {
       maxLines: lines,
       minLines: lines,
       decoration: InputDecoration(
-        fillColor: mainbg,
+        fillColor: hoverBG,
         filled: true,
         border: InputBorder.none,
         enabledBorder: OutlineInputBorder(

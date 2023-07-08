@@ -13,10 +13,10 @@ class BgFcmDialog extends StatelessWidget {
     double fullWidth = MediaQuery.of(context).size.width;
 
     return AlertDialog(
-        insetPadding: EdgeInsets.all(paddingXSM),
-        contentPadding: EdgeInsets.all(paddingXSM),
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.all(roundedLG)),
+        insetPadding: EdgeInsets.all(spaceSM),
+        contentPadding: EdgeInsets.all(spaceSM),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(roundedLG))),
         content: SizedBox(
             height: fullHeight * 0.75,
             width: fullWidth,
@@ -34,16 +34,16 @@ class BgFcmDialog extends StatelessWidget {
               ),
               Expanded(
                   child: ListView(
-                padding: EdgeInsets.symmetric(horizontal: paddingXSM),
+                padding: EdgeInsets.symmetric(horizontal: spaceSM),
                 children: [
                   Text(title,
                       style: const TextStyle(fontWeight: FontWeight.w500)),
                   SizedBox(
-                    height: paddingLg,
+                    height: spaceJumbo,
                   ),
                   Text(body),
                   SizedBox(
-                    height: paddingLg,
+                    height: spaceJumbo,
                   ),
                 ],
               )),

@@ -105,7 +105,7 @@ class StateChooseTag extends State<ChooseTag> {
                           style: ButtonStyle(
                             shape: MaterialStateProperty.all<
                                 RoundedRectangleBorder>(RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(roundedLG2),
+                              borderRadius: BorderRadius.circular(roundedMD),
                             )),
                             backgroundColor:
                                 MaterialStatePropertyAll<Color>(primaryColor),

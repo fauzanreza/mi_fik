@@ -20,13 +20,14 @@ class FAQSkeleton extends StatelessWidget {
               return Container(
                   alignment: Alignment.topLeft,
                   width: fullWidth,
-                  padding: EdgeInsets.all(paddingSM - 2),
+                  padding: EdgeInsets.all(spaceXMD - 2),
                   margin: EdgeInsets.only(
-                      left: fullWidth * 0.2, right: paddingSM, top: paddingXSM),
+                      left: fullWidth * 0.2, right: spaceXMD, top: spaceSM),
                   child: SkeletonLine(
                       style: SkeletonLineStyle(
-                          height: paddingLg * 2,
-                          borderRadius: BorderRadius.all(roundedMd))));
+                          height: spaceJumbo * 2,
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(roundedSM)))));
             }));
   }
 }

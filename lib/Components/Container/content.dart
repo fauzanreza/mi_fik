@@ -41,7 +41,9 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         style: TextStyle(
-            color: greybg, fontWeight: FontWeight.w400, fontSize: textSM - 1));
+            color: shadowColor,
+            fontWeight: FontWeight.w400,
+            fontSize: textSM - 1));
   }
 
   @override
@@ -50,14 +52,14 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
 
     return Container(
         width: widget.width * 0.82,
-        margin: EdgeInsets.only(bottom: marginMD),
+        margin: EdgeInsets.only(bottom: spaceXLG),
         transform: Matrix4.translationValues(40.0, 5.0, 0.0),
         decoration: BoxDecoration(
-          color: whitebg,
-          borderRadius: BorderRadius.all(roundedMd),
+          color: whiteColor,
+          borderRadius: BorderRadius.all(Radius.circular(roundedSM)),
           boxShadow: [
             BoxShadow(
-              color: greybg.withOpacity(0.35),
+              color: shadowColor.withOpacity(0.35),
               blurRadius: 10.0,
               spreadRadius: 0.0,
               offset: const Offset(
@@ -120,7 +122,7 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
-                                        color: blackbg,
+                                        color: darkColor,
                                         fontWeight: FontWeight.bold,
                                         fontSize: textMD - 1)),
                                 const SizedBox(height: 1),
@@ -130,7 +132,7 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
                             ))
                       ],
                     ),
-                    getDescHeaderWidget(widget.content.contentDesc, blackbg)
+                    getDescHeaderWidget(widget.content.contentDesc, darkColor)
                   ]),
             ),
             Container(
@@ -221,7 +223,7 @@ class GetScheduleContainer extends StatelessWidget {
 
   Widget getOngoingDesc(DateTime ds, DateTime de, String desc) {
     if (isPassedDate(ds, de)) {
-      return getDescHeaderWidget(desc, whitebg);
+      return getDescHeaderWidget(desc, whiteColor);
     } else {
       return const SizedBox();
     }
@@ -233,9 +235,8 @@ class GetScheduleContainer extends StatelessWidget {
 
     return Container(
       width: width * 0.82,
-      padding:
-          EdgeInsets.symmetric(horizontal: paddingXSM, vertical: paddingXSM),
-      margin: EdgeInsets.only(bottom: marginMT),
+      padding: EdgeInsets.symmetric(horizontal: spaceSM, vertical: spaceSM),
+      margin: EdgeInsets.only(bottom: spaceMD),
       transform: Matrix4.translationValues(40.0, 5.0, 0.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -246,7 +247,7 @@ class GetScheduleContainer extends StatelessWidget {
                 .add(Duration(hours: getUTCHourOffset()))),
         boxShadow: [
           BoxShadow(
-            color: greybg.withOpacity(0.35),
+            color: shadowColor.withOpacity(0.35),
             blurRadius: 10.0,
             spreadRadius: 0.0,
             offset: const Offset(
@@ -280,9 +281,8 @@ class GetScheduleContainer extends StatelessWidget {
                     ),
                   )),
                   Text(
-                    DateFormat("HH : mm a").format(
-                        DateTime.parse(content.dateStart)
-                            .add(Duration(hours: getUTCHourOffset()))),
+                    DateFormat("HH:mm").format(DateTime.parse(content.dateStart)
+                        .add(Duration(hours: getUTCHourOffset()))),
                     style: TextStyle(
                       color: getColor(
                           DateTime.parse(content.dateStart)
@@ -367,29 +367,29 @@ class StateGetAttachmentContainer extends State<GetAttachmentContainer> {
     Widget getExpansion(val) {
       if (val != null) {
         return Padding(
-            padding: EdgeInsets.symmetric(vertical: paddingSM),
+            padding: EdgeInsets.symmetric(vertical: spaceXMD),
             child: getSubTitleMedium(
                 "Attachment Type : ${ucFirst(getSeparatedAfter("_", widget.data['attach_type']))}",
-                blackbg,
+                darkColor,
                 TextAlign.start));
       } else {
         return ExpansionTile(
             childrenPadding:
-                EdgeInsets.fromLTRB(paddingSM, 0, paddingSM, paddingSM),
+                EdgeInsets.fromLTRB(spaceXMD, 0, spaceXMD, spaceXMD),
             initiallyExpanded: false,
-            trailing: Icon(Icons.remove_red_eye_outlined, color: blackbg),
+            trailing: Icon(Icons.remove_red_eye_outlined, color: darkColor),
             iconColor: null,
-            textColor: whitebg,
+            textColor: whiteColor,
             collapsedTextColor: primaryColor,
             leading: null,
             expandedCrossAxisAlignment: CrossAxisAlignment.end,
             expandedAlignment: Alignment.topLeft,
             tilePadding: EdgeInsets.zero,
             title: Padding(
-                padding: EdgeInsets.symmetric(vertical: paddingSM),
+                padding: EdgeInsets.symmetric(vertical: spaceXMD),
                 child: getSubTitleMedium(
                     "Attachment Type : ${ucFirst(getSeparatedAfter("_", widget.data['attach_type']))}",
-                    blackbg,
+                    darkColor,
                     TextAlign.start)),
             children: [widget.item]);
       }
@@ -399,11 +399,11 @@ class StateGetAttachmentContainer extends State<GetAttachmentContainer> {
       width: fullWidth * 0.9,
       alignment: Alignment.center,
       padding: EdgeInsets.zero,
-      margin: EdgeInsets.only(bottom: paddingMD),
+      margin: EdgeInsets.only(bottom: spaceLG),
       decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: greybg.withOpacity(0.35),
+              color: shadowColor.withOpacity(0.35),
               blurRadius: 10.0,
               spreadRadius: 0.0,
               offset: const Offset(
@@ -412,22 +412,22 @@ class StateGetAttachmentContainer extends State<GetAttachmentContainer> {
               ),
             )
           ],
-          color: whitebg,
+          color: whiteColor,
           borderRadius: BorderRadius.only(
-              topRight: Radius.circular(paddingMD),
-              bottomRight: Radius.circular(paddingMD))),
+              topRight: Radius.circular(spaceLG),
+              bottomRight: Radius.circular(spaceLG))),
       child: Container(
           width: double.infinity,
-          padding: EdgeInsets.fromLTRB(paddingSM, 0, paddingSM, paddingSM),
+          padding: EdgeInsets.fromLTRB(spaceXMD, 0, spaceXMD, spaceXMD),
           decoration: BoxDecoration(
             border: Border(
-              left: BorderSide(width: 4, color: successbg),
+              left: BorderSide(width: 4, color: successBG),
             ),
           ),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             getExpansion(widget.others),
-            getSubTitleMedium("Attachment Name".tr, blackbg, TextAlign.start),
+            getSubTitleMedium("Attachment Name".tr, darkColor, TextAlign.start),
             getInputTextAtt(75, widget.id, 'attach_name'),
             getOthers(widget.others),
             Row(
@@ -440,7 +440,7 @@ class StateGetAttachmentContainer extends State<GetAttachmentContainer> {
                   ),
                   child: IconButton(
                     icon: const Icon(Icons.delete),
-                    color: dangerColor,
+                    color: warningBG,
                     onPressed: widget.action,
                   ),
                 ),
