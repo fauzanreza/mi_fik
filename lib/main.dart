@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
+import 'package:mi_fik/Components/Dialogs/bg_fcm_dialog.dart';
 import 'package:mi_fik/Modules/APIs/DictionaryApi/Services/queries.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
 import 'package:mi_fik/Modules/Translators/dictionary.dart';
@@ -15,12 +17,33 @@ import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mi_fik/Pages/Landings/RegisterPage/index.dart';
-import 'package:mi_fik/firebase_options.dart';
+import 'package:mi_fik/Pages/SubMenus/ProfilePage/index.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+@pragma('vm:entry-point')
+//not finished
 Future<void> fireFCMHandler(RemoteMessage message) async {
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // final AndroidFlutterLocalNotificationsPlugin plugin =
+  //     FlutterLocalNotificationsPlugin().resolvePlatformSpecificImplementation<
+  //         AndroidFlutterLocalNotificationsPlugin>();
+
+  // if (plugin != null) {
+  //   await plugin.createNotificationChannel(channel);
+  // }
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  showDialog<String>(
+    context: Get.context,
+    builder: (BuildContext context) => BgFcmDialog(
+      title: message.notification.title,
+      body: message.notification.body,
+    ),
+  );
+  //}
 }
 
 Future<void> main() async {
@@ -33,7 +56,7 @@ Future<void> main() async {
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await Firebase.initializeApp();
 
-  FirebaseMessaging.onBackgroundMessage(fireFCMHandler);
+  //FirebaseMessaging.onBackgroundMessage(fireFCMHandler);
   await FlutterLocalNotificationsPlugin()
       .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>()
@@ -70,6 +93,21 @@ Future<void> main() async {
     } else {
       isFinishedRegis = false;
     }
+
+    FirebaseMessaging.onBackgroundMessage(fireFCMHandler);
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      RemoteNotification notification = message.notification;
+      AndroidNotification android = message.notification?.android;
+      // if (notification != null && android != null) {
+      showDialog<String>(
+        context: Get.context,
+        builder: (BuildContext context) => BgFcmDialog(
+            title: message.notification.title,
+            body: message.notification.body,
+            date: message.sentTime),
+      );
+      //}
+    });
 
     runApp(MyApp(signed: true, finishRegis: isFinishedRegis, lang: langKey));
   } else {
@@ -124,62 +162,6 @@ class StateMyApp extends State<MyApp> {
       }
     });
 
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      double fullHeight = MediaQuery.of(context).size.height;
-      double fullWidth = MediaQuery.of(context).size.width;
-
-      RemoteNotification notification = message.notification;
-      AndroidNotification android = message.notification?.android;
-      if (notification != null && android != null) {
-        showDialog<String>(
-            context: context,
-            barrierColor: primaryColor.withOpacity(0.5),
-            builder: (BuildContext context) {
-              return StatefulBuilder(builder: (context, setState) {
-                return AlertDialog(
-                    insetPadding: EdgeInsets.all(paddingXSM),
-                    contentPadding: EdgeInsets.all(paddingXSM),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(roundedLG)),
-                    content: SizedBox(
-                        height: fullHeight * 0.75,
-                        width: fullWidth,
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                alignment: Alignment.topRight,
-                                child: IconButton(
-                                  icon: const Icon(Icons.close),
-                                  tooltip: 'Back',
-                                  onPressed: () {
-                                    Get.back();
-                                  },
-                                ),
-                              ),
-                              Expanded(
-                                  child: ListView(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: paddingXSM),
-                                children: [
-                                  Text(notification.title,
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.w500)),
-                                  SizedBox(
-                                    height: paddingLg,
-                                  ),
-                                  Text(notification.body),
-                                  SizedBox(
-                                    height: paddingLg,
-                                  ),
-                                ],
-                              )),
-                            ])));
-              });
-            });
-      }
-    });
-
     // Get dictionary collection
 
     getToken();
@@ -201,6 +183,37 @@ class StateMyApp extends State<MyApp> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+
+    final TextTheme textTheme = TextTheme(
+      displayLarge: GoogleFonts.poppins(fontSize: textSM),
+      displayMedium: GoogleFonts.poppins(fontSize: textSM),
+      displaySmall: GoogleFonts.poppins(fontSize: textSM),
+      headlineLarge: GoogleFonts.poppins(fontSize: textSM),
+      headlineMedium: GoogleFonts.poppins(fontSize: textSM),
+      headlineSmall: GoogleFonts.poppins(fontSize: textSM),
+      titleLarge: GoogleFonts.poppins(fontSize: textSM),
+      titleMedium: GoogleFonts.poppins(fontSize: textSM),
+      titleSmall: GoogleFonts.poppins(fontSize: textSM),
+      bodyLarge: GoogleFonts.poppins(fontSize: textSM),
+      bodyMedium: GoogleFonts.poppins(fontSize: textSM),
+      bodySmall: GoogleFonts.poppins(fontSize: textSM),
+      labelLarge: GoogleFonts.poppins(fontSize: textSM),
+      labelMedium: GoogleFonts.poppins(fontSize: textSM),
+      labelSmall: GoogleFonts.poppins(fontSize: textSM),
+      // headline1: GoogleFonts.poppins(),
+      // headline2: GoogleFonts.poppins(),
+      // headline3: GoogleFonts.poppins(),
+      // headline4: GoogleFonts.poppins(),
+      // headline5: GoogleFonts.poppins(),
+      // headline6: GoogleFonts.poppins(),
+      // subtitle1: GoogleFonts.poppins(),
+      // subtitle2: GoogleFonts.poppins(),
+      // bodyText1: GoogleFonts.poppins(),
+      // bodyText2: GoogleFonts.poppins(),
+      // caption: GoogleFonts.poppins(),
+      // button: GoogleFonts.poppins(),
+      // overline: GoogleFonts.poppins(),
+    );
 
     String langCode = "en";
     slctLang = LangList.en;
@@ -229,6 +242,7 @@ class StateMyApp extends State<MyApp> {
                 title: 'Mi-FIK',
                 theme: ThemeData(
                   primarySwatch: Colors.blue,
+                  textTheme: textTheme,
                 ),
                 home: const BottomBar(),
               );
@@ -241,6 +255,7 @@ class StateMyApp extends State<MyApp> {
                 title: 'Mi-FIK',
                 theme: ThemeData(
                   primarySwatch: Colors.blue,
+                  textTheme: textTheme,
                 ),
                 home: const RegisterPage(isLogged: true),
               );
@@ -259,6 +274,7 @@ class StateMyApp extends State<MyApp> {
         title: 'Mi-FIK',
         theme: ThemeData(
           primarySwatch: Colors.blue,
+          textTheme: textTheme,
         ),
         home: const LoginPage(),
       );

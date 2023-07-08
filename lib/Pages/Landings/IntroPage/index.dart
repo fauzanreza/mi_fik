@@ -46,7 +46,7 @@ class StateIntroPage extends State<IntroPage> {
                         height: MediaQuery.of(context).size.height * 0.65,
                         child: Theme(
                           data: ThemeData(
-                            canvasColor: mainbg,
+                            canvasColor: hoverBG,
                           ),
                           child: Stepper(
                               controlsBuilder: (context, onStepContinue) {
@@ -68,15 +68,14 @@ class StateIntroPage extends State<IntroPage> {
                                             padding: MaterialStateProperty.all<
                                                     EdgeInsets>(
                                                 EdgeInsets.symmetric(
-                                                    vertical: paddingXSM,
-                                                    horizontal:
-                                                        paddingMD * 2.4)),
+                                                    vertical: spaceSM,
+                                                    horizontal: spaceLG * 2.4)),
                                             shape: MaterialStateProperty.all<
                                                     RoundedRectangleBorder>(
                                                 RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(
-                                                      roundedLG2),
+                                                      roundedMD),
                                             )),
                                             backgroundColor:
                                                 MaterialStatePropertyAll<Color>(
@@ -84,7 +83,7 @@ class StateIntroPage extends State<IntroPage> {
                                           ),
                                           child: Text('Next',
                                               style:
-                                                  TextStyle(fontSize: textMD)),
+                                                  TextStyle(fontSize: textXMD)),
                                         )
                                         //Need back button??
                                       ],
@@ -124,9 +123,9 @@ class StateIntroPage extends State<IntroPage> {
                                         padding: const EdgeInsets.all(10),
                                         alignment: Alignment.center,
                                         decoration: BoxDecoration(
-                                          color: whitebg,
-                                          borderRadius:
-                                              BorderRadius.all(roundedMd),
+                                          color: whiteColor,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(roundedMD)),
                                           boxShadow: [
                                             BoxShadow(
                                               color: const Color.fromARGB(
@@ -151,13 +150,13 @@ class StateIntroPage extends State<IntroPage> {
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: primaryColor,
-                                              fontSize: textLG,
+                                              fontSize: textXMD,
                                               fontWeight: FontWeight.w500)),
                                       Text("Every Information in one app",
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: primaryColor,
-                                              fontSize: textLG,
+                                              fontSize: textXMD,
                                               fontWeight: FontWeight.w500)),
                                     ])),
                                 Step(
@@ -171,9 +170,9 @@ class StateIntroPage extends State<IntroPage> {
                                         padding: const EdgeInsets.all(10),
                                         alignment: Alignment.center,
                                         decoration: BoxDecoration(
-                                          color: whitebg,
-                                          borderRadius:
-                                              BorderRadius.all(roundedMd),
+                                          color: whiteColor,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(roundedMD)),
                                           boxShadow: [
                                             BoxShadow(
                                               color: const Color.fromARGB(
@@ -198,13 +197,13 @@ class StateIntroPage extends State<IntroPage> {
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: primaryColor,
-                                              fontSize: textLG,
+                                              fontSize: textXMD,
                                               fontWeight: FontWeight.w500)),
                                       Text("and Activity",
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: primaryColor,
-                                              fontSize: textLG,
+                                              fontSize: textXMD,
                                               fontWeight: FontWeight.w500)),
                                     ])),
                                 Step(
@@ -218,9 +217,9 @@ class StateIntroPage extends State<IntroPage> {
                                         padding: const EdgeInsets.all(10),
                                         alignment: Alignment.center,
                                         decoration: BoxDecoration(
-                                          color: whitebg,
-                                          borderRadius:
-                                              BorderRadius.all(roundedMd),
+                                          color: whiteColor,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(roundedMD)),
                                           boxShadow: [
                                             BoxShadow(
                                               color: const Color.fromARGB(
@@ -245,7 +244,7 @@ class StateIntroPage extends State<IntroPage> {
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: primaryColor,
-                                              fontSize: textLG,
+                                              fontSize: textXMD,
                                               fontWeight: FontWeight.w500)),
                                       Container(
                                           margin:
@@ -275,7 +274,7 @@ class StateIntroPage extends State<IntroPage> {
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
-                                                                        roundedLG2),
+                                                                        roundedMD),
                                                           )),
                                                           backgroundColor:
                                                               MaterialStatePropertyAll<
@@ -286,7 +285,7 @@ class StateIntroPage extends State<IntroPage> {
                                                             rl['role_name'],
                                                             style: TextStyle(
                                                                 color:
-                                                                    whitebg)),
+                                                                    whiteColor)),
                                                       );
                                                     } else {
                                                       return OutlinedButton(
@@ -327,12 +326,12 @@ class StateIntroPage extends State<IntroPage> {
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
-                                                                        roundedLG2),
+                                                                        roundedMD),
                                                           )),
                                                           backgroundColor:
                                                               MaterialStatePropertyAll<
                                                                       Color>(
-                                                                  mainbg),
+                                                                  hoverBG),
                                                         ),
                                                         child: Text(
                                                             rl['role_name'],
@@ -365,7 +364,7 @@ class StateIntroPage extends State<IntroPage> {
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: primaryColor,
-                                              fontSize: textLG,
+                                              fontSize: textXMD,
                                               fontWeight: FontWeight.w500)),
                                       Container(
                                         margin: const EdgeInsets.symmetric(
@@ -375,14 +374,14 @@ class StateIntroPage extends State<IntroPage> {
                                             textAlign: TextAlign.justify,
                                             style: TextStyle(
                                                 color: primaryColor,
-                                                fontSize: textMD,
+                                                fontSize: textXMD,
                                                 fontWeight: FontWeight.w500)),
                                       ),
                                       Container(
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 10),
                                         child: TextFormField(
-                                          cursorColor: whitebg,
+                                          cursorColor: whiteColor,
                                           decoration: InputDecoration(
                                             hintText: 'Search',
                                             enabledBorder: OutlineInputBorder(
@@ -428,11 +427,11 @@ class StateIntroPage extends State<IntroPage> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(
-                                                                    roundedLG2),
+                                                                    roundedMD),
                                                       )),
                                                       backgroundColor:
                                                           MaterialStatePropertyAll<
-                                                              Color>(mainbg),
+                                                              Color>(hoverBG),
                                                     ),
                                                     child: Text(sp['prog_name'],
                                                         style: TextStyle(

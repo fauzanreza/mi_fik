@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:full_screen_menu/full_screen_menu.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mi_fik/Components/Bars/bottom_bar.dart';
-import 'package:mi_fik/Components/Cameras/camera.dart';
+import 'package:mi_fik/Components/Cameras/captures.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
@@ -60,8 +59,8 @@ class _EditImageState extends State<EditImage> {
             Widget getResetImageProfile(String exist) {
               if (exist != null && exist != "null") {
                 return FSMenuItem(
-                    icon: Icon(Icons.refresh, color: whitebg),
-                    text: Text('Reset', style: TextStyle(fontSize: textMD)),
+                    icon: Icon(Icons.refresh, color: whiteColor),
+                    text: Text('Reset', style: TextStyle(fontSize: textXMD)),
                     gradient: redGradient,
                     onTap: () async {
                       await fireServiceDelete.deleteImageUser().then((value) {
@@ -76,7 +75,7 @@ class _EditImageState extends State<EditImage> {
 
                             if (status == "success") {
                               FullScreenMenu.hide();
-                              Get.to(() => const BottomBar());
+                              Get.to(() => const ProfilePage());
                             } else {
                               FullScreenMenu.hide();
                               showDialog<String>(
@@ -89,9 +88,8 @@ class _EditImageState extends State<EditImage> {
                           FullScreenMenu.hide();
                           showDialog<String>(
                               context: context,
-                              builder: (BuildContext context) =>
-                                  const FailedDialog(
-                                      text: "Failed to reset image"));
+                              builder: (BuildContext context) => FailedDialog(
+                                  text: "Failed to reset image".tr));
                         }
                       });
                     });
@@ -113,9 +111,9 @@ class _EditImageState extends State<EditImage> {
                             context,
                             items: [
                               FSMenuItem(
-                                  icon: Icon(Icons.camera, color: whitebg),
+                                  icon: Icon(Icons.camera, color: whiteColor),
                                   text: Text('Camera'.tr,
-                                      style: TextStyle(fontSize: textMD)),
+                                      style: TextStyle(fontSize: textXMD)),
                                   gradient: orangeGradient,
                                   onTap: () async {
                                     WidgetsFlutterBinding.ensureInitialized();
@@ -123,13 +121,14 @@ class _EditImageState extends State<EditImage> {
                                     FullScreenMenu.hide();
                                     Get.to(() => CameraPage(
                                           camera: cameras.first,
+                                          from: "profile",
                                         ));
                                   }),
                               FSMenuItem(
-                                icon: Icon(Icons.folder, color: whitebg),
+                                icon: Icon(Icons.folder, color: whiteColor),
                                 gradient: orangeGradient,
                                 text: Text('File Picker'.tr,
-                                    style: TextStyle(fontSize: textMD)),
+                                    style: TextStyle(fontSize: textXMD)),
                                 onTap: () async {
                                   var file = await getImage();
 
@@ -167,10 +166,10 @@ class _EditImageState extends State<EditImage> {
                           );
                         },
                         child: Container(
-                            padding: EdgeInsets.all(paddingXSM * 0.8),
+                            padding: EdgeInsets.all(spaceSM * 0.8),
                             decoration: BoxDecoration(
-                                border: Border.all(width: 3, color: whitebg),
-                                color: infoColor,
+                                border: Border.all(width: 3, color: whiteColor),
+                                color: infoBG,
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(25))),
                             child: ClipRRect(

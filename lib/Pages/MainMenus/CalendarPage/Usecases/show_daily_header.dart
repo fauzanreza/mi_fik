@@ -71,22 +71,22 @@ class StateDayHeader extends State<DayHeader> with TickerProviderStateMixin {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
-            margin: const EdgeInsets.only(left: 15),
+            margin: EdgeInsets.only(left: spaceXMD),
             child: Column(
               children: [
                 Text(
                   DateFormat("EEE").format(widget.selectedDay),
-                  style: GoogleFonts.poppins(
+                  style: TextStyle(
                     color: primaryColor,
-                    fontSize: textMD,
+                    fontSize: textXLG,
                     //fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
                   DateFormat("d").format(widget.selectedDay),
-                  style: GoogleFonts.poppins(
+                  style: TextStyle(
                     color: primaryColor,
-                    fontSize: textLG,
+                    fontSize: textXMD,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -100,18 +100,16 @@ class StateDayHeader extends State<DayHeader> with TickerProviderStateMixin {
               children: [
                 Text(
                   getTodayCalendarHeader(widget.selectedDay),
-                  style: GoogleFonts.poppins(
-                    color: Colors.grey,
-                    fontSize: textLG,
-                    //fontWeight: FontWeight.bold,
+                  style: TextStyle(
+                    color: shadowColor,
+                    fontSize: textXLG,
                   ),
                 ),
                 Text(
                   getTotalContext(contents),
-                  style: GoogleFonts.poppins(
-                    color: Colors.grey,
-                    fontSize: textSM,
-                    //fontWeight: FontWeight.bold,
+                  style: TextStyle(
+                    color: shadowColor,
+                    fontSize: textXMD,
                   ),
                 ),
               ],

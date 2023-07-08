@@ -21,21 +21,21 @@ class StateTagSelectedArea extends State<TagSelectedArea> {
 
     if (widget.tag.isNotEmpty) {
       return Container(
-          margin: EdgeInsets.only(top: 10, right: paddingMD),
+          margin: EdgeInsets.only(top: 10, right: spaceLG),
           width: fullWidth,
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(
                 Radius.circular(10.0),
               ),
-              color: semiPrimaryBg),
+              color: semiPrimary),
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text("Selected ${ucFirst(widget.type)}",
-                    style:
-                        TextStyle(color: blackbg, fontWeight: FontWeight.w500)),
+                    style: TextStyle(
+                        color: darkColor, fontWeight: FontWeight.w500)),
                 Wrap(
                   runSpacing: -5,
                   spacing: 5,
@@ -59,12 +59,12 @@ class StateTagSelectedArea extends State<TagSelectedArea> {
                             selectedTagFilterContent.removeWhere(
                                 (item) => item['slug_name'] == tg['slug_name']);
                           });
-                          // widget.action(); i dont know why tf this shit can run as the others
+                          // widget.action();
                         }
                       },
                       icon: Icon(
                         Icons.close,
-                        color: dangerColor.withOpacity(0.7),
+                        color: warningBG.withOpacity(0.7),
                       ),
                       label: Text(tg['tag_name'],
                           style:
@@ -77,10 +77,10 @@ class StateTagSelectedArea extends State<TagSelectedArea> {
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(roundedLG2),
+                          borderRadius: BorderRadius.circular(roundedMD),
                         )),
                         backgroundColor:
-                            MaterialStatePropertyAll<Color>(whitebg),
+                            MaterialStatePropertyAll<Color>(whiteColor),
                       ),
                     );
                   }).toList(),

@@ -39,16 +39,16 @@ class StateDeleteTask extends State<DeleteTask> {
             children: [
               Text("Are you sure want to delete this '${widget.name}' task",
                   style: TextStyle(
-                      color: blackbg,
-                      fontSize: textMD,
+                      color: darkColor,
+                      fontSize: textXMD,
                       fontWeight: FontWeight.w400)),
               const SizedBox(height: 15),
               Row(
                 children: [
                   TextButton(
                     style: TextButton.styleFrom(
-                        backgroundColor: dangerColor.withOpacity(0.8),
-                        padding: EdgeInsets.all(paddingMD * 0.8)),
+                        backgroundColor: warningBG.withOpacity(0.8),
+                        padding: EdgeInsets.all(spaceLG * 0.8)),
                     onPressed: () async {
                       taskService.deleteTask(widget.id).then((response) {
                         setState(() => isLoading = false);
@@ -62,6 +62,9 @@ class StateDeleteTask extends State<DeleteTask> {
                               context: context,
                               builder: (BuildContext context) =>
                                   SuccessDialog(text: body));
+                          Future.delayed(const Duration(seconds: 2), () {
+                            Get.back();
+                          });
                         } else {
                           showDialog<String>(
                               context: context,
@@ -73,7 +76,7 @@ class StateDeleteTask extends State<DeleteTask> {
                     child: Text(
                       "Yes, Delete task".tr,
                       style: TextStyle(
-                        color: whitebg,
+                        color: whiteColor,
                       ),
                     ),
                   ),
@@ -81,14 +84,14 @@ class StateDeleteTask extends State<DeleteTask> {
                   TextButton(
                     style: TextButton.styleFrom(
                         backgroundColor: primaryColor,
-                        padding: EdgeInsets.all(paddingMD * 0.8)),
+                        padding: EdgeInsets.all(spaceLG * 0.8)),
                     onPressed: () {
                       Get.back();
                     },
                     child: Text(
                       "Cancel".tr,
                       style: TextStyle(
-                        color: whitebg,
+                        color: whiteColor,
                       ),
                     ),
                   )

@@ -52,8 +52,9 @@ class StateEditArchive extends State<EditArchive> {
           context: context,
           isDismissible: false,
           shape: RoundedRectangleBorder(
-              borderRadius:
-                  BorderRadius.only(topLeft: roundedLG, topRight: roundedLG)),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(roundedLG),
+                  topRight: Radius.circular(roundedLG))),
           barrierColor: primaryColor.withOpacity(0.5),
           isScrollControlled: true,
           builder: (BuildContext context) {
@@ -80,23 +81,25 @@ class StateEditArchive extends State<EditArchive> {
                       style: TextStyle(
                           color: primaryColor,
                           fontWeight: FontWeight.bold,
-                          fontSize: textLG)),
+                          fontSize: textXMD)),
                   Container(
                       alignment: Alignment.topLeft,
-                      padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
+                      padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
                       child: Text("Archive Name".tr,
-                          style: TextStyle(color: blackbg, fontSize: textMD))),
+                          style:
+                              TextStyle(color: darkColor, fontSize: textXMD))),
                   Container(
-                      padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
+                      padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
                       child: getInputText(75, archiveNameCtrl, false)),
                   Container(
                       alignment: Alignment.topLeft,
-                      padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
+                      padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
                       child: Text("Description (optional)".tr,
-                          style: TextStyle(color: blackbg, fontSize: textMD))),
+                          style:
+                              TextStyle(color: darkColor, fontSize: textXMD))),
                   Container(
                       padding: EdgeInsets.fromLTRB(
-                          paddingSM, 10, paddingSM, paddingMD * 2),
+                          spaceXMD, 10, spaceXMD, spaceLG * 2),
                       child: getInputDesc(255, 3, archiveDescCtrl, false)),
                   SizedBox(
                       width: fullWidth,
@@ -125,6 +128,9 @@ class StateEditArchive extends State<EditArchive> {
                                     context: context,
                                     builder: (BuildContext context) =>
                                         SuccessDialog(text: body));
+                                Future.delayed(const Duration(seconds: 2), () {
+                                  Get.back();
+                                });
                               } else {
                                 showDialog<String>(
                                     context: context,
@@ -144,7 +150,7 @@ class StateEditArchive extends State<EditArchive> {
                         },
                         style: ButtonStyle(
                           backgroundColor:
-                              MaterialStatePropertyAll<Color>(successbg),
+                              MaterialStatePropertyAll<Color>(successBG),
                         ),
                         child: Text('Done'.tr),
                       ))

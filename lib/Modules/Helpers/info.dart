@@ -24,7 +24,7 @@ class StateGetInfoBox extends State<GetInfoBox> {
     apiQuery = InfoQueriesService();
   }
 
-  Color getInfoColor(String type) {
+  Color getinfoBG(String type) {
     if (type == "tips") {
       return const Color(0xFFc6eff8);
     } else {
@@ -34,24 +34,25 @@ class StateGetInfoBox extends State<GetInfoBox> {
 
   Widget getElement(String infoType, String infoBody) {
     return Container(
-      padding: EdgeInsets.all(paddingMD),
+      padding: EdgeInsets.all(spaceLG),
       decoration: BoxDecoration(
-          color: getInfoColor(infoType),
-          borderRadius: const BorderRadius.all(Radius.circular(12))),
+          color: getinfoBG(infoType),
+          borderRadius: BorderRadius.all(Radius.circular(roundedMD))),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Icon(
               Icons.info,
-              color: blackbg,
+              color: darkColor,
               size: iconMD,
             ),
-            SizedBox(width: paddingXSM / 2),
-            Text(ucFirst(infoType), style: TextStyle(color: blackbg))
+            SizedBox(width: spaceSM / 2),
+            Text(ucFirst(infoType),
+                style: TextStyle(color: darkColor, fontSize: textMD))
           ],
         ),
-        SizedBox(height: paddingSM),
+        SizedBox(height: spaceXMD),
         HtmlWidget(infoBody),
       ]),
     );

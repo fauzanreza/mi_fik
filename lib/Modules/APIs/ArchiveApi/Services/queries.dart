@@ -23,7 +23,7 @@ class ArchiveQueriesService {
         if (!isOffline) {
           Get.snackbar(
               "Warning".tr, "Lost connection, all data shown are local".tr,
-              backgroundColor: whitebg);
+              backgroundColor: whiteColor);
           isOffline = true;
         }
         return archiveModelFromJson(
@@ -34,7 +34,7 @@ class ArchiveQueriesService {
     } else {
       if (isOffline) {
         Get.snackbar("Warning".tr, "Welcome back, all data are now realtime".tr,
-            backgroundColor: whitebg);
+            backgroundColor: whiteColor);
         isOffline = false;
       }
       final token = prefs.getString('token_key');
@@ -53,7 +53,7 @@ class ArchiveQueriesService {
         await prefs.clear();
         Get.offAll(() => const LoginPage());
         Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
-            backgroundColor: whitebg);
+            backgroundColor: whiteColor);
         return null;
       } else {
         return null;
@@ -69,7 +69,7 @@ class ArchiveQueriesService {
         if (!isOffline) {
           Get.snackbar(
               "Warning".tr, "Lost connection, all data shown are local".tr,
-              backgroundColor: whitebg);
+              backgroundColor: whiteColor);
           isOffline = true;
         }
         return scheduleModelFromJsonWPaginate(
@@ -80,7 +80,7 @@ class ArchiveQueriesService {
     } else {
       if (isOffline) {
         Get.snackbar("Warning".tr, "Welcome back, all data are now realtime".tr,
-            backgroundColor: whitebg);
+            backgroundColor: whiteColor);
         isOffline = false;
       }
 
@@ -98,7 +98,7 @@ class ArchiveQueriesService {
       } else if (response.statusCode == 401) {
         Get.offAll(() => const LoginPage());
         Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
-            backgroundColor: whitebg);
+            backgroundColor: whiteColor);
         return null;
       } else {
         return null;

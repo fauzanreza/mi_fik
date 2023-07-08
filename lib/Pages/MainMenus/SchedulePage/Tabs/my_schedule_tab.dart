@@ -75,7 +75,7 @@ class StateMySchedulePage extends State<MySchedulePage> {
           key: _refreshIndicatorKey,
           onRefresh: refreshData,
           child: ListView(
-              padding: EdgeInsets.only(bottom: paddingLg, left: paddingSM),
+              padding: EdgeInsets.only(bottom: spaceJumbo, left: spaceXMD),
               children: contents.map((content) {
                 getChipHour(String ds) {
                   String now = DateTime.parse(ds).hour.toString();
@@ -105,12 +105,13 @@ class StateMySchedulePage extends State<MySchedulePage> {
                                           builder: (context, setState) {
                                         return AlertDialog(
                                             insetPadding:
-                                                EdgeInsets.all(paddingXSM),
+                                                EdgeInsets.all(spaceSM),
                                             contentPadding:
-                                                EdgeInsets.all(paddingXSM),
+                                                EdgeInsets.all(spaceSM),
                                             shape: RoundedRectangleBorder(
                                                 borderRadius: BorderRadius.all(
-                                                    roundedLG)),
+                                                    Radius.circular(
+                                                        roundedLG))),
                                             content: DetailTask(
                                               data: content,
                                             ));

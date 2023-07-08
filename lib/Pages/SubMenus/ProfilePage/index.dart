@@ -50,11 +50,12 @@ class StateProfilePage extends State<ProfilePage> {
                       Container(
                           margin: const EdgeInsets.only(top: 10.0),
                           padding: EdgeInsets.fromLTRB(
-                              paddingSM, paddingMD, paddingSM, paddingLg),
+                              spaceXMD, spaceLG, spaceXMD, spaceJumbo),
                           decoration: BoxDecoration(
-                            color: mainbg,
+                            color: hoverBG,
                             borderRadius: BorderRadius.only(
-                                topLeft: roundedLG, topRight: roundedLG),
+                                topLeft: Radius.circular(roundedLG),
+                                topRight: Radius.circular(roundedLG)),
                           ),
                           child: Column(
                             children: [
@@ -72,7 +73,7 @@ class StateProfilePage extends State<ProfilePage> {
                               }, Icons.info, "About Us".tr,
                                   Icons.keyboard_arrow_right),
                               Container(
-                                margin: EdgeInsets.only(top: paddingMD * 2),
+                                margin: EdgeInsets.only(top: spaceLG * 2),
                                 child: Text("$versionText 1.0",
                                     style: TextStyle(fontSize: textSM)),
                               ),

@@ -75,9 +75,9 @@ class StateAddPost extends State<AddPost> {
             builder: (BuildContext context) {
               return StatefulBuilder(builder: (context, setState) {
                 return AlertDialog(
-                    insetPadding: EdgeInsets.all(paddingSM),
+                    insetPadding: EdgeInsets.all(spaceXMD),
                     contentPadding: EdgeInsets.symmetric(
-                        horizontal: paddingMD, vertical: paddingMD * 1.5),
+                        horizontal: spaceLG, vertical: spaceLG * 1.5),
                     content: SizedBox(
                         height: 120,
                         width: fullWidth,
@@ -88,8 +88,8 @@ class StateAddPost extends State<AddPost> {
                               Text(
                                   "Are you sure want to leave? All changes will not be saved",
                                   style: TextStyle(
-                                      color: blackbg,
-                                      fontSize: textMD,
+                                      color: darkColor,
+                                      fontSize: textXMD,
                                       fontWeight: FontWeight.w500)),
                               const SizedBox(height: 15),
                               Row(
@@ -97,9 +97,8 @@ class StateAddPost extends State<AddPost> {
                                   TextButton(
                                     style: TextButton.styleFrom(
                                         backgroundColor:
-                                            dangerColor.withOpacity(0.8),
-                                        padding:
-                                            EdgeInsets.all(paddingMD * 0.8)),
+                                            warningBG.withOpacity(0.8),
+                                        padding: EdgeInsets.all(spaceLG * 0.8)),
                                     onPressed: () {
                                       selectedTag.clear();
                                       locDetailCtrl.clear();
@@ -112,7 +111,7 @@ class StateAddPost extends State<AddPost> {
                                     child: Text(
                                       "Yes, Discard Change".tr,
                                       style: TextStyle(
-                                        color: whitebg,
+                                        color: whiteColor,
                                       ),
                                     ),
                                   ),
@@ -120,15 +119,14 @@ class StateAddPost extends State<AddPost> {
                                   TextButton(
                                     style: TextButton.styleFrom(
                                         backgroundColor: primaryColor,
-                                        padding:
-                                            EdgeInsets.all(paddingMD * 0.8)),
+                                        padding: EdgeInsets.all(spaceLG * 0.8)),
                                     onPressed: () {
                                       Get.back();
                                     },
                                     child: Text(
                                       "Cancel".tr,
                                       style: TextStyle(
-                                        color: whitebg,
+                                        color: whiteColor,
                                       ),
                                     ),
                                   )
@@ -157,7 +155,8 @@ class StateAddPost extends State<AddPost> {
                       fullWidth * 0.03, fullHeight * 0.05, 0.0),
                   decoration: BoxDecoration(
                     color: primaryColor,
-                    borderRadius: BorderRadius.all(roundedCircle),
+                    borderRadius:
+                        BorderRadius.all(Radius.circular(roundedCircle)),
                     boxShadow: [
                       BoxShadow(
                         color: const Color.fromARGB(255, 67, 67, 67)
@@ -173,7 +172,7 @@ class StateAddPost extends State<AddPost> {
                   ),
                   child: IconButton(
                     icon: Icon(Icons.arrow_back, size: iconLG),
-                    color: whitebg,
+                    color: whiteColor,
                     onPressed: () async {
                       getDiscard();
                     },
@@ -182,18 +181,18 @@ class StateAddPost extends State<AddPost> {
               ]),
               Expanded(
                   child: Container(
-                padding: EdgeInsets.only(top: paddingMD),
+                padding: EdgeInsets.only(top: spaceLG),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(roundedLG2),
-                  color: whitebg,
+                  borderRadius: BorderRadius.circular(roundedMD),
+                  color: whiteColor,
                 ),
                 child: ListView(
-                    padding: EdgeInsets.only(bottom: paddingLg),
+                    padding: EdgeInsets.only(bottom: spaceJumbo),
                     children: [
                       Container(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                         child: getSubTitleMedium(
-                            "Title".tr, blackbg, TextAlign.start),
+                            "Title".tr, darkColor, TextAlign.start),
                       ),
                       Container(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
@@ -202,15 +201,15 @@ class StateAddPost extends State<AddPost> {
                       Container(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                         child: getSubTitleMedium(
-                            "Description".tr, blackbg, TextAlign.start),
+                            "Description".tr, darkColor, TextAlign.start),
                       ),
                       Container(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                         child: getInputDesc(10000, 5, contentDescCtrl, false),
                       ),
                       Container(
-                          margin: EdgeInsets.only(left: paddingMD),
-                          padding: EdgeInsets.only(top: paddingXSM),
+                          margin: EdgeInsets.only(left: spaceLG),
+                          padding: EdgeInsets.only(top: spaceSM),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -219,14 +218,14 @@ class StateAddPost extends State<AddPost> {
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontFamily: 'Poppins',
-                                    color: blackbg,
+                                    color: darkColor,
                                     fontWeight: FontWeight.w500,
                                   )),
                               const ChooseTag(),
                             ],
                           )),
                       Container(
-                          padding: EdgeInsets.fromLTRB(20, paddingMD, 20, 0),
+                          padding: EdgeInsets.fromLTRB(20, spaceLG, 20, 0),
                           child: Row(
                             children: [
                               Column(
@@ -236,12 +235,11 @@ class StateAddPost extends State<AddPost> {
                                         style: TextStyle(
                                           fontSize: 16,
                                           fontFamily: 'Poppins',
-                                          color: blackbg,
+                                          color: darkColor,
                                           fontWeight: FontWeight.w500,
                                         )),
                                     Container(
-                                        padding:
-                                            EdgeInsets.only(left: paddingXSM),
+                                        padding: EdgeInsets.only(left: spaceSM),
                                         child: getDropDownMain(
                                             slctReminderType, reminderTypeOpt,
                                             (String newValue) {
@@ -250,7 +248,7 @@ class StateAddPost extends State<AddPost> {
                                           });
                                         }, true, "reminder_")),
                                   ]),
-                              SizedBox(width: paddingMD),
+                              SizedBox(width: spaceLG),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -258,7 +256,7 @@ class StateAddPost extends State<AddPost> {
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontFamily: 'Poppins',
-                                        color: blackbg,
+                                        color: darkColor,
                                         fontWeight: FontWeight.w500,
                                       )),
                                   SetLocation(locDetailCtrl: locDetailCtrl),
@@ -267,7 +265,7 @@ class StateAddPost extends State<AddPost> {
                             ],
                           )),
                       Container(
-                          padding: EdgeInsets.fromLTRB(20, paddingMD, 20, 0),
+                          padding: EdgeInsets.fromLTRB(20, spaceLG, 20, 0),
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -275,7 +273,7 @@ class StateAddPost extends State<AddPost> {
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontFamily: 'Poppins',
-                                      color: blackbg,
+                                      color: darkColor,
                                       fontWeight: FontWeight.w500,
                                     )),
                                 Row(children: [
@@ -315,7 +313,7 @@ class StateAddPost extends State<AddPost> {
                                 ])
                               ])),
                       Container(
-                          padding: EdgeInsets.fromLTRB(20, paddingMD, 20, 0),
+                          padding: EdgeInsets.fromLTRB(20, spaceLG, 20, 0),
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -323,13 +321,13 @@ class StateAddPost extends State<AddPost> {
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontFamily: 'Poppins',
-                                      color: blackbg,
+                                      color: darkColor,
                                       fontWeight: FontWeight.w500,
                                     )),
                                 const SetFileAttachment()
                               ])),
                       Container(
-                          padding: EdgeInsets.fromLTRB(20, paddingMD, 20, 0),
+                          padding: EdgeInsets.fromLTRB(20, spaceLG, 20, 0),
                           child: const GetInfoBox(
                             page: "homepage",
                             location: "add_event",
@@ -379,6 +377,9 @@ class StateAddPost extends State<AddPost> {
                                     context: context,
                                     builder: (BuildContext context) =>
                                         SuccessDialog(text: body));
+                                Future.delayed(const Duration(seconds: 2), () {
+                                  Get.back();
+                                });
                               } else {
                                 showDialog<String>(
                                     context: context,
@@ -415,9 +416,10 @@ class StateAddPost extends State<AddPost> {
                     },
                     style: ButtonStyle(
                       backgroundColor:
-                          MaterialStatePropertyAll<Color>(successbg),
+                          MaterialStatePropertyAll<Color>(successBG),
                     ),
-                    child: Text('Save Event'.tr),
+                    child: Text('Publish Event'.tr,
+                        style: TextStyle(fontSize: textMD)),
                   ))
             ],
           ),

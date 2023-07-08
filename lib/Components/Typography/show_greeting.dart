@@ -13,6 +13,6 @@ Widget getGreeting(String hours, var clr) {
     greet = "Good Night";
   }
   return Text(greet.tr,
-      style:
-          TextStyle(color: clr, fontWeight: FontWeight.w500, fontSize: textXL));
+      style: TextStyle(
+          color: clr, fontWeight: FontWeight.w500, fontSize: textXJumbo));
 }

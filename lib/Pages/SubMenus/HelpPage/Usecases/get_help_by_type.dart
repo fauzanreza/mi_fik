@@ -58,7 +58,7 @@ class StateGetHelpByType extends State<GetHelpByType> {
     if (contents != null) {
       if (contents.isNotEmpty) {
         return Container(
-            padding: EdgeInsets.all(paddingSM),
+            padding: EdgeInsets.all(spaceXMD),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -71,8 +71,8 @@ class StateGetHelpByType extends State<GetHelpByType> {
                             Text(content.helpCategory,
                                 style: TextStyle(
                                     fontWeight: FontWeight.w500,
-                                    fontSize: textMD,
-                                    color: blackbg)),
+                                    fontSize: textXMD,
+                                    color: darkColor)),
                             const SizedBox(height: 5),
                             HtmlWidget(content.helpBody),
                             const Divider(thickness: 1.5),
@@ -85,8 +85,8 @@ class StateGetHelpByType extends State<GetHelpByType> {
                             Text(content.helpCategory,
                                 style: TextStyle(
                                     fontWeight: FontWeight.w500,
-                                    fontSize: textMD,
-                                    color: blackbg)),
+                                    fontSize: textXMD,
+                                    color: darkColor)),
                             const SizedBox(height: 5),
                             const Text("-"),
                             const Divider(thickness: 1.5),

@@ -60,7 +60,7 @@ class StateDetailTask extends State<DetailTask> {
           Row(
             children: [
               Container(
-                  margin: EdgeInsets.only(left: paddingXSM),
+                  margin: EdgeInsets.only(left: spaceSM),
                   child: GetSavedStatus(
                       passSlug: widget.data.slugName, ctx: "Task")),
               const Spacer(),
@@ -76,22 +76,22 @@ class StateDetailTask extends State<DetailTask> {
               ),
             ],
           ),
-          SizedBox(height: paddingMD),
+          SizedBox(height: spaceLG),
           Container(
-            padding: EdgeInsets.only(left: paddingSM),
-            child: getSubTitleMedium("Title", blackbg, TextAlign.start),
+            padding: EdgeInsets.only(left: spaceXMD),
+            child: getSubTitleMedium("Title", darkColor, TextAlign.start),
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: paddingSM),
+            padding: EdgeInsets.symmetric(horizontal: spaceXMD),
             child: getInputText(75, taskTitleCtrl, false),
           ),
           Container(
-            padding: EdgeInsets.only(left: paddingSM),
-            child:
-                getSubTitleMedium("Notes (Optional)", blackbg, TextAlign.start),
+            padding: EdgeInsets.only(left: spaceXMD),
+            child: getSubTitleMedium(
+                "Notes (Optional)", darkColor, TextAlign.start),
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: paddingSM),
+            padding: EdgeInsets.symmetric(horizontal: spaceXMD),
             child: getInputDesc(255, 4, taskDescCtrl, false),
           ),
           Container(
@@ -138,7 +138,7 @@ class StateDetailTask extends State<DetailTask> {
                     child: Text('Reminder'.tr),
                   ),
                   Container(
-                      padding: EdgeInsets.only(left: paddingXSM),
+                      padding: EdgeInsets.only(left: spaceSM),
                       child:
                           getDropDownMain(widget.data.reminder, reminderTypeOpt,
                               (String newValue) {
@@ -147,10 +147,10 @@ class StateDetailTask extends State<DetailTask> {
                         });
                       }, true, "reminder_")),
                   SizedBox(
-                    width: paddingMD,
+                    width: spaceLG,
                   ),
                   IconButton(
-                    icon: Icon(Icons.delete, color: dangerColor),
+                    icon: Icon(Icons.delete, color: warningBG),
                     tooltip: 'Delete Task',
                     onPressed: () {
                       Get.back();
@@ -162,11 +162,11 @@ class StateDetailTask extends State<DetailTask> {
                             return StatefulBuilder(
                                 builder: (context, setState) {
                               return AlertDialog(
-                                  insetPadding: EdgeInsets.all(paddingMD),
-                                  contentPadding: EdgeInsets.all(paddingMD),
+                                  insetPadding: EdgeInsets.all(spaceLG),
+                                  contentPadding: EdgeInsets.all(spaceLG),
                                   shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.all(roundedLG)),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(roundedLG))),
                                   content: DeleteTask(
                                     id: widget.data.id,
                                     name: widget.data.contentTitle,
@@ -177,7 +177,7 @@ class StateDetailTask extends State<DetailTask> {
                   )
                 ]),
                 Container(
-                    margin: EdgeInsets.only(top: paddingMD),
+                    margin: EdgeInsets.only(top: spaceLG),
                     width: fullWidth,
                     height: btnHeightMD,
                     child: ElevatedButton(
@@ -205,6 +205,9 @@ class StateDetailTask extends State<DetailTask> {
                                   context: context,
                                   builder: (BuildContext context) =>
                                       SuccessDialog(text: body));
+                              Future.delayed(const Duration(seconds: 2), () {
+                                Get.back();
+                              });
                             } else {
                               showDialog<String>(
                                   context: context,
@@ -229,7 +232,7 @@ class StateDetailTask extends State<DetailTask> {
                       child: Text('Save Changes'.tr),
                     )),
                 SizedBox(
-                  height: paddingMD,
+                  height: spaceLG,
                 ),
                 PostArchiveRelation(
                     passSlug: widget.data.slugName, ctx: "Task"),
@@ -237,16 +240,16 @@ class StateDetailTask extends State<DetailTask> {
             ),
           ),
           Container(
-              padding: EdgeInsets.fromLTRB(paddingMD, paddingSM, 0, 0),
+              padding: EdgeInsets.fromLTRB(spaceLG, spaceXMD, 0, 0),
               child: getSubTitleMedium(
                   "Created At : ${getItemTimeString(widget.data.createdAt)}",
-                  greybg,
+                  shadowColor,
                   TextAlign.left)),
           Container(
-              padding: EdgeInsets.fromLTRB(paddingMD, paddingXSM, 0, 0),
+              padding: EdgeInsets.fromLTRB(spaceLG, spaceSM, 0, 0),
               child: getSubTitleMedium(
                   "Last Updated : ${getItemTimeString(widget.data.updatedAt)}",
-                  greybg,
+                  shadowColor,
                   TextAlign.left))
         ]));
   }

@@ -22,11 +22,11 @@ class ContentSkeleton2 extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               margin: const EdgeInsets.only(left: 45, right: 20),
               decoration: BoxDecoration(
-                color: whitebg,
-                borderRadius: BorderRadius.all(roundedMd),
+                color: whiteColor,
+                borderRadius: BorderRadius.all(Radius.circular(roundedSM)),
                 boxShadow: [
                   BoxShadow(
-                    color: greybg.withOpacity(0.35),
+                    color: shadowColor.withOpacity(0.35),
                     blurRadius: 10.0,
                     spreadRadius: 0.0,
                     offset: const Offset(
@@ -56,7 +56,7 @@ class ContentSkeleton2 extends StatelessWidget {
                       )
                     ],
                   ),
-                  SizedBox(height: paddingXSM),
+                  SizedBox(height: spaceSM),
                   SkeletonParagraph(
                     style: SkeletonParagraphStyle(
                         lines: 2,
@@ -68,7 +68,7 @@ class ContentSkeleton2 extends StatelessWidget {
                           minLength: fullWidth * 0.5,
                         )),
                   ),
-                  SizedBox(height: paddingXSM),
+                  SizedBox(height: spaceSM),
                 ],
               )),
             ),

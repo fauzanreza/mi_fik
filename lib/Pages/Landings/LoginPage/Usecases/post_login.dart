@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
@@ -51,11 +52,12 @@ class StatePostLogin extends State<PostLogin> {
     bool isLoading = false;
 
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 30, horizontal: paddingSM),
-      margin: EdgeInsets.symmetric(horizontal: 20, vertical: fullHeight * 0.1),
+      padding: EdgeInsets.symmetric(vertical: 30, horizontal: spaceXMD),
+      margin:
+          EdgeInsets.symmetric(horizontal: 20, vertical: fullHeight * 0.075),
       decoration: BoxDecoration(
-        color: whitebg,
-        borderRadius: BorderRadius.all(roundedLG),
+        color: whiteColor,
+        borderRadius: BorderRadius.all(Radius.circular(roundedLG)),
       ),
       child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -69,16 +71,16 @@ class StatePostLogin extends State<PostLogin> {
               ),
             ),
             Text("Username",
-                style: TextStyle(color: blackbg, fontSize: textMD)),
+                style: TextStyle(color: darkColor, fontSize: textXMD)),
             getInputWarning(usernameMsg),
             getInputText(lnameLength, usernameCtrl, false),
             Text("Password",
-                style: TextStyle(color: blackbg, fontSize: textMD)),
+                style: TextStyle(color: darkColor, fontSize: textXMD)),
             getInputWarning(passMsg),
             getInputText(passwordLength, passCtrl, true),
             getInputWarning(allMsg),
             Container(
-                margin: EdgeInsets.only(top: paddingSM),
+                margin: EdgeInsets.only(top: spaceXMD),
                 padding: EdgeInsets.zero,
                 width: fullWidth,
                 height: 45,
@@ -161,35 +163,35 @@ class StatePostLogin extends State<PostLogin> {
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(roundedLG2),
+                      borderRadius: BorderRadius.circular(roundedMD),
                     )),
-                    backgroundColor: MaterialStatePropertyAll<Color>(successbg),
+                    backgroundColor: MaterialStatePropertyAll<Color>(successBG),
                   ),
-                  child: const Text('Sign In'),
+                  child: Text('Sign In', style: TextStyle(fontSize: textMD)),
                 )),
             Container(
                 alignment: Alignment.center,
-                margin: EdgeInsets.only(top: paddingSM * 2),
-                child: Wrap(runSpacing: 5, spacing: 5, children: [
-                  Container(
-                      padding: EdgeInsets.symmetric(vertical: paddingMD),
-                      child: const Text("already have an account?")),
-                  SizedBox(
-                    width: paddingMD,
-                  ),
-                  TextButton(
-                    style: TextButton.styleFrom(
-                        foregroundColor: primaryColor,
-                        padding: EdgeInsets.symmetric(
-                            vertical: paddingMD, horizontal: paddingSM)),
-                    onPressed: () {
-                      Get.to(() => const RegisterPage(
-                            isLogged: false,
-                          ));
-                    },
-                    child: const Text('Register now'),
-                  ),
-                ]))
+                margin: EdgeInsets.only(top: spaceXMD * 2),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                          padding: EdgeInsets.symmetric(vertical: spaceMD),
+                          child: Text("already have an account?",
+                              style: TextStyle(fontSize: textMD))),
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          foregroundColor: primaryColor,
+                        ),
+                        onPressed: () {
+                          Get.to(() => const RegisterPage(
+                                isLogged: false,
+                              ));
+                        },
+                        child: Text('Register now',
+                            style: TextStyle(fontSize: textMD)),
+                      ),
+                    ]))
           ]),
     );
   }

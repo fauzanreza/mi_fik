@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
+import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 Widget getUploadDateWidget(DateTime date) {
@@ -39,7 +42,8 @@ Widget getUploadDateWidget(DateTime date) {
 
   return Text(result,
       style: TextStyle(
-        color: whitebg,
+        color: whiteColor,
+        fontSize: textMD,
         fontWeight: FontWeight.w500,
       ));
 }
@@ -49,9 +53,9 @@ Widget getViewWidget(total) {
     text: TextSpan(
       children: [
         WidgetSpan(
-          child: Icon(Icons.remove_red_eye, size: 14, color: whitebg),
+          child: Icon(Icons.remove_red_eye, size: 14, color: whiteColor),
         ),
-        TextSpan(text: " $total", style: TextStyle(color: whitebg)),
+        TextSpan(text: " $total", style: TextStyle(color: whiteColor)),
       ],
     ),
   );
@@ -77,18 +81,34 @@ Widget getDescHeaderWidget(String desc, Color clr) {
   if (desc.trim() != "" && desc != "null") {
     return Container(
         margin: const EdgeInsets.only(top: 5),
-        child: Text(removeHtmlTags(desc),
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(color: clr, fontSize: textSM)));
+        child: Expanded(
+            child: Text(removeHtmlTags(desc),
+                maxLines: 3,
+                softWrap: true,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(color: clr, fontSize: textSM))));
   } else {
     return Container(
         margin: const EdgeInsets.only(top: 5),
         child: Text("No description provided",
-            maxLines: 3,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
                 color: clr, fontSize: textSM, fontStyle: FontStyle.italic)));
+  }
+}
+
+Widget getDescDetailWidget(String desc, double width) {
+  if (desc != null && desc != "null") {
+    return Container(
+        alignment: Alignment.centerLeft,
+        margin: EdgeInsets.symmetric(horizontal: spaceXMD),
+        child: HtmlWidget(desc));
+  } else {
+    return Container(
+        alignment: Alignment.center,
+        margin: EdgeInsets.symmetric(horizontal: spaceXMD),
+        child: getMessageImageNoData("assets/icon/nodesc.png",
+            "This Event doesn't have description".tr, width));
   }
 }
 
@@ -102,7 +122,7 @@ Widget getContentLoc(loc) {
           ),
           TextSpan(
               text: getLocationName(loc),
-              style: TextStyle(color: primaryColor, fontSize: textSM)),
+              style: TextStyle(color: primaryColor, fontSize: textMD)),
         ],
       ),
     );
@@ -123,7 +143,7 @@ Widget getTotalTag(tag) {
           ),
           TextSpan(
               text: total.toString(),
-              style: TextStyle(color: primaryColor, fontSize: textSM)),
+              style: TextStyle(color: primaryColor, fontSize: textMD)),
         ],
       ),
     );
@@ -158,7 +178,7 @@ Widget getTag(tag, height, ctx) {
               style: ButtonStyle(
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(roundedLG2),
+                  borderRadius: BorderRadius.circular(roundedSM),
                 )),
                 backgroundColor: MaterialStatePropertyAll<Color>(primaryColor),
               ),
@@ -171,10 +191,11 @@ Widget getTag(tag, height, ctx) {
                   onPressed: () => showDialog<String>(
                     context: ctx,
                     builder: (BuildContext context) => AlertDialog(
-                      contentPadding: EdgeInsets.all(paddingMD),
+                      contentPadding: EdgeInsets.all(spaceLG),
                       title: Text(
                         'All Tag',
-                        style: TextStyle(color: primaryColor, fontSize: textMD),
+                        style:
+                            TextStyle(color: primaryColor, fontSize: textXMD),
                       ),
                       content: SizedBox(
                           width: height,
@@ -198,7 +219,7 @@ Widget getTag(tag, height, ctx) {
                                             RoundedRectangleBorder>(
                                         RoundedRectangleBorder(
                                       borderRadius:
-                                          BorderRadius.circular(roundedLG2),
+                                          BorderRadius.circular(roundedSM),
                                     )),
                                     backgroundColor:
                                         MaterialStatePropertyAll<Color>(
@@ -229,12 +250,12 @@ Widget getContentHour(dateStart, dateEnd) {
         children: [
           //Content date start & end
           WidgetSpan(
-            child: Icon(Icons.access_time, size: 20, color: blackbg),
+            child: Icon(Icons.access_time, size: 20, color: darkColor),
           ),
           TextSpan(
               text:
-                  " ${DateFormat("hh:mm a").format(DateTime.parse(dateStart))} - ${DateFormat("hh:mm a").format(DateTime.parse(dateEnd))}",
-              style: TextStyle(color: blackbg, fontSize: textMD)),
+                  " ${DateFormat("HH:mm").format(DateTime.parse(dateStart).add(Duration(hours: getUTCHourOffset())))} - ${DateFormat("HH:mm").format(DateTime.parse(dateEnd).add(Duration(hours: getUTCHourOffset())))}",
+              style: TextStyle(color: darkColor, fontSize: textXMD)),
         ],
       ),
     );
@@ -267,7 +288,7 @@ Widget getPeriodDateWidget(dateStart, dateEnd) {
   if (hasDatePassed(ds) && !hasDatePassed(de)) {
     if (now.difference(ds).inMinutes < 60 && isTodayStart) {
       return Container(
-          margin: EdgeInsets.only(left: marginMD * 0.8),
+          margin: EdgeInsets.only(left: spaceXLG * 0.8),
           child: RichText(
             text: TextSpan(
               children: [
@@ -277,56 +298,62 @@ Widget getPeriodDateWidget(dateStart, dateEnd) {
                 TextSpan(
                     text: " About to start",
                     style: TextStyle(
-                        color: primaryColor, fontWeight: FontWeight.w500)),
+                        color: primaryColor,
+                        fontSize: textXMD,
+                        fontWeight: FontWeight.w500)),
               ],
             ),
           ));
     } else if (de.difference(now).inMinutes < 30 && isTodayEnd) {
       return Container(
-          margin: EdgeInsets.only(left: marginMD * 0.8),
+          margin: EdgeInsets.only(left: spaceXLG * 0.8),
           child: RichText(
             text: TextSpan(
               children: [
                 WidgetSpan(
-                  child: Icon(Icons.circle, size: 14, color: dangerColor),
+                  child: Icon(Icons.circle, size: 14, color: warningBG),
                 ),
                 TextSpan(
                     text: " About to end",
                     style: TextStyle(
-                        color: dangerColor, fontWeight: FontWeight.w500)),
+                        color: warningBG,
+                        fontSize: textXMD,
+                        fontWeight: FontWeight.w500)),
               ],
             ),
           ));
     } else {
       return Container(
-          margin: EdgeInsets.only(left: marginMD * 0.8),
+          margin: EdgeInsets.only(left: spaceXLG * 0.8),
           child: RichText(
             text: TextSpan(
               children: [
                 WidgetSpan(
-                  child: Icon(Icons.circle, size: 14, color: dangerColor),
+                  child: Icon(Icons.circle, size: 14, color: warningBG),
                 ),
                 TextSpan(
                     text: "Live".tr,
                     style: TextStyle(
-                        color: dangerColor, fontWeight: FontWeight.w500)),
+                        color: warningBG,
+                        fontSize: textXMD,
+                        fontWeight: FontWeight.w500)),
               ],
             ),
           ));
     }
   } else if (hasDatePassed(ds) && hasDatePassed(de)) {
     return Container(
-        margin: EdgeInsets.only(left: marginMD * 0.8),
+        margin: EdgeInsets.only(left: spaceXLG * 0.8),
         child: RichText(
           text: TextSpan(
             children: [
               WidgetSpan(
-                child: Icon(Icons.circle, size: 14, color: successbg),
+                child: Icon(Icons.circle, size: 14, color: successBG),
               ),
               TextSpan(
                   text: " Just Ended",
                   style:
-                      TextStyle(color: successbg, fontWeight: FontWeight.w500)),
+                      TextStyle(color: successBG, fontWeight: FontWeight.w500)),
             ],
           ),
         ));

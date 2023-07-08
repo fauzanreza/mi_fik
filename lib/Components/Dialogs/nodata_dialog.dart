@@ -22,7 +22,8 @@ class NoDataDialog extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ClipRRect(
-                borderRadius: roundedErrImage,
+                borderRadius:
+                    BorderRadius.circular(roundedJumbo + roundedJumbo),
                 child: Image.asset('assets/icon/nodata.png',
                     width: fullWidth * 0.45),
               ),
@@ -30,7 +31,7 @@ class NoDataDialog extends StatelessWidget {
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   child: Text(text,
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: greybg, fontSize: textMD)))
+                      style: TextStyle(color: shadowColor, fontSize: textXMD)))
             ]),
       ),
       actions: <Widget>[

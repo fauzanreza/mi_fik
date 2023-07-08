@@ -66,7 +66,7 @@ class StateGetAllTagByCategory extends State<GetAllTagByCategory> {
                 style: ButtonStyle(
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(roundedLG2),
+                    borderRadius: BorderRadius.circular(roundedSM),
                   )),
                   backgroundColor:
                       MaterialStatePropertyAll<Color>(primaryColor),

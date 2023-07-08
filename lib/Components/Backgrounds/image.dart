@@ -7,15 +7,15 @@ Widget getProfileImageSideBar(double width, double size, String url) {
   if (url != null && url != "null") {
     return Container(
       padding: const EdgeInsets.all(3),
-      margin: EdgeInsets.all(paddingXSM),
+      margin: EdgeInsets.all(spaceSM),
       // width: width * 0.3,
       // height: width * 0.3,
       decoration: BoxDecoration(
-        color: whitebg,
-        borderRadius: BorderRadius.all(roundedCircle),
+        color: whiteColor,
+        borderRadius: BorderRadius.all(Radius.circular(roundedCircle)),
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.all(roundedCircle),
+        borderRadius: BorderRadius.all(Radius.circular(roundedCircle)),
         child: Image.network(
           url,
           width: width * size,
@@ -37,13 +37,13 @@ Widget getProfileImageSideBar(double width, double size, String url) {
   } else {
     return Container(
       padding: const EdgeInsets.all(3),
-      margin: EdgeInsets.all(paddingXSM),
+      margin: EdgeInsets.all(spaceSM),
       decoration: BoxDecoration(
-        color: whitebg,
-        borderRadius: BorderRadius.all(roundedCircle),
+        color: whiteColor,
+        borderRadius: BorderRadius.all(Radius.circular(roundedLG)),
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.all(roundedCircle),
+        borderRadius: BorderRadius.all(Radius.circular(roundedLG)),
         child: Image.asset('assets/icon/default_lecturer.png',
             width: width * size),
       ),
@@ -75,10 +75,14 @@ Widget getProfileImageContent(var url) {
   if (url != null && url != "null") {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10.0),
-      width: iconXL,
-      height: iconXL,
+      width: iconJumbo,
+      height: iconJumbo,
+      decoration: BoxDecoration(
+        border: Border.all(color: primaryColor, width: 1.5),
+        borderRadius: BorderRadius.circular(roundedXLG + roundedMini),
+      ),
       child: ClipRRect(
-          borderRadius: roundedImage,
+          borderRadius: BorderRadius.circular(roundedXLG + roundedMini),
           child: Image.network(
             url,
             width: iconXL,
@@ -99,9 +103,14 @@ Widget getProfileImageContent(var url) {
   } else {
     return Container(
         margin: const EdgeInsets.symmetric(horizontal: 10.0),
-        width: iconXL,
+        width: iconJumbo,
+        height: iconJumbo,
+        decoration: BoxDecoration(
+          border: Border.all(color: primaryColor, width: 1.5),
+          borderRadius: BorderRadius.circular(roundedXLG + roundedMini),
+        ),
         child: ClipRRect(
-            borderRadius: roundedImage,
+            borderRadius: BorderRadius.circular(roundedXLG + roundedMini),
             child: Image.asset('assets/icon/default_lecturer.png')));
   }
 }
@@ -114,13 +123,13 @@ Widget getMessageImageNoData(String url, String msg, double width) {
       width: width * 0.55,
       height: width * 0.55,
       decoration: BoxDecoration(
-        color: whitebg,
+        color: whiteColor,
         borderRadius: BorderRadius.all(Radius.circular(width * 0.6)),
       ),
       child: ClipRRect(
         child: Image.asset(url, width: width * 0.45),
       ),
     ),
-    getSubTitleMedium(msg, greybg, TextAlign.center)
+    getSubTitleMedium(msg, shadowColor, TextAlign.center)
   ]);
 }

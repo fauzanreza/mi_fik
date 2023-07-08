@@ -62,7 +62,7 @@ class CirclePainterSide extends CustomPainter {
 
     final gradientColors = [
       primaryColor,
-      blackbg,
+      darkColor,
     ];
 
     final gradientStops = [
@@ -161,11 +161,11 @@ class CirclePainterSideWhite extends CustomPainter {
 
     Path mainBackground = Path();
     mainBackground.addRect(Rect.fromLTRB(0, 0, size.width, size.height));
-    paint.color = mainbg;
+    paint.color = hoverBG;
     canvas.drawPath(mainBackground, paint);
 
     //Color attribute
-    var paint1 = Paint()..color = mainbg; //Main color
+    var paint1 = Paint()..color = hoverBG; //Main color
     var paint2 = Paint()
       ..color = const Color.fromARGB(255, 192, 115, 0); //Border
 

@@ -32,6 +32,10 @@ class _SetImageContentState extends State<SetImageContent> {
     return await ImagePicker().pickImage(source: ImageSource.gallery);
   }
 
+  Future<XFile> getCamera() async {
+    return await ImagePicker().pickImage(source: ImageSource.camera);
+  }
+
   @override
   Widget build(BuildContext context) {
     double fullHeight = MediaQuery.of(context).size.height;
@@ -41,8 +45,8 @@ class _SetImageContentState extends State<SetImageContent> {
     Widget getResetImageProfile(String exist) {
       if (exist != null && exist != "null") {
         return FSMenuItem(
-            icon: Icon(Icons.refresh, color: whitebg),
-            text: Text('Reset', style: TextStyle(fontSize: textMD)),
+            icon: Icon(Icons.refresh, color: whiteColor),
+            text: Text('Reset', style: TextStyle(fontSize: textXMD)),
             gradient: redGradient,
             onTap: () async {
               await fireServiceDelete
@@ -91,16 +95,28 @@ class _SetImageContentState extends State<SetImageContent> {
                     context,
                     items: [
                       FSMenuItem(
-                          icon: Icon(Icons.camera, color: whitebg),
+                          icon: Icon(Icons.camera, color: whiteColor),
                           text: Text('Camera'.tr,
-                              style: TextStyle(fontSize: textMD)),
+                              style: TextStyle(fontSize: textXMD)),
                           gradient: orangeGradient,
-                          onTap: () {}),
+                          onTap: () async {
+                            var file = await getCamera();
+
+                            if (file != null) {
+                              await fireServicePost
+                                  .sendImageContent(file, "content_image")
+                                  .then((value) {
+                                contentAttImage = value;
+                              });
+                              FullScreenMenu.hide();
+                              setState(() {});
+                            }
+                          }),
                       FSMenuItem(
-                        icon: Icon(Icons.folder, color: whitebg),
+                        icon: Icon(Icons.folder, color: whiteColor),
                         gradient: orangeGradient,
                         text: Text('File Picker'.tr,
-                            style: TextStyle(fontSize: textMD)),
+                            style: TextStyle(fontSize: textXMD)),
                         onTap: () async {
                           var file = await getImage();
 
@@ -120,10 +136,10 @@ class _SetImageContentState extends State<SetImageContent> {
                   );
                 },
                 child: Container(
-                    padding: EdgeInsets.all(paddingXSM * 0.8),
+                    padding: EdgeInsets.all(spaceSM * 0.8),
                     decoration: BoxDecoration(
-                        border: Border.all(width: 3, color: whitebg),
-                        color: infoColor,
+                        border: Border.all(width: 3, color: whiteColor),
+                        color: infoBG,
                         borderRadius:
                             const BorderRadius.all(Radius.circular(25))),
                     child: ClipRRect(

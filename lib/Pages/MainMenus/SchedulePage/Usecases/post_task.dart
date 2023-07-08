@@ -6,6 +6,7 @@ import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
 import 'package:mi_fik/Components/Forms/date_picker.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
+import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/command_tasks.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_tasks.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
@@ -67,29 +68,25 @@ class StatePostTask extends State<PostTask> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-            child: Text("New Task".tr,
-                style: TextStyle(
-                    color: primaryColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: textLG)),
-          ),
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+              alignment: Alignment.centerLeft,
+              child: getTitleLarge("New Task".tr, primaryColor)),
           Container(
-              padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
+              padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
               child: Text("Title".tr,
-                  style: TextStyle(color: blackbg, fontSize: textMD))),
+                  style: TextStyle(color: darkColor, fontSize: textXMD))),
           Container(
-              padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
+              padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
               child: getInputText(75, taskTitleCtrl, false)),
           Container(
-              padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
+              padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
               child: Text("Notes (optional)".tr,
-                  style: TextStyle(color: blackbg, fontSize: textMD))),
+                  style: TextStyle(color: darkColor, fontSize: textXMD))),
           Container(
-              padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
+              padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
               child: getInputDesc(75, 5, taskDescCtrl, false)),
           Container(
-            padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
+            padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
             child: Wrap(
               runSpacing: -5,
               spacing: 5,
@@ -132,7 +129,7 @@ class StatePostTask extends State<PostTask> {
                     child: Text('Reminder'.tr),
                   ),
                   Container(
-                      padding: EdgeInsets.only(left: paddingXSM),
+                      padding: EdgeInsets.only(left: spaceSM),
                       child: getDropDownMain(slctReminderType, reminderTypeOpt,
                           (String newValue) {
                         setState(() {
@@ -141,7 +138,7 @@ class StatePostTask extends State<PostTask> {
                       }, true, "reminder_")),
                 ]),
                 Container(
-                    padding: EdgeInsets.fromLTRB(0, paddingMD, 0, 0),
+                    padding: EdgeInsets.fromLTRB(0, spaceLG, 0, 0),
                     child: const GetInfoBox(
                       page: "homepage",
                       location: "add_task",
@@ -150,7 +147,7 @@ class StatePostTask extends State<PostTask> {
             ),
           ),
           Container(
-              margin: EdgeInsets.only(top: paddingXSM),
+              margin: EdgeInsets.only(top: spaceSM),
               width: fullWidth,
               height: btnHeightMD,
               child: ElevatedButton(
@@ -177,6 +174,9 @@ class StatePostTask extends State<PostTask> {
                             context: context,
                             builder: (BuildContext context) =>
                                 SuccessDialog(text: body));
+                        Future.delayed(const Duration(seconds: 2), () {
+                          Get.back();
+                        });
                       } else {
                         showDialog<String>(
                             context: context,
@@ -193,9 +193,9 @@ class StatePostTask extends State<PostTask> {
                   }
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll<Color>(successbg),
+                  backgroundColor: MaterialStatePropertyAll<Color>(successBG),
                 ),
-                child: Text('Done'.tr, style: TextStyle(fontSize: textMD)),
+                child: Text('Done'.tr, style: TextStyle(fontSize: textXMD)),
               ))
         ],
       ),

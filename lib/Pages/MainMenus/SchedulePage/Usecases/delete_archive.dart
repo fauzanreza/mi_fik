@@ -34,16 +34,16 @@ class StateDeleteArchive extends State<DeleteArchive> {
 
     return IconButton(
       icon: const Icon(Icons.delete),
-      color: dangerColor,
+      color: warningBG,
       onPressed: () {
         return showDialog<String>(
             context: context,
             builder: (BuildContext context) {
               return StatefulBuilder(builder: (context, setState) {
                 return AlertDialog(
-                    insetPadding: EdgeInsets.all(paddingSM),
+                    insetPadding: EdgeInsets.all(spaceXMD),
                     contentPadding: EdgeInsets.symmetric(
-                        horizontal: paddingMD, vertical: paddingMD * 1.5),
+                        horizontal: spaceLG, vertical: spaceLG * 1.5),
                     content: SizedBox(
                         height: 120,
                         width: fullWidth,
@@ -54,8 +54,8 @@ class StateDeleteArchive extends State<DeleteArchive> {
                               Text(
                                   "Are you sure want to delete this archive, all event related to this archive also will be deleted",
                                   style: TextStyle(
-                                      color: blackbg,
-                                      fontSize: textMD,
+                                      color: darkColor,
+                                      fontSize: textXMD,
                                       fontWeight: FontWeight.w400)),
                               const SizedBox(height: 15),
                               Row(
@@ -63,9 +63,8 @@ class StateDeleteArchive extends State<DeleteArchive> {
                                   TextButton(
                                     style: TextButton.styleFrom(
                                         backgroundColor:
-                                            dangerColor.withOpacity(0.8),
-                                        padding:
-                                            EdgeInsets.all(paddingMD * 0.8)),
+                                            warningBG.withOpacity(0.8),
+                                        padding: EdgeInsets.all(spaceLG * 0.8)),
                                     onPressed: () async {
                                       DeleteArchiveModel archive =
                                           DeleteArchiveModel(
@@ -88,6 +87,10 @@ class StateDeleteArchive extends State<DeleteArchive> {
                                               context: context,
                                               builder: (BuildContext context) =>
                                                   SuccessDialog(text: body));
+                                          Future.delayed(
+                                              const Duration(seconds: 2), () {
+                                            Get.back();
+                                          });
                                         } else {
                                           showDialog<String>(
                                               context: context,
@@ -101,7 +104,7 @@ class StateDeleteArchive extends State<DeleteArchive> {
                                     child: Text(
                                       "Yes, Delete archive".tr,
                                       style: TextStyle(
-                                        color: whitebg,
+                                        color: whiteColor,
                                       ),
                                     ),
                                   ),
@@ -109,15 +112,14 @@ class StateDeleteArchive extends State<DeleteArchive> {
                                   TextButton(
                                     style: TextButton.styleFrom(
                                         backgroundColor: primaryColor,
-                                        padding:
-                                            EdgeInsets.all(paddingMD * 0.8)),
+                                        padding: EdgeInsets.all(spaceLG * 0.8)),
                                     onPressed: () {
                                       Get.back();
                                     },
                                     child: Text(
                                       "Cancel".tr,
                                       style: TextStyle(
-                                        color: whitebg,
+                                        color: whiteColor,
                                       ),
                                     ),
                                   )

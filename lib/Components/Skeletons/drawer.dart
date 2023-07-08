@@ -15,7 +15,7 @@ class DrawerSkeleton extends StatelessWidget {
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [primaryColor, semiblackbg],
+                colors: [primaryColor, semidarkColor],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
               ),

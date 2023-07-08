@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
+import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Services/commands.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
@@ -24,6 +25,7 @@ class ListArchive extends StatefulWidget {
 
 class StateListArchive extends State<ListArchive> {
   ArchiveCommandsService apiCommand;
+  int start = 0;
 
   @override
   void initState() {
@@ -34,8 +36,8 @@ class StateListArchive extends State<ListArchive> {
   @override
   Widget build(BuildContext context) {
     double fullWidth = MediaQuery.of(context).size.width;
-    int i = -1;
     bool isLoading;
+    int i = start;
 
     bool reverseBool(bool val) {
       if (val) {
@@ -58,16 +60,20 @@ class StateListArchive extends State<ListArchive> {
               Container(
                   height: fullWidth * 1,
                   width: fullWidth,
-                  padding: EdgeInsets.all(paddingMD),
+                  padding: EdgeInsets.all(spaceLG),
                   decoration: BoxDecoration(
-                      color: whitebg,
-                      borderRadius: BorderRadius.all(roundedMd)),
+                      color: whiteColor,
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(roundedSM))),
                   child: ListView.builder(
                       padding: EdgeInsets.symmetric(
-                          vertical: 0, horizontal: paddingXSM / 2),
+                          vertical: 0, horizontal: spaceSM / 2),
                       itemCount: widget.archieves.length,
                       itemBuilder: (context, index) {
-                        i++;
+                        if (i < widget.archieves.length - 1) {
+                          i++;
+                        }
+
                         return InkWell(
                             onTap: () {
                               setState(() {
@@ -76,18 +82,18 @@ class StateListArchive extends State<ListArchive> {
                                     widget.archieves[index].slug);
                                 listArchiveCheck[idx]["check"] = getIntByBool(
                                     reverseBool(getBoolByInt(
-                                        listArchiveCheck[i]["check"])));
+                                        listArchiveCheck[index]["check"])));
                               });
                             },
                             child: Container(
                                 width: fullWidth,
                                 margin:
-                                    EdgeInsets.symmetric(vertical: marginHZ),
-                                padding: EdgeInsets.all(marginMT),
+                                    EdgeInsets.symmetric(vertical: spaceMini),
+                                padding: EdgeInsets.all(spaceMD),
                                 decoration: BoxDecoration(
-                                  color: whitebg,
+                                  color: whiteColor,
                                   borderRadius:
-                                      BorderRadius.circular(roundedMd2),
+                                      BorderRadius.circular(roundedSM),
                                   boxShadow: [
                                     BoxShadow(
                                       color: const Color.fromARGB(
@@ -116,11 +122,11 @@ class StateListArchive extends State<ListArchive> {
                                                 maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
                                                 style: TextStyle(
-                                                    color: blackbg,
+                                                    color: darkColor,
                                                     fontSize: textSM,
                                                     fontWeight:
                                                         FontWeight.w500))),
-                                        SizedBox(height: paddingXSM),
+                                        SizedBox(height: spaceSM),
                                         Text(
                                             getTotalArchive(
                                                 widget.archieves[index]
@@ -128,7 +134,7 @@ class StateListArchive extends State<ListArchive> {
                                                 widget.archieves[index]
                                                     .totalTask),
                                             style: TextStyle(
-                                              color: blackbg,
+                                              color: darkColor,
                                               fontSize: textXSM,
                                             )),
                                       ]),
@@ -137,7 +143,7 @@ class StateListArchive extends State<ListArchive> {
                                     fillColor:
                                         MaterialStateProperty.all(primaryColor),
                                     value: getBoolByInt(
-                                        listArchiveCheck[i]["check"]),
+                                        listArchiveCheck[index]["check"]),
                                     onChanged: (bool value) {
                                       setState(() {
                                         int idx = listArchiveCheck.indexWhere(
@@ -156,7 +162,7 @@ class StateListArchive extends State<ListArchive> {
                   width: fullWidth,
                   height: btnHeightMD,
                   margin: EdgeInsets.only(
-                      left: marginMT, right: marginMT, bottom: btnHeightMD),
+                      left: spaceMD, right: spaceMD, bottom: btnHeightMD),
                   child: ElevatedButton(
                     onPressed: () async {
                       MultiRelationArchiveModel data =
@@ -190,38 +196,11 @@ class StateListArchive extends State<ListArchive> {
                                         onTap: () {
                                           Get.back();
                                         },
-                                        child: AlertDialog(
-                                            contentPadding: EdgeInsets.zero,
-                                            elevation: 0,
-                                            backgroundColor: Colors.transparent,
-                                            content: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Container(
-                                                    width: fullWidth * 0.45,
-                                                    padding: EdgeInsets.all(
-                                                        fullWidth * 0.1),
-                                                    margin: EdgeInsets.only(
-                                                        bottom: marginMT),
-                                                    decoration: BoxDecoration(
-                                                      color: whitebg,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                    ),
-                                                    child: ClipRRect(
-                                                      child: Image.asset(
-                                                          'assets/icon/checklist.png'),
-                                                    ),
-                                                  ),
-                                                  Text("Post Saved".tr,
-                                                      style: TextStyle(
-                                                          color: whitebg,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: textLG))
-                                                ]))));
+                                        child: SuccessDialogCustom(
+                                            text: "Event Saved".tr)));
+                            Future.delayed(const Duration(seconds: 2), () {
+                              Get.back();
+                            });
                           } else {
                             showDialog<String>(
                                 context: context,
@@ -232,23 +211,22 @@ class StateListArchive extends State<ListArchive> {
                       } else {
                         showDialog<String>(
                             context: context,
-                            builder: (BuildContext context) =>
-                                const FailedDialog(
-                                    text: "Nothing has changed",
-                                    type: "editacc"));
+                            builder: (BuildContext context) => FailedDialog(
+                                text: "Nothing has changed".tr,
+                                type: "editacc"));
                       }
                     },
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(roundedLG2),
+                        borderRadius: BorderRadius.circular(roundedSM),
                       )),
                       backgroundColor:
-                          MaterialStatePropertyAll<Color>(successbg),
+                          MaterialStatePropertyAll<Color>(successBG),
                     ),
                     child: Text('Save'.tr,
                         style: TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: textMD)),
+                            fontWeight: FontWeight.w500, fontSize: textXMD)),
                   ))
             ])));
   }

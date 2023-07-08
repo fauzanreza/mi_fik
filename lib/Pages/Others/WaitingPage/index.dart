@@ -31,24 +31,25 @@ class StateWaitingPage extends State<WaitingPage> {
                   children: [
                     Container(
                       padding: EdgeInsets.symmetric(
-                          vertical: paddingXSM, horizontal: paddingMD),
-                      margin: EdgeInsets.all(paddingMD * 2.5),
+                          vertical: spaceSM, horizontal: spaceLG),
+                      margin: EdgeInsets.all(spaceLG * 2.5),
                       decoration: BoxDecoration(
-                        color: whitebg,
-                        borderRadius: BorderRadius.all(roundedLG),
+                        color: whiteColor,
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(roundedLG)),
                       ),
                       child: ClipRRect(
                         child: Image.asset('assets/icon/sorry.png'),
                       ),
                     ),
-                    getTitleJumbo("Waiting for Approval...", whitebg),
+                    getTitleJumbo("Waiting for Approval...", whiteColor),
                     Text("Soon, our Admin will give you access to the App",
-                        style: TextStyle(color: whitebg, fontSize: textMD)),
+                        style: TextStyle(color: whiteColor, fontSize: textXMD)),
                     Text("It may take to 1-2 hr, please waiting",
-                        style: TextStyle(color: whitebg, fontSize: textMD)),
+                        style: TextStyle(color: whiteColor, fontSize: textXMD)),
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: paddingMD),
-                      child: getTitleJumbo("Or", whitebg),
+                      padding: EdgeInsets.symmetric(vertical: spaceLG),
+                      child: getTitleJumbo("Or", whiteColor),
                     ),
                     InkWell(
                       onTap: () async {
@@ -68,14 +69,15 @@ class StateWaitingPage extends State<WaitingPage> {
                       child: Container(
                         height: 60,
                         width: 60,
-                        padding: EdgeInsets.all(paddingXSM - 2),
+                        padding: EdgeInsets.all(spaceSM - 2),
                         decoration: BoxDecoration(
-                            color: successbg,
-                            border: Border.all(color: whitebg, width: 2),
-                            borderRadius: BorderRadius.all(roundedCircle)),
+                            color: successBG,
+                            border: Border.all(color: whiteColor, width: 2),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(roundedLG))),
                         child: IconButton(
                           icon: const Icon(Icons.mail),
-                          color: whitebg,
+                          color: whiteColor,
                           onPressed: () {},
                         ),
                       ),

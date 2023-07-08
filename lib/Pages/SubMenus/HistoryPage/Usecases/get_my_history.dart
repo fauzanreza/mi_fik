@@ -71,7 +71,7 @@ class StateGetMyHistory extends State<GetMyHistory> {
       child: RefreshIndicator(
         onRefresh: refreshData,
         child: ListView.builder(
-          padding: EdgeInsets.only(bottom: paddingSM),
+          padding: EdgeInsets.only(bottom: spaceXMD),
           itemCount: contents.length + 1,
           controller: widget.scrollCtrl,
           itemBuilder: (BuildContext context, int index) {
@@ -82,7 +82,7 @@ class StateGetMyHistory extends State<GetMyHistory> {
             } else {
               return Container(
                   alignment: Alignment.center,
-                  padding: EdgeInsets.symmetric(vertical: paddingMD),
+                  padding: EdgeInsets.symmetric(vertical: spaceLG),
                   child: Text("No more item to show".tr,
                       style: TextStyle(fontSize: textSM)));
             }
@@ -94,14 +94,14 @@ class StateGetMyHistory extends State<GetMyHistory> {
 
   Widget _buildHistoryItem(HistoryModel content) {
     return Container(
-      margin: EdgeInsets.fromLTRB(paddingSM, paddingSM, paddingSM, 0),
-      padding: EdgeInsets.all(paddingSM),
+      margin: EdgeInsets.fromLTRB(spaceXMD, spaceXMD, spaceXMD, 0),
+      padding: EdgeInsets.all(spaceXMD),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: const BorderRadius.all(Radius.circular(10)),
         boxShadow: [
           BoxShadow(
-            color: greybg.withOpacity(0.2),
+            color: shadowColor.withOpacity(0.2),
             blurRadius: 4.0,
             spreadRadius: 0.0,
             offset: const Offset(3.0, 3.0),
@@ -116,26 +116,26 @@ class StateGetMyHistory extends State<GetMyHistory> {
               Text(
                 content.historyType,
                 style: TextStyle(
-                  color: blackbg,
+                  color: darkColor,
                   fontWeight: FontWeight.w500,
-                  fontSize: textMD,
+                  fontSize: textXMD,
                 ),
               ),
               const Spacer(),
               Text(
-                getItemTimeString(content.createdAt),
+                getItemTimeString(DateTime.parse(content.createdAt)),
                 style: TextStyle(
-                  color: semiblackbg,
+                  color: semidarkColor,
                   fontSize: textSM * 1.1,
                 ),
               ),
             ],
           ),
-          SizedBox(height: paddingSM),
+          SizedBox(height: spaceXMD),
           Text(
             content.historyBody,
             style: TextStyle(
-              color: semiblackbg,
+              color: semidarkColor,
               fontSize: textSM * 1.1,
             ),
           ),

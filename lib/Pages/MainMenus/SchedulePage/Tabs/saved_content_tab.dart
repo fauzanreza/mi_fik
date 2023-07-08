@@ -84,7 +84,7 @@ class StateSavedContent extends State<SavedContent>
           key: _refreshIndicatorKey,
           onRefresh: refreshData,
           child: ListView(
-            padding: EdgeInsets.only(bottom: paddingLg),
+            padding: EdgeInsets.only(bottom: spaceJumbo),
             children: [
               Row(
                 children: [
@@ -172,12 +172,13 @@ class StateSavedContent extends State<SavedContent>
                                           builder: (context, setState) {
                                         return AlertDialog(
                                             insetPadding:
-                                                EdgeInsets.all(paddingXSM),
+                                                EdgeInsets.all(spaceSM),
                                             contentPadding:
-                                                EdgeInsets.all(paddingXSM),
+                                                EdgeInsets.all(spaceSM),
                                             shape: RoundedRectangleBorder(
                                                 borderRadius: BorderRadius.all(
-                                                    roundedLG)),
+                                                    Radius.circular(
+                                                        roundedLG))),
                                             content: DetailTask(
                                               data: content,
                                             ));

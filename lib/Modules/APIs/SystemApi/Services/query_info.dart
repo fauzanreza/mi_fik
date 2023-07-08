@@ -21,7 +21,7 @@ class InfoQueriesService {
         if (!isOffline) {
           Get.snackbar(
               "Warning".tr, "Lost connection, all data shown are local".tr,
-              backgroundColor: whitebg);
+              backgroundColor: whiteColor);
           isOffline = true;
         }
         return infoModelFromJson(prefs.getString("info-$page-$loc-sess"));
@@ -31,7 +31,7 @@ class InfoQueriesService {
     } else {
       if (isOffline) {
         Get.snackbar("Warning".tr, "Welcome back, all data are now realtime".tr,
-            backgroundColor: whitebg);
+            backgroundColor: whiteColor);
         isOffline = false;
       }
       final header = {

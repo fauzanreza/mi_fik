@@ -63,26 +63,26 @@ class StateShowRole extends State<ShowRole> {
 
     return Card(
         shape: RoundedRectangleBorder(
-          side: BorderSide(color: mainbg, width: 1),
+          side: BorderSide(color: hoverBG, width: 1),
           borderRadius: BorderRadius.circular(6),
         ),
         child: ExpansionTile(
             tilePadding: EdgeInsets.symmetric(
-                vertical: paddingXSM / 2, horizontal: paddingSM),
+                vertical: spaceSM / 2, horizontal: spaceXMD),
             childrenPadding: EdgeInsets.only(
-                left: paddingSM, bottom: paddingSM, right: paddingSM),
+                left: spaceXMD, bottom: spaceXMD, right: spaceXMD),
             initiallyExpanded: false,
             iconColor: primaryColor,
-            textColor: blackbg,
+            textColor: darkColor,
             leading: Icon(Icons.tag, size: iconLG),
             expandedCrossAxisAlignment: CrossAxisAlignment.start,
             expandedAlignment: Alignment.topLeft,
             title: Text(ucFirst("My Roles".tr),
-                style: TextStyle(fontSize: textMD - 1)),
+                style: TextStyle(fontSize: textXMD)),
             children: [
               Wrap(
-                  runSpacing: -5,
-                  spacing: 5,
+                  runSpacing: -spaceMini,
+                  spacing: spaceMini,
                   children: contents.map<Widget>((tag) {
                     return ElevatedButton.icon(
                       onPressed: () {
@@ -114,8 +114,8 @@ class StateShowRole extends State<ShowRole> {
                                                   "$removeText ${tag.tagName}?",
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
-                                                      color: greybg,
-                                                      fontSize: textMD)))
+                                                      color: shadowColor,
+                                                      fontSize: textXMD)))
                                         ]),
                                   ),
                                   actions: <Widget>[
@@ -125,11 +125,11 @@ class StateShowRole extends State<ShowRole> {
                                                 RoundedRectangleBorder>(
                                             RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(roundedMd2),
+                                              BorderRadius.circular(roundedSM),
                                         )),
                                         backgroundColor:
                                             MaterialStatePropertyAll<Color>(
-                                                dangerColor),
+                                                warningBG),
                                       ),
                                       onPressed: () async {
                                         selectedRole.add({
@@ -160,6 +160,11 @@ class StateShowRole extends State<ShowRole> {
                                                       (BuildContext context) =>
                                                           SuccessDialog(
                                                               text: body));
+                                              Future.delayed(
+                                                  const Duration(seconds: 2),
+                                                  () {
+                                                Get.back();
+                                              });
                                             } else {
                                               Get.offAll(
                                                   () => const ProfilePage());
@@ -188,7 +193,7 @@ class StateShowRole extends State<ShowRole> {
                                         }
                                       },
                                       child: Text("Yes".tr,
-                                          style: TextStyle(color: whitebg)),
+                                          style: TextStyle(color: whiteColor)),
                                     )
                                   ],
                                 );
@@ -212,7 +217,7 @@ class StateShowRole extends State<ShowRole> {
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(roundedLG2),
+                          borderRadius: BorderRadius.circular(roundedSM),
                         )),
                         backgroundColor:
                             MaterialStatePropertyAll<Color>(primaryColor),
@@ -220,7 +225,7 @@ class StateShowRole extends State<ShowRole> {
                     );
                   }).toList()),
               Container(
-                  padding: EdgeInsets.fromLTRB(0, paddingMD, 0, 0),
+                  padding: EdgeInsets.fromLTRB(0, spaceLG, 0, 0),
                   child: const GetInfoBox(
                     page: "profile",
                     location: "delete_role_mobile",

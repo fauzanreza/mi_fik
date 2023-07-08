@@ -36,8 +36,7 @@ class StateAttachButton extends State<AttachButton> {
 
       //Get button attachment by its type.
       getButton() {
-        if (attach['attach_type'] == "attachment_url" &&
-            attach['attach_type'] == "attachment_doc") {
+        if (attach['attach_type'] == "attachment_url") {
           return RichText(
             text: TextSpan(
               children: [
@@ -52,7 +51,7 @@ class StateAttachButton extends State<AttachButton> {
                       },
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
-                        color: blackbg,
+                        color: darkColor,
                         fontSize: textSM + 2)),
               ],
             ),
@@ -75,7 +74,7 @@ class StateAttachButton extends State<AttachButton> {
                                   NetworkImage(attach['attach_url'].toString()),
                               fit: BoxFit.fitWidth,
                             ),
-                            borderRadius: BorderRadius.circular(roundedLG2),
+                            borderRadius: BorderRadius.circular(roundedSM),
                           ),
                         )),
                   ),
@@ -84,7 +83,7 @@ class StateAttachButton extends State<AttachButton> {
                 child: Column(
                   children: [
                     ClipRRect(
-                      borderRadius: BorderRadius.circular(roundedMd2),
+                      borderRadius: BorderRadius.circular(roundedSM),
                       child: Image.network(
                         attach['attach_url'].toString(),
                         filterQuality: FilterQuality.medium,
@@ -94,8 +93,7 @@ class StateAttachButton extends State<AttachButton> {
                             style: SkeletonLineStyle(
                                 height: 50,
                                 width: fullWidth * 0.3,
-                                borderRadius:
-                                    BorderRadius.circular(roundedMd2)),
+                                borderRadius: BorderRadius.circular(roundedSM)),
                           );
                         },
                       ),
@@ -121,7 +119,7 @@ class StateAttachButton extends State<AttachButton> {
                     errorBuilder: (context, errorMessage) {
                       return Text(
                         errorMessage,
-                        style: TextStyle(color: blackbg),
+                        style: TextStyle(color: darkColor),
                       );
                     },
                     autoPlay: false,
@@ -145,7 +143,7 @@ class StateAttachButton extends State<AttachButton> {
                       },
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
-                        color: blackbg,
+                        color: darkColor,
                         fontSize: textSM + 2)),
               ],
             ),
@@ -154,7 +152,7 @@ class StateAttachButton extends State<AttachButton> {
       }
 
       return Container(
-          margin: EdgeInsets.only(left: marginMD, top: marginMD * 0.3),
+          margin: EdgeInsets.only(left: spaceXLG, top: spaceXLG * 0.3),
           alignment: Alignment.centerLeft,
           child: getButton());
     }).toList());

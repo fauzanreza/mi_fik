@@ -28,15 +28,15 @@ class GetWeeklyNavigator extends StatelessWidget {
               if (i == 0) {
                 return primaryColor;
               } else {
-                return whitebg;
+                return whiteColor;
               }
             }
 
             getcolor(i) {
               if (i == 0) {
-                return whitebg;
+                return whiteColor;
               } else {
-                return blackbg;
+                return darkColor;
               }
             }
 
@@ -55,13 +55,13 @@ class GetWeeklyNavigator extends StatelessWidget {
                       Get.offAll(() => const BottomBar());
                     },
                     child: Container(
-                      width: 60,
                       height: 60,
                       margin: const EdgeInsets.only(right: 10, bottom: 10),
-                      padding: EdgeInsets.symmetric(horizontal: paddingXSM),
+                      padding: EdgeInsets.symmetric(horizontal: spaceSM),
                       decoration: BoxDecoration(
-                        color: dangerColor,
-                        borderRadius: BorderRadius.all(roundedMd),
+                        color: warningBG,
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(roundedSM)),
                         boxShadow: [getShadow("med")],
                       ),
                       child: Column(
@@ -78,8 +78,8 @@ class GetWeeklyNavigator extends StatelessWidget {
                                 padding: const EdgeInsets.only(left: 3.5),
                                 child: FaIcon(
                                   FontAwesomeIcons.rotateLeft,
-                                  color: whitebg,
-                                  size: iconMD * 1.25,
+                                  color: whiteColor,
+                                  size: iconMD,
                                 ))
                           ]),
                     )),
@@ -89,10 +89,11 @@ class GetWeeklyNavigator extends StatelessWidget {
                       width: 60,
                       height: 60,
                       margin: const EdgeInsets.only(right: 10, bottom: 10),
-                      padding: EdgeInsets.symmetric(horizontal: paddingXSM),
+                      padding: EdgeInsets.symmetric(horizontal: spaceSM),
                       decoration: BoxDecoration(
                         color: getBgcolor(index),
-                        borderRadius: BorderRadius.all(roundedMd),
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(roundedSM)),
                         boxShadow: [getShadow("med")],
                       ),
                       child: Column(
@@ -111,7 +112,7 @@ class GetWeeklyNavigator extends StatelessWidget {
                                     .toString(),
                                 style: TextStyle(
                                     color: getcolor(index),
-                                    fontSize: textXLG,
+                                    fontSize: textLG,
                                     fontWeight: FontWeight.w500))
                           ]),
                     ))
@@ -123,10 +124,11 @@ class GetWeeklyNavigator extends StatelessWidget {
                     width: 60,
                     height: 60,
                     margin: const EdgeInsets.only(right: 10, bottom: 10),
-                    padding: EdgeInsets.symmetric(horizontal: paddingXSM),
+                    padding: EdgeInsets.symmetric(horizontal: spaceSM),
                     decoration: BoxDecoration(
                       color: getBgcolor(index),
-                      borderRadius: BorderRadius.all(roundedMd),
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(roundedSM)),
                       boxShadow: [getShadow("med")],
                     ),
                     child: Column(
@@ -145,7 +147,7 @@ class GetWeeklyNavigator extends StatelessWidget {
                                   .toString(),
                               style: TextStyle(
                                   color: getcolor(index),
-                                  fontSize: textXLG,
+                                  fontSize: textLG,
                                   fontWeight: FontWeight.w500))
                         ]),
                   ));

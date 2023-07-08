@@ -2,15 +2,13 @@ import 'dart:convert';
 
 // Usecase update profile
 class EditUserProfileModel {
-  String password;
   String firstName;
   String lastName;
 
-  EditUserProfileModel({this.password, this.firstName, this.lastName});
+  EditUserProfileModel({this.firstName, this.lastName});
 
   Map<String, dynamic> toJson() {
     return {
-      "password": password,
       "first_name": firstName,
       "last_name": lastName,
     };

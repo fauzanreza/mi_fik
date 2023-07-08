@@ -42,7 +42,7 @@ class LeftBar extends StatelessWidget {
                 child: Container(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [primaryColor, semiblackbg],
+                        colors: [primaryColor, semidarkColor],
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                       ),
@@ -70,13 +70,13 @@ class LeftBar extends StatelessWidget {
                                             fullWidth, 0.15, image),
                                         Text(username,
                                             style: TextStyle(
-                                                color: whitebg,
-                                                fontSize: textMD,
+                                                color: whiteColor,
+                                                fontSize: textXMD,
                                                 fontWeight: FontWeight.w500)),
                                         Text(role,
                                             style: TextStyle(
-                                                color: whitebg,
-                                                fontSize: textMD,
+                                                color: whiteColor,
+                                                fontSize: textXMD,
                                                 fontWeight: FontWeight.w500))
                                       ]),
                                 ),
@@ -107,15 +107,15 @@ class LeftBar extends StatelessWidget {
                         Container(
                           width: fullWidth,
                           margin: EdgeInsets.only(
-                              bottom: paddingXSM * 2,
-                              left: paddingXSM,
-                              right: paddingXSM),
+                              bottom: spaceSM * 2,
+                              left: spaceSM,
+                              right: spaceSM),
                           alignment: Alignment.centerLeft,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.all(
-                                Radius.circular(roundedMd2),
+                                Radius.circular(roundedSM),
                               ),
-                              color: dangerColor),
+                              color: warningBG),
                           child: TextButton.icon(
                             onPressed: () {
                               showDialog<String>(
@@ -124,10 +124,10 @@ class LeftBar extends StatelessWidget {
                                       const SignOutDialog());
                             },
                             icon: Icon(Icons.logout,
-                                size: textXLG, color: whitebg),
+                                size: textLG, color: whiteColor),
                             label: Text("Log-Out".tr,
                                 style: TextStyle(
-                                    color: whitebg, fontSize: textMD)),
+                                    color: whiteColor, fontSize: textXMD)),
                             style: ElevatedButton.styleFrom(),
                           ),
                         )

@@ -42,10 +42,10 @@ class StateGetAllTagCategory extends State<GetAllTagCategory> {
           }
 
           return Container(
-            padding: EdgeInsets.all(paddingXSM),
-            margin: EdgeInsets.only(bottom: paddingXSM),
+            padding: EdgeInsets.all(spaceSM),
+            margin: EdgeInsets.only(bottom: spaceSM),
             decoration: BoxDecoration(
-                color: whitebg,
+                color: whiteColor,
                 borderRadius: const BorderRadius.all(Radius.circular(10))),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,9 +53,9 @@ class StateGetAllTagCategory extends State<GetAllTagCategory> {
               children: [
                 Text(dctName,
                     style: TextStyle(
-                        color: blackbg,
+                        color: darkColor,
                         fontWeight: FontWeight.bold,
-                        fontSize: textMD)),
+                        fontSize: textXMD)),
                 const Divider(
                   thickness: 1,
                 ),

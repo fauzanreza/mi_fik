@@ -5,16 +5,17 @@ import 'package:mi_fik/Modules/Variables/style.dart';
 
 Widget getInputText(int len, var ctrl, bool secure) {
   return Container(
-    padding: EdgeInsets.only(top: paddingXSM * 0.2),
+    padding: EdgeInsets.only(top: spaceSM * 0.2),
     child: TextField(
-      cursorColor: blackbg,
+      cursorColor: darkColor,
       maxLength: len,
       autofocus: false,
       controller: ctrl,
       obscureText: secure,
+      style: TextStyle(fontSize: textXMD),
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-        fillColor: mainbg,
+        fillColor: hoverBG,
         filled: true,
         border: InputBorder.none,
         enabledBorder: OutlineInputBorder(
@@ -40,13 +41,23 @@ Widget getInputTextRegis(
     }
   }
 
+  bool getObscure(type) {
+    if (type == "pass") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   return Container(
-    padding: EdgeInsets.only(top: paddingXSM * 0.2),
+    padding: EdgeInsets.only(top: spaceSM * 0.2),
     child: TextField(
-      cursorColor: blackbg,
+      cursorColor: darkColor,
       maxLength: len,
       autofocus: false,
+      obscureText: getObscure(type),
       controller: ctrl,
+      style: TextStyle(fontSize: textXMD),
       onChanged: (val) {
         if (type == "username") {
           usernameAvaiabilityCheck = val;
@@ -62,7 +73,7 @@ Widget getInputTextRegis(
       },
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-        fillColor: mainbg,
+        fillColor: hoverBG,
         filled: true,
         enabled: getEnabledEditing(check),
         hintText: hint,
@@ -86,18 +97,19 @@ void refreshPage(Function refreshCallback) {
 
 Widget getInputTextAtt(int len, String id, String obj) {
   return Container(
-    padding: EdgeInsets.only(top: paddingXSM * 0.2),
+    padding: EdgeInsets.only(top: spaceSM * 0.2),
     child: TextField(
-      cursorColor: blackbg,
+      cursorColor: darkColor,
       maxLength: len,
       autofocus: false,
+      style: TextStyle(fontSize: textXMD),
       onChanged: (value) {
         int idx = listAttachment.indexWhere((e) => e['id'] == id);
         listAttachment[idx][obj] = value.trim();
       },
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-        fillColor: mainbg,
+        fillColor: hoverBG,
         filled: true,
         border: InputBorder.none,
         enabledBorder: OutlineInputBorder(
@@ -115,17 +127,18 @@ Widget getInputTextAtt(int len, String id, String obj) {
 
 Widget getInputDesc(int len, int lines, var ctrl, bool secure) {
   return Container(
-    padding: EdgeInsets.only(top: paddingXSM * 0.2),
+    padding: EdgeInsets.only(top: spaceSM * 0.2),
     child: TextField(
-      cursorColor: blackbg,
+      cursorColor: darkColor,
       maxLength: len,
       autofocus: false,
       controller: ctrl,
       obscureText: secure,
       maxLines: lines,
       minLines: lines,
+      style: TextStyle(fontSize: textXMD),
       decoration: InputDecoration(
-        fillColor: mainbg,
+        fillColor: hoverBG,
         filled: true,
         border: InputBorder.none,
         enabledBorder: OutlineInputBorder(
@@ -160,7 +173,7 @@ Widget getDropDownMain(String slct, List<String> opt,
           height: 1.0,
           decoration: const BoxDecoration(border: null),
         ),
-        style: TextStyle(fontSize: textMD, color: primaryColor),
+        style: TextStyle(fontSize: textXMD, color: primaryColor),
         items: opt.map((String item) {
           if (separate) {
             return DropdownMenuItem<String>(

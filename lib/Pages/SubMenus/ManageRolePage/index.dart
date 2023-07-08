@@ -64,7 +64,7 @@ class StateRolePage extends State<RolePage> {
           Get.to(() => const BottomBar());
         }),
         body: Container(
-            margin: EdgeInsets.symmetric(horizontal: paddingSM),
+            margin: EdgeInsets.symmetric(horizontal: spaceXMD),
             child: const GetAllTagCategory()),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
@@ -79,7 +79,8 @@ class StateRolePage extends State<RolePage> {
                 isDismissible: false,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
-                        topLeft: roundedLG, topRight: roundedLG)),
+                        topLeft: Radius.circular(roundedLG),
+                        topRight: Radius.circular(roundedLG))),
                 barrierColor: primaryColor.withOpacity(0.5),
                 isScrollControlled: true,
                 builder: (BuildContext context) {
@@ -92,7 +93,7 @@ class StateRolePage extends State<RolePage> {
               );
             }
           },
-          backgroundColor: successbg,
+          backgroundColor: successBG,
           tooltip: "Submit Changes".tr,
           child: const Icon(Icons.send),
         ),
@@ -108,7 +109,7 @@ class StateRolePage extends State<RolePage> {
           children: [
             Container(
                 alignment: Alignment.center,
-                margin: EdgeInsets.all(paddingLg),
+                margin: EdgeInsets.all(spaceJumbo),
                 height: fullHeight * 0.7,
                 child: getMessageImageNoData(
                     "assets/icon/sorry.png",
@@ -120,7 +121,7 @@ class StateRolePage extends State<RolePage> {
           onPressed: () {
             //
           },
-          backgroundColor: successbg,
+          backgroundColor: successBG,
           tooltip: "Submit Changes".tr,
           child: const Icon(Icons.help_center),
         ),

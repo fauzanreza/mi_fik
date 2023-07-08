@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -68,10 +69,10 @@ Future checkGps(var func) async {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
         Get.snackbar("Alert", 'Location permissions are denied',
-            backgroundColor: whitebg);
+            backgroundColor: whiteColor);
       } else if (permission == LocationPermission.deniedForever) {
         Get.snackbar("Alert", 'Location permissions are permanently denied',
-            backgroundColor: whitebg);
+            backgroundColor: whiteColor);
       } else {
         haspermission = true;
       }
@@ -84,11 +85,11 @@ Future checkGps(var func) async {
     }
   } else {
     Get.snackbar("Alert", 'GPS Service is not enabled, turn on GPS location',
-        backgroundColor: whitebg);
+        backgroundColor: whiteColor);
   }
 }
 
 bool isPassedDate(DateTime ds, DateTime de) {
-  DateTime now = DateTime.now();
+  DateTime now = DateTime.now().add(Duration(hours: getUTCHourOffset()));
   return now.isAfter(ds) && now.isBefore(de);
 }

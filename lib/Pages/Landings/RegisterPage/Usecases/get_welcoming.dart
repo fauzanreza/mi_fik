@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
-import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class GetWelcoming extends StatefulWidget {
   const GetWelcoming({Key key}) : super(key: key);
@@ -16,125 +12,21 @@ class GetWelcoming extends StatefulWidget {
 class StateGetWelcoming extends State<GetWelcoming> {
   @override
   Widget build(BuildContext context) {
-    //double fullHeight = MediaQuery.of(context).size.height;
-    double fullWidth = MediaQuery.of(context).size.height;
+    // double fullHeight = MediaQuery.of(context).size.height;
+    // double fullWidth = MediaQuery.of(context).size.height;
 
     return ListView(
+      padding:
+          EdgeInsets.fromLTRB(spaceLG, spaceJumbo + spaceMD, spaceLG, spaceLG),
       children: [
-        Row(
-          children: [
-            InkWell(
-              onTap: () => showDialog<String>(
-                  context: context,
-                  builder: (BuildContext context) => AlertDialog(
-                        contentPadding: const EdgeInsets.all(10),
-                        title: Text('Warning'.tr),
-                        content: SizedBox(
-                          width: fullWidth,
-                          height: 50,
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                    margin: const EdgeInsets.symmetric(
-                                        vertical: 10),
-                                    child: Text(
-                                        "Are you sure want to close the registration?"
-                                            .tr,
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            color: greybg, fontSize: textMD)))
-                              ]),
-                        ),
-                        actions: <Widget>[
-                          ElevatedButton(
-                            style: ButtonStyle(
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(roundedMd2),
-                              )),
-                              backgroundColor:
-                                  MaterialStatePropertyAll<Color>(dangerColor),
-                            ),
-                            onPressed: () async {
-                              indexRegis = 0;
-                              usernameAvaiabilityCheck = "";
-                              emailAvaiabilityCheck = "";
-                              passRegisCtrl = "";
-                              fnameRegisCtrl = "";
-                              lnameRegisCtrl = "";
-                              validRegisCtrl = 2023;
-                              isCheckedRegister = false;
-                              isFillForm = false;
-                              isChooseRole = false;
-                              checkAvaiabilityRegis = false;
-                              isFinishedRegis = false;
-                              uploadedImageRegis = null;
-                              isWaiting = false;
-                              final prefs =
-                                  await SharedPreferences.getInstance();
-                              await prefs.clear();
-
-                              Get.offAll(() => const LoginPage());
-                            },
-                            child: Text("Yes".tr,
-                                style: TextStyle(color: whitebg)),
-                          )
-                        ],
-                      )),
-              child: Container(
-                margin: EdgeInsets.only(
-                    left: paddingMD, right: paddingMD, top: paddingLg),
-                padding: EdgeInsets.all(paddingSM - 2),
-                width: 180,
-                color: Colors.transparent,
-                child: Row(
-                  children: [
-                    Icon(Icons.arrow_back, color: dangerColor, size: iconLG),
-                    SizedBox(width: paddingSM),
-                    Text("Back to Sign In",
-                        style: TextStyle(
-                            color: dangerColor,
-                            fontSize: textMD,
-                            fontWeight: FontWeight.w500))
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-        Container(
-          padding: EdgeInsets.all(paddingMD),
-          margin: EdgeInsets.all(paddingMD),
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(10)),
-            color: whitebg,
-            boxShadow: [
-              BoxShadow(
-                color: greybg.withOpacity(0.35),
-                blurRadius: 10.0,
-                spreadRadius: 1.0,
-                offset: const Offset(
-                  5.0,
-                  5.0,
-                ),
-              )
-            ],
-          ),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            getTitleLarge("Welcoming", primaryColor),
-            Text(
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquet nec ullamcorper sit amet risus nullam eget felis. Nibh tellus molestie nunc non blandit massa enim. Dolor magna eget est lorem ipsum dolor sit amet. Maecenas ultricies mi eget mauris pharetra et ultrices. Purus sit amet volutpat consequat mauris nunc congue. Sed cras ornare arcu dui vivamus arcu felis bibendum ut. Mi ipsum faucibus vitae aliquet. Viverra justo nec ultrices dui sapien eget mi proin sed. Enim nulla aliquet porttitor lacus.",
-                style: TextStyle(fontSize: textMD - 2)),
-            SizedBox(height: paddingMD),
-            Text(
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquet nec ullamcorper sit amet risus nullam eget felis. Nibh tellus molestie nunc non blandit massa enim. Dolor magna eget est lorem ipsum dolor sit amet. Maecenas ultricies mi eget mauris pharetra et ultrices. Purus sit amet volutpat consequat mauris nunc congue. Sed cras ornare arcu dui vivamus arcu felis bibendum ut. Mi ipsum faucibus vitae aliquet. Viverra justo nec ultrices dui sapien eget mi proin sed. Enim nulla aliquet porttitor lacus.",
-                style: TextStyle(fontSize: textMD - 2)),
-          ]),
-        )
+        getTitleLarge("Welcoming", primaryColor),
+        Text(
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquet nec ullamcorper sit amet risus nullam eget felis. Nibh tellus molestie nunc non blandit massa enim. Dolor magna eget est lorem ipsum dolor sit amet. Maecenas ultricies mi eget mauris pharetra et ultrices. Purus sit amet volutpat consequat mauris nunc congue. Sed cras ornare arcu dui vivamus arcu felis bibendum ut. Mi ipsum faucibus vitae aliquet. Viverra justo nec ultrices dui sapien eget mi proin sed. Enim nulla aliquet porttitor lacus.",
+            style: TextStyle(fontSize: textXMD - 2)),
+        SizedBox(height: spaceLG),
+        Text(
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquet nec ullamcorper sit amet risus nullam eget felis. Nibh tellus molestie nunc non blandit massa enim. Dolor magna eget est lorem ipsum dolor sit amet. Maecenas ultricies mi eget mauris pharetra et ultrices. Purus sit amet volutpat consequat mauris nunc congue. Sed cras ornare arcu dui vivamus arcu felis bibendum ut. Mi ipsum faucibus vitae aliquet. Viverra justo nec ultrices dui sapien eget mi proin sed. Enim nulla aliquet porttitor lacus.",
+            style: TextStyle(fontSize: textXMD - 2)),
       ],
     );
   }

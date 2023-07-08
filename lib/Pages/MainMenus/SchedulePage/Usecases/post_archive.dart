@@ -4,6 +4,7 @@ import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
+import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Services/commands.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
@@ -62,35 +63,31 @@ class StatePostArchive extends State<PostArchive> {
             ),
           ),
           Container(
-              padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
-              child: Text("New Archive".tr,
-                  style: TextStyle(
-                      color: primaryColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: textLG))),
+              padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
+              alignment: Alignment.centerLeft,
+              child: getTitleLarge("New Archive".tr, primaryColor)),
           Container(
-              padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
+              padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
               child: Text("Archive Name".tr,
-                  style: TextStyle(color: blackbg, fontSize: textMD))),
+                  style: TextStyle(color: darkColor, fontSize: textXMD))),
           Container(
-              padding: EdgeInsets.fromLTRB(paddingSM, 0, paddingSM, 0),
+              padding: EdgeInsets.fromLTRB(spaceXMD, 0, spaceXMD, 0),
               child: getInputWarning(archiveNameMsg)),
           Container(
-              padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
+              padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
               child: getInputText(75, archiveNameCtrl, false)),
           Container(
-              padding: EdgeInsets.fromLTRB(paddingSM, 0, paddingSM, 0),
+              padding: EdgeInsets.fromLTRB(spaceXMD, 0, spaceXMD, 0),
               child: getInputWarning(archiveDescMsg)),
           Container(
-              padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
+              padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
               child: Text("Description (optional)".tr,
-                  style: TextStyle(color: blackbg, fontSize: textMD))),
+                  style: TextStyle(color: darkColor, fontSize: textXMD))),
           Container(
-              padding:
-                  EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, paddingMD * 2),
+              padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, spaceLG * 2),
               child: getInputDesc(255, 3, archiveDescCtrl, false)),
           Container(
-              padding: EdgeInsets.fromLTRB(paddingSM, 0, paddingSM, 0),
+              padding: EdgeInsets.fromLTRB(spaceXMD, 0, spaceXMD, 0),
               child: getInputWarning(allArchiveMsg)),
           SizedBox(
               // transform: Matrix4.translationValues(
@@ -116,6 +113,9 @@ class StatePostArchive extends State<PostArchive> {
                             context: context,
                             builder: (BuildContext context) =>
                                 SuccessDialog(text: body));
+                        Future.delayed(const Duration(seconds: 2), () {
+                          Get.back();
+                        });
                       } else {
                         archiveNameMsg = "";
                         archiveDescMsg = "";
@@ -165,7 +165,7 @@ class StatePostArchive extends State<PostArchive> {
                   }
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll<Color>(successbg),
+                  backgroundColor: MaterialStatePropertyAll<Color>(successBG),
                 ),
                 child: Text('Done'.tr),
               ))

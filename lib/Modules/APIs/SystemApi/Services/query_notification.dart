@@ -21,7 +21,7 @@ class NotificationQueriesService {
         if (!isOffline) {
           Get.snackbar(
               "Warning".tr, "Lost connection, all data shown are local".tr,
-              backgroundColor: whitebg);
+              backgroundColor: whiteColor);
           isOffline = true;
         }
         return notificationJsonWPaginate(prefs.getString("notif-$page-sess"));
@@ -31,7 +31,7 @@ class NotificationQueriesService {
     } else {
       if (isOffline) {
         Get.snackbar("Warning".tr, "Welcome back, all data are now realtime".tr,
-            backgroundColor: whitebg);
+            backgroundColor: whiteColor);
         isOffline = false;
       }
       final token = prefs.getString('token_key');
@@ -51,7 +51,7 @@ class NotificationQueriesService {
 
         Get.offAll(() => const LoginPage());
         Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
-            backgroundColor: whitebg);
+            backgroundColor: whiteColor);
         return null;
       } else {
         return null;

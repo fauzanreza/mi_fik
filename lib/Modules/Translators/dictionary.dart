@@ -130,7 +130,20 @@ class Dictionaries extends Translations {
               "Are you sure want to close the registration?",
           "Failed to capture image": "Failed to capture image",
           "Preview Image": "Preview Image",
-          "No more item to show": "No more item to show"
+          "No more item to show": "No more item to show",
+          "Failed to upload, file doesnt exist":
+              "Failed to upload, file doesnt exist",
+          "Failed to reset image": "Failed to reset image",
+          "Nothing has changed": "Nothing has changed",
+          "Event posted": "Event posted",
+          "Task saved": "Task saved",
+          "Archive Created": "Archive Created",
+          "Answer": "Answer",
+          "This Event doesn't have description":
+              "This Event doesn't have description",
+          "Publish Event": "Publish Event",
+          "This Event doesn't have attachment":
+              "This Event doesn't have attachment"
         },
         'id_ID': {
           'Good Morning': 'Selamat Pagi',
@@ -259,7 +272,20 @@ class Dictionaries extends Translations {
               "Apakah Anda yakin ingin membatalkan pendaftaran?",
           "Failed to capture image": "Gagal mengambil gambar",
           "Preview Image": "Hasil Gambar",
-          "No more item to show": "Semua item telah ditampilkan"
+          "No more item to show": "Semua item telah ditampilkan",
+          "Failed to upload, file doesnt exist":
+              "Gagal mengunggah, file tidak ditemukan",
+          "Failed to reset image": "Gagal menghapus gambar",
+          "Nothing has changed": "Tidak ada yang diubah",
+          "Event posted": "Event berhasil diposting",
+          "Task saved": "Tugas disimpan",
+          "Archive Created": "Arsip dibuat",
+          "Answer": "Jawaban",
+          "This Event doesn't have description":
+              "Event ini tidak memiliki deskripsi",
+          "Publish Event": "Simpan Event",
+          "This Event doesn't have attachment":
+              "Event ini tidak memiliki tautan"
         },
       };
 }

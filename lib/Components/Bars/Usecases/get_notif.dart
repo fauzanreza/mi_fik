@@ -74,7 +74,7 @@ class StateGetNotification extends State<GetNotification> {
       child: RefreshIndicator(
         onRefresh: refreshData,
         child: ListView.builder(
-          padding: EdgeInsets.only(bottom: paddingSM),
+          padding: EdgeInsets.only(bottom: spaceXMD),
           itemCount: contents.length + 1,
           controller: scrollCtrl,
           itemBuilder: (BuildContext context, int index) {
@@ -85,9 +85,10 @@ class StateGetNotification extends State<GetNotification> {
             } else {
               return Container(
                   alignment: Alignment.center,
-                  padding: EdgeInsets.symmetric(vertical: paddingMD),
+                  padding: EdgeInsets.symmetric(vertical: spaceLG),
                   child: Text("No more item to show".tr,
-                      style: TextStyle(fontSize: textSM + 1, color: whitebg)));
+                      style:
+                          TextStyle(fontSize: textSM + 1, color: whiteColor)));
             }
           },
         ),
@@ -100,26 +101,26 @@ class StateGetNotification extends State<GetNotification> {
     double fullWidth = MediaQuery.of(context).size.width;
 
     return Container(
-        margin: EdgeInsets.fromLTRB(paddingSM, 0, paddingSM, paddingXSM),
-        padding: EdgeInsets.symmetric(vertical: paddingXSM),
+        margin: EdgeInsets.fromLTRB(spaceXMD, 0, spaceXMD, spaceSM),
+        padding: EdgeInsets.symmetric(vertical: spaceSM),
         decoration: BoxDecoration(
-          color: whitebg,
-          borderRadius: BorderRadius.all(roundedMd),
+          color: whiteColor,
+          borderRadius: BorderRadius.all(Radius.circular(roundedSM)),
         ),
         child: ListTile(
           title: Text(notifs.notifTitle,
               style: TextStyle(
-                  color: blackbg,
+                  color: darkColor,
                   fontWeight: FontWeight.bold,
                   fontSize: textSM + 1)),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(notifs.notifBody,
-                  style: TextStyle(color: blackbg, fontSize: textSM)),
+                  style: TextStyle(color: darkColor, fontSize: textSM)),
               const SizedBox(height: 5),
               Text(getItemTimeString(notifs.createdAt),
-                  style: TextStyle(color: greybg, fontSize: textSM))
+                  style: TextStyle(color: shadowColor, fontSize: textSM))
             ],
           ),
           trailing: IconButton(
@@ -133,10 +134,11 @@ class StateGetNotification extends State<GetNotification> {
                   builder: (BuildContext context) {
                     return StatefulBuilder(builder: (context, setState) {
                       return AlertDialog(
-                          insetPadding: EdgeInsets.all(paddingXSM),
-                          contentPadding: EdgeInsets.all(paddingXSM),
+                          insetPadding: EdgeInsets.all(spaceSM),
+                          contentPadding: EdgeInsets.all(spaceSM),
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(roundedLG)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(roundedLG))),
                           content: SizedBox(
                               height: fullHeight * 0.75,
                               width: fullWidth,
@@ -156,28 +158,29 @@ class StateGetNotification extends State<GetNotification> {
                                     Expanded(
                                         child: ListView(
                                       padding: EdgeInsets.symmetric(
-                                          horizontal: paddingXSM),
+                                          horizontal: spaceSM),
                                       children: [
                                         Text(notifs.notifTitle,
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.w500)),
                                         SizedBox(
-                                          height: paddingLg,
+                                          height: spaceJumbo,
                                         ),
                                         Text(notifs.notifBody),
                                         SizedBox(
-                                          height: paddingLg,
+                                          height: spaceJumbo,
                                         ),
                                       ],
                                     )),
                                     Container(
-                                      margin: EdgeInsets.all(paddingXSM),
+                                      margin: EdgeInsets.all(spaceSM),
                                       alignment: Alignment.topRight,
                                       child: Text(
-                                          getItemTimeString(notifs.createdAt),
+                                          getItemTimeString(
+                                              DateTime.parse(notifs.createdAt)),
                                           style: TextStyle(
                                               fontWeight: FontWeight.w500,
-                                              fontSize: textMD)),
+                                              fontSize: textXMD)),
                                     )
                                   ])));
                     });

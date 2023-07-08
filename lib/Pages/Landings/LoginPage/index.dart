@@ -25,19 +25,21 @@ class StateLoginPage extends State<LoginPage> {
             body: CustomPaint(
                 painter: CirclePainterSide(),
                 child: ListView(
+                  padding: EdgeInsets.zero,
                   children: [
                     const PostLogin(),
                     Container(
                       padding: EdgeInsets.symmetric(
-                          vertical: paddingXSM, horizontal: paddingMD),
+                          vertical: spaceSM, horizontal: spaceLG),
                       margin: EdgeInsets.only(
                           left: fullWidth * 0.2,
                           right: fullWidth * 0.2,
-                          top: 20,
+                          top: fullWidth * 0.05,
                           bottom: 20),
                       decoration: BoxDecoration(
-                        color: whitebg,
-                        borderRadius: BorderRadius.all(roundedLG),
+                        color: whiteColor,
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(roundedLG)),
                       ),
                       child: ClipRRect(
                         child: Image.asset('assets/icon/fik_logo.png'),

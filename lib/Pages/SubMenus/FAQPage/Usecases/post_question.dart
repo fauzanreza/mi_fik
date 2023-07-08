@@ -52,8 +52,9 @@ class StatePostQuestion extends State<PostQuestion> {
           context: context,
           isDismissible: false,
           shape: RoundedRectangleBorder(
-              borderRadius:
-                  BorderRadius.only(topLeft: roundedLG, topRight: roundedLG)),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(roundedLG),
+                  topRight: Radius.circular(roundedLG))),
           barrierColor: primaryColor.withOpacity(0.5),
           isScrollControlled: true,
           builder: (BuildContext context) {
@@ -75,39 +76,38 @@ class StatePostQuestion extends State<PostQuestion> {
                       ),
                     ),
                     Container(
-                        padding: EdgeInsets.only(left: paddingMD),
+                        padding: EdgeInsets.only(left: spaceLG),
                         alignment: Alignment.centerLeft,
                         child:
                             getTitleLarge("Ask a question".tr, primaryColor)),
                     Container(
-                      padding: EdgeInsets.only(left: paddingMD),
+                      padding: EdgeInsets.only(left: spaceLG),
                       alignment: Alignment.centerLeft,
                       child: getSubTitleMedium(
-                          "Question Body".tr, blackbg, TextAlign.start),
+                          "Question Body".tr, darkColor, TextAlign.start),
                     ),
                     Container(
-                        padding: EdgeInsets.only(left: paddingSM),
+                        padding: EdgeInsets.only(left: spaceXMD),
                         child: getInputWarning(qbodyMsg)),
                     Container(
-                        padding:
-                            EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
+                        padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
                         child: getInputDesc(255, 5, quBodyCtrl, false)),
                     Container(
-                      padding: EdgeInsets.only(left: paddingSM),
+                      padding: EdgeInsets.only(left: spaceXMD),
                       child: Text("Question Type".tr,
                           style: TextStyle(
-                            fontSize: textMD - 1,
+                            fontSize: textXMD - 1,
                             fontFamily: 'Poppins',
-                            color: blackbg,
+                            color: darkColor,
                             fontWeight: FontWeight.w500,
                           )),
                     ),
                     Container(
-                        padding: EdgeInsets.only(left: paddingSM),
+                        padding: EdgeInsets.only(left: spaceXMD),
                         child: getInputWarning(qtypeMsg)),
                     Container(
-                        margin: EdgeInsets.only(bottom: paddingMD),
-                        padding: EdgeInsets.only(left: paddingSM),
+                        margin: EdgeInsets.only(bottom: spaceLG),
+                        padding: EdgeInsets.only(left: spaceXMD),
                         child:
                             getDropDownMain(slctQuestionType, questionTypeOpt,
                                 (String newValue) {
@@ -116,7 +116,7 @@ class StatePostQuestion extends State<PostQuestion> {
                           });
                         }, false, null)),
                     Container(
-                        padding: EdgeInsets.only(left: paddingSM),
+                        padding: EdgeInsets.only(left: spaceXMD),
                         child: getInputWarning(allMsg)),
                     SizedBox(
                         width: fullWidth,
@@ -147,6 +147,10 @@ class StatePostQuestion extends State<PostQuestion> {
                                       context: context,
                                       builder: (BuildContext context) =>
                                           SuccessDialog(text: body));
+                                  Future.delayed(const Duration(seconds: 2),
+                                      () {
+                                    Get.back();
+                                  });
                                   quBodyCtrl.clear();
                                 } else {
                                   qbodyMsg = "";
@@ -200,7 +204,7 @@ class StatePostQuestion extends State<PostQuestion> {
                           },
                           style: ButtonStyle(
                             backgroundColor:
-                                MaterialStatePropertyAll<Color>(successbg),
+                                MaterialStatePropertyAll<Color>(successBG),
                           ),
                           child: Text('Done'.tr),
                         ))
@@ -209,7 +213,7 @@ class StatePostQuestion extends State<PostQuestion> {
           },
         );
       },
-      backgroundColor: successbg,
+      backgroundColor: successBG,
       tooltip: "Ask a question".tr,
       child: const Icon(Icons.headset_mic),
     );

@@ -43,7 +43,7 @@ class StateSignOutDialog extends State<SignOutDialog> {
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   child: Text("Are you sure want to sign out?",
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: greybg, fontSize: textMD)))
+                      style: TextStyle(color: shadowColor, fontSize: textXMD)))
             ]),
       ),
       actions: <Widget>[
@@ -51,9 +51,9 @@ class StateSignOutDialog extends State<SignOutDialog> {
           style: ButtonStyle(
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(roundedMd2),
+              borderRadius: BorderRadius.circular(roundedSM),
             )),
-            backgroundColor: MaterialStatePropertyAll<Color>(dangerColor),
+            backgroundColor: MaterialStatePropertyAll<Color>(warningBG),
           ),
           onPressed: () async {
             bool keyExists = await keyExist('token_key');
@@ -94,7 +94,7 @@ class StateSignOutDialog extends State<SignOutDialog> {
                       const SuccessDialog(text: "Sign out success"));
             }
           },
-          child: Text("Sign Out", style: TextStyle(color: whitebg)),
+          child: Text("Sign Out", style: TextStyle(color: whiteColor)),
         )
       ],
     );

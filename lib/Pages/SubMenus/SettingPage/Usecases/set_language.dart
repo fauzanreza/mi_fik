@@ -33,13 +33,13 @@ class StateSetLanguage extends State<SetLanguage> {
     //double fullWidth = MediaQuery.of(context).size.width;
 
     return Container(
-      padding: EdgeInsets.all(paddingMD),
-      margin: EdgeInsets.all(paddingSM),
+      padding: EdgeInsets.all(spaceLG),
+      margin: EdgeInsets.all(spaceXMD),
       decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(10)),
-          color: whitebg),
+          color: whiteColor),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        getSubTitleMedium("Language".tr, blackbg, TextAlign.start),
+        getSubTitleMedium("Language".tr, darkColor, TextAlign.start),
         ListTile(
           contentPadding: EdgeInsets.zero,
           title: const Text('English'),
@@ -58,6 +58,9 @@ class StateSetLanguage extends State<SetLanguage> {
                   context: context,
                   builder: (BuildContext context) =>
                       const SuccessDialog(text: "Language changed to English"));
+              Future.delayed(const Duration(seconds: 2), () {
+                Get.back();
+              });
             },
           ),
         ),
@@ -79,6 +82,9 @@ class StateSetLanguage extends State<SetLanguage> {
                   context: context,
                   builder: (BuildContext context) => const SuccessDialog(
                       text: "Bahasa diganti ke bahasa Indonesia"));
+              Future.delayed(const Duration(seconds: 2), () {
+                Get.back();
+              });
             },
           ),
         ),

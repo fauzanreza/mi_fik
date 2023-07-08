@@ -41,35 +41,35 @@ class StatePostFeedback extends State<PostFeedback> {
     bool isLoading = false;
 
     return Container(
-        padding: EdgeInsets.all(paddingMD),
-        margin: EdgeInsets.all(paddingSM),
+        padding: EdgeInsets.all(spaceLG),
+        margin: EdgeInsets.all(spaceXMD),
         decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(10)),
-            color: whitebg),
+            color: whiteColor),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             getSubTitleMedium("Let us know, what do you think about this App?",
-                blackbg, TextAlign.start),
+                darkColor, TextAlign.start),
             getInputRate((double rate) {
               setState(() {
                 rateCtrl = rate.toInt();
               });
             }),
             getInputDesc(255, 3, fbBodyCtrl, false),
-            SizedBox(height: paddingMD),
+            SizedBox(height: spaceLG),
             const GetInfoBox(
               page: "landing",
               location: "add_feedback",
             ),
-            SizedBox(height: paddingSM),
+            SizedBox(height: spaceXMD),
             Align(
                 alignment: Alignment.centerLeft,
                 child: Text("What do you think the improvment should be".tr,
                     style: TextStyle(
                       fontSize: 14,
                       fontFamily: 'Poppins',
-                      color: blackbg,
+                      color: darkColor,
                       fontWeight: FontWeight.w500,
                     ))),
             Row(
@@ -77,7 +77,7 @@ class StatePostFeedback extends State<PostFeedback> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
-                      margin: EdgeInsets.symmetric(vertical: paddingXSM),
+                      margin: EdgeInsets.symmetric(vertical: spaceSM),
                       child: getDropDownMain(slctFeedbackType, feedbackTypeOpt,
                           (String newValue) {
                         setState(() {
@@ -108,6 +108,9 @@ class StatePostFeedback extends State<PostFeedback> {
                                   context: context,
                                   builder: (BuildContext context) =>
                                       SuccessDialog(text: body));
+                              Future.delayed(const Duration(seconds: 2), () {
+                                Get.back();
+                              });
                             } else {
                               showDialog<String>(
                                   context: context,
@@ -129,21 +132,22 @@ class StatePostFeedback extends State<PostFeedback> {
                       child: Container(
                         width: 110,
                         padding: EdgeInsets.symmetric(
-                            vertical: paddingXSM, horizontal: paddingXSM + 3),
+                            vertical: spaceSM, horizontal: spaceSM + 3),
                         decoration: BoxDecoration(
-                            border: Border.all(color: whitebg, width: 2),
-                            color: successbg,
+                            border: Border.all(color: whiteColor, width: 2),
+                            color: successBG,
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(10))),
                         child: Row(
                           children: [
-                            Icon(Icons.send, size: iconSM + 3, color: whitebg),
+                            Icon(Icons.send,
+                                size: iconSM + 3, color: whiteColor),
                             const Spacer(),
                             Text("Submit".tr,
                                 style: TextStyle(
-                                    fontSize: textMD,
+                                    fontSize: textXMD,
                                     fontWeight: FontWeight.w500,
-                                    color: whitebg))
+                                    color: whiteColor))
                           ],
                         ),
                       )),

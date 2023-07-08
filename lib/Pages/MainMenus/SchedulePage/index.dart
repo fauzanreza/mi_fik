@@ -105,16 +105,16 @@ class StateSchedulePage extends State<SchedulePage>
                   //         getGreeting(getToday("part"), primaryColor),
                   //         const Spacer(),
                   //         getSubTitleMedium(
-                  //             getToday("date"), blackbg, TextAlign.start)
+                  //             getToday("date"), darkColor, TextAlign.start)
                   //       ]),
                   // ),
                   GetWeeklyNavigator(active: slctSchedule, action: navigateDay),
                   TabBar(
                       controller: tabController,
-                      labelColor: greybg,
+                      labelColor: shadowColor,
                       indicatorColor: primaryColor,
                       labelStyle: TextStyle(
-                          fontSize: textMD, fontWeight: FontWeight.w500),
+                          fontSize: textXMD, fontWeight: FontWeight.w500),
                       indicatorPadding:
                           EdgeInsets.symmetric(horizontal: fullWidth * 0.1),
                       tabs: List.generate(tabColSchedule.length, (index) {
@@ -134,7 +134,7 @@ class StateSchedulePage extends State<SchedulePage>
             floatingActionButton: SpeedDial(
                 activeIcon: Icons.close,
                 icon: Icons.add,
-                iconTheme: IconThemeData(color: whitebg),
+                iconTheme: IconThemeData(color: whiteColor),
                 backgroundColor: primaryColor,
                 overlayColor: primaryColor,
                 overlayOpacity: 0.4,
