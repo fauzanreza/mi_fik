@@ -271,8 +271,26 @@ String getMessageResponseFromObject(val, type) {
           res += "${email.join('\n')}";
         }
       }
+      if (val.containsKey('password')) {
+        var pass = val['password'];
+        if (pass != null) {
+          res += "${pass.join('\n')}";
+        }
+      }
+      if (val.containsKey('first_name')) {
+        var fname = val['first_name'];
+        if (fname != null) {
+          res += "${fname.join('\n')}";
+        }
+      }
+      if (val.containsKey('last_name')) {
+        var lname = val['last_name'];
+        if (lname != null) {
+          res += "${lname.join('\n')}";
+        }
+      }
       if (val.containsKey('username')) {
-        var username = val['question_type'];
+        var username = val['username'];
         if (username != null) {
           res += "${username.join('\n')}";
         }

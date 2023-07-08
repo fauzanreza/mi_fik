@@ -73,39 +73,41 @@ class StateSetProfileData extends State<SetProfileData>
             getInputWarning(widget.emailMsg),
             getInputTextRegis(30, "email", emailCtrl, refresh,
                 emailAvaiabilityCheck, isCheckedRegister),
-            InkWell(
-                onTap: () {
-                  lottieController.reset();
-                  usernameAvaiabilityCheck = "";
-                  usernameCtrl.clear();
-                  emailCtrl.clear();
-                  widget.unameMsg = "";
-                  widget.emailMsg = "";
-                  emailAvaiabilityCheck = "";
-                  checkAvaiabilityRegis = false;
-                  refreshPage(refresh);
-                  Get.snackbar("Success", "Username and Email is reset",
-                      backgroundColor: whiteColor);
-                },
-                child: Container(
-                  margin: EdgeInsets.only(bottom: spaceLG),
-                  child: RichText(
-                      text: TextSpan(
-                    children: [
-                      WidgetSpan(
-                        child: Icon(Icons.refresh,
-                            size: iconMD + 2, color: warningBG),
-                      ),
-                      TextSpan(
-                        style: TextStyle(
-                            color: warningBG,
-                            fontSize: textMD,
-                            fontWeight: FontWeight.w500),
-                        text: " Reset Username and Email".tr,
-                      ),
-                    ],
-                  )),
-                )),
+            !isFillForm
+                ? InkWell(
+                    onTap: () {
+                      lottieController.reset();
+                      usernameAvaiabilityCheck = "";
+                      usernameCtrl.clear();
+                      emailCtrl.clear();
+                      widget.unameMsg = "";
+                      widget.emailMsg = "";
+                      emailAvaiabilityCheck = "";
+                      checkAvaiabilityRegis = false;
+                      refreshPage(refresh);
+                      Get.snackbar("Success", "Username and Email is reset",
+                          backgroundColor: whiteColor);
+                    },
+                    child: Container(
+                      margin: EdgeInsets.only(bottom: spaceLG),
+                      child: RichText(
+                          text: TextSpan(
+                        children: [
+                          WidgetSpan(
+                            child: Icon(Icons.refresh,
+                                size: iconMD + 2, color: warningBG),
+                          ),
+                          TextSpan(
+                            style: TextStyle(
+                                color: warningBG,
+                                fontSize: textMD,
+                                fontWeight: FontWeight.w500),
+                            text: " Reset Username and Email".tr,
+                          ),
+                        ],
+                      )),
+                    ))
+                : const SizedBox(),
             getSubTitleMedium("Password", darkColor, TextAlign.left),
             getInputWarning(widget.passMsg),
             getInputTextRegis(
@@ -249,59 +251,12 @@ class StateSetProfileData extends State<SetProfileData>
       }
     }
 
-    // Future<ProfileData> getToken() async {
-    //   final prefs = await SharedPreferences.getInstance();
-    //   if (isFillForm) {
-    //     final data = jsonDecode(prefs.getString('profile_data_key'));
-    //     return ProfileData(
-    //         username: data['username'],
-    //         email: data['email'],
-    //         pass: data['password'],
-    //         image: data['image_url'],
-    //         fname: data['first_name'],
-    //         lname: data['last_name']);
-    //   } else {
-    //     return ProfileData(
-    //         username: "", email: "", pass: "", image: "", fname: "", lname: "");
-    //   }
-    // }
-
-    //return
-    // FutureBuilder<ProfileData>(
-    //     future: getToken(),
-    //     builder: (context, snapshot) {
-    //       if (snapshot.connectionState == ConnectionState.done) {
-    //         if (isFillForm) {
-    //           usernameAvaiabilityCheck = snapshot.data.username;
-    //         } else {}
-
-    return Container(
-      height: fullHeight * 0.75,
-      padding: EdgeInsets.all(spaceLG),
-      margin: EdgeInsets.fromLTRB(spaceLG, spaceJumbo * 1.75, spaceLG, spaceLG),
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-        color: whiteColor,
-        boxShadow: [
-          BoxShadow(
-            color: shadowColor.withOpacity(0.35),
-            blurRadius: 10.0,
-            spreadRadius: 1.0,
-            offset: const Offset(
-              5.0,
-              5.0,
-            ),
-          )
-        ],
-      ),
-      child: ListView(children: [
-        getTitleLarge("Profile Data", primaryColor),
-        getDataDetailForm(checkAvaiabilityRegis),
-      ]),
-    );
-    //   } else {
-    //     return const SizedBox();
-    //   }
-    // });
+    return ListView(
+        padding: EdgeInsets.fromLTRB(
+            spaceLG, spaceJumbo + spaceXMD, spaceLG, spaceLG),
+        children: [
+          getTitleLarge("Profile Data", primaryColor),
+          getDataDetailForm(checkAvaiabilityRegis),
+        ]);
   }
 }

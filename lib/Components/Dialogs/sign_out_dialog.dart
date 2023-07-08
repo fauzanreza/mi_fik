@@ -71,9 +71,6 @@ class StateSignOutDialog extends State<SignOutDialog> {
                       context: context,
                       builder: (BuildContext context) =>
                           SuccessDialog(text: body));
-                  Future.delayed(const Duration(seconds: 2), () {
-                    Get.back();
-                  });
                 } else if (code == 401) {
                   Get.off(() => const LoginPage());
 
@@ -81,9 +78,6 @@ class StateSignOutDialog extends State<SignOutDialog> {
                       context: context,
                       builder: (BuildContext context) =>
                           const SuccessDialog(text: "Sign out success"));
-                  Future.delayed(const Duration(seconds: 2), () {
-                    Get.back();
-                  });
                 } else {
                   showDialog<String>(
                       context: context,

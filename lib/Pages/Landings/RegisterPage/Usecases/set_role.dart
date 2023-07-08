@@ -46,24 +46,8 @@ class StateSetRole extends State<SetRole> {
     return ListView(
       children: [
         Container(
-            height: fullHeight * 0.75,
-            padding: EdgeInsets.all(spaceLG),
-            margin: EdgeInsets.fromLTRB(spaceLG, spaceJumbo, spaceLG, spaceLG),
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-              color: whiteColor,
-              boxShadow: [
-                BoxShadow(
-                  color: shadowColor.withOpacity(0.35),
-                  blurRadius: 10.0,
-                  spreadRadius: 1.0,
-                  offset: const Offset(
-                    5.0,
-                    5.0,
-                  ),
-                )
-              ],
-            ),
+            height: fullHeight * 0.9,
+            padding: EdgeInsets.fromLTRB(spaceMD, spaceXMD, spaceMD, spaceMD),
             child: getPicker(isWaiting))
       ],
     );

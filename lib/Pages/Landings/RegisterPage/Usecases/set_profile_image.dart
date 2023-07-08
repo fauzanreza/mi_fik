@@ -109,165 +109,137 @@ class StateSetProfileImage extends State<SetProfileImage> {
             }
 
             return ListView(
-              children: [
-                Container(
-                  height: fullHeight * 0.75,
-                  padding: EdgeInsets.all(spaceLG),
-                  margin: EdgeInsets.fromLTRB(
-                      spaceLG, spaceJumbo, spaceLG, spaceLG),
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    color: whiteColor,
-                    boxShadow: [
-                      BoxShadow(
-                        color: shadowColor.withOpacity(0.35),
-                        blurRadius: 10.0,
-                        spreadRadius: 1.0,
-                        offset: const Offset(
-                          5.0,
-                          5.0,
+                padding: EdgeInsets.fromLTRB(
+                    spaceLG, spaceJumbo + spaceMD, spaceLG, spaceLG),
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: getTitleLarge("Profile Picture", primaryColor),
+                  ),
+                  Stack(
+                    children: [
+                      Align(
+                        alignment: Alignment.center,
+                        child: Container(
+                          height: 200,
+                          width: 200,
+                          margin: EdgeInsets.symmetric(vertical: spaceJumbo),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(roundedCircle)),
+                            image: DecorationImage(
+                              image: getImageUser(uploadedImageRegis),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
-                      )
+                      ),
+                      WillPopScope(
+                          onWillPop: () {
+                            FullScreenMenu.hide();
+                          },
+                          child: Positioned(
+                              top: fullHeight * 0.225,
+                              right: fullWidth * 0.15,
+                              child: InkWell(
+                                  onTap: () {
+                                    FullScreenMenu.show(
+                                      context,
+                                      items: [
+                                        FSMenuItem(
+                                            icon: Icon(Icons.camera,
+                                                color: whiteColor),
+                                            text: Text('Camera'.tr,
+                                                style: TextStyle(
+                                                    fontSize: textMD)),
+                                            gradient: orangeGradient,
+                                            onTap: () async {
+                                              WidgetsFlutterBinding
+                                                  .ensureInitialized();
+                                              final cameras =
+                                                  await availableCameras();
+                                              FullScreenMenu.hide();
+                                              Get.to(() => CameraPage(
+                                                    camera: cameras.first,
+                                                    from: "register",
+                                                  ));
+                                            }),
+                                        FSMenuItem(
+                                          icon: Icon(Icons.folder,
+                                              color: whiteColor),
+                                          gradient: orangeGradient,
+                                          text: Text('File Picker'.tr,
+                                              style:
+                                                  TextStyle(fontSize: textMD)),
+                                          onTap: () async {
+                                            var file = await getImage();
+
+                                            if (file != null) {
+                                              await fireServicePost
+                                                  .sendImageUser(file)
+                                                  .then((value) {
+                                                EditUserImageModel data =
+                                                    EditUserImageModel(
+                                                        imageUrl: value);
+
+                                                commandService
+                                                    .putProfileImage(data)
+                                                    .then((response) {
+                                                  setState(
+                                                      () => isLoading = false);
+                                                  var status =
+                                                      response[0]['message'];
+                                                  var body =
+                                                      response[0]['body'];
+
+                                                  if (status == "success") {
+                                                    setState(() {
+                                                      uploadedImageRegis =
+                                                          value;
+                                                    });
+                                                    FullScreenMenu.hide();
+                                                  } else {
+                                                    FullScreenMenu.hide();
+                                                    showDialog<String>(
+                                                        context: context,
+                                                        builder: (BuildContext
+                                                                context) =>
+                                                            FailedDialog(
+                                                                text: body));
+                                                  }
+                                                });
+                                              });
+                                            }
+                                          },
+                                        ),
+                                        getResetImageProfile(image)
+                                      ],
+                                    );
+                                  },
+                                  child: Container(
+                                      padding: EdgeInsets.all(spaceSM * 0.8),
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              width: 3, color: whiteColor),
+                                          color: infoBG,
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(25))),
+                                      child: ClipRRect(
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(12)),
+                                        child: Image.asset(
+                                            'assets/icon/camera.png',
+                                            width: fullWidth * 0.085),
+                                      ))))),
                     ],
                   ),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: getTitleLarge("Profile Picture", primaryColor),
-                        ),
-                        Stack(
-                          children: [
-                            Container(
-                              height: 200,
-                              width: 200,
-                              margin:
-                                  EdgeInsets.symmetric(vertical: spaceJumbo),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(roundedLG)),
-                                image: DecorationImage(
-                                  image: getImageUser(uploadedImageRegis),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            WillPopScope(
-                                onWillPop: () {
-                                  FullScreenMenu.hide();
-                                },
-                                child: Positioned(
-                                    bottom: fullHeight * 0.05,
-                                    right: fullWidth * 0.005,
-                                    child: InkWell(
-                                        onTap: () {
-                                          FullScreenMenu.show(
-                                            context,
-                                            items: [
-                                              FSMenuItem(
-                                                  icon: Icon(Icons.camera,
-                                                      color: whiteColor),
-                                                  text: Text('Camera'.tr,
-                                                      style: TextStyle(
-                                                          fontSize: textMD)),
-                                                  gradient: orangeGradient,
-                                                  onTap: () async {
-                                                    WidgetsFlutterBinding
-                                                        .ensureInitialized();
-                                                    final cameras =
-                                                        await availableCameras();
-                                                    FullScreenMenu.hide();
-                                                    Get.to(() => CameraPage(
-                                                          camera: cameras.first,
-                                                          from: "register",
-                                                        ));
-                                                  }),
-                                              FSMenuItem(
-                                                icon: Icon(Icons.folder,
-                                                    color: whiteColor),
-                                                gradient: orangeGradient,
-                                                text: Text('File Picker'.tr,
-                                                    style: TextStyle(
-                                                        fontSize: textMD)),
-                                                onTap: () async {
-                                                  var file = await getImage();
-
-                                                  if (file != null) {
-                                                    await fireServicePost
-                                                        .sendImageUser(file)
-                                                        .then((value) {
-                                                      EditUserImageModel data =
-                                                          EditUserImageModel(
-                                                              imageUrl: value);
-
-                                                      commandService
-                                                          .putProfileImage(data)
-                                                          .then((response) {
-                                                        setState(() =>
-                                                            isLoading = false);
-                                                        var status = response[0]
-                                                            ['message'];
-                                                        var body =
-                                                            response[0]['body'];
-
-                                                        if (status ==
-                                                            "success") {
-                                                          setState(() {
-                                                            uploadedImageRegis =
-                                                                value;
-                                                          });
-                                                          FullScreenMenu.hide();
-                                                        } else {
-                                                          FullScreenMenu.hide();
-                                                          showDialog<String>(
-                                                              context: context,
-                                                              builder: (BuildContext
-                                                                      context) =>
-                                                                  FailedDialog(
-                                                                      text:
-                                                                          body));
-                                                        }
-                                                      });
-                                                    });
-                                                  }
-                                                },
-                                              ),
-                                              getResetImageProfile(image)
-                                            ],
-                                          );
-                                        },
-                                        child: Container(
-                                            padding:
-                                                EdgeInsets.all(spaceSM * 0.8),
-                                            decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    width: 3,
-                                                    color: whiteColor),
-                                                color: infoBG,
-                                                borderRadius:
-                                                    const BorderRadius.all(
-                                                        Radius.circular(25))),
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                      Radius.circular(12)),
-                                              child: Image.asset(
-                                                  'assets/icon/camera.png',
-                                                  width: fullWidth * 0.085),
-                                            ))))),
-                          ],
-                        ),
-                        Container(
-                            padding: EdgeInsets.fromLTRB(0, spaceLG, 0, 0),
-                            child: const GetInfoBox(
-                              page: "register",
-                              location: "add_profile_pic",
-                            )),
-                      ]),
-                )
-              ],
-            );
+                  Container(
+                      padding: EdgeInsets.fromLTRB(0, spaceLG, 0, 0),
+                      child: const GetInfoBox(
+                        page: "register",
+                        location: "add_profile_pic",
+                      )),
+                ]);
           } else {
             return const Center(child: CircularProgressIndicator());
           }

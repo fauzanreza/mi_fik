@@ -52,7 +52,8 @@ class StatePostLogin extends State<PostLogin> {
 
     return Container(
       padding: EdgeInsets.symmetric(vertical: 30, horizontal: spaceXMD),
-      margin: EdgeInsets.symmetric(horizontal: 20, vertical: fullHeight * 0.1),
+      margin:
+          EdgeInsets.symmetric(horizontal: 20, vertical: fullHeight * 0.075),
       decoration: BoxDecoration(
         color: whiteColor,
         borderRadius: BorderRadius.all(Radius.circular(roundedLG)),

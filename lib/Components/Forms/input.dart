@@ -40,12 +40,21 @@ Widget getInputTextRegis(
     }
   }
 
+  bool getObscure(type) {
+    if (type == "pass") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   return Container(
     padding: EdgeInsets.only(top: spaceSM * 0.2),
     child: TextField(
       cursorColor: darkColor,
       maxLength: len,
       autofocus: false,
+      obscureText: getObscure(type),
       controller: ctrl,
       onChanged: (val) {
         if (type == "username") {

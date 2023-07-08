@@ -25,6 +25,7 @@ class StateLoginPage extends State<LoginPage> {
             body: CustomPaint(
                 painter: CirclePainterSide(),
                 child: ListView(
+                  padding: EdgeInsets.zero,
                   children: [
                     const PostLogin(),
                     Container(
@@ -33,7 +34,7 @@ class StateLoginPage extends State<LoginPage> {
                       margin: EdgeInsets.only(
                           left: fullWidth * 0.2,
                           right: fullWidth * 0.2,
-                          top: 20,
+                          top: fullWidth * 0.05,
                           bottom: 20),
                       decoration: BoxDecoration(
                         color: whiteColor,

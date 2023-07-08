@@ -3,7 +3,7 @@ import 'package:mi_fik/Modules/Variables/style.dart';
 
 Widget getTitleLarge(String title, var color) {
   return Container(
-    padding: const EdgeInsets.symmetric(vertical: 6),
+    padding: EdgeInsets.symmetric(vertical: spaceXXSM),
     child: Text(title,
         style: TextStyle(
             color: color, fontSize: textLG, fontWeight: FontWeight.w500)),
@@ -12,7 +12,7 @@ Widget getTitleLarge(String title, var color) {
 
 Widget getTitleJumbo(String title, var color) {
   return Container(
-    padding: const EdgeInsets.symmetric(vertical: 7),
+    padding: EdgeInsets.symmetric(vertical: spaceXXSM + 1),
     child: Text(title,
         style: TextStyle(
             color: color, fontSize: textLG, fontWeight: FontWeight.bold)),
