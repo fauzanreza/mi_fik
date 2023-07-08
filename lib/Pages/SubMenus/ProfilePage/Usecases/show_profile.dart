@@ -54,14 +54,14 @@ class ShowProfile extends StatelessWidget {
                           child: getProfileImageSideBar(fullWidth, 0.3, image)),
                       const EditImage(),
                     ]),
-                    Text(username,
+                    Text("@$username",
                         style: TextStyle(
                             color: whiteColor,
-                            fontSize: textLG,
+                            fontSize: textXMD + 2,
                             fontWeight: FontWeight.w500)),
                     Container(
-                        margin:
-                            const EdgeInsets.only(top: 5, left: 5, right: 5),
+                        margin: EdgeInsets.only(
+                            top: spaceMini, left: spaceMini, right: spaceMini),
                         padding: EdgeInsets.symmetric(
                             vertical: spaceSM / 2, horizontal: spaceXMD),
                         decoration: BoxDecoration(
@@ -71,7 +71,7 @@ class ShowProfile extends StatelessWidget {
                         child: Text(role,
                             style: TextStyle(
                                 color: primaryColor,
-                                fontSize: textMD,
+                                fontSize: textXMD + 2,
                                 fontWeight: FontWeight.w500)))
                   ]),
             );

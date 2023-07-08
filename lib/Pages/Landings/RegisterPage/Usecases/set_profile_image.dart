@@ -64,7 +64,7 @@ class StateSetProfileImage extends State<SetProfileImage> {
               if (exist != null && exist != "null") {
                 return FSMenuItem(
                     icon: Icon(Icons.refresh, color: whiteColor),
-                    text: Text('Reset', style: TextStyle(fontSize: textMD)),
+                    text: Text('Reset', style: TextStyle(fontSize: textXMD)),
                     gradient: redGradient,
                     onTap: () async {
                       await fireServiceDelete.deleteImageUser().then((value) {
@@ -151,7 +151,7 @@ class StateSetProfileImage extends State<SetProfileImage> {
                                                 color: whiteColor),
                                             text: Text('Camera'.tr,
                                                 style: TextStyle(
-                                                    fontSize: textMD)),
+                                                    fontSize: textXMD)),
                                             gradient: orangeGradient,
                                             onTap: () async {
                                               WidgetsFlutterBinding
@@ -170,7 +170,7 @@ class StateSetProfileImage extends State<SetProfileImage> {
                                           gradient: orangeGradient,
                                           text: Text('File Picker'.tr,
                                               style:
-                                                  TextStyle(fontSize: textMD)),
+                                                  TextStyle(fontSize: textXMD)),
                                           onTap: () async {
                                             var file = await getImage();
 

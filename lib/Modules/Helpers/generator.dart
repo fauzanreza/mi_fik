@@ -225,8 +225,10 @@ Widget getHourChipLine(String dateStart, double width) {
               ),
               TextSpan(
                   text: " Just Started",
-                  style:
-                      TextStyle(color: warningBG, fontWeight: FontWeight.w500)),
+                  style: TextStyle(
+                      color: warningBG,
+                      fontSize: textMD,
+                      fontWeight: FontWeight.w500)),
             ],
           ),
         )

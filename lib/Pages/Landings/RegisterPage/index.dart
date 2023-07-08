@@ -284,7 +284,7 @@ class StateRegisterPage extends State<RegisterPage> {
             Text(
               'Next',
               style: TextStyle(
-                  fontSize: textMD,
+                  fontSize: textXMD,
                   color: successBG,
                   fontWeight: FontWeight.w500),
             ),
@@ -335,7 +335,7 @@ class StateRegisterPage extends State<RegisterPage> {
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                           color: shadowColor,
-                                          fontSize: textMD)))
+                                          fontSize: textXMD)))
                             ]),
                       ),
                       actions: <Widget>[
@@ -434,7 +434,7 @@ class StateRegisterPage extends State<RegisterPage> {
             Text(
               'To login',
               style: TextStyle(
-                  fontSize: textMD,
+                  fontSize: textXMD,
                   color: successBG,
                   fontWeight: FontWeight.w500),
             ),

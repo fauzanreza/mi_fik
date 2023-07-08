@@ -81,8 +81,8 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
                 items: [
                   FSMenuItem(
                       icon: Icon(Icons.camera, color: whiteColor),
-                      text:
-                          Text('Camera'.tr, style: TextStyle(fontSize: textMD)),
+                      text: Text('Camera'.tr,
+                          style: TextStyle(fontSize: textXMD)),
                       gradient: orangeGradient,
                       onTap: () async {
                         var file = await getCamera();
@@ -96,7 +96,7 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
                       }),
                   FSMenuItem(
                       icon: Icon(Icons.link, color: whiteColor),
-                      text: Text('URL', style: TextStyle(fontSize: textMD)),
+                      text: Text('URL', style: TextStyle(fontSize: textXMD)),
                       gradient: orangeGradient,
                       onTap: () {
                         var type = "attachment_url";
@@ -111,7 +111,7 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
                       }),
                   FSMenuItem(
                       icon: Icon(Icons.document_scanner, color: whiteColor),
-                      text: Text('Pdf', style: TextStyle(fontSize: textMD)),
+                      text: Text('Pdf', style: TextStyle(fontSize: textXMD)),
                       gradient: orangeGradient,
                       onTap: () async {
                         FilePickerResult result =
@@ -132,7 +132,7 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
                     icon: Icon(Icons.image_outlined, color: whiteColor),
                     gradient: orangeGradient,
                     text: Text('Image Picker'.tr,
-                        style: TextStyle(fontSize: textMD)),
+                        style: TextStyle(fontSize: textXMD)),
                     onTap: () async {
                       var file = await getImage();
                       var type = "attachment_image";
@@ -148,7 +148,7 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
                     icon: Icon(Icons.ondemand_video, color: whiteColor),
                     gradient: orangeGradient,
                     text: Text('Video Picker'.tr,
-                        style: TextStyle(fontSize: textMD)),
+                        style: TextStyle(fontSize: textXMD)),
                     onTap: () async {
                       var file = await getVideo();
                       var type = "attachment_video";
@@ -169,7 +169,7 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
             ),
             label: Text("Insert Attachment",
                 style: TextStyle(
-                    fontSize: textMD,
+                    fontSize: textXMD,
                     color: semidarkColor,
                     fontWeight: FontWeight.w400)),
           ),

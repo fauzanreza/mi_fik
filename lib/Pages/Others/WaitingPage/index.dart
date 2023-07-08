@@ -44,9 +44,9 @@ class StateWaitingPage extends State<WaitingPage> {
                     ),
                     getTitleJumbo("Waiting for Approval...", whiteColor),
                     Text("Soon, our Admin will give you access to the App",
-                        style: TextStyle(color: whiteColor, fontSize: textMD)),
+                        style: TextStyle(color: whiteColor, fontSize: textXMD)),
                     Text("It may take to 1-2 hr, please waiting",
-                        style: TextStyle(color: whiteColor, fontSize: textMD)),
+                        style: TextStyle(color: whiteColor, fontSize: textXMD)),
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: spaceLG),
                       child: getTitleJumbo("Or", whiteColor),

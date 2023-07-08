@@ -14,6 +14,6 @@ Widget getNoDataContainer(String title, double size) {
             margin: const EdgeInsets.symmetric(vertical: 10),
             child: Text(title,
                 textAlign: TextAlign.center,
-                style: TextStyle(color: shadowColor, fontSize: textMD)))
+                style: TextStyle(color: shadowColor, fontSize: textXMD)))
       ]);
 }

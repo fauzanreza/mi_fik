@@ -38,7 +38,7 @@ class StateFailedDialog extends State<FailedDialog> {
                   child: Text(
                       getMessageResponseFromObject(widget.text, widget.type),
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: shadowColor, fontSize: textMD)))
+                      style: TextStyle(color: shadowColor, fontSize: textXMD)))
             ]),
       ),
       actions: <Widget>[

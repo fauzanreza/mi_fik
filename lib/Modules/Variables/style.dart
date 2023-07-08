@@ -29,13 +29,14 @@ double roundedSM = 10;
 double roundedMini = 6; // Not used yet
 
 // Font size
-double textXL = 32;
-double textXLG = 25;
-double textLG = 22;
-double textMD = 16;
-double textSM = 13;
-double textXSM = 11.5;
-double textXXSM = 9.5;
+double textXJumbo = 32;
+double textJumbo = 24;
+double textXLG = 20;
+double textLG = 18;
+double textXMD = 14;
+double textMD = 13;
+double textSM = 12;
+double textXSM = 11;
 
 // Height & Width
 double btnHeightMD = 55;

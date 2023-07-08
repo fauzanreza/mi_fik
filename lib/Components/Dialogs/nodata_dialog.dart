@@ -31,7 +31,7 @@ class NoDataDialog extends StatelessWidget {
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   child: Text(text,
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: shadowColor, fontSize: textMD)))
+                      style: TextStyle(color: shadowColor, fontSize: textXMD)))
             ]),
       ),
       actions: <Widget>[

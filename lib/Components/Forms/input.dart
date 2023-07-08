@@ -12,6 +12,7 @@ Widget getInputText(int len, var ctrl, bool secure) {
       autofocus: false,
       controller: ctrl,
       obscureText: secure,
+      style: TextStyle(fontSize: textXMD),
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
         fillColor: hoverBG,
@@ -56,6 +57,7 @@ Widget getInputTextRegis(
       autofocus: false,
       obscureText: getObscure(type),
       controller: ctrl,
+      style: TextStyle(fontSize: textXMD),
       onChanged: (val) {
         if (type == "username") {
           usernameAvaiabilityCheck = val;
@@ -100,6 +102,7 @@ Widget getInputTextAtt(int len, String id, String obj) {
       cursorColor: darkColor,
       maxLength: len,
       autofocus: false,
+      style: TextStyle(fontSize: textXMD),
       onChanged: (value) {
         int idx = listAttachment.indexWhere((e) => e['id'] == id);
         listAttachment[idx][obj] = value.trim();
@@ -133,6 +136,7 @@ Widget getInputDesc(int len, int lines, var ctrl, bool secure) {
       obscureText: secure,
       maxLines: lines,
       minLines: lines,
+      style: TextStyle(fontSize: textXMD),
       decoration: InputDecoration(
         fillColor: hoverBG,
         filled: true,
@@ -169,7 +173,7 @@ Widget getDropDownMain(String slct, List<String> opt,
           height: 1.0,
           decoration: const BoxDecoration(border: null),
         ),
-        style: TextStyle(fontSize: textMD, color: primaryColor),
+        style: TextStyle(fontSize: textXMD, color: primaryColor),
         items: opt.map((String item) {
           if (separate) {
             return DropdownMenuItem<String>(

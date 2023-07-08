@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
@@ -70,11 +71,11 @@ class StatePostLogin extends State<PostLogin> {
               ),
             ),
             Text("Username",
-                style: TextStyle(color: darkColor, fontSize: textMD)),
+                style: TextStyle(color: darkColor, fontSize: textXMD)),
             getInputWarning(usernameMsg),
             getInputText(lnameLength, usernameCtrl, false),
             Text("Password",
-                style: TextStyle(color: darkColor, fontSize: textMD)),
+                style: TextStyle(color: darkColor, fontSize: textXMD)),
             getInputWarning(passMsg),
             getInputText(passwordLength, passCtrl, true),
             getInputWarning(allMsg),
@@ -166,31 +167,31 @@ class StatePostLogin extends State<PostLogin> {
                     )),
                     backgroundColor: MaterialStatePropertyAll<Color>(successBG),
                   ),
-                  child: const Text('Sign In'),
+                  child: Text('Sign In', style: TextStyle(fontSize: textMD)),
                 )),
             Container(
                 alignment: Alignment.center,
                 margin: EdgeInsets.only(top: spaceXMD * 2),
-                child: Wrap(runSpacing: 5, spacing: 5, children: [
-                  Container(
-                      padding: EdgeInsets.symmetric(vertical: spaceLG),
-                      child: const Text("already have an account?")),
-                  SizedBox(
-                    width: spaceLG,
-                  ),
-                  TextButton(
-                    style: TextButton.styleFrom(
-                        foregroundColor: primaryColor,
-                        padding: EdgeInsets.symmetric(
-                            vertical: spaceLG, horizontal: spaceXMD)),
-                    onPressed: () {
-                      Get.to(() => const RegisterPage(
-                            isLogged: false,
-                          ));
-                    },
-                    child: const Text('Register now'),
-                  ),
-                ]))
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                          padding: EdgeInsets.symmetric(vertical: spaceMD),
+                          child: Text("already have an account?",
+                              style: TextStyle(fontSize: textMD))),
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          foregroundColor: primaryColor,
+                        ),
+                        onPressed: () {
+                          Get.to(() => const RegisterPage(
+                                isLogged: false,
+                              ));
+                        },
+                        child: Text('Register now',
+                            style: TextStyle(fontSize: textMD)),
+                      ),
+                    ]))
           ]),
     );
   }

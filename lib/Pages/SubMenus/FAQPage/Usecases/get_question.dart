@@ -82,7 +82,7 @@ class StateGetAllQuestion extends State<GetAllQuestion> {
               expandedCrossAxisAlignment: CrossAxisAlignment.start,
               expandedAlignment: Alignment.topLeft,
               title: Text(ucFirst(contents[index].questionBody),
-                  style: TextStyle(fontSize: textMD - 1)),
+                  style: TextStyle(fontSize: textXMD - 1)),
               subtitle: Text(ucFirst(contents[index].questionType),
                   style: TextStyle(color: shadowColor)),
               children: [
@@ -90,7 +90,7 @@ class StateGetAllQuestion extends State<GetAllQuestion> {
                   "Answer".tr,
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
-                      fontSize: textMD,
+                      fontSize: textXMD,
                       color: successBG),
                 ),
                 Text(ucFirst(contents[index].questionAnswer))

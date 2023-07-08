@@ -4,6 +4,7 @@ import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
+import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Services/commands.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
@@ -63,15 +64,12 @@ class StatePostArchive extends State<PostArchive> {
           ),
           Container(
               padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
-              child: Text("New Archive".tr,
-                  style: TextStyle(
-                      color: primaryColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: textLG))),
+              alignment: Alignment.centerLeft,
+              child: getTitleLarge("New Archive".tr, primaryColor)),
           Container(
               padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
               child: Text("Archive Name".tr,
-                  style: TextStyle(color: darkColor, fontSize: textMD))),
+                  style: TextStyle(color: darkColor, fontSize: textXMD))),
           Container(
               padding: EdgeInsets.fromLTRB(spaceXMD, 0, spaceXMD, 0),
               child: getInputWarning(archiveNameMsg)),
@@ -84,7 +82,7 @@ class StatePostArchive extends State<PostArchive> {
           Container(
               padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
               child: Text("Description (optional)".tr,
-                  style: TextStyle(color: darkColor, fontSize: textMD))),
+                  style: TextStyle(color: darkColor, fontSize: textXMD))),
           Container(
               padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, spaceLG * 2),
               child: getInputDesc(255, 3, archiveDescCtrl, false)),

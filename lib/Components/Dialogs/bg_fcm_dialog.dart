@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class BgFcmDialog extends StatelessWidget {
-  const BgFcmDialog({Key key, this.title, this.body}) : super(key: key);
+  const BgFcmDialog({Key key, this.title, this.body, this.date})
+      : super(key: key);
   final String title;
   final String body;
+  final DateTime date;
 
   @override
   Widget build(BuildContext context) {
@@ -22,29 +25,41 @@ class BgFcmDialog extends StatelessWidget {
             width: fullWidth,
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Container(
-                alignment: Alignment.topRight,
-                child: IconButton(
-                  icon: const Icon(Icons.close),
-                  tooltip: 'Back',
-                  onPressed: () {
-                    Get.back();
-                  },
+              Row(children: [
+                Text(getItemTimeString(date),
+                    style: TextStyle(fontSize: textXMD, color: primaryColor)),
+                const Spacer(),
+                Container(
+                  alignment: Alignment.topRight,
+                  child: IconButton(
+                    icon: const Icon(Icons.close),
+                    tooltip: 'Back',
+                    onPressed: () {
+                      Get.back();
+                    },
+                  ),
                 ),
-              ),
+              ]),
+              Padding(
+                  padding: EdgeInsets.symmetric(vertical: spaceMini),
+                  child: Divider(
+                      thickness: 1, indent: spaceLG, endIndent: spaceLG)),
               Expanded(
                   child: ListView(
                 padding: EdgeInsets.symmetric(horizontal: spaceSM),
                 children: [
-                  Text(title,
-                      style: const TextStyle(fontWeight: FontWeight.w500)),
+                  Text(ucFirst(title),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: textXMD)),
                   SizedBox(
                     height: spaceJumbo,
                   ),
-                  Text(body),
+                  Text(body,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500, fontSize: textXMD)),
                   SizedBox(
                     height: spaceJumbo,
-                  ),
+                  )
                 ],
               )),
             ])));

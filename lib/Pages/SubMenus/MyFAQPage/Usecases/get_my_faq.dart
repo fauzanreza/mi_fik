@@ -105,14 +105,15 @@ class StateGetMyFAQ extends State<GetMyFAQ> {
             margin: EdgeInsets.only(bottom: spaceSM),
             padding: EdgeInsets.all(spaceSM),
             width: double.infinity,
-            decoration: const BoxDecoration(
-                color: Color(0xFFF5E6CB),
+            decoration: BoxDecoration(
+                color: const Color(0xFFF5E6CB),
                 // border: Border(
                 //     left: BorderSide(color: primaryColor)),
                 borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(14),
-                    bottomRight: Radius.circular(14))),
-            child: Text(text, style: TextStyle(color: darkColor)));
+                    topRight: Radius.circular(roundedMD),
+                    bottomRight: Radius.circular(roundedMD))),
+            child: Text(text,
+                style: TextStyle(color: darkColor, fontSize: textMD)));
       } else {
         return const SizedBox();
       }
@@ -158,9 +159,9 @@ class StateGetMyFAQ extends State<GetMyFAQ> {
             padding: EdgeInsets.all(spaceXMD - 2),
             margin: EdgeInsets.only(
                 left: fullWidth * 0.2, right: spaceXMD, top: spaceSM),
-            decoration: const BoxDecoration(
-                color: Color(0xFFE88F34),
-                borderRadius: BorderRadius.all(Radius.circular(14))),
+            decoration: BoxDecoration(
+                color: const Color(0xFFE88F34),
+                borderRadius: BorderRadius.all(Radius.circular(roundedMD))),
             child: Text(content.msgBody, style: TextStyle(color: whiteColor))),
         getHourText(
             content.createdAt,
@@ -175,9 +176,9 @@ class StateGetMyFAQ extends State<GetMyFAQ> {
             padding: EdgeInsets.all(spaceXMD - 2),
             margin: EdgeInsets.only(
                 right: fullWidth * 0.2, left: spaceXMD, top: spaceSM),
-            decoration: const BoxDecoration(
-                color: Color(0xFFE5E5EA),
-                borderRadius: BorderRadius.all(Radius.circular(14))),
+            decoration: BoxDecoration(
+                color: const Color(0xFFE5E5EA),
+                borderRadius: BorderRadius.all(Radius.circular(roundedMD))),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

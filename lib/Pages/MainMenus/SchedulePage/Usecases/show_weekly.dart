@@ -112,7 +112,7 @@ class GetWeeklyNavigator extends StatelessWidget {
                                     .toString(),
                                 style: TextStyle(
                                     color: getcolor(index),
-                                    fontSize: textXLG,
+                                    fontSize: textLG,
                                     fontWeight: FontWeight.w500))
                           ]),
                     ))
@@ -147,7 +147,7 @@ class GetWeeklyNavigator extends StatelessWidget {
                                   .toString(),
                               style: TextStyle(
                                   color: getcolor(index),
-                                  fontSize: textXLG,
+                                  fontSize: textLG,
                                   fontWeight: FontWeight.w500))
                         ]),
                   ));

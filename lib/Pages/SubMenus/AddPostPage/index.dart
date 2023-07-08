@@ -89,7 +89,7 @@ class StateAddPost extends State<AddPost> {
                                   "Are you sure want to leave? All changes will not be saved",
                                   style: TextStyle(
                                       color: darkColor,
-                                      fontSize: textMD,
+                                      fontSize: textXMD,
                                       fontWeight: FontWeight.w500)),
                               const SizedBox(height: 15),
                               Row(
@@ -418,7 +418,8 @@ class StateAddPost extends State<AddPost> {
                       backgroundColor:
                           MaterialStatePropertyAll<Color>(successBG),
                     ),
-                    child: Text('Publish Event'.tr),
+                    child: Text('Publish Event'.tr,
+                        style: TextStyle(fontSize: textMD)),
                   ))
             ],
           ),

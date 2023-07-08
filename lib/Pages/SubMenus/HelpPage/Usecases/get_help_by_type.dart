@@ -71,7 +71,7 @@ class StateGetHelpByType extends State<GetHelpByType> {
                             Text(content.helpCategory,
                                 style: TextStyle(
                                     fontWeight: FontWeight.w500,
-                                    fontSize: textMD,
+                                    fontSize: textXMD,
                                     color: darkColor)),
                             const SizedBox(height: 5),
                             HtmlWidget(content.helpBody),
@@ -85,7 +85,7 @@ class StateGetHelpByType extends State<GetHelpByType> {
                             Text(content.helpCategory,
                                 style: TextStyle(
                                     fontWeight: FontWeight.w500,
-                                    fontSize: textMD,
+                                    fontSize: textXMD,
                                     color: darkColor)),
                             const SizedBox(height: 5),
                             const Text("-"),

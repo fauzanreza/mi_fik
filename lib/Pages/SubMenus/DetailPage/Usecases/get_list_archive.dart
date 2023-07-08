@@ -226,7 +226,7 @@ class StateListArchive extends State<ListArchive> {
                     ),
                     child: Text('Save'.tr,
                         style: TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: textMD)),
+                            fontWeight: FontWeight.w500, fontSize: textXMD)),
                   ))
             ])));
   }

@@ -106,7 +106,7 @@ class _GetEditProfileState extends State<GetEditProfile> {
                           horizontal: 5, vertical: spaceXMD),
                       child: Text("Edit Profile".tr,
                           style: TextStyle(
-                              fontSize: textMD + 4,
+                              fontSize: textXMD + 4,
                               fontWeight: FontWeight.w500))),
                   children: [
                 Align(
@@ -180,7 +180,7 @@ class _GetEditProfileState extends State<GetEditProfile> {
                         const Spacer(),
                         Text("Submit".tr,
                             style: TextStyle(
-                                fontSize: textMD,
+                                fontSize: textXMD,
                                 fontWeight: FontWeight.w500,
                                 color: whiteColor))
                       ],

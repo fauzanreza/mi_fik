@@ -55,7 +55,7 @@ class StateGetAllTagCategory extends State<GetAllTagCategory> {
                     style: TextStyle(
                         color: darkColor,
                         fontWeight: FontWeight.bold,
-                        fontSize: textMD)),
+                        fontSize: textXMD)),
                 const Divider(
                   thickness: 1,
                 ),

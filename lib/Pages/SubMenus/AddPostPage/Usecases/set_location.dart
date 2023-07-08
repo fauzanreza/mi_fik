@@ -243,7 +243,7 @@ class StateSetLocation extends State<SetLocation>
       icon: Icon(Icons.location_on_outlined, size: 22, color: semidarkColor),
       label: Text(getButtonText(locCoordinateCtrl, widget.locDetailCtrl.text),
           style: TextStyle(
-              fontSize: textMD,
+              fontSize: textXMD,
               color: semidarkColor,
               fontWeight: FontWeight.w400)),
     );

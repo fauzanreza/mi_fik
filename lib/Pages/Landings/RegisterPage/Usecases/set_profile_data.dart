@@ -100,7 +100,7 @@ class StateSetProfileData extends State<SetProfileData>
                           TextSpan(
                             style: TextStyle(
                                 color: warningBG,
-                                fontSize: textMD,
+                                fontSize: textXMD,
                                 fontWeight: FontWeight.w500),
                             text: " Reset Username and Email".tr,
                           ),
@@ -236,7 +236,7 @@ class StateSetProfileData extends State<SetProfileData>
                     color: whiteColor,
                   ),
                   label:
-                      Text("Validate", style: TextStyle(fontSize: textMD - 2)),
+                      Text("Validate", style: TextStyle(fontSize: textXMD - 2)),
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(

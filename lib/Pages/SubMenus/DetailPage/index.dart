@@ -5,6 +5,7 @@ import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/query_contents.dart';
+import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Helpers/widget.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -107,7 +108,7 @@ class StateDetailPage extends State<DetailPage> {
                 ),
                 TextSpan(
                     text: " $result",
-                    style: TextStyle(color: darkColor, fontSize: textMD))
+                    style: TextStyle(color: darkColor, fontSize: textXMD))
               ],
             ),
           );
@@ -209,7 +210,7 @@ class StateDetailPage extends State<DetailPage> {
                             child: Column(children: [
                               Container(
                                 margin:
-                                    const EdgeInsets.symmetric(horizontal: 20),
+                                    EdgeInsets.symmetric(horizontal: spaceSM),
                                 padding: const EdgeInsets.only(bottom: 5),
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -224,9 +225,9 @@ class StateDetailPage extends State<DetailPage> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(contents[0].contentTitle,
+                                        Text(ucAll(contents[0].contentTitle),
                                             style: TextStyle(
-                                                fontSize: textMD,
+                                                fontSize: textXMD,
                                                 color: primaryColor,
                                                 fontWeight: FontWeight.bold)),
                                       ],

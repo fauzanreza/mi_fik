@@ -55,7 +55,7 @@ class StateDeleteArchive extends State<DeleteArchive> {
                                   "Are you sure want to delete this archive, all event related to this archive also will be deleted",
                                   style: TextStyle(
                                       color: darkColor,
-                                      fontSize: textMD,
+                                      fontSize: textXMD,
                                       fontWeight: FontWeight.w400)),
                               const SizedBox(height: 15),
                               Row(

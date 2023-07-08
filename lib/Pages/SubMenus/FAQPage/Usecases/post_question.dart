@@ -96,7 +96,7 @@ class StatePostQuestion extends State<PostQuestion> {
                       padding: EdgeInsets.only(left: spaceXMD),
                       child: Text("Question Type".tr,
                           style: TextStyle(
-                            fontSize: textMD - 1,
+                            fontSize: textXMD - 1,
                             fontFamily: 'Poppins',
                             color: darkColor,
                             fontWeight: FontWeight.w500,

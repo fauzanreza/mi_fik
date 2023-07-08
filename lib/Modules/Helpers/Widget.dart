@@ -43,6 +43,7 @@ Widget getUploadDateWidget(DateTime date) {
   return Text(result,
       style: TextStyle(
         color: whiteColor,
+        fontSize: textMD,
         fontWeight: FontWeight.w500,
       ));
 }
@@ -121,7 +122,7 @@ Widget getContentLoc(loc) {
           ),
           TextSpan(
               text: getLocationName(loc),
-              style: TextStyle(color: primaryColor, fontSize: textSM)),
+              style: TextStyle(color: primaryColor, fontSize: textMD)),
         ],
       ),
     );
@@ -142,7 +143,7 @@ Widget getTotalTag(tag) {
           ),
           TextSpan(
               text: total.toString(),
-              style: TextStyle(color: primaryColor, fontSize: textSM)),
+              style: TextStyle(color: primaryColor, fontSize: textMD)),
         ],
       ),
     );
@@ -193,7 +194,8 @@ Widget getTag(tag, height, ctx) {
                       contentPadding: EdgeInsets.all(spaceLG),
                       title: Text(
                         'All Tag',
-                        style: TextStyle(color: primaryColor, fontSize: textMD),
+                        style:
+                            TextStyle(color: primaryColor, fontSize: textXMD),
                       ),
                       content: SizedBox(
                           width: height,
@@ -253,7 +255,7 @@ Widget getContentHour(dateStart, dateEnd) {
           TextSpan(
               text:
                   " ${DateFormat("HH:mm").format(DateTime.parse(dateStart).add(Duration(hours: getUTCHourOffset())))} - ${DateFormat("HH:mm").format(DateTime.parse(dateEnd).add(Duration(hours: getUTCHourOffset())))}",
-              style: TextStyle(color: darkColor, fontSize: textMD)),
+              style: TextStyle(color: darkColor, fontSize: textXMD)),
         ],
       ),
     );
@@ -296,7 +298,9 @@ Widget getPeriodDateWidget(dateStart, dateEnd) {
                 TextSpan(
                     text: " About to start",
                     style: TextStyle(
-                        color: primaryColor, fontWeight: FontWeight.w500)),
+                        color: primaryColor,
+                        fontSize: textXMD,
+                        fontWeight: FontWeight.w500)),
               ],
             ),
           ));
@@ -312,7 +316,9 @@ Widget getPeriodDateWidget(dateStart, dateEnd) {
                 TextSpan(
                     text: " About to end",
                     style: TextStyle(
-                        color: warningBG, fontWeight: FontWeight.w500)),
+                        color: warningBG,
+                        fontSize: textXMD,
+                        fontWeight: FontWeight.w500)),
               ],
             ),
           ));
@@ -328,7 +334,9 @@ Widget getPeriodDateWidget(dateStart, dateEnd) {
                 TextSpan(
                     text: "Live".tr,
                     style: TextStyle(
-                        color: warningBG, fontWeight: FontWeight.w500)),
+                        color: warningBG,
+                        fontSize: textXMD,
+                        fontWeight: FontWeight.w500)),
               ],
             ),
           ));

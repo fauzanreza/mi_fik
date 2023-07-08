@@ -114,7 +114,7 @@ class StateSchedulePage extends State<SchedulePage>
                       labelColor: shadowColor,
                       indicatorColor: primaryColor,
                       labelStyle: TextStyle(
-                          fontSize: textMD, fontWeight: FontWeight.w500),
+                          fontSize: textXMD, fontWeight: FontWeight.w500),
                       indicatorPadding:
                           EdgeInsets.symmetric(horizontal: fullWidth * 0.1),
                       tabs: List.generate(tabColSchedule.length, (index) {

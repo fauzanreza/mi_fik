@@ -41,9 +41,7 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         style: TextStyle(
-            color: shadowColor,
-            fontWeight: FontWeight.w400,
-            fontSize: textSM - 1));
+            color: shadowColor, fontWeight: FontWeight.w400, fontSize: textSM));
   }
 
   @override
@@ -118,13 +116,13 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Text(widget.content.contentTitle,
+                                Text(ucAll(widget.content.contentTitle),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                         color: darkColor,
                                         fontWeight: FontWeight.bold,
-                                        fontSize: textMD - 1)),
+                                        fontSize: textXMD - 1)),
                                 const SizedBox(height: 1),
                                 getUsername(widget.content.acUsername,
                                     widget.content.ucUsername),
@@ -267,7 +265,7 @@ class GetScheduleContainer extends StatelessWidget {
                   Expanded(
                       // constraints: BoxConstraints(maxWidth: fullWidth * 0.6),
                       child: Text(
-                    "${content.contentTitle}",
+                    ucAll(content.contentTitle),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     style: TextStyle(
@@ -290,7 +288,7 @@ class GetScheduleContainer extends StatelessWidget {
                           DateTime.parse(content.dateEnd)
                               .add(Duration(hours: getUTCHourOffset()))),
                       fontWeight: FontWeight.w500,
-                      fontSize: textSM,
+                      fontSize: textMD,
                     ),
                   ),
                 ],

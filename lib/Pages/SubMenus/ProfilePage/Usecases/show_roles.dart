@@ -78,11 +78,11 @@ class StateShowRole extends State<ShowRole> {
             expandedCrossAxisAlignment: CrossAxisAlignment.start,
             expandedAlignment: Alignment.topLeft,
             title: Text(ucFirst("My Roles".tr),
-                style: TextStyle(fontSize: textMD - 1)),
+                style: TextStyle(fontSize: textXMD)),
             children: [
               Wrap(
-                  runSpacing: -5,
-                  spacing: 5,
+                  runSpacing: -spaceMini,
+                  spacing: spaceMini,
                   children: contents.map<Widget>((tag) {
                     return ElevatedButton.icon(
                       onPressed: () {
@@ -115,7 +115,7 @@ class StateShowRole extends State<ShowRole> {
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                       color: shadowColor,
-                                                      fontSize: textMD)))
+                                                      fontSize: textXMD)))
                                         ]),
                                   ),
                                   actions: <Widget>[

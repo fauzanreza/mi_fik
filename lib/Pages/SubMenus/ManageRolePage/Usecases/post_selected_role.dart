@@ -85,7 +85,7 @@ class StatePostSelectedRole extends State<PostSelectedRole> {
                         const Spacer(),
                         Text("Reset",
                             style: TextStyle(
-                                fontSize: textMD,
+                                fontSize: textXMD,
                                 fontWeight: FontWeight.w500,
                                 color: whiteColor))
                       ],
@@ -164,7 +164,7 @@ class StatePostSelectedRole extends State<PostSelectedRole> {
                         const Spacer(),
                         Text("Submit".tr,
                             style: TextStyle(
-                                fontSize: textMD,
+                                fontSize: textXMD,
                                 fontWeight: FontWeight.w500,
                                 color: whiteColor))
                       ],

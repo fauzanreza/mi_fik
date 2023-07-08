@@ -165,7 +165,7 @@ class StateLocationButton extends State<LocationButton>
                 ),
                 TextSpan(
                     text: getLocationName(widget.passLocation),
-                    style: TextStyle(fontSize: textMD, color: darkColor)),
+                    style: TextStyle(fontSize: textXMD, color: darkColor)),
               ],
             ),
           ));
@@ -186,7 +186,7 @@ class StateLocationButton extends State<LocationButton>
                 ),
                 TextSpan(
                     text: getLocationName(widget.passLocation),
-                    style: TextStyle(fontSize: textMD, color: darkColor)),
+                    style: TextStyle(fontSize: textXMD, color: darkColor)),
               ],
             ),
           ));

@@ -6,6 +6,7 @@ import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
 import 'package:mi_fik/Components/Forms/date_picker.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
+import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/command_tasks.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_tasks.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
@@ -67,24 +68,20 @@ class StatePostTask extends State<PostTask> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-            child: Text("New Task".tr,
-                style: TextStyle(
-                    color: primaryColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: textLG)),
-          ),
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+              alignment: Alignment.centerLeft,
+              child: getTitleLarge("New Task".tr, primaryColor)),
           Container(
               padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
               child: Text("Title".tr,
-                  style: TextStyle(color: darkColor, fontSize: textMD))),
+                  style: TextStyle(color: darkColor, fontSize: textXMD))),
           Container(
               padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
               child: getInputText(75, taskTitleCtrl, false)),
           Container(
               padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
               child: Text("Notes (optional)".tr,
-                  style: TextStyle(color: darkColor, fontSize: textMD))),
+                  style: TextStyle(color: darkColor, fontSize: textXMD))),
           Container(
               padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
               child: getInputDesc(75, 5, taskDescCtrl, false)),
@@ -198,7 +195,7 @@ class StatePostTask extends State<PostTask> {
                 style: ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll<Color>(successBG),
                 ),
-                child: Text('Done'.tr, style: TextStyle(fontSize: textMD)),
+                child: Text('Done'.tr, style: TextStyle(fontSize: textXMD)),
               ))
         ],
       ),

@@ -176,10 +176,11 @@ class StateGetNotification extends State<GetNotification> {
                                       margin: EdgeInsets.all(spaceSM),
                                       alignment: Alignment.topRight,
                                       child: Text(
-                                          getItemTimeString(notifs.createdAt),
+                                          getItemTimeString(
+                                              DateTime.parse(notifs.createdAt)),
                                           style: TextStyle(
                                               fontWeight: FontWeight.w500,
-                                              fontSize: textMD)),
+                                              fontSize: textXMD)),
                                     )
                                   ])));
                     });

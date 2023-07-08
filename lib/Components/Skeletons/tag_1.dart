@@ -43,7 +43,7 @@ class TagSkeleton1 extends StatelessWidget {
                             SkeletonAvatarStyle(width: textSM, height: textSM)),
                     SkeletonLine(
                       style: SkeletonLineStyle(
-                          height: textMD,
+                          height: textXMD,
                           width: len * 0.45,
                           borderRadius: BorderRadius.circular(8)),
                     )
@@ -81,7 +81,7 @@ class TagSkeleton1 extends StatelessWidget {
                             SkeletonAvatarStyle(width: textSM, height: textSM)),
                     SkeletonLine(
                       style: SkeletonLineStyle(
-                          height: textMD,
+                          height: textXMD,
                           width: len * 0.85,
                           borderRadius: BorderRadius.circular(8)),
                     )
@@ -119,7 +119,7 @@ class TagSkeleton1 extends StatelessWidget {
                             SkeletonAvatarStyle(width: textSM, height: textSM)),
                     SkeletonLine(
                       style: SkeletonLineStyle(
-                          height: textMD,
+                          height: textXMD,
                           width: len * 0.65,
                           borderRadius: BorderRadius.circular(8)),
                     )

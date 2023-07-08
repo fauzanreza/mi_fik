@@ -71,12 +71,12 @@ class LeftBar extends StatelessWidget {
                                         Text(username,
                                             style: TextStyle(
                                                 color: whiteColor,
-                                                fontSize: textMD,
+                                                fontSize: textXMD,
                                                 fontWeight: FontWeight.w500)),
                                         Text(role,
                                             style: TextStyle(
                                                 color: whiteColor,
-                                                fontSize: textMD,
+                                                fontSize: textXMD,
                                                 fontWeight: FontWeight.w500))
                                       ]),
                                 ),
@@ -124,10 +124,10 @@ class LeftBar extends StatelessWidget {
                                       const SignOutDialog());
                             },
                             icon: Icon(Icons.logout,
-                                size: textXLG, color: whiteColor),
+                                size: textLG, color: whiteColor),
                             label: Text("Log-Out".tr,
                                 style: TextStyle(
-                                    color: whiteColor, fontSize: textMD)),
+                                    color: whiteColor, fontSize: textXMD)),
                             style: ElevatedButton.styleFrom(),
                           ),
                         )

@@ -83,7 +83,7 @@ class StateIntroPage extends State<IntroPage> {
                                           ),
                                           child: Text('Next',
                                               style:
-                                                  TextStyle(fontSize: textMD)),
+                                                  TextStyle(fontSize: textXMD)),
                                         )
                                         //Need back button??
                                       ],
@@ -150,13 +150,13 @@ class StateIntroPage extends State<IntroPage> {
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: primaryColor,
-                                              fontSize: textLG,
+                                              fontSize: textXMD,
                                               fontWeight: FontWeight.w500)),
                                       Text("Every Information in one app",
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: primaryColor,
-                                              fontSize: textLG,
+                                              fontSize: textXMD,
                                               fontWeight: FontWeight.w500)),
                                     ])),
                                 Step(
@@ -197,13 +197,13 @@ class StateIntroPage extends State<IntroPage> {
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: primaryColor,
-                                              fontSize: textLG,
+                                              fontSize: textXMD,
                                               fontWeight: FontWeight.w500)),
                                       Text("and Activity",
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: primaryColor,
-                                              fontSize: textLG,
+                                              fontSize: textXMD,
                                               fontWeight: FontWeight.w500)),
                                     ])),
                                 Step(
@@ -244,7 +244,7 @@ class StateIntroPage extends State<IntroPage> {
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: primaryColor,
-                                              fontSize: textLG,
+                                              fontSize: textXMD,
                                               fontWeight: FontWeight.w500)),
                                       Container(
                                           margin:
@@ -364,7 +364,7 @@ class StateIntroPage extends State<IntroPage> {
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: primaryColor,
-                                              fontSize: textLG,
+                                              fontSize: textXMD,
                                               fontWeight: FontWeight.w500)),
                                       Container(
                                         margin: const EdgeInsets.symmetric(
@@ -374,7 +374,7 @@ class StateIntroPage extends State<IntroPage> {
                                             textAlign: TextAlign.justify,
                                             style: TextStyle(
                                                 color: primaryColor,
-                                                fontSize: textMD,
+                                                fontSize: textXMD,
                                                 fontWeight: FontWeight.w500)),
                                       ),
                                       Container(

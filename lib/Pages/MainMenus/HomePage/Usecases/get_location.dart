@@ -32,7 +32,7 @@ class StateGetLocation extends State<GetLocation> {
           ),
           TextSpan(
             text: getLocationNull(locName),
-            style: TextStyle(color: whiteColor, fontSize: textMD),
+            style: TextStyle(color: whiteColor, fontSize: textXMD),
           ),
         ],
       ),

@@ -242,7 +242,7 @@ class StateSheetFilter extends State<SheetFilter> {
                   value: sortingHomepageContent,
                   icon: const Icon(Icons.keyboard_arrow_down),
                   elevation: iconSM.toInt(),
-                  style: TextStyle(color: darkColor, fontSize: textMD),
+                  style: TextStyle(color: darkColor, fontSize: textXMD),
                   onChanged: (String value) {
                     sortingHomepageContent = value;
                   },
@@ -265,7 +265,7 @@ class StateSheetFilter extends State<SheetFilter> {
                         style: TextStyle(
                             color: primaryColor,
                             fontWeight: FontWeight.bold,
-                            fontSize: textMD)),
+                            fontSize: textXMD)),
                     const Spacer(),
                     outlinedButtonCustom(() {
                       selectedTagFilterContent.clear();

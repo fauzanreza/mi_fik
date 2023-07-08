@@ -40,7 +40,7 @@ class StateDeleteTask extends State<DeleteTask> {
               Text("Are you sure want to delete this '${widget.name}' task",
                   style: TextStyle(
                       color: darkColor,
-                      fontSize: textMD,
+                      fontSize: textXMD,
                       fontWeight: FontWeight.w400)),
               const SizedBox(height: 15),
               Row(

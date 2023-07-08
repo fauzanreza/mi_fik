@@ -118,12 +118,12 @@ class StateGetMyHistory extends State<GetMyHistory> {
                 style: TextStyle(
                   color: darkColor,
                   fontWeight: FontWeight.w500,
-                  fontSize: textMD,
+                  fontSize: textXMD,
                 ),
               ),
               const Spacer(),
               Text(
-                getItemTimeString(content.createdAt),
+                getItemTimeString(DateTime.parse(content.createdAt)),
                 style: TextStyle(
                   color: semidarkColor,
                   fontSize: textSM * 1.1,

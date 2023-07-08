@@ -13,6 +13,6 @@ Widget getAppbar(String title, var action) {
         ),
       ),
     ),
-    title: Text(title),
+    title: Text(title, style: TextStyle(fontSize: textLG)),
   );
 }

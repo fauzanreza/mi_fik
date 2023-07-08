@@ -71,14 +71,14 @@ class StateDayHeader extends State<DayHeader> with TickerProviderStateMixin {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
-            margin: const EdgeInsets.only(left: 15),
+            margin: EdgeInsets.only(left: spaceXMD),
             child: Column(
               children: [
                 Text(
                   DateFormat("EEE").format(widget.selectedDay),
                   style: TextStyle(
                     color: primaryColor,
-                    fontSize: textMD,
+                    fontSize: textXLG,
                     //fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -86,7 +86,7 @@ class StateDayHeader extends State<DayHeader> with TickerProviderStateMixin {
                   DateFormat("d").format(widget.selectedDay),
                   style: TextStyle(
                     color: primaryColor,
-                    fontSize: textLG,
+                    fontSize: textXMD,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -101,15 +101,15 @@ class StateDayHeader extends State<DayHeader> with TickerProviderStateMixin {
                 Text(
                   getTodayCalendarHeader(widget.selectedDay),
                   style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: textLG,
+                    color: shadowColor,
+                    fontSize: textXLG,
                   ),
                 ),
                 Text(
                   getTotalContext(contents),
                   style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: textSM,
+                    color: shadowColor,
+                    fontSize: textXMD,
                   ),
                 ),
               ],

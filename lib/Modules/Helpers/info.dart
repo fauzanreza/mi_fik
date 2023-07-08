@@ -37,7 +37,7 @@ class StateGetInfoBox extends State<GetInfoBox> {
       padding: EdgeInsets.all(spaceLG),
       decoration: BoxDecoration(
           color: getinfoBG(infoType),
-          borderRadius: const BorderRadius.all(Radius.circular(12))),
+          borderRadius: BorderRadius.all(Radius.circular(roundedMD))),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,7 +48,8 @@ class StateGetInfoBox extends State<GetInfoBox> {
               size: iconMD,
             ),
             SizedBox(width: spaceSM / 2),
-            Text(ucFirst(infoType), style: TextStyle(color: darkColor))
+            Text(ucFirst(infoType),
+                style: TextStyle(color: darkColor, fontSize: textMD))
           ],
         ),
         SizedBox(height: spaceXMD),

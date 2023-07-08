@@ -23,7 +23,7 @@ Widget getSignOutButtonWide(var ctx) {
           const Spacer(),
           Text("Log-Out".tr,
               style: TextStyle(
-                  fontSize: textMD,
+                  fontSize: textXMD,
                   fontWeight: FontWeight.w500,
                   color: whiteColor)),
           const Spacer(),
@@ -36,6 +36,7 @@ getSpeeDialChild(String title, var ctx, var cls, var icon) {
   return SpeedDialChild(
     child: Icon(icon),
     label: title,
+    labelStyle: TextStyle(fontSize: textXMD),
     backgroundColor: primaryColor,
     foregroundColor: whiteColor,
     onTap: () {
@@ -63,8 +64,9 @@ Widget getSideBarTile(double width, IconData icon, String title, var action) {
     alignment: Alignment.centerLeft,
     child: TextButton.icon(
       onPressed: action,
-      icon: Icon(icon, size: textXLG, color: whiteColor),
-      label: Text(title, style: TextStyle(color: whiteColor, fontSize: textMD)),
+      icon: Icon(icon, size: textLG, color: whiteColor),
+      label:
+          Text(title, style: TextStyle(color: whiteColor, fontSize: textXMD)),
       style: ElevatedButton.styleFrom(),
     ),
   );
@@ -75,7 +77,7 @@ Widget outlinedButtonCustom(var action, String title, IconData icon) {
     onPressed: action,
     label: Text(title,
         style: TextStyle(
-            color: warningBG, fontSize: textMD, fontWeight: FontWeight.w500)),
+            color: warningBG, fontSize: textXMD, fontWeight: FontWeight.w500)),
     icon: Icon(icon, color: warningBG),
   );
 }
@@ -96,7 +98,7 @@ Widget getProfileButton(
               children: [
                 Icon(iconStart, color: shadowColor, size: iconLG),
                 const SizedBox(width: 35),
-                Text(title, style: TextStyle(fontSize: textMD - 1)),
+                Text(title, style: TextStyle(fontSize: textXMD)),
                 const Spacer(),
                 Icon(iconEnd, color: shadowColor, size: iconLG),
               ],

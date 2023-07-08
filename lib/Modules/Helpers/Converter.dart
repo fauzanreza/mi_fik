@@ -25,6 +25,13 @@ String ucFirst(String val) {
   return res;
 }
 
+String ucAll(String val) {
+  List<String> words = val.split(' ');
+  words =
+      words.map((word) => word[0].toUpperCase() + word.substring(1)).toList();
+  return words.join(' ');
+}
+
 String removeHtmlTags(String htmlString) {
   RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
   return htmlString.replaceAll(exp, '');
@@ -72,7 +79,8 @@ getItemTimeString(date) {
     final now = DateTime.now();
 
     //Check this again!
-    date = DateTime.parse(getLocalConvertedDate(date));
+    date = DateTime.parse(
+        getLocalConvertedDate(DateFormat('yyyy-MM-dd HH:mm:ss').format(date)));
 
     final today = DateTime(now.year, now.month, now.day);
     final justNowHour = DateTime(now.hour);

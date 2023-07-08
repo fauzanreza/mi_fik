@@ -145,7 +145,7 @@ class StatePostFeedback extends State<PostFeedback> {
                             const Spacer(),
                             Text("Submit".tr,
                                 style: TextStyle(
-                                    fontSize: textMD,
+                                    fontSize: textXMD,
                                     fontWeight: FontWeight.w500,
                                     color: whiteColor))
                           ],

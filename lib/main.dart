@@ -17,6 +17,7 @@ import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mi_fik/Pages/Landings/RegisterPage/index.dart';
+import 'package:mi_fik/Pages/SubMenus/ProfilePage/index.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -97,15 +98,15 @@ Future<void> main() async {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       RemoteNotification notification = message.notification;
       AndroidNotification android = message.notification?.android;
-      if (notification != null && android != null) {
-        showDialog<String>(
-          context: Get.context,
-          builder: (BuildContext context) => BgFcmDialog(
+      // if (notification != null && android != null) {
+      showDialog<String>(
+        context: Get.context,
+        builder: (BuildContext context) => BgFcmDialog(
             title: message.notification.title,
             body: message.notification.body,
-          ),
-        );
-      }
+            date: message.sentTime),
+      );
+      //}
     });
 
     runApp(MyApp(signed: true, finishRegis: isFinishedRegis, lang: langKey));
@@ -184,21 +185,21 @@ class StateMyApp extends State<MyApp> {
     ]);
 
     final TextTheme textTheme = TextTheme(
-      displayLarge: GoogleFonts.poppins(),
-      displayMedium: GoogleFonts.poppins(),
-      displaySmall: GoogleFonts.poppins(),
-      headlineLarge: GoogleFonts.poppins(),
-      headlineMedium: GoogleFonts.poppins(),
-      headlineSmall: GoogleFonts.poppins(),
-      titleLarge: GoogleFonts.poppins(),
-      titleMedium: GoogleFonts.poppins(),
-      titleSmall: GoogleFonts.poppins(),
-      bodyLarge: GoogleFonts.poppins(),
-      bodyMedium: GoogleFonts.poppins(),
-      bodySmall: GoogleFonts.poppins(),
-      labelLarge: GoogleFonts.poppins(),
-      labelMedium: GoogleFonts.poppins(),
-      labelSmall: GoogleFonts.poppins(),
+      displayLarge: GoogleFonts.poppins(fontSize: textSM),
+      displayMedium: GoogleFonts.poppins(fontSize: textSM),
+      displaySmall: GoogleFonts.poppins(fontSize: textSM),
+      headlineLarge: GoogleFonts.poppins(fontSize: textSM),
+      headlineMedium: GoogleFonts.poppins(fontSize: textSM),
+      headlineSmall: GoogleFonts.poppins(fontSize: textSM),
+      titleLarge: GoogleFonts.poppins(fontSize: textSM),
+      titleMedium: GoogleFonts.poppins(fontSize: textSM),
+      titleSmall: GoogleFonts.poppins(fontSize: textSM),
+      bodyLarge: GoogleFonts.poppins(fontSize: textSM),
+      bodyMedium: GoogleFonts.poppins(fontSize: textSM),
+      bodySmall: GoogleFonts.poppins(fontSize: textSM),
+      labelLarge: GoogleFonts.poppins(fontSize: textSM),
+      labelMedium: GoogleFonts.poppins(fontSize: textSM),
+      labelSmall: GoogleFonts.poppins(fontSize: textSM),
       // headline1: GoogleFonts.poppins(),
       // headline2: GoogleFonts.poppins(),
       // headline3: GoogleFonts.poppins(),

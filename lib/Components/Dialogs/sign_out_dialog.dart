@@ -43,7 +43,7 @@ class StateSignOutDialog extends State<SignOutDialog> {
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   child: Text("Are you sure want to sign out?",
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: shadowColor, fontSize: textMD)))
+                      style: TextStyle(color: shadowColor, fontSize: textXMD)))
             ]),
       ),
       actions: <Widget>[

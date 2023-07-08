@@ -46,7 +46,7 @@ class _SetImageContentState extends State<SetImageContent> {
       if (exist != null && exist != "null") {
         return FSMenuItem(
             icon: Icon(Icons.refresh, color: whiteColor),
-            text: Text('Reset', style: TextStyle(fontSize: textMD)),
+            text: Text('Reset', style: TextStyle(fontSize: textXMD)),
             gradient: redGradient,
             onTap: () async {
               await fireServiceDelete
@@ -97,7 +97,7 @@ class _SetImageContentState extends State<SetImageContent> {
                       FSMenuItem(
                           icon: Icon(Icons.camera, color: whiteColor),
                           text: Text('Camera'.tr,
-                              style: TextStyle(fontSize: textMD)),
+                              style: TextStyle(fontSize: textXMD)),
                           gradient: orangeGradient,
                           onTap: () async {
                             var file = await getCamera();
@@ -116,7 +116,7 @@ class _SetImageContentState extends State<SetImageContent> {
                         icon: Icon(Icons.folder, color: whiteColor),
                         gradient: orangeGradient,
                         text: Text('File Picker'.tr,
-                            style: TextStyle(fontSize: textMD)),
+                            style: TextStyle(fontSize: textXMD)),
                         onTap: () async {
                           var file = await getImage();
 
