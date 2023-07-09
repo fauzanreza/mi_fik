@@ -20,7 +20,7 @@ class StateFailedDialog extends State<FailedDialog> {
 
     return AlertDialog(
       contentPadding: const EdgeInsets.all(10),
-      title: const Text('Error'),
+      title: Text('Error', style: TextStyle(fontSize: textXMD)),
       content: SizedBox(
         width: fullWidth,
         height: 210,
@@ -44,7 +44,7 @@ class StateFailedDialog extends State<FailedDialog> {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.pop(context, 'OK'),
-          child: const Text('OK'),
+          child: Text('OK', style: TextStyle(fontSize: textXMD)),
         ),
       ],
     );

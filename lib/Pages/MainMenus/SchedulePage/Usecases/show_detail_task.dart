@@ -44,7 +44,6 @@ class StateDetailTask extends State<DetailTask> {
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading = false;
 
     //Assign value to controller
     taskTitleCtrl.text = widget.data.contentTitle;
@@ -194,7 +193,7 @@ class StateDetailTask extends State<DetailTask> {
                           taskService
                               .updateTask(task, widget.data.id)
                               .then((response) {
-                            setState(() => isLoading = false);
+                            setState(() => {});
                             var status = response[0]['message'];
                             var body = response[0]['body'];
 
@@ -205,9 +204,6 @@ class StateDetailTask extends State<DetailTask> {
                                   context: context,
                                   builder: (BuildContext context) =>
                                       SuccessDialog(text: body));
-                              Future.delayed(const Duration(seconds: 2), () {
-                                Get.back();
-                              });
                             } else {
                               showDialog<String>(
                                   context: context,

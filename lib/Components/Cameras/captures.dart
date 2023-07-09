@@ -11,7 +11,7 @@ import 'package:mi_fik/Pages/SubMenus/ProfilePage/index.dart';
 class CameraPage extends StatefulWidget {
   const CameraPage({Key key, this.camera, this.from}) : super(key: key);
   final CameraDescription camera;
-  final from;
+  final String from;
 
   @override
   State<CameraPage> createState() => StateCameraPageState();

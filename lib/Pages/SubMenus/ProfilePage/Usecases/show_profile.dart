@@ -67,7 +67,7 @@ class ShowProfile extends StatelessWidget {
                         decoration: BoxDecoration(
                             color: whiteColor,
                             borderRadius:
-                                const BorderRadius.all(Radius.circular(10))),
+                                BorderRadius.all(Radius.circular(roundedSM))),
                         child: Text(role,
                             style: TextStyle(
                                 color: primaryColor,

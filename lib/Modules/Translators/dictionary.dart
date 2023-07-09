@@ -143,7 +143,12 @@ class Dictionaries extends Translations {
               "This Event doesn't have description",
           "Publish Event": "Publish Event",
           "This Event doesn't have attachment":
-              "This Event doesn't have attachment"
+              "This Event doesn't have attachment",
+          "don't have an account?": "don't have an account?",
+          "Register now": "Register now",
+          "Insert Attachment": "Insert Attachment",
+          "Are you sure want to sign out?": "Are you sure want to sign out?",
+          "Information": "Information"
         },
         'id_ID': {
           'Good Morning': 'Selamat Pagi',
@@ -285,7 +290,12 @@ class Dictionaries extends Translations {
               "Event ini tidak memiliki deskripsi",
           "Publish Event": "Simpan Event",
           "This Event doesn't have attachment":
-              "Event ini tidak memiliki tautan"
+              "Event ini tidak memiliki tautan",
+          "don't have an account?": "belum punya akun?",
+          "Register now": "Daftar sekarang",
+          "Insert Attachment": "Tambah Tautan",
+          "Are you sure want to sign out?": "Apakah Anda yakin ingin keluar?",
+          "Information": "Informasi"
         },
       };
 }

@@ -58,7 +58,6 @@ class StateShowRole extends State<ShowRole> {
 
   Widget _buildListView(List<MyTagModel> contents) {
     //double fullHeight = MediaQuery.of(context).size.height;
-    bool isLoading = false;
     double fullWidth = MediaQuery.of(context).size.width;
 
     return Card(
@@ -147,7 +146,7 @@ class StateShowRole extends State<ShowRole> {
                                           commandService
                                               .postUserReq(data)
                                               .then((response) {
-                                            setState(() => isLoading = false);
+                                            setState(() => {});
                                             var status = response[0]['message'];
                                             var body = response[0]['body'];
 
@@ -160,11 +159,6 @@ class StateShowRole extends State<ShowRole> {
                                                       (BuildContext context) =>
                                                           SuccessDialog(
                                                               text: body));
-                                              Future.delayed(
-                                                  const Duration(seconds: 2),
-                                                  () {
-                                                Get.back();
-                                              });
                                             } else {
                                               Get.offAll(
                                                   () => const ProfilePage());

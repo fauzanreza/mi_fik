@@ -55,7 +55,7 @@ class StateCalendarPageState extends State<CalendarPage> {
 
     return WillPopScope(
       onWillPop: () {
-        SystemNavigator.pop();
+        return SystemNavigator.pop();
       },
       child: Scaffold(
           key: scaffoldKey,

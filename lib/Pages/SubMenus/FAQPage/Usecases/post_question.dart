@@ -44,7 +44,6 @@ class StatePostQuestion extends State<PostQuestion> {
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading = false;
 
     return FloatingActionButton(
       onPressed: () async {
@@ -132,7 +131,7 @@ class StatePostQuestion extends State<PostQuestion> {
                             if (data.quType.isNotEmpty &&
                                 data.quType.isNotEmpty) {
                               apiService.postUserReq(data).then((response) {
-                                setState(() => isLoading = false);
+                                setState(() => {});
                                 var status = response[0]['message'];
                                 var body = response[0]['body'];
 
@@ -147,10 +146,7 @@ class StatePostQuestion extends State<PostQuestion> {
                                       context: context,
                                       builder: (BuildContext context) =>
                                           SuccessDialog(text: body));
-                                  Future.delayed(const Duration(seconds: 2),
-                                      () {
-                                    Get.back();
-                                  });
+
                                   quBodyCtrl.clear();
                                 } else {
                                   qbodyMsg = "";

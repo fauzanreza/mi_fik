@@ -141,7 +141,7 @@ class StateDetailPage extends State<DetailPage> {
 
       return WillPopScope(
           onWillPop: () {
-            Get.offAll(() => const BottomBar());
+            return Get.offAll(() => const BottomBar());
           },
           child: Scaffold(
             backgroundColor: whiteColor,
@@ -309,7 +309,7 @@ class StateDetailPage extends State<DetailPage> {
     } else {
       return WillPopScope(
           onWillPop: () {
-            Get.offAll(() => const BottomBar());
+            return Get.offAll(() => const BottomBar());
           },
           child: Scaffold(
             body: RefreshIndicator(

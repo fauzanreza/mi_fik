@@ -58,7 +58,6 @@ class StateAddPost extends State<AddPost> {
   Widget build(BuildContext context) {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading = false;
 
     getDiscard() {
       //Empty all input
@@ -361,7 +360,7 @@ class StateAddPost extends State<AddPost> {
                           if (content.contentTitle.isNotEmpty &&
                               content.contentDesc.isNotEmpty) {
                             apiCommand.postContent(content).then((response) {
-                              setState(() => isLoading = false);
+                              setState(() => {});
                               var status = response[0]['message'];
                               var body = response[0]['body'];
 
@@ -377,9 +376,6 @@ class StateAddPost extends State<AddPost> {
                                     context: context,
                                     builder: (BuildContext context) =>
                                         SuccessDialog(text: body));
-                                Future.delayed(const Duration(seconds: 2), () {
-                                  Get.back();
-                                });
                               } else {
                                 showDialog<String>(
                                     context: context,

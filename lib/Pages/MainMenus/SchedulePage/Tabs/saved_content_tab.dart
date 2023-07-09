@@ -77,7 +77,6 @@ class StateSavedContent extends State<SavedContent>
   Widget _buildListView(List<ScheduleModel> contents) {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading;
 
     if (contents != null) {
       return RefreshIndicator(
@@ -122,7 +121,7 @@ class StateSavedContent extends State<SavedContent>
                                   commandService
                                       .postContentView(content.slugName)
                                       .then((response) {
-                                    setState(() => isLoading = false);
+                                    setState(() => {});
                                     var status = response[0]['message'];
                                     var body = response[0]['body'];
 

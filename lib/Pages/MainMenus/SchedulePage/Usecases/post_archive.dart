@@ -42,7 +42,6 @@ class StatePostArchive extends State<PostArchive> {
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading = false;
 
     return Padding(
       padding: MediaQuery.of(context).viewInsets,
@@ -103,7 +102,7 @@ class StatePostArchive extends State<PostArchive> {
                   //Validator
                   if (archive.archiveName.isNotEmpty) {
                     archiveService.addArchive(archive).then((response) {
-                      setState(() => isLoading = false);
+                      setState(() => {});
                       var status = response[0]['message'];
                       var body = response[0]['body'];
 
@@ -113,9 +112,6 @@ class StatePostArchive extends State<PostArchive> {
                             context: context,
                             builder: (BuildContext context) =>
                                 SuccessDialog(text: body));
-                        Future.delayed(const Duration(seconds: 2), () {
-                          Get.back();
-                        });
                       } else {
                         archiveNameMsg = "";
                         archiveDescMsg = "";

@@ -19,7 +19,7 @@ import 'package:mi_fik/Pages/SubMenus/ProfilePage/index.dart';
 class ShowImage extends StatefulWidget {
   const ShowImage({Key key, this.path, this.from}) : super(key: key);
   final String path;
-  final from;
+  final String from;
 
   @override
   State<ShowImage> createState() => _ShowImageState();

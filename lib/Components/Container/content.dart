@@ -33,7 +33,11 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
     if (u1 != null) {
       username = "@$u1";
     } else if (u2 != null) {
-      username = "@$u2";
+      if (u2 == usernameKey) {
+        username = "You";
+      } else {
+        username = "@$u2";
+      }
     } else {
       username = "Unknown User".tr;
     }
@@ -46,8 +50,6 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
 
   @override
   Widget build(BuildContext context) {
-    bool isLoading;
-
     return Container(
         width: widget.width * 0.82,
         margin: EdgeInsets.only(bottom: spaceXLG),
@@ -153,7 +155,7 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
                     widget.servc
                         .postContentView(widget.content.slugName)
                         .then((response) {
-                      setState(() => isLoading = false);
+                      setState(() => {});
                       var status = response[0]['message'];
                       var body = response[0]['body'];
 

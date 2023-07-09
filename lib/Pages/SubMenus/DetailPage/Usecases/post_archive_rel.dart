@@ -12,7 +12,7 @@ class PostArchiveRelation extends StatefulWidget {
       : super(key: key);
   final String passSlug;
   final String ctx;
-  final margin;
+  final EdgeInsetsGeometry margin;
 
   @override
   StatePostArchiveRelation createState() => StatePostArchiveRelation();

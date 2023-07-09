@@ -5,13 +5,13 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mi_fik/Components/Cameras/captures.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
+import 'package:mi_fik/Components/Dialogs/loading_dialog.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
 import 'package:mi_fik/Modules/Firebases/Storages/User/add_image.dart';
 import 'package:mi_fik/Modules/Firebases/Storages/User/remove_image.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/SubMenus/ProfilePage/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EditImage extends StatefulWidget {
@@ -21,11 +21,13 @@ class EditImage extends StatefulWidget {
   State<EditImage> createState() => _EditImageState();
 }
 
-class _EditImageState extends State<EditImage> {
+class _EditImageState extends State<EditImage>
+    with SingleTickerProviderStateMixin {
   UserCommandsService commandService;
   PostImage fireServicePost;
   DeleteImage fireServiceDelete;
   XFile file;
+  AnimationController lottieController;
 
   @override
   void initState() {
@@ -33,6 +35,13 @@ class _EditImageState extends State<EditImage> {
     commandService = UserCommandsService();
     fireServicePost = PostImage();
     fireServiceDelete = DeleteImage();
+    lottieController = AnimationController(vsync: this);
+  }
+
+  @override
+  void dispose() {
+    lottieController.dispose();
+    super.dispose();
   }
 
   Future<XFile> getImage() async {
@@ -42,7 +51,6 @@ class _EditImageState extends State<EditImage> {
   @override
   Widget build(BuildContext context) {
     double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading;
 
     Future<UserProfileLeftBar> getToken() async {
       final prefs = await SharedPreferences.getInstance();
@@ -63,33 +71,40 @@ class _EditImageState extends State<EditImage> {
                     text: Text('Reset', style: TextStyle(fontSize: textXMD)),
                     gradient: redGradient,
                     onTap: () async {
+                      FullScreenMenu.hide();
+
                       await fireServiceDelete.deleteImageUser().then((value) {
                         if (value == true) {
                           EditUserImageModel data =
                               EditUserImageModel(imageUrl: null);
 
                           commandService.putProfileImage(data).then((response) {
-                            setState(() => isLoading = false);
+                            setState(() {});
                             var status = response[0]['message'];
                             var body = response[0]['body'];
 
                             if (status == "success") {
-                              FullScreenMenu.hide();
-                              Get.to(() => const ProfilePage());
-                            } else {
-                              FullScreenMenu.hide();
                               showDialog<String>(
                                   context: context,
+                                  barrierDismissible: false,
                                   builder: (BuildContext context) =>
-                                      FailedDialog(text: body));
+                                      const LoadingDialog(
+                                          url: "assets/json/remove-file.json",
+                                          destination: 'profile'));
+                            } else {
+                              showDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    FailedDialog(text: body),
+                              );
                             }
                           });
                         } else {
-                          FullScreenMenu.hide();
                           showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) => FailedDialog(
-                                  text: "Failed to reset image".tr));
+                            context: context,
+                            builder: (BuildContext context) =>
+                                FailedDialog(text: "Failed to reset image".tr),
+                          );
                         }
                       });
                     });
@@ -132,6 +147,7 @@ class _EditImageState extends State<EditImage> {
                                 onTap: () async {
                                   var file = await getImage();
 
+                                  FullScreenMenu.hide();
                                   if (file != null) {
                                     await fireServicePost
                                         .sendImageUser(file)
@@ -142,15 +158,20 @@ class _EditImageState extends State<EditImage> {
                                       commandService
                                           .putProfileImage(data)
                                           .then((response) {
-                                        setState(() => isLoading = false);
+                                        setState(() => {});
                                         var status = response[0]['message'];
                                         var body = response[0]['body'];
 
                                         if (status == "success") {
-                                          FullScreenMenu.hide();
-                                          Get.to(() => const ProfilePage());
+                                          showDialog<String>(
+                                              context: context,
+                                              barrierDismissible: false,
+                                              builder: (BuildContext context) =>
+                                                  const LoadingDialog(
+                                                      url:
+                                                          "assets/json/loading-att.json",
+                                                      destination: 'profile'));
                                         } else {
-                                          FullScreenMenu.hide();
                                           showDialog<String>(
                                               context: context,
                                               builder: (BuildContext context) =>

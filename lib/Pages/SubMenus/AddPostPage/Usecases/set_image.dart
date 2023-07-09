@@ -40,7 +40,6 @@ class _SetImageContentState extends State<SetImageContent> {
   Widget build(BuildContext context) {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading;
 
     Widget getResetImageProfile(String exist) {
       if (exist != null && exist != "null") {
@@ -91,16 +90,33 @@ class _SetImageContentState extends State<SetImageContent> {
             right: 20,
             child: InkWell(
                 onTap: () {
-                  FullScreenMenu.show(
-                    context,
-                    items: [
-                      FSMenuItem(
-                          icon: Icon(Icons.camera, color: whiteColor),
-                          text: Text('Camera'.tr,
-                              style: TextStyle(fontSize: textXMD)),
+                  FullScreenMenu.show(context,
+                      items: [
+                        FSMenuItem(
+                            icon: Icon(Icons.camera, color: whiteColor),
+                            text: Text('Camera'.tr,
+                                style: TextStyle(fontSize: textXMD)),
+                            gradient: orangeGradient,
+                            onTap: () async {
+                              var file = await getCamera();
+
+                              if (file != null) {
+                                await fireServicePost
+                                    .sendImageContent(file, "content_image")
+                                    .then((value) {
+                                  contentAttImage = value;
+                                });
+                                FullScreenMenu.hide();
+                                setState(() {});
+                              }
+                            }),
+                        FSMenuItem(
+                          icon: Icon(Icons.folder, color: whiteColor),
                           gradient: orangeGradient,
+                          text: Text('File Picker'.tr,
+                              style: TextStyle(fontSize: textXMD)),
                           onTap: () async {
-                            var file = await getCamera();
+                            var file = await getImage();
 
                             if (file != null) {
                               await fireServicePost
@@ -111,29 +127,11 @@ class _SetImageContentState extends State<SetImageContent> {
                               FullScreenMenu.hide();
                               setState(() {});
                             }
-                          }),
-                      FSMenuItem(
-                        icon: Icon(Icons.folder, color: whiteColor),
-                        gradient: orangeGradient,
-                        text: Text('File Picker'.tr,
-                            style: TextStyle(fontSize: textXMD)),
-                        onTap: () async {
-                          var file = await getImage();
-
-                          if (file != null) {
-                            await fireServicePost
-                                .sendImageContent(file, "content_image")
-                                .then((value) {
-                              contentAttImage = value;
-                            });
-                            FullScreenMenu.hide();
-                            setState(() {});
-                          }
-                        },
-                      ),
-                      getResetImageProfile(contentAttImage)
-                    ],
-                  );
+                          },
+                        ),
+                        getResetImageProfile(contentAttImage)
+                      ],
+                      backgroundColor: primaryLightBG);
                 },
                 child: Container(
                     padding: EdgeInsets.all(spaceSM * 0.8),

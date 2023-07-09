@@ -174,8 +174,6 @@ class StateGetRole extends State<GetRoleFeature> {
   List<ContentHeaderModel> contents = [];
   bool isLoading = false;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
 
   Future<Role> getTokenNLoc() async {
     final prefs = await SharedPreferences.getInstance();

@@ -27,7 +27,6 @@ class StateSignOutDialog extends State<SignOutDialog> {
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading = false;
 
     return AlertDialog(
       contentPadding: const EdgeInsets.all(10),
@@ -41,7 +40,7 @@ class StateSignOutDialog extends State<SignOutDialog> {
             children: [
               Container(
                   margin: const EdgeInsets.symmetric(vertical: 10),
-                  child: Text("Are you sure want to sign out?",
+                  child: Text("Are you sure want to sign out?".tr,
                       textAlign: TextAlign.center,
                       style: TextStyle(color: shadowColor, fontSize: textXMD)))
             ]),
@@ -60,7 +59,7 @@ class StateSignOutDialog extends State<SignOutDialog> {
 
             if (keyExists) {
               apiService.getSignOut().then((response) {
-                setState(() => isLoading = false);
+                setState(() => {});
                 var body = response[0]['body'];
                 var code = response[0]['code'];
 
@@ -94,7 +93,8 @@ class StateSignOutDialog extends State<SignOutDialog> {
                       const SuccessDialog(text: "Sign out success"));
             }
           },
-          child: Text("Sign Out", style: TextStyle(color: whiteColor)),
+          child: Text("Sign Out",
+              style: TextStyle(color: whiteColor, fontSize: textXMD)),
         )
       ],
     );

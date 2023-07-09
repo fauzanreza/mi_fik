@@ -40,10 +40,10 @@ Widget getProfileImageSideBar(double width, double size, String url) {
       margin: EdgeInsets.all(spaceSM),
       decoration: BoxDecoration(
         color: whiteColor,
-        borderRadius: BorderRadius.all(Radius.circular(roundedLG)),
+        borderRadius: BorderRadius.all(Radius.circular(roundedCircle)),
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(roundedLG)),
+        borderRadius: BorderRadius.all(Radius.circular(roundedCircle)),
         child: Image.asset('assets/icon/default_lecturer.png',
             width: width * size),
       ),

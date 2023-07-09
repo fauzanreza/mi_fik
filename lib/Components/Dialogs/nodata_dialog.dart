@@ -13,7 +13,7 @@ class NoDataDialog extends StatelessWidget {
 
     return AlertDialog(
       contentPadding: const EdgeInsets.all(10),
-      title: Text('Warning'.tr),
+      title: Text('Warning'.tr, style: TextStyle(fontSize: textXMD)),
       content: SizedBox(
         width: fullWidth,
         height: 210,
@@ -37,7 +37,7 @@ class NoDataDialog extends StatelessWidget {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.pop(context, 'OK'),
-          child: const Text('OK'),
+          child: Text('OK', style: TextStyle(fontSize: textXMD)),
         ),
       ],
     );

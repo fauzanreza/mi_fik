@@ -23,7 +23,7 @@ class StateSetLocation extends State<SetLocation>
     with SingleTickerProviderStateMixin {
   //Initial variable.
   //_MapsPageState(passIdFakses);
-  GoogleMapController _googleMapController;
+  //GoogleMapController _googleMapController;
   Marker _coordinate;
   bool servicestatus = false;
   bool haspermission = false;
@@ -88,19 +88,19 @@ class StateSetLocation extends State<SetLocation>
     //   //refresh UI
     // });
 
-    LocationSettings locationSettings = const LocationSettings(
-      accuracy: LocationAccuracy.high,
-      distanceFilter: 100,
-    );
+    // LocationSettings locationSettings = const LocationSettings(
+    //   accuracy: LocationAccuracy.high,
+    //   distanceFilter: 100,
+    // );
 
-    StreamSubscription<Position> positionStream =
-        Geolocator.getPositionStream(locationSettings: locationSettings)
-            .listen((Position position) {
-      mylong = position.longitude;
-      mylat = position.latitude;
+    // StreamSubscription<Position> positionStream =
+    //     Geolocator.getPositionStream(locationSettings: locationSettings)
+    //         .listen((Position position) {
+    //   mylong = position.longitude;
+    //   mylat = position.latitude;
 
-      setState(() {});
-    });
+    //   setState(() {});
+    // });
 
     String imgurl =
         "https://leonardhors.site/public/assets/img/87409344219_PAS_FOTO_2.jpg";
@@ -122,7 +122,7 @@ class StateSetLocation extends State<SetLocation>
     // double lng = double.parse(coordinate[1]);
 
     //Maps starting point.
-    final _initialCameraPosition = CameraPosition(
+    final initialCameraPosition = CameraPosition(
       target: LatLng(mylat, mylong),
       zoom: 14,
     );
@@ -160,9 +160,10 @@ class StateSetLocation extends State<SetLocation>
                           myLocationButtonEnabled: false,
                           zoomControlsEnabled: false,
                           myLocationEnabled: true,
-                          initialCameraPosition: _initialCameraPosition,
-                          onMapCreated: (controller) =>
-                              _googleMapController = controller,
+                          initialCameraPosition: initialCameraPosition,
+                          onMapCreated: (controller) => {
+                            //_googleMapController = controller,
+                          },
                           markers: {
                             if (_coordinate != null) _coordinate,
                           },

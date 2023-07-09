@@ -65,8 +65,8 @@ Widget getSideBarTile(double width, IconData icon, String title, var action) {
     child: TextButton.icon(
       onPressed: action,
       icon: Icon(icon, size: textLG, color: whiteColor),
-      label:
-          Text(title, style: TextStyle(color: whiteColor, fontSize: textXMD)),
+      label: Text(title,
+          style: TextStyle(color: whiteColor, fontSize: textXMD + 2)),
       style: ElevatedButton.styleFrom(),
     ),
   );

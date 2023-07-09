@@ -14,7 +14,7 @@ import 'package:mi_fik/Pages/SubMenus/ManageRolePage/index.dart';
 
 class PostSelectedRole extends StatefulWidget {
   const PostSelectedRole({Key key, this.back, this.isLogged}) : super(key: key);
-  final back;
+  final Widget back;
   final bool isLogged;
 
   @override
@@ -34,7 +34,6 @@ class StatePostSelectedRole extends State<PostSelectedRole> {
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
     //double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading = false;
 
     return ListView(
       children: <Widget>[
@@ -103,7 +102,7 @@ class StatePostSelectedRole extends State<PostSelectedRole> {
                     //Validator
                     if (data.userRole.isNotEmpty) {
                       apiService.postUserReq(data).then((response) {
-                        setState(() => isLoading = false);
+                        setState(() => {});
                         var status = response[0]['message'];
                         var body = response[0]['body'];
 
@@ -114,9 +113,6 @@ class StatePostSelectedRole extends State<PostSelectedRole> {
                                 context: context,
                                 builder: (BuildContext context) =>
                                     SuccessDialog(text: body));
-                            Future.delayed(const Duration(seconds: 2), () {
-                              Get.back();
-                            });
                           } else {
                             setState(() {
                               indexRegis = 5;

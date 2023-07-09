@@ -62,7 +62,6 @@ class StateDayEvent extends State<DayEvent> with TickerProviderStateMixin {
   Widget _buildListView(List<ScheduleModel> contents) {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading;
     bool hasShowFinished = false;
 
     if (contents != null) {
@@ -147,7 +146,7 @@ class StateDayEvent extends State<DayEvent> with TickerProviderStateMixin {
                             commandService
                                 .postContentView(content.slugName)
                                 .then((response) {
-                              setState(() => isLoading = false);
+                              setState(() => {});
                               var status = response[0]['message'];
                               var body = response[0]['body'];
 

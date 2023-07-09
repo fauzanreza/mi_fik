@@ -6,6 +6,7 @@ String passSlugContent;
 
 // Others
 String locName;
+String usernameKey;
 List listAttachment = [];
 List<Map<String, dynamic>> listArchiveCheck = [];
 TabController tabController;

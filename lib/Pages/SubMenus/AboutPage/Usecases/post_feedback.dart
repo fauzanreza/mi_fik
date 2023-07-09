@@ -38,8 +38,6 @@ class StatePostFeedback extends State<PostFeedback> {
 
   @override
   Widget build(BuildContext context) {
-    bool isLoading = false;
-
     return Container(
         padding: EdgeInsets.all(spaceLG),
         margin: EdgeInsets.all(spaceXMD),
@@ -96,7 +94,7 @@ class StatePostFeedback extends State<PostFeedback> {
                         if (data.fbBody != null ||
                             (data.rate >= 0 && data.rate <= 5)) {
                           apiService.postFeedback(data).then((response) {
-                            setState(() => isLoading = false);
+                            setState(() => {});
                             var status = response[0]['message'];
                             var body = response[0]['body'];
 
@@ -108,9 +106,6 @@ class StatePostFeedback extends State<PostFeedback> {
                                   context: context,
                                   builder: (BuildContext context) =>
                                       SuccessDialog(text: body));
-                              Future.delayed(const Duration(seconds: 2), () {
-                                Get.back();
-                              });
                             } else {
                               showDialog<String>(
                                   context: context,

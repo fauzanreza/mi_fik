@@ -52,10 +52,10 @@ class StateLocationButton extends State<LocationButton>
       //refresh UI
     });
 
-    LocationSettings locationSettings = const LocationSettings(
-      accuracy: LocationAccuracy.high,
-      distanceFilter: 100,
-    );
+    // LocationSettings locationSettings = const LocationSettings(
+    //   accuracy: LocationAccuracy.high,
+    //   distanceFilter: 100,
+    // );
 
     // String imgurl =
     //     "https://leonardhors.site/public/assets/img/87409344219_PAS_FOTO_2.jpg";

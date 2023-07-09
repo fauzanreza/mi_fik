@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mi_fik/Components/Cameras/captures.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
+import 'package:mi_fik/Components/Dialogs/loading_dialog.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
@@ -52,7 +53,6 @@ class StateSetProfileImage extends State<SetProfileImage> {
 
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading;
 
     return FutureBuilder<UserProfileLeftBar>(
         future: getToken(),
@@ -67,26 +67,30 @@ class StateSetProfileImage extends State<SetProfileImage> {
                     text: Text('Reset', style: TextStyle(fontSize: textXMD)),
                     gradient: redGradient,
                     onTap: () async {
+                      FullScreenMenu.hide();
+
                       await fireServiceDelete.deleteImageUser().then((value) {
                         if (value == true) {
                           EditUserImageModel data =
                               EditUserImageModel(imageUrl: null);
 
                           commandService.putProfileImage(data).then((response) {
-                            setState(() => isLoading = false);
+                            setState(() => {});
                             var status = response[0]['message'];
                             var body = response[0]['body'];
 
                             if (status == "success") {
-                              FullScreenMenu.hide();
+                              showDialog<String>(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (BuildContext context) =>
+                                      const LoadingDialog(
+                                          url: "assets/json/remove-file.json",
+                                          destination: null));
                               setState(() {
                                 uploadedImageRegis = null;
                               });
-                              Get.snackbar(
-                                  "Success", "Uploaded Image has been removed",
-                                  backgroundColor: whiteColor);
                             } else {
-                              FullScreenMenu.hide();
                               showDialog<String>(
                                   context: context,
                                   builder: (BuildContext context) =>
@@ -94,7 +98,6 @@ class StateSetProfileImage extends State<SetProfileImage> {
                             }
                           });
                         } else {
-                          FullScreenMenu.hide();
                           showDialog<String>(
                               context: context,
                               builder: (BuildContext context) =>
@@ -143,78 +146,87 @@ class StateSetProfileImage extends State<SetProfileImage> {
                               right: fullWidth * 0.15,
                               child: InkWell(
                                   onTap: () {
-                                    FullScreenMenu.show(
-                                      context,
-                                      items: [
-                                        FSMenuItem(
-                                            icon: Icon(Icons.camera,
+                                    FullScreenMenu.show(context,
+                                        items: [
+                                          FSMenuItem(
+                                              icon: Icon(Icons.camera,
+                                                  color: whiteColor),
+                                              text: Text('Camera'.tr,
+                                                  style: TextStyle(
+                                                      fontSize: textXMD)),
+                                              gradient: orangeGradient,
+                                              onTap: () async {
+                                                WidgetsFlutterBinding
+                                                    .ensureInitialized();
+                                                final cameras =
+                                                    await availableCameras();
+                                                FullScreenMenu.hide();
+                                                Get.to(() => CameraPage(
+                                                      camera: cameras.first,
+                                                      from: "register",
+                                                    ));
+                                              }),
+                                          FSMenuItem(
+                                            icon: Icon(Icons.folder,
                                                 color: whiteColor),
-                                            text: Text('Camera'.tr,
+                                            gradient: orangeGradient,
+                                            text: Text('File Picker'.tr,
                                                 style: TextStyle(
                                                     fontSize: textXMD)),
-                                            gradient: orangeGradient,
                                             onTap: () async {
-                                              WidgetsFlutterBinding
-                                                  .ensureInitialized();
-                                              final cameras =
-                                                  await availableCameras();
-                                              FullScreenMenu.hide();
-                                              Get.to(() => CameraPage(
-                                                    camera: cameras.first,
-                                                    from: "register",
-                                                  ));
-                                            }),
-                                        FSMenuItem(
-                                          icon: Icon(Icons.folder,
-                                              color: whiteColor),
-                                          gradient: orangeGradient,
-                                          text: Text('File Picker'.tr,
-                                              style:
-                                                  TextStyle(fontSize: textXMD)),
-                                          onTap: () async {
-                                            var file = await getImage();
+                                              var file = await getImage();
 
-                                            if (file != null) {
-                                              await fireServicePost
-                                                  .sendImageUser(file)
-                                                  .then((value) {
-                                                EditUserImageModel data =
-                                                    EditUserImageModel(
-                                                        imageUrl: value);
+                                              if (file != null) {
+                                                FullScreenMenu.hide();
+                                                await fireServicePost
+                                                    .sendImageUser(file)
+                                                    .then((value) {
+                                                  EditUserImageModel data =
+                                                      EditUserImageModel(
+                                                          imageUrl: value);
 
-                                                commandService
-                                                    .putProfileImage(data)
-                                                    .then((response) {
-                                                  setState(
-                                                      () => isLoading = false);
-                                                  var status =
-                                                      response[0]['message'];
-                                                  var body =
-                                                      response[0]['body'];
+                                                  commandService
+                                                      .putProfileImage(data)
+                                                      .then((response) {
+                                                    setState(() => {});
+                                                    var status =
+                                                        response[0]['message'];
+                                                    var body =
+                                                        response[0]['body'];
 
-                                                  if (status == "success") {
-                                                    setState(() {
-                                                      uploadedImageRegis =
-                                                          value;
-                                                    });
-                                                    FullScreenMenu.hide();
-                                                  } else {
-                                                    FullScreenMenu.hide();
-                                                    showDialog<String>(
-                                                        context: context,
-                                                        builder: (BuildContext
-                                                                context) =>
-                                                            FailedDialog(
-                                                                text: body));
-                                                  }
+                                                    if (status == "success") {
+                                                      showDialog<String>(
+                                                          context: context,
+                                                          barrierDismissible:
+                                                              false,
+                                                          builder: (BuildContext
+                                                                  context) =>
+                                                              const LoadingDialog(
+                                                                  url:
+                                                                      "assets/json/loading-att.json",
+                                                                  destination:
+                                                                      null));
+                                                      setState(() {
+                                                        uploadedImageRegis =
+                                                            value;
+                                                      });
+                                                    } else {
+                                                      FullScreenMenu.hide();
+                                                      showDialog<String>(
+                                                          context: context,
+                                                          builder: (BuildContext
+                                                                  context) =>
+                                                              FailedDialog(
+                                                                  text: body));
+                                                    }
+                                                  });
                                                 });
-                                              });
-                                            }
-                                          },
-                                        ),
-                                        getResetImageProfile(image)
-                                      ],
-                                    );
+                                              }
+                                            },
+                                          ),
+                                          getResetImageProfile(image)
+                                        ],
+                                        backgroundColor: primaryLightBG);
                                   },
                                   child: Container(
                                       padding: EdgeInsets.all(spaceSM * 0.8),

@@ -1,7 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
@@ -49,7 +48,6 @@ class StatePostLogin extends State<PostLogin> {
   Widget build(BuildContext context) {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading = false;
 
     return Container(
       padding: EdgeInsets.symmetric(vertical: 30, horizontal: spaceXMD),
@@ -100,12 +98,13 @@ class StatePostLogin extends State<PostLogin> {
                         AuthValidator.validateLogin(data);
                     if (valid['status']) {
                       apiService.postLogin(data, false).then((response) {
-                        setState(() => isLoading = false);
+                        setState(() => {});
                         var status = response[0]['message'];
                         var body = response[0]['body'];
                         var acc = response[0]['access'];
 
                         if (status == "success") {
+                          usernameKey = data.username;
                           if (acc) {
                             Get.to(() => const BottomBar());
                             userService.putFirebase(token);
@@ -177,7 +176,7 @@ class StatePostLogin extends State<PostLogin> {
                     children: [
                       Container(
                           padding: EdgeInsets.symmetric(vertical: spaceMD),
-                          child: Text("already have an account?",
+                          child: Text("don't have an account?".tr,
                               style: TextStyle(fontSize: textMD))),
                       TextButton(
                         style: TextButton.styleFrom(
@@ -188,7 +187,7 @@ class StatePostLogin extends State<PostLogin> {
                                 isLogged: false,
                               ));
                         },
-                        child: Text('Register now',
+                        child: Text('Register now'.tr,
                             style: TextStyle(fontSize: textMD)),
                       ),
                     ]))

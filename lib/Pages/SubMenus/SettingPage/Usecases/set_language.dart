@@ -53,13 +53,10 @@ class StateSetLanguage extends State<SetLanguage> {
               setState(() {
                 slctLang = value;
                 langctrl.switchLang('en', 'US');
-              });
-              showDialog<String>(
-                  context: context,
-                  builder: (BuildContext context) =>
-                      const SuccessDialog(text: "Language changed to English"));
-              Future.delayed(const Duration(seconds: 2), () {
-                Get.back();
+                showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => const SuccessDialog(
+                        text: "Language changed to English"));
               });
             },
           ),
@@ -77,13 +74,10 @@ class StateSetLanguage extends State<SetLanguage> {
               setState(() {
                 slctLang = value;
                 langctrl.switchLang('id', 'ID');
-              });
-              showDialog<String>(
-                  context: context,
-                  builder: (BuildContext context) => const SuccessDialog(
-                      text: "Bahasa diganti ke bahasa Indonesia"));
-              Future.delayed(const Duration(seconds: 2), () {
-                Get.back();
+                showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => const SuccessDialog(
+                        text: "Bahasa diganti ke bahasa Indonesia"));
               });
             },
           ),

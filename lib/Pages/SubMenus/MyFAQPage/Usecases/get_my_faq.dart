@@ -106,7 +106,7 @@ class StateGetMyFAQ extends State<GetMyFAQ> {
             padding: EdgeInsets.all(spaceSM),
             width: double.infinity,
             decoration: BoxDecoration(
-                color: const Color(0xFFF5E6CB),
+                color: primaryLightBG.withOpacity(0.7),
                 // border: Border(
                 //     left: BorderSide(color: primaryColor)),
                 borderRadius: BorderRadius.only(

@@ -48,7 +48,6 @@ class StatePostTask extends State<PostTask> {
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading = false;
 
     return Padding(
       padding: MediaQuery.of(context).viewInsets,
@@ -163,7 +162,7 @@ class StatePostTask extends State<PostTask> {
                       dateStartCtrl != null &&
                       dateEndCtrl != null) {
                     taskService.addTask(data).then((response) {
-                      setState(() => isLoading = false);
+                      setState(() => {});
                       var status = response[0]['message'];
                       var body = response[0]['body'];
 
@@ -174,9 +173,6 @@ class StatePostTask extends State<PostTask> {
                             context: context,
                             builder: (BuildContext context) =>
                                 SuccessDialog(text: body));
-                        Future.delayed(const Duration(seconds: 2), () {
-                          Get.back();
-                        });
                       } else {
                         showDialog<String>(
                             context: context,

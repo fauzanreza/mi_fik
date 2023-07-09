@@ -16,7 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class LeftBar extends StatelessWidget {
   const LeftBar({Key key}) : super(key: key);
 
-  Future<UserProfileLeftBar> getToken() async {
+  Future<UserProfileLeftBar> getMiniProfile() async {
     final prefs = await SharedPreferences.getInstance();
     final username = prefs.getString('username_key');
     final image = prefs.getString('image_key');
@@ -31,7 +31,7 @@ class LeftBar extends StatelessWidget {
     double fullWidth = MediaQuery.of(context).size.width;
 
     return FutureBuilder<UserProfileLeftBar>(
-        future: getToken(),
+        future: getMiniProfile(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             String username = snapshot.data.username;
@@ -71,12 +71,12 @@ class LeftBar extends StatelessWidget {
                                         Text(username,
                                             style: TextStyle(
                                                 color: whiteColor,
-                                                fontSize: textXMD,
+                                                fontSize: textXMD + 2,
                                                 fontWeight: FontWeight.w500)),
                                         Text(role,
                                             style: TextStyle(
                                                 color: whiteColor,
-                                                fontSize: textXMD,
+                                                fontSize: textXMD + 2,
                                                 fontWeight: FontWeight.w500))
                                       ]),
                                 ),
