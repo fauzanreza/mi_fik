@@ -52,10 +52,10 @@ class StateLocationButton extends State<LocationButton>
       //refresh UI
     });
 
-    LocationSettings locationSettings = const LocationSettings(
-      accuracy: LocationAccuracy.high,
-      distanceFilter: 100,
-    );
+    // LocationSettings locationSettings = const LocationSettings(
+    //   accuracy: LocationAccuracy.high,
+    //   distanceFilter: 100,
+    // );
 
     // String imgurl =
     //     "https://leonardhors.site/public/assets/img/87409344219_PAS_FOTO_2.jpg";
@@ -81,81 +81,78 @@ class StateLocationButton extends State<LocationButton>
       );
 
       return InkWell(
-          onTap: () => showDialog<String>(
-              context: context,
-              builder: (BuildContext context) => AlertDialog(
-                  insetPadding: EdgeInsets.all(spaceXMD),
-                  contentPadding: EdgeInsets.all(spaceLG),
-                  content: SizedBox(
-                    height:
-                        fullWidth, //Pop up height based on fullwidth (Square maps).
-                    width: fullWidth,
-                    child: Column(children: [
-                      Flexible(
-                        child: GoogleMap(
-                          myLocationButtonEnabled: false,
-                          zoomControlsEnabled: false,
-                          myLocationEnabled: true,
-                          initialCameraPosition: initialCameraPosition,
-                          onMapCreated: (controller) =>
-                              googleMapController = controller,
-                          markers: {
-                            if (_origin != null) _origin,
-                            if (_destination != null) _destination,
-                            Marker(
-                              markerId: MarkerId(widget.passSlugName),
-                              infoWindow: InfoWindow(
-                                  title: getLocationName(widget.passLocation)),
-                              icon: BitmapDescriptor.defaultMarkerWithHue(
-                                  BitmapDescriptor.hueOrange),
-                              position: LatLng(lat, lng),
-                            ),
-                            // Marker(
-                            //   markerId: const MarkerId("0"),
-                            //   infoWindow: const InfoWindow(title: "You"),
-
-                            //   icon: BitmapDescriptor.defaultMarkerWithHue(
-                            //       BitmapDescriptor.hueOrange),
-                            //   // icon: BitmapDescriptor.fromBytes(bytes),
-                            //   position: LatLng(
-                            //       double.parse(mylat), double.parse(mylong)),
-                            // )
-                          },
+          onTap: () => Get.dialog(AlertDialog(
+              insetPadding: EdgeInsets.all(spaceXMD),
+              contentPadding: EdgeInsets.all(spaceLG),
+              content: SizedBox(
+                height:
+                    fullWidth, //Pop up height based on fullwidth (Square maps).
+                width: fullWidth,
+                child: Column(children: [
+                  Flexible(
+                    child: GoogleMap(
+                      myLocationButtonEnabled: false,
+                      zoomControlsEnabled: false,
+                      myLocationEnabled: true,
+                      initialCameraPosition: initialCameraPosition,
+                      onMapCreated: (controller) =>
+                          googleMapController = controller,
+                      markers: {
+                        if (_origin != null) _origin,
+                        if (_destination != null) _destination,
+                        Marker(
+                          markerId: MarkerId(widget.passSlugName),
+                          infoWindow: InfoWindow(
+                              title: getLocationName(widget.passLocation)),
+                          icon: BitmapDescriptor.defaultMarkerWithHue(
+                              BitmapDescriptor.hueOrange),
+                          position: LatLng(lat, lng),
                         ),
-                      ),
-                      Container(
-                          padding: EdgeInsets.zero,
-                          margin: EdgeInsets.only(top: spaceLG),
-                          width: fullWidth,
-                          height: btnHeightMD - 10,
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              //Navigate through google maps w/ direction.
-                              String googleUrl =
-                                  //'https://www.google.com/maps/dir/Current+Location/?api=1&query=${lat},${lng}';
-                                  'https://www.google.com/maps/dir/Current+Location/$lat,$lng';
-                              if (await canLaunchUrl(Uri.parse(googleUrl))) {
-                                await launchUrl(Uri.parse(googleUrl));
-                              } else {
-                                Get.snackbar(
-                                    "Error", "Could not open the map".tr,
-                                    backgroundColor: whiteColor);
-                                // throw 'Could not open the map'.tr;
-                              }
-                            },
-                            style: ButtonStyle(
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
+                        // Marker(
+                        //   markerId: const MarkerId("0"),
+                        //   infoWindow: const InfoWindow(title: "You"),
+
+                        //   icon: BitmapDescriptor.defaultMarkerWithHue(
+                        //       BitmapDescriptor.hueOrange),
+                        //   // icon: BitmapDescriptor.fromBytes(bytes),
+                        //   position: LatLng(
+                        //       double.parse(mylat), double.parse(mylong)),
+                        // )
+                      },
+                    ),
+                  ),
+                  Container(
+                      padding: EdgeInsets.zero,
+                      margin: EdgeInsets.only(top: spaceLG),
+                      width: fullWidth,
+                      height: btnHeightMD - 10,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          //Navigate through google maps w/ direction.
+                          String googleUrl =
+                              //'https://www.google.com/maps/dir/Current+Location/?api=1&query=${lat},${lng}';
+                              'https://www.google.com/maps/dir/Current+Location/$lat,$lng';
+                          if (await canLaunchUrl(Uri.parse(googleUrl))) {
+                            await launchUrl(Uri.parse(googleUrl));
+                          } else {
+                            Get.snackbar("Error", "Could not open the map".tr,
+                                backgroundColor: whiteColor);
+                            // throw 'Could not open the map'.tr;
+                          }
+                        },
+                        style: ButtonStyle(
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              )),
-                              backgroundColor:
-                                  MaterialStatePropertyAll<Color>(primaryColor),
-                            ),
-                            child: const Text('Navigate'),
-                          ))
-                    ]),
-                  ))),
+                            borderRadius: BorderRadius.circular(10),
+                          )),
+                          backgroundColor:
+                              MaterialStatePropertyAll<Color>(primaryColor),
+                        ),
+                        child: const Text('Navigate'),
+                      ))
+                ]),
+              ))),
           child: RichText(
             text: TextSpan(
               children: [
@@ -171,12 +168,9 @@ class StateLocationButton extends State<LocationButton>
           ));
     } else {
       return InkWell(
-          onTap: () => showDialog<String>(
-              context: context,
-              builder: (BuildContext context) => const FailedDialog(
-                  text:
-                      "Something error with event location, please contact admin",
-                  type: "event")),
+          onTap: () => Get.dialog(const FailedDialog(
+              text: "Something error with event location, please contact admin",
+              type: "event")),
           child: RichText(
             text: TextSpan(
               children: [

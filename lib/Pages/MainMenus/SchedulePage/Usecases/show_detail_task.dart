@@ -8,6 +8,7 @@ import 'package:mi_fik/Components/Forms/date_picker.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/command_tasks.dart';
+import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_tasks.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
@@ -19,7 +20,7 @@ import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/post_archive_rel.dart'
 
 class DetailTask extends StatefulWidget {
   const DetailTask({Key key, this.data}) : super(key: key);
-  final data;
+  final ScheduleModel data;
 
   @override
   StateDetailTask createState() => StateDetailTask();
@@ -44,7 +45,6 @@ class StateDetailTask extends State<DetailTask> {
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading = false;
 
     //Assign value to controller
     taskTitleCtrl.text = widget.data.contentTitle;
@@ -194,35 +194,24 @@ class StateDetailTask extends State<DetailTask> {
                           taskService
                               .updateTask(task, widget.data.id)
                               .then((response) {
-                            setState(() => isLoading = false);
+                            setState(() => {});
                             var status = response[0]['message'];
                             var body = response[0]['body'];
 
                             if (status == "success") {
                               Get.offAll(() => const BottomBar());
 
-                              showDialog<String>(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      SuccessDialog(text: body));
-                              Future.delayed(const Duration(seconds: 2), () {
-                                Get.back();
-                              });
+                              Get.dialog(SuccessDialog(text: body));
                             } else {
-                              showDialog<String>(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      FailedDialog(
-                                          text: body, type: "addtask"));
+                              Get.dialog(
+                                  FailedDialog(text: body, type: "addtask"));
                             }
                           });
                         } else {
-                          showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) => const FailedDialog(
-                                  text:
-                                      "Create archive failed, field can't be empty",
-                                  type: "addtask"));
+                          Get.dialog(const FailedDialog(
+                              text:
+                                  "Create archive failed, field can't be empty",
+                              type: "addtask"));
                         }
                       },
                       style: ButtonStyle(

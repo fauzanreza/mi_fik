@@ -27,11 +27,10 @@ class StateSignOutDialog extends State<SignOutDialog> {
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading = false;
 
     return AlertDialog(
       contentPadding: const EdgeInsets.all(10),
-      title: Text('Warning'.tr),
+      title: Text('Warning'.tr, style: TextStyle(fontSize: textXMD)),
       content: SizedBox(
         width: fullWidth,
         height: 50,
@@ -41,7 +40,7 @@ class StateSignOutDialog extends State<SignOutDialog> {
             children: [
               Container(
                   margin: const EdgeInsets.symmetric(vertical: 10),
-                  child: Text("Are you sure want to sign out?",
+                  child: Text("Are you sure want to sign out?".tr,
                       textAlign: TextAlign.center,
                       style: TextStyle(color: shadowColor, fontSize: textXMD)))
             ]),
@@ -60,41 +59,27 @@ class StateSignOutDialog extends State<SignOutDialog> {
 
             if (keyExists) {
               apiService.getSignOut().then((response) {
-                setState(() => isLoading = false);
+                setState(() => {});
                 var body = response[0]['body'];
                 var code = response[0]['code'];
 
                 if (body == "Logout success" && code == 200) {
                   Get.off(() => const LoginPage());
-
-                  showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context) =>
-                          SuccessDialog(text: body));
+                  Get.dialog(SuccessDialog(text: body));
                 } else if (code == 401) {
                   Get.off(() => const LoginPage());
-
-                  showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context) =>
-                          const SuccessDialog(text: "Sign out success"));
+                  Get.dialog(const SuccessDialog(text: "Sign out success"));
                 } else {
-                  showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context) =>
-                          FailedDialog(text: body, type: "signout"));
+                  Get.dialog(FailedDialog(text: body, type: "signout"));
                 }
               });
             } else {
               Get.off(() => const LoginPage());
-
-              showDialog<String>(
-                  context: context,
-                  builder: (BuildContext context) =>
-                      const SuccessDialog(text: "Sign out success"));
+              Get.dialog(const SuccessDialog(text: "Sign out success"));
             }
           },
-          child: Text("Sign Out", style: TextStyle(color: whiteColor)),
+          child: Text("Sign Out".tr,
+              style: TextStyle(color: whiteColor, fontSize: textXMD)),
         )
       ],
     );

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/query_contents.dart';
@@ -78,7 +77,7 @@ class StateDayHeader extends State<DayHeader> with TickerProviderStateMixin {
                   DateFormat("EEE").format(widget.selectedDay),
                   style: TextStyle(
                     color: primaryColor,
-                    fontSize: textXLG,
+                    fontSize: textLG,
                     //fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -86,7 +85,7 @@ class StateDayHeader extends State<DayHeader> with TickerProviderStateMixin {
                   DateFormat("d").format(widget.selectedDay),
                   style: TextStyle(
                     color: primaryColor,
-                    fontSize: textXMD,
+                    fontSize: textLG,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

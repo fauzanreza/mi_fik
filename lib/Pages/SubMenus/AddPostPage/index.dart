@@ -58,7 +58,6 @@ class StateAddPost extends State<AddPost> {
   Widget build(BuildContext context) {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading = false;
 
     getDiscard() {
       //Empty all input
@@ -143,6 +142,7 @@ class StateAddPost extends State<AddPost> {
     return WillPopScope(
         onWillPop: () {
           getDiscard();
+          return null;
         },
         child: Scaffold(
           body: Column(
@@ -207,9 +207,14 @@ class StateAddPost extends State<AddPost> {
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                         child: getInputDesc(10000, 5, contentDescCtrl, false),
                       ),
+                      Padding(
+                          padding: EdgeInsets.symmetric(vertical: spaceMD),
+                          child: Divider(
+                              thickness: 1,
+                              indent: spaceLG,
+                              endIndent: spaceLG)),
                       Container(
                           margin: EdgeInsets.only(left: spaceLG),
-                          padding: EdgeInsets.only(top: spaceSM),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -224,8 +229,14 @@ class StateAddPost extends State<AddPost> {
                               const ChooseTag(),
                             ],
                           )),
+                      Padding(
+                          padding: EdgeInsets.symmetric(vertical: spaceMD),
+                          child: Divider(
+                              thickness: 1,
+                              indent: spaceLG,
+                              endIndent: spaceLG)),
                       Container(
-                          padding: EdgeInsets.fromLTRB(20, spaceLG, 20, 0),
+                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                           child: Row(
                             children: [
                               Column(
@@ -264,8 +275,14 @@ class StateAddPost extends State<AddPost> {
                               )
                             ],
                           )),
+                      Padding(
+                          padding: EdgeInsets.symmetric(vertical: spaceMD),
+                          child: Divider(
+                              thickness: 1,
+                              indent: spaceLG,
+                              endIndent: spaceLG)),
                       Container(
-                          padding: EdgeInsets.fromLTRB(20, spaceLG, 20, 0),
+                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -312,8 +329,14 @@ class StateAddPost extends State<AddPost> {
                                   }, "End", "datetime"),
                                 ])
                               ])),
+                      Padding(
+                          padding: EdgeInsets.symmetric(vertical: spaceMD),
+                          child: Divider(
+                              thickness: 1,
+                              indent: spaceLG,
+                              endIndent: spaceLG)),
                       Container(
-                          padding: EdgeInsets.fromLTRB(20, spaceLG, 20, 0),
+                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -326,8 +349,14 @@ class StateAddPost extends State<AddPost> {
                                     )),
                                 const SetFileAttachment()
                               ])),
+                      Padding(
+                          padding: EdgeInsets.symmetric(vertical: spaceMD),
+                          child: Divider(
+                              thickness: 1,
+                              indent: spaceLG,
+                              endIndent: spaceLG)),
                       Container(
-                          padding: EdgeInsets.fromLTRB(20, spaceLG, 20, 0),
+                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                           child: const GetInfoBox(
                             page: "homepage",
                             location: "add_event",
@@ -361,7 +390,7 @@ class StateAddPost extends State<AddPost> {
                           if (content.contentTitle.isNotEmpty &&
                               content.contentDesc.isNotEmpty) {
                             apiCommand.postContent(content).then((response) {
-                              setState(() => isLoading = false);
+                              setState(() => {});
                               var status = response[0]['message'];
                               var body = response[0]['body'];
 
@@ -373,45 +402,28 @@ class StateAddPost extends State<AddPost> {
                                 listAttachment = [];
                                 Get.offAll(() => const BottomBar());
 
-                                showDialog<String>(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        SuccessDialog(text: body));
-                                Future.delayed(const Duration(seconds: 2), () {
-                                  Get.back();
-                                });
+                                Get.dialog(SuccessDialog(text: body));
                               } else {
-                                showDialog<String>(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        FailedDialog(
-                                            text: body, type: "addevent"));
+                                Get.dialog(
+                                    FailedDialog(text: body, type: "addevent"));
                               }
                             });
                           } else {
-                            showDialog<String>(
-                                context: context,
-                                builder: (BuildContext context) =>
-                                    const FailedDialog(
-                                        text:
-                                            "Create event failed, field can't be empty",
-                                        type: "addevent"));
+                            Get.dialog(const FailedDialog(
+                                text:
+                                    "Create event failed, field can't be empty",
+                                type: "addevent"));
                           }
                         } else {
-                          showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) => const FailedDialog(
-                                  text:
-                                      "Create event failed, tag must be selected",
-                                  type: "addevent"));
+                          Get.dialog(const FailedDialog(
+                              text: "Create event failed, tag must be selected",
+                              type: "addevent"));
                         }
                       } else {
-                        showDialog<String>(
-                            context: context,
-                            builder: (BuildContext context) => const FailedDialog(
-                                text:
-                                    "Create event failed, date period must be selected",
-                                type: "addevent"));
+                        Get.dialog(const FailedDialog(
+                            text:
+                                "Create event failed, date period must be selected",
+                            type: "addevent"));
                       }
                     },
                     style: ButtonStyle(

@@ -74,7 +74,6 @@ class _GetEditProfileState extends State<GetEditProfile> {
       fNameCtrl.text = contents[0].firstName;
       lNameCtrl.text = contents[0].lastName;
       passCtrl.text = contents[0].password;
-      bool isLoading = false;
 
       return Theme(
           data: Theme.of(context).copyWith(
@@ -90,7 +89,8 @@ class _GetEditProfileState extends State<GetEditProfile> {
                     padding: EdgeInsets.all(spaceSM * 1),
                     decoration: BoxDecoration(
                       color: infoBG,
-                      borderRadius: const BorderRadius.all(Radius.circular(20)),
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(roundedXLG)),
                       border: Border.all(width: 3, color: whiteColor),
                     ),
                     child: Icon(Icons.edit, color: whiteColor),
@@ -136,32 +136,21 @@ class _GetEditProfileState extends State<GetEditProfile> {
                         data.firstName.length <= 35 &&
                         data.lastName.length <= 35) {
                       apiCommand.putProfileData(data).then((response) {
-                        setState(() => isLoading = false);
+                        setState(() => {});
                         var status = response[0]['message'];
                         var body = response[0]['body'];
 
                         if (status == "success") {
                           Get.to(() => const ProfilePage());
-                          showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  SuccessDialog(text: body));
-                          Future.delayed(const Duration(seconds: 2), () {
-                            Get.back();
-                          });
+                          Get.dialog(SuccessDialog(text: body));
                         } else {
-                          showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  FailedDialog(text: body, type: "editacc"));
+                          Get.dialog(FailedDialog(text: body, type: "editacc"));
                         }
                       });
                     } else {
-                      showDialog<String>(
-                          context: context,
-                          builder: (BuildContext context) => const FailedDialog(
-                              text: "Edit failed, field can't be empty",
-                              type: "editacc"));
+                      Get.dialog(const FailedDialog(
+                          text: "Edit failed, field can't be empty",
+                          type: "editacc"));
                     }
                   },
                   child: Container(
@@ -173,7 +162,7 @@ class _GetEditProfileState extends State<GetEditProfile> {
                         border: Border.all(color: whiteColor, width: 2),
                         color: successBG,
                         borderRadius:
-                            const BorderRadius.all(Radius.circular(10))),
+                            BorderRadius.all(Radius.circular(roundedSM))),
                     child: Row(
                       children: [
                         Icon(Icons.send, size: iconSM + 3, color: whiteColor),

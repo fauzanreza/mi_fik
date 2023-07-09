@@ -16,8 +16,8 @@ import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class PostTask extends StatefulWidget {
-  PostTask({Key key, this.text}) : super(key: key);
-  String text;
+  const PostTask({Key key, this.text}) : super(key: key);
+  final String text;
 
   @override
   StatePostTask createState() => StatePostTask();
@@ -48,7 +48,6 @@ class StatePostTask extends State<PostTask> {
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading = false;
 
     return Padding(
       padding: MediaQuery.of(context).viewInsets,
@@ -163,33 +162,22 @@ class StatePostTask extends State<PostTask> {
                       dateStartCtrl != null &&
                       dateEndCtrl != null) {
                     taskService.addTask(data).then((response) {
-                      setState(() => isLoading = false);
+                      setState(() => {});
                       var status = response[0]['message'];
                       var body = response[0]['body'];
 
                       if (status == "success") {
                         Get.offAll(const BottomBar());
 
-                        showDialog<String>(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                SuccessDialog(text: body));
-                        Future.delayed(const Duration(seconds: 2), () {
-                          Get.back();
-                        });
+                        Get.dialog(SuccessDialog(text: body));
                       } else {
-                        showDialog<String>(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                FailedDialog(text: body, type: "addtask"));
+                        Get.dialog(FailedDialog(text: body, type: "addtask"));
                       }
                     });
                   } else {
-                    showDialog<String>(
-                        context: context,
-                        builder: (BuildContext context) => const FailedDialog(
-                            text: "Create archive failed, field can't be empty",
-                            type: "addtask"));
+                    Get.dialog(const FailedDialog(
+                        text: "Create archive failed, field can't be empty",
+                        type: "addtask"));
                   }
                 },
                 style: ButtonStyle(

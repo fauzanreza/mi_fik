@@ -7,9 +7,7 @@ import 'package:mi_fik/Modules/Variables/style.dart';
 Widget getSignOutButtonWide(var ctx) {
   return InkWell(
       onTap: () {
-        showDialog<String>(
-            context: ctx,
-            builder: (BuildContext context) => const SignOutDialog());
+        Get.dialog(const SignOutDialog());
       },
       child: Container(
         margin:
@@ -65,8 +63,8 @@ Widget getSideBarTile(double width, IconData icon, String title, var action) {
     child: TextButton.icon(
       onPressed: action,
       icon: Icon(icon, size: textLG, color: whiteColor),
-      label:
-          Text(title, style: TextStyle(color: whiteColor, fontSize: textXMD)),
+      label: Text(title,
+          style: TextStyle(color: whiteColor, fontSize: textXMD + 2)),
       style: ElevatedButton.styleFrom(),
     ),
   );

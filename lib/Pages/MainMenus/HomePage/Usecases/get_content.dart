@@ -14,7 +14,7 @@ import 'package:mi_fik/Pages/SubMenus/DetailPage/index.dart';
 class GetContent extends StatefulWidget {
   const GetContent({Key key, this.scrollCtrl, this.item}) : super(key: key);
   final ScrollController scrollCtrl;
-  final item;
+  final List item;
 
   @override
   StateGetContent createState() => StateGetContent();
@@ -152,10 +152,7 @@ class StateGetContent extends State<GetContent> {
                       if (status == "success") {
                         Get.to(() => DetailPage(passSlug: content.slugName));
                       } else {
-                        showDialog<String>(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                FailedDialog(text: body, type: "openevent"));
+                        Get.dialog(FailedDialog(text: body, type: "openevent"));
                       }
                     });
 

@@ -130,7 +130,7 @@ class StateHomePage extends State<HomePage> {
                                 children: [
                                   getGreeting(getToday("part"), whiteColor),
                                   getTitleJumbo(getToday("clock"), whiteColor),
-                                  SizedBox(height: fullHeight * 0.05),
+                                  SizedBox(height: fullHeight * 0.03),
                                   Row(
                                     children: [
                                       getSubTitleMedium(getToday("date"),
@@ -174,8 +174,6 @@ class StateGetRole extends State<GetRoleFeature> {
   List<ContentHeaderModel> contents = [];
   bool isLoading = false;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
 
   Future<Role> getTokenNLoc() async {
     final prefs = await SharedPreferences.getInstance();
@@ -251,7 +249,7 @@ class StateGetRole extends State<GetRoleFeature> {
                   overlayColor: primaryColor,
                   overlayOpacity: 0.4,
                   children: [
-                    getSpeeDialChild("New Task".tr, context, PostTask(),
+                    getSpeeDialChild("New Task".tr, context, const PostTask(),
                         Icons.note_add_outlined),
                     getSpeeDialChild("New Post".tr, context, const AddPost(),
                         Icons.post_add_outlined),
@@ -265,7 +263,7 @@ class StateGetRole extends State<GetRoleFeature> {
                   overlayColor: primaryColor,
                   overlayOpacity: 0.4,
                   children: [
-                    getSpeeDialChild("New Task".tr, context, PostTask(),
+                    getSpeeDialChild("New Task".tr, context, const PostTask(),
                         Icons.note_add_outlined),
                   ],
                   child: Icon(Icons.add, size: iconLG));

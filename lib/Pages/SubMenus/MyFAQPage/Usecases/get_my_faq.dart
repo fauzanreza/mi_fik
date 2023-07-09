@@ -9,8 +9,7 @@ import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class GetMyFAQ extends StatefulWidget {
-  GetMyFAQ({Key key, this.scrollCtrl}) : super(key: key);
-  ScrollController scrollCtrl;
+  const GetMyFAQ({Key key}) : super(key: key);
 
   @override
   StateGetMyFAQ createState() => StateGetMyFAQ();
@@ -24,14 +23,14 @@ class StateGetMyFAQ extends State<GetMyFAQ> {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
   String dateChipBefore = "";
+  ScrollController scrollCtrl;
 
   @override
   void initState() {
     super.initState();
-    widget.scrollCtrl = ScrollController()
+    scrollCtrl = ScrollController()
       ..addListener(() {
-        if (widget.scrollCtrl.offset ==
-            widget.scrollCtrl.position.maxScrollExtent) {
+        if (scrollCtrl.offset == scrollCtrl.position.maxScrollExtent) {
           loadMoreFAQ();
         }
       });
@@ -75,7 +74,7 @@ class StateGetMyFAQ extends State<GetMyFAQ> {
         child: ListView.builder(
           padding: EdgeInsets.only(bottom: spaceXMD),
           itemCount: contents.length + 1,
-          controller: widget.scrollCtrl,
+          controller: scrollCtrl,
           reverse: true,
           itemBuilder: (BuildContext context, int index) {
             if (index < contents.length) {
@@ -106,7 +105,7 @@ class StateGetMyFAQ extends State<GetMyFAQ> {
             padding: EdgeInsets.all(spaceSM),
             width: double.infinity,
             decoration: BoxDecoration(
-                color: const Color(0xFFF5E6CB),
+                color: primaryLightBG.withOpacity(0.7),
                 // border: Border(
                 //     left: BorderSide(color: primaryColor)),
                 borderRadius: BorderRadius.only(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
-import 'package:mi_fik/Components/Skeletons/content_1.dart';
 import 'package:mi_fik/Modules/APIs/TagApi/Models/queries.dart';
 import 'package:mi_fik/Modules/APIs/TagApi/Services/queries.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Models/commands.dart';
@@ -49,7 +48,9 @@ class StateShowRole extends State<ShowRole> {
             List<MyTagModel> contents = snapshot.data;
             return _buildListView(contents);
           } else {
-            return const ContentSkeleton1();
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           }
         },
       ),
@@ -58,7 +59,6 @@ class StateShowRole extends State<ShowRole> {
 
   Widget _buildListView(List<MyTagModel> contents) {
     //double fullHeight = MediaQuery.of(context).size.height;
-    bool isLoading = false;
     double fullWidth = MediaQuery.of(context).size.width;
 
     return Card(
@@ -96,7 +96,8 @@ class StateShowRole extends State<ShowRole> {
                                   tag.slug != "staff") {
                                 return AlertDialog(
                                   contentPadding: const EdgeInsets.all(10),
-                                  title: Text('Warning'.tr),
+                                  title: Text('Warning'.tr,
+                                      style: TextStyle(fontSize: textXMD)),
                                   content: SizedBox(
                                     width: fullWidth,
                                     height: 80,
@@ -147,49 +148,32 @@ class StateShowRole extends State<ShowRole> {
                                           commandService
                                               .postUserReq(data)
                                               .then((response) {
-                                            setState(() => isLoading = false);
+                                            setState(() => {});
                                             var status = response[0]['message'];
                                             var body = response[0]['body'];
 
                                             if (status == "success") {
                                               Get.offAll(
                                                   () => const ProfilePage());
-                                              showDialog<String>(
-                                                  context: context,
-                                                  builder:
-                                                      (BuildContext context) =>
-                                                          SuccessDialog(
-                                                              text: body));
-                                              Future.delayed(
-                                                  const Duration(seconds: 2),
-                                                  () {
-                                                Get.back();
-                                              });
+                                              Get.dialog(
+                                                  SuccessDialog(text: body));
                                             } else {
                                               Get.offAll(
                                                   () => const ProfilePage());
 
-                                              showDialog<String>(
-                                                  context: context,
-                                                  builder:
-                                                      (BuildContext context) =>
-                                                          FailedDialog(
-                                                              text: body,
-                                                              type: "req"));
+                                              Get.dialog(FailedDialog(
+                                                  text: body, type: "req"));
                                             }
                                             setState(() {
                                               selectedRole.clear();
                                             });
                                           });
                                         } else {
-                                          showDialog<String>(
-                                              context: context,
-                                              builder: (BuildContext context) =>
-                                                  FailedDialog(
-                                                      text:
-                                                          "Request failed, you haven't chosen any tag yet"
-                                                              .tr,
-                                                      type: "req"));
+                                          Get.dialog(FailedDialog(
+                                              text:
+                                                  "Request failed, you haven't selected any tag yet"
+                                                      .tr,
+                                              type: "req"));
                                         }
                                       },
                                       child: Text("Yes".tr,

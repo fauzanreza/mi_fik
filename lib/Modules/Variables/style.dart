@@ -20,9 +20,9 @@ var importantItem = const Color(0xFFFCC4C4); // Not used yet
 var semiPrimary = const Color(0xFFFFF1DF);
 
 // Border Radius
-double roundedCircle = 1000;
+double roundedCircle = 100;
 double roundedJumbo = 30;
-double roundedXLG = 20; // Not used yet
+double roundedXLG = 20;
 double roundedLG = 18;
 double roundedMD = 14;
 double roundedSM = 10;

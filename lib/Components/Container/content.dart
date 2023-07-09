@@ -6,6 +6,8 @@ import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
+import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
+import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_contents.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
@@ -19,8 +21,8 @@ class GetHomePageEventContainer extends StatefulWidget {
       {Key key, this.width, this.content, this.servc})
       : super(key: key);
   final double width;
-  final content;
-  final servc;
+  final dynamic content;
+  final ContentCommandsService servc;
 
   @override
   StateGetHomePageEventContainer createState() =>
@@ -33,7 +35,11 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
     if (u1 != null) {
       username = "@$u1";
     } else if (u2 != null) {
-      username = "@$u2";
+      if (u2 == usernameKey) {
+        username = "You";
+      } else {
+        username = "@$u2";
+      }
     } else {
       username = "Unknown User".tr;
     }
@@ -46,8 +52,6 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
 
   @override
   Widget build(BuildContext context) {
-    bool isLoading;
-
     return Container(
         width: widget.width * 0.82,
         margin: EdgeInsets.only(bottom: spaceXLG),
@@ -153,7 +157,7 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
                     widget.servc
                         .postContentView(widget.content.slugName)
                         .then((response) {
-                      setState(() => isLoading = false);
+                      setState(() => {});
                       var status = response[0]['message'];
                       var body = response[0]['body'];
 
@@ -161,10 +165,7 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
                         Get.to(() =>
                             DetailPage(passSlug: widget.content.slugName));
                       } else {
-                        showDialog<String>(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                FailedDialog(text: body, type: "openevent"));
+                        Get.dialog(FailedDialog(text: body, type: "openevent"));
                       }
                     });
 
@@ -189,7 +190,7 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
 
 class GetScheduleContainer extends StatelessWidget {
   final double width;
-  final content;
+  final ScheduleModel content;
 
   const GetScheduleContainer({Key key, this.width, this.content})
       : super(key: key);
@@ -334,12 +335,12 @@ class GetAttachmentContainer extends StatefulWidget {
       this.idx,
       this.action})
       : super(key: key);
-  final data;
-  final item;
-  final others;
+  final dynamic data;
+  final Widget item;
+  final Widget others;
   final String id;
   final int idx;
-  final action;
+  final VoidCallback action;
 
   @override
   StateGetAttachmentContainer createState() => StateGetAttachmentContainer();

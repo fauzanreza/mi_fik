@@ -6,6 +6,7 @@ String passSlugContent;
 
 // Others
 String locName;
+String usernameKey;
 List listAttachment = [];
 List<Map<String, dynamic>> listArchiveCheck = [];
 TabController tabController;
@@ -33,8 +34,6 @@ bool isFinishedRegis = false;
 bool isWaiting = false;
 bool successValidateAnimation = false;
 
-String checkMsg = "";
-
 String usernameAvaiabilityCheck = "";
 String emailAvaiabilityCheck = "";
 
@@ -43,18 +42,27 @@ int validRegisCtrl;
 String fnameRegisCtrl = "";
 String lnameRegisCtrl = "";
 
+// Array selection
 var selectedRole = [];
-
 final selectedTag = [];
+
+// Initial Dropdown
 var slctQuestionType = "event";
 var slctFeedbackType = "feedback_design";
 var slctAttachmentType = "image";
 var slctReminderType = "reminder_3_hour_before";
 var slctValidUntil = "2023";
+
+// Inital calendar and schedule page
+DateTime slctSchedule = DateTime.now();
+DateTime slctCalendar = DateTime.now();
+
+// File upload max size
 int maxImage = 4;
 int maxVideo = 20;
 int maxDoc = 15;
 
+// Language
 enum LangList { en, id }
 
 LangList slctLang;
@@ -69,9 +77,6 @@ String contentAttImage;
 DateTime filterDateStart;
 DateTime filterDateEnd;
 var selectedTagFilterContent = [];
-
-DateTime slctSchedule = DateTime.now();
-DateTime slctCalendar = DateTime.now();
 
 // Filled by API dictionary
 List<String> questionTypeOpt = [];
@@ -114,7 +119,6 @@ class Role {
 
 // Firebase FCM
 bool shouldUseFirestoreEmulator = false;
-
 String token;
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(

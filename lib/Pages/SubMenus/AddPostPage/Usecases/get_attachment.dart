@@ -9,6 +9,7 @@ import 'package:mi_fik/Modules/Firebases/Storages/Content/remove_image.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/get_pdf.dart';
+// ignore: depend_on_referenced_packages
 import 'package:video_player/video_player.dart';
 
 class GetFileAttachment extends StatefulWidget {
@@ -32,7 +33,6 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading;
     int i = 0;
 
     resetItem(int idx) async {
@@ -95,10 +95,16 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
                   margin: EdgeInsets.symmetric(vertical: spaceLG),
                   child: Chewie(
                     controller: ChewieController(
+                      autoInitialize: true,
                       videoPlayerController:
                           VideoPlayerController.network(e['attach_url']),
                       autoPlay: false,
                       looping: false,
+                      allowFullScreen: false,
+                      materialProgressColors: ChewieProgressColors(
+                          playedColor: primaryColor,
+                          handleColor: infoBG,
+                          bufferedColor: primaryLightBG),
                       errorBuilder: (context, errorMessage) {
                         return Text(
                           errorMessage,

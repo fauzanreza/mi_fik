@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class SuccessDialog extends StatelessWidget {
@@ -12,7 +13,7 @@ class SuccessDialog extends StatelessWidget {
 
     return AlertDialog(
       contentPadding: const EdgeInsets.all(10),
-      title: const Text('Information'),
+      title: Text('Information'.tr, style: TextStyle(fontSize: textXMD)),
       content: SizedBox(
         width: fullWidth,
         height: 180,
@@ -37,7 +38,7 @@ class SuccessDialog extends StatelessWidget {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.pop(context, 'OK'),
-          child: const Text('OK'),
+          child: Text('OK', style: TextStyle(fontSize: textXMD)),
         ),
       ],
     );

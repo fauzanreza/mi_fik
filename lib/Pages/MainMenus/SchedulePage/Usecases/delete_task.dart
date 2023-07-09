@@ -28,7 +28,6 @@ class StateDeleteTask extends State<DeleteTask> {
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading = false;
 
     return SizedBox(
         height: 120,
@@ -51,25 +50,17 @@ class StateDeleteTask extends State<DeleteTask> {
                         padding: EdgeInsets.all(spaceLG * 0.8)),
                     onPressed: () async {
                       taskService.deleteTask(widget.id).then((response) {
-                        setState(() => isLoading = false);
+                        setState(() => {});
                         var status = response[0]['message'];
                         var body = response[0]['body'];
 
                         if (status == "success") {
                           Get.offAll(() => const BottomBar());
 
-                          showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  SuccessDialog(text: body));
-                          Future.delayed(const Duration(seconds: 2), () {
-                            Get.back();
-                          });
+                          Get.dialog(SuccessDialog(text: body));
                         } else {
-                          showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  FailedDialog(text: body, type: "deletetask"));
+                          Get.dialog(
+                              FailedDialog(text: body, type: "deletetask"));
                         }
                       });
                     },

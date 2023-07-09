@@ -1,9 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/APIs/TagApi/Models/queries.dart';
 import 'package:mi_fik/Modules/APIs/TagApi/Services/queries.dart';
+import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/ManageRolePage/Usecases/get_tag_bycat.dart';
 
@@ -41,28 +44,62 @@ class StateGetAllTagCategory extends State<GetAllTagCategory> {
             slug = contents[index]['slug_name'];
           }
 
-          return Container(
-            padding: EdgeInsets.all(spaceSM),
-            margin: EdgeInsets.only(bottom: spaceSM),
-            decoration: BoxDecoration(
-                color: whiteColor,
-                borderRadius: const BorderRadius.all(Radius.circular(10))),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
+          Widget getItem() {
+            return Container(
+              padding: EdgeInsets.all(spaceSM),
+              margin: EdgeInsets.only(bottom: spaceSM),
+              decoration: BoxDecoration(
+                  color: whiteColor,
+                  borderRadius: const BorderRadius.all(Radius.circular(10))),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(ucAll(dctName),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: darkColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: textXMD)),
+                  const Divider(
+                    thickness: 1,
+                  ),
+                  GetAllTagByCategory(slug: slug)
+                ],
+              ),
+            );
+          }
+
+          if (index == 0) {
+            return Column(
               children: [
-                Text(dctName,
-                    style: TextStyle(
-                        color: darkColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: textXMD)),
-                const Divider(
-                  thickness: 1,
-                ),
-                GetAllTagByCategory(slug: slug)
+                Container(
+                    padding:
+                        EdgeInsets.fromLTRB(spaceMD, spaceMD, spaceMD, spaceLG),
+                    margin: EdgeInsets.only(bottom: spaceSM),
+                    decoration: BoxDecoration(
+                        color: whiteColor,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10))),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        getTitleLarge("Choose Your Role".tr, primaryColor),
+                        SizedBox(height: spaceSM),
+                        Text(
+                            "Role system will shows your preferable information in your timeline, and you can save your information based on your roles to archive. Please choose your roles based on your academic situation right now.",
+                            textAlign: TextAlign.center,
+                            style:
+                                TextStyle(color: darkColor, fontSize: textMD)),
+                      ],
+                    )),
+                getItem()
               ],
-            ),
-          );
+            );
+          } else {
+            return getItem();
+          }
         });
   }
 

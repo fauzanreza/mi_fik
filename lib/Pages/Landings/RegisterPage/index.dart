@@ -73,10 +73,8 @@ class StateRegisterPage extends State<RegisterPage> {
         borderRadius: defaultSkipButtonBorderRadius,
         onTap: () async {
           if (selectedRole.isEmpty && !isChooseRole && indexRegis == 4) {
-            showDialog<String>(
-                context: context,
-                builder: (BuildContext context) =>
-                    NoDataDialog(text: "You haven't selected any tag yet".tr));
+            Get.dialog(
+                NoDataDialog(text: "You haven't selected any tag yet".tr));
           } else if (selectedRole.isNotEmpty &&
               !isChooseRole &&
               indexRegis == 4) {
@@ -172,10 +170,7 @@ class StateRegisterPage extends State<RegisterPage> {
                       }
                     });
 
-                    showDialog<String>(
-                        context: context,
-                        builder: (BuildContext context) =>
-                            FailedDialog(text: body, type: "register"));
+                    Get.dialog(FailedDialog(text: body, type: "register"));
                   }
                 });
               } else {
@@ -186,10 +181,7 @@ class StateRegisterPage extends State<RegisterPage> {
                 } else if (valid['loc'] == "password") {
                   passMsg = valid['message'];
                 }
-                showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) =>
-                        FailedDialog(text: valid['message'], type: "regis"));
+                Get.dialog(FailedDialog(text: valid['message'], type: "regis"));
               }
             } else {
               if (checkAvaiabilityRegis) {
@@ -207,11 +199,8 @@ class StateRegisterPage extends State<RegisterPage> {
                     passMsg = "";
                   }
                 });
-                showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) => const FailedDialog(
-                        text: "Please fill the remaining field",
-                        type: "register"));
+                Get.dialog(const FailedDialog(
+                    text: "Please fill the remaining field", type: "register"));
               } else {
                 if (usernameAvaiabilityCheck.trim() == "" ||
                     emailAvaiabilityCheck.trim() == "") {
@@ -230,22 +219,18 @@ class StateRegisterPage extends State<RegisterPage> {
                   });
                 }
 
-                showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) => const FailedDialog(
-                        text: "Please register your account first",
-                        type: "register"));
+                Get.dialog(const FailedDialog(
+                    text: "Please register your account first",
+                    type: "register"));
               }
             }
           } else if (!isCheckedRegister && indexRegis == 1) {
             setState(() {
-              checkMsg = "You haven't accept the terms & condition";
+              checkMsg = "You haven't accept the terms & condition".tr;
             });
-            showDialog<String>(
-                context: context,
-                builder: (BuildContext context) => const FailedDialog(
-                    text: "You haven't accept the terms & condition",
-                    type: "register"));
+            Get.dialog(FailedDialog(
+                text: "You haven't accept the terms & condition".tr,
+                type: "register"));
           } else {
             setState(() {
               if (isCheckedRegister) {
@@ -314,65 +299,58 @@ class StateRegisterPage extends State<RegisterPage> {
         borderRadius: defaultSkipButtonBorderRadius,
         onTap: () {
           if (isFirst) {
-            showDialog<String>(
-                context: context,
-                builder: (BuildContext context) => AlertDialog(
-                      contentPadding: const EdgeInsets.all(10),
-                      title: Text('Warning'.tr),
-                      content: SizedBox(
-                        width: width,
-                        height: 75,
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                  margin:
-                                      const EdgeInsets.symmetric(vertical: 10),
-                                  child: Text(
-                                      "Are you sure want to close the registration?"
-                                          .tr,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          color: shadowColor,
-                                          fontSize: textXMD)))
-                            ]),
-                      ),
-                      actions: <Widget>[
-                        ElevatedButton(
-                          style: ButtonStyle(
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(roundedSM),
-                            )),
-                            backgroundColor:
-                                MaterialStatePropertyAll<Color>(warningBG),
-                          ),
-                          onPressed: () async {
-                            indexRegis = 0;
-                            usernameAvaiabilityCheck = "";
-                            emailAvaiabilityCheck = "";
-                            passRegisCtrl = "";
-                            fnameRegisCtrl = "";
-                            lnameRegisCtrl = "";
-                            validRegisCtrl = 2023;
-                            isCheckedRegister = false;
-                            isFillForm = false;
-                            isChooseRole = false;
-                            checkAvaiabilityRegis = false;
-                            isFinishedRegis = false;
-                            uploadedImageRegis = null;
-                            isWaiting = false;
-                            final prefs = await SharedPreferences.getInstance();
-                            await prefs.clear();
+            Get.dialog(AlertDialog(
+              contentPadding: const EdgeInsets.all(10),
+              title: Text('Warning'.tr, style: TextStyle(fontSize: textXMD)),
+              content: SizedBox(
+                width: width,
+                height: 75,
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                          margin: const EdgeInsets.symmetric(vertical: 10),
+                          child: Text(
+                              "Are you sure want to close the registration?".tr,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: shadowColor, fontSize: textXMD)))
+                    ]),
+              ),
+              actions: <Widget>[
+                ElevatedButton(
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(roundedSM),
+                    )),
+                    backgroundColor: MaterialStatePropertyAll<Color>(warningBG),
+                  ),
+                  onPressed: () async {
+                    indexRegis = 0;
+                    usernameAvaiabilityCheck = "";
+                    emailAvaiabilityCheck = "";
+                    passRegisCtrl = "";
+                    fnameRegisCtrl = "";
+                    lnameRegisCtrl = "";
+                    validRegisCtrl = 2023;
+                    isCheckedRegister = false;
+                    isFillForm = false;
+                    isChooseRole = false;
+                    checkAvaiabilityRegis = false;
+                    isFinishedRegis = false;
+                    uploadedImageRegis = null;
+                    isWaiting = false;
+                    final prefs = await SharedPreferences.getInstance();
+                    await prefs.clear();
 
-                            Get.offAll(() => const LoginPage());
-                          },
-                          child: Text("Yes".tr,
-                              style: TextStyle(color: whiteColor)),
-                        )
-                      ],
-                    ));
+                    Get.offAll(() => const LoginPage());
+                  },
+                  child: Text("Yes".tr, style: TextStyle(color: whiteColor)),
+                )
+              ],
+            ));
           } else {
             setState(() {
               setIndex(indexRegis--);

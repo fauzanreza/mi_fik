@@ -42,7 +42,6 @@ class StateEditArchive extends State<EditArchive> {
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading = false;
 
     return IconButton(
       icon: const Icon(Icons.edit),
@@ -115,7 +114,7 @@ class StateEditArchive extends State<EditArchive> {
                             apiService
                                 .editArchive(archive, widget.slug)
                                 .then((response) {
-                              setState(() => isLoading = false);
+                              setState(() => {});
                               var status = response[0]['message'];
                               var body = response[0]['body'];
 
@@ -124,28 +123,16 @@ class StateEditArchive extends State<EditArchive> {
                                 selectedArchiveDesc = archive.archiveDesc;
                                 Get.offAll(() => const BottomBar());
 
-                                showDialog<String>(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        SuccessDialog(text: body));
-                                Future.delayed(const Duration(seconds: 2), () {
-                                  Get.back();
-                                });
+                                Get.dialog(SuccessDialog(text: body));
                               } else {
-                                showDialog<String>(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        FailedDialog(
-                                            text: body, type: "addarchive"));
+                                Get.dialog(FailedDialog(
+                                    text: body, type: "addarchive"));
                               }
                             });
                           } else {
-                            showDialog<String>(
-                                context: context,
-                                builder: (BuildContext context) =>
-                                    const FailedDialog(
-                                        text:
-                                            "Edit archive failed, field can't be empty"));
+                            Get.dialog(const FailedDialog(
+                                text:
+                                    "Edit archive failed, field can't be empty"));
                           }
                         },
                         style: ButtonStyle(

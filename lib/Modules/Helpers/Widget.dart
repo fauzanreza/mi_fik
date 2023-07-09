@@ -81,12 +81,11 @@ Widget getDescHeaderWidget(String desc, Color clr) {
   if (desc.trim() != "" && desc != "null") {
     return Container(
         margin: const EdgeInsets.only(top: 5),
-        child: Expanded(
-            child: Text(removeHtmlTags(desc),
-                maxLines: 3,
-                softWrap: true,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: clr, fontSize: textSM))));
+        child: Text(removeHtmlTags(desc),
+            maxLines: 3,
+            softWrap: true,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(color: clr, fontSize: textSM)));
   } else {
     return Container(
         margin: const EdgeInsets.only(top: 5),
@@ -188,12 +187,11 @@ Widget getTag(tag, height, ctx) {
             return Container(
                 margin: const EdgeInsets.only(right: 5),
                 child: TextButton(
-                  onPressed: () => showDialog<String>(
-                    context: ctx,
-                    builder: (BuildContext context) => AlertDialog(
+                  onPressed: () => Get.dialog(
+                    AlertDialog(
                       contentPadding: EdgeInsets.all(spaceLG),
                       title: Text(
-                        'All Tag',
+                        'All Tag'.tr,
                         style:
                             TextStyle(color: primaryColor, fontSize: textXMD),
                       ),

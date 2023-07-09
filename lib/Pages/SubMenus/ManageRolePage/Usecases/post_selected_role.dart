@@ -14,7 +14,7 @@ import 'package:mi_fik/Pages/SubMenus/ManageRolePage/index.dart';
 
 class PostSelectedRole extends StatefulWidget {
   const PostSelectedRole({Key key, this.back, this.isLogged}) : super(key: key);
-  final back;
+  final Widget back;
   final bool isLogged;
 
   @override
@@ -34,7 +34,6 @@ class StatePostSelectedRole extends State<PostSelectedRole> {
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
     //double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading = false;
 
     return ListView(
       children: <Widget>[
@@ -103,20 +102,14 @@ class StatePostSelectedRole extends State<PostSelectedRole> {
                     //Validator
                     if (data.userRole.isNotEmpty) {
                       apiService.postUserReq(data).then((response) {
-                        setState(() => isLoading = false);
+                        setState(() => {});
                         var status = response[0]['message'];
                         var body = response[0]['body'];
 
                         if (status == "success") {
                           if (widget.isLogged) {
                             Get.to(() => const BottomBar());
-                            showDialog<String>(
-                                context: context,
-                                builder: (BuildContext context) =>
-                                    SuccessDialog(text: body));
-                            Future.delayed(const Duration(seconds: 2), () {
-                              Get.back();
-                            });
+                            Get.dialog(SuccessDialog(text: body));
                           } else {
                             setState(() {
                               indexRegis = 5;
@@ -127,10 +120,7 @@ class StatePostSelectedRole extends State<PostSelectedRole> {
                                 backgroundColor: whiteColor);
                           }
                         } else {
-                          showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  FailedDialog(text: body, type: "req"));
+                          Get.dialog(FailedDialog(text: body, type: "req"));
 
                           setState(() {
                             selectedRole.clear();
@@ -139,13 +129,11 @@ class StatePostSelectedRole extends State<PostSelectedRole> {
                         }
                       });
                     } else {
-                      showDialog<String>(
-                          context: context,
-                          builder: (BuildContext context) => FailedDialog(
-                              text:
-                                  "Request failed, you haven't chosen any tag yet"
-                                      .tr,
-                              type: "req"));
+                      Get.dialog(FailedDialog(
+                          text:
+                              "Request failed, you haven't selected any tag yet"
+                                  .tr,
+                          type: "req"));
                     }
                   },
                   child: Container(

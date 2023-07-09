@@ -19,7 +19,7 @@ class StateLoginPage extends State<LoginPage> {
 
     return WillPopScope(
         onWillPop: () {
-          SystemNavigator.pop();
+          return SystemNavigator.pop();
         },
         child: Scaffold(
             body: CustomPaint(

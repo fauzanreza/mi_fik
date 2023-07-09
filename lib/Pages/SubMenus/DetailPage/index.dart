@@ -129,7 +129,26 @@ class StateDetailPage extends State<DetailPage> {
       //Get attachment file or link.
       Widget getAttach(attach, width) {
         if (attach != null && attach.isNotEmpty) {
-          return AttachButton(passAttach: attach);
+          var listUrl = [];
+          var listImage = [];
+          var listVideo = [];
+          var listDoc = [];
+
+          attach.forEach((e) {
+            if (e['attach_type'] == 'attachment_url') {
+              listUrl.add(e);
+            } else if (e['attach_type'] == 'attachment_image') {
+              listImage.add(e);
+            } else if (e['attach_type'] == 'attachment_video') {
+              listVideo.add(e);
+            } else if (e['attach_type'] == 'attachment_doc') {
+              listDoc.add(e);
+            }
+          });
+
+          var attachSorted = [...listUrl, ...listVideo, ...listDoc];
+
+          return AttachButton(passAttach: attachSorted, passImage: listImage);
         } else {
           return Container(
               alignment: Alignment.center,
@@ -141,7 +160,7 @@ class StateDetailPage extends State<DetailPage> {
 
       return WillPopScope(
           onWillPop: () {
-            Get.offAll(() => const BottomBar());
+            return Get.offAll(() => const BottomBar());
           },
           child: Scaffold(
             backgroundColor: whiteColor,
@@ -309,7 +328,7 @@ class StateDetailPage extends State<DetailPage> {
     } else {
       return WillPopScope(
           onWillPop: () {
-            Get.offAll(() => const BottomBar());
+            return Get.offAll(() => const BottomBar());
           },
           child: Scaffold(
             body: RefreshIndicator(

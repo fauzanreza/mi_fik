@@ -15,7 +15,7 @@ import 'package:mi_fik/Pages/SubMenus/DetailPage/index.dart';
 class ListArchive extends StatefulWidget {
   const ListArchive({Key key, this.archieves, this.passSlug, this.type})
       : super(key: key);
-  final archieves;
+  final List archieves;
   final String passSlug;
   final String type;
 
@@ -36,7 +36,6 @@ class StateListArchive extends State<ListArchive> {
   @override
   Widget build(BuildContext context) {
     double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading;
     int i = start;
 
     bool reverseBool(bool val) {
@@ -175,7 +174,7 @@ class StateListArchive extends State<ListArchive> {
                             .multiActionArchiveRel(
                                 data, widget.passSlug, widget.type)
                             .then((response) {
-                          setState(() => isLoading = false);
+                          setState(() => {});
                           var status = response[0]['message'];
                           var body = response[0]['body'];
 
@@ -198,22 +197,14 @@ class StateListArchive extends State<ListArchive> {
                                         },
                                         child: SuccessDialogCustom(
                                             text: "Event Saved".tr)));
-                            Future.delayed(const Duration(seconds: 2), () {
-                              Get.back();
-                            });
                           } else {
-                            showDialog<String>(
-                                context: context,
-                                builder: (BuildContext context) => FailedDialog(
-                                    text: body, type: "editarchiverel"));
+                            Get.dialog(FailedDialog(
+                                text: body, type: "editarchiverel"));
                           }
                         });
                       } else {
-                        showDialog<String>(
-                            context: context,
-                            builder: (BuildContext context) => FailedDialog(
-                                text: "Nothing has changed".tr,
-                                type: "editacc"));
+                        Get.dialog(FailedDialog(
+                            text: "Nothing has changed".tr, type: "editacc"));
                       }
                     },
                     style: ButtonStyle(

@@ -8,8 +8,7 @@ import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class GetMyHistory extends StatefulWidget {
-  GetMyHistory({Key key, this.scrollCtrl}) : super(key: key);
-  ScrollController scrollCtrl;
+  const GetMyHistory({Key key}) : super(key: key);
 
   @override
   StateGetMyHistory createState() => StateGetMyHistory();
@@ -22,14 +21,14 @@ class StateGetMyHistory extends State<GetMyHistory> {
   bool isLoading = false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
+  ScrollController scrollCtrl;
 
   @override
   void initState() {
     super.initState();
-    widget.scrollCtrl = ScrollController()
+    scrollCtrl = ScrollController()
       ..addListener(() {
-        if (widget.scrollCtrl.offset ==
-            widget.scrollCtrl.position.maxScrollExtent) {
+        if (scrollCtrl.offset == scrollCtrl.position.maxScrollExtent) {
           loadMoreHistory();
         }
       });
@@ -73,7 +72,7 @@ class StateGetMyHistory extends State<GetMyHistory> {
         child: ListView.builder(
           padding: EdgeInsets.only(bottom: spaceXMD),
           itemCount: contents.length + 1,
-          controller: widget.scrollCtrl,
+          controller: scrollCtrl,
           itemBuilder: (BuildContext context, int index) {
             if (index < contents.length) {
               return _buildHistoryItem(contents[index]);
@@ -123,7 +122,7 @@ class StateGetMyHistory extends State<GetMyHistory> {
               ),
               const Spacer(),
               Text(
-                getItemTimeString(DateTime.parse(content.createdAt)),
+                getItemTimeString(content.createdAt),
                 style: TextStyle(
                   color: semidarkColor,
                   fontSize: textSM * 1.1,
@@ -133,7 +132,7 @@ class StateGetMyHistory extends State<GetMyHistory> {
           ),
           SizedBox(height: spaceXMD),
           Text(
-            content.historyBody,
+            "You ${content.historyBody}",
             style: TextStyle(
               color: semidarkColor,
               fontSize: textSM * 1.1,

@@ -11,6 +11,7 @@ import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
+// ignore: must_be_immutable
 class SetProfileData extends StatefulWidget {
   SetProfileData(
       {Key key,
@@ -212,10 +213,7 @@ class StateSetProfileData extends State<SetProfileData>
                         } else {
                           checkAvaiabilityRegis = false;
                           refreshPage(refresh);
-                          showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  FailedDialog(text: body, type: "regis"));
+                          Get.dialog(FailedDialog(text: body, type: "regis"));
                         }
                       });
                     } else {
@@ -224,10 +222,8 @@ class StateSetProfileData extends State<SetProfileData>
                       } else if (valid['loc'] == "email") {
                         widget.emailMsg = valid['message'];
                       }
-                      showDialog<String>(
-                          context: context,
-                          builder: (BuildContext context) => FailedDialog(
-                              text: valid['message'], type: "regis"));
+                      Get.dialog(
+                          FailedDialog(text: valid['message'], type: "regis"));
                     }
                   },
                   icon: Icon(

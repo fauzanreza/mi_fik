@@ -38,8 +38,6 @@ class StatePostFeedback extends State<PostFeedback> {
 
   @override
   Widget build(BuildContext context) {
-    bool isLoading = false;
-
     return Container(
         padding: EdgeInsets.all(spaceLG),
         margin: EdgeInsets.all(spaceXMD),
@@ -96,7 +94,7 @@ class StatePostFeedback extends State<PostFeedback> {
                         if (data.fbBody != null ||
                             (data.rate >= 0 && data.rate <= 5)) {
                           apiService.postFeedback(data).then((response) {
-                            setState(() => isLoading = false);
+                            setState(() => {});
                             var status = response[0]['message'];
                             var body = response[0]['body'];
 
@@ -104,29 +102,16 @@ class StatePostFeedback extends State<PostFeedback> {
                               fbBodyCtrl.clear();
                               Get.to(() => const AboutPage());
 
-                              showDialog<String>(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      SuccessDialog(text: body));
-                              Future.delayed(const Duration(seconds: 2), () {
-                                Get.back();
-                              });
+                              Get.dialog(SuccessDialog(text: body));
                             } else {
-                              showDialog<String>(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      FailedDialog(
-                                          text: body, type: "addfeedback"));
+                              Get.dialog(FailedDialog(
+                                  text: body, type: "addfeedback"));
                             }
                           });
                         } else {
-                          showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  const FailedDialog(
-                                      text:
-                                          "Add feedback, field can't be empty",
-                                      type: "addfeedback"));
+                          Get.dialog(const FailedDialog(
+                              text: "Add feedback, field can't be empty",
+                              type: "addfeedback"));
                         }
                       },
                       child: Container(

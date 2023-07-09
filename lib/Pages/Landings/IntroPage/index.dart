@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Backgrounds/custom.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
@@ -240,7 +241,7 @@ class StateIntroPage extends State<IntroPage> {
                                               width: fullHeight * 0.2),
                                         ),
                                       ),
-                                      Text("Please tell us who You are",
+                                      Text("Please tell us who You are".tr,
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: primaryColor,
