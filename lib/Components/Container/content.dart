@@ -6,6 +6,8 @@ import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
+import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
+import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_contents.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
@@ -19,8 +21,8 @@ class GetHomePageEventContainer extends StatefulWidget {
       {Key key, this.width, this.content, this.servc})
       : super(key: key);
   final double width;
-  final content;
-  final servc;
+  final dynamic content;
+  final ContentCommandsService servc;
 
   @override
   StateGetHomePageEventContainer createState() =>
@@ -188,7 +190,7 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
 
 class GetScheduleContainer extends StatelessWidget {
   final double width;
-  final content;
+  final ScheduleModel content;
 
   const GetScheduleContainer({Key key, this.width, this.content})
       : super(key: key);
@@ -333,12 +335,12 @@ class GetAttachmentContainer extends StatefulWidget {
       this.idx,
       this.action})
       : super(key: key);
-  final data;
-  final item;
-  final others;
+  final dynamic data;
+  final Widget item;
+  final Widget others;
   final String id;
   final int idx;
-  final action;
+  final VoidCallback action;
 
   @override
   StateGetAttachmentContainer createState() => StateGetAttachmentContainer();

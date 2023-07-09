@@ -21,7 +21,7 @@ class StateHistoryPage extends State<HistoryPage> {
       appBar: getAppbar("History".tr, () {
         Get.offAll(() => const ProfilePage());
       }),
-      body: GetMyHistory(),
+      body: const GetMyHistory(),
     );
   }
 }

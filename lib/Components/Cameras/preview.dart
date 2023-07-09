@@ -46,7 +46,7 @@ class _ShowImageState extends State<ShowImage> {
       setState(() {
         isLoading = true;
       });
-      var response;
+      List response;
 
       if (widget.from == "profile") {
         if (imageFile != null) {

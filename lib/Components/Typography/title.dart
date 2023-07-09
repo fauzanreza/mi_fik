@@ -15,7 +15,7 @@ Widget getTitleJumbo(String title, var color) {
     padding: EdgeInsets.symmetric(vertical: spaceXXSM + 1),
     child: Text(title,
         style: TextStyle(
-            color: color, fontSize: textXMD, fontWeight: FontWeight.bold)),
+            color: color, fontSize: textLG, fontWeight: FontWeight.bold)),
   );
 }
 

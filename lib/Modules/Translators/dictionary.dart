@@ -153,7 +153,8 @@ class Dictionaries extends Translations {
           "Welcoming": "Welcoming",
           "You haven't accept the terms & condition":
               "You haven't accept the terms & condition",
-          "All Tag": "All Tag"
+          "All Tag": "All Tag",
+          "Attachment": "Attachment"
         },
         'id_ID': {
           'Good Morning': 'Selamat Pagi',
@@ -305,7 +306,8 @@ class Dictionaries extends Translations {
           "Welcoming": "Selamat Datang",
           "You haven't accept the terms & condition":
               "Anda belum menyetujui Syarat & Ketentuan",
-          "All Tag": "Semua tag"
+          "All Tag": "Semua tag",
+          "Attachment": "Tautan"
         },
       };
 }

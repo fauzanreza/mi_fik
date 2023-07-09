@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -26,8 +27,20 @@ class BgFcmDialog extends StatelessWidget {
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(children: [
-                Text(getItemTimeString(date),
-                    style: TextStyle(fontSize: textXMD, color: primaryColor)),
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      WidgetSpan(
+                        child: FaIcon(FontAwesomeIcons.clock,
+                            color: primaryColor, size: iconSM),
+                      ),
+                      TextSpan(
+                          text: " ${getItemTimeString(date)}",
+                          style:
+                              TextStyle(fontSize: textXMD, color: primaryColor))
+                    ],
+                  ),
+                ),
                 const Spacer(),
                 Container(
                   alignment: Alignment.topRight,

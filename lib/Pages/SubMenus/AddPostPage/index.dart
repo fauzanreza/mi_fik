@@ -207,9 +207,14 @@ class StateAddPost extends State<AddPost> {
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                         child: getInputDesc(10000, 5, contentDescCtrl, false),
                       ),
+                      Padding(
+                          padding: EdgeInsets.symmetric(vertical: spaceMD),
+                          child: Divider(
+                              thickness: 1,
+                              indent: spaceLG,
+                              endIndent: spaceLG)),
                       Container(
                           margin: EdgeInsets.only(left: spaceLG),
-                          padding: EdgeInsets.only(top: spaceSM),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -224,8 +229,14 @@ class StateAddPost extends State<AddPost> {
                               const ChooseTag(),
                             ],
                           )),
+                      Padding(
+                          padding: EdgeInsets.symmetric(vertical: spaceMD),
+                          child: Divider(
+                              thickness: 1,
+                              indent: spaceLG,
+                              endIndent: spaceLG)),
                       Container(
-                          padding: EdgeInsets.fromLTRB(20, spaceLG, 20, 0),
+                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                           child: Row(
                             children: [
                               Column(
@@ -264,8 +275,14 @@ class StateAddPost extends State<AddPost> {
                               )
                             ],
                           )),
+                      Padding(
+                          padding: EdgeInsets.symmetric(vertical: spaceMD),
+                          child: Divider(
+                              thickness: 1,
+                              indent: spaceLG,
+                              endIndent: spaceLG)),
                       Container(
-                          padding: EdgeInsets.fromLTRB(20, spaceLG, 20, 0),
+                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -312,8 +329,14 @@ class StateAddPost extends State<AddPost> {
                                   }, "End", "datetime"),
                                 ])
                               ])),
+                      Padding(
+                          padding: EdgeInsets.symmetric(vertical: spaceMD),
+                          child: Divider(
+                              thickness: 1,
+                              indent: spaceLG,
+                              endIndent: spaceLG)),
                       Container(
-                          padding: EdgeInsets.fromLTRB(20, spaceLG, 20, 0),
+                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -326,8 +349,14 @@ class StateAddPost extends State<AddPost> {
                                     )),
                                 const SetFileAttachment()
                               ])),
+                      Padding(
+                          padding: EdgeInsets.symmetric(vertical: spaceMD),
+                          child: Divider(
+                              thickness: 1,
+                              indent: spaceLG,
+                              endIndent: spaceLG)),
                       Container(
-                          padding: EdgeInsets.fromLTRB(20, spaceLG, 20, 0),
+                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                           child: const GetInfoBox(
                             page: "homepage",
                             location: "add_event",

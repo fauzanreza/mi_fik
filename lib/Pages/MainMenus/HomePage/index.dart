@@ -130,7 +130,7 @@ class StateHomePage extends State<HomePage> {
                                 children: [
                                   getGreeting(getToday("part"), whiteColor),
                                   getTitleJumbo(getToday("clock"), whiteColor),
-                                  SizedBox(height: fullHeight * 0.05),
+                                  SizedBox(height: fullHeight * 0.03),
                                   Row(
                                     children: [
                                       getSubTitleMedium(getToday("date"),

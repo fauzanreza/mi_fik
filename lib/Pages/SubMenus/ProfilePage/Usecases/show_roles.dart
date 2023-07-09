@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
-import 'package:mi_fik/Components/Skeletons/content_1.dart';
 import 'package:mi_fik/Modules/APIs/TagApi/Models/queries.dart';
 import 'package:mi_fik/Modules/APIs/TagApi/Services/queries.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Models/commands.dart';
@@ -49,7 +48,9 @@ class StateShowRole extends State<ShowRole> {
             List<MyTagModel> contents = snapshot.data;
             return _buildListView(contents);
           } else {
-            return const ContentSkeleton1();
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           }
         },
       ),

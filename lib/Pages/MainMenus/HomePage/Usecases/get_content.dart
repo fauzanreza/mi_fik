@@ -14,7 +14,7 @@ import 'package:mi_fik/Pages/SubMenus/DetailPage/index.dart';
 class GetContent extends StatefulWidget {
   const GetContent({Key key, this.scrollCtrl, this.item}) : super(key: key);
   final ScrollController scrollCtrl;
-  final item;
+  final List item;
 
   @override
   StateGetContent createState() => StateGetContent();

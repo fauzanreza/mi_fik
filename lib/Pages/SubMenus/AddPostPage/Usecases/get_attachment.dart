@@ -95,10 +95,16 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
                   margin: EdgeInsets.symmetric(vertical: spaceLG),
                   child: Chewie(
                     controller: ChewieController(
+                      autoInitialize: true,
                       videoPlayerController:
                           VideoPlayerController.network(e['attach_url']),
                       autoPlay: false,
                       looping: false,
+                      allowFullScreen: false,
+                      materialProgressColors: ChewieProgressColors(
+                          playedColor: primaryColor,
+                          handleColor: infoBG,
+                          bufferedColor: primaryLightBG),
                       errorBuilder: (context, errorMessage) {
                         return Text(
                           errorMessage,

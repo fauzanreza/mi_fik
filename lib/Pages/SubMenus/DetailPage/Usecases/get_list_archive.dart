@@ -15,7 +15,7 @@ import 'package:mi_fik/Pages/SubMenus/DetailPage/index.dart';
 class ListArchive extends StatefulWidget {
   const ListArchive({Key key, this.archieves, this.passSlug, this.type})
       : super(key: key);
-  final archieves;
+  final List archieves;
   final String passSlug;
   final String type;
 

@@ -8,6 +8,7 @@ import 'package:mi_fik/Components/Forms/date_picker.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/command_tasks.dart';
+import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_tasks.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
@@ -19,7 +20,7 @@ import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/post_archive_rel.dart'
 
 class DetailTask extends StatefulWidget {
   const DetailTask({Key key, this.data}) : super(key: key);
-  final data;
+  final ScheduleModel data;
 
   @override
   StateDetailTask createState() => StateDetailTask();
