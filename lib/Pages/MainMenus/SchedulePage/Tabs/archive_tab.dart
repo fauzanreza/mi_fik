@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
-import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Skeletons/archive_1.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Models/queries.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Services/queries.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
@@ -86,7 +86,8 @@ class StateArchivePage extends State<ArchivePage> {
                                 selectedArchiveDesc = archive.archiveDesc;
                                 selectedArchiveSlug = archive.slug;
                               });
-                              Get.offAll(const BottomBar());
+                              Get.offNamed(CollectionRoute.bar,
+                                  preventDuplicates: false);
                             },
                             child: Container(
                                 width: fullWidth * 0.7,

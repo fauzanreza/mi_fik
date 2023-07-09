@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
@@ -9,6 +8,7 @@ import 'package:mi_fik/Modules/APIs/ArchiveApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Services/commands.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
@@ -107,7 +107,8 @@ class StatePostArchive extends State<PostArchive> {
                       var body = response[0]['body'];
 
                       if (status == "success") {
-                        Get.offAll(() => const BottomBar());
+                        Get.offNamed(CollectionRoute.bar,
+                            preventDuplicates: false);
                         Get.dialog(SuccessDialog(text: body));
                       } else {
                         archiveNameMsg = "";

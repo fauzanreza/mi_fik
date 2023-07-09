@@ -10,11 +10,9 @@ import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
 import 'package:mi_fik/Modules/Firebases/Storages/User/add_image.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/Landings/RegisterPage/index.dart';
-import 'package:mi_fik/Pages/SubMenus/AddPostPage/index.dart';
-import 'package:mi_fik/Pages/SubMenus/ProfilePage/index.dart';
 
 class ShowImage extends StatefulWidget {
   const ShowImage({Key key, this.path, this.from, this.loadingCtrl})
@@ -57,7 +55,7 @@ class _ShowImageState extends State<ShowImage> {
         } else {
           Get.snackbar("Error".tr, "Failed to upload, file doesnt exist".tr,
               backgroundColor: whiteColor);
-          Get.offAll(() => const ProfilePage());
+          Get.offNamed(CollectionRoute.profile, preventDuplicates: false);
         }
       } else if (widget.from == "addpost") {
         //
@@ -85,7 +83,7 @@ class _ShowImageState extends State<ShowImage> {
         } else {
           Get.snackbar("Error".tr, "Failed to upload, file doesnt exist".tr,
               backgroundColor: whiteColor);
-          Get.offAll(() => const RegisterPage());
+          Get.offNamed(CollectionRoute.register, preventDuplicates: false);
         }
       }
 
@@ -99,13 +97,13 @@ class _ShowImageState extends State<ShowImage> {
       if (status == "success") {
         if (widget.from == "profile") {
           widget.loadingCtrl.reset();
-          Get.offAll(() => const ProfilePage());
+          Get.offNamed(CollectionRoute.profile, preventDuplicates: false);
         } else if (widget.from == "addpost") {
           widget.loadingCtrl.reset();
-          Get.offAll(() => const AddPost());
+          Get.offNamed(CollectionRoute.addpost, preventDuplicates: false);
         } else if (widget.from == "register") {
           widget.loadingCtrl.reset();
-          Get.offAll(() => const RegisterPage());
+          Get.offNamed(CollectionRoute.register, preventDuplicates: false);
         }
       } else {
         Get.dialog(FailedDialog(text: body));

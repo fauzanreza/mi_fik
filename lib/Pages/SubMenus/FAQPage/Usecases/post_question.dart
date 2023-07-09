@@ -7,10 +7,9 @@ import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/APIs/QuestionApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/QuestionApi/Services/commands.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/SubMenus/FAQPage/index.dart';
-import 'package:mi_fik/Pages/SubMenus/MyFAQPage/index.dart';
 
 class PostQuestion extends StatefulWidget {
   const PostQuestion({Key key, this.from}) : super(key: key);
@@ -137,9 +136,11 @@ class StatePostQuestion extends State<PostQuestion> {
 
                                 if (status == "success") {
                                   if (widget.from == "myfaq") {
-                                    Get.offAll(() => const MyFAQPage());
+                                    Get.offNamed(CollectionRoute.myfaq,
+                                        preventDuplicates: false);
                                   } else {
-                                    Get.offAll(() => const FAQPage());
+                                    Get.offNamed(CollectionRoute.faq,
+                                        preventDuplicates: false);
                                   }
 
                                   Get.dialog(SuccessDialog(text: body));

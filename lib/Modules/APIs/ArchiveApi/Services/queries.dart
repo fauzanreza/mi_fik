@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' show Client;
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Models/queries.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ArchiveQueriesService {
@@ -51,7 +51,7 @@ class ArchiveQueriesService {
         return archiveModelFromJson(response.body);
       } else if (response.statusCode == 401) {
         await prefs.clear();
-        Get.offAll(() => const LoginPage());
+        Get.offNamed(CollectionRoute.landing, preventDuplicates: false);
         Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
             backgroundColor: whiteColor);
         return null;
@@ -96,7 +96,7 @@ class ArchiveQueriesService {
         prefs.setString("archivecontent-$slug-sess", response.body);
         return scheduleModelFromJsonWPaginate(response.body);
       } else if (response.statusCode == 401) {
-        Get.offAll(() => const LoginPage());
+        Get.offNamed(CollectionRoute.landing, preventDuplicates: false);
         Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
             backgroundColor: whiteColor);
         return null;

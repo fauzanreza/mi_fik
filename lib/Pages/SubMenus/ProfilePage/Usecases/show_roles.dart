@@ -9,9 +9,9 @@ import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Helpers/info.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/SubMenus/ProfilePage/index.dart';
 
 class ShowRole extends StatefulWidget {
   const ShowRole({Key key}) : super(key: key);
@@ -153,13 +153,15 @@ class StateShowRole extends State<ShowRole> {
                                             var body = response[0]['body'];
 
                                             if (status == "success") {
-                                              Get.offAll(
-                                                  () => const ProfilePage());
+                                              Get.offNamed(
+                                                  CollectionRoute.profile,
+                                                  preventDuplicates: false);
                                               Get.dialog(
                                                   SuccessDialog(text: body));
                                             } else {
-                                              Get.offAll(
-                                                  () => const ProfilePage());
+                                              Get.offNamed(
+                                                  CollectionRoute.profile,
+                                                  preventDuplicates: false);
 
                                               Get.dialog(FailedDialog(
                                                   text: body, type: "req"));

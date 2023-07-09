@@ -64,12 +64,12 @@ class _SetImageContentState extends State<SetImageContent>
                 if (value == true) {
                   contentAttImage = null;
 
-                  Get.back();
+                  FullScreenMenu.hide();
                   lottieController.reset();
                   setState(() {});
                 } else {
-                  Get.back();
                   lottieController.reset();
+                  Get.back();
                   showDialog<String>(
                       context: context,
                       builder: (BuildContext context) =>
@@ -144,8 +144,11 @@ class _SetImageContentState extends State<SetImageContent>
                                   .sendImageContent(file, "content_image")
                                   .then((value) {
                                 contentAttImage = value;
+
+                                lottieController.reset();
+                                Get.back();
+                                setState(() {});
                               });
-                              setState(() {});
                             }
                           },
                         ),

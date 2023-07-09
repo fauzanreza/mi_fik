@@ -4,9 +4,9 @@ import 'package:http/http.dart' show Client;
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
@@ -56,7 +56,7 @@ class ContentQueriesService {
       } else if (response.statusCode == 401) {
         await prefs.clear();
 
-        Get.offAll(() => const LoginPage());
+        Get.offNamed(CollectionRoute.landing, preventDuplicates: false);
         Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
             backgroundColor: whiteColor);
         return null;
@@ -103,7 +103,7 @@ class ContentQueriesService {
       } else if (response.statusCode == 401) {
         await prefs.clear();
 
-        Get.offAll(() => const LoginPage());
+        Get.offNamed(CollectionRoute.landing, preventDuplicates: false);
         Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
             backgroundColor: whiteColor);
         return null;
@@ -152,7 +152,7 @@ class ContentQueriesService {
       } else if (response.statusCode == 401) {
         await prefs.clear();
 
-        Get.offAll(() => const LoginPage());
+        Get.offNamed(CollectionRoute.landing, preventDuplicates: false);
         Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
             backgroundColor: whiteColor);
         return null;
@@ -199,7 +199,7 @@ class ContentQueriesService {
         prefs.setString("scheduletotal-$dateStr-sess", response.body);
         return scheduleTotalModelFromJson(response.body);
       } else if (response.statusCode == 401) {
-        Get.offAll(() => const LoginPage());
+        Get.offNamed(CollectionRoute.landing, preventDuplicates: false);
         Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
             backgroundColor: whiteColor);
         return null;

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
-import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Button/navigation.dart';
 import 'package:mi_fik/Components/Container/content.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
@@ -9,6 +8,7 @@ import 'package:mi_fik/Components/Skeletons/content_1.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Services/queries.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_contents.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/show_detail_task.dart';
@@ -90,7 +90,7 @@ class StateSavedContent extends State<SavedContent>
                   outlinedButtonCustom(() {
                     selectedArchiveSlug = null;
                     selectedArchiveName = null;
-                    Get.offAll(() => const BottomBar());
+                    Get.offNamed(CollectionRoute.bar, preventDuplicates: false);
                   }, "Back to Archive".tr, Icons.arrow_back),
                   const Spacer(),
                   DeleteArchive(slug: widget.slug, name: widget.name),
@@ -197,7 +197,7 @@ class StateSavedContent extends State<SavedContent>
               outlinedButtonCustom(() {
                 selectedArchiveSlug = null;
                 selectedArchiveName = null;
-                Get.offAll(() => const BottomBar());
+                Get.offNamed(CollectionRoute.bar, preventDuplicates: false);
               }, "Back to Archive".tr, Icons.arrow_back),
               const Spacer(),
               DeleteArchive(slug: selectedArchiveSlug),

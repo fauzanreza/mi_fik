@@ -7,9 +7,9 @@ import 'package:mi_fik/Components/Forms/tag_picker.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/Landings/RegisterPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/ManageRolePage/index.dart';
 
 class PostSelectedRole extends StatefulWidget {
@@ -46,7 +46,7 @@ class StatePostSelectedRole extends State<PostSelectedRole> {
               if (widget.back == null) {
                 Get.back();
               } else {
-                Get.offAll(() => const RolePage());
+                Get.offNamed(CollectionRoute.role, preventDuplicates: false);
               }
             },
           ),
@@ -64,7 +64,8 @@ class StatePostSelectedRole extends State<PostSelectedRole> {
                     if (widget.back == null) {
                       Get.back();
                     } else {
-                      Get.offAll(() => const RolePage());
+                      Get.offNamed(CollectionRoute.role,
+                          preventDuplicates: false);
                     }
                   },
                   child: Container(
@@ -115,7 +116,8 @@ class StatePostSelectedRole extends State<PostSelectedRole> {
                               indexRegis = 5;
                               isFinishedRegis = true;
                             });
-                            Get.offAll(() => const RegisterPage());
+                            Get.offNamed(CollectionRoute.register,
+                                preventDuplicates: false);
                             Get.snackbar("Success", "Role request has sended",
                                 backgroundColor: whiteColor);
                           }
