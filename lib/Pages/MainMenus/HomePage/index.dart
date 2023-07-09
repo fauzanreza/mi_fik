@@ -249,7 +249,7 @@ class StateGetRole extends State<GetRoleFeature> {
                   overlayColor: primaryColor,
                   overlayOpacity: 0.4,
                   children: [
-                    getSpeeDialChild("New Task".tr, context, PostTask(),
+                    getSpeeDialChild("New Task".tr, context, const PostTask(),
                         Icons.note_add_outlined),
                     getSpeeDialChild("New Post".tr, context, const AddPost(),
                         Icons.post_add_outlined),
@@ -263,7 +263,7 @@ class StateGetRole extends State<GetRoleFeature> {
                   overlayColor: primaryColor,
                   overlayOpacity: 0.4,
                   children: [
-                    getSpeeDialChild("New Task".tr, context, PostTask(),
+                    getSpeeDialChild("New Task".tr, context, const PostTask(),
                         Icons.note_add_outlined),
                   ],
                   child: Icon(Icons.add, size: iconLG));

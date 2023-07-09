@@ -6,6 +6,7 @@ import 'package:full_screen_menu/full_screen_menu.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
+import 'package:mi_fik/Components/Dialogs/loading_dialog.dart';
 import 'package:mi_fik/Modules/Firebases/Storages/Content/add_image.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -19,14 +20,23 @@ class SetFileAttachment extends StatefulWidget {
   State<SetFileAttachment> createState() => _SetFileAttachmentState();
 }
 
-class _SetFileAttachmentState extends State<SetFileAttachment> {
+class _SetFileAttachmentState extends State<SetFileAttachment>
+    with SingleTickerProviderStateMixin {
   PostImageContent fireServicePost;
   XFile file;
+  AnimationController lottieController;
 
   @override
   void initState() {
     super.initState();
     fireServicePost = PostImageContent();
+    lottieController = AnimationController(vsync: this);
+  }
+
+  @override
+  void dispose() {
+    lottieController.dispose();
+    super.dispose();
   }
 
   Future<XFile> getImage() async {
@@ -56,15 +66,13 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
             "attach_url": value
           });
         });
-        FullScreenMenu.hide();
+        lottieController.reset();
+        Get.back();
         setState(() {});
       } else {
-        FullScreenMenu.hide();
-        showDialog<String>(
-            context: context,
-            builder: (BuildContext context) => FailedDialog(
-                text: "Upload failed, the file size must below $maxImage mb",
-                type: "openevent"));
+        Get.dialog(FailedDialog(
+            text: "Upload failed, the file size must below $maxImage mb",
+            type: "openevent"));
       }
     }
 
@@ -87,6 +95,10 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
                           var type = "attachment_image";
 
                           if (file != null) {
+                            FullScreenMenu.hide();
+                            Get.dialog(LoadingDialog(
+                                url: "assets/json/loading-att.json",
+                                ctrl: lottieController));
                             final bytes = await file.readAsBytes();
 
                             uploadFile(bytes, file, type, maxImage);
@@ -121,6 +133,11 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
                           File file = File(result.files.single.path);
 
                           if (file != null) {
+                            FullScreenMenu.hide();
+                            Get.dialog(LoadingDialog(
+                                url: "assets/json/loading-att.json",
+                                ctrl: lottieController));
+
                             final bytes = await file.readAsBytes();
 
                             uploadFile(bytes, file, type, maxDoc);
@@ -136,6 +153,10 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
                         var type = "attachment_image";
 
                         if (file != null) {
+                          FullScreenMenu.hide();
+                          Get.dialog(LoadingDialog(
+                              url: "assets/json/loading-att.json",
+                              ctrl: lottieController));
                           final bytes = await file.readAsBytes();
 
                           uploadFile(bytes, file, type, maxImage);
@@ -152,6 +173,10 @@ class _SetFileAttachmentState extends State<SetFileAttachment> {
                         var type = "attachment_video";
 
                         if (file != null) {
+                          FullScreenMenu.hide();
+                          Get.dialog(LoadingDialog(
+                              url: "assets/json/loading-att.json",
+                              ctrl: lottieController));
                           final bytes = await file.readAsBytes();
 
                           uploadFile(bytes, file, type, maxVideo);

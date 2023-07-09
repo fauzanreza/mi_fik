@@ -163,10 +163,7 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
                         Get.to(() =>
                             DetailPage(passSlug: widget.content.slugName));
                       } else {
-                        showDialog<String>(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                FailedDialog(text: body, type: "openevent"));
+                        Get.dialog(FailedDialog(text: body, type: "openevent"));
                       }
                     });
 

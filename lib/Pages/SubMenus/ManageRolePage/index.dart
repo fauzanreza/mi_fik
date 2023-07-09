@@ -69,10 +69,8 @@ class StateRolePage extends State<RolePage> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             if (selectedRole.isEmpty) {
-              showDialog<String>(
-                  context: context,
-                  builder: (BuildContext context) => const NoDataDialog(
-                      text: "You haven't selected any tag yet"));
+              Get.dialog(
+                  NoDataDialog(text: "You haven't selected any tag yet".tr));
             } else {
               showModalBottomSheet<void>(
                 context: context,

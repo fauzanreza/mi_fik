@@ -30,7 +30,7 @@ class StateSignOutDialog extends State<SignOutDialog> {
 
     return AlertDialog(
       contentPadding: const EdgeInsets.all(10),
-      title: Text('Warning'.tr),
+      title: Text('Warning'.tr, style: TextStyle(fontSize: textXMD)),
       content: SizedBox(
         width: fullWidth,
         height: 50,
@@ -65,35 +65,20 @@ class StateSignOutDialog extends State<SignOutDialog> {
 
                 if (body == "Logout success" && code == 200) {
                   Get.off(() => const LoginPage());
-
-                  showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context) =>
-                          SuccessDialog(text: body));
+                  Get.dialog(SuccessDialog(text: body));
                 } else if (code == 401) {
                   Get.off(() => const LoginPage());
-
-                  showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context) =>
-                          const SuccessDialog(text: "Sign out success"));
+                  Get.dialog(const SuccessDialog(text: "Sign out success"));
                 } else {
-                  showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context) =>
-                          FailedDialog(text: body, type: "signout"));
+                  Get.dialog(FailedDialog(text: body, type: "signout"));
                 }
               });
             } else {
               Get.off(() => const LoginPage());
-
-              showDialog<String>(
-                  context: context,
-                  builder: (BuildContext context) =>
-                      const SuccessDialog(text: "Sign out success"));
+              Get.dialog(const SuccessDialog(text: "Sign out success"));
             }
           },
-          child: Text("Sign Out",
+          child: Text("Sign Out".tr,
               style: TextStyle(color: whiteColor, fontSize: textXMD)),
         )
       ],

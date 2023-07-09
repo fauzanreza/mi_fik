@@ -12,6 +12,7 @@ import 'package:mi_fik/Modules/Firebases/Storages/User/add_image.dart';
 import 'package:mi_fik/Modules/Firebases/Storages/User/remove_image.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/SubMenus/ProfilePage/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EditImage extends StatefulWidget {
@@ -72,6 +73,9 @@ class _EditImageState extends State<EditImage>
                     gradient: redGradient,
                     onTap: () async {
                       FullScreenMenu.hide();
+                      Get.dialog(LoadingDialog(
+                          url: "assets/json/loading-att.json",
+                          ctrl: lottieController));
 
                       await fireServiceDelete.deleteImageUser().then((value) {
                         if (value == true) {
@@ -84,26 +88,21 @@ class _EditImageState extends State<EditImage>
                             var body = response[0]['body'];
 
                             if (status == "success") {
-                              showDialog<String>(
-                                  context: context,
-                                  barrierDismissible: false,
-                                  builder: (BuildContext context) =>
-                                      const LoadingDialog(
-                                          url: "assets/json/remove-file.json",
-                                          destination: 'profile'));
+                              lottieController.reset();
+                              Get.offAll(() => const ProfilePage());
                             } else {
-                              showDialog<String>(
-                                context: context,
-                                builder: (BuildContext context) =>
-                                    FailedDialog(text: body),
-                              );
+                              Get.back();
+
+                              lottieController.reset();
+                              Get.dialog(FailedDialog(text: body));
                             }
                           });
                         } else {
-                          showDialog<String>(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                FailedDialog(text: "Failed to reset image".tr),
+                          Get.back();
+
+                          lottieController.reset();
+                          Get.dialog(
+                            FailedDialog(text: "Failed to reset image".tr),
                           );
                         }
                       });
@@ -116,75 +115,75 @@ class _EditImageState extends State<EditImage>
             return WillPopScope(
                 onWillPop: () {
                   FullScreenMenu.hide();
+                  return null;
                 },
                 child: Positioned(
                     top: 110,
                     left: 120,
                     child: InkWell(
                         onTap: () {
-                          FullScreenMenu.show(
-                            context,
-                            items: [
-                              FSMenuItem(
-                                  icon: Icon(Icons.camera, color: whiteColor),
-                                  text: Text('Camera'.tr,
-                                      style: TextStyle(fontSize: textXMD)),
+                          FullScreenMenu.show(context,
+                              items: [
+                                FSMenuItem(
+                                    icon: Icon(Icons.camera, color: whiteColor),
+                                    text: Text('Camera'.tr,
+                                        style: TextStyle(fontSize: textXMD)),
+                                    gradient: orangeGradient,
+                                    onTap: () async {
+                                      WidgetsFlutterBinding.ensureInitialized();
+                                      final cameras = await availableCameras();
+                                      FullScreenMenu.hide();
+
+                                      Get.to(() => CameraPage(
+                                            camera: cameras.first,
+                                            from: "profile",
+                                            loadingCtrl: lottieController,
+                                          ));
+                                    }),
+                                FSMenuItem(
+                                  icon: Icon(Icons.folder, color: whiteColor),
                                   gradient: orangeGradient,
+                                  text: Text('File Picker'.tr,
+                                      style: TextStyle(fontSize: textXMD)),
                                   onTap: () async {
-                                    WidgetsFlutterBinding.ensureInitialized();
-                                    final cameras = await availableCameras();
+                                    var file = await getImage();
+
                                     FullScreenMenu.hide();
-                                    Get.to(() => CameraPage(
-                                          camera: cameras.first,
-                                          from: "profile",
-                                        ));
-                                  }),
-                              FSMenuItem(
-                                icon: Icon(Icons.folder, color: whiteColor),
-                                gradient: orangeGradient,
-                                text: Text('File Picker'.tr,
-                                    style: TextStyle(fontSize: textXMD)),
-                                onTap: () async {
-                                  var file = await getImage();
+                                    if (file != null) {
+                                      Get.dialog(LoadingDialog(
+                                          url: "assets/json/loading-att.json",
+                                          ctrl: lottieController));
 
-                                  FullScreenMenu.hide();
-                                  if (file != null) {
-                                    await fireServicePost
-                                        .sendImageUser(file)
-                                        .then((value) {
-                                      EditUserImageModel data =
-                                          EditUserImageModel(imageUrl: value);
+                                      await fireServicePost
+                                          .sendImageUser(file)
+                                          .then((value) {
+                                        EditUserImageModel data =
+                                            EditUserImageModel(imageUrl: value);
 
-                                      commandService
-                                          .putProfileImage(data)
-                                          .then((response) {
-                                        setState(() => {});
-                                        var status = response[0]['message'];
-                                        var body = response[0]['body'];
+                                        commandService
+                                            .putProfileImage(data)
+                                            .then((response) {
+                                          setState(() {});
+                                          var status = response[0]['message'];
+                                          var body = response[0]['body'];
 
-                                        if (status == "success") {
-                                          showDialog<String>(
-                                              context: context,
-                                              barrierDismissible: false,
-                                              builder: (BuildContext context) =>
-                                                  const LoadingDialog(
-                                                      url:
-                                                          "assets/json/loading-att.json",
-                                                      destination: 'profile'));
-                                        } else {
-                                          showDialog<String>(
-                                              context: context,
-                                              builder: (BuildContext context) =>
-                                                  FailedDialog(text: body));
-                                        }
+                                          if (status == "success") {
+                                            lottieController.reset();
+                                            Get.offAll(
+                                                () => const ProfilePage());
+                                          } else {
+                                            Get.back();
+                                            Get.dialog(
+                                                FailedDialog(text: body));
+                                          }
+                                        });
                                       });
-                                    });
-                                  }
-                                },
-                              ),
-                              getResetImageProfile(image)
-                            ],
-                          );
+                                    }
+                                  },
+                                ),
+                                getResetImageProfile(image)
+                              ],
+                              backgroundColor: primaryLightBG);
                         },
                         child: Container(
                             padding: EdgeInsets.all(spaceSM * 0.8),

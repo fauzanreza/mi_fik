@@ -108,20 +108,15 @@ class StatePostArchive extends State<PostArchive> {
 
                       if (status == "success") {
                         Get.offAll(() => const BottomBar());
-                        showDialog<String>(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                SuccessDialog(text: body));
+                        Get.dialog(SuccessDialog(text: body));
                       } else {
                         archiveNameMsg = "";
                         archiveDescMsg = "";
                         allArchiveMsg = "";
 
                         Get.back();
-                        showDialog<String>(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                FailedDialog(text: body, type: "addarchive"));
+                        Get.dialog(
+                            FailedDialog(text: body, type: "addarchive"));
                         setState(() {
                           if (body is! String) {
                             if (body['archive_name'] != null) {
@@ -151,11 +146,9 @@ class StatePostArchive extends State<PostArchive> {
                     });
                   } else {
                     Get.back();
-                    showDialog<String>(
-                        context: context,
-                        builder: (BuildContext context) => const FailedDialog(
-                            text: "Create archive failed, field can't be empty",
-                            type: "addarchive"));
+                    Get.dialog(const FailedDialog(
+                        text: "Create archive failed, field can't be empty",
+                        type: "addarchive"));
                     allArchiveMsg =
                         "Create archive failed, field can't be empty";
                   }

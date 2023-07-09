@@ -35,13 +35,10 @@ Future<void> fireFCMHandler(RemoteMessage message) async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  showDialog<String>(
-    context: Get.context,
-    builder: (BuildContext context) => BgFcmDialog(
-      title: message.notification.title,
-      body: message.notification.body,
-    ),
-  );
+  Get.dialog(BgFcmDialog(
+    title: message.notification.title,
+    body: message.notification.body,
+  ));
   //}
 }
 
@@ -98,9 +95,8 @@ Future<void> main() async {
       RemoteNotification notification = message.notification;
       AndroidNotification android = message.notification?.android;
       if (notification != null && android != null) {
-        showDialog<String>(
-          context: Get.context,
-          builder: (BuildContext context) => BgFcmDialog(
+        Get.dialog(
+          BgFcmDialog(
               title: message.notification.title,
               body: message.notification.body,
               date: message.sentTime),

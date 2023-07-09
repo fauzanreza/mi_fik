@@ -123,25 +123,16 @@ class StateEditArchive extends State<EditArchive> {
                                 selectedArchiveDesc = archive.archiveDesc;
                                 Get.offAll(() => const BottomBar());
 
-                                showDialog<String>(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        SuccessDialog(text: body));
+                                Get.dialog(SuccessDialog(text: body));
                               } else {
-                                showDialog<String>(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        FailedDialog(
-                                            text: body, type: "addarchive"));
+                                Get.dialog(FailedDialog(
+                                    text: body, type: "addarchive"));
                               }
                             });
                           } else {
-                            showDialog<String>(
-                                context: context,
-                                builder: (BuildContext context) =>
-                                    const FailedDialog(
-                                        text:
-                                            "Edit archive failed, field can't be empty"));
+                            Get.dialog(const FailedDialog(
+                                text:
+                                    "Edit archive failed, field can't be empty"));
                           }
                         },
                         style: ButtonStyle(

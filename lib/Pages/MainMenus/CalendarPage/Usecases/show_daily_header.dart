@@ -77,7 +77,7 @@ class StateDayHeader extends State<DayHeader> with TickerProviderStateMixin {
                   DateFormat("EEE").format(widget.selectedDay),
                   style: TextStyle(
                     color: primaryColor,
-                    fontSize: textXLG,
+                    fontSize: textLG,
                     //fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -85,7 +85,7 @@ class StateDayHeader extends State<DayHeader> with TickerProviderStateMixin {
                   DateFormat("d").format(widget.selectedDay),
                   style: TextStyle(
                     color: primaryColor,
-                    fontSize: textXMD,
+                    fontSize: textLG,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

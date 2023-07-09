@@ -3,6 +3,7 @@ import 'package:full_screen_menu/full_screen_menu.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
+import 'package:mi_fik/Components/Dialogs/loading_dialog.dart';
 import 'package:mi_fik/Modules/Firebases/Storages/Content/add_image.dart';
 import 'package:mi_fik/Modules/Firebases/Storages/Content/remove_image.dart';
 import 'package:mi_fik/Modules/Helpers/widget.dart';
@@ -16,16 +17,25 @@ class SetImageContent extends StatefulWidget {
   State<SetImageContent> createState() => _SetImageContentState();
 }
 
-class _SetImageContentState extends State<SetImageContent> {
+class _SetImageContentState extends State<SetImageContent>
+    with SingleTickerProviderStateMixin {
   PostImageContent fireServicePost;
   DeleteImageContent fireServiceDelete;
   XFile file;
+  AnimationController lottieController;
 
   @override
   void initState() {
     super.initState();
     fireServicePost = PostImageContent();
     fireServiceDelete = DeleteImageContent();
+    lottieController = AnimationController(vsync: this);
+  }
+
+  @override
+  void dispose() {
+    lottieController.dispose();
+    super.dispose();
   }
 
   Future<XFile> getImage() async {
@@ -54,14 +64,16 @@ class _SetImageContentState extends State<SetImageContent> {
                 if (value == true) {
                   contentAttImage = null;
 
-                  FullScreenMenu.hide();
+                  Get.back();
+                  lottieController.reset();
                   setState(() {});
                 } else {
-                  FullScreenMenu.hide();
+                  Get.back();
+                  lottieController.reset();
                   showDialog<String>(
                       context: context,
                       builder: (BuildContext context) =>
-                          const FailedDialog(text: "Failed to reset image"));
+                          FailedDialog(text: "Failed to reset image".tr));
                 }
               });
             });
@@ -101,12 +113,16 @@ class _SetImageContentState extends State<SetImageContent> {
                               var file = await getCamera();
 
                               if (file != null) {
+                                FullScreenMenu.hide();
+
+                                Get.dialog(LoadingDialog(
+                                    url: "assets/json/loading-att.json",
+                                    ctrl: lottieController));
                                 await fireServicePost
                                     .sendImageContent(file, "content_image")
                                     .then((value) {
                                   contentAttImage = value;
                                 });
-                                FullScreenMenu.hide();
                                 setState(() {});
                               }
                             }),
@@ -119,12 +135,16 @@ class _SetImageContentState extends State<SetImageContent> {
                             var file = await getImage();
 
                             if (file != null) {
+                              FullScreenMenu.hide();
+
+                              Get.dialog(LoadingDialog(
+                                  url: "assets/json/loading-att.json",
+                                  ctrl: lottieController));
                               await fireServicePost
                                   .sendImageContent(file, "content_image")
                                   .then((value) {
                                 contentAttImage = value;
                               });
-                              FullScreenMenu.hide();
                               setState(() {});
                             }
                           },

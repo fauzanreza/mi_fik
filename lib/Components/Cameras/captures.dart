@@ -9,9 +9,11 @@ import 'package:mi_fik/Pages/SubMenus/AddPostPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/ProfilePage/index.dart';
 
 class CameraPage extends StatefulWidget {
-  const CameraPage({Key key, this.camera, this.from}) : super(key: key);
+  const CameraPage({Key key, this.camera, this.from, this.loadingCtrl})
+      : super(key: key);
   final CameraDescription camera;
   final String from;
+  final AnimationController loadingCtrl;
 
   @override
   State<CameraPage> createState() => StateCameraPageState();
@@ -44,7 +46,10 @@ class StateCameraPageState extends State<CameraPage> {
   }
 
   void navigateToShowImage(XFile imageFile) {
-    Get.offAll(() => ShowImage(path: imageFile.path, from: widget.from));
+    Get.offAll(() => ShowImage(
+        path: imageFile.path,
+        from: widget.from,
+        loadingCtrl: widget.loadingCtrl));
   }
 
   @override

@@ -17,9 +17,11 @@ import 'package:mi_fik/Pages/SubMenus/AddPostPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/ProfilePage/index.dart';
 
 class ShowImage extends StatefulWidget {
-  const ShowImage({Key key, this.path, this.from}) : super(key: key);
+  const ShowImage({Key key, this.path, this.from, this.loadingCtrl})
+      : super(key: key);
   final String path;
   final String from;
+  final AnimationController loadingCtrl;
 
   @override
   State<ShowImage> createState() => _ShowImageState();
@@ -76,10 +78,7 @@ class _ShowImageState extends State<ShowImage> {
                 FullScreenMenu.hide();
               } else {
                 FullScreenMenu.hide();
-                showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) =>
-                        FailedDialog(text: body));
+                Get.dialog(FailedDialog(text: body));
               }
             });
           });
@@ -99,17 +98,17 @@ class _ShowImageState extends State<ShowImage> {
 
       if (status == "success") {
         if (widget.from == "profile") {
+          widget.loadingCtrl.reset();
           Get.offAll(() => const ProfilePage());
         } else if (widget.from == "addpost") {
+          widget.loadingCtrl.reset();
           Get.offAll(() => const AddPost());
         } else if (widget.from == "register") {
+          widget.loadingCtrl.reset();
           Get.offAll(() => const RegisterPage());
         }
       } else {
-        showDialog<String>(
-          context: context,
-          builder: (BuildContext context) => FailedDialog(text: body),
-        );
+        Get.dialog(FailedDialog(text: body));
       }
     } catch (e) {
       setState(() {

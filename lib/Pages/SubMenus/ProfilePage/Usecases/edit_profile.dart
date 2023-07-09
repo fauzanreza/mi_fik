@@ -142,23 +142,15 @@ class _GetEditProfileState extends State<GetEditProfile> {
 
                         if (status == "success") {
                           Get.to(() => const ProfilePage());
-                          showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  SuccessDialog(text: body));
+                          Get.dialog(SuccessDialog(text: body));
                         } else {
-                          showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  FailedDialog(text: body, type: "editacc"));
+                          Get.dialog(FailedDialog(text: body, type: "editacc"));
                         }
                       });
                     } else {
-                      showDialog<String>(
-                          context: context,
-                          builder: (BuildContext context) => const FailedDialog(
-                              text: "Edit failed, field can't be empty",
-                              type: "editacc"));
+                      Get.dialog(const FailedDialog(
+                          text: "Edit failed, field can't be empty",
+                          type: "editacc"));
                     }
                   },
                   child: Container(

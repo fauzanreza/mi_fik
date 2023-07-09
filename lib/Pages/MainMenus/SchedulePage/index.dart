@@ -139,7 +139,7 @@ class StateSchedulePage extends State<SchedulePage>
                 overlayColor: primaryColor,
                 overlayOpacity: 0.4,
                 children: [
-                  getSpeeDialChild("New Task".tr, context, PostTask(),
+                  getSpeeDialChild("New Task".tr, context, const PostTask(),
                       Icons.note_add_outlined),
                   getSpeeDialChild("New Archive".tr, context,
                       const PostArchive(), Icons.folder)

@@ -142,10 +142,7 @@ class StatePostQuestion extends State<PostQuestion> {
                                     Get.offAll(() => const FAQPage());
                                   }
 
-                                  showDialog<String>(
-                                      context: context,
-                                      builder: (BuildContext context) =>
-                                          SuccessDialog(text: body));
+                                  Get.dialog(SuccessDialog(text: body));
 
                                   quBodyCtrl.clear();
                                 } else {
@@ -154,11 +151,8 @@ class StatePostQuestion extends State<PostQuestion> {
                                   allMsg = "";
 
                                   Get.back();
-                                  showDialog<String>(
-                                      context: context,
-                                      builder: (BuildContext context) =>
-                                          FailedDialog(
-                                              text: body, type: "faq"));
+                                  Get.dialog(
+                                      FailedDialog(text: body, type: "faq"));
                                   setState(() {
                                     if (body is! String) {
                                       if (body['question_body'] != null) {
@@ -189,13 +183,10 @@ class StatePostQuestion extends State<PostQuestion> {
                                 }
                               });
                             } else {
-                              showDialog<String>(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      const FailedDialog(
-                                          text:
-                                              "Request failed, you haven't chosen any type yet",
-                                          type: "faq"));
+                              Get.dialog(const FailedDialog(
+                                  text:
+                                      "Request failed, you haven't chosen any type yet",
+                                  type: "faq"));
                             }
                           },
                           style: ButtonStyle(

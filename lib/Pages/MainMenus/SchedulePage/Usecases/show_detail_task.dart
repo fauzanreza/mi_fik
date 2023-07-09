@@ -200,25 +200,17 @@ class StateDetailTask extends State<DetailTask> {
                             if (status == "success") {
                               Get.offAll(() => const BottomBar());
 
-                              showDialog<String>(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      SuccessDialog(text: body));
+                              Get.dialog(SuccessDialog(text: body));
                             } else {
-                              showDialog<String>(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      FailedDialog(
-                                          text: body, type: "addtask"));
+                              Get.dialog(
+                                  FailedDialog(text: body, type: "addtask"));
                             }
                           });
                         } else {
-                          showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) => const FailedDialog(
-                                  text:
-                                      "Create archive failed, field can't be empty",
-                                  type: "addtask"));
+                          Get.dialog(const FailedDialog(
+                              text:
+                                  "Create archive failed, field can't be empty",
+                              type: "addtask"));
                         }
                       },
                       style: ButtonStyle(

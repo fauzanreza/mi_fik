@@ -109,10 +109,7 @@ class StatePostSelectedRole extends State<PostSelectedRole> {
                         if (status == "success") {
                           if (widget.isLogged) {
                             Get.to(() => const BottomBar());
-                            showDialog<String>(
-                                context: context,
-                                builder: (BuildContext context) =>
-                                    SuccessDialog(text: body));
+                            Get.dialog(SuccessDialog(text: body));
                           } else {
                             setState(() {
                               indexRegis = 5;
@@ -123,10 +120,7 @@ class StatePostSelectedRole extends State<PostSelectedRole> {
                                 backgroundColor: whiteColor);
                           }
                         } else {
-                          showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  FailedDialog(text: body, type: "req"));
+                          Get.dialog(FailedDialog(text: body, type: "req"));
 
                           setState(() {
                             selectedRole.clear();
@@ -135,13 +129,11 @@ class StatePostSelectedRole extends State<PostSelectedRole> {
                         }
                       });
                     } else {
-                      showDialog<String>(
-                          context: context,
-                          builder: (BuildContext context) => FailedDialog(
-                              text:
-                                  "Request failed, you haven't chosen any tag yet"
-                                      .tr,
-                              type: "req"));
+                      Get.dialog(FailedDialog(
+                          text:
+                              "Request failed, you haven't selected any tag yet"
+                                  .tr,
+                          type: "req"));
                     }
                   },
                   child: Container(

@@ -122,10 +122,7 @@ class StatePostLogin extends State<PostLogin> {
                             userService.putFirebase(token);
                           }
                         } else {
-                          showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  FailedDialog(text: body, type: "login"));
+                          Get.dialog(FailedDialog(text: body, type: "login"));
 
                           if (body is! String) {
                             if (body['username'] != null) {
@@ -153,10 +150,8 @@ class StatePostLogin extends State<PostLogin> {
                         }
                       });
                     } else {
-                      showDialog<String>(
-                          context: context,
-                          builder: (BuildContext context) => FailedDialog(
-                              text: valid['message'], type: "login"));
+                      Get.dialog(
+                          FailedDialog(text: valid['message'], type: "login"));
                     }
                   },
                   style: ButtonStyle(

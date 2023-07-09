@@ -16,8 +16,8 @@ import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class PostTask extends StatefulWidget {
-  PostTask({Key key, this.text}) : super(key: key);
-  String text;
+  const PostTask({Key key, this.text}) : super(key: key);
+  final String text;
 
   @override
   StatePostTask createState() => StatePostTask();
@@ -169,23 +169,15 @@ class StatePostTask extends State<PostTask> {
                       if (status == "success") {
                         Get.offAll(const BottomBar());
 
-                        showDialog<String>(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                SuccessDialog(text: body));
+                        Get.dialog(SuccessDialog(text: body));
                       } else {
-                        showDialog<String>(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                FailedDialog(text: body, type: "addtask"));
+                        Get.dialog(FailedDialog(text: body, type: "addtask"));
                       }
                     });
                   } else {
-                    showDialog<String>(
-                        context: context,
-                        builder: (BuildContext context) => const FailedDialog(
-                            text: "Create archive failed, field can't be empty",
-                            type: "addtask"));
+                    Get.dialog(const FailedDialog(
+                        text: "Create archive failed, field can't be empty",
+                        type: "addtask"));
                   }
                 },
                 style: ButtonStyle(

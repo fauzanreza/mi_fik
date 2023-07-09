@@ -142,6 +142,7 @@ class StateAddPost extends State<AddPost> {
     return WillPopScope(
         onWillPop: () {
           getDiscard();
+          return null;
         },
         child: Scaffold(
           body: Column(
@@ -372,42 +373,28 @@ class StateAddPost extends State<AddPost> {
                                 listAttachment = [];
                                 Get.offAll(() => const BottomBar());
 
-                                showDialog<String>(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        SuccessDialog(text: body));
+                                Get.dialog(SuccessDialog(text: body));
                               } else {
-                                showDialog<String>(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        FailedDialog(
-                                            text: body, type: "addevent"));
+                                Get.dialog(
+                                    FailedDialog(text: body, type: "addevent"));
                               }
                             });
                           } else {
-                            showDialog<String>(
-                                context: context,
-                                builder: (BuildContext context) =>
-                                    const FailedDialog(
-                                        text:
-                                            "Create event failed, field can't be empty",
-                                        type: "addevent"));
+                            Get.dialog(const FailedDialog(
+                                text:
+                                    "Create event failed, field can't be empty",
+                                type: "addevent"));
                           }
                         } else {
-                          showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) => const FailedDialog(
-                                  text:
-                                      "Create event failed, tag must be selected",
-                                  type: "addevent"));
+                          Get.dialog(const FailedDialog(
+                              text: "Create event failed, tag must be selected",
+                              type: "addevent"));
                         }
                       } else {
-                        showDialog<String>(
-                            context: context,
-                            builder: (BuildContext context) => const FailedDialog(
-                                text:
-                                    "Create event failed, date period must be selected",
-                                type: "addevent"));
+                        Get.dialog(const FailedDialog(
+                            text:
+                                "Create event failed, date period must be selected",
+                            type: "addevent"));
                       }
                     },
                     style: ButtonStyle(

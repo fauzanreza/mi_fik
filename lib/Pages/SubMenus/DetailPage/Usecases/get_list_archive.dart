@@ -198,18 +198,13 @@ class StateListArchive extends State<ListArchive> {
                                         child: SuccessDialogCustom(
                                             text: "Event Saved".tr)));
                           } else {
-                            showDialog<String>(
-                                context: context,
-                                builder: (BuildContext context) => FailedDialog(
-                                    text: body, type: "editarchiverel"));
+                            Get.dialog(FailedDialog(
+                                text: body, type: "editarchiverel"));
                           }
                         });
                       } else {
-                        showDialog<String>(
-                            context: context,
-                            builder: (BuildContext context) => FailedDialog(
-                                text: "Nothing has changed".tr,
-                                type: "editacc"));
+                        Get.dialog(FailedDialog(
+                            text: "Nothing has changed".tr, type: "editacc"));
                       }
                     },
                     style: ButtonStyle(

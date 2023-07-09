@@ -95,7 +95,8 @@ class StateShowRole extends State<ShowRole> {
                                   tag.slug != "staff") {
                                 return AlertDialog(
                                   contentPadding: const EdgeInsets.all(10),
-                                  title: Text('Warning'.tr),
+                                  title: Text('Warning'.tr,
+                                      style: TextStyle(fontSize: textXMD)),
                                   content: SizedBox(
                                     width: fullWidth,
                                     height: 80,
@@ -153,37 +154,25 @@ class StateShowRole extends State<ShowRole> {
                                             if (status == "success") {
                                               Get.offAll(
                                                   () => const ProfilePage());
-                                              showDialog<String>(
-                                                  context: context,
-                                                  builder:
-                                                      (BuildContext context) =>
-                                                          SuccessDialog(
-                                                              text: body));
+                                              Get.dialog(
+                                                  SuccessDialog(text: body));
                                             } else {
                                               Get.offAll(
                                                   () => const ProfilePage());
 
-                                              showDialog<String>(
-                                                  context: context,
-                                                  builder:
-                                                      (BuildContext context) =>
-                                                          FailedDialog(
-                                                              text: body,
-                                                              type: "req"));
+                                              Get.dialog(FailedDialog(
+                                                  text: body, type: "req"));
                                             }
                                             setState(() {
                                               selectedRole.clear();
                                             });
                                           });
                                         } else {
-                                          showDialog<String>(
-                                              context: context,
-                                              builder: (BuildContext context) =>
-                                                  FailedDialog(
-                                                      text:
-                                                          "Request failed, you haven't chosen any tag yet"
-                                                              .tr,
-                                                      type: "req"));
+                                          Get.dialog(FailedDialog(
+                                              text:
+                                                  "Request failed, you haven't selected any tag yet"
+                                                      .tr,
+                                              type: "req"));
                                         }
                                       },
                                       child: Text("Yes".tr,

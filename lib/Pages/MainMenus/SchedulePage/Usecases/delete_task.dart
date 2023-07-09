@@ -57,15 +57,10 @@ class StateDeleteTask extends State<DeleteTask> {
                         if (status == "success") {
                           Get.offAll(() => const BottomBar());
 
-                          showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  SuccessDialog(text: body));
+                          Get.dialog(SuccessDialog(text: body));
                         } else {
-                          showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  FailedDialog(text: body, type: "deletetask"));
+                          Get.dialog(
+                              FailedDialog(text: body, type: "deletetask"));
                         }
                       });
                     },

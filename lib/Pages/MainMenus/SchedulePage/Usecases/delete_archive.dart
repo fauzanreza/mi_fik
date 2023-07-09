@@ -82,17 +82,10 @@ class StateDeleteArchive extends State<DeleteArchive> {
                                           selectedArchiveDesc = null;
                                           Get.offAll(const BottomBar());
 
-                                          showDialog<String>(
-                                              context: context,
-                                              builder: (BuildContext context) =>
-                                                  SuccessDialog(text: body));
+                                          Get.dialog(SuccessDialog(text: body));
                                         } else {
-                                          showDialog<String>(
-                                              context: context,
-                                              builder: (BuildContext context) =>
-                                                  FailedDialog(
-                                                      text: body,
-                                                      type: "addarchive"));
+                                          Get.dialog(FailedDialog(
+                                              text: body, type: "addarchive"));
                                         }
                                       });
                                     },

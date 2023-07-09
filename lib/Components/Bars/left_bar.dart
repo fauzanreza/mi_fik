@@ -118,10 +118,7 @@ class LeftBar extends StatelessWidget {
                               color: warningBG),
                           child: TextButton.icon(
                             onPressed: () {
-                              showDialog<String>(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      const SignOutDialog());
+                              Get.dialog(const SignOutDialog());
                             },
                             icon: Icon(Icons.logout,
                                 size: textLG, color: whiteColor),

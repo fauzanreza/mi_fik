@@ -79,8 +79,8 @@ getItemTimeString(date) {
     final now = DateTime.now();
 
     //Check this again!
-    date = DateTime.parse(
-        getLocalConvertedDate(DateFormat('yyyy-MM-dd HH:mm:ss').format(date)));
+    date = DateTime.parse(getLocalConvertedDate(
+        DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.parse(date))));
 
     final today = DateTime(now.year, now.month, now.day);
     final justNowHour = DateTime(now.hour);

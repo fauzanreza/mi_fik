@@ -12,14 +12,6 @@ class HistoryPage extends StatefulWidget {
 }
 
 class StateHistoryPage extends State<HistoryPage> {
-  ScrollController scrollCtrl;
-
-  @override
-  void dispose() {
-    //scrollCtrl.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
@@ -29,7 +21,7 @@ class StateHistoryPage extends State<HistoryPage> {
       appBar: getAppbar("History".tr, () {
         Get.offAll(() => const ProfilePage());
       }),
-      body: GetMyHistory(scrollCtrl: scrollCtrl),
+      body: GetMyHistory(),
     );
   }
 }
