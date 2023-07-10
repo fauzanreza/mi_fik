@@ -161,16 +161,16 @@ class StatePostLogin extends State<PostLogin> {
                     )),
                     backgroundColor: MaterialStatePropertyAll<Color>(successBG),
                   ),
-                  child: Text('Sign In', style: TextStyle(fontSize: textMD)),
+                  child: Text('Sign In'.tr, style: TextStyle(fontSize: textMD)),
                 )),
             Container(
                 alignment: Alignment.center,
-                margin: EdgeInsets.only(top: spaceXMD * 2),
+                margin: EdgeInsets.only(top: spaceXMD),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
-                          padding: EdgeInsets.symmetric(vertical: spaceMD),
+                          padding: EdgeInsets.symmetric(vertical: spaceSM),
                           child: Text("don't have an account?".tr,
                               style: TextStyle(fontSize: textMD))),
                       TextButton(

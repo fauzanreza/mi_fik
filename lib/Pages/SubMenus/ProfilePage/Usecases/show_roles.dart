@@ -179,7 +179,9 @@ class StateShowRole extends State<ShowRole> {
                                         }
                                       },
                                       child: Text("Yes".tr,
-                                          style: TextStyle(color: whiteColor)),
+                                          style: TextStyle(
+                                              color: whiteColor,
+                                              fontSize: textMD)),
                                     )
                                   ],
                                 );

@@ -348,7 +348,8 @@ class StateRegisterPage extends State<RegisterPage> {
                     Get.offNamed(CollectionRoute.landing,
                         preventDuplicates: false);
                   },
-                  child: Text("Yes".tr, style: TextStyle(color: whiteColor)),
+                  child: Text("Yes".tr,
+                      style: TextStyle(color: whiteColor, fontSize: textMD)),
                 )
               ],
             ));

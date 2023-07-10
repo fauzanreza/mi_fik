@@ -64,7 +64,7 @@ class LeftBar extends StatelessWidget {
                                       children: [
                                         getProfileImageSideBar(
                                             fullWidth, 0.15, image),
-                                        Text(username,
+                                        Text("@$username",
                                             style: TextStyle(
                                                 color: whiteColor,
                                                 fontSize: textXMD + 2,

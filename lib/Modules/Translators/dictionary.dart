@@ -154,7 +154,12 @@ class Dictionaries extends Translations {
           "You haven't accept the terms & condition":
               "You haven't accept the terms & condition",
           "All Tag": "All Tag",
-          "Attachment": "Attachment"
+          "Attachment": "Attachment",
+          "Sign In": "Sign In",
+          "Create archive failed, field can't be empty":
+              "Create archive failed, field can't be empty",
+          "Are you sure want to leave? All changes will not be saved":
+              "Are you sure want to leave? All changes will not be saved"
         },
         'id_ID': {
           'Good Morning': 'Selamat Pagi',
@@ -307,7 +312,12 @@ class Dictionaries extends Translations {
           "You haven't accept the terms & condition":
               "Anda belum menyetujui Syarat & Ketentuan",
           "All Tag": "Semua tag",
-          "Attachment": "Tautan"
+          "Attachment": "Tautan",
+          "Sign In": "Masuk",
+          "Create archive failed, field can't be empty":
+              "Gagal membuat arsip, kolom tidak boleh kosong",
+          "Are you sure want to leave? All changes will not be saved":
+              "Apakah Anda yakin ingin keluar? Semua perubahan tidak akan tersimpan"
         },
       };
 }

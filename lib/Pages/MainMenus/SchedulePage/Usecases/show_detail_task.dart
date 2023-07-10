@@ -10,6 +10,7 @@ import 'package:mi_fik/Modules/APIs/ContentApi/Models/command_tasks.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_tasks.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
+import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
@@ -100,7 +101,9 @@ class StateDetailTask extends State<DetailTask> {
               runSpacing: -5,
               spacing: 5,
               children: [
-                getDatePicker(dateStartCtrl, () {
+                getDatePicker(
+                    dateStartCtrl.subtract(
+                        Duration(hours: getUTCHourOffset() * -1)), () {
                   final now = DateTime.now();
 
                   DatePicker.showDateTimePicker(context,
@@ -110,11 +113,17 @@ class StateDetailTask extends State<DetailTask> {
                       maxTime: DateTime(now.year + 1, now.month, now.day),
                       onConfirm: (date) {
                     setState(() {
-                      dateStartCtrl = date;
+                      dateStartCtrl =
+                          date.add(Duration(hours: getUTCHourOffset() * -1));
                     });
-                  }, currentTime: dateStartCtrl, locale: LocaleType.en);
+                  },
+                      currentTime: dateStartCtrl
+                          .subtract(Duration(hours: getUTCHourOffset() * -1)),
+                      locale: LocaleType.en);
                 }, "Start", "datetime"),
-                getDatePicker(dateEndCtrl, () {
+                getDatePicker(
+                    dateEndCtrl.subtract(
+                        Duration(hours: getUTCHourOffset() * -1)), () {
                   final now = DateTime.now();
 
                   DatePicker.showDateTimePicker(context,
@@ -124,9 +133,13 @@ class StateDetailTask extends State<DetailTask> {
                       maxTime: DateTime(now.year + 1, now.month, now.day),
                       onConfirm: (date) {
                     setState(() {
-                      dateEndCtrl = date;
+                      dateEndCtrl =
+                          date.add(Duration(hours: getUTCHourOffset() * -1));
                     });
-                  }, currentTime: dateEndCtrl, locale: LocaleType.en);
+                  },
+                      currentTime: dateEndCtrl
+                          .subtract(Duration(hours: getUTCHourOffset() * -1)),
+                      locale: LocaleType.en);
                 }, "End", "datetime"),
                 Wrap(children: <Widget>[
                   TextButton(

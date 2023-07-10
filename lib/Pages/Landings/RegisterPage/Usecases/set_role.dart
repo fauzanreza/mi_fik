@@ -36,10 +36,9 @@ class StateSetRole extends State<SetRole> {
               TextAlign.center)
         ]);
       } else {
-        return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          getTitleLarge("Choose Your Role", primaryColor),
-          const Expanded(child: GetAllTagCategory())
-        ]);
+        return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: const [Expanded(child: GetAllTagCategory())]);
       }
     }
 

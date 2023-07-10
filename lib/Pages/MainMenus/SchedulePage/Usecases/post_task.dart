@@ -154,8 +154,10 @@ class StatePostTask extends State<PostTask> {
                   AddTaskModel data = AddTaskModel(
                       taskTitle: taskTitleCtrl.text.trim(),
                       taskDesc: taskDescCtrl.text.trim(),
-                      dateStart: validateDatetime(dateStartCtrl),
-                      dateEnd: validateDatetime(dateEndCtrl),
+                      dateStart: validateDatetime(dateStartCtrl
+                          .add(Duration(hours: getUTCHourOffset() * -1))),
+                      dateEnd: validateDatetime(dateEndCtrl
+                          .add(Duration(hours: getUTCHourOffset() * -1))),
                       reminder: slctReminderType);
 
                   if (data.taskTitle.isNotEmpty &&
@@ -176,8 +178,8 @@ class StatePostTask extends State<PostTask> {
                       }
                     });
                   } else {
-                    Get.dialog(const FailedDialog(
-                        text: "Create archive failed, field can't be empty",
+                    Get.dialog(FailedDialog(
+                        text: "Create archive failed, field can't be empty".tr,
                         type: "addtask"));
                   }
                 },

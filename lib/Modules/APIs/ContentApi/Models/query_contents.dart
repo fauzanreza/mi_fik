@@ -198,7 +198,7 @@ class ScheduleModel {
       id: map["id"],
       slugName: map["slug_name"],
       contentTitle: map["content_title"],
-      contentDesc: map["content_desc"].toString(),
+      contentDesc: map["content_desc"],
       contentTag: map["content_tag"],
       contentLoc: map["content_loc"],
       contentImage: map["content_image"],

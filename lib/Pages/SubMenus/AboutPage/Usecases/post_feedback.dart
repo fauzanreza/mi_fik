@@ -65,8 +65,7 @@ class StatePostFeedback extends State<PostFeedback> {
                 alignment: Alignment.centerLeft,
                 child: Text("What do you think the improvment should be".tr,
                     style: TextStyle(
-                      fontSize: 14,
-                      fontFamily: 'Poppins',
+                      fontSize: textXMD,
                       color: darkColor,
                       fontWeight: FontWeight.w500,
                     ))),

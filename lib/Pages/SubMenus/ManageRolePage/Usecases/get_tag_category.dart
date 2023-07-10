@@ -44,61 +44,65 @@ class StateGetAllTagCategory extends State<GetAllTagCategory> {
             slug = contents[index]['slug_name'];
           }
 
-          Widget getItem() {
-            return Container(
-              padding: EdgeInsets.all(spaceSM),
-              margin: EdgeInsets.only(bottom: spaceSM),
-              decoration: BoxDecoration(
-                  color: whiteColor,
-                  borderRadius: const BorderRadius.all(Radius.circular(10))),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(ucAll(dctName),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: darkColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: textXMD)),
-                  const Divider(
-                    thickness: 1,
-                  ),
-                  GetAllTagByCategory(slug: slug)
-                ],
-              ),
-            );
-          }
+          if (Get.currentRoute != "/role" || slug != "general-role") {
+            Widget getItem() {
+              return Container(
+                padding: EdgeInsets.all(spaceSM),
+                margin: EdgeInsets.only(bottom: spaceSM),
+                decoration: BoxDecoration(
+                    color: whiteColor,
+                    borderRadius: const BorderRadius.all(Radius.circular(10))),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(ucAll(dctName),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: darkColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: textXMD)),
+                    const Divider(
+                      thickness: 1,
+                    ),
+                    GetAllTagByCategory(slug: slug)
+                  ],
+                ),
+              );
+            }
 
-          if (index == 0) {
-            return Column(
-              children: [
-                Container(
-                    padding:
-                        EdgeInsets.fromLTRB(spaceMD, spaceMD, spaceMD, spaceLG),
-                    margin: EdgeInsets.only(bottom: spaceSM),
-                    decoration: BoxDecoration(
-                        color: whiteColor,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10))),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        getTitleLarge("Choose Your Role".tr, primaryColor),
-                        SizedBox(height: spaceSM),
-                        Text(
-                            "Role system will shows your preferable information in your timeline, and you can save your information based on your roles to archive. Please choose your roles based on your academic situation right now.",
-                            textAlign: TextAlign.center,
-                            style:
-                                TextStyle(color: darkColor, fontSize: textMD)),
-                      ],
-                    )),
-                getItem()
-              ],
-            );
+            if (index == 0) {
+              return Column(
+                children: [
+                  Container(
+                      padding: EdgeInsets.fromLTRB(
+                          spaceMD, spaceMD, spaceMD, spaceLG),
+                      margin: EdgeInsets.only(bottom: spaceSM),
+                      decoration: BoxDecoration(
+                          color: whiteColor,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10))),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          getTitleLarge("Choose Your Role".tr, primaryColor),
+                          SizedBox(height: spaceSM),
+                          Text(
+                              "Role system will shows your preferable information in your timeline, and you can save your information based on your roles to archive. Please choose your roles based on your academic situation right now.",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: darkColor, fontSize: textMD)),
+                        ],
+                      )),
+                  getItem()
+                ],
+              );
+            } else {
+              return getItem();
+            }
           } else {
-            return getItem();
+            return const SizedBox();
           }
         });
   }
@@ -123,7 +127,8 @@ class StateGetAllTagCategory extends State<GetAllTagCategory> {
               contents = snapshot.data;
               var lst = [];
               for (var element in contents) {
-                if (element.slug != "general-role") {
+                if (element.slug != "general-role" ||
+                    Get.currentRoute != "/role") {
                   lst.add(
                       {"slug_name": element.slug, "dct_name": element.dctName});
                 }

@@ -115,6 +115,12 @@ class StatePostSelectedRole extends State<PostSelectedRole> {
                             setState(() {
                               indexRegis = 5;
                               isFinishedRegis = true;
+                              isCheckedRegister = false;
+                              isFillForm = false;
+                              isChooseRole = false;
+                              checkAvaiabilityRegis = false;
+                              uploadedImageRegis = null;
+                              isWaiting = false;
                             });
                             Get.offNamed(CollectionRoute.register,
                                 preventDuplicates: false);
