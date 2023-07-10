@@ -83,6 +83,11 @@ class StateSetProfileData extends State<SetProfileData>
                       emailCtrl.clear();
                       widget.unameMsg = "";
                       widget.emailMsg = "";
+
+                      passRegisCtrl = "";
+                      lnameRegisCtrl = "";
+                      fnameRegisCtrl = "";
+
                       emailAvaiabilityCheck = "";
                       checkAvaiabilityRegis = false;
                       refreshPage(refresh);

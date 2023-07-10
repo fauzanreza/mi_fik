@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/top_bar.dart';
 import 'package:mi_fik/Components/Cameras/preview.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/Landings/RegisterPage/index.dart';
-import 'package:mi_fik/Pages/SubMenus/AddPostPage/index.dart';
-import 'package:mi_fik/Pages/SubMenus/ProfilePage/index.dart';
 
 class CameraPage extends StatefulWidget {
   const CameraPage({Key key, this.camera, this.from, this.loadingCtrl})
@@ -57,11 +55,11 @@ class StateCameraPageState extends State<CameraPage> {
     return Scaffold(
       appBar: getAppbar("Take a Picture".tr, () {
         if (widget.from == "profile") {
-          Get.offAll(() => const ProfilePage());
+          Get.offNamed(CollectionRoute.profile, preventDuplicates: false);
         } else if (widget.from == "addpost") {
-          Get.offAll(() => const AddPost());
+          Get.offNamed(CollectionRoute.addpost, preventDuplicates: false);
         } else if (widget.from == "register") {
-          Get.offAll(() => const RegisterPage());
+          Get.offNamed(CollectionRoute.register, preventDuplicates: false);
         }
       }),
       body: FutureBuilder<void>(

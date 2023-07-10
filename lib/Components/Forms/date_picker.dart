@@ -14,6 +14,7 @@ Widget getDatePicker(
       Icons.calendar_month,
       size: 24.0,
     ),
-    label: Text(getDateText(ds, type, view)),
+    label:
+        Text(getDateText(ds, type, view), style: TextStyle(fontSize: textXMD)),
   );
 }

@@ -191,10 +191,7 @@ class _SetFileAttachmentState extends State<SetFileAttachment>
               color: semidarkColor,
             ),
             label: Text("Insert Attachment".tr,
-                style: TextStyle(
-                    fontSize: textXMD,
-                    color: semidarkColor,
-                    fontWeight: FontWeight.w400)),
+                style: TextStyle(fontSize: textMD, color: semidarkColor)),
           ),
         ),
       ),

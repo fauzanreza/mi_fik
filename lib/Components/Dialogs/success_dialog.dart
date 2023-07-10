@@ -75,7 +75,7 @@ class SuccessDialogCustom extends StatelessWidget {
               style: TextStyle(
                   color: whiteColor,
                   fontWeight: FontWeight.bold,
-                  fontSize: textXMD))
+                  fontSize: textLG + 4))
         ]));
   }
 }

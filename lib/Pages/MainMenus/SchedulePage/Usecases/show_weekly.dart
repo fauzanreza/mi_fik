@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
@@ -52,7 +52,8 @@ class GetWeeklyNavigator extends StatelessWidget {
                       }
                       slctSchedule = DateTime.now();
 
-                      Get.offAll(() => const BottomBar());
+                      Get.offNamed(CollectionRoute.bar,
+                          preventDuplicates: false);
                     },
                     child: Container(
                       height: 60,

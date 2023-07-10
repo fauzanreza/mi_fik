@@ -3,16 +3,15 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get/get.dart';
-import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Button/navigation.dart';
 import 'package:mi_fik/Components/Forms/date_picker.dart';
 import 'package:mi_fik/Components/Forms/tag_picker.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/dummy.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SetControl extends StatefulWidget {
@@ -31,7 +30,7 @@ class StateSetControl extends State<SetControl> {
     if (roles != null) {
       return Role(role: roles);
     } else {
-      Get.offAll(() => const LoginPage());
+      Get.offNamed(CollectionRoute.landing, preventDuplicates: false);
       Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
           backgroundColor: whiteColor);
       return null;
@@ -162,7 +161,8 @@ class StateSheetFilter extends State<SheetFilter> {
                           color: whiteColor,
                           onPressed: () {
                             searchingContent = "";
-                            Get.offAll(() => const BottomBar());
+                            Get.offNamed(CollectionRoute.bar,
+                                preventDuplicates: false);
                           },
                         ),
                       )),
@@ -224,7 +224,8 @@ class StateSheetFilter extends State<SheetFilter> {
                             onPressed: () {
                               filterDateStart = null;
                               filterDateEnd = null;
-                              Get.offAll(() => const BottomBar());
+                              Get.offNamed(CollectionRoute.bar,
+                                  preventDuplicates: false);
                             },
                           ),
                         )),
@@ -269,7 +270,8 @@ class StateSheetFilter extends State<SheetFilter> {
                     const Spacer(),
                     outlinedButtonCustom(() {
                       selectedTagFilterContent.clear();
-                      Get.offAll(() => const BottomBar());
+                      Get.offNamed(CollectionRoute.bar,
+                          preventDuplicates: false);
                     }, "Clear All".tr, Icons.delete)
                   ],
                 ),
@@ -321,7 +323,8 @@ class StateSheetFilter extends State<SheetFilter> {
                   child: ElevatedButton(
                     onPressed: () {
                       searchingContent = widget.title.text.trim();
-                      Get.offAll(() => const BottomBar());
+                      Get.offNamed(CollectionRoute.bar,
+                          preventDuplicates: false);
                     },
                     style: ButtonStyle(
                       backgroundColor:

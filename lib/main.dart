@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/bg_fcm_dialog.dart';
 import 'package:mi_fik/Modules/APIs/DictionaryApi/Services/queries.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
+import 'package:mi_fik/Modules/Routes/page_routes.dart';
 import 'package:mi_fik/Modules/Translators/dictionary.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -19,6 +19,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:mi_fik/Pages/Landings/RegisterPage/index.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 @pragma('vm:entry-point')
 //not finished
@@ -44,6 +45,10 @@ Future<void> fireFCMHandler(RemoteMessage message) async {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  FlutterNativeSplash.remove();
+
   await Permission.notification.isDenied.then((value) {
     if (value) {
       Permission.notification.request();
@@ -146,12 +151,16 @@ class StateMyApp extends State<MyApp> {
             notification.body,
             NotificationDetails(
               android: AndroidNotificationDetails(
-                channel.id,
+                "${channel.id}2",
                 channel.name,
                 channelDescription: channel.description,
                 color: primaryColor,
                 enableLights: true,
                 icon: "@mipmap/ic_launcher",
+                priority: Priority.max,
+                playSound: true,
+                importance: Importance.max,
+                sound: const RawResourceAndroidNotificationSound('notif_1'),
               ),
             ));
       }
@@ -179,37 +188,6 @@ class StateMyApp extends State<MyApp> {
       DeviceOrientation.portraitDown,
     ]);
 
-    final TextTheme textTheme = TextTheme(
-      displayLarge: GoogleFonts.poppins(fontSize: textSM),
-      displayMedium: GoogleFonts.poppins(fontSize: textSM),
-      displaySmall: GoogleFonts.poppins(fontSize: textSM),
-      headlineLarge: GoogleFonts.poppins(fontSize: textSM),
-      headlineMedium: GoogleFonts.poppins(fontSize: textSM),
-      headlineSmall: GoogleFonts.poppins(fontSize: textSM),
-      titleLarge: GoogleFonts.poppins(fontSize: textSM),
-      titleMedium: GoogleFonts.poppins(fontSize: textSM),
-      titleSmall: GoogleFonts.poppins(fontSize: textSM),
-      bodyLarge: GoogleFonts.poppins(fontSize: textSM),
-      bodyMedium: GoogleFonts.poppins(fontSize: textSM),
-      bodySmall: GoogleFonts.poppins(fontSize: textSM),
-      labelLarge: GoogleFonts.poppins(fontSize: textSM),
-      labelMedium: GoogleFonts.poppins(fontSize: textSM),
-      labelSmall: GoogleFonts.poppins(fontSize: textSM),
-      // headline1: GoogleFonts.poppins(),
-      // headline2: GoogleFonts.poppins(),
-      // headline3: GoogleFonts.poppins(),
-      // headline4: GoogleFonts.poppins(),
-      // headline5: GoogleFonts.poppins(),
-      // headline6: GoogleFonts.poppins(),
-      // subtitle1: GoogleFonts.poppins(),
-      // subtitle2: GoogleFonts.poppins(),
-      // bodyText1: GoogleFonts.poppins(),
-      // bodyText2: GoogleFonts.poppins(),
-      // caption: GoogleFonts.poppins(),
-      // button: GoogleFonts.poppins(),
-      // overline: GoogleFonts.poppins(),
-    );
-
     String langCode = "en";
     slctLang = LangList.en;
     String countryCode = "US";
@@ -218,6 +196,22 @@ class StateMyApp extends State<MyApp> {
       langCode = "id";
       countryCode = "ID";
       slctLang = LangList.id;
+    }
+
+    Widget getItem(Widget destination) {
+      return GetMaterialApp(
+        translations: Dictionaries(),
+        locale: Locale(langCode, countryCode),
+        fallbackLocale: Locale(langCode, countryCode),
+        debugShowCheckedModeBanner: false,
+        title: 'Mi-FIK',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          textTheme: textTheme,
+        ),
+        getPages: PageRoutes.pages,
+        home: destination,
+      );
     }
 
     if (widget.signed) {
@@ -229,31 +223,9 @@ class StateMyApp extends State<MyApp> {
             userService.putFirebase(tokens);
 
             if (widget.finishRegis) {
-              return GetMaterialApp(
-                translations: Dictionaries(),
-                locale: Locale(langCode, countryCode),
-                fallbackLocale: Locale(langCode, countryCode),
-                debugShowCheckedModeBanner: false,
-                title: 'Mi-FIK',
-                theme: ThemeData(
-                  primarySwatch: Colors.blue,
-                  textTheme: textTheme,
-                ),
-                home: const BottomBar(),
-              );
+              return getItem(const BottomBar());
             } else {
-              return GetMaterialApp(
-                translations: Dictionaries(),
-                locale: Locale(langCode, countryCode),
-                fallbackLocale: Locale(langCode, countryCode),
-                debugShowCheckedModeBanner: false,
-                title: 'Mi-FIK',
-                theme: ThemeData(
-                  primarySwatch: Colors.blue,
-                  textTheme: textTheme,
-                ),
-                home: const RegisterPage(isLogged: true),
-              );
+              return getItem(const RegisterPage(isLogged: true));
             }
           } else {
             return const CircularProgressIndicator();
@@ -261,18 +233,7 @@ class StateMyApp extends State<MyApp> {
         },
       );
     } else {
-      return GetMaterialApp(
-        translations: Dictionaries(),
-        locale: const Locale("en", "US"),
-        fallbackLocale: const Locale("en", "US"),
-        debugShowCheckedModeBanner: false,
-        title: 'Mi-FIK',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          textTheme: textTheme,
-        ),
-        home: const LoginPage(),
-      );
+      return getItem(const LoginPage());
     }
   }
 }

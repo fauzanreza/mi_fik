@@ -4,13 +4,9 @@ import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Button/navigation.dart';
 import 'package:mi_fik/Components/Dialogs/sign_out_dialog.dart';
 import 'package:mi_fik/Components/Skeletons/drawer.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/SubMenus/FAQPage/index.dart';
-import 'package:mi_fik/Pages/SubMenus/HelpPage/index.dart';
-import 'package:mi_fik/Pages/SubMenus/ManageRolePage/index.dart';
-import 'package:mi_fik/Pages/SubMenus/ProfilePage/index.dart';
-import 'package:mi_fik/Pages/SubMenus/SettingPage/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LeftBar extends StatelessWidget {
@@ -68,7 +64,7 @@ class LeftBar extends StatelessWidget {
                                       children: [
                                         getProfileImageSideBar(
                                             fullWidth, 0.15, image),
-                                        Text(username,
+                                        Text("@$username",
                                             style: TextStyle(
                                                 color: whiteColor,
                                                 fontSize: textXMD + 2,
@@ -82,27 +78,27 @@ class LeftBar extends StatelessWidget {
                                 ),
                                 getSideBarTile(
                                     fullWidth, Icons.person, "Profile".tr, () {
-                                  Get.to(() => const ProfilePage());
+                                  Get.toNamed(CollectionRoute.profile);
                                 }),
                                 getSideBarTile(fullWidth, Icons.tag, "Role",
                                     () {
                                   selectedRole.clear();
-                                  Get.to(() => const RolePage());
+                                  Get.toNamed(CollectionRoute.role);
                                 }),
                                 getSideBarTile(fullWidth,
                                     Icons.question_answer_outlined, "FAQ", () {
-                                  Get.to(() => const FAQPage());
+                                  Get.toNamed(CollectionRoute.faq);
                                 }),
                                 getSideBarTile(
                                     fullWidth, Icons.help_center, "Help".tr,
                                     () {
-                                  Get.to(() => const HelpPage());
+                                  Get.toNamed(CollectionRoute.help);
                                 }),
                               ]),
                         ),
                         getSideBarTile(fullWidth, Icons.settings, "Setting".tr,
                             () {
-                          Get.to(() => const SettingPage());
+                          Get.toNamed(CollectionRoute.setting);
                         }),
                         Container(
                           width: fullWidth,

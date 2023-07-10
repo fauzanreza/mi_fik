@@ -9,8 +9,8 @@ import 'package:mi_fik/Modules/APIs/UserApi/Models/queries.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/queries.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/SubMenus/ProfilePage/index.dart';
 
 class GetEditProfile extends StatefulWidget {
   const GetEditProfile({Key key}) : super(key: key);
@@ -119,11 +119,6 @@ class _GetEditProfileState extends State<GetEditProfile> {
                     child: getSubTitleMedium(
                         "Last Name".tr, whiteColor, TextAlign.start)),
                 getInputText(lnameLength, lNameCtrl, false),
-                // Align(
-                //     alignment: Alignment.centerLeft,
-                //     child: getSubTitleMedium(
-                //         "Password".tr, whiteColor, TextAlign.start)),
-                // getInputText(passwordLength, passCtrl, true),
                 InkWell(
                   onTap: () async {
                     EditUserProfileModel data = EditUserProfileModel(
@@ -141,7 +136,8 @@ class _GetEditProfileState extends State<GetEditProfile> {
                         var body = response[0]['body'];
 
                         if (status == "success") {
-                          Get.to(() => const ProfilePage());
+                          Get.toNamed(CollectionRoute.profile,
+                              preventDuplicates: false);
                           Get.dialog(SuccessDialog(text: body));
                         } else {
                           Get.dialog(FailedDialog(text: body, type: "editacc"));

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/ProfilePage/Usecases/edit_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,7 +20,7 @@ class ShowProfile extends StatelessWidget {
       return UserProfileLeftBar(
           username: username, image: image, roleGeneral: role);
     } else {
-      Get.offAll(() => const LoginPage());
+      Get.offNamed(CollectionRoute.landing, preventDuplicates: false);
       Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
           backgroundColor: whiteColor);
       return null;

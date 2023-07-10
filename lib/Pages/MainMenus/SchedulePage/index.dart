@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/Usecases/show_side_bar.dart';
@@ -7,6 +6,7 @@ import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Bars/left_bar.dart';
 import 'package:mi_fik/Components/Bars/right_bar.dart';
 import 'package:mi_fik/Components/Button/navigation.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Translators/service.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -85,7 +85,8 @@ class StateSchedulePage extends State<SchedulePage>
 
     return WillPopScope(
         onWillPop: () {
-          return SystemNavigator.pop();
+          return Get.offNamed(CollectionRoute.homepage,
+              preventDuplicates: false);
         },
         child: Scaffold(
             key: scaffoldKey,

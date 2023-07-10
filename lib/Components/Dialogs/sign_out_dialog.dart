@@ -4,8 +4,8 @@ import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
 import 'package:mi_fik/Modules/APIs/AuthApi/Services/queries.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
 
 class SignOutDialog extends StatefulWidget {
   const SignOutDialog({Key key}) : super(key: key);
@@ -64,17 +64,17 @@ class StateSignOutDialog extends State<SignOutDialog> {
                 var code = response[0]['code'];
 
                 if (body == "Logout success" && code == 200) {
-                  Get.off(() => const LoginPage());
+                  Get.offNamed(CollectionRoute.landing);
                   Get.dialog(SuccessDialog(text: body));
                 } else if (code == 401) {
-                  Get.off(() => const LoginPage());
+                  Get.offNamed(CollectionRoute.landing);
                   Get.dialog(const SuccessDialog(text: "Sign out success"));
                 } else {
                   Get.dialog(FailedDialog(text: body, type: "signout"));
                 }
               });
             } else {
-              Get.off(() => const LoginPage());
+              Get.offNamed(CollectionRoute.landing);
               Get.dialog(const SuccessDialog(text: "Sign out success"));
             }
           },

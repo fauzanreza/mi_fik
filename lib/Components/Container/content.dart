@@ -81,12 +81,12 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  fit: BoxFit.fitWidth,
-                  filterQuality: FilterQuality.low,
-                  image: getImageHeader(widget.content.contentImage),
-                  colorFilter: ColorFilter.mode(
-                      Colors.black.withOpacity(0.5), BlendMode.darken),
-                ),
+                    fit: BoxFit.fitWidth,
+                    filterQuality: FilterQuality.low,
+                    image: getImageHeader(widget.content.contentImage),
+                    colorFilter: ColorFilter.mode(
+                        Colors.black.withOpacity(0.5), BlendMode.darken),
+                    onError: (exception, stackTrace) => getImageHeader(null)),
                 borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10)),

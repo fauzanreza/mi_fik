@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get/get.dart';
-import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
 import 'package:mi_fik/Components/Forms/date_picker.dart';
@@ -12,6 +11,7 @@ import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_tasks.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Helpers/info.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
@@ -154,8 +154,10 @@ class StatePostTask extends State<PostTask> {
                   AddTaskModel data = AddTaskModel(
                       taskTitle: taskTitleCtrl.text.trim(),
                       taskDesc: taskDescCtrl.text.trim(),
-                      dateStart: validateDatetime(dateStartCtrl),
-                      dateEnd: validateDatetime(dateEndCtrl),
+                      dateStart: validateDatetime(dateStartCtrl
+                          .add(Duration(hours: getUTCHourOffset() * -1))),
+                      dateEnd: validateDatetime(dateEndCtrl
+                          .add(Duration(hours: getUTCHourOffset() * -1))),
                       reminder: slctReminderType);
 
                   if (data.taskTitle.isNotEmpty &&
@@ -167,7 +169,8 @@ class StatePostTask extends State<PostTask> {
                       var body = response[0]['body'];
 
                       if (status == "success") {
-                        Get.offAll(const BottomBar());
+                        Get.offNamed(CollectionRoute.bar,
+                            preventDuplicates: false);
 
                         Get.dialog(SuccessDialog(text: body));
                       } else {
@@ -175,8 +178,8 @@ class StatePostTask extends State<PostTask> {
                       }
                     });
                   } else {
-                    Get.dialog(const FailedDialog(
-                        text: "Create archive failed, field can't be empty",
+                    Get.dialog(FailedDialog(
+                        text: "Create archive failed, field can't be empty".tr,
                         type: "addtask"));
                   }
                 },

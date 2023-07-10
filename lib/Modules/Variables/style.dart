@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // Colors
 var primaryLightBG = const Color(0xFFFADFB9); // Not used yet
@@ -58,3 +59,35 @@ double iconXL = 32; //For floating add btn, ...
 double iconLG = 24; //For floating add btn, ...
 double iconMD = 18; //For link or file btn, ...
 double iconSM = 15; //For content header ...
+
+// Typography
+final TextTheme textTheme = TextTheme(
+  displayLarge: GoogleFonts.poppins(fontSize: textSM),
+  displayMedium: GoogleFonts.poppins(fontSize: textSM),
+  displaySmall: GoogleFonts.poppins(fontSize: textSM),
+  headlineLarge: GoogleFonts.poppins(fontSize: textSM),
+  headlineMedium: GoogleFonts.poppins(fontSize: textSM),
+  headlineSmall: GoogleFonts.poppins(fontSize: textSM),
+  titleLarge: GoogleFonts.poppins(fontSize: textSM),
+  titleMedium: GoogleFonts.poppins(fontSize: textSM),
+  titleSmall: GoogleFonts.poppins(fontSize: textSM),
+  bodyLarge: GoogleFonts.poppins(fontSize: textSM),
+  bodyMedium: GoogleFonts.poppins(fontSize: textSM),
+  bodySmall: GoogleFonts.poppins(fontSize: textSM),
+  labelLarge: GoogleFonts.poppins(fontSize: textSM),
+  labelMedium: GoogleFonts.poppins(fontSize: textSM),
+  labelSmall: GoogleFonts.poppins(fontSize: textSM),
+  // headline1: GoogleFonts.poppins(),
+  // headline2: GoogleFonts.poppins(),
+  // headline3: GoogleFonts.poppins(),
+  // headline4: GoogleFonts.poppins(),
+  // headline5: GoogleFonts.poppins(),
+  // headline6: GoogleFonts.poppins(),
+  // subtitle1: GoogleFonts.poppins(),
+  // subtitle2: GoogleFonts.poppins(),
+  // bodyText1: GoogleFonts.poppins(),
+  // bodyText2: GoogleFonts.poppins(),
+  // caption: GoogleFonts.poppins(),
+  // button: GoogleFonts.poppins(),
+  // overline: GoogleFonts.poppins(),
+);

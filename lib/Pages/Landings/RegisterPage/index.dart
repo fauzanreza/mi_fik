@@ -8,9 +8,9 @@ import 'package:mi_fik/Modules/APIs/UserApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/queries.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Validators/commands.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
 import 'package:mi_fik/Pages/Landings/RegisterPage/Usecases/get_terms.dart';
 import 'package:mi_fik/Pages/Landings/RegisterPage/Usecases/get_waiting.dart';
 import 'package:mi_fik/Pages/Landings/RegisterPage/Usecases/get_welcoming.dart';
@@ -345,9 +345,11 @@ class StateRegisterPage extends State<RegisterPage> {
                     final prefs = await SharedPreferences.getInstance();
                     await prefs.clear();
 
-                    Get.offAll(() => const LoginPage());
+                    Get.offNamed(CollectionRoute.landing,
+                        preventDuplicates: false);
                   },
-                  child: Text("Yes".tr, style: TextStyle(color: whiteColor)),
+                  child: Text("Yes".tr,
+                      style: TextStyle(color: whiteColor, fontSize: textMD)),
                 )
               ],
             ));
@@ -381,7 +383,7 @@ class StateRegisterPage extends State<RegisterPage> {
   Widget finishBtn() {
     return InkWell(
         onTap: () {
-          Get.offAll(() => const LoginPage());
+          Get.offNamed(CollectionRoute.landing, preventDuplicates: false);
         },
         child: Container(
           padding: EdgeInsets.all(spaceXSM),

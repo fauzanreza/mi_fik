@@ -10,9 +10,9 @@ import 'package:mi_fik/Modules/APIs/UserApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
 import 'package:mi_fik/Modules/Firebases/Storages/User/add_image.dart';
 import 'package:mi_fik/Modules/Firebases/Storages/User/remove_image.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/SubMenus/ProfilePage/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EditImage extends StatefulWidget {
@@ -89,7 +89,8 @@ class _EditImageState extends State<EditImage>
 
                             if (status == "success") {
                               lottieController.reset();
-                              Get.offAll(() => const ProfilePage());
+                              Get.offNamed(CollectionRoute.profile,
+                                  preventDuplicates: false);
                             } else {
                               Get.back();
 
@@ -169,8 +170,9 @@ class _EditImageState extends State<EditImage>
 
                                           if (status == "success") {
                                             lottieController.reset();
-                                            Get.offAll(
-                                                () => const ProfilePage());
+                                            Get.offNamed(
+                                                CollectionRoute.profile,
+                                                preventDuplicates: false);
                                           } else {
                                             Get.back();
                                             Get.dialog(

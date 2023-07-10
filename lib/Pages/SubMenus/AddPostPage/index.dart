@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
 import 'package:mi_fik/Components/Forms/date_picker.dart';
@@ -13,6 +12,7 @@ import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Helpers/info.dart';
 import 'package:mi_fik/Modules/Helpers/template.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 
 import 'package:mi_fik/Modules/Variables/dummy.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
@@ -85,7 +85,8 @@ class StateAddPost extends State<AddPost> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                  "Are you sure want to leave? All changes will not be saved",
+                                  "Are you sure want to leave? All changes will not be saved"
+                                      .tr,
                                   style: TextStyle(
                                       color: darkColor,
                                       fontSize: textXMD,
@@ -219,13 +220,8 @@ class StateAddPost extends State<AddPost> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text("Event Tag".tr,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontFamily: 'Poppins',
-                                    color: darkColor,
-                                    fontWeight: FontWeight.w500,
-                                  )),
+                              getSubTitleMedium(
+                                  "Event Tag".tr, darkColor, TextAlign.start),
                               const ChooseTag(),
                             ],
                           )),
@@ -242,13 +238,8 @@ class StateAddPost extends State<AddPost> {
                               Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("Event Reminder".tr,
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontFamily: 'Poppins',
-                                          color: darkColor,
-                                          fontWeight: FontWeight.w500,
-                                        )),
+                                    getSubTitleMedium("Event Reminder".tr,
+                                        darkColor, TextAlign.start),
                                     Container(
                                         padding: EdgeInsets.only(left: spaceSM),
                                         child: getDropDownMain(
@@ -263,13 +254,8 @@ class StateAddPost extends State<AddPost> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Event Location".tr,
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontFamily: 'Poppins',
-                                        color: darkColor,
-                                        fontWeight: FontWeight.w500,
-                                      )),
+                                  getSubTitleMedium("Event Location".tr,
+                                      darkColor, TextAlign.start),
                                   SetLocation(locDetailCtrl: locDetailCtrl),
                                 ],
                               )
@@ -286,13 +272,8 @@ class StateAddPost extends State<AddPost> {
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Event Period".tr,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontFamily: 'Poppins',
-                                      color: darkColor,
-                                      fontWeight: FontWeight.w500,
-                                    )),
+                                getSubTitleMedium("Event Period".tr, darkColor,
+                                    TextAlign.start),
                                 Row(children: [
                                   getDatePicker(dateStartCtrl, () {
                                     final now = DateTime.now();
@@ -309,7 +290,7 @@ class StateAddPost extends State<AddPost> {
                                       });
                                     }, currentTime: now, locale: LocaleType.en);
                                   }, "Start", "datetime"),
-                                  const Spacer(),
+                                  SizedBox(width: spaceSM),
                                   getDatePicker(dateEndCtrl, () {
                                     final now = DateTime.now();
 
@@ -340,13 +321,8 @@ class StateAddPost extends State<AddPost> {
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Event Attachment".tr,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontFamily: 'Poppins',
-                                      color: darkColor,
-                                      fontWeight: FontWeight.w500,
-                                    )),
+                                getSubTitleMedium("Event Attachment".tr,
+                                    darkColor, TextAlign.start),
                                 const SetFileAttachment()
                               ])),
                       Padding(
@@ -381,8 +357,14 @@ class StateAddPost extends State<AddPost> {
                           reminder: slctReminderType,
                           dateStart: getDBDateFormat("date", dateStartCtrl),
                           dateEnd: getDBDateFormat("date", dateEndCtrl),
-                          timeStart: getDBDateFormat("time", dateStartCtrl),
-                          timeEnd: getDBDateFormat("time", dateEndCtrl),
+                          timeStart: getDBDateFormat(
+                              "time",
+                              dateStartCtrl.add(
+                                  Duration(hours: getUTCHourOffset() * -1))),
+                          timeEnd: getDBDateFormat(
+                              "time",
+                              dateEndCtrl.add(
+                                  Duration(hours: getUTCHourOffset() * -1))),
                           isDraft: 0,
                         );
 
@@ -400,7 +382,8 @@ class StateAddPost extends State<AddPost> {
                                 locCoordinateCtrl = null;
                                 contentAttImage = null;
                                 listAttachment = [];
-                                Get.offAll(() => const BottomBar());
+                                Get.offNamed(CollectionRoute.bar,
+                                    preventDuplicates: false);
 
                                 Get.dialog(SuccessDialog(text: body));
                               } else {

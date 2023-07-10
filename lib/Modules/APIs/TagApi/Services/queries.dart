@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 // ignore: depend_on_referenced_packages
 import 'package:http/http.dart' show Client;
 import 'package:mi_fik/Modules/APIs/TagApi/Models/queries.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TagQueriesService {
@@ -60,7 +60,7 @@ class TagQueriesService {
       await prefs.setString('role_list_key', jsonEncode(responseData['data']));
       return myTagModelFromJson(response.body);
     } else if (response.statusCode == 401) {
-      Get.offAll(() => const LoginPage());
+      Get.offNamed(CollectionRoute.landing, preventDuplicates: false);
       Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
           backgroundColor: whiteColor);
       return null;
