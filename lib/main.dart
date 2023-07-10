@@ -19,6 +19,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:mi_fik/Pages/Landings/RegisterPage/index.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 @pragma('vm:entry-point')
 //not finished
@@ -44,6 +45,10 @@ Future<void> fireFCMHandler(RemoteMessage message) async {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  FlutterNativeSplash.remove();
+
   await Permission.notification.isDenied.then((value) {
     if (value) {
       Permission.notification.request();
@@ -146,12 +151,16 @@ class StateMyApp extends State<MyApp> {
             notification.body,
             NotificationDetails(
               android: AndroidNotificationDetails(
-                channel.id,
+                "${channel.id}2",
                 channel.name,
                 channelDescription: channel.description,
                 color: primaryColor,
                 enableLights: true,
                 icon: "@mipmap/ic_launcher",
+                priority: Priority.max,
+                playSound: true,
+                importance: Importance.max,
+                sound: const RawResourceAndroidNotificationSound('notif_1'),
               ),
             ));
       }

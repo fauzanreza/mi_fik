@@ -123,6 +123,9 @@ class _SetImageContentState extends State<SetImageContent>
                                     .then((value) {
                                   contentAttImage = value;
                                 });
+
+                                lottieController.reset();
+                                Get.back();
                                 setState(() {});
                               }
                             }),
