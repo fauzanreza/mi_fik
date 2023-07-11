@@ -231,7 +231,7 @@ class StateDetailPage extends State<DetailPage> {
                               Container(
                                 margin:
                                     EdgeInsets.symmetric(horizontal: spaceSM),
-                                padding: const EdgeInsets.only(bottom: 5),
+                                padding: EdgeInsets.only(bottom: spaceMini),
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
@@ -285,15 +285,17 @@ class StateDetailPage extends State<DetailPage> {
                                 alignment: Alignment.centerLeft,
                                 margin:
                                     EdgeInsets.symmetric(horizontal: spaceXMD),
-                                child:
-                                    Wrap(runSpacing: 5, spacing: 10, children: [
-                                  getLocation(contents[0].contentLoc,
-                                      contents[0].slugName),
-                                  getContentDate(contents[0].dateStart,
-                                      contents[0].dateEnd),
-                                  getContentHour(contents[0].dateStart,
-                                      contents[0].dateEnd)
-                                ]),
+                                child: Wrap(
+                                    runSpacing: spaceMini,
+                                    spacing: spaceSM,
+                                    children: [
+                                      getLocation(contents[0].contentLoc,
+                                          contents[0].slugName),
+                                      getContentDate(contents[0].dateStart,
+                                          contents[0].dateEnd),
+                                      getContentHour(contents[0].dateStart,
+                                          contents[0].dateEnd)
+                                    ]),
                               ),
                             ])),
                       ]),

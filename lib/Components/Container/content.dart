@@ -78,7 +78,7 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
             Container(
               height: 108.0,
               width: widget.width,
-              padding: const EdgeInsets.all(10),
+              padding: EdgeInsets.all(spaceSM),
               decoration: BoxDecoration(
                 image: DecorationImage(
                     fit: BoxFit.fitWidth,
@@ -101,8 +101,8 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
               ]),
             ),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              margin: const EdgeInsets.symmetric(vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: spaceSM),
+              margin: EdgeInsets.symmetric(vertical: spaceSM),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -138,12 +138,15 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
                   ]),
             ),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              margin: const EdgeInsets.symmetric(vertical: 10),
-              child: Wrap(runSpacing: -5, spacing: 5, children: [
-                getContentLoc(widget.content.contentLoc),
-                getTotalTag(widget.content.contentTag)
-              ]),
+              padding: EdgeInsets.symmetric(horizontal: spaceSM),
+              margin: EdgeInsets.symmetric(vertical: spaceSM),
+              child: Wrap(
+                  runSpacing: -spaceWrap,
+                  spacing: spaceWrap,
+                  children: [
+                    getContentLoc(widget.content.contentLoc),
+                    getTotalTag(widget.content.contentTag)
+                  ]),
             ),
 
             //Open content w/ button.
@@ -261,7 +264,7 @@ class GetScheduleContainer extends StatelessWidget {
         ],
       ),
       child: Padding(
-          padding: const EdgeInsets.all(4),
+          padding: EdgeInsets.all(spaceMini),
           child: Stack(children: [
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(
@@ -305,11 +308,11 @@ class GetScheduleContainer extends StatelessWidget {
                       .add(Duration(hours: getUTCHourOffset())),
                   content.contentDesc),
               Container(
-                  margin: const EdgeInsets.symmetric(vertical: 15),
+                  margin: EdgeInsets.symmetric(vertical: spaceXMD),
                   child: getTagShow(
                       content.contentTag, content.dateStart, content.dateEnd)),
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 10),
+                margin: EdgeInsets.symmetric(horizontal: spaceSM),
                 child: getLocation(
                     content.contentLoc,
                     getColor(

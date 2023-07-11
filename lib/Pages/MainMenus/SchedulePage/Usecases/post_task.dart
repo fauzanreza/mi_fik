@@ -91,7 +91,8 @@ class StatePostTask extends State<PostTask> {
                       padding: EdgeInsets.only(top: spaceLG),
                       child: ListView(children: [
                         Container(
-                            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                            padding:
+                                EdgeInsets.fromLTRB(spaceLG, 0, spaceLG, 0),
                             alignment: Alignment.centerLeft,
                             child: getTitleLarge("New Task".tr, primaryColor)),
                         Container(
@@ -118,8 +119,8 @@ class StatePostTask extends State<PostTask> {
                           padding:
                               EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
                           child: Wrap(
-                            runSpacing: -5,
-                            spacing: 5,
+                            runSpacing: -spaceWrap,
+                            spacing: spaceWrap,
                             children: [
                               getDatePicker(dateStartCtrl, () {
                                 final now = DateTime.now();

@@ -96,10 +96,10 @@ class StateDetailTask extends State<DetailTask> {
             child: getInputDesc(255, 4, taskDescCtrl, false),
           ),
           Container(
-            padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+            padding: EdgeInsets.fromLTRB(spaceLG, spaceSM, spaceLG, 0),
             child: Wrap(
-              runSpacing: -5,
-              spacing: 5,
+              runSpacing: -spaceWrap,
+              spacing: spaceWrap,
               children: [
                 getDatePicker(
                     dateStartCtrl.subtract(

@@ -52,7 +52,8 @@ class StateIntroPage extends State<IntroPage> {
                           child: Stepper(
                               controlsBuilder: (context, onStepContinue) {
                                 return Container(
-                                    margin: const EdgeInsets.only(top: 40),
+                                    margin: EdgeInsets.only(
+                                        top: spaceMini + spaceJumbo),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -119,9 +120,9 @@ class StateIntroPage extends State<IntroPage> {
                                     content: Column(children: [
                                       Container(
                                         margin: EdgeInsets.symmetric(
-                                            vertical: 20,
+                                            vertical: spaceLG,
                                             horizontal: fullWidth * 0.15),
-                                        padding: const EdgeInsets.all(10),
+                                        padding: EdgeInsets.all(spaceSM),
                                         alignment: Alignment.center,
                                         decoration: BoxDecoration(
                                           color: whiteColor,
@@ -166,9 +167,9 @@ class StateIntroPage extends State<IntroPage> {
                                     content: Column(children: [
                                       Container(
                                         margin: EdgeInsets.symmetric(
-                                            vertical: 20,
+                                            vertical: spaceLG,
                                             horizontal: fullWidth * 0.15),
-                                        padding: const EdgeInsets.all(10),
+                                        padding: EdgeInsets.all(spaceSM),
                                         alignment: Alignment.center,
                                         decoration: BoxDecoration(
                                           color: whiteColor,
@@ -213,9 +214,9 @@ class StateIntroPage extends State<IntroPage> {
                                     content: Column(children: [
                                       Container(
                                         margin: EdgeInsets.symmetric(
-                                            vertical: 20,
+                                            vertical: spaceLG,
                                             horizontal: fullWidth * 0.15),
-                                        padding: const EdgeInsets.all(10),
+                                        padding: EdgeInsets.all(spaceSM),
                                         alignment: Alignment.center,
                                         decoration: BoxDecoration(
                                           color: whiteColor,
@@ -248,11 +249,10 @@ class StateIntroPage extends State<IntroPage> {
                                               fontSize: textXMD,
                                               fontWeight: FontWeight.w500)),
                                       Container(
-                                          margin:
-                                              const EdgeInsets.only(top: 20),
+                                          margin: EdgeInsets.only(top: spaceLG),
                                           child: Wrap(
-                                              runSpacing: -5,
-                                              spacing: 5,
+                                              runSpacing: -spaceWrap,
+                                              spacing: spaceWrap,
                                               children: role.map<Widget>(
                                                 (rl) {
                                                   getRole(slct) {
@@ -368,8 +368,8 @@ class StateIntroPage extends State<IntroPage> {
                                               fontSize: textXMD,
                                               fontWeight: FontWeight.w500)),
                                       Container(
-                                        margin: const EdgeInsets.symmetric(
-                                            vertical: 15),
+                                        margin: EdgeInsets.symmetric(
+                                            vertical: spaceXMD),
                                         child: Text(
                                             "Role system will shows your preferable information in your timeline, and you can save your information based on your roles to archive. Please choose your roles based on your academic situation right now.",
                                             textAlign: TextAlign.justify,
@@ -405,11 +405,10 @@ class StateIntroPage extends State<IntroPage> {
                                         ),
                                       ),
                                       Container(
-                                          margin:
-                                              const EdgeInsets.only(top: 20),
+                                          margin: EdgeInsets.only(top: spaceLG),
                                           child: Wrap(
-                                              runSpacing: -5,
-                                              spacing: 5,
+                                              runSpacing: -spaceWrap,
+                                              spacing: spaceWrap,
                                               children: studyProg.map<Widget>(
                                                 (sp) {
                                                   return OutlinedButton(

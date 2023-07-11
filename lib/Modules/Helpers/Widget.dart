@@ -80,15 +80,15 @@ getImageUser(url) {
 Widget getDescHeaderWidget(String desc, Color clr) {
   if (desc != null && desc.trim() != "" && desc != "null") {
     return Container(
-        margin: const EdgeInsets.only(top: 5),
-        child: Text(removeHtmlTags(desc),
+        margin: EdgeInsets.only(top: spaceSM),
+        child: Text(ucFirst(removeHtmlTags(desc).trim()),
             maxLines: 3,
             softWrap: true,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(color: clr, fontSize: textSM)));
   } else {
     return Container(
-        margin: const EdgeInsets.only(top: 5),
+        margin: EdgeInsets.only(top: spaceSM),
         child: Text("No description provided",
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
@@ -158,8 +158,8 @@ Widget getTag(tag, height, ctx) {
 
   if (tag != null) {
     return Wrap(
-        runSpacing: -5,
-        spacing: 5,
+        runSpacing: -spaceWrap,
+        spacing: spaceWrap,
         children: tag.map<Widget>((content) {
           if (i < max) {
             i++;
@@ -185,7 +185,7 @@ Widget getTag(tag, height, ctx) {
           } else if (i == max) {
             i++;
             return Container(
-                margin: const EdgeInsets.only(right: 5),
+                margin: EdgeInsets.only(right: spaceSM),
                 child: TextButton(
                   onPressed: () => Get.dialog(
                     AlertDialog(
@@ -198,8 +198,8 @@ Widget getTag(tag, height, ctx) {
                       content: SizedBox(
                           width: height,
                           child: Wrap(
-                              runSpacing: -5,
-                              spacing: 5,
+                              runSpacing: -spaceWrap,
+                              spacing: spaceWrap,
                               children: tag.map<Widget>((content) {
                                 return ElevatedButton.icon(
                                   onPressed: () {

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Container/content.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
@@ -62,12 +60,11 @@ class StateDayEvent extends State<DayEvent> with TickerProviderStateMixin {
   Widget _buildListView(List<ScheduleModel> contents) {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    bool hasShowFinished = false;
 
     if (contents != null) {
       return Container(
-          margin: const EdgeInsets.only(left: 15, top: 10),
-          padding: const EdgeInsets.only(bottom: 15),
+          margin: EdgeInsets.only(left: spaceXMD, top: spaceSM),
+          padding: EdgeInsets.only(bottom: spaceXMD),
           child: Column(
               children: contents.map((content) {
             getChipHour(String ds) {

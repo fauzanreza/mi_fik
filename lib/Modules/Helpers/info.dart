@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mi_fik/Modules/APIs/SystemApi/Models/query_info.dart';
 import 'package:mi_fik/Modules/APIs/SystemApi/Services/query_info.dart';

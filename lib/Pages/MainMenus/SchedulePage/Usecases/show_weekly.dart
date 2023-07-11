@@ -17,7 +17,7 @@ class GetWeeklyNavigator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(left: 10),
+      padding: EdgeInsets.only(left: spaceSM),
       height: 70,
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
@@ -57,7 +57,7 @@ class GetWeeklyNavigator extends StatelessWidget {
                     },
                     child: Container(
                       height: 60,
-                      margin: const EdgeInsets.only(right: 10, bottom: 10),
+                      margin: EdgeInsets.only(right: spaceSM, bottom: spaceSM),
                       padding: EdgeInsets.symmetric(horizontal: spaceSM),
                       decoration: BoxDecoration(
                         color: warningBG,
@@ -76,7 +76,7 @@ class GetWeeklyNavigator extends StatelessWidget {
                                     fontWeight: FontWeight.w500)),
                             const SizedBox(height: 5),
                             Container(
-                                padding: const EdgeInsets.only(left: 3.5),
+                                padding: EdgeInsets.only(left: spaceMini - 0.5),
                                 child: FaIcon(
                                   FontAwesomeIcons.rotateLeft,
                                   color: whiteColor,
@@ -89,7 +89,7 @@ class GetWeeklyNavigator extends StatelessWidget {
                     child: Container(
                       width: 60,
                       height: 60,
-                      margin: const EdgeInsets.only(right: 10, bottom: 10),
+                      margin: EdgeInsets.only(right: spaceSM, bottom: spaceSM),
                       padding: EdgeInsets.symmetric(horizontal: spaceSM),
                       decoration: BoxDecoration(
                         color: getBgcolor(index),
@@ -124,7 +124,7 @@ class GetWeeklyNavigator extends StatelessWidget {
                   child: Container(
                     width: 60,
                     height: 60,
-                    margin: const EdgeInsets.only(right: 10, bottom: 10),
+                    margin: EdgeInsets.only(right: spaceSM, bottom: spaceSM),
                     padding: EdgeInsets.symmetric(horizontal: spaceSM),
                     decoration: BoxDecoration(
                       color: getBgcolor(index),

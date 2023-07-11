@@ -32,14 +32,14 @@ class DrawerSkeleton extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
-                              margin: const EdgeInsets.only(bottom: 10),
+                              margin: EdgeInsets.only(bottom: spaceSM),
                               child: SkeletonAvatar(
                                   style: SkeletonAvatarStyle(
                                       height: fullWidth * 0.15,
                                       width: fullWidth * 0.15,
                                       shape: BoxShape.circle))),
                           Container(
-                            margin: const EdgeInsets.only(bottom: 10),
+                            margin: EdgeInsets.only(bottom: spaceSM),
                             child: const SkeletonLine(
                               style: SkeletonLineStyle(
                                   width: 200, alignment: Alignment.center),
@@ -52,42 +52,42 @@ class DrawerSkeleton extends StatelessWidget {
                         ]),
                   ),
                   Container(
-                    margin: const EdgeInsets.only(bottom: 10),
+                    margin: EdgeInsets.only(bottom: spaceSM),
                     child: SkeletonLine(
                       style:
                           SkeletonLineStyle(height: 40, width: fullWidth * 0.5),
                     ),
                   ),
                   Container(
-                    margin: const EdgeInsets.only(bottom: 10),
+                    margin: EdgeInsets.only(bottom: spaceSM),
                     child: SkeletonLine(
                       style:
                           SkeletonLineStyle(height: 40, width: fullWidth * 0.5),
                     ),
                   ),
                   Container(
-                    margin: const EdgeInsets.only(bottom: 10),
+                    margin: EdgeInsets.only(bottom: spaceSM),
                     child: SkeletonLine(
                       style:
                           SkeletonLineStyle(height: 40, width: fullWidth * 0.5),
                     ),
                   ),
                   Container(
-                    margin: const EdgeInsets.only(bottom: 10),
+                    margin: EdgeInsets.only(bottom: spaceSM),
                     child: SkeletonLine(
                       style:
                           SkeletonLineStyle(height: 40, width: fullWidth * 0.5),
                     ),
                   ),
                   Container(
-                    margin: const EdgeInsets.only(bottom: 10),
+                    margin: EdgeInsets.only(bottom: spaceSM),
                     child: SkeletonLine(
                       style:
                           SkeletonLineStyle(height: 40, width: fullWidth * 0.5),
                     ),
                   ),
                   Container(
-                    margin: const EdgeInsets.only(bottom: 10),
+                    margin: EdgeInsets.only(bottom: spaceSM),
                     child: SkeletonLine(
                       style:
                           SkeletonLineStyle(height: 40, width: fullWidth * 0.5),
@@ -95,21 +95,21 @@ class DrawerSkeleton extends StatelessWidget {
                   ),
                   SizedBox(height: fullHeight * 0.13),
                   Container(
-                    margin: const EdgeInsets.only(bottom: 10),
+                    margin: EdgeInsets.only(bottom: spaceSM),
                     child: SkeletonLine(
                       style:
                           SkeletonLineStyle(height: 40, width: fullWidth * 0.5),
                     ),
                   ),
                   Container(
-                    margin: const EdgeInsets.only(bottom: 10),
+                    margin: EdgeInsets.only(bottom: spaceSM),
                     child: SkeletonLine(
                       style:
                           SkeletonLineStyle(height: 40, width: fullWidth * 0.5),
                     ),
                   ),
                   Container(
-                    margin: const EdgeInsets.only(bottom: 10),
+                    margin: EdgeInsets.only(bottom: spaceSM),
                     child: SkeletonLine(
                       style:
                           SkeletonLineStyle(height: 40, width: fullWidth * 0.5),

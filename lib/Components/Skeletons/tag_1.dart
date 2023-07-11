@@ -13,9 +13,9 @@ class TagSkeleton1 extends StatelessWidget {
 
     return SizedBox(
         width: fullWidth,
-        child: Wrap(runSpacing: -5, spacing: 10, children: [
+        child: Wrap(runSpacing: -spaceWrap, spacing: spaceWrap * 2, children: [
           Container(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(spaceXSM),
             width: len * 0.8,
             decoration: BoxDecoration(
               color: whiteColor,
@@ -53,7 +53,7 @@ class TagSkeleton1 extends StatelessWidget {
             )),
           ),
           Container(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(spaceXSM),
             width: len * 1.2,
             decoration: BoxDecoration(
               color: whiteColor,
@@ -91,7 +91,7 @@ class TagSkeleton1 extends StatelessWidget {
             )),
           ),
           Container(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(spaceXSM),
             width: len,
             decoration: BoxDecoration(
               color: whiteColor,

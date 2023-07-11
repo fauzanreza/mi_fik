@@ -50,9 +50,10 @@ class StatePostLogin extends State<PostLogin> {
     double fullWidth = MediaQuery.of(context).size.width;
 
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 30, horizontal: spaceXMD),
-      margin:
-          EdgeInsets.symmetric(horizontal: 20, vertical: fullHeight * 0.075),
+      padding: EdgeInsets.symmetric(
+          vertical: spaceJumbo - spaceMini, horizontal: spaceXMD),
+      margin: EdgeInsets.symmetric(
+          horizontal: spaceLG, vertical: fullHeight * 0.075),
       decoration: BoxDecoration(
         color: whiteColor,
         borderRadius: BorderRadius.all(Radius.circular(roundedLG)),
@@ -62,7 +63,7 @@ class StatePostLogin extends State<PostLogin> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              margin: const EdgeInsets.only(bottom: 20),
+              margin: EdgeInsets.only(bottom: spaceLG),
               alignment: Alignment.center,
               child: ClipRRect(
                 child: Image.asset('assets/icon/mifik_logo.png', width: 300),

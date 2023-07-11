@@ -190,21 +190,21 @@ class StateAddPost extends State<AddPost> {
                     padding: EdgeInsets.only(bottom: spaceJumbo),
                     children: [
                       Container(
-                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                        padding: EdgeInsets.fromLTRB(spaceLG, 0, spaceLG, 0),
                         child: getSubTitleMedium(
                             "Title".tr, darkColor, TextAlign.start),
                       ),
                       Container(
-                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                        padding: EdgeInsets.fromLTRB(spaceLG, 0, spaceLG, 0),
                         child: getInputText(75, contentTitleCtrl, false),
                       ),
                       Container(
-                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                        padding: EdgeInsets.fromLTRB(spaceLG, 0, spaceLG, 0),
                         child: getSubTitleMedium(
                             "Description".tr, darkColor, TextAlign.start),
                       ),
                       Container(
-                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                        padding: EdgeInsets.fromLTRB(spaceLG, 0, spaceLG, 0),
                         child: getInputDesc(10000, 5, contentDescCtrl, false),
                       ),
                       Padding(
@@ -231,7 +231,7 @@ class StateAddPost extends State<AddPost> {
                               indent: spaceLG,
                               endIndent: spaceLG)),
                       Container(
-                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                          padding: EdgeInsets.fromLTRB(spaceLG, 0, spaceLG, 0),
                           child: Row(
                             children: [
                               Column(
@@ -267,7 +267,7 @@ class StateAddPost extends State<AddPost> {
                               indent: spaceLG,
                               endIndent: spaceLG)),
                       Container(
-                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                          padding: EdgeInsets.fromLTRB(spaceLG, 0, spaceLG, 0),
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -316,7 +316,7 @@ class StateAddPost extends State<AddPost> {
                               indent: spaceLG,
                               endIndent: spaceLG)),
                       Container(
-                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                          padding: EdgeInsets.fromLTRB(spaceLG, 0, spaceLG, 0),
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -331,7 +331,7 @@ class StateAddPost extends State<AddPost> {
                               indent: spaceLG,
                               endIndent: spaceLG)),
                       Container(
-                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                          padding: EdgeInsets.fromLTRB(spaceLG, 0, spaceLG, 0),
                           child: const GetInfoBox(
                             page: "homepage",
                             location: "add_event",

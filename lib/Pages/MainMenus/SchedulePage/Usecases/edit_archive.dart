@@ -83,16 +83,19 @@ class StateEditArchive extends State<EditArchive> {
                           fontSize: textXMD)),
                   Container(
                       alignment: Alignment.topLeft,
-                      padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
+                      padding:
+                          EdgeInsets.fromLTRB(spaceXMD, spaceSM, spaceXMD, 0),
                       child: Text("Archive Name".tr,
                           style:
                               TextStyle(color: darkColor, fontSize: textXMD))),
                   Container(
-                      padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
+                      padding:
+                          EdgeInsets.fromLTRB(spaceXMD, spaceSM, spaceXMD, 0),
                       child: getInputText(75, archiveNameCtrl, false)),
                   Container(
                       alignment: Alignment.topLeft,
-                      padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
+                      padding:
+                          EdgeInsets.fromLTRB(spaceXMD, spaceSM, spaceXMD, 0),
                       child: Text("Description (optional)".tr,
                           style:
                               TextStyle(color: darkColor, fontSize: textXMD))),

@@ -53,7 +53,7 @@ class StateProfilePage extends State<ProfilePage> {
                           const ShowProfile(),
                           const GetEditProfile(),
                           Container(
-                              margin: const EdgeInsets.only(top: 10.0),
+                              margin: EdgeInsets.only(top: spaceSM),
                               padding: EdgeInsets.fromLTRB(
                                   spaceXMD, spaceLG, spaceXMD, spaceJumbo),
                               decoration: BoxDecoration(

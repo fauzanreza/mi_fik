@@ -99,17 +99,6 @@ class StateSchedulePage extends State<SchedulePage>
                     EdgeInsets.only(top: fullHeight * 0.04), //Check this!!!
                 children: [
                   showSideBar(scaffoldKey, primaryColor),
-                  // Container(
-                  //   padding: const EdgeInsets.all(10),
-                  //   child: Row(
-                  //       crossAxisAlignment: CrossAxisAlignment.end,
-                  //       children: [
-                  //         getGreeting(getToday("part"), primaryColor),
-                  //         const Spacer(),
-                  //         getSubTitleMedium(
-                  //             getToday("date"), darkColor, TextAlign.start)
-                  //       ]),
-                  // ),
                   GetWeeklyNavigator(active: slctSchedule, action: navigateDay),
                   TabBar(
                       controller: tabController,
@@ -122,7 +111,6 @@ class StateSchedulePage extends State<SchedulePage>
                       tabs: List.generate(tabColSchedule.length, (index) {
                         return Tab(text: tabColSchedule[index]['title']);
                       })),
-
                   SizedBox(
                     height: fullHeight * 0.7,
                     child: TabBarView(
