@@ -17,10 +17,10 @@ class ContentSkeleton1 extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           itemCount: 4,
           itemBuilder: (context, index) => Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(spaceXSM),
             child: Container(
-              padding: const EdgeInsets.all(8.0),
-              margin: const EdgeInsets.only(left: 35),
+              padding: EdgeInsets.all(spaceXSM),
+              margin: EdgeInsets.only(left: spaceJumbo),
               decoration: BoxDecoration(
                 color: whiteColor,
                 borderRadius: BorderRadius.all(Radius.circular(roundedSM)),
@@ -47,7 +47,7 @@ class ContentSkeleton1 extends StatelessWidget {
                   SkeletonParagraph(
                     style: SkeletonParagraphStyle(
                         lines: 3,
-                        spacing: 6,
+                        spacing: spaceWrap,
                         lineStyle: SkeletonLineStyle(
                           randomLength: true,
                           height: textSM,

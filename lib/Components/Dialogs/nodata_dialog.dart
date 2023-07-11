@@ -12,7 +12,7 @@ class NoDataDialog extends StatelessWidget {
     double fullWidth = MediaQuery.of(context).size.width;
 
     return AlertDialog(
-      contentPadding: const EdgeInsets.all(10),
+      contentPadding: EdgeInsets.all(spaceSM),
       title: Text('Warning'.tr, style: TextStyle(fontSize: textXMD)),
       content: SizedBox(
         width: fullWidth,
@@ -28,7 +28,7 @@ class NoDataDialog extends StatelessWidget {
                     width: fullWidth * 0.45),
               ),
               Container(
-                  margin: const EdgeInsets.symmetric(vertical: 10),
+                  margin: EdgeInsets.symmetric(vertical: spaceSM),
                   child: Text(text,
                       textAlign: TextAlign.center,
                       style: TextStyle(color: shadowColor, fontSize: textXMD)))

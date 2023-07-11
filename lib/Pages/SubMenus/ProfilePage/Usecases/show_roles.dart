@@ -6,7 +6,6 @@ import 'package:mi_fik/Modules/APIs/TagApi/Models/queries.dart';
 import 'package:mi_fik/Modules/APIs/TagApi/Services/queries.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
-import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Helpers/info.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Routes/collection.dart';
@@ -77,8 +76,7 @@ class StateShowRole extends State<ShowRole> {
             leading: Icon(Icons.tag, size: iconLG),
             expandedCrossAxisAlignment: CrossAxisAlignment.start,
             expandedAlignment: Alignment.topLeft,
-            title: Text(ucFirst("My Roles".tr),
-                style: TextStyle(fontSize: textXMD)),
+            title: Text("My Roles".tr, style: TextStyle(fontSize: textXMD)),
             children: [
               Wrap(
                   runSpacing: -spaceMini,
@@ -95,7 +93,7 @@ class StateShowRole extends State<ShowRole> {
                                   tag.slug != "student" &&
                                   tag.slug != "staff") {
                                 return AlertDialog(
-                                  contentPadding: const EdgeInsets.all(10),
+                                  contentPadding: EdgeInsets.all(spaceSM),
                                   title: Text('Warning'.tr,
                                       style: TextStyle(fontSize: textXMD)),
                                   content: SizedBox(
@@ -108,9 +106,8 @@ class StateShowRole extends State<ShowRole> {
                                             MainAxisAlignment.center,
                                         children: [
                                           Container(
-                                              margin:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 10),
+                                              margin: EdgeInsets.symmetric(
+                                                  vertical: spaceSM),
                                               child: Text(
                                                   "$removeText ${tag.tagName}?",
                                                   textAlign: TextAlign.center,

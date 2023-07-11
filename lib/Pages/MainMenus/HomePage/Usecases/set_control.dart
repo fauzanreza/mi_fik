@@ -279,8 +279,8 @@ class StateSheetFilter extends State<SheetFilter> {
               Container(
                   padding: EdgeInsets.only(left: spaceLG),
                   child: Wrap(
-                      runSpacing: -5,
-                      spacing: 5,
+                      runSpacing: -spaceWrap,
+                      spacing: spaceWrap,
                       children: widget.roles.map<Widget>((tag) {
                         return ElevatedButton.icon(
                           onPressed: () {

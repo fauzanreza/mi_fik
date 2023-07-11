@@ -50,7 +50,7 @@ class ShowProfile extends StatelessWidget {
                   children: [
                     Stack(alignment: Alignment.center, children: [
                       Container(
-                          margin: const EdgeInsets.all(20),
+                          margin: EdgeInsets.all(spaceLG),
                           child: getProfileImageSideBar(fullWidth, 0.3, image)),
                       const EditImage(),
                     ]),

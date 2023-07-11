@@ -153,15 +153,14 @@ class StateAddPost extends State<AddPost> {
                 const SetImageContent(),
                 Container(
                   transform: Matrix4.translationValues(
-                      fullWidth * 0.03, fullHeight * 0.05, 0.0),
+                      spaceXMD, fullHeight * 0.05, 0.0),
                   decoration: BoxDecoration(
                     color: primaryColor,
                     borderRadius:
                         BorderRadius.all(Radius.circular(roundedCircle)),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color.fromARGB(255, 67, 67, 67)
-                            .withOpacity(0.35),
+                        color: darkColor.withOpacity(0.35),
                         blurRadius: 10.0,
                         spreadRadius: 0.0,
                         offset: const Offset(
@@ -191,21 +190,21 @@ class StateAddPost extends State<AddPost> {
                     padding: EdgeInsets.only(bottom: spaceJumbo),
                     children: [
                       Container(
-                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                        padding: EdgeInsets.fromLTRB(spaceLG, 0, spaceLG, 0),
                         child: getSubTitleMedium(
                             "Title".tr, darkColor, TextAlign.start),
                       ),
                       Container(
-                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                        padding: EdgeInsets.fromLTRB(spaceLG, 0, spaceLG, 0),
                         child: getInputText(75, contentTitleCtrl, false),
                       ),
                       Container(
-                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                        padding: EdgeInsets.fromLTRB(spaceLG, 0, spaceLG, 0),
                         child: getSubTitleMedium(
                             "Description".tr, darkColor, TextAlign.start),
                       ),
                       Container(
-                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                        padding: EdgeInsets.fromLTRB(spaceLG, 0, spaceLG, 0),
                         child: getInputDesc(10000, 5, contentDescCtrl, false),
                       ),
                       Padding(
@@ -232,7 +231,7 @@ class StateAddPost extends State<AddPost> {
                               indent: spaceLG,
                               endIndent: spaceLG)),
                       Container(
-                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                          padding: EdgeInsets.fromLTRB(spaceLG, 0, spaceLG, 0),
                           child: Row(
                             children: [
                               Column(
@@ -268,7 +267,7 @@ class StateAddPost extends State<AddPost> {
                               indent: spaceLG,
                               endIndent: spaceLG)),
                       Container(
-                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                          padding: EdgeInsets.fromLTRB(spaceLG, 0, spaceLG, 0),
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -317,7 +316,7 @@ class StateAddPost extends State<AddPost> {
                               indent: spaceLG,
                               endIndent: spaceLG)),
                       Container(
-                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                          padding: EdgeInsets.fromLTRB(spaceLG, 0, spaceLG, 0),
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -332,7 +331,7 @@ class StateAddPost extends State<AddPost> {
                               indent: spaceLG,
                               endIndent: spaceLG)),
                       Container(
-                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                          padding: EdgeInsets.fromLTRB(spaceLG, 0, spaceLG, 0),
                           child: const GetInfoBox(
                             page: "homepage",
                             location: "add_event",
@@ -392,20 +391,23 @@ class StateAddPost extends State<AddPost> {
                               }
                             });
                           } else {
-                            Get.dialog(const FailedDialog(
+                            Get.dialog(FailedDialog(
                                 text:
-                                    "Create event failed, field can't be empty",
+                                    "Create event failed, field can't be empty"
+                                        .tr,
                                 type: "addevent"));
                           }
                         } else {
-                          Get.dialog(const FailedDialog(
-                              text: "Create event failed, tag must be selected",
+                          Get.dialog(FailedDialog(
+                              text: "Create event failed, tag must be selected"
+                                  .tr,
                               type: "addevent"));
                         }
                       } else {
-                        Get.dialog(const FailedDialog(
+                        Get.dialog(FailedDialog(
                             text:
-                                "Create event failed, date period must be selected",
+                                "Create event failed, date period must be selected"
+                                    .tr,
                             type: "addevent"));
                       }
                     },
@@ -414,7 +416,7 @@ class StateAddPost extends State<AddPost> {
                           MaterialStatePropertyAll<Color>(successBG),
                     ),
                     child: Text('Publish Event'.tr,
-                        style: TextStyle(fontSize: textMD)),
+                        style: TextStyle(fontSize: textXMD)),
                   ))
             ],
           ),

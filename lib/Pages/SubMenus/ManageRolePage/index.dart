@@ -168,8 +168,8 @@ class StateRolePage extends State<RolePage> {
                           darkColor,
                           TextAlign.center),
                       Wrap(
-                          runSpacing: -5,
-                          spacing: 5,
+                          runSpacing: -spaceWrap,
+                          spacing: spaceWrap,
                           alignment: WrapAlignment.center,
                           children: contents[0].tagSlugName.map<Widget>((tag) {
                             return ElevatedButton(

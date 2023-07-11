@@ -310,7 +310,7 @@ class StateRegisterPage extends State<RegisterPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                          margin: const EdgeInsets.symmetric(vertical: 10),
+                          margin: EdgeInsets.symmetric(vertical: spaceSM),
                           child: Text(
                               "Are you sure want to close the registration?".tr,
                               textAlign: TextAlign.center,

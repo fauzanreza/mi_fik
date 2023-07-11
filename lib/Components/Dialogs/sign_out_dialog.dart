@@ -29,7 +29,7 @@ class StateSignOutDialog extends State<SignOutDialog> {
     double fullWidth = MediaQuery.of(context).size.width;
 
     return AlertDialog(
-      contentPadding: const EdgeInsets.all(10),
+      contentPadding: EdgeInsets.all(spaceSM),
       title: Text('Warning'.tr, style: TextStyle(fontSize: textXMD)),
       content: SizedBox(
         width: fullWidth,
@@ -39,7 +39,7 @@ class StateSignOutDialog extends State<SignOutDialog> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                  margin: const EdgeInsets.symmetric(vertical: 10),
+                  margin: EdgeInsets.symmetric(vertical: spaceSM),
                   child: Text("Are you sure want to sign out?".tr,
                       textAlign: TextAlign.center,
                       style: TextStyle(color: shadowColor, fontSize: textXMD)))
@@ -68,14 +68,14 @@ class StateSignOutDialog extends State<SignOutDialog> {
                   Get.dialog(SuccessDialog(text: body));
                 } else if (code == 401) {
                   Get.offNamed(CollectionRoute.landing);
-                  Get.dialog(const SuccessDialog(text: "Sign out success"));
+                  Get.dialog(SuccessDialog(text: "Sign out success".tr));
                 } else {
                   Get.dialog(FailedDialog(text: body, type: "signout"));
                 }
               });
             } else {
               Get.offNamed(CollectionRoute.landing);
-              Get.dialog(const SuccessDialog(text: "Sign out success"));
+              Get.dialog(SuccessDialog(text: "Sign out success".tr));
             }
           },
           child: Text("Sign Out".tr,

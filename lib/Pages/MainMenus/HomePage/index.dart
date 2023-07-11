@@ -123,7 +123,7 @@ class StateHomePage extends State<HomePage> {
                         return Column(children: [
                           showSideBar(scaffoldKey, whiteColor),
                           Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 15),
+                            margin: EdgeInsets.symmetric(horizontal: spaceXMD),
                             child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,9 +142,8 @@ class StateHomePage extends State<HomePage> {
                                 ]),
                           ),
                           Container(
-                            //height: double.infinity,
-                            margin: const EdgeInsets.only(top: 10.0),
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            margin: EdgeInsets.only(top: spaceSM),
+                            padding: EdgeInsets.symmetric(horizontal: spaceSM),
                             decoration: BoxDecoration(
                               color: hoverBG,
                               borderRadius: BorderRadius.only(

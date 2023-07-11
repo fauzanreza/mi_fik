@@ -8,9 +8,9 @@ import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/APIs/FeedbackApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/FeedbackApi/Services/commands.dart';
 import 'package:mi_fik/Modules/Helpers/info.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/SubMenus/AboutPage/index.dart';
 
 class PostFeedback extends StatefulWidget {
   const PostFeedback({Key key}) : super(key: key);
@@ -38,6 +38,7 @@ class StatePostFeedback extends State<PostFeedback> {
 
   @override
   Widget build(BuildContext context) {
+    rateCtrl = 5;
     return Container(
         padding: EdgeInsets.all(spaceLG),
         margin: EdgeInsets.all(spaceXMD),
@@ -98,9 +99,10 @@ class StatePostFeedback extends State<PostFeedback> {
                             var body = response[0]['body'];
 
                             if (status == "success") {
+                              rateCtrl == 0;
                               fbBodyCtrl.clear();
-                              Get.to(() => const AboutPage());
 
+                              Get.offNamed(CollectionRoute.about);
                               Get.dialog(SuccessDialog(text: body));
                             } else {
                               Get.dialog(FailedDialog(
@@ -108,8 +110,9 @@ class StatePostFeedback extends State<PostFeedback> {
                             }
                           });
                         } else {
-                          Get.dialog(const FailedDialog(
-                              text: "Add feedback, field can't be empty",
+                          Get.dialog(FailedDialog(
+                              text: "Add feedback failed, field can't be empty"
+                                  .tr,
                               type: "addfeedback"));
                         }
                       },

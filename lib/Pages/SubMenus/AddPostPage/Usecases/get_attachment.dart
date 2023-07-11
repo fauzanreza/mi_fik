@@ -6,6 +6,7 @@ import 'package:mi_fik/Components/Container/content.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/Firebases/Storages/Content/remove_image.dart';
+import 'package:mi_fik/Modules/Helpers/widget.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/get_pdf.dart';
@@ -78,10 +79,8 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
               item: Container(
                   alignment: Alignment.center,
                   margin: EdgeInsets.symmetric(vertical: spaceLG),
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: Image.network(e['attach_url'],
-                          width: fullWidth * 0.5))));
+                  child: getContentImageHeader(e['attach_url'], fullWidth * 0.5,
+                      null, false, BorderRadius.circular(roundedMD))));
         } else if (e['attach_type'] == "attachment_video") {
           return GetAttachmentContainer(
               data: e,
@@ -93,26 +92,7 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
               item: Container(
                   alignment: Alignment.center,
                   margin: EdgeInsets.symmetric(vertical: spaceLG),
-                  child: Chewie(
-                    controller: ChewieController(
-                      autoInitialize: true,
-                      videoPlayerController:
-                          VideoPlayerController.network(e['attach_url']),
-                      autoPlay: false,
-                      looping: false,
-                      allowFullScreen: false,
-                      materialProgressColors: ChewieProgressColors(
-                          playedColor: primaryColor,
-                          handleColor: infoBG,
-                          bufferedColor: primaryLightBG),
-                      errorBuilder: (context, errorMessage) {
-                        return Text(
-                          errorMessage,
-                          style: TextStyle(color: darkColor),
-                        );
-                      },
-                    ),
-                  )));
+                  child: getContentVideo(e['attach_url'], fullWidth, 220)));
         } else if (e['attach_type'] == "attachment_doc") {
           return GetAttachmentContainer(
               data: e,

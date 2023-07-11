@@ -3,7 +3,10 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
+import 'package:mi_fik/Modules/Firebases/Storages/validator.dart';
+import 'package:mi_fik/Modules/Helpers/widget.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/get_pdf.dart';
 import 'package:skeletons/skeletons.dart';
@@ -48,30 +51,23 @@ class StateAttachButton extends State<AttachButton> {
                         children: widget.passImage.map<Widget>(
                           (attach) {
                             return InkWell(
-                                onTap: () => showDialog<String>(
-                                      context: context,
+                                onTap: () => Get.dialog(
+                                      AlertDialog(
+                                          contentPadding: EdgeInsets.zero,
+                                          elevation: 0,
+                                          backgroundColor: Colors.transparent,
+                                          content: SizedBox(
+                                            width: fullWidth,
+                                            child: getContentImageHeader(
+                                                attach['attach_url'].toString(),
+                                                fullWidth * 0.5,
+                                                fullWidth,
+                                                false,
+                                                BorderRadius.circular(
+                                                    roundedSM)),
+                                          )),
                                       barrierColor:
                                           primaryColor.withOpacity(0.5),
-                                      builder: (BuildContext context) =>
-                                          AlertDialog(
-                                              contentPadding: EdgeInsets.zero,
-                                              elevation: 0,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              content: Container(
-                                                width: fullWidth,
-                                                decoration: BoxDecoration(
-                                                  image: DecorationImage(
-                                                    image: NetworkImage(
-                                                        attach['attach_url']
-                                                            .toString()),
-                                                    fit: BoxFit.fitWidth,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          roundedSM),
-                                                ),
-                                              )),
                                     ),
                                 child: Container(
                                   margin: EdgeInsets.symmetric(
@@ -82,32 +78,12 @@ class StateAttachButton extends State<AttachButton> {
                                         CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(roundedSM),
-                                          child: LimitedBox(
-                                            maxHeight: 250,
-                                            child: Image.network(
-                                              attach['attach_url'].toString(),
-                                              fit: BoxFit.fitHeight,
-                                              filterQuality:
-                                                  FilterQuality.medium,
-                                              loadingBuilder: (context, child,
-                                                  loadingProgress) {
-                                                if (loadingProgress == null) {
-                                                  return child;
-                                                }
-                                                return SkeletonLine(
-                                                  style: SkeletonLineStyle(
-                                                      height: 260,
-                                                      width: fullWidth,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              roundedSM)),
-                                                );
-                                              },
-                                            ),
-                                          )),
+                                      getContentImageHeader(
+                                          attach['attach_url'].toString(),
+                                          fullWidth * 0.5,
+                                          250,
+                                          false,
+                                          BorderRadius.circular(roundedSM)),
                                       const SizedBox(height: 5),
                                       Text(attach['attach_name'].toString(),
                                           maxLines: 2,
@@ -173,30 +149,7 @@ class StateAttachButton extends State<AttachButton> {
           } else if (attach['attach_type'] == "attachment_video") {
             return Transform(
                 transform: Matrix4.translationValues(-spaceSM, 0.0, 0.0),
-                child: AspectRatio(
-                    aspectRatio: 16 / 9,
-                    child: Chewie(
-                      controller: ChewieController(
-                          autoInitialize: true,
-                          aspectRatio: 16 / 9,
-                          fullScreenByDefault: false,
-                          materialProgressColors: ChewieProgressColors(
-                              playedColor: primaryColor,
-                              handleColor: infoBG,
-                              bufferedColor: primaryLightBG),
-                          videoPlayerController: VideoPlayerController.network(
-                            attach['attach_url'].toString(),
-                          ),
-                          errorBuilder: (context, errorMessage) {
-                            return Text(
-                              errorMessage,
-                              style: TextStyle(color: darkColor),
-                            );
-                          },
-                          autoPlay: false,
-                          looping: false,
-                          allowFullScreen: false),
-                    )));
+                child: getContentVideo(attach['attach_url'], fullWidth, 220));
           } else if (attach['attach_type'] == "attachment_doc") {
             return RichText(
               text: TextSpan(

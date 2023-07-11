@@ -21,9 +21,9 @@ class StateTagSelectedArea extends State<TagSelectedArea> {
 
     if (widget.tag.isNotEmpty) {
       return Container(
-          margin: EdgeInsets.only(top: 10, right: spaceLG),
+          margin: EdgeInsets.only(top: spaceSM, right: spaceLG),
           width: fullWidth,
-          padding: const EdgeInsets.all(10),
+          padding: EdgeInsets.all(spaceSM),
           decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(
                 Radius.circular(10.0),
@@ -37,8 +37,8 @@ class StateTagSelectedArea extends State<TagSelectedArea> {
                     style: TextStyle(
                         color: darkColor, fontWeight: FontWeight.w500)),
                 Wrap(
-                  runSpacing: -5,
-                  spacing: 5,
+                  runSpacing: -spaceWrap,
+                  spacing: spaceWrap,
                   children: widget.tag.map<Widget>((tg) {
                     return OutlinedButton.icon(
                       onPressed: () {

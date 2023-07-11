@@ -75,34 +75,36 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
+            SizedBox(
+                height: 108,
+                width: widget.width,
+                child: Stack(
+                  children: [
+                    getContentImageHeader(
+                        widget.content.contentImage,
+                        widget.width,
+                        108,
+                        true,
+                        BorderRadius.only(
+                            topLeft: Radius.circular(roundedSM),
+                            topRight: Radius.circular(roundedSM))),
+                    Padding(
+                        padding: EdgeInsets.all(spaceSM),
+                        child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              getViewWidget(widget.content.totalViews),
+                              getPeriodDateWidget(widget.content.dateStart,
+                                  widget.content.dateEnd),
+                              const Spacer(),
+                              getUploadDateWidget(
+                                  DateTime.parse(widget.content.createdAt))
+                            ])),
+                  ],
+                )),
             Container(
-              height: 108.0,
-              width: widget.width,
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                    fit: BoxFit.fitWidth,
-                    filterQuality: FilterQuality.low,
-                    image: getImageHeader(widget.content.contentImage),
-                    colorFilter: ColorFilter.mode(
-                        Colors.black.withOpacity(0.5), BlendMode.darken),
-                    onError: (exception, stackTrace) => getImageHeader(null)),
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10)),
-              ),
-              child:
-                  Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                getViewWidget(widget.content.totalViews),
-                getPeriodDateWidget(
-                    widget.content.dateStart, widget.content.dateEnd),
-                const Spacer(),
-                getUploadDateWidget(DateTime.parse(widget.content.createdAt))
-              ]),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              margin: const EdgeInsets.symmetric(vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: spaceSM),
+              margin: EdgeInsets.symmetric(vertical: spaceSM),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -138,12 +140,15 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
                   ]),
             ),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              margin: const EdgeInsets.symmetric(vertical: 10),
-              child: Wrap(runSpacing: -5, spacing: 5, children: [
-                getContentLoc(widget.content.contentLoc),
-                getTotalTag(widget.content.contentTag)
-              ]),
+              padding: EdgeInsets.symmetric(horizontal: spaceSM),
+              margin: EdgeInsets.symmetric(vertical: spaceSM),
+              child: Wrap(
+                  runSpacing: -spaceWrap,
+                  spacing: spaceWrap,
+                  children: [
+                    getContentLoc(widget.content.contentLoc),
+                    getTotalTag(widget.content.contentTag)
+                  ]),
             ),
 
             //Open content w/ button.
@@ -202,8 +207,10 @@ class GetScheduleContainer extends StatelessWidget {
       return FaIcon(
         FontAwesomeIcons.calendarDay,
         color: getColor(
-            DateTime.parse(dateStart).add(Duration(hours: getUTCHourOffset())),
-            DateTime.parse(dateEnd).add(Duration(hours: getUTCHourOffset()))),
+            DateTime.parse(dateStart)
+                .subtract(Duration(hours: getUTCHourOffset() * -1)),
+            DateTime.parse(dateEnd)
+                .subtract(Duration(hours: getUTCHourOffset() * -1))),
         size: iconLG + 5,
       );
     } else if (type == 2) {
@@ -211,8 +218,10 @@ class GetScheduleContainer extends StatelessWidget {
       return Icon(
         Icons.task,
         color: getColor(
-            DateTime.parse(dateStart).add(Duration(hours: getUTCHourOffset())),
-            DateTime.parse(dateEnd).add(Duration(hours: getUTCHourOffset()))),
+            DateTime.parse(dateStart)
+                .subtract(Duration(hours: getUTCHourOffset() * -1)),
+            DateTime.parse(dateEnd)
+                .subtract(Duration(hours: getUTCHourOffset() * -1))),
         size: iconLG + 7,
       );
     } else {
@@ -241,9 +250,9 @@ class GetScheduleContainer extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         color: getBgColor(
             DateTime.parse(content.dateStart)
-                .add(Duration(hours: getUTCHourOffset())),
+                .subtract(Duration(hours: getUTCHourOffset() * -1)),
             DateTime.parse(content.dateEnd)
-                .add(Duration(hours: getUTCHourOffset()))),
+                .subtract(Duration(hours: getUTCHourOffset() * -1))),
         boxShadow: [
           BoxShadow(
             color: shadowColor.withOpacity(0.35),
@@ -257,7 +266,7 @@ class GetScheduleContainer extends StatelessWidget {
         ],
       ),
       child: Padding(
-          padding: const EdgeInsets.all(4),
+          padding: EdgeInsets.all(spaceMini),
           child: Stack(children: [
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(
@@ -301,11 +310,11 @@ class GetScheduleContainer extends StatelessWidget {
                       .add(Duration(hours: getUTCHourOffset())),
                   content.contentDesc),
               Container(
-                  margin: const EdgeInsets.symmetric(vertical: 15),
+                  margin: EdgeInsets.symmetric(vertical: spaceXMD),
                   child: getTagShow(
                       content.contentTag, content.dateStart, content.dateEnd)),
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 10),
+                margin: EdgeInsets.symmetric(horizontal: spaceSM),
                 child: getLocation(
                     content.contentLoc,
                     getColor(

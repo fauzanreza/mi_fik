@@ -19,7 +19,7 @@ class StateFailedDialog extends State<FailedDialog> {
     double fullWidth = MediaQuery.of(context).size.width;
 
     return AlertDialog(
-      contentPadding: const EdgeInsets.all(10),
+      contentPadding: EdgeInsets.all(spaceSM),
       title: Text('Error', style: TextStyle(fontSize: textXMD)),
       content: SizedBox(
         width: fullWidth,
@@ -34,7 +34,7 @@ class StateFailedDialog extends State<FailedDialog> {
                 child: Image.asset('assets/icon/Failed.png', width: 120),
               ),
               Container(
-                  margin: const EdgeInsets.symmetric(vertical: 10),
+                  margin: EdgeInsets.symmetric(vertical: spaceSM),
                   child: Text(
                       getMessageResponseFromObject(widget.text, widget.type),
                       textAlign: TextAlign.center,

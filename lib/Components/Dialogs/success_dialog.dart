@@ -12,7 +12,7 @@ class SuccessDialog extends StatelessWidget {
     double fullWidth = MediaQuery.of(context).size.width;
 
     return AlertDialog(
-      contentPadding: const EdgeInsets.all(10),
+      contentPadding: EdgeInsets.all(spaceSM),
       title: Text('Information'.tr, style: TextStyle(fontSize: textXMD)),
       content: SizedBox(
         width: fullWidth,
@@ -27,7 +27,7 @@ class SuccessDialog extends StatelessWidget {
                 child: Image.asset('assets/icon/Success.png', width: 120),
               ),
               Container(
-                  margin: const EdgeInsets.symmetric(vertical: 10),
+                  margin: EdgeInsets.symmetric(vertical: spaceSM),
                   child: Text(text,
                       style: TextStyle(
                           color: shadowColor,

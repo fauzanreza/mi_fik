@@ -162,9 +162,9 @@ Widget getInputDesc(int len, int lines, var ctrl, bool secure) {
 Widget getDropDownMain(String slct, List<String> opt,
     Function(String) onChanged, bool separate, String divider) {
   return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: EdgeInsets.symmetric(horizontal: spaceSM),
       height: 40,
-      margin: const EdgeInsets.only(top: 8),
+      margin: EdgeInsets.only(top: spaceXSM),
       decoration: BoxDecoration(
         border: Border.all(
           color: primaryColor,

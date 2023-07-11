@@ -62,28 +62,29 @@ class StatePostArchive extends State<PostArchive> {
             ),
           ),
           Container(
-              padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
+              padding: EdgeInsets.fromLTRB(spaceXMD, spaceSM, spaceXMD, 0),
               alignment: Alignment.centerLeft,
               child: getTitleLarge("New Archive".tr, primaryColor)),
           Container(
-              padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
+              padding: EdgeInsets.fromLTRB(spaceXMD, spaceSM, spaceXMD, 0),
               child: Text("Archive Name".tr,
                   style: TextStyle(color: darkColor, fontSize: textXMD))),
           Container(
               padding: EdgeInsets.fromLTRB(spaceXMD, 0, spaceXMD, 0),
               child: getInputWarning(archiveNameMsg)),
           Container(
-              padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
+              padding: EdgeInsets.fromLTRB(spaceXMD, spaceSM, spaceXMD, 0),
               child: getInputText(75, archiveNameCtrl, false)),
           Container(
               padding: EdgeInsets.fromLTRB(spaceXMD, 0, spaceXMD, 0),
               child: getInputWarning(archiveDescMsg)),
           Container(
-              padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
+              padding: EdgeInsets.fromLTRB(spaceXMD, spaceSM, spaceXMD, 0),
               child: Text("Description (optional)".tr,
                   style: TextStyle(color: darkColor, fontSize: textXMD))),
           Container(
-              padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, spaceLG * 2),
+              padding:
+                  EdgeInsets.fromLTRB(spaceXMD, spaceSM, spaceXMD, spaceLG * 2),
               child: getInputDesc(255, 3, archiveDescCtrl, false)),
           Container(
               padding: EdgeInsets.fromLTRB(spaceXMD, 0, spaceXMD, 0),
@@ -157,7 +158,7 @@ class StatePostArchive extends State<PostArchive> {
                 style: ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll<Color>(successBG),
                 ),
-                child: Text('Done'.tr),
+                child: Text('Done'.tr, style: TextStyle(fontSize: textXMD)),
               ))
         ],
       ),

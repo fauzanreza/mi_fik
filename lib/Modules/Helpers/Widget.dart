@@ -1,11 +1,16 @@
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
+import 'package:mi_fik/Modules/Firebases/Storages/validator.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:skeletons/skeletons.dart';
+// ignore: depend_on_referenced_packages
+import 'package:video_player/video_player.dart';
 
 Widget getUploadDateWidget(DateTime date) {
   //Initial variable.
@@ -62,11 +67,135 @@ Widget getViewWidget(total) {
 }
 
 getImageHeader(url) {
-  if (url != null && url != "null") {
+  if (url != null && url != "null" && url != "invalid") {
     return NetworkImage(url);
+  } else if (url == "invalid") {
+    return const AssetImage('assets/icon/default_failed_content.png');
   } else {
     return const AssetImage('assets/icon/default_content.jpg');
   }
+}
+
+Widget getContentImageHeader(
+    String url, double width, double heigth, bool darken, BorderRadius rad) {
+  getChild() {
+    return ColorFiltered(
+        colorFilter: ColorFilter.mode(
+            Colors.black.withOpacity(darken ? 0.5 : 0), BlendMode.darken),
+        child: FutureBuilder<bool>(
+          future: isLoadable(url),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return SkeletonAvatar(
+                style: SkeletonAvatarStyle(
+                    width: width, height: heigth, borderRadius: rad),
+              );
+            } else if (snapshot.hasData &&
+                snapshot.data == true &&
+                url != null &&
+                url != "null") {
+              return Image.network(
+                url,
+                width: width,
+                fit: BoxFit.cover,
+                filterQuality: FilterQuality.low,
+                height: heigth,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) {
+                    return child;
+                  }
+                  return SkeletonAvatar(
+                    style: SkeletonAvatarStyle(
+                        width: width, height: heigth, borderRadius: rad),
+                  );
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  return Image.asset(
+                    'assets/icon/default_failed_content.png',
+                    width: width,
+                    height: heigth,
+                    fit: BoxFit.cover,
+                    filterQuality: FilterQuality.low,
+                  );
+                },
+              );
+            } else {
+              return Image.asset(
+                'assets/icon/default_content.jpg',
+                width: width,
+                height: heigth,
+                fit: BoxFit.cover,
+                filterQuality: FilterQuality.low,
+              );
+            }
+          },
+        ));
+  }
+
+  return ClipRRect(
+      borderRadius: rad,
+      child: heigth != null
+          ? LimitedBox(maxHeight: heigth, child: getChild())
+          : getChild());
+}
+
+Widget getContentVideo(String url, double width, double heigth) {
+  return FutureBuilder<bool>(
+    future: isLoadable(url),
+    builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return SkeletonAvatar(
+          style: SkeletonAvatarStyle(
+              width: width,
+              height: heigth,
+              borderRadius: BorderRadius.all(Radius.circular(roundedSM))),
+        );
+      } else if (snapshot.hasData && snapshot.data == true) {
+        return AspectRatio(
+            aspectRatio: 16 / 9,
+            child: Chewie(
+              controller: ChewieController(
+                  autoInitialize: true,
+                  //aspectRatio: 16 / 9,
+                  zoomAndPan: true,
+                  fullScreenByDefault: false,
+                  materialProgressColors: ChewieProgressColors(
+                      playedColor: primaryColor,
+                      handleColor: infoBG,
+                      bufferedColor: primaryLightBG),
+                  videoPlayerController: VideoPlayerController.network(
+                    url.toString(),
+                  ),
+                  errorBuilder: (context, errorMessage) {
+                    return Center(
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                          ClipRRect(
+                            child: Image.asset('assets/icon/Failed.png',
+                                height: 75),
+                          ),
+                          Text(
+                            errorMessage,
+                            style:
+                                TextStyle(color: whiteColor, fontSize: textMD),
+                          )
+                        ]));
+                  },
+                  autoPlay: false,
+                  looping: false,
+                  allowFullScreen: false),
+            ));
+      } else {
+        return Container(
+            alignment: Alignment.center,
+            height: heigth,
+            child: getMessageImageNoData(
+                "assets/icon/Failed.png", "Failed to load video".tr, heigth));
+      }
+    },
+  );
 }
 
 getImageUser(url) {
@@ -78,17 +207,17 @@ getImageUser(url) {
 }
 
 Widget getDescHeaderWidget(String desc, Color clr) {
-  if (desc.trim() != "" && desc != "null") {
+  if (desc != null && desc.trim() != "" && desc != "null") {
     return Container(
-        margin: const EdgeInsets.only(top: 5),
-        child: Text(removeHtmlTags(desc),
+        margin: EdgeInsets.only(top: spaceSM),
+        child: Text(ucFirst(removeHtmlTags(desc).trim()),
             maxLines: 3,
             softWrap: true,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(color: clr, fontSize: textSM)));
   } else {
     return Container(
-        margin: const EdgeInsets.only(top: 5),
+        margin: EdgeInsets.only(top: spaceSM),
         child: Text("No description provided",
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
@@ -158,8 +287,8 @@ Widget getTag(tag, height, ctx) {
 
   if (tag != null) {
     return Wrap(
-        runSpacing: -5,
-        spacing: 5,
+        runSpacing: -spaceWrap,
+        spacing: spaceWrap,
         children: tag.map<Widget>((content) {
           if (i < max) {
             i++;
@@ -185,7 +314,7 @@ Widget getTag(tag, height, ctx) {
           } else if (i == max) {
             i++;
             return Container(
-                margin: const EdgeInsets.only(right: 5),
+                margin: EdgeInsets.only(right: spaceSM),
                 child: TextButton(
                   onPressed: () => Get.dialog(
                     AlertDialog(
@@ -198,8 +327,8 @@ Widget getTag(tag, height, ctx) {
                       content: SizedBox(
                           width: height,
                           child: Wrap(
-                              runSpacing: -5,
-                              spacing: 5,
+                              runSpacing: -spaceWrap,
+                              spacing: spaceWrap,
                               children: tag.map<Widget>((content) {
                                 return ElevatedButton.icon(
                                   onPressed: () {

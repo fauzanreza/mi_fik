@@ -93,7 +93,7 @@ class StateDayHeader extends State<DayHeader> with TickerProviderStateMixin {
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(left: 15),
+            margin: EdgeInsets.only(left: spaceXMD),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

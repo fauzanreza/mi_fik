@@ -65,7 +65,7 @@ Widget getProfileImageSideBar(double width, double size, String url) {
     );
   } else {
     return Container(
-      padding: const EdgeInsets.all(3),
+      padding: EdgeInsets.all(spaceMini),
       margin: EdgeInsets.all(spaceSM),
       decoration: BoxDecoration(
         color: whiteColor,
@@ -107,7 +107,7 @@ Widget getProfileImage(u1, u2, i1, i2) {
 Widget getProfileImageContent(var url) {
   if (url != null && url != "null") {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10.0),
+      margin: EdgeInsets.symmetric(horizontal: spaceSM),
       width: iconJumbo,
       height: iconJumbo,
       decoration: BoxDecoration(
@@ -167,7 +167,7 @@ Widget getProfileImageContent(var url) {
     );
   } else {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10.0),
+      margin: EdgeInsets.symmetric(horizontal: spaceSM),
       width: iconJumbo,
       height: iconJumbo,
       decoration: BoxDecoration(
@@ -187,7 +187,7 @@ Widget getMessageImageNoData(String url, String msg, double width) {
   return Column(children: [
     Container(
       alignment: Alignment.center,
-      margin: const EdgeInsets.only(bottom: 20),
+      margin: EdgeInsets.only(bottom: spaceLG),
       width: width * 0.55,
       height: width * 0.55,
       decoration: BoxDecoration(

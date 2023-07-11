@@ -39,8 +39,8 @@ class StateChooseTag extends State<ChooseTag> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Wrap(
-                    runSpacing: -5,
-                    spacing: 5,
+                    runSpacing: -spaceWrap,
+                    spacing: spaceWrap,
                     children: roles.map<Widget>((tag) {
                       //Check if tag already selected
                       var contain = selectedTag.where(

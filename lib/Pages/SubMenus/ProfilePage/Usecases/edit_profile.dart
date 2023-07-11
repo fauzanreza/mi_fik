@@ -86,7 +86,7 @@ class _GetEditProfileState extends State<GetEditProfile> {
                       left: spaceXMD, bottom: spaceXMD, right: spaceXMD),
                   initiallyExpanded: false,
                   trailing: Container(
-                    padding: EdgeInsets.all(spaceSM * 1),
+                    padding: EdgeInsets.all(spaceSM),
                     decoration: BoxDecoration(
                       color: infoBG,
                       borderRadius:

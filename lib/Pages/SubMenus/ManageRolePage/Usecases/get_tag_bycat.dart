@@ -33,8 +33,8 @@ class StateGetAllTagByCategory extends State<GetAllTagByCategory> {
       String slug = "";
 
       return Wrap(
-          runSpacing: -5,
-          spacing: 5,
+          runSpacing: -spaceWrap,
+          spacing: spaceWrap,
           children: contents.map<Widget>((e) {
             if (isModel) {
               tagName = e.tagName;

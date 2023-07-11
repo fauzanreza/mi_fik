@@ -10,7 +10,7 @@ Widget getInputRate(var action) {
       direction: Axis.horizontal,
       allowHalfRating: false,
       itemCount: 5,
-      itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+      itemPadding: EdgeInsets.symmetric(horizontal: spaceMini),
       itemBuilder: (context, _) => Icon(
         Icons.star,
         color: successBG,

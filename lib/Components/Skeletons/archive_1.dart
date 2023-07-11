@@ -17,10 +17,10 @@ class ArchiveSkeleton1 extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           itemCount: 2,
           itemBuilder: (context, index) => Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(spaceXSM),
             child: Container(
-              padding: const EdgeInsets.all(8.0),
-              margin: const EdgeInsets.symmetric(horizontal: 45),
+              padding: EdgeInsets.all(spaceXSM),
+              margin: EdgeInsets.symmetric(horizontal: spaceJumbo + spaceSM),
               decoration: BoxDecoration(
                 color: whiteColor,
                 borderRadius: BorderRadius.all(Radius.circular(roundedSM)),

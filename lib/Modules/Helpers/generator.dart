@@ -88,7 +88,8 @@ Widget getTagShow(tag, dateStart, dateEnd) {
 
   if (tag != null) {
     return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        padding:
+            EdgeInsets.symmetric(horizontal: spaceSM, vertical: spaceMini + 1),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: getColor(
@@ -97,13 +98,13 @@ Widget getTagShow(tag, dateStart, dateEnd) {
               DateTime.parse(dateEnd).add(Duration(hours: getUTCHourOffset()))),
         ),
         child: Wrap(
-            runSpacing: -5,
-            spacing: 5,
+            runSpacing: -spaceWrap,
+            spacing: spaceWrap,
             children: tag.map<Widget>((content) {
               if (i < max) {
                 i++;
                 return Container(
-                    margin: const EdgeInsets.only(bottom: 4),
+                    margin: EdgeInsets.only(bottom: spaceMini),
                     child: RichText(
                       text: TextSpan(
                         children: [
@@ -127,7 +128,7 @@ Widget getTagShow(tag, dateStart, dateEnd) {
               } else if (i == max) {
                 i++;
                 return Container(
-                    margin: const EdgeInsets.only(bottom: 4),
+                    margin: EdgeInsets.only(bottom: spaceMini),
                     child: RichText(
                       text: TextSpan(
                         children: [
@@ -239,7 +240,7 @@ Widget getHourChipLine(String dateStart, double width) {
   }
 
   return Container(
-      margin: const EdgeInsets.only(top: 10),
+      margin: EdgeInsets.only(top: spaceSM),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -266,7 +267,7 @@ Widget getHourChipLine(String dateStart, double width) {
 Widget getInputWarning(String text) {
   if (text.trim() != "") {
     return Container(
-        margin: EdgeInsets.symmetric(vertical: spaceSM / 2),
+        margin: EdgeInsets.symmetric(vertical: spaceMini),
         child: RichText(
           text: TextSpan(
             children: [

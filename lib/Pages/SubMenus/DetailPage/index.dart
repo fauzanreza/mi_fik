@@ -160,7 +160,8 @@ class StateDetailPage extends State<DetailPage> {
 
       return WillPopScope(
           onWillPop: () {
-            return Get.offNamed(CollectionRoute.bar, preventDuplicates: false);
+            Get.offNamed(CollectionRoute.bar);
+            return null;
           },
           child: Scaffold(
             backgroundColor: whiteColor,
@@ -174,36 +175,32 @@ class StateDetailPage extends State<DetailPage> {
                       children: [
                         Stack(children: [
                           GestureDetector(
-                            onTap: () => showDialog<String>(
-                              context: context,
-                              barrierColor: primaryColor.withOpacity(0.5),
-                              builder: (BuildContext context) => AlertDialog(
+                            onTap: () => Get.dialog(
+                              AlertDialog(
                                   contentPadding: EdgeInsets.zero,
                                   elevation: 0,
                                   backgroundColor: Colors.transparent,
-                                  content: Container(
-                                    height: fullHeight * 0.45,
-                                    width: fullWidth,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: getImageHeader(
-                                            contents[0].contentImage),
-                                        fit: BoxFit.fill,
-                                      ),
-                                      borderRadius:
-                                          BorderRadius.circular(roundedSM),
-                                    ),
-                                  )),
+                                  content: SizedBox(
+                                      height: fullHeight * 0.45,
+                                      width: fullWidth,
+                                      child: getContentImageHeader(
+                                        contents[0].contentImage,
+                                        fullWidth,
+                                        fullHeight * 0.3,
+                                        false,
+                                        BorderRadius.all(
+                                            Radius.circular(roundedMD)),
+                                      ))),
+                              barrierColor: primaryColor.withOpacity(0.5),
                             ),
-                            child: Container(
+                            child: SizedBox(
                               height: fullHeight * 0.3,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image:
-                                      getImageHeader(contents[0].contentImage),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
+                              child: getContentImageHeader(
+                                  contents[0].contentImage,
+                                  fullWidth,
+                                  fullHeight * 0.3,
+                                  false,
+                                  BorderRadius.zero),
                             ),
                           ),
                           Positioned(
@@ -230,7 +227,7 @@ class StateDetailPage extends State<DetailPage> {
                               Container(
                                 margin:
                                     EdgeInsets.symmetric(horizontal: spaceSM),
-                                padding: const EdgeInsets.only(bottom: 5),
+                                padding: EdgeInsets.only(bottom: spaceMini),
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
@@ -284,15 +281,17 @@ class StateDetailPage extends State<DetailPage> {
                                 alignment: Alignment.centerLeft,
                                 margin:
                                     EdgeInsets.symmetric(horizontal: spaceXMD),
-                                child:
-                                    Wrap(runSpacing: 5, spacing: 10, children: [
-                                  getLocation(contents[0].contentLoc,
-                                      contents[0].slugName),
-                                  getContentDate(contents[0].dateStart,
-                                      contents[0].dateEnd),
-                                  getContentHour(contents[0].dateStart,
-                                      contents[0].dateEnd)
-                                ]),
+                                child: Wrap(
+                                    runSpacing: spaceMini,
+                                    spacing: spaceSM,
+                                    children: [
+                                      getLocation(contents[0].contentLoc,
+                                          contents[0].slugName),
+                                      getContentDate(contents[0].dateStart,
+                                          contents[0].dateEnd),
+                                      getContentHour(contents[0].dateStart,
+                                          contents[0].dateEnd)
+                                    ]),
                               ),
                             ])),
                       ]),

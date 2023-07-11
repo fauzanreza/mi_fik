@@ -46,150 +46,190 @@ class StatePostTask extends State<PostTask> {
 
   @override
   Widget build(BuildContext context) {
-    //double fullHeight = MediaQuery.of(context).size.height;
+    double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
-    return Padding(
-      padding: MediaQuery.of(context).viewInsets,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Container(
-            alignment: Alignment.topRight,
-            child: IconButton(
-              icon: const Icon(Icons.close),
-              tooltip: 'Back',
-              onPressed: () {
-                Get.back();
-              },
-            ),
-          ),
-          Container(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-              alignment: Alignment.centerLeft,
-              child: getTitleLarge("New Task".tr, primaryColor)),
-          Container(
-              padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
-              child: Text("Title".tr,
-                  style: TextStyle(color: darkColor, fontSize: textXMD))),
-          Container(
-              padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
-              child: getInputText(75, taskTitleCtrl, false)),
-          Container(
-              padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
-              child: Text("Notes (optional)".tr,
-                  style: TextStyle(color: darkColor, fontSize: textXMD))),
-          Container(
-              padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
-              child: getInputDesc(75, 5, taskDescCtrl, false)),
-          Container(
-            padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
-            child: Wrap(
-              runSpacing: -5,
-              spacing: 5,
-              children: [
-                getDatePicker(dateStartCtrl, () {
-                  final now = DateTime.now();
-
-                  DatePicker.showDateTimePicker(context,
-                      showTitleActions: true,
-                      minTime: DateTime(now.year, now.month, now.day),
-                      maxTime: DateTime(now.year + 1, now.month, now.day),
-                      onConfirm: (date) {
-                    setState(() {
-                      dateStartCtrl = date;
-                    });
-                  }, currentTime: now, locale: LocaleType.en);
-                }, "Start", "datetime"),
-                getDatePicker(dateEndCtrl, () {
-                  final now = DateTime.now();
-
-                  DatePicker.showDateTimePicker(context,
-                      showTitleActions: true,
-                      minTime: getMinEndTime(dateStartCtrl),
-                      maxTime: DateTime(now.year + 1, now.month, now.day),
-                      onConfirm: (date) {
-                    setState(() {
-                      dateEndCtrl = date;
-                    });
-                  },
-                      currentTime: getMinEndTime(dateStartCtrl),
-                      locale: LocaleType.en);
-                }, "End", "datetime"),
-                Wrap(children: <Widget>[
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      textStyle: const TextStyle(fontSize: 16),
-                      foregroundColor: primaryColor,
+    return Scaffold(
+      body: Container(
+          padding: EdgeInsets.only(top: fullHeight * 0.05),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Stack(children: [
+                InkWell(
+                  onTap: () => Get.back(),
+                  child: Container(
+                    transform: Matrix4.translationValues(
+                        spaceXMD, fullHeight * 0.01, 0.0),
+                    decoration: BoxDecoration(
+                      color: primaryColor,
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(roundedCircle)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: darkColor.withOpacity(0.35),
+                          blurRadius: 10.0,
+                          spreadRadius: 0.0,
+                          offset: const Offset(
+                            5.0,
+                            5.0,
+                          ),
+                        )
+                      ],
                     ),
-                    onPressed: () {},
-                    child: Text('Reminder'.tr),
+                    child: IconButton(
+                        icon: Icon(Icons.arrow_back, size: iconLG),
+                        color: whiteColor,
+                        onPressed: () => Get.back()),
                   ),
-                  Container(
-                      padding: EdgeInsets.only(left: spaceSM),
-                      child: getDropDownMain(slctReminderType, reminderTypeOpt,
-                          (String newValue) {
-                        setState(() {
-                          slctReminderType = newValue;
+                )
+              ]),
+              Expanded(
+                  child: Container(
+                      padding: EdgeInsets.only(top: spaceLG),
+                      child: ListView(children: [
+                        Container(
+                            padding:
+                                EdgeInsets.fromLTRB(spaceLG, 0, spaceLG, 0),
+                            alignment: Alignment.centerLeft,
+                            child: getTitleLarge("New Task".tr, primaryColor)),
+                        Container(
+                            padding:
+                                EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
+                            child: Text("Title".tr,
+                                style: TextStyle(
+                                    color: darkColor, fontSize: textXMD))),
+                        Container(
+                            padding:
+                                EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
+                            child: getInputText(75, taskTitleCtrl, false)),
+                        Container(
+                            padding:
+                                EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
+                            child: Text("Notes (optional)".tr,
+                                style: TextStyle(
+                                    color: darkColor, fontSize: textXMD))),
+                        Container(
+                            padding:
+                                EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
+                            child: getInputDesc(75, 5, taskDescCtrl, false)),
+                        Container(
+                          padding:
+                              EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
+                          child: Wrap(
+                            runSpacing: -spaceWrap,
+                            spacing: spaceWrap,
+                            children: [
+                              getDatePicker(dateStartCtrl, () {
+                                final now = DateTime.now();
+
+                                DatePicker.showDateTimePicker(context,
+                                    showTitleActions: true,
+                                    minTime:
+                                        DateTime(now.year, now.month, now.day),
+                                    maxTime: DateTime(
+                                        now.year + 1, now.month, now.day),
+                                    onConfirm: (date) {
+                                  setState(() {
+                                    dateStartCtrl = date;
+                                  });
+                                }, currentTime: now, locale: LocaleType.en);
+                              }, "Start", "datetime"),
+                              getDatePicker(dateEndCtrl, () {
+                                final now = DateTime.now();
+
+                                DatePicker.showDateTimePicker(context,
+                                    showTitleActions: true,
+                                    minTime: getMinEndTime(dateStartCtrl),
+                                    maxTime: DateTime(
+                                        now.year + 1, now.month, now.day),
+                                    onConfirm: (date) {
+                                  setState(() {
+                                    dateEndCtrl = date;
+                                  });
+                                },
+                                    currentTime: getMinEndTime(dateStartCtrl),
+                                    locale: LocaleType.en);
+                              }, "End", "datetime"),
+                              Wrap(children: <Widget>[
+                                TextButton(
+                                  style: TextButton.styleFrom(
+                                    textStyle: const TextStyle(fontSize: 16),
+                                    foregroundColor: primaryColor,
+                                  ),
+                                  onPressed: () {},
+                                  child: Text('Reminder'.tr),
+                                ),
+                                Container(
+                                    padding: EdgeInsets.only(left: spaceSM),
+                                    child: getDropDownMain(
+                                        slctReminderType, reminderTypeOpt,
+                                        (String newValue) {
+                                      setState(() {
+                                        slctReminderType = newValue;
+                                      });
+                                    }, true, "reminder_")),
+                              ]),
+                              Container(
+                                  padding:
+                                      EdgeInsets.fromLTRB(0, spaceLG, 0, 0),
+                                  child: const GetInfoBox(
+                                    page: "homepage",
+                                    location: "add_task",
+                                  ))
+                            ],
+                          ),
+                        )
+                      ]))),
+              SizedBox(
+                  width: fullWidth,
+                  height: btnHeightMD,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      AddTaskModel data = AddTaskModel(
+                          taskTitle: taskTitleCtrl.text.trim(),
+                          taskDesc: taskDescCtrl.text.trim(),
+                          dateStart: validateDatetime(dateStartCtrl
+                              .add(Duration(hours: getUTCHourOffset() * -1))),
+                          dateEnd: validateDatetime(dateEndCtrl
+                              .add(Duration(hours: getUTCHourOffset() * -1))),
+                          reminder: slctReminderType);
+
+                      if (data.taskTitle.isNotEmpty &&
+                          dateStartCtrl != null &&
+                          dateEndCtrl != null) {
+                        taskService.addTask(data).then((response) {
+                          setState(() => {});
+                          var status = response[0]['message'];
+                          var body = response[0]['body'];
+
+                          if (status == "success") {
+                            Get.offNamed(CollectionRoute.bar,
+                                preventDuplicates: false);
+
+                            Get.dialog(SuccessDialog(text: body));
+                          } else {
+                            Get.dialog(
+                                FailedDialog(text: body, type: "addtask"));
+                          }
                         });
-                      }, true, "reminder_")),
-                ]),
-                Container(
-                    padding: EdgeInsets.fromLTRB(0, spaceLG, 0, 0),
-                    child: const GetInfoBox(
-                      page: "homepage",
-                      location: "add_task",
-                    ))
-              ],
-            ),
-          ),
-          Container(
-              margin: EdgeInsets.only(top: spaceSM),
-              width: fullWidth,
-              height: btnHeightMD,
-              child: ElevatedButton(
-                onPressed: () async {
-                  AddTaskModel data = AddTaskModel(
-                      taskTitle: taskTitleCtrl.text.trim(),
-                      taskDesc: taskDescCtrl.text.trim(),
-                      dateStart: validateDatetime(dateStartCtrl
-                          .add(Duration(hours: getUTCHourOffset() * -1))),
-                      dateEnd: validateDatetime(dateEndCtrl
-                          .add(Duration(hours: getUTCHourOffset() * -1))),
-                      reminder: slctReminderType);
-
-                  if (data.taskTitle.isNotEmpty &&
-                      dateStartCtrl != null &&
-                      dateEndCtrl != null) {
-                    taskService.addTask(data).then((response) {
-                      setState(() => {});
-                      var status = response[0]['message'];
-                      var body = response[0]['body'];
-
-                      if (status == "success") {
-                        Get.offNamed(CollectionRoute.bar,
-                            preventDuplicates: false);
-
-                        Get.dialog(SuccessDialog(text: body));
                       } else {
-                        Get.dialog(FailedDialog(text: body, type: "addtask"));
+                        Get.dialog(FailedDialog(
+                            text: "Create archive failed, field can't be empty"
+                                .tr,
+                            type: "addtask"));
                       }
-                    });
-                  } else {
-                    Get.dialog(FailedDialog(
-                        text: "Create archive failed, field can't be empty".tr,
-                        type: "addtask"));
-                  }
-                },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll<Color>(successBG),
-                ),
-                child: Text('Done'.tr, style: TextStyle(fontSize: textXMD)),
-              ))
-        ],
-      ),
+                    },
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStatePropertyAll<Color>(successBG),
+                    ),
+                    child: Text('Done'.tr, style: TextStyle(fontSize: textXMD)),
+                  ))
+            ],
+          )),
     );
   }
 }

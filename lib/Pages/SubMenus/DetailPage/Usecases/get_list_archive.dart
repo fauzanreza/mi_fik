@@ -197,7 +197,9 @@ class StateListArchive extends State<ListArchive> {
                                           Get.back();
                                         },
                                         child: SuccessDialogCustom(
-                                            text: "Event Saved".tr)));
+                                            text:
+                                                "${ucFirst(widget.type)} Saved"
+                                                    .tr)));
                           } else {
                             Get.dialog(FailedDialog(
                                 text: body, type: "editarchiverel"));

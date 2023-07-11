@@ -55,7 +55,7 @@ class LeftBar extends StatelessWidget {
                               children: [
                                 Container(
                                   width: fullWidth,
-                                  padding: const EdgeInsets.all(20),
+                                  padding: EdgeInsets.all(spaceLG),
                                   child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,

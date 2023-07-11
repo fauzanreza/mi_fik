@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Container/content.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
@@ -62,12 +60,11 @@ class StateDayEvent extends State<DayEvent> with TickerProviderStateMixin {
   Widget _buildListView(List<ScheduleModel> contents) {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    bool hasShowFinished = false;
 
     if (contents != null) {
       return Container(
-          margin: const EdgeInsets.only(left: 15, top: 10),
-          padding: const EdgeInsets.only(bottom: 15),
+          margin: EdgeInsets.only(left: spaceXMD, top: spaceSM),
+          padding: EdgeInsets.only(bottom: spaceXMD),
           child: Column(
               children: contents.map((content) {
             getChipHour(String ds) {
@@ -81,42 +78,7 @@ class StateDayEvent extends State<DayEvent> with TickerProviderStateMixin {
               }
             }
 
-            getFinishedCollectionStatus(String ds) {
-              String now = DateTime.now().hour.toString();
-              String event = DateTime.parse(ds)
-                  .add(Duration(hours: getUTCHourOffset()))
-                  .hour
-                  .toString();
-
-              if (int.parse(now) > int.parse(event) &&
-                  !hasShowFinished &&
-                  DateFormat("yyyy-MM-dd").format(DateTime.parse(ds)) ==
-                      DateFormat("yyyy-MM-dd").format(DateTime.now())) {
-                hasShowFinished = true;
-
-                return Container(
-                  width: 140,
-                  decoration: BoxDecoration(
-                      borderRadius:
-                          BorderRadius.all(Radius.circular(roundedSM)),
-                      color: successBG),
-                  margin: EdgeInsets.only(top: spaceLG),
-                  padding: EdgeInsets.symmetric(
-                      vertical: spaceSM, horizontal: spaceLG),
-                  child: Row(children: [
-                    FaIcon(FontAwesomeIcons.check,
-                        color: whiteColor, size: iconSM),
-                    Text(" Has started",
-                        style: TextStyle(fontSize: textSM, color: whiteColor))
-                  ]),
-                );
-              } else {
-                return const SizedBox();
-              }
-            }
-
             return Column(children: [
-              getFinishedCollectionStatus(content.dateStart),
               getChipHour(content.dateStart),
               SizedBox(
                   width: fullWidth,
