@@ -68,14 +68,14 @@ class StateSignOutDialog extends State<SignOutDialog> {
                   Get.dialog(SuccessDialog(text: body));
                 } else if (code == 401) {
                   Get.offNamed(CollectionRoute.landing);
-                  Get.dialog(const SuccessDialog(text: "Sign out success"));
+                  Get.dialog(SuccessDialog(text: "Sign out success".tr));
                 } else {
                   Get.dialog(FailedDialog(text: body, type: "signout"));
                 }
               });
             } else {
               Get.offNamed(CollectionRoute.landing);
-              Get.dialog(const SuccessDialog(text: "Sign out success"));
+              Get.dialog(SuccessDialog(text: "Sign out success".tr));
             }
           },
           child: Text("Sign Out".tr,

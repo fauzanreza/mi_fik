@@ -75,31 +75,33 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Container(
-              height: 108.0,
-              width: widget.width,
-              padding: EdgeInsets.all(spaceSM),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                    fit: BoxFit.fitWidth,
-                    filterQuality: FilterQuality.low,
-                    image: getImageHeader(widget.content.contentImage),
-                    colorFilter: ColorFilter.mode(
-                        Colors.black.withOpacity(0.5), BlendMode.darken),
-                    onError: (exception, stackTrace) => getImageHeader(null)),
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10)),
-              ),
-              child:
-                  Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                getViewWidget(widget.content.totalViews),
-                getPeriodDateWidget(
-                    widget.content.dateStart, widget.content.dateEnd),
-                const Spacer(),
-                getUploadDateWidget(DateTime.parse(widget.content.createdAt))
-              ]),
-            ),
+            SizedBox(
+                height: 108,
+                width: widget.width,
+                child: Stack(
+                  children: [
+                    getContentImageHeader(
+                        widget.content.contentImage,
+                        widget.width,
+                        108,
+                        true,
+                        BorderRadius.only(
+                            topLeft: Radius.circular(roundedSM),
+                            topRight: Radius.circular(roundedSM))),
+                    Padding(
+                        padding: EdgeInsets.all(spaceSM),
+                        child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              getViewWidget(widget.content.totalViews),
+                              getPeriodDateWidget(widget.content.dateStart,
+                                  widget.content.dateEnd),
+                              const Spacer(),
+                              getUploadDateWidget(
+                                  DateTime.parse(widget.content.createdAt))
+                            ])),
+                  ],
+                )),
             Container(
               padding: EdgeInsets.symmetric(horizontal: spaceSM),
               margin: EdgeInsets.symmetric(vertical: spaceSM),

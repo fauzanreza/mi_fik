@@ -175,36 +175,32 @@ class StateDetailPage extends State<DetailPage> {
                       children: [
                         Stack(children: [
                           GestureDetector(
-                            onTap: () => showDialog<String>(
-                              context: context,
-                              barrierColor: primaryColor.withOpacity(0.5),
-                              builder: (BuildContext context) => AlertDialog(
+                            onTap: () => Get.dialog(
+                              AlertDialog(
                                   contentPadding: EdgeInsets.zero,
                                   elevation: 0,
                                   backgroundColor: Colors.transparent,
-                                  content: Container(
-                                    height: fullHeight * 0.45,
-                                    width: fullWidth,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: getImageHeader(
-                                            contents[0].contentImage),
-                                        fit: BoxFit.fill,
-                                      ),
-                                      borderRadius:
-                                          BorderRadius.circular(roundedSM),
-                                    ),
-                                  )),
+                                  content: SizedBox(
+                                      height: fullHeight * 0.45,
+                                      width: fullWidth,
+                                      child: getContentImageHeader(
+                                        contents[0].contentImage,
+                                        fullWidth,
+                                        fullHeight * 0.3,
+                                        false,
+                                        BorderRadius.all(
+                                            Radius.circular(roundedMD)),
+                                      ))),
+                              barrierColor: primaryColor.withOpacity(0.5),
                             ),
-                            child: Container(
+                            child: SizedBox(
                               height: fullHeight * 0.3,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image:
-                                      getImageHeader(contents[0].contentImage),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
+                              child: getContentImageHeader(
+                                  contents[0].contentImage,
+                                  fullWidth,
+                                  fullHeight * 0.3,
+                                  false,
+                                  BorderRadius.zero),
                             ),
                           ),
                           Positioned(
