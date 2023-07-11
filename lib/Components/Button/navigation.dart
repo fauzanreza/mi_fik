@@ -32,27 +32,24 @@ Widget getSignOutButtonWide(var ctx) {
 
 getSpeeDialChild(String title, var ctx, var cls, var icon) {
   return SpeedDialChild(
-    child: Icon(icon),
-    label: title,
-    labelStyle: TextStyle(fontSize: textXMD),
-    backgroundColor: primaryColor,
-    foregroundColor: whiteColor,
-    onTap: () {
-      showModalBottomSheet<void>(
-        context: ctx,
-        isDismissible: false,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(roundedLG),
-                topRight: Radius.circular(roundedLG))),
-        barrierColor: primaryColor.withOpacity(0.5),
-        isScrollControlled: true,
-        builder: (BuildContext context) {
-          return cls;
-        },
-      );
-    },
-  );
+      child: Icon(icon),
+      label: title,
+      labelStyle: TextStyle(fontSize: textXMD),
+      backgroundColor: primaryColor,
+      foregroundColor: whiteColor,
+      onTap: () => showModalBottomSheet(
+            context: ctx,
+            isDismissible: false,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(roundedLG),
+                    topRight: Radius.circular(roundedLG))),
+            barrierColor: primaryColor.withOpacity(0.5),
+            isScrollControlled: true,
+            builder: (BuildContext context) {
+              return cls;
+            },
+          ));
 }
 
 Widget getSideBarTile(double width, IconData icon, String title, var action) {

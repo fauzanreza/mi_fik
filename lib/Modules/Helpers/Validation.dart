@@ -90,6 +90,6 @@ Future checkGps(var func) async {
 }
 
 bool isPassedDate(DateTime ds, DateTime de) {
-  DateTime now = DateTime.now().add(Duration(hours: getUTCHourOffset()));
+  DateTime now = DateTime.now();
   return now.isAfter(ds) && now.isBefore(de);
 }

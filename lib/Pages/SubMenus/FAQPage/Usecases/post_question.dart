@@ -44,165 +44,136 @@ class StatePostQuestion extends State<PostQuestion> {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
-    return FloatingActionButton(
-      onPressed: () async {
-        showModalBottomSheet<void>(
-          context: context,
-          isDismissible: false,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(roundedLG),
-                  topRight: Radius.circular(roundedLG))),
-          barrierColor: primaryColor.withOpacity(0.5),
-          isScrollControlled: true,
-          builder: (BuildContext context) {
-            return Padding(
-                padding: MediaQuery.of(context).viewInsets,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Container(
-                      alignment: Alignment.topRight,
-                      child: IconButton(
-                        icon: const Icon(Icons.close),
-                        tooltip: 'Back',
-                        onPressed: () {
+    return Padding(
+        padding: MediaQuery.of(context).viewInsets,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Container(
+              alignment: Alignment.topRight,
+              child: IconButton(
+                icon: const Icon(Icons.close),
+                tooltip: 'Back',
+                onPressed: () {
+                  Get.back();
+                },
+              ),
+            ),
+            Container(
+                padding: EdgeInsets.only(left: spaceLG),
+                alignment: Alignment.centerLeft,
+                child: getTitleLarge("Ask a question".tr, primaryColor)),
+            Container(
+              padding: EdgeInsets.only(left: spaceLG),
+              alignment: Alignment.centerLeft,
+              child: getSubTitleMedium(
+                  "Question Body".tr, darkColor, TextAlign.start),
+            ),
+            Container(
+                padding: EdgeInsets.only(left: spaceXMD),
+                child: getInputWarning(qbodyMsg)),
+            Container(
+                padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
+                child: getInputDesc(255, 5, quBodyCtrl, false)),
+            Container(
+              padding: EdgeInsets.only(left: spaceLG),
+              alignment: Alignment.centerLeft,
+              child: getSubTitleMedium(
+                  "Question Type".tr, darkColor, TextAlign.start),
+            ),
+            Container(
+                padding: EdgeInsets.only(left: spaceXMD),
+                child: getInputWarning(qtypeMsg)),
+            Container(
+                margin: EdgeInsets.only(bottom: spaceLG),
+                padding: EdgeInsets.only(left: spaceXMD),
+                child: getDropDownMain(slctQuestionType, questionTypeOpt,
+                    (String newValue) {
+                  setState(() {
+                    slctQuestionType = newValue;
+                  });
+                }, false, null)),
+            Container(
+                padding: EdgeInsets.only(left: spaceXMD),
+                child: getInputWarning(allMsg)),
+            SizedBox(
+                width: fullWidth,
+                height: btnHeightMD,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    AddQuestionModel data = AddQuestionModel(
+                      quType: slctQuestionType,
+                      quBody: quBodyCtrl.text.trim(),
+                    );
+
+                    //Validator
+                    if (data.quType.isNotEmpty && data.quType.isNotEmpty) {
+                      apiService.postUserReq(data).then((response) {
+                        setState(() => {});
+                        var status = response[0]['message'];
+                        var body = response[0]['body'];
+
+                        if (status == "success") {
+                          if (widget.from == "myfaq") {
+                            Get.offNamed(CollectionRoute.myfaq,
+                                preventDuplicates: false);
+                          } else {
+                            Get.offNamed(CollectionRoute.faq,
+                                preventDuplicates: false);
+                          }
+
+                          Get.dialog(SuccessDialog(text: body));
+
+                          quBodyCtrl.clear();
+                        } else {
+                          qbodyMsg = "";
+                          qtypeMsg = "";
+                          allMsg = "";
+
                           Get.back();
-                        },
-                      ),
-                    ),
-                    Container(
-                        padding: EdgeInsets.only(left: spaceLG),
-                        alignment: Alignment.centerLeft,
-                        child:
-                            getTitleLarge("Ask a question".tr, primaryColor)),
-                    Container(
-                      padding: EdgeInsets.only(left: spaceLG),
-                      alignment: Alignment.centerLeft,
-                      child: getSubTitleMedium(
-                          "Question Body".tr, darkColor, TextAlign.start),
-                    ),
-                    Container(
-                        padding: EdgeInsets.only(left: spaceXMD),
-                        child: getInputWarning(qbodyMsg)),
-                    Container(
-                        padding: EdgeInsets.fromLTRB(spaceXMD, 10, spaceXMD, 0),
-                        child: getInputDesc(255, 5, quBodyCtrl, false)),
-                    Container(
-                      padding: EdgeInsets.only(left: spaceXMD),
-                      child: Text("Question Type".tr,
-                          style: TextStyle(
-                            fontSize: textXMD,
-                            color: darkColor,
-                            fontWeight: FontWeight.w500,
-                          )),
-                    ),
-                    Container(
-                        padding: EdgeInsets.only(left: spaceXMD),
-                        child: getInputWarning(qtypeMsg)),
-                    Container(
-                        margin: EdgeInsets.only(bottom: spaceLG),
-                        padding: EdgeInsets.only(left: spaceXMD),
-                        child:
-                            getDropDownMain(slctQuestionType, questionTypeOpt,
-                                (String newValue) {
+                          Get.dialog(FailedDialog(text: body, type: "faq"));
                           setState(() {
-                            slctQuestionType = newValue;
-                          });
-                        }, false, null)),
-                    Container(
-                        padding: EdgeInsets.only(left: spaceXMD),
-                        child: getInputWarning(allMsg)),
-                    SizedBox(
-                        width: fullWidth,
-                        height: btnHeightMD,
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            AddQuestionModel data = AddQuestionModel(
-                              quType: slctQuestionType,
-                              quBody: quBodyCtrl.text.trim(),
-                            );
+                            if (body is! String) {
+                              if (body['question_body'] != null) {
+                                qbodyMsg = body['question_body'][0];
 
-                            //Validator
-                            if (data.quType.isNotEmpty &&
-                                data.quType.isNotEmpty) {
-                              apiService.postUserReq(data).then((response) {
-                                setState(() => {});
-                                var status = response[0]['message'];
-                                var body = response[0]['body'];
-
-                                if (status == "success") {
-                                  if (widget.from == "myfaq") {
-                                    Get.offNamed(CollectionRoute.myfaq,
-                                        preventDuplicates: false);
-                                  } else {
-                                    Get.offNamed(CollectionRoute.faq,
-                                        preventDuplicates: false);
+                                if (body['question_body'].length > 1) {
+                                  for (String e in body['question_body']) {
+                                    qbodyMsg += e;
                                   }
-
-                                  Get.dialog(SuccessDialog(text: body));
-
-                                  quBodyCtrl.clear();
-                                } else {
-                                  qbodyMsg = "";
-                                  qtypeMsg = "";
-                                  allMsg = "";
-
-                                  Get.back();
-                                  Get.dialog(
-                                      FailedDialog(text: body, type: "faq"));
-                                  setState(() {
-                                    if (body is! String) {
-                                      if (body['question_body'] != null) {
-                                        qbodyMsg = body['question_body'][0];
-
-                                        if (body['question_body'].length > 1) {
-                                          for (String e
-                                              in body['question_body']) {
-                                            qbodyMsg += e;
-                                          }
-                                        }
-                                      }
-
-                                      if (body['question_type'] != null) {
-                                        qtypeMsg = body['question_type'][0];
-
-                                        if (body['question_type'].length > 1) {
-                                          for (String e
-                                              in body['question_type']) {
-                                            qtypeMsg += e;
-                                          }
-                                        }
-                                      }
-                                    } else {
-                                      allMsg = body;
-                                    }
-                                  });
                                 }
-                              });
+                              }
+
+                              if (body['question_type'] != null) {
+                                qtypeMsg = body['question_type'][0];
+
+                                if (body['question_type'].length > 1) {
+                                  for (String e in body['question_type']) {
+                                    qtypeMsg += e;
+                                  }
+                                }
+                              }
                             } else {
-                              Get.dialog(const FailedDialog(
-                                  text:
-                                      "Request failed, you haven't chosen any type yet",
-                                  type: "faq"));
+                              allMsg = body;
                             }
-                          },
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStatePropertyAll<Color>(successBG),
-                          ),
-                          child: Text('Done'.tr),
-                        ))
-                  ],
-                ));
-          },
-        );
-      },
-      backgroundColor: successBG,
-      tooltip: "Ask a question".tr,
-      child: const Icon(Icons.headset_mic),
-    );
+                          });
+                        }
+                      });
+                    } else {
+                      Get.dialog(const FailedDialog(
+                          text:
+                              "Request failed, you haven't chosen any type yet",
+                          type: "faq"));
+                    }
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll<Color>(successBG),
+                  ),
+                  child: Text('Done'.tr),
+                ))
+          ],
+        ));
   }
 }

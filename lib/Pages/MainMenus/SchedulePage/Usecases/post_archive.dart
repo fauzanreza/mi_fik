@@ -157,7 +157,7 @@ class StatePostArchive extends State<PostArchive> {
                 style: ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll<Color>(successBG),
                 ),
-                child: Text('Done'.tr),
+                child: Text('Done'.tr, style: TextStyle(fontSize: textXMD)),
               ))
         ],
       ),

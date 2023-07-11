@@ -153,15 +153,14 @@ class StateAddPost extends State<AddPost> {
                 const SetImageContent(),
                 Container(
                   transform: Matrix4.translationValues(
-                      fullWidth * 0.03, fullHeight * 0.05, 0.0),
+                      spaceXMD, fullHeight * 0.05, 0.0),
                   decoration: BoxDecoration(
                     color: primaryColor,
                     borderRadius:
                         BorderRadius.all(Radius.circular(roundedCircle)),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color.fromARGB(255, 67, 67, 67)
-                            .withOpacity(0.35),
+                        color: darkColor.withOpacity(0.35),
                         blurRadius: 10.0,
                         spreadRadius: 0.0,
                         offset: const Offset(
@@ -392,20 +391,23 @@ class StateAddPost extends State<AddPost> {
                               }
                             });
                           } else {
-                            Get.dialog(const FailedDialog(
+                            Get.dialog(FailedDialog(
                                 text:
-                                    "Create event failed, field can't be empty",
+                                    "Create event failed, field can't be empty"
+                                        .tr,
                                 type: "addevent"));
                           }
                         } else {
-                          Get.dialog(const FailedDialog(
-                              text: "Create event failed, tag must be selected",
+                          Get.dialog(FailedDialog(
+                              text: "Create event failed, tag must be selected"
+                                  .tr,
                               type: "addevent"));
                         }
                       } else {
-                        Get.dialog(const FailedDialog(
+                        Get.dialog(FailedDialog(
                             text:
-                                "Create event failed, date period must be selected",
+                                "Create event failed, date period must be selected"
+                                    .tr,
                             type: "addevent"));
                       }
                     },
@@ -414,7 +416,7 @@ class StateAddPost extends State<AddPost> {
                           MaterialStatePropertyAll<Color>(successBG),
                     ),
                     child: Text('Publish Event'.tr,
-                        style: TextStyle(fontSize: textMD)),
+                        style: TextStyle(fontSize: textXMD)),
                   ))
             ],
           ),

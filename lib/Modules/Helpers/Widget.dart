@@ -78,7 +78,7 @@ getImageUser(url) {
 }
 
 Widget getDescHeaderWidget(String desc, Color clr) {
-  if (desc.trim() != "" && desc != "null") {
+  if (desc != null && desc.trim() != "" && desc != "null") {
     return Container(
         margin: const EdgeInsets.only(top: 5),
         child: Text(removeHtmlTags(desc),

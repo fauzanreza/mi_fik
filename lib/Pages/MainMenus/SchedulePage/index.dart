@@ -85,8 +85,9 @@ class StateSchedulePage extends State<SchedulePage>
 
     return WillPopScope(
         onWillPop: () {
-          return Get.offNamed(CollectionRoute.homepage,
-              preventDuplicates: false);
+          selectedIndex = 0;
+          Get.offNamed(CollectionRoute.bar, preventDuplicates: false);
+          return null;
         },
         child: Scaffold(
             key: scaffoldKey,

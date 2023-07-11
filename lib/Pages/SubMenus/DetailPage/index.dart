@@ -160,7 +160,8 @@ class StateDetailPage extends State<DetailPage> {
 
       return WillPopScope(
           onWillPop: () {
-            return Get.offNamed(CollectionRoute.bar, preventDuplicates: false);
+            Get.offNamed(CollectionRoute.bar);
+            return null;
           },
           child: Scaffold(
             backgroundColor: whiteColor,

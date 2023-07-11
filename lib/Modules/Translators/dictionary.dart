@@ -159,7 +159,15 @@ class Dictionaries extends Translations {
           "Create archive failed, field can't be empty":
               "Create archive failed, field can't be empty",
           "Are you sure want to leave? All changes will not be saved":
-              "Are you sure want to leave? All changes will not be saved"
+              "Are you sure want to leave? All changes will not be saved",
+          "Create event failed, field can't be empty":
+              "Create event failed, field can't be empty",
+          "Create event failed, tag must be selected":
+              "Create event failed, tag must be selected",
+          "Create event failed, date period must be selected":
+              "Create event failed, date period must be selected",
+          "Add feedback failed, field can't be empty":
+              "Add feedback failed, field can't be empty"
         },
         'id_ID': {
           'Good Morning': 'Selamat Pagi',
@@ -317,7 +325,15 @@ class Dictionaries extends Translations {
           "Create archive failed, field can't be empty":
               "Gagal membuat arsip, kolom tidak boleh kosong",
           "Are you sure want to leave? All changes will not be saved":
-              "Apakah Anda yakin ingin keluar? Semua perubahan tidak akan tersimpan"
+              "Apakah Anda yakin ingin keluar? Semua perubahan tidak akan tersimpan",
+          "Create event failed, field can't be empty":
+              "Gagal membuat event, inputan tidak boleh kosong",
+          "Create event failed, tag must be selected":
+              "Gagal membuat event, tag harus dipilih",
+          "Create event failed, date period must be selected":
+              "Gagal membuat event, periode tanggal harus dipilih",
+          "Add feedback failed, field can't be empty":
+              "Gagal membuat event, inputan tidak boleh kosong"
         },
       };
 }

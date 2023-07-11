@@ -202,8 +202,10 @@ class GetScheduleContainer extends StatelessWidget {
       return FaIcon(
         FontAwesomeIcons.calendarDay,
         color: getColor(
-            DateTime.parse(dateStart).add(Duration(hours: getUTCHourOffset())),
-            DateTime.parse(dateEnd).add(Duration(hours: getUTCHourOffset()))),
+            DateTime.parse(dateStart)
+                .subtract(Duration(hours: getUTCHourOffset() * -1)),
+            DateTime.parse(dateEnd)
+                .subtract(Duration(hours: getUTCHourOffset() * -1))),
         size: iconLG + 5,
       );
     } else if (type == 2) {
@@ -211,8 +213,10 @@ class GetScheduleContainer extends StatelessWidget {
       return Icon(
         Icons.task,
         color: getColor(
-            DateTime.parse(dateStart).add(Duration(hours: getUTCHourOffset())),
-            DateTime.parse(dateEnd).add(Duration(hours: getUTCHourOffset()))),
+            DateTime.parse(dateStart)
+                .subtract(Duration(hours: getUTCHourOffset() * -1)),
+            DateTime.parse(dateEnd)
+                .subtract(Duration(hours: getUTCHourOffset() * -1))),
         size: iconLG + 7,
       );
     } else {
@@ -241,9 +245,9 @@ class GetScheduleContainer extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         color: getBgColor(
             DateTime.parse(content.dateStart)
-                .add(Duration(hours: getUTCHourOffset())),
+                .subtract(Duration(hours: getUTCHourOffset() * -1)),
             DateTime.parse(content.dateEnd)
-                .add(Duration(hours: getUTCHourOffset()))),
+                .subtract(Duration(hours: getUTCHourOffset() * -1))),
         boxShadow: [
           BoxShadow(
             color: shadowColor.withOpacity(0.35),
