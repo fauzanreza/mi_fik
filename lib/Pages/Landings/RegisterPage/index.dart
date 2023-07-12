@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/nodata_dialog.dart';
+import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
 import 'package:mi_fik/Modules/APIs/AuthApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/AuthApi/Services/commands.dart';
+import 'package:mi_fik/Modules/APIs/AuthApi/Services/queries.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/queries.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Validators/commands.dart';
+import 'package:mi_fik/Modules/Helpers/template.dart';
+import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -36,6 +40,7 @@ class StateRegisterPage extends State<RegisterPage> {
   UserQueriesService apiQuery;
 
   AuthCommandsService authService;
+  AuthQueriesService authQueryService;
 
   String checkMsg = "";
   String passMsg = "";
@@ -51,6 +56,7 @@ class StateRegisterPage extends State<RegisterPage> {
     fillValidUntil();
     apiService = UserCommandsService();
     apiQuery = UserQueriesService();
+    authQueryService = AuthQueriesService();
 
     authService = AuthCommandsService();
     materialButton = _skipButton();
@@ -382,8 +388,39 @@ class StateRegisterPage extends State<RegisterPage> {
 
   Widget finishBtn() {
     return InkWell(
-        onTap: () {
-          Get.offNamed(CollectionRoute.landing, preventDuplicates: false);
+        onTap: () async {
+          bool keyExists = await keyExist('token_key');
+          indexRegis = 0;
+          usernameAvaiabilityCheck = "";
+          emailAvaiabilityCheck = "";
+          passRegisCtrl = "";
+          fnameRegisCtrl = "";
+          lnameRegisCtrl = "";
+          validRegisCtrl = 2023;
+          isCheckedRegister = false;
+          isFillForm = false;
+          isChooseRole = false;
+          checkAvaiabilityRegis = false;
+          isFinishedRegis = false;
+          uploadedImageRegis = null;
+          isWaiting = false;
+
+          if (keyExists) {
+            authQueryService.getSignOut().then((response) {
+              var body = response[0]['body'];
+              var code = response[0]['code'];
+
+              if (body == "Logout success" && code == 200) {
+                getDestroyTrace(true);
+                Get.dialog(SuccessDialog(text: body));
+              } else if (code == 401) {
+                getDestroyTrace(true);
+              }
+            });
+          } else {
+            getDestroyTrace(true);
+            Get.dialog(SuccessDialog(text: "Sign out success".tr));
+          }
         },
         child: Container(
           padding: EdgeInsets.all(spaceXSM),

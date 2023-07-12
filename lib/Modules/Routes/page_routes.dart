@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Routes/middleware.dart';
+import 'package:mi_fik/Pages/Landings/ForgetPassPage/index.dart';
 import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
 import 'package:mi_fik/Pages/Landings/RegisterPage/index.dart';
 import 'package:mi_fik/Pages/MainMenus/CalendarPage/index.dart';
@@ -20,6 +21,7 @@ class PageRoutes {
   static final pages = [
     GetPage(name: CollectionRoute.landing, page: () => const LoginPage()),
     GetPage(name: CollectionRoute.register, page: () => const RegisterPage()),
+    GetPage(name: CollectionRoute.forget, page: () => const ForgetPage()),
     GetPage(
         name: CollectionRoute.profile,
         page: () => const ProfilePage(),

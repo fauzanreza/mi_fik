@@ -2,6 +2,7 @@ abstract class CollectionRoute {
   // Landing group
   static const landing = '/';
   static const register = '/register';
+  static const forget = '/forget';
 
   // Submenu group
   static const profile = '/profile';

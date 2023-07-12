@@ -17,7 +17,6 @@ import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mi_fik/Pages/Landings/RegisterPage/index.dart';
-import 'package:mi_fik/Pages/Others/WaitingPage/index.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -226,8 +225,9 @@ class StateMyApp extends State<MyApp> {
             if (widget.finishRegis) {
               return getItem(const BottomBar());
             } else {
-              // return getItem(const RegisterPage(isLogged: true));
-              return getItem(const WaitingPage());
+              indexRegis = 5;
+              return getItem(const RegisterPage(isLogged: true));
+              // return getItem(const WaitingPage());
             }
           } else {
             return const CircularProgressIndicator();

@@ -98,6 +98,7 @@ dependencies:
   # Others
   intl: ^0.17.0
   provider: ^6.0.5
+  pinput: ^2.2.31
 
 dev_dependencies:
   flutter_test:

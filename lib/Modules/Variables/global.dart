@@ -25,6 +25,9 @@ String selectedArchiveDesc;
 String locCoordinateCtrl;
 String selectedArchiveSlug;
 
+// Forget password
+int indexForget = 0;
+
 //Regis only
 int indexRegis = 0;
 bool isCheckedRegister = false;
@@ -38,6 +41,7 @@ bool successValidateAnimation = false;
 
 String usernameAvaiabilityCheck = "";
 String emailAvaiabilityCheck = "";
+String tokenAvaiabilityCheck = "";
 
 String passRegisCtrl = "";
 int validRegisCtrl;

@@ -67,6 +67,11 @@ class StatePostSelectedRole extends State<PostSelectedRole> {
                       Get.offNamed(CollectionRoute.role,
                           preventDuplicates: false);
                     }
+                    if (!widget.isLogged) {
+                      Get.offNamed(CollectionRoute.register,
+                          arguments: {'isLogged': false},
+                          preventDuplicates: false);
+                    }
                   },
                   child: Container(
                     width: 105,

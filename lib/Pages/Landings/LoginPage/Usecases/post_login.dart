@@ -179,6 +179,7 @@ class StatePostLogin extends State<PostLogin> {
                           foregroundColor: primaryColor,
                         ),
                         onPressed: () {
+                          indexRegis = 0;
                           Get.to(() => const RegisterPage(
                                 isLogged: false,
                               ));

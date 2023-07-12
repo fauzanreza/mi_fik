@@ -6,6 +6,7 @@ import 'package:mi_fik/Components/Bars/top_bar.dart';
 import 'package:mi_fik/Components/Button/navigation.dart';
 import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/Landings/ForgetPassPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/AboutPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/HistoryPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/MyFAQPage/index.dart';
@@ -81,6 +82,10 @@ class StateProfilePage extends State<ProfilePage> {
                                   getProfileButton(() {
                                     Get.to(() => const AboutPage());
                                   }, Icons.info, "About Us".tr,
+                                      Icons.keyboard_arrow_right),
+                                  getProfileButton(() {
+                                    Get.to(() => const ForgetPage());
+                                  }, Icons.key, "Forget Password".tr,
                                       Icons.keyboard_arrow_right),
                                   Container(
                                     margin: EdgeInsets.only(top: spaceLG * 2),
