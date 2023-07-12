@@ -11,7 +11,8 @@ import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/ManageRolePage/Usecases/get_tag_bycat.dart';
 
 class GetAllTagCategory extends StatefulWidget {
-  const GetAllTagCategory({Key key}) : super(key: key);
+  const GetAllTagCategory({Key key, this.isLogged}) : super(key: key);
+  final bool isLogged;
 
   @override
   StateGetAllTagCategory createState() => StateGetAllTagCategory();
@@ -65,7 +66,7 @@ class StateGetAllTagCategory extends State<GetAllTagCategory> {
                     const Divider(
                       thickness: 1,
                     ),
-                    GetAllTagByCategory(slug: slug)
+                    GetAllTagByCategory(slug: slug, isLogged: widget.isLogged)
                   ],
                 ),
               );
@@ -110,8 +111,7 @@ class StateGetAllTagCategory extends State<GetAllTagCategory> {
   @override
   Widget build(BuildContext context) {
     List<TagCategoryModel> contents;
-
-    if (box.read("tag-cat") == null) {
+    if (!box.hasData("tag-cat")) {
       return SafeArea(
         maintainBottomViewPadding: false,
         child: FutureBuilder(

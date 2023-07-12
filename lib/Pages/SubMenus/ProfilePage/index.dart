@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:full_screen_menu/full_screen_menu.dart';
 import 'package:get/get.dart';
 import 'package:mi_fik/Components/Backgrounds/custom.dart';
 import 'package:mi_fik/Components/Bars/top_bar.dart';
@@ -35,7 +36,11 @@ class StateProfilePage extends State<ProfilePage> {
 
     return WillPopScope(
         onWillPop: () {
-          Get.toNamed(CollectionRoute.bar);
+          if (FullScreenMenu.isVisible) {
+            Get.back();
+          } else {
+            Get.toNamed(CollectionRoute.bar);
+          }
           return null;
         },
         child: Scaffold(

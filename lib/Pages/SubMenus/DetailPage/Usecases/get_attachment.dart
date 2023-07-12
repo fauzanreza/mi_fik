@@ -1,18 +1,13 @@
 import 'package:carousel_indicator/carousel_indicator.dart';
-import 'package:chewie/chewie.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
-import 'package:mi_fik/Modules/Firebases/Storages/validator.dart';
 import 'package:mi_fik/Modules/Helpers/widget.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/get_pdf.dart';
-import 'package:skeletons/skeletons.dart';
 import 'package:url_launcher/url_launcher.dart';
 // ignore: depend_on_referenced_packages
-import 'package:video_player/video_player.dart';
 
 class AttachButton extends StatefulWidget {
   const AttachButton({Key key, this.passAttach, this.passImage})
@@ -60,8 +55,8 @@ class StateAttachButton extends State<AttachButton> {
                                             width: fullWidth,
                                             child: getContentImageHeader(
                                                 attach['attach_url'].toString(),
-                                                fullWidth * 0.5,
-                                                fullWidth,
+                                                null,
+                                                null,
                                                 false,
                                                 BorderRadius.circular(
                                                     roundedSM)),
@@ -80,7 +75,7 @@ class StateAttachButton extends State<AttachButton> {
                                     children: [
                                       getContentImageHeader(
                                           attach['attach_url'].toString(),
-                                          fullWidth * 0.5,
+                                          null,
                                           250,
                                           false,
                                           BorderRadius.circular(roundedSM)),
@@ -147,9 +142,9 @@ class StateAttachButton extends State<AttachButton> {
               ),
             );
           } else if (attach['attach_type'] == "attachment_video") {
-            return Transform(
-                transform: Matrix4.translationValues(-spaceSM, 0.0, 0.0),
-                child: getContentVideo(attach['attach_url'], fullWidth, 220));
+            // return Transform(
+            //     transform: Matrix4.translationValues(-spaceSM, 0.0, 0.0),
+            //     child: getContentVideo(attach['attach_url'], fullWidth, 220));
           } else if (attach['attach_type'] == "attachment_doc") {
             return RichText(
               text: TextSpan(

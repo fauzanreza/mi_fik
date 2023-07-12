@@ -160,7 +160,7 @@ class StateDetailPage extends State<DetailPage> {
 
       return WillPopScope(
           onWillPop: () {
-            Get.offNamed(CollectionRoute.bar);
+            Get.toNamed(CollectionRoute.bar);
             return null;
           },
           child: Scaffold(
@@ -319,7 +319,7 @@ class StateDetailPage extends State<DetailPage> {
                     color: whiteColor,
                     onPressed: () {
                       listArchiveCheck = [];
-                      Get.offNamed(CollectionRoute.bar,
+                      Get.toNamed(CollectionRoute.bar,
                           preventDuplicates: false);
                     },
                   ),
@@ -328,7 +328,7 @@ class StateDetailPage extends State<DetailPage> {
     } else {
       return WillPopScope(
           onWillPop: () {
-            return Get.offNamed(CollectionRoute.bar, preventDuplicates: false);
+            return Get.toNamed(CollectionRoute.bar, preventDuplicates: false);
           },
           child: Scaffold(
             body: RefreshIndicator(
@@ -409,7 +409,7 @@ class StateDetailPage extends State<DetailPage> {
                     icon: Icon(Icons.arrow_back, size: iconLG),
                     color: whiteColor,
                     onPressed: () {
-                      Get.offNamed(CollectionRoute.bar,
+                      Get.toNamed(CollectionRoute.bar,
                           preventDuplicates: false);
                     },
                   ),

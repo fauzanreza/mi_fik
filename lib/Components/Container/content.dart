@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -158,21 +159,29 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
                 width: widget.width,
                 height: 35,
                 child: ElevatedButton(
-                  onPressed: () {
-                    widget.servc
-                        .postContentView(widget.content.slugName)
-                        .then((response) {
-                      setState(() => {});
-                      var status = response[0]['message'];
-                      var body = response[0]['body'];
+                  onPressed: () async {
+                    final connectivityResult =
+                        await (Connectivity().checkConnectivity());
+                    if (connectivityResult != ConnectivityResult.none) {
+                      widget.servc
+                          .postContentView(widget.content.slugName)
+                          .then((response) {
+                        setState(() => {});
+                        var status = response[0]['message'];
+                        var body = response[0]['body'];
 
-                      if (status == "success") {
-                        Get.to(() =>
-                            DetailPage(passSlug: widget.content.slugName));
-                      } else {
-                        Get.dialog(FailedDialog(text: body, type: "openevent"));
-                      }
-                    });
+                        if (status == "success") {
+                          Get.to(() =>
+                              DetailPage(passSlug: widget.content.slugName));
+                        } else {
+                          Get.dialog(
+                              FailedDialog(text: body, type: "openevent"));
+                        }
+                      });
+                    } else {
+                      Get.to(
+                          () => DetailPage(passSlug: widget.content.slugName));
+                    }
 
                     passSlugContent = widget.content.slugName;
                   },

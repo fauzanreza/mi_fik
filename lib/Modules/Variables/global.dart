@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
@@ -11,6 +12,7 @@ List listAttachment = [];
 List<Map<String, dynamic>> listArchiveCheck = [];
 TabController tabController;
 bool isOffline = false;
+FlashMode flashMode = FlashMode.off;
 
 //Schedule Page
 String archiveNameMsg = "";

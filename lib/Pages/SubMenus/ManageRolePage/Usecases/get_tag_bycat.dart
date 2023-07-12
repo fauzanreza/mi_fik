@@ -5,12 +5,15 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mi_fik/Modules/APIs/TagApi/Models/queries.dart';
 import 'package:mi_fik/Modules/APIs/TagApi/Services/queries.dart';
+import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class GetAllTagByCategory extends StatefulWidget {
-  const GetAllTagByCategory({Key key, this.slug}) : super(key: key);
+  const GetAllTagByCategory({Key key, this.slug, this.isLogged})
+      : super(key: key);
   final String slug;
+  final bool isLogged;
 
   @override
   StateGetAllTagByCategory createState() => StateGetAllTagByCategory();
@@ -27,10 +30,11 @@ class StateGetAllTagByCategory extends State<GetAllTagByCategory> {
     box = GetStorage();
   }
 
-  Widget getElement(contents, bool isModel) {
+  Widget getElement(contents, bool isModel, mytag) {
     if (contents != null) {
       String tagName = "";
       String slug = "";
+      dynamic assigned = [];
 
       return Wrap(
           runSpacing: -spaceWrap,
@@ -46,7 +50,11 @@ class StateGetAllTagByCategory extends State<GetAllTagByCategory> {
 
             var contain =
                 selectedRole.where((item) => item['slug_name'] == slug);
-            if (contain.isEmpty || selectedRole.isEmpty) {
+
+            if (mytag != null) {
+              assigned = mytag.where((item) => item['slug_name'] == slug);
+            }
+            if ((contain.isEmpty || selectedRole.isEmpty) && assigned.isEmpty) {
               return ElevatedButton(
                 onPressed: () {
                   String tagNameState = "";
@@ -107,7 +115,19 @@ class StateGetAllTagByCategory extends State<GetAllTagByCategory> {
                       {"slug_name": element.slug, "tag_name": element.tagName});
                 }
                 box.write("tag-bycat-${widget.slug}", jsonEncode(lst));
-                return _buildListView(contents);
+
+                return FutureBuilder<Role>(
+                    future: getRoleSess(widget.isLogged),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done &&
+                          snapshot.hasData) {
+                        var roles = jsonDecode(snapshot.data.role);
+
+                        return _buildListView(contents, roles);
+                      } else {
+                        return const SizedBox();
+                      }
+                    });
               } else {
                 return Center(child: Text("No role available".tr));
               }
@@ -120,14 +140,35 @@ class StateGetAllTagByCategory extends State<GetAllTagByCategory> {
         ),
       );
     } else {
-      return getElement(
-          jsonDecode(box.read("tag-bycat-${widget.slug}")), false);
+      return FutureBuilder<Role>(
+          future: getRoleSess(false),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done &&
+                snapshot.hasData) {
+              var roles = jsonDecode(snapshot.data.role);
+
+              return getElement(
+                  jsonDecode(box.read("tag-bycat-${widget.slug}")),
+                  false,
+                  roles);
+            } else if (snapshot.connectionState == ConnectionState.none) {
+              return getElement(
+                  jsonDecode(box.read("tag-bycat-${widget.slug}")),
+                  false,
+                  null);
+            } else {
+              return getElement(
+                  jsonDecode(box.read("tag-bycat-${widget.slug}")),
+                  false,
+                  null);
+            }
+          });
     }
   }
 
-  Widget _buildListView(List<TagAllModel> contents) {
+  Widget _buildListView(List<TagAllModel> contents, roles) {
     //double fullHeight = MediaQuery.of(context).size.height;
     //double fullWidth = MediaQuery.of(context).size.width;
-    return getElement(contents, true);
+    return getElement(contents, true, roles);
   }
 }
