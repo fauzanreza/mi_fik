@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Services/commands.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
@@ -42,7 +42,6 @@ class StateEditArchive extends State<EditArchive> {
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading = false;
 
     return IconButton(
       icon: const Icon(Icons.edit),
@@ -52,8 +51,9 @@ class StateEditArchive extends State<EditArchive> {
           context: context,
           isDismissible: false,
           shape: RoundedRectangleBorder(
-              borderRadius:
-                  BorderRadius.only(topLeft: roundedLG, topRight: roundedLG)),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(roundedLG),
+                  topRight: Radius.circular(roundedLG))),
           barrierColor: primaryColor.withOpacity(0.5),
           isScrollControlled: true,
           builder: (BuildContext context) {
@@ -80,23 +80,28 @@ class StateEditArchive extends State<EditArchive> {
                       style: TextStyle(
                           color: primaryColor,
                           fontWeight: FontWeight.bold,
-                          fontSize: textLG)),
+                          fontSize: textXMD)),
                   Container(
                       alignment: Alignment.topLeft,
-                      padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
+                      padding:
+                          EdgeInsets.fromLTRB(spaceXMD, spaceSM, spaceXMD, 0),
                       child: Text("Archive Name".tr,
-                          style: TextStyle(color: blackbg, fontSize: textMD))),
+                          style:
+                              TextStyle(color: darkColor, fontSize: textXMD))),
                   Container(
-                      padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
+                      padding:
+                          EdgeInsets.fromLTRB(spaceXMD, spaceSM, spaceXMD, 0),
                       child: getInputText(75, archiveNameCtrl, false)),
                   Container(
                       alignment: Alignment.topLeft,
-                      padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
+                      padding:
+                          EdgeInsets.fromLTRB(spaceXMD, spaceSM, spaceXMD, 0),
                       child: Text("Description (optional)".tr,
-                          style: TextStyle(color: blackbg, fontSize: textMD))),
+                          style:
+                              TextStyle(color: darkColor, fontSize: textXMD))),
                   Container(
                       padding: EdgeInsets.fromLTRB(
-                          paddingSM, 10, paddingSM, paddingMD * 2),
+                          spaceXMD, 10, spaceXMD, spaceLG * 2),
                       child: getInputDesc(255, 3, archiveDescCtrl, false)),
                   SizedBox(
                       width: fullWidth,
@@ -112,39 +117,31 @@ class StateEditArchive extends State<EditArchive> {
                             apiService
                                 .editArchive(archive, widget.slug)
                                 .then((response) {
-                              setState(() => isLoading = false);
+                              setState(() => {});
                               var status = response[0]['message'];
                               var body = response[0]['body'];
 
                               if (status == "success") {
                                 selectedArchiveName = archive.archiveName;
                                 selectedArchiveDesc = archive.archiveDesc;
-                                Get.offAll(() => const BottomBar());
+                                Get.offNamed(CollectionRoute.bar,
+                                    preventDuplicates: false);
 
-                                showDialog<String>(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        SuccessDialog(text: body));
+                                Get.dialog(SuccessDialog(text: body));
                               } else {
-                                showDialog<String>(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        FailedDialog(
-                                            text: body, type: "addarchive"));
+                                Get.dialog(FailedDialog(
+                                    text: body, type: "addarchive"));
                               }
                             });
                           } else {
-                            showDialog<String>(
-                                context: context,
-                                builder: (BuildContext context) =>
-                                    const FailedDialog(
-                                        text:
-                                            "Edit archive failed, field can't be empty"));
+                            Get.dialog(const FailedDialog(
+                                text:
+                                    "Edit archive failed, field can't be empty"));
                           }
                         },
                         style: ButtonStyle(
                           backgroundColor:
-                              MaterialStatePropertyAll<Color>(successbg),
+                              MaterialStatePropertyAll<Color>(successBG),
                         ),
                         child: Text('Done'.tr),
                       ))

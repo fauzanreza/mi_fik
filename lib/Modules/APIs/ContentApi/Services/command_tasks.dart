@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:get/get.dart';
 // ignore: depend_on_referenced_packages
 import 'package:http/http.dart' show Client;
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/command_tasks.dart';
@@ -43,7 +43,10 @@ class TaskCommandsService {
       ];
     } else {
       return [
-        {"message": "failed", "body": "Unknown error"}
+        {
+          "message": "failed",
+          "body": "Unknown error, please contact the admin".tr
+        }
       ];
     }
   }
@@ -81,7 +84,10 @@ class TaskCommandsService {
       ];
     } else {
       return [
-        {"message": "failed", "body": "Unknown error"}
+        {
+          "message": "failed",
+          "body": "Unknown error, please contact the admin".tr
+        }
       ];
     }
   }
@@ -117,7 +123,10 @@ class TaskCommandsService {
       ];
     } else {
       return [
-        {"message": "failed", "body": "Unknown error"}
+        {
+          "message": "failed",
+          "body": "Unknown error, please contact the admin".tr
+        }
       ];
     }
   }

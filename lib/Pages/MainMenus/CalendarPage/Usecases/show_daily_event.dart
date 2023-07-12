@@ -60,12 +60,11 @@ class StateDayEvent extends State<DayEvent> with TickerProviderStateMixin {
   Widget _buildListView(List<ScheduleModel> contents) {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading;
 
     if (contents != null) {
       return Container(
-          margin: const EdgeInsets.only(left: 15, top: 10),
-          padding: const EdgeInsets.only(bottom: 15),
+          margin: EdgeInsets.only(left: spaceXMD, top: spaceSM),
+          padding: EdgeInsets.only(bottom: spaceXMD),
           child: Column(
               children: contents.map((content) {
             getChipHour(String ds) {
@@ -95,13 +94,11 @@ class StateDayEvent extends State<DayEvent> with TickerProviderStateMixin {
                                   return StatefulBuilder(
                                       builder: (context, setState) {
                                     return AlertDialog(
-                                        insetPadding:
-                                            EdgeInsets.all(paddingXSM),
-                                        contentPadding:
-                                            EdgeInsets.all(paddingXSM),
+                                        insetPadding: EdgeInsets.all(spaceSM),
+                                        contentPadding: EdgeInsets.all(spaceSM),
                                         shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.all(roundedLG)),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(roundedLG))),
                                         content: DetailTask(
                                           data: content,
                                         ));
@@ -111,7 +108,7 @@ class StateDayEvent extends State<DayEvent> with TickerProviderStateMixin {
                             commandService
                                 .postContentView(content.slugName)
                                 .then((response) {
-                              setState(() => isLoading = false);
+                              setState(() => {});
                               var status = response[0]['message'];
                               var body = response[0]['body'];
 
@@ -119,11 +116,8 @@ class StateDayEvent extends State<DayEvent> with TickerProviderStateMixin {
                                 Get.to(() =>
                                     DetailPage(passSlug: content.slugName));
                               } else {
-                                showDialog<String>(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        FailedDialog(
-                                            text: body, type: "openevent"));
+                                Get.dialog(FailedDialog(
+                                    text: body, type: "openevent"));
                               }
                             });
 
@@ -136,10 +130,17 @@ class StateDayEvent extends State<DayEvent> with TickerProviderStateMixin {
             ]);
           }).toList()));
     } else {
-      return SizedBox(
-          height: fullHeight * 0.7,
-          child: getMessageImageNoData("assets/icon/empty.png",
-              "No event / task for today, have a good rest", fullWidth));
+      if (isOffline) {
+        return SizedBox(
+            height: fullHeight * 0.7,
+            child: getMessageImageNoData(
+                "assets/icon/badnet.png", "Failed to load data".tr, fullWidth));
+      } else {
+        return SizedBox(
+            height: fullHeight * 0.7,
+            child: getMessageImageNoData("assets/icon/empty.png",
+                "No event / task for today, have a good rest".tr, fullWidth));
+      }
     }
   }
 }

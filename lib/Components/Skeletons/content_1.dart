@@ -17,17 +17,16 @@ class ContentSkeleton1 extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           itemCount: 4,
           itemBuilder: (context, index) => Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(spaceXSM),
             child: Container(
-              padding: const EdgeInsets.all(8.0),
-              margin: const EdgeInsets.only(left: 35),
+              padding: EdgeInsets.all(spaceXSM),
+              margin: EdgeInsets.only(left: spaceJumbo),
               decoration: BoxDecoration(
-                color: whitebg,
-                borderRadius: BorderRadius.all(roundedMd),
+                color: whiteColor,
+                borderRadius: BorderRadius.all(Radius.circular(roundedSM)),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color.fromARGB(255, 128, 128, 128)
-                        .withOpacity(0.3),
+                    color: shadowColor.withOpacity(0.35),
                     blurRadius: 10.0,
                     spreadRadius: 0.0,
                     offset: const Offset(
@@ -44,11 +43,11 @@ class ContentSkeleton1 extends StatelessWidget {
                     style:
                         SkeletonAvatarStyle(width: double.infinity, height: 60),
                   ),
-                  SizedBox(height: paddingXSM),
+                  SizedBox(height: spaceSM),
                   SkeletonParagraph(
                     style: SkeletonParagraphStyle(
                         lines: 3,
-                        spacing: 6,
+                        spacing: spaceWrap,
                         lineStyle: SkeletonLineStyle(
                           randomLength: true,
                           height: textSM,
@@ -56,7 +55,7 @@ class ContentSkeleton1 extends StatelessWidget {
                           minLength: fullWidth / 2,
                         )),
                   ),
-                  SizedBox(height: paddingXSM),
+                  SizedBox(height: spaceSM),
                   const SkeletonAvatar(
                     style: SkeletonAvatarStyle(
                       width: double.infinity,

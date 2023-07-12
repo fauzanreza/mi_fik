@@ -88,7 +88,89 @@ class Dictionaries extends Translations {
           'Selected Location': 'Selected Location',
           'Could not open the map': 'Could not open the map',
           'Question Type': 'Question Type',
-          'Save Changes': 'Save Changes'
+          'Save Changes': 'Save Changes',
+          'Unknown error, please contact the admin':
+              'Unknown error, please contact the admin',
+          'Unknown User': 'Unknown User',
+          'Descending': 'Descending',
+          'Ascending': 'Ascending',
+          'Title like': 'Title like',
+          'Start from': 'Start from',
+          'until': 'until',
+          ' Saved': ' Saved',
+          'Version': 'Version',
+          'First Name': 'First Name',
+          'Last Name': 'Last Name',
+          'Valid Until': 'Valid Until',
+          'Frequently Asked Question': 'Frequently Asked Question',
+          "You haven't selected any tag yet":
+              "You haven't selected any tag yet",
+          'No role available': 'No role available',
+          'Active filters': 'Active filters',
+          'Lost connection, all data shown are local':
+              'Lost connection, all data shown are local',
+          'Welcome back, all data are now realtime':
+              'Welcome back, all data are now realtime',
+          'Help not found': 'Help not found',
+          'Failed to load data': 'Failed to load data',
+          'No event / task saved in this archive':
+              'No event / task saved in this archive',
+          "You haven't created any Archive": "You haven't created any Archive",
+          'No event / task for today, have a good rest':
+              'No event / task for today, have a good rest',
+          "Sorry but we not found specific event":
+              "Sorry but we not found specific event",
+          "Are you sure want to request remove":
+              "Are you sure want to request remove",
+          "Request failed, you haven't chosen any tag yet":
+              "Request failed, you haven't chosen any tag yet",
+          "Request failed, you can't remove general role":
+              "Request failed, you can't remove general role",
+          "Are you sure want to close the registration?":
+              "Are you sure want to close the registration?",
+          "Failed to capture image": "Failed to capture image",
+          "Preview Image": "Preview Image",
+          "No more item to show": "No more item to show",
+          "Failed to upload, file doesnt exist":
+              "Failed to upload, file doesnt exist",
+          "Failed to reset image": "Failed to reset image",
+          "Nothing has changed": "Nothing has changed",
+          "Event posted": "Event posted",
+          "Task saved": "Task saved",
+          "Archive Created": "Archive Created",
+          "Answer": "Answer",
+          "This Event doesn't have description":
+              "This Event doesn't have description",
+          "Publish Event": "Publish Event",
+          "This Event doesn't have attachment":
+              "This Event doesn't have attachment",
+          "don't have an account?": "don't have an account?",
+          "Register now": "Register now",
+          "Insert Attachment": "Insert Attachment",
+          "Are you sure want to sign out?": "Are you sure want to sign out?",
+          "Information": "Information",
+          "Sign Out": "Sign Out",
+          "Welcoming": "Welcoming",
+          "You haven't accept the terms & condition":
+              "You haven't accept the terms & condition",
+          "All Tag": "All Tag",
+          "Attachment": "Attachment",
+          "Sign In": "Sign In",
+          "Create archive failed, field can't be empty":
+              "Create archive failed, field can't be empty",
+          "Are you sure want to leave? All changes will not be saved":
+              "Are you sure want to leave? All changes will not be saved",
+          "Create event failed, field can't be empty":
+              "Create event failed, field can't be empty",
+          "Create event failed, tag must be selected":
+              "Create event failed, tag must be selected",
+          "Create event failed, date period must be selected":
+              "Create event failed, date period must be selected",
+          "Add feedback failed, field can't be empty":
+              "Add feedback failed, field can't be empty",
+          "Sign out success": "Sign out success",
+          "Failed to load document": "Failed to load document",
+          "Failed to load video": "Failed to load video"
         },
         'id_ID': {
           'Good Morning': 'Selamat Pagi',
@@ -112,7 +194,7 @@ class Dictionaries extends Translations {
           'Today': 'Hari ini',
           'Yesterday': 'Kemarin',
           'Tommorow': 'Besok',
-          'Role Saya': 'Role Saya',
+          'My Roles': 'Role Saya',
           'History': 'Riwayat',
           'My Question': 'Pertanyaan Saya',
           'About Us': 'Tentang Kami',
@@ -175,7 +257,89 @@ class Dictionaries extends Translations {
           'Selected Location': 'Lokasi Terpilih',
           'Could not open the map': 'Gagal membuka Maps',
           'Question Type': 'Tipe Pertanyaan',
-          'Save Changes': 'Simpan Perubahan'
+          'Save Changes': 'Simpan Perubahan',
+          'Unknown error, please contact the admin':
+              'Kegagalan sistem, segera hubungi admin',
+          'Unknown User': 'Tak dikenal',
+          'Descending': 'Menurun',
+          'Ascending': 'Menaik',
+          'Title like': 'Judul seperti',
+          'Start from': 'Mulai dari',
+          'until': 'hingga',
+          ' Saved': ' Tersimpan',
+          'Version': 'Versi',
+          'First Name': 'Nama Depan',
+          'Last Name': 'Nama Belakang',
+          'Valid Until': 'Valid Hingga',
+          'Frequently Asked Question': 'Pertanyaan Populer',
+          "You haven't selected any tag yet":
+              "Anda belum memilih tag sama sekali",
+          'No role available': 'Tidak ada role yang tersedia',
+          'Active filters': 'Filter aktif',
+          'Lost connection, all data shown are local':
+              'Koneksi gagal, data yang ditampilkan adalah lokal',
+          'Welcome back, all data are now realtime':
+              'Selamat datang kembali, semua data kembali online',
+          'Help not found': 'Bantuan tidak ditemukan',
+          'Failed to load data': 'Gagal meload data',
+          'No event / task saved in this archive':
+              'Tidak ada event atau tugas yang tersimpan pada arsip',
+          "You haven't created any Archive": "Anda belum membuat arsip",
+          'No event / task for today, have a good rest':
+              'Tidak ada event atau tugas hari ini, silahkan beristirahat',
+          "Sorry but we not found specific event":
+              "Maaf, event tidak ditemukan",
+          "Are you sure want to request remove":
+              "Apakah Anda yakin ingin mengirim permintaan untuk menghapus",
+          "Request failed, you haven't chosen any tag yet":
+              "Permintaan role gagal, Anda sama sekali belum memilih",
+          "Request failed, you can't remove general role":
+              "Permintaan role gagal, role utama tidak boleh diubah",
+          "Are you sure want to close the registration?":
+              "Apakah Anda yakin ingin membatalkan pendaftaran?",
+          "Failed to capture image": "Gagal mengambil gambar",
+          "Preview Image": "Hasil Gambar",
+          "No more item to show": "Semua item telah ditampilkan",
+          "Failed to upload, file doesnt exist":
+              "Gagal mengunggah, file tidak ditemukan",
+          "Failed to reset image": "Gagal menghapus gambar",
+          "Nothing has changed": "Tidak ada yang diubah",
+          "Event posted": "Event berhasil diposting",
+          "Task saved": "Tugas disimpan",
+          "Archive Created": "Arsip dibuat",
+          "Answer": "Jawaban",
+          "This Event doesn't have description":
+              "Event ini tidak memiliki deskripsi",
+          "Publish Event": "Simpan Event",
+          "This Event doesn't have attachment":
+              "Event ini tidak memiliki tautan",
+          "don't have an account?": "belum punya akun?",
+          "Register now": "Daftar sekarang",
+          "Insert Attachment": "Tambah Tautan",
+          "Are you sure want to sign out?": "Apakah Anda yakin ingin keluar?",
+          "Information": "Informasi",
+          "Sign Out": "Keluar",
+          "Welcoming": "Selamat Datang",
+          "You haven't accept the terms & condition":
+              "Anda belum menyetujui Syarat & Ketentuan",
+          "All Tag": "Semua tag",
+          "Attachment": "Tautan",
+          "Sign In": "Masuk",
+          "Create archive failed, field can't be empty":
+              "Gagal membuat arsip, kolom tidak boleh kosong",
+          "Are you sure want to leave? All changes will not be saved":
+              "Apakah Anda yakin ingin keluar? Semua perubahan tidak akan tersimpan",
+          "Create event failed, field can't be empty":
+              "Gagal membuat event, inputan tidak boleh kosong",
+          "Create event failed, tag must be selected":
+              "Gagal membuat event, tag harus dipilih",
+          "Create event failed, date period must be selected":
+              "Gagal membuat event, periode tanggal harus dipilih",
+          "Add feedback failed, field can't be empty":
+              "Gagal membuat event, inputan tidak boleh kosong",
+          "Sign out success": "Berhasil keluar akun",
+          "Failed to load document": "Gagal menampilkan dokumen",
+          "Failed to load video": "Gagal menampilkan video"
         },
       };
 }

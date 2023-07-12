@@ -1,50 +1,95 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // Colors
-var primaryColor = const Color(0xFFFB8C00);
-var dangerColor = const Color(0xFFFB5E5B);
-var infoColor = const Color(0xFF009FF9);
-var mainbg = const Color.fromARGB(255, 232, 232, 232);
-var whitebg = const Color(0xFFFFFFFF);
-var blackbg = const Color(0xFF414141);
-var semiblackbg = const Color(0xFF212529);
-var greybg = const Color.fromARGB(255, 118, 118, 118);
-var successbg = const Color(0xFF6EC25B);
+var primaryLightBG = const Color(0xFFFADFB9);
+var successBG = const Color(0xFF00C363);
+var warningBG = const Color(0xFFF85D59);
+var warningDarkBG = const Color(0xFFD5534C);
+var infoBG = const Color(0xFF009FF9);
+var hoverBG = const Color(0xFFF2F2F2);
 
-var semiPrimaryBg = const Color(0xFFFADFb9);
+var primaryColor = const Color(0xFFF78A00);
+var darkColor = const Color(0xFF5B5B5B);
+var whiteColor = const Color(0xFFFFFFFF);
+var greyColor = const Color(0xFFC3C3C3);
+var shadowColor = const Color(0xFF808080);
+var semidarkColor = const Color(0xFF212529);
+
+var calendarItem = const Color(0xFF85DEF3); // Not used yet
+var importantItem = const Color(0xFFFCC4C4); // Not used yet
+var semiPrimary = const Color(0xFFFFF1DF);
 
 // Border Radius
-var roundedLG = const Radius.circular(18); //For navbar, ...
-var roundedMd = const Radius.circular(10); //For container, ...
-double roundedMd2 = 10; //For container, ...
-double roundedLG2 = 14; //For container, ...
+double roundedCircle = 100;
+double roundedJumbo = 30;
+double roundedXLG = 20;
+double roundedLG = 18;
+double roundedMD = 14;
+double roundedSM = 10;
+double roundedMini = 6; // Not used yet
 
 // Font size
-double textXL = 32;
-double textXLG = 25;
-double textLG = 22;
-double textMD = 16;
-double textSM = 13;
-double textXSM = 11.5;
-double textXXSM = 9.5;
+double textXJumbo = 32;
+double textJumbo = 24;
+double textXLG = 20;
+double textLG = 18;
+double textXMD = 14;
+double textMD = 13;
+double textSM = 12;
+double textXSM = 11;
 
 // Height & Width
 double btnHeightMD = 55;
 
-// Margin
-double marginMD = 25; //For home content (MB)
-double marginMT = 12; //For detail content (MT)
-double marginSM = 8; //For detail content (MT)
-double marginHZ = 4; //For horizontal listview
+// Spacing
+double spaceJumbo = 35;
+double spaceXLG = 24;
+double spaceLG = 20;
+double spaceXMD = 16;
+double spaceMD = 12;
+double spaceSM = 10;
+double spaceXSM = 8; // Not used yet
+double spaceXXSM = 6; // Not used yet
+double spaceMini = 4;
 
-// Padding
-double paddingLg = 35;
-double paddingMD = 20;
-double paddingSM = 15;
-double paddingXSM = 10;
+double spaceWrap = 5;
 
 // Icon size
+double iconJumbo = 40;
 double iconXL = 32; //For floating add btn, ...
 double iconLG = 24; //For floating add btn, ...
 double iconMD = 18; //For link or file btn, ...
 double iconSM = 15; //For content header ...
+
+// Typography
+final TextTheme textTheme = TextTheme(
+  displayLarge: GoogleFonts.poppins(fontSize: textSM),
+  displayMedium: GoogleFonts.poppins(fontSize: textSM),
+  displaySmall: GoogleFonts.poppins(fontSize: textSM),
+  headlineLarge: GoogleFonts.poppins(fontSize: textSM),
+  headlineMedium: GoogleFonts.poppins(fontSize: textSM),
+  headlineSmall: GoogleFonts.poppins(fontSize: textSM),
+  titleLarge: GoogleFonts.poppins(fontSize: textSM),
+  titleMedium: GoogleFonts.poppins(fontSize: textSM),
+  titleSmall: GoogleFonts.poppins(fontSize: textSM),
+  bodyLarge: GoogleFonts.poppins(fontSize: textSM),
+  bodyMedium: GoogleFonts.poppins(fontSize: textSM),
+  bodySmall: GoogleFonts.poppins(fontSize: textSM),
+  labelLarge: GoogleFonts.poppins(fontSize: textSM),
+  labelMedium: GoogleFonts.poppins(fontSize: textSM),
+  labelSmall: GoogleFonts.poppins(fontSize: textSM),
+  // headline1: GoogleFonts.poppins(),
+  // headline2: GoogleFonts.poppins(),
+  // headline3: GoogleFonts.poppins(),
+  // headline4: GoogleFonts.poppins(),
+  // headline5: GoogleFonts.poppins(),
+  // headline6: GoogleFonts.poppins(),
+  // subtitle1: GoogleFonts.poppins(),
+  // subtitle2: GoogleFonts.poppins(),
+  // bodyText1: GoogleFonts.poppins(),
+  // bodyText2: GoogleFonts.poppins(),
+  // caption: GoogleFonts.poppins(),
+  // button: GoogleFonts.poppins(),
+  // overline: GoogleFonts.poppins(),
+);

@@ -17,17 +17,17 @@ class ContentSkeleton2 extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           itemCount: 2,
           itemBuilder: (context, index) => Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(spaceXSM),
             child: Container(
-              padding: const EdgeInsets.all(8.0),
-              margin: const EdgeInsets.only(left: 45, right: 20),
+              padding: EdgeInsets.all(spaceXSM),
+              margin:
+                  EdgeInsets.only(left: spaceJumbo + spaceSM, right: spaceLG),
               decoration: BoxDecoration(
-                color: whitebg,
-                borderRadius: BorderRadius.all(roundedMd),
+                color: whiteColor,
+                borderRadius: BorderRadius.all(Radius.circular(roundedSM)),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color.fromARGB(255, 128, 128, 128)
-                        .withOpacity(0.3),
+                    color: shadowColor.withOpacity(0.35),
                     blurRadius: 10.0,
                     spreadRadius: 0.0,
                     offset: const Offset(
@@ -57,11 +57,11 @@ class ContentSkeleton2 extends StatelessWidget {
                       )
                     ],
                   ),
-                  SizedBox(height: paddingXSM),
+                  SizedBox(height: spaceSM),
                   SkeletonParagraph(
                     style: SkeletonParagraphStyle(
                         lines: 2,
-                        spacing: 6,
+                        spacing: spaceWrap,
                         lineStyle: SkeletonLineStyle(
                           randomLength: true,
                           height: textSM,
@@ -69,7 +69,7 @@ class ContentSkeleton2 extends StatelessWidget {
                           minLength: fullWidth * 0.5,
                         )),
                   ),
-                  SizedBox(height: paddingXSM),
+                  SizedBox(height: spaceSM),
                 ],
               )),
             ),

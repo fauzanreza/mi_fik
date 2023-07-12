@@ -17,17 +17,16 @@ class ArchiveSkeleton1 extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           itemCount: 2,
           itemBuilder: (context, index) => Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(spaceXSM),
             child: Container(
-              padding: const EdgeInsets.all(8.0),
-              margin: const EdgeInsets.symmetric(horizontal: 45),
+              padding: EdgeInsets.all(spaceXSM),
+              margin: EdgeInsets.symmetric(horizontal: spaceJumbo + spaceSM),
               decoration: BoxDecoration(
-                color: whitebg,
-                borderRadius: BorderRadius.all(roundedMd),
+                color: whiteColor,
+                borderRadius: BorderRadius.all(Radius.circular(roundedSM)),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color.fromARGB(255, 128, 128, 128)
-                        .withOpacity(0.3),
+                    color: shadowColor.withOpacity(0.35),
                     blurRadius: 10.0,
                     spreadRadius: 0.0,
                     offset: const Offset(
@@ -40,7 +39,7 @@ class ArchiveSkeleton1 extends StatelessWidget {
               child: SkeletonItem(
                   child: Column(
                 children: [
-                  SizedBox(height: paddingMD * 0.75),
+                  SizedBox(height: spaceLG * 0.75),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -58,7 +57,7 @@ class ArchiveSkeleton1 extends StatelessWidget {
                       )
                     ],
                   ),
-                  SizedBox(height: paddingMD * 0.75),
+                  SizedBox(height: spaceLG * 0.75),
                 ],
               )),
             ),

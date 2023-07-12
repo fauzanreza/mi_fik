@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Components/Backgrounds/custom.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
@@ -46,12 +47,13 @@ class StateIntroPage extends State<IntroPage> {
                         height: MediaQuery.of(context).size.height * 0.65,
                         child: Theme(
                           data: ThemeData(
-                            canvasColor: mainbg,
+                            canvasColor: hoverBG,
                           ),
                           child: Stepper(
                               controlsBuilder: (context, onStepContinue) {
                                 return Container(
-                                    margin: const EdgeInsets.only(top: 40),
+                                    margin: EdgeInsets.only(
+                                        top: spaceMini + spaceJumbo),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -68,15 +70,14 @@ class StateIntroPage extends State<IntroPage> {
                                             padding: MaterialStateProperty.all<
                                                     EdgeInsets>(
                                                 EdgeInsets.symmetric(
-                                                    vertical: paddingXSM,
-                                                    horizontal:
-                                                        paddingMD * 2.4)),
+                                                    vertical: spaceSM,
+                                                    horizontal: spaceLG * 2.4)),
                                             shape: MaterialStateProperty.all<
                                                     RoundedRectangleBorder>(
                                                 RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(
-                                                      roundedLG2),
+                                                      roundedMD),
                                             )),
                                             backgroundColor:
                                                 MaterialStatePropertyAll<Color>(
@@ -84,7 +85,7 @@ class StateIntroPage extends State<IntroPage> {
                                           ),
                                           child: Text('Next',
                                               style:
-                                                  TextStyle(fontSize: textMD)),
+                                                  TextStyle(fontSize: textXMD)),
                                         )
                                         //Need back button??
                                       ],
@@ -119,14 +120,14 @@ class StateIntroPage extends State<IntroPage> {
                                     content: Column(children: [
                                       Container(
                                         margin: EdgeInsets.symmetric(
-                                            vertical: 20,
+                                            vertical: spaceLG,
                                             horizontal: fullWidth * 0.15),
-                                        padding: const EdgeInsets.all(10),
+                                        padding: EdgeInsets.all(spaceSM),
                                         alignment: Alignment.center,
                                         decoration: BoxDecoration(
-                                          color: whitebg,
-                                          borderRadius:
-                                              BorderRadius.all(roundedMd),
+                                          color: whiteColor,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(roundedMD)),
                                           boxShadow: [
                                             BoxShadow(
                                               color: const Color.fromARGB(
@@ -151,13 +152,13 @@ class StateIntroPage extends State<IntroPage> {
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: primaryColor,
-                                              fontSize: textLG,
+                                              fontSize: textXMD,
                                               fontWeight: FontWeight.w500)),
                                       Text("Every Information in one app",
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: primaryColor,
-                                              fontSize: textLG,
+                                              fontSize: textXMD,
                                               fontWeight: FontWeight.w500)),
                                     ])),
                                 Step(
@@ -166,14 +167,14 @@ class StateIntroPage extends State<IntroPage> {
                                     content: Column(children: [
                                       Container(
                                         margin: EdgeInsets.symmetric(
-                                            vertical: 20,
+                                            vertical: spaceLG,
                                             horizontal: fullWidth * 0.15),
-                                        padding: const EdgeInsets.all(10),
+                                        padding: EdgeInsets.all(spaceSM),
                                         alignment: Alignment.center,
                                         decoration: BoxDecoration(
-                                          color: whitebg,
-                                          borderRadius:
-                                              BorderRadius.all(roundedMd),
+                                          color: whiteColor,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(roundedMD)),
                                           boxShadow: [
                                             BoxShadow(
                                               color: const Color.fromARGB(
@@ -198,13 +199,13 @@ class StateIntroPage extends State<IntroPage> {
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: primaryColor,
-                                              fontSize: textLG,
+                                              fontSize: textXMD,
                                               fontWeight: FontWeight.w500)),
                                       Text("and Activity",
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: primaryColor,
-                                              fontSize: textLG,
+                                              fontSize: textXMD,
                                               fontWeight: FontWeight.w500)),
                                     ])),
                                 Step(
@@ -213,14 +214,14 @@ class StateIntroPage extends State<IntroPage> {
                                     content: Column(children: [
                                       Container(
                                         margin: EdgeInsets.symmetric(
-                                            vertical: 20,
+                                            vertical: spaceLG,
                                             horizontal: fullWidth * 0.15),
-                                        padding: const EdgeInsets.all(10),
+                                        padding: EdgeInsets.all(spaceSM),
                                         alignment: Alignment.center,
                                         decoration: BoxDecoration(
-                                          color: whitebg,
-                                          borderRadius:
-                                              BorderRadius.all(roundedMd),
+                                          color: whiteColor,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(roundedMD)),
                                           boxShadow: [
                                             BoxShadow(
                                               color: const Color.fromARGB(
@@ -241,18 +242,17 @@ class StateIntroPage extends State<IntroPage> {
                                               width: fullHeight * 0.2),
                                         ),
                                       ),
-                                      Text("Please tell us who You are",
+                                      Text("Please tell us who You are".tr,
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: primaryColor,
-                                              fontSize: textLG,
+                                              fontSize: textXMD,
                                               fontWeight: FontWeight.w500)),
                                       Container(
-                                          margin:
-                                              const EdgeInsets.only(top: 20),
+                                          margin: EdgeInsets.only(top: spaceLG),
                                           child: Wrap(
-                                              runSpacing: -5,
-                                              spacing: 5,
+                                              runSpacing: -spaceWrap,
+                                              spacing: spaceWrap,
                                               children: role.map<Widget>(
                                                 (rl) {
                                                   getRole(slct) {
@@ -275,7 +275,7 @@ class StateIntroPage extends State<IntroPage> {
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
-                                                                        roundedLG2),
+                                                                        roundedMD),
                                                           )),
                                                           backgroundColor:
                                                               MaterialStatePropertyAll<
@@ -286,7 +286,7 @@ class StateIntroPage extends State<IntroPage> {
                                                             rl['role_name'],
                                                             style: TextStyle(
                                                                 color:
-                                                                    whitebg)),
+                                                                    whiteColor)),
                                                       );
                                                     } else {
                                                       return OutlinedButton(
@@ -327,12 +327,12 @@ class StateIntroPage extends State<IntroPage> {
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
-                                                                        roundedLG2),
+                                                                        roundedMD),
                                                           )),
                                                           backgroundColor:
                                                               MaterialStatePropertyAll<
                                                                       Color>(
-                                                                  mainbg),
+                                                                  hoverBG),
                                                         ),
                                                         child: Text(
                                                             rl['role_name'],
@@ -365,24 +365,24 @@ class StateIntroPage extends State<IntroPage> {
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: primaryColor,
-                                              fontSize: textLG,
+                                              fontSize: textXMD,
                                               fontWeight: FontWeight.w500)),
                                       Container(
-                                        margin: const EdgeInsets.symmetric(
-                                            vertical: 15),
+                                        margin: EdgeInsets.symmetric(
+                                            vertical: spaceXMD),
                                         child: Text(
                                             "Role system will shows your preferable information in your timeline, and you can save your information based on your roles to archive. Please choose your roles based on your academic situation right now.",
                                             textAlign: TextAlign.justify,
                                             style: TextStyle(
                                                 color: primaryColor,
-                                                fontSize: textMD,
+                                                fontSize: textXMD,
                                                 fontWeight: FontWeight.w500)),
                                       ),
                                       Container(
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 10),
                                         child: TextFormField(
-                                          cursorColor: whitebg,
+                                          cursorColor: whiteColor,
                                           decoration: InputDecoration(
                                             hintText: 'Search',
                                             enabledBorder: OutlineInputBorder(
@@ -405,11 +405,10 @@ class StateIntroPage extends State<IntroPage> {
                                         ),
                                       ),
                                       Container(
-                                          margin:
-                                              const EdgeInsets.only(top: 20),
+                                          margin: EdgeInsets.only(top: spaceLG),
                                           child: Wrap(
-                                              runSpacing: -5,
-                                              spacing: 5,
+                                              runSpacing: -spaceWrap,
+                                              spacing: spaceWrap,
                                               children: studyProg.map<Widget>(
                                                 (sp) {
                                                   return OutlinedButton(
@@ -428,11 +427,11 @@ class StateIntroPage extends State<IntroPage> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(
-                                                                    roundedLG2),
+                                                                    roundedMD),
                                                       )),
                                                       backgroundColor:
                                                           MaterialStatePropertyAll<
-                                                              Color>(mainbg),
+                                                              Color>(hoverBG),
                                                     ),
                                                     child: Text(sp['prog_name'],
                                                         style: TextStyle(

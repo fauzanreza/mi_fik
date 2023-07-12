@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
-import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Button/navigation.dart';
 import 'package:mi_fik/Components/Container/content.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
@@ -9,6 +8,7 @@ import 'package:mi_fik/Components/Skeletons/content_1.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Services/queries.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_contents.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/show_detail_task.dart';
@@ -77,21 +77,20 @@ class StateSavedContent extends State<SavedContent>
   Widget _buildListView(List<ScheduleModel> contents) {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading;
 
     if (contents != null) {
       return RefreshIndicator(
           key: _refreshIndicatorKey,
           onRefresh: refreshData,
           child: ListView(
-            padding: EdgeInsets.only(bottom: paddingLg),
+            padding: EdgeInsets.only(bottom: spaceJumbo),
             children: [
               Row(
                 children: [
                   outlinedButtonCustom(() {
                     selectedArchiveSlug = null;
                     selectedArchiveName = null;
-                    Get.offAll(() => const BottomBar());
+                    Get.offNamed(CollectionRoute.bar, preventDuplicates: false);
                   }, "Back to Archive".tr, Icons.arrow_back),
                   const Spacer(),
                   DeleteArchive(slug: widget.slug, name: widget.name),
@@ -122,7 +121,7 @@ class StateSavedContent extends State<SavedContent>
                                   commandService
                                       .postContentView(content.slugName)
                                       .then((response) {
-                                    setState(() => isLoading = false);
+                                    setState(() => {});
                                     var status = response[0]['message'];
                                     var body = response[0]['body'];
 
@@ -130,12 +129,8 @@ class StateSavedContent extends State<SavedContent>
                                       Get.to(() => DetailPage(
                                           passSlug: content.slugName));
                                     } else {
-                                      showDialog<String>(
-                                          context: context,
-                                          builder: (BuildContext context) =>
-                                              FailedDialog(
-                                                  text: body,
-                                                  type: "openevent"));
+                                      Get.dialog(FailedDialog(
+                                          text: body, type: "openevent"));
                                     }
                                   });
 
@@ -172,12 +167,13 @@ class StateSavedContent extends State<SavedContent>
                                           builder: (context, setState) {
                                         return AlertDialog(
                                             insetPadding:
-                                                EdgeInsets.all(paddingXSM),
+                                                EdgeInsets.all(spaceSM),
                                             contentPadding:
-                                                EdgeInsets.all(paddingXSM),
+                                                EdgeInsets.all(spaceSM),
                                             shape: RoundedRectangleBorder(
                                                 borderRadius: BorderRadius.all(
-                                                    roundedLG)),
+                                                    Radius.circular(
+                                                        roundedLG))),
                                             content: DetailTask(
                                               data: content,
                                             ));
@@ -201,7 +197,7 @@ class StateSavedContent extends State<SavedContent>
               outlinedButtonCustom(() {
                 selectedArchiveSlug = null;
                 selectedArchiveName = null;
-                Get.offAll(() => const BottomBar());
+                Get.offNamed(CollectionRoute.bar, preventDuplicates: false);
               }, "Back to Archive".tr, Icons.arrow_back),
               const Spacer(),
               DeleteArchive(slug: selectedArchiveSlug),
@@ -216,7 +212,7 @@ class StateSavedContent extends State<SavedContent>
               alignment: Alignment.center,
               height: fullHeight * 0.7,
               child: getMessageImageNoData("assets/icon/nodata.png",
-                  "No event / task saved in this archive", fullWidth))
+                  "No event / task saved in this archive".tr, fullWidth))
         ],
       );
     }

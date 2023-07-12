@@ -23,7 +23,7 @@ class StateSetLocation extends State<SetLocation>
     with SingleTickerProviderStateMixin {
   //Initial variable.
   //_MapsPageState(passIdFakses);
-  GoogleMapController _googleMapController;
+  //GoogleMapController _googleMapController;
   Marker _coordinate;
   bool servicestatus = false;
   bool haspermission = false;
@@ -49,11 +49,11 @@ class StateSetLocation extends State<SetLocation>
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
           Get.snackbar("Alert", "Location permissions are permently denied",
-              backgroundColor: whitebg);
+              backgroundColor: whiteColor);
         } else if (permission == LocationPermission.deniedForever) {
           if (permission == LocationPermission.denied) {
             Get.snackbar("Alert", "Location permissions are permently denied",
-                backgroundColor: whitebg);
+                backgroundColor: whiteColor);
           }
         } else {
           haspermission = true;
@@ -88,19 +88,19 @@ class StateSetLocation extends State<SetLocation>
     //   //refresh UI
     // });
 
-    LocationSettings locationSettings = const LocationSettings(
-      accuracy: LocationAccuracy.high,
-      distanceFilter: 100,
-    );
+    // LocationSettings locationSettings = const LocationSettings(
+    //   accuracy: LocationAccuracy.high,
+    //   distanceFilter: 100,
+    // );
 
-    StreamSubscription<Position> positionStream =
-        Geolocator.getPositionStream(locationSettings: locationSettings)
-            .listen((Position position) {
-      mylong = position.longitude;
-      mylat = position.latitude;
+    // StreamSubscription<Position> positionStream =
+    //     Geolocator.getPositionStream(locationSettings: locationSettings)
+    //         .listen((Position position) {
+    //   mylong = position.longitude;
+    //   mylat = position.latitude;
 
-      setState(() {});
-    });
+    //   setState(() {});
+    // });
 
     String imgurl =
         "https://leonardhors.site/public/assets/img/87409344219_PAS_FOTO_2.jpg";
@@ -122,7 +122,7 @@ class StateSetLocation extends State<SetLocation>
     // double lng = double.parse(coordinate[1]);
 
     //Maps starting point.
-    final _initialCameraPosition = CameraPosition(
+    final initialCameraPosition = CameraPosition(
       target: LatLng(mylat, mylong),
       zoom: 14,
     );
@@ -148,8 +148,8 @@ class StateSetLocation extends State<SetLocation>
           builder: (BuildContext context) {
             return StatefulBuilder(builder: (context, setState) {
               return AlertDialog(
-                  insetPadding: EdgeInsets.all(paddingSM),
-                  contentPadding: EdgeInsets.all(paddingMD),
+                  insetPadding: EdgeInsets.all(spaceXMD),
+                  contentPadding: EdgeInsets.all(spaceLG),
                   content: SizedBox(
                     height: fullHeight *
                         0.6, //Pop up height based on fullwidth (Square maps).
@@ -160,9 +160,10 @@ class StateSetLocation extends State<SetLocation>
                           myLocationButtonEnabled: false,
                           zoomControlsEnabled: false,
                           myLocationEnabled: true,
-                          initialCameraPosition: _initialCameraPosition,
-                          onMapCreated: (controller) =>
-                              _googleMapController = controller,
+                          initialCameraPosition: initialCameraPosition,
+                          onMapCreated: (controller) => {
+                            //_googleMapController = controller,
+                          },
                           markers: {
                             if (_coordinate != null) _coordinate,
                           },
@@ -184,11 +185,11 @@ class StateSetLocation extends State<SetLocation>
                           }),
                         ),
                       ),
-                      SizedBox(height: paddingMD),
+                      SizedBox(height: spaceLG),
                       Container(
                           alignment: Alignment.centerLeft,
                           child: getSubTitleMedium(
-                              "Location Name", blackbg, TextAlign.start)),
+                              "Location Name", darkColor, TextAlign.start)),
                       getInputText(75, widget.locDetailCtrl, false),
                       SizedBox(
                           width: fullWidth,
@@ -199,7 +200,7 @@ class StateSetLocation extends State<SetLocation>
                                       width: double.infinity,
                                       height: btnHeightMD,
                                       margin: EdgeInsets.symmetric(
-                                          vertical: paddingXSM),
+                                          vertical: spaceSM),
                                       child: ElevatedButton(
                                         onPressed: () {
                                           Get.back();
@@ -207,15 +208,15 @@ class StateSetLocation extends State<SetLocation>
                                         style: ButtonStyle(
                                           backgroundColor:
                                               MaterialStatePropertyAll<Color>(
-                                                  successbg),
+                                                  successBG),
                                         ),
                                         child: Text('Save Location'.tr),
                                       ))),
                               const SizedBox(width: 20),
                               Container(
                                   height: btnHeightMD,
-                                  margin: EdgeInsets.symmetric(
-                                      vertical: paddingXSM),
+                                  margin:
+                                      EdgeInsets.symmetric(vertical: spaceSM),
                                   child: ElevatedButton(
                                     onPressed: () {
                                       _coordinate = null;
@@ -226,11 +227,11 @@ class StateSetLocation extends State<SetLocation>
                                     style: ButtonStyle(
                                       backgroundColor:
                                           MaterialStatePropertyAll<Color>(
-                                              dangerColor),
+                                              warningBG),
                                     ),
                                     child: Icon(
                                       Icons.delete,
-                                      color: whitebg,
+                                      color: whiteColor,
                                       size: iconLG,
                                     ),
                                   ))
@@ -240,11 +241,11 @@ class StateSetLocation extends State<SetLocation>
                   ));
             });
           }).then((_) => setState(() {})), //Check this again !!!!
-      icon: Icon(Icons.location_on_outlined, size: 22, color: semiblackbg),
+      icon: Icon(Icons.location_on_outlined, size: 22, color: semidarkColor),
       label: Text(getButtonText(locCoordinateCtrl, widget.locDetailCtrl.text),
           style: TextStyle(
-              fontSize: textMD,
-              color: semiblackbg,
+              fontSize: textXMD,
+              color: semidarkColor,
               fontWeight: FontWeight.w400)),
     );
   }

@@ -9,8 +9,8 @@ import 'package:mi_fik/Modules/APIs/UserApi/Models/queries.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/queries.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/SubMenus/ProfilePage/index.dart';
 
 class GetEditProfile extends StatefulWidget {
   const GetEditProfile({Key key}) : super(key: key);
@@ -74,7 +74,6 @@ class _GetEditProfileState extends State<GetEditProfile> {
       fNameCtrl.text = contents[0].firstName;
       lNameCtrl.text = contents[0].lastName;
       passCtrl.text = contents[0].password;
-      bool isLoading = false;
 
       return Theme(
           data: Theme.of(context).copyWith(
@@ -84,105 +83,91 @@ class _GetEditProfileState extends State<GetEditProfile> {
           child: SingleChildScrollView(
               child: ExpansionTile(
                   childrenPadding: EdgeInsets.only(
-                      left: paddingSM, bottom: paddingSM, right: paddingSM),
+                      left: spaceXMD, bottom: spaceXMD, right: spaceXMD),
                   initiallyExpanded: false,
                   trailing: Container(
-                    padding: EdgeInsets.all(paddingXSM * 1),
+                    padding: EdgeInsets.all(spaceSM),
                     decoration: BoxDecoration(
-                      color: infoColor,
-                      borderRadius: const BorderRadius.all(Radius.circular(20)),
-                      border: Border.all(width: 3, color: whitebg),
+                      color: infoBG,
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(roundedXLG)),
+                      border: Border.all(width: 3, color: whiteColor),
                     ),
-                    child: Icon(Icons.edit, color: whitebg),
+                    child: Icon(Icons.edit, color: whiteColor),
                   ),
                   iconColor: null,
-                  textColor: whitebg,
+                  textColor: whiteColor,
                   collapsedTextColor: primaryColor,
                   leading: null,
                   expandedCrossAxisAlignment: CrossAxisAlignment.end,
                   expandedAlignment: Alignment.topLeft,
                   title: Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: 5, vertical: paddingSM),
+                          horizontal: 5, vertical: spaceXMD),
                       child: Text("Edit Profile".tr,
                           style: TextStyle(
-                              fontSize: textMD + 4,
+                              fontSize: textXMD + 4,
                               fontWeight: FontWeight.w500))),
                   children: [
                 Align(
                     alignment: Alignment.centerLeft,
                     child: getSubTitleMedium(
-                        "First Name".tr, whitebg, TextAlign.start)),
+                        "First Name".tr, whiteColor, TextAlign.start)),
                 getInputText(fnameLength, fNameCtrl, false),
                 Align(
                     alignment: Alignment.centerLeft,
                     child: getSubTitleMedium(
-                        "Last Name".tr, whitebg, TextAlign.start)),
+                        "Last Name".tr, whiteColor, TextAlign.start)),
                 getInputText(lnameLength, lNameCtrl, false),
-                Align(
-                    alignment: Alignment.centerLeft,
-                    child: getSubTitleMedium(
-                        "Password".tr, whitebg, TextAlign.start)),
-                getInputText(passwordLength, passCtrl, true),
                 InkWell(
                   onTap: () async {
                     EditUserProfileModel data = EditUserProfileModel(
-                        password: passCtrl.text.trim(),
                         lastName: lNameCtrl.text.trim(),
                         firstName: fNameCtrl.text.trim());
 
                     //Validator
-                    if (data.password.isNotEmpty &&
-                        data.firstName.isNotEmpty &&
+                    if (data.firstName.isNotEmpty &&
                         data.lastName.isNotEmpty &&
                         data.firstName.length <= 35 &&
-                        data.lastName.length <= 35 &&
-                        data.password.length <= 50) {
+                        data.lastName.length <= 35) {
                       apiCommand.putProfileData(data).then((response) {
-                        setState(() => isLoading = false);
+                        setState(() => {});
                         var status = response[0]['message'];
                         var body = response[0]['body'];
 
                         if (status == "success") {
-                          Get.to(() => const ProfilePage());
-                          showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  SuccessDialog(text: body));
+                          Get.toNamed(CollectionRoute.profile,
+                              preventDuplicates: false);
+                          Get.dialog(SuccessDialog(text: body));
                         } else {
-                          showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  FailedDialog(text: body, type: "editacc"));
+                          Get.dialog(FailedDialog(text: body, type: "editacc"));
                         }
                       });
                     } else {
-                      showDialog<String>(
-                          context: context,
-                          builder: (BuildContext context) => const FailedDialog(
-                              text: "Edit failed, field can't be empty",
-                              type: "editacc"));
+                      Get.dialog(const FailedDialog(
+                          text: "Edit failed, field can't be empty",
+                          type: "editacc"));
                     }
                   },
                   child: Container(
                     width: 110,
-                    margin: EdgeInsets.only(top: paddingXSM),
+                    margin: EdgeInsets.only(top: spaceSM),
                     padding: EdgeInsets.symmetric(
-                        vertical: paddingXSM, horizontal: paddingXSM + 3),
+                        vertical: spaceSM, horizontal: spaceSM + 3),
                     decoration: BoxDecoration(
-                        border: Border.all(color: whitebg, width: 2),
-                        color: successbg,
+                        border: Border.all(color: whiteColor, width: 2),
+                        color: successBG,
                         borderRadius:
-                            const BorderRadius.all(Radius.circular(10))),
+                            BorderRadius.all(Radius.circular(roundedSM))),
                     child: Row(
                       children: [
-                        Icon(Icons.send, size: iconSM + 3, color: whitebg),
+                        Icon(Icons.send, size: iconSM + 3, color: whiteColor),
                         const Spacer(),
                         Text("Submit".tr,
                             style: TextStyle(
-                                fontSize: textMD,
+                                fontSize: textXMD,
                                 fontWeight: FontWeight.w500,
-                                color: whitebg))
+                                color: whiteColor))
                       ],
                     ),
                   ),

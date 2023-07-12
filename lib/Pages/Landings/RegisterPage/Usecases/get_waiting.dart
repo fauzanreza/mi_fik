@@ -19,25 +19,8 @@ class StateGetWaiting extends State<GetWaiting> {
         Container(
           height: fullHeight * 0.75,
           padding: EdgeInsets.symmetric(
-              horizontal: paddingMD, vertical: paddingLg * 2),
-          margin:
-              EdgeInsets.fromLTRB(paddingMD, paddingLg, paddingMD, paddingMD),
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(10)),
-            color: whitebg,
-            boxShadow: [
-              BoxShadow(
-                color:
-                    const Color.fromARGB(255, 128, 128, 128).withOpacity(0.3),
-                blurRadius: 10.0,
-                spreadRadius: 1.0,
-                offset: const Offset(
-                  5.0,
-                  5.0,
-                ),
-              )
-            ],
-          ),
+              horizontal: spaceLG, vertical: spaceJumbo * 2),
+          margin: EdgeInsets.fromLTRB(spaceLG, spaceJumbo, spaceLG, spaceLG),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
             getTitleLarge("Your account has registered", primaryColor),
@@ -47,7 +30,7 @@ class StateGetWaiting extends State<GetWaiting> {
             ),
             getSubTitleMedium(
                 "Please wait until your account has been approved by admin",
-                blackbg,
+                darkColor,
                 TextAlign.center)
           ]),
         )

@@ -19,8 +19,8 @@ class StateFailedDialog extends State<FailedDialog> {
     double fullWidth = MediaQuery.of(context).size.width;
 
     return AlertDialog(
-      contentPadding: const EdgeInsets.all(10),
-      title: const Text('Error'),
+      contentPadding: EdgeInsets.all(spaceSM),
+      title: Text('Error', style: TextStyle(fontSize: textXMD)),
       content: SizedBox(
         width: fullWidth,
         height: 210,
@@ -29,21 +29,22 @@ class StateFailedDialog extends State<FailedDialog> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(60),
+                borderRadius:
+                    BorderRadius.circular(roundedJumbo + roundedJumbo),
                 child: Image.asset('assets/icon/Failed.png', width: 120),
               ),
               Container(
-                  margin: const EdgeInsets.symmetric(vertical: 10),
+                  margin: EdgeInsets.symmetric(vertical: spaceSM),
                   child: Text(
                       getMessageResponseFromObject(widget.text, widget.type),
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: greybg, fontSize: textMD)))
+                      style: TextStyle(color: shadowColor, fontSize: textXMD)))
             ]),
       ),
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.pop(context, 'OK'),
-          child: const Text('OK'),
+          child: Text('OK', style: TextStyle(fontSize: textXMD)),
         ),
       ],
     );

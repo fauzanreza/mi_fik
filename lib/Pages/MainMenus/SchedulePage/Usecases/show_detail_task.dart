@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get/get.dart';
-import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
 import 'package:mi_fik/Components/Forms/date_picker.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/command_tasks.dart';
+import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_tasks.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
+import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/delete_task.dart';
@@ -19,7 +21,7 @@ import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/post_archive_rel.dart'
 
 class DetailTask extends StatefulWidget {
   const DetailTask({Key key, this.data}) : super(key: key);
-  final data;
+  final ScheduleModel data;
 
   @override
   StateDetailTask createState() => StateDetailTask();
@@ -44,7 +46,6 @@ class StateDetailTask extends State<DetailTask> {
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading = false;
 
     //Assign value to controller
     taskTitleCtrl.text = widget.data.contentTitle;
@@ -56,11 +57,11 @@ class StateDetailTask extends State<DetailTask> {
     return SizedBox(
         height: 630,
         width: fullWidth,
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        child: ListView(padding: EdgeInsets.zero, children: [
           Row(
             children: [
               Container(
-                  margin: EdgeInsets.only(left: paddingXSM),
+                  margin: EdgeInsets.only(left: spaceSM),
                   child: GetSavedStatus(
                       passSlug: widget.data.slugName, ctx: "Task")),
               const Spacer(),
@@ -76,31 +77,33 @@ class StateDetailTask extends State<DetailTask> {
               ),
             ],
           ),
-          SizedBox(height: paddingMD),
+          SizedBox(height: spaceLG),
           Container(
-            padding: EdgeInsets.only(left: paddingSM),
-            child: getSubTitleMedium("Title", blackbg, TextAlign.start),
+            padding: EdgeInsets.only(left: spaceXMD),
+            child: getSubTitleMedium("Title", darkColor, TextAlign.start),
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: paddingSM),
+            padding: EdgeInsets.symmetric(horizontal: spaceXMD),
             child: getInputText(75, taskTitleCtrl, false),
           ),
           Container(
-            padding: EdgeInsets.only(left: paddingSM),
-            child:
-                getSubTitleMedium("Notes (Optional)", blackbg, TextAlign.start),
+            padding: EdgeInsets.only(left: spaceXMD),
+            child: getSubTitleMedium(
+                "Notes (Optional)", darkColor, TextAlign.start),
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: paddingSM),
+            padding: EdgeInsets.symmetric(horizontal: spaceXMD),
             child: getInputDesc(255, 4, taskDescCtrl, false),
           ),
           Container(
-            padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+            padding: EdgeInsets.fromLTRB(spaceLG, spaceSM, spaceLG, 0),
             child: Wrap(
-              runSpacing: -5,
-              spacing: 5,
+              runSpacing: -spaceWrap,
+              spacing: spaceWrap,
               children: [
-                getDatePicker(dateStartCtrl, () {
+                getDatePicker(
+                    dateStartCtrl.subtract(
+                        Duration(hours: getUTCHourOffset() * -1)), () {
                   final now = DateTime.now();
 
                   DatePicker.showDateTimePicker(context,
@@ -110,11 +113,17 @@ class StateDetailTask extends State<DetailTask> {
                       maxTime: DateTime(now.year + 1, now.month, now.day),
                       onConfirm: (date) {
                     setState(() {
-                      dateStartCtrl = date;
+                      dateStartCtrl =
+                          date.add(Duration(hours: getUTCHourOffset() * -1));
                     });
-                  }, currentTime: dateStartCtrl, locale: LocaleType.en);
+                  },
+                      currentTime: dateStartCtrl
+                          .subtract(Duration(hours: getUTCHourOffset() * -1)),
+                      locale: LocaleType.en);
                 }, "Start", "datetime"),
-                getDatePicker(dateEndCtrl, () {
+                getDatePicker(
+                    dateEndCtrl.subtract(
+                        Duration(hours: getUTCHourOffset() * -1)), () {
                   final now = DateTime.now();
 
                   DatePicker.showDateTimePicker(context,
@@ -124,9 +133,13 @@ class StateDetailTask extends State<DetailTask> {
                       maxTime: DateTime(now.year + 1, now.month, now.day),
                       onConfirm: (date) {
                     setState(() {
-                      dateEndCtrl = date;
+                      dateEndCtrl =
+                          date.add(Duration(hours: getUTCHourOffset() * -1));
                     });
-                  }, currentTime: dateEndCtrl, locale: LocaleType.en);
+                  },
+                      currentTime: dateEndCtrl
+                          .subtract(Duration(hours: getUTCHourOffset() * -1)),
+                      locale: LocaleType.en);
                 }, "End", "datetime"),
                 Wrap(children: <Widget>[
                   TextButton(
@@ -135,10 +148,10 @@ class StateDetailTask extends State<DetailTask> {
                       foregroundColor: primaryColor,
                     ),
                     onPressed: () {},
-                    child: const Text('Reminder :'),
+                    child: Text('Reminder'.tr),
                   ),
                   Container(
-                      padding: EdgeInsets.only(left: paddingXSM),
+                      padding: EdgeInsets.only(left: spaceSM),
                       child:
                           getDropDownMain(widget.data.reminder, reminderTypeOpt,
                               (String newValue) {
@@ -147,10 +160,10 @@ class StateDetailTask extends State<DetailTask> {
                         });
                       }, true, "reminder_")),
                   SizedBox(
-                    width: paddingMD,
+                    width: spaceLG,
                   ),
                   IconButton(
-                    icon: Icon(Icons.delete, color: dangerColor),
+                    icon: Icon(Icons.delete, color: warningBG),
                     tooltip: 'Delete Task',
                     onPressed: () {
                       Get.back();
@@ -162,11 +175,11 @@ class StateDetailTask extends State<DetailTask> {
                             return StatefulBuilder(
                                 builder: (context, setState) {
                               return AlertDialog(
-                                  insetPadding: EdgeInsets.all(paddingMD),
-                                  contentPadding: EdgeInsets.all(paddingMD),
+                                  insetPadding: EdgeInsets.all(spaceLG),
+                                  contentPadding: EdgeInsets.all(spaceLG),
                                   shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.all(roundedLG)),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(roundedLG))),
                                   content: DeleteTask(
                                     id: widget.data.id,
                                     name: widget.data.contentTitle,
@@ -177,7 +190,7 @@ class StateDetailTask extends State<DetailTask> {
                   )
                 ]),
                 Container(
-                    margin: EdgeInsets.only(top: paddingMD),
+                    margin: EdgeInsets.only(top: spaceLG),
                     width: fullWidth,
                     height: btnHeightMD,
                     child: ElevatedButton(
@@ -194,32 +207,25 @@ class StateDetailTask extends State<DetailTask> {
                           taskService
                               .updateTask(task, widget.data.id)
                               .then((response) {
-                            setState(() => isLoading = false);
+                            setState(() => {});
                             var status = response[0]['message'];
                             var body = response[0]['body'];
 
                             if (status == "success") {
-                              Get.offAll(() => const BottomBar());
+                              Get.offNamed(CollectionRoute.bar,
+                                  preventDuplicates: false);
 
-                              showDialog<String>(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      SuccessDialog(text: body));
+                              Get.dialog(SuccessDialog(text: body));
                             } else {
-                              showDialog<String>(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      FailedDialog(
-                                          text: body, type: "addtask"));
+                              Get.dialog(
+                                  FailedDialog(text: body, type: "addtask"));
                             }
                           });
                         } else {
-                          showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) => const FailedDialog(
-                                  text:
-                                      "Create archive failed, field can't be empty",
-                                  type: "addtask"));
+                          Get.dialog(const FailedDialog(
+                              text:
+                                  "Create archive failed, field can't be empty",
+                              type: "addtask"));
                         }
                       },
                       style: ButtonStyle(
@@ -229,7 +235,7 @@ class StateDetailTask extends State<DetailTask> {
                       child: Text('Save Changes'.tr),
                     )),
                 SizedBox(
-                  height: paddingMD,
+                  height: spaceLG,
                 ),
                 PostArchiveRelation(
                     passSlug: widget.data.slugName, ctx: "Task"),
@@ -237,16 +243,16 @@ class StateDetailTask extends State<DetailTask> {
             ),
           ),
           Container(
-              padding: EdgeInsets.fromLTRB(paddingMD, paddingSM, 0, 0),
+              padding: EdgeInsets.fromLTRB(spaceLG, spaceXMD, 0, 0),
               child: getSubTitleMedium(
                   "Created At : ${getItemTimeString(widget.data.createdAt)}",
-                  greybg,
+                  shadowColor,
                   TextAlign.left)),
           Container(
-              padding: EdgeInsets.fromLTRB(paddingMD, paddingXSM, 0, 0),
+              padding: EdgeInsets.fromLTRB(spaceLG, spaceSM, 0, 0),
               child: getSubTitleMedium(
                   "Last Updated : ${getItemTimeString(widget.data.updatedAt)}",
-                  greybg,
+                  shadowColor,
                   TextAlign.left))
         ]));
   }

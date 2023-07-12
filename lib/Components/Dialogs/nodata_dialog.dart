@@ -12,8 +12,8 @@ class NoDataDialog extends StatelessWidget {
     double fullWidth = MediaQuery.of(context).size.width;
 
     return AlertDialog(
-      contentPadding: const EdgeInsets.all(10),
-      title: Text('Warning'.tr),
+      contentPadding: EdgeInsets.all(spaceSM),
+      title: Text('Warning'.tr, style: TextStyle(fontSize: textXMD)),
       content: SizedBox(
         width: fullWidth,
         height: 210,
@@ -22,21 +22,22 @@ class NoDataDialog extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(60),
+                borderRadius:
+                    BorderRadius.circular(roundedJumbo + roundedJumbo),
                 child: Image.asset('assets/icon/nodata.png',
                     width: fullWidth * 0.45),
               ),
               Container(
-                  margin: const EdgeInsets.symmetric(vertical: 10),
+                  margin: EdgeInsets.symmetric(vertical: spaceSM),
                   child: Text(text,
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: greybg, fontSize: textMD)))
+                      style: TextStyle(color: shadowColor, fontSize: textXMD)))
             ]),
       ),
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.pop(context, 'OK'),
-          child: const Text('OK'),
+          child: Text('OK', style: TextStyle(fontSize: textXMD)),
         ),
       ],
     );

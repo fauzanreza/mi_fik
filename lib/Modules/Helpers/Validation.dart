@@ -68,10 +68,10 @@ Future checkGps(var func) async {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
         Get.snackbar("Alert", 'Location permissions are denied',
-            backgroundColor: whitebg);
+            backgroundColor: whiteColor);
       } else if (permission == LocationPermission.deniedForever) {
         Get.snackbar("Alert", 'Location permissions are permanently denied',
-            backgroundColor: whitebg);
+            backgroundColor: whiteColor);
       } else {
         haspermission = true;
       }
@@ -84,7 +84,7 @@ Future checkGps(var func) async {
     }
   } else {
     Get.snackbar("Alert", 'GPS Service is not enabled, turn on GPS location',
-        backgroundColor: whitebg);
+        backgroundColor: whiteColor);
   }
 }
 

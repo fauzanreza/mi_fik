@@ -7,13 +7,14 @@ Widget getDatePicker(
   return TextButton.icon(
     style: TextButton.styleFrom(
       textStyle: const TextStyle(fontSize: 16),
-      foregroundColor: blackbg,
+      foregroundColor: darkColor,
     ),
     onPressed: actionPressed,
     icon: const Icon(
       Icons.calendar_month,
       size: 24.0,
     ),
-    label: Text(getDateText(ds, type, view)),
+    label:
+        Text(getDateText(ds, type, view), style: TextStyle(fontSize: textXMD)),
   );
 }

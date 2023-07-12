@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
+import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
+import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_contents.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
@@ -20,8 +21,8 @@ class GetHomePageEventContainer extends StatefulWidget {
       {Key key, this.width, this.content, this.servc})
       : super(key: key);
   final double width;
-  final content;
-  final servc;
+  final dynamic content;
+  final ContentCommandsService servc;
 
   @override
   StateGetHomePageEventContainer createState() =>
@@ -34,51 +35,33 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
     if (u1 != null) {
       username = "@$u1";
     } else if (u2 != null) {
-      username = "@$u2";
+      if (u2 == usernameKey) {
+        username = "You";
+      } else {
+        username = "@$u2";
+      }
     } else {
-      username = "Unknown User";
+      username = "Unknown User".tr;
     }
     return Text(username,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         style: TextStyle(
-            color: greybg, fontWeight: FontWeight.w400, fontSize: textSM - 1));
-  }
-
-  Widget getProfileImage(u1, u2, i1, i2) {
-    String image;
-    if (u1 != null) {
-      if (i1 != null) {
-        image = i1;
-      } else {
-        image = null;
-      }
-    } else if (u2 != null) {
-      if (i2 != null) {
-        image = i2;
-      } else {
-        image = null;
-      }
-    } else {
-      image = null;
-    }
-    return getProfileImageContent(image);
+            color: shadowColor, fontWeight: FontWeight.w400, fontSize: textSM));
   }
 
   @override
   Widget build(BuildContext context) {
-    bool isLoading;
-
     return Container(
         width: widget.width * 0.82,
-        margin: EdgeInsets.only(bottom: marginMD),
+        margin: EdgeInsets.only(bottom: spaceXLG),
         transform: Matrix4.translationValues(40.0, 5.0, 0.0),
         decoration: BoxDecoration(
-          color: whitebg,
-          borderRadius: BorderRadius.all(roundedMd),
+          color: whiteColor,
+          borderRadius: BorderRadius.all(Radius.circular(roundedSM)),
           boxShadow: [
             BoxShadow(
-              color: const Color.fromARGB(255, 128, 128, 128).withOpacity(0.3),
+              color: shadowColor.withOpacity(0.35),
               blurRadius: 10.0,
               spreadRadius: 0.0,
               offset: const Offset(
@@ -92,33 +75,36 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
+            SizedBox(
+                height: 108,
+                width: widget.width,
+                child: Stack(
+                  children: [
+                    getContentImageHeader(
+                        widget.content.contentImage,
+                        widget.width,
+                        108,
+                        true,
+                        BorderRadius.only(
+                            topLeft: Radius.circular(roundedSM),
+                            topRight: Radius.circular(roundedSM))),
+                    Padding(
+                        padding: EdgeInsets.all(spaceSM),
+                        child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              getViewWidget(widget.content.totalViews),
+                              getPeriodDateWidget(widget.content.dateStart,
+                                  widget.content.dateEnd),
+                              const Spacer(),
+                              getUploadDateWidget(
+                                  DateTime.parse(widget.content.createdAt))
+                            ])),
+                  ],
+                )),
             Container(
-              height: 108.0,
-              width: widget.width,
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.fitWidth,
-                  image: getImageHeader(widget.content.contentImage),
-                  colorFilter: ColorFilter.mode(
-                      Colors.black.withOpacity(0.5), BlendMode.darken),
-                ),
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10)),
-              ),
-              child:
-                  Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                getViewWidget(widget.content.totalViews),
-                getPeriodDateWidget(
-                    widget.content.dateStart, widget.content.dateEnd),
-                const Spacer(),
-                getUploadDateWidget(DateTime.parse(widget.content.createdAt))
-              ]),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              margin: const EdgeInsets.symmetric(vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: spaceSM),
+              margin: EdgeInsets.symmetric(vertical: spaceSM),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -136,13 +122,13 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Text(widget.content.contentTitle,
+                                Text(ucAll(widget.content.contentTitle),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
-                                        color: blackbg,
+                                        color: darkColor,
                                         fontWeight: FontWeight.bold,
-                                        fontSize: textMD - 1)),
+                                        fontSize: textXMD - 1)),
                                 const SizedBox(height: 1),
                                 getUsername(widget.content.acUsername,
                                     widget.content.ucUsername),
@@ -150,16 +136,19 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
                             ))
                       ],
                     ),
-                    getDescHeaderWidget(widget.content.contentDesc, blackbg)
+                    getDescHeaderWidget(widget.content.contentDesc, darkColor)
                   ]),
             ),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              margin: const EdgeInsets.symmetric(vertical: 10),
-              child: Wrap(runSpacing: -5, spacing: 5, children: [
-                getContentLoc(widget.content.contentLoc),
-                getTotalTag(widget.content.contentTag)
-              ]),
+              padding: EdgeInsets.symmetric(horizontal: spaceSM),
+              margin: EdgeInsets.symmetric(vertical: spaceSM),
+              child: Wrap(
+                  runSpacing: -spaceWrap,
+                  spacing: spaceWrap,
+                  children: [
+                    getContentLoc(widget.content.contentLoc),
+                    getTotalTag(widget.content.contentTag)
+                  ]),
             ),
 
             //Open content w/ button.
@@ -173,7 +162,7 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
                     widget.servc
                         .postContentView(widget.content.slugName)
                         .then((response) {
-                      setState(() => isLoading = false);
+                      setState(() => {});
                       var status = response[0]['message'];
                       var body = response[0]['body'];
 
@@ -181,10 +170,7 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
                         Get.to(() =>
                             DetailPage(passSlug: widget.content.slugName));
                       } else {
-                        showDialog<String>(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                FailedDialog(text: body, type: "openevent"));
+                        Get.dialog(FailedDialog(text: body, type: "openevent"));
                       }
                     });
 
@@ -209,7 +195,7 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
 
 class GetScheduleContainer extends StatelessWidget {
   final double width;
-  final content;
+  final ScheduleModel content;
 
   const GetScheduleContainer({Key key, this.width, this.content})
       : super(key: key);
@@ -220,14 +206,22 @@ class GetScheduleContainer extends StatelessWidget {
       //Event or content
       return FaIcon(
         FontAwesomeIcons.calendarDay,
-        color: getColor(DateTime.parse(dateStart), DateTime.parse(dateEnd)),
+        color: getColor(
+            DateTime.parse(dateStart)
+                .subtract(Duration(hours: getUTCHourOffset() * -1)),
+            DateTime.parse(dateEnd)
+                .subtract(Duration(hours: getUTCHourOffset() * -1))),
         size: iconLG + 5,
       );
     } else if (type == 2) {
       //Task
       return Icon(
         Icons.task,
-        color: getColor(DateTime.parse(dateStart), DateTime.parse(dateEnd)),
+        color: getColor(
+            DateTime.parse(dateStart)
+                .subtract(Duration(hours: getUTCHourOffset() * -1)),
+            DateTime.parse(dateEnd)
+                .subtract(Duration(hours: getUTCHourOffset() * -1))),
         size: iconLG + 7,
       );
     } else {
@@ -237,7 +231,7 @@ class GetScheduleContainer extends StatelessWidget {
 
   Widget getOngoingDesc(DateTime ds, DateTime de, String desc) {
     if (isPassedDate(ds, de)) {
-      return getDescHeaderWidget(desc, whitebg);
+      return getDescHeaderWidget(desc, whiteColor);
     } else {
       return const SizedBox();
     }
@@ -249,17 +243,19 @@ class GetScheduleContainer extends StatelessWidget {
 
     return Container(
       width: width * 0.82,
-      padding:
-          EdgeInsets.symmetric(horizontal: paddingXSM, vertical: paddingXSM),
-      margin: EdgeInsets.only(bottom: marginMT),
+      padding: EdgeInsets.symmetric(horizontal: spaceSM, vertical: spaceSM),
+      margin: EdgeInsets.only(bottom: spaceMD),
       transform: Matrix4.translationValues(40.0, 5.0, 0.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: getBgColor(
-            DateTime.parse(content.dateStart), DateTime.parse(content.dateEnd)),
+            DateTime.parse(content.dateStart)
+                .subtract(Duration(hours: getUTCHourOffset() * -1)),
+            DateTime.parse(content.dateEnd)
+                .subtract(Duration(hours: getUTCHourOffset() * -1))),
         boxShadow: [
           BoxShadow(
-            color: const Color.fromARGB(255, 128, 128, 128).withOpacity(0.3),
+            color: shadowColor.withOpacity(0.35),
             blurRadius: 10.0,
             spreadRadius: 0.0,
             offset: const Offset(
@@ -270,50 +266,62 @@ class GetScheduleContainer extends StatelessWidget {
         ],
       ),
       child: Padding(
-          padding: const EdgeInsets.all(4),
+          padding: EdgeInsets.all(spaceMini),
           child: Stack(children: [
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(
-                    content.contentTitle,
+                  Expanded(
+                      // constraints: BoxConstraints(maxWidth: fullWidth * 0.6),
+                      child: Text(
+                    ucAll(content.contentTitle),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
-                    style: GoogleFonts.poppins(
-                      color: getColor(DateTime.parse(content.dateStart),
-                          DateTime.parse(content.dateEnd)),
+                    style: TextStyle(
+                      color: getColor(
+                          DateTime.parse(content.dateStart)
+                              .add(Duration(hours: getUTCHourOffset())),
+                          DateTime.parse(content.dateEnd)
+                              .add(Duration(hours: getUTCHourOffset()))),
                       fontSize: textSM,
                       fontWeight: FontWeight.bold,
                     ),
-                  ),
-                  // getLocation(content.contentLoc),
-                  //Width doesnt enough
-                  const Spacer(),
+                  )),
                   Text(
-                    DateFormat("HH : mm a")
-                        .format(DateTime.parse(content.dateStart)),
-                    style: GoogleFonts.poppins(
-                      color: getColor(DateTime.parse(content.dateStart),
-                          DateTime.parse(content.dateEnd)),
+                    DateFormat("HH:mm").format(DateTime.parse(content.dateStart)
+                        .add(Duration(hours: getUTCHourOffset()))),
+                    style: TextStyle(
+                      color: getColor(
+                          DateTime.parse(content.dateStart)
+                              .add(Duration(hours: getUTCHourOffset())),
+                          DateTime.parse(content.dateEnd)
+                              .add(Duration(hours: getUTCHourOffset()))),
                       fontWeight: FontWeight.w500,
-                      fontSize: textSM,
+                      fontSize: textMD,
                     ),
                   ),
                 ],
               ),
-              getOngoingDesc(DateTime.parse(content.dateStart),
-                  DateTime.parse(content.dateEnd), content.contentDesc),
+              getOngoingDesc(
+                  DateTime.parse(content.dateStart)
+                      .add(Duration(hours: getUTCHourOffset())),
+                  DateTime.parse(content.dateEnd)
+                      .add(Duration(hours: getUTCHourOffset())),
+                  content.contentDesc),
               Container(
-                  margin: const EdgeInsets.symmetric(vertical: 15),
+                  margin: EdgeInsets.symmetric(vertical: spaceXMD),
                   child: getTagShow(
                       content.contentTag, content.dateStart, content.dateEnd)),
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 10),
+                margin: EdgeInsets.symmetric(horizontal: spaceSM),
                 child: getLocation(
                     content.contentLoc,
-                    getColor(DateTime.parse(content.dateStart),
-                        DateTime.parse(content.dateEnd))),
+                    getColor(
+                        DateTime.parse(content.dateStart)
+                            .add(Duration(hours: getUTCHourOffset())),
+                        DateTime.parse(content.dateEnd)
+                            .add(Duration(hours: getUTCHourOffset())))),
               ),
             ]),
             Positioned(
@@ -336,12 +344,12 @@ class GetAttachmentContainer extends StatefulWidget {
       this.idx,
       this.action})
       : super(key: key);
-  final data;
-  final item;
-  final others;
+  final dynamic data;
+  final Widget item;
+  final Widget others;
   final String id;
   final int idx;
-  final action;
+  final VoidCallback action;
 
   @override
   StateGetAttachmentContainer createState() => StateGetAttachmentContainer();
@@ -367,29 +375,29 @@ class StateGetAttachmentContainer extends State<GetAttachmentContainer> {
     Widget getExpansion(val) {
       if (val != null) {
         return Padding(
-            padding: EdgeInsets.symmetric(vertical: paddingSM),
+            padding: EdgeInsets.symmetric(vertical: spaceXMD),
             child: getSubTitleMedium(
                 "Attachment Type : ${ucFirst(getSeparatedAfter("_", widget.data['attach_type']))}",
-                blackbg,
+                darkColor,
                 TextAlign.start));
       } else {
         return ExpansionTile(
-            childrenPadding: EdgeInsets.only(
-                left: paddingSM, bottom: paddingSM, right: paddingSM),
+            childrenPadding:
+                EdgeInsets.fromLTRB(spaceXMD, 0, spaceXMD, spaceXMD),
             initiallyExpanded: false,
-            trailing: Icon(Icons.remove_red_eye_outlined, color: blackbg),
+            trailing: Icon(Icons.remove_red_eye_outlined, color: darkColor),
             iconColor: null,
-            textColor: whitebg,
+            textColor: whiteColor,
             collapsedTextColor: primaryColor,
             leading: null,
             expandedCrossAxisAlignment: CrossAxisAlignment.end,
             expandedAlignment: Alignment.topLeft,
             tilePadding: EdgeInsets.zero,
             title: Padding(
-                padding: EdgeInsets.symmetric(vertical: paddingSM),
+                padding: EdgeInsets.symmetric(vertical: spaceXMD),
                 child: getSubTitleMedium(
                     "Attachment Type : ${ucFirst(getSeparatedAfter("_", widget.data['attach_type']))}",
-                    blackbg,
+                    darkColor,
                     TextAlign.start)),
             children: [widget.item]);
       }
@@ -399,11 +407,11 @@ class StateGetAttachmentContainer extends State<GetAttachmentContainer> {
       width: fullWidth * 0.9,
       alignment: Alignment.center,
       padding: EdgeInsets.zero,
-      margin: EdgeInsets.only(bottom: paddingMD),
+      margin: EdgeInsets.only(bottom: spaceLG),
       decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: const Color.fromARGB(255, 128, 128, 128).withOpacity(0.3),
+              color: shadowColor.withOpacity(0.35),
               blurRadius: 10.0,
               spreadRadius: 0.0,
               offset: const Offset(
@@ -412,22 +420,22 @@ class StateGetAttachmentContainer extends State<GetAttachmentContainer> {
               ),
             )
           ],
-          color: whitebg,
+          color: whiteColor,
           borderRadius: BorderRadius.only(
-              topRight: Radius.circular(paddingMD),
-              bottomRight: Radius.circular(paddingMD))),
+              topRight: Radius.circular(spaceLG),
+              bottomRight: Radius.circular(spaceLG))),
       child: Container(
           width: double.infinity,
-          padding: EdgeInsets.fromLTRB(paddingSM, 0, paddingSM, paddingSM),
+          padding: EdgeInsets.fromLTRB(spaceXMD, 0, spaceXMD, spaceXMD),
           decoration: BoxDecoration(
             border: Border(
-              left: BorderSide(width: 4, color: successbg),
+              left: BorderSide(width: 4, color: successBG),
             ),
           ),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             getExpansion(widget.others),
-            getSubTitleMedium("Attachment Name".tr, blackbg, TextAlign.start),
+            getSubTitleMedium("Attachment Name".tr, darkColor, TextAlign.start),
             getInputTextAtt(75, widget.id, 'attach_name'),
             getOthers(widget.others),
             Row(
@@ -440,7 +448,7 @@ class StateGetAttachmentContainer extends State<GetAttachmentContainer> {
                   ),
                   child: IconButton(
                     icon: const Icon(Icons.delete),
-                    color: dangerColor,
+                    color: warningBG,
                     onPressed: widget.action,
                   ),
                 ),

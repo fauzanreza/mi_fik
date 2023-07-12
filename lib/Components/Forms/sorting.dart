@@ -18,7 +18,7 @@ class SortingButton extends StatelessWidget {
             onPressed: () => action("ASC"),
             child: Icon(
               Icons.arrow_downward_rounded,
-              color: whitebg,
+              color: whiteColor,
             ),
           )
         : TextButton(
@@ -29,7 +29,7 @@ class SortingButton extends StatelessWidget {
             onPressed: () => action("DESC"),
             child: Icon(
               Icons.arrow_upward_rounded,
-              color: whitebg,
+              color: whiteColor,
             ),
           );
   }

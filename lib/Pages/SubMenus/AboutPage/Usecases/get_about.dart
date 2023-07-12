@@ -52,11 +52,11 @@ class StateGetAbout extends State<GetAbout> {
         children: contents.map(
       (e) {
         return Container(
-          padding: EdgeInsets.all(paddingMD),
-          margin: EdgeInsets.all(paddingSM),
+          padding: EdgeInsets.all(spaceLG),
+          margin: EdgeInsets.all(spaceXMD),
           decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(10)),
-              color: whitebg),
+              color: whiteColor),
           child: HtmlWidget(e.helpBody),
         );
       },

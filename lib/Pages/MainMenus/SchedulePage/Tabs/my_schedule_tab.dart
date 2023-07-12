@@ -68,14 +68,13 @@ class StateMySchedulePage extends State<MySchedulePage> {
   Widget _buildListView(List<ScheduleModel> contents) {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading;
 
     if ((contents != null) && (contents.isNotEmpty)) {
       return RefreshIndicator(
           key: _refreshIndicatorKey,
           onRefresh: refreshData,
           child: ListView(
-              padding: EdgeInsets.only(bottom: paddingLg, left: paddingSM),
+              padding: EdgeInsets.only(bottom: spaceJumbo, left: spaceXMD),
               children: contents.map((content) {
                 getChipHour(String ds) {
                   String now = DateTime.parse(ds).hour.toString();
@@ -105,12 +104,13 @@ class StateMySchedulePage extends State<MySchedulePage> {
                                           builder: (context, setState) {
                                         return AlertDialog(
                                             insetPadding:
-                                                EdgeInsets.all(paddingXSM),
+                                                EdgeInsets.all(spaceSM),
                                             contentPadding:
-                                                EdgeInsets.all(paddingXSM),
+                                                EdgeInsets.all(spaceSM),
                                             shape: RoundedRectangleBorder(
                                                 borderRadius: BorderRadius.all(
-                                                    roundedLG)),
+                                                    Radius.circular(
+                                                        roundedLG))),
                                             content: DetailTask(
                                               data: content,
                                             ));
@@ -120,7 +120,7 @@ class StateMySchedulePage extends State<MySchedulePage> {
                                 commandService
                                     .postContentView(content.slugName)
                                     .then((response) {
-                                  setState(() => isLoading = false);
+                                  setState(() => {});
                                   var status = response[0]['message'];
                                   var body = response[0]['body'];
 
@@ -128,11 +128,8 @@ class StateMySchedulePage extends State<MySchedulePage> {
                                     Get.offAll(() =>
                                         DetailPage(passSlug: content.slugName));
                                   } else {
-                                    showDialog<String>(
-                                        context: context,
-                                        builder: (BuildContext context) =>
-                                            FailedDialog(
-                                                text: body, type: "openevent"));
+                                    Get.dialog(FailedDialog(
+                                        text: body, type: "openevent"));
                                   }
                                 });
 
@@ -145,10 +142,17 @@ class StateMySchedulePage extends State<MySchedulePage> {
                 ]);
               }).toList()));
     } else {
-      return SizedBox(
-          height: fullHeight * 0.7,
-          child: getMessageImageNoData("assets/icon/empty.png",
-              "No event / task for today, have a good rest", fullWidth));
+      if (isOffline) {
+        return SizedBox(
+            height: fullHeight * 0.7,
+            child: getMessageImageNoData(
+                "assets/icon/badnet.png", "Failed to load data".tr, fullWidth));
+      } else {
+        return SizedBox(
+            height: fullHeight * 0.7,
+            child: getMessageImageNoData("assets/icon/empty.png",
+                "No event / task for today, have a good rest".tr, fullWidth));
+      }
     }
   }
 }

@@ -7,26 +7,57 @@ import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
+import 'package:mi_fik/Components/Dialogs/bg_fcm_dialog.dart';
 import 'package:mi_fik/Modules/APIs/DictionaryApi/Services/queries.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
+import 'package:mi_fik/Modules/Routes/page_routes.dart';
 import 'package:mi_fik/Modules/Translators/dictionary.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mi_fik/Pages/Landings/RegisterPage/index.dart';
-import 'package:mi_fik/firebase_options.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
+@pragma('vm:entry-point')
+//not finished
 Future<void> fireFCMHandler(RemoteMessage message) async {
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // final AndroidFlutterLocalNotificationsPlugin plugin =
+  //     FlutterLocalNotificationsPlugin().resolvePlatformSpecificImplementation<
+  //         AndroidFlutterLocalNotificationsPlugin>();
+
+  // if (plugin != null) {
+  //   await plugin.createNotificationChannel(channel);
+  // }
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  Get.dialog(BgFcmDialog(
+    title: message.notification.title,
+    body: message.notification.body,
+  ));
+  //}
 }
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  FlutterNativeSplash.remove();
+
+  await Permission.notification.isDenied.then((value) {
+    if (value) {
+      Permission.notification.request();
+    }
+  });
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await Firebase.initializeApp();
 
-  FirebaseMessaging.onBackgroundMessage(fireFCMHandler);
+  //FirebaseMessaging.onBackgroundMessage(fireFCMHandler);
   await FlutterLocalNotificationsPlugin()
       .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>()
@@ -52,6 +83,11 @@ Future<void> main() async {
   }
 
   final prefs = await SharedPreferences.getInstance();
+  String langKey = "en";
+  if (prefs.containsKey("lang_key")) {
+    langKey = prefs.getString("lang_key");
+  }
+
   if (prefs.containsKey("token_key")) {
     if (prefs.containsKey("role_general_key")) {
       isFinishedRegis = true;
@@ -59,16 +95,32 @@ Future<void> main() async {
       isFinishedRegis = false;
     }
 
-    runApp(MyApp(signed: true, finishRegis: isFinishedRegis));
+    FirebaseMessaging.onBackgroundMessage(fireFCMHandler);
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      RemoteNotification notification = message.notification;
+      AndroidNotification android = message.notification?.android;
+      if (notification != null && android != null) {
+        Get.dialog(
+          BgFcmDialog(
+              title: message.notification.title,
+              body: message.notification.body,
+              date: message.sentTime),
+        );
+      }
+    });
+
+    runApp(MyApp(signed: true, finishRegis: isFinishedRegis, lang: langKey));
   } else {
-    runApp(MyApp(signed: false, finishRegis: isFinishedRegis));
+    runApp(MyApp(signed: false, finishRegis: isFinishedRegis, lang: langKey));
   }
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key key, this.signed, this.finishRegis}) : super(key: key);
+  const MyApp({Key key, this.signed, this.finishRegis, this.lang})
+      : super(key: key);
   final bool signed;
   final bool finishRegis;
+  final String lang;
 
   @override
   StateMyApp createState() => StateMyApp();
@@ -99,35 +151,18 @@ class StateMyApp extends State<MyApp> {
             notification.body,
             NotificationDetails(
               android: AndroidNotificationDetails(
-                channel.id,
+                "${channel.id}2",
                 channel.name,
                 channelDescription: channel.description,
                 color: primaryColor,
                 enableLights: true,
                 icon: "@mipmap/ic_launcher",
+                priority: Priority.max,
+                playSound: true,
+                importance: Importance.max,
+                sound: const RawResourceAndroidNotificationSound('notif_1'),
               ),
             ));
-      }
-    });
-
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      RemoteNotification notification = message.notification;
-      AndroidNotification android = message.notification?.android;
-      if (notification != null && android != null) {
-        showDialog(
-          context: context,
-          builder: (_) {
-            return AlertDialog(
-              title: Text(notification.title ?? ""),
-              content: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [Text(notification.body ?? "")],
-                ),
-              ),
-            );
-          },
-        );
       }
     });
 
@@ -153,6 +188,32 @@ class StateMyApp extends State<MyApp> {
       DeviceOrientation.portraitDown,
     ]);
 
+    String langCode = "en";
+    slctLang = LangList.en;
+    String countryCode = "US";
+
+    if (widget.lang == "id") {
+      langCode = "id";
+      countryCode = "ID";
+      slctLang = LangList.id;
+    }
+
+    Widget getItem(Widget destination) {
+      return GetMaterialApp(
+        translations: Dictionaries(),
+        locale: Locale(langCode, countryCode),
+        fallbackLocale: Locale(langCode, countryCode),
+        debugShowCheckedModeBanner: false,
+        title: 'Mi-FIK',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          textTheme: textTheme,
+        ),
+        getPages: PageRoutes.pages,
+        home: destination,
+      );
+    }
+
     if (widget.signed) {
       return FutureBuilder<String>(
         future: FirebaseMessaging.instance.getToken(),
@@ -162,29 +223,9 @@ class StateMyApp extends State<MyApp> {
             userService.putFirebase(tokens);
 
             if (widget.finishRegis) {
-              return GetMaterialApp(
-                translations: Dictionaries(),
-                locale: const Locale("en", "US"),
-                fallbackLocale: const Locale("en", "US"),
-                debugShowCheckedModeBanner: false,
-                title: 'Mi-FIK',
-                theme: ThemeData(
-                  primarySwatch: Colors.blue,
-                ),
-                home: const BottomBar(),
-              );
+              return getItem(const BottomBar());
             } else {
-              return GetMaterialApp(
-                translations: Dictionaries(),
-                locale: const Locale("en", "US"),
-                fallbackLocale: const Locale("en", "US"),
-                debugShowCheckedModeBanner: false,
-                title: 'Mi-FIK',
-                theme: ThemeData(
-                  primarySwatch: Colors.blue,
-                ),
-                home: const RegisterPage(isLogged: true),
-              );
+              return getItem(const RegisterPage(isLogged: true));
             }
           } else {
             return const CircularProgressIndicator();
@@ -192,17 +233,7 @@ class StateMyApp extends State<MyApp> {
         },
       );
     } else {
-      return GetMaterialApp(
-        translations: Dictionaries(),
-        locale: const Locale("en", "US"),
-        fallbackLocale: const Locale("en", "US"),
-        debugShowCheckedModeBanner: false,
-        title: 'Mi-FIK',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: const LoginPage(),
-      );
+      return getItem(const LoginPage());
     }
   }
 }

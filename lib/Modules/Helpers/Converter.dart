@@ -1,8 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:mi_fik/Modules/Variables/style.dart';
 
 Future<String> getFind(check) async {
   if (check == null || check.trim() == "") {
@@ -18,9 +16,18 @@ String getSeparatedAfter(String divider, String value) {
 }
 
 String ucFirst(String val) {
-  String res = val[0].toUpperCase() + val.substring(1);
-
+  String res = "";
+  if (val != null) {
+    res = val[0].toUpperCase() + val.substring(1);
+  }
   return res;
+}
+
+String ucAll(String val) {
+  List<String> words = val.split(' ');
+  words =
+      words.map((word) => word[0].toUpperCase() + word.substring(1)).toList();
+  return words.join(' ');
 }
 
 String removeHtmlTags(String htmlString) {
@@ -70,7 +77,13 @@ getItemTimeString(date) {
     final now = DateTime.now();
 
     //Check this again!
-    date = DateTime.parse(getLocalConvertedDate(date));
+    if (date is DateTime) {
+      date = DateTime.parse(getLocalConvertedDate(
+          DateFormat('yyyy-MM-dd HH:mm:ss').format(date)));
+    } else {
+      date = DateTime.parse(getLocalConvertedDate(
+          DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.parse(date))));
+    }
 
     final today = DateTime(now.year, now.month, now.day);
     final justNowHour = DateTime(now.hour);
@@ -201,6 +214,21 @@ String getMessageResponseFromObject(val, type) {
           res += "${adescErr.join('\n')}";
         }
       }
+    } else if (type == "addevent") {
+      if (val.containsKey('content_title') != null) {
+        var ctitleErr = val['content_title'];
+
+        if (ctitleErr != null) {
+          res += "${ctitleErr.join('\n')}";
+        }
+      }
+      if (val.containsKey('content_desc') != null) {
+        var cdescErr = val['content_desc'];
+
+        if (cdescErr != null) {
+          res += "${cdescErr.join('\n')}";
+        }
+      }
     } else if (type == "addtask") {
       if (val.containsKey('task_title') != null) {
         var ttitleErr = val['task_title'];
@@ -247,6 +275,37 @@ String getMessageResponseFromObject(val, type) {
           res += "${qtype.join('\n')}";
         }
       }
+    } else if (type == "regis") {
+      if (val.containsKey('email')) {
+        var email = val['email'];
+        if (email != null) {
+          res += "${email.join('\n')}";
+        }
+      }
+      if (val.containsKey('password')) {
+        var pass = val['password'];
+        if (pass != null) {
+          res += "${pass.join('\n')}";
+        }
+      }
+      if (val.containsKey('first_name')) {
+        var fname = val['first_name'];
+        if (fname != null) {
+          res += "${fname.join('\n')}";
+        }
+      }
+      if (val.containsKey('last_name')) {
+        var lname = val['last_name'];
+        if (lname != null) {
+          res += "${lname.join('\n')}";
+        }
+      }
+      if (val.containsKey('username')) {
+        var username = val['username'];
+        if (username != null) {
+          res += "${username.join('\n')}";
+        }
+      }
     }
 
     return res;
@@ -254,32 +313,13 @@ String getMessageResponseFromObject(val, type) {
 }
 
 String getLocationName(var loc) {
-  if (loc[0]['detail'] != null) {
-    return " ${ucFirst(loc[0]['detail'])}";
-  } else {
-    return " ${loc[1]['detail']}";
-  }
-}
-
-Widget getImageProfileContent(adminUname, userUname, adminImg, userImg) {
-  Widget url;
-  if (adminUname != null) {
-    if (adminImg != null) {
-      url = Image.network(adminImg.toString());
+  if (loc.length == 2) {
+    if (loc[0]['detail'] != null) {
+      return " ${ucFirst(loc[0]['detail'])}";
     } else {
-      url = Image.asset("assets/icon/default_lecturer.png");
+      return " ${loc[1]['detail']}";
     }
   } else {
-    if (userImg != null) {
-      url = Image.network(adminImg.toString());
-    } else {
-      url = Image.asset("assets/icon/default_lecturer.png");
-    }
+    return " Invalid";
   }
-  return Container(
-    margin: const EdgeInsets.symmetric(horizontal: 10.0),
-    width: iconXL,
-    child: ClipRRect(
-        borderRadius: BorderRadius.circular(25), child: url), //For now.
-  );
 }

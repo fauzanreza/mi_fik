@@ -13,17 +13,16 @@ class TagSkeleton1 extends StatelessWidget {
 
     return SizedBox(
         width: fullWidth,
-        child: Wrap(runSpacing: -5, spacing: 10, children: [
+        child: Wrap(runSpacing: -spaceWrap, spacing: spaceWrap * 2, children: [
           Container(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(spaceXSM),
             width: len * 0.8,
             decoration: BoxDecoration(
-              color: whitebg,
-              borderRadius: BorderRadius.all(roundedMd),
+              color: whiteColor,
+              borderRadius: BorderRadius.all(Radius.circular(roundedSM)),
               boxShadow: [
                 BoxShadow(
-                  color: const Color.fromARGB(255, 128, 128, 128)
-                      .withOpacity(0.25),
+                  color: shadowColor.withOpacity(0.25),
                   blurRadius: 10.0,
                   spreadRadius: 0.0,
                   offset: const Offset(
@@ -44,7 +43,7 @@ class TagSkeleton1 extends StatelessWidget {
                             SkeletonAvatarStyle(width: textSM, height: textSM)),
                     SkeletonLine(
                       style: SkeletonLineStyle(
-                          height: textMD,
+                          height: textXMD,
                           width: len * 0.45,
                           borderRadius: BorderRadius.circular(8)),
                     )
@@ -54,15 +53,14 @@ class TagSkeleton1 extends StatelessWidget {
             )),
           ),
           Container(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(spaceXSM),
             width: len * 1.2,
             decoration: BoxDecoration(
-              color: whitebg,
-              borderRadius: BorderRadius.all(roundedMd),
+              color: whiteColor,
+              borderRadius: BorderRadius.all(Radius.circular(roundedSM)),
               boxShadow: [
                 BoxShadow(
-                  color: const Color.fromARGB(255, 128, 128, 128)
-                      .withOpacity(0.25),
+                  color: shadowColor.withOpacity(0.25),
                   blurRadius: 10.0,
                   spreadRadius: 0.0,
                   offset: const Offset(
@@ -83,7 +81,7 @@ class TagSkeleton1 extends StatelessWidget {
                             SkeletonAvatarStyle(width: textSM, height: textSM)),
                     SkeletonLine(
                       style: SkeletonLineStyle(
-                          height: textMD,
+                          height: textXMD,
                           width: len * 0.85,
                           borderRadius: BorderRadius.circular(8)),
                     )
@@ -93,15 +91,14 @@ class TagSkeleton1 extends StatelessWidget {
             )),
           ),
           Container(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(spaceXSM),
             width: len,
             decoration: BoxDecoration(
-              color: whitebg,
-              borderRadius: BorderRadius.all(roundedMd),
+              color: whiteColor,
+              borderRadius: BorderRadius.all(Radius.circular(roundedSM)),
               boxShadow: [
                 BoxShadow(
-                  color: const Color.fromARGB(255, 128, 128, 128)
-                      .withOpacity(0.25),
+                  color: shadowColor.withOpacity(0.25),
                   blurRadius: 10.0,
                   spreadRadius: 0.0,
                   offset: const Offset(
@@ -122,7 +119,7 @@ class TagSkeleton1 extends StatelessWidget {
                             SkeletonAvatarStyle(width: textSM, height: textSM)),
                     SkeletonLine(
                       style: SkeletonLineStyle(
-                          height: textMD,
+                          height: textXMD,
                           width: len * 0.65,
                           borderRadius: BorderRadius.circular(8)),
                     )

@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:mi_fik/Components/Forms/tag_picker.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -15,8 +14,6 @@ class ChooseTag extends StatefulWidget {
 }
 
 class StateChooseTag extends State<ChooseTag> {
-  int pageTag = 1;
-
   Future<Role> getToken() async {
     final prefs = await SharedPreferences.getInstance();
     final roles = prefs.getString('role_list_key');
@@ -32,43 +29,6 @@ class StateChooseTag extends State<ChooseTag> {
     //double fullHeight = MediaQuery.of(context).size.height;
     //double fullWidth = MediaQuery.of(context).size.width;
 
-    Widget getControlButton(type) {
-      if (type == "more") {
-        return Container(
-            alignment: Alignment.center,
-            margin: const EdgeInsets.only(right: 15),
-            child: TextButton.icon(
-              onPressed: () {
-                setState(() {
-                  pageTag++;
-                });
-              },
-              icon: Icon(Icons.navigate_next, color: primaryColor),
-              label: Text(
-                "More".tr,
-                style: TextStyle(color: primaryColor),
-              ),
-            ));
-      } else if (type == "previous" && pageTag > 1) {
-        return Container(
-            alignment: Alignment.center,
-            child: TextButton.icon(
-              onPressed: () {
-                setState(() {
-                  pageTag--;
-                });
-              },
-              icon: Icon(Icons.navigate_before, color: primaryColor),
-              label: Text(
-                "Previous".tr,
-                style: TextStyle(color: primaryColor),
-              ),
-            ));
-      } else {
-        return const SizedBox();
-      }
-    }
-
     return FutureBuilder<Role>(
         future: getToken(),
         builder: (context, snapshot) {
@@ -79,8 +39,8 @@ class StateChooseTag extends State<ChooseTag> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Wrap(
-                    runSpacing: -5,
-                    spacing: 5,
+                    runSpacing: -spaceWrap,
+                    spacing: spaceWrap,
                     children: roles.map<Widget>((tag) {
                       //Check if tag already selected
                       var contain = selectedTag.where(
@@ -105,7 +65,7 @@ class StateChooseTag extends State<ChooseTag> {
                           style: ButtonStyle(
                             shape: MaterialStateProperty.all<
                                 RoundedRectangleBorder>(RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(roundedLG2),
+                              borderRadius: BorderRadius.circular(roundedMD),
                             )),
                             backgroundColor:
                                 MaterialStatePropertyAll<Color>(primaryColor),
@@ -115,13 +75,6 @@ class StateChooseTag extends State<ChooseTag> {
                         return const SizedBox();
                       }
                     }).toList(),
-                  ),
-                  Row(
-                    children: [
-                      getControlButton("previous".tr),
-                      const Spacer(),
-                      getControlButton("more".tr),
-                    ],
                   ),
                   TagSelectedArea(
                       tag: selectedTag, type: "tag", action: updateTags)

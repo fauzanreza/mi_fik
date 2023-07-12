@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
 import 'package:mi_fik/Components/Forms/date_picker.dart';
@@ -13,6 +12,7 @@ import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Helpers/info.dart';
 import 'package:mi_fik/Modules/Helpers/template.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 
 import 'package:mi_fik/Modules/Variables/dummy.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
@@ -58,7 +58,6 @@ class StateAddPost extends State<AddPost> {
   Widget build(BuildContext context) {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading = false;
 
     getDiscard() {
       //Empty all input
@@ -75,9 +74,9 @@ class StateAddPost extends State<AddPost> {
             builder: (BuildContext context) {
               return StatefulBuilder(builder: (context, setState) {
                 return AlertDialog(
-                    insetPadding: EdgeInsets.all(paddingSM),
+                    insetPadding: EdgeInsets.all(spaceXMD),
                     contentPadding: EdgeInsets.symmetric(
-                        horizontal: paddingMD, vertical: paddingMD * 1.5),
+                        horizontal: spaceLG, vertical: spaceLG * 1.5),
                     content: SizedBox(
                         height: 120,
                         width: fullWidth,
@@ -86,10 +85,11 @@ class StateAddPost extends State<AddPost> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                  "Are you sure want to leave? All changes will not be saved",
+                                  "Are you sure want to leave? All changes will not be saved"
+                                      .tr,
                                   style: TextStyle(
-                                      color: blackbg,
-                                      fontSize: textMD,
+                                      color: darkColor,
+                                      fontSize: textXMD,
                                       fontWeight: FontWeight.w500)),
                               const SizedBox(height: 15),
                               Row(
@@ -97,9 +97,8 @@ class StateAddPost extends State<AddPost> {
                                   TextButton(
                                     style: TextButton.styleFrom(
                                         backgroundColor:
-                                            dangerColor.withOpacity(0.8),
-                                        padding:
-                                            EdgeInsets.all(paddingMD * 0.8)),
+                                            warningBG.withOpacity(0.8),
+                                        padding: EdgeInsets.all(spaceLG * 0.8)),
                                     onPressed: () {
                                       selectedTag.clear();
                                       locDetailCtrl.clear();
@@ -112,7 +111,7 @@ class StateAddPost extends State<AddPost> {
                                     child: Text(
                                       "Yes, Discard Change".tr,
                                       style: TextStyle(
-                                        color: whitebg,
+                                        color: whiteColor,
                                       ),
                                     ),
                                   ),
@@ -120,15 +119,14 @@ class StateAddPost extends State<AddPost> {
                                   TextButton(
                                     style: TextButton.styleFrom(
                                         backgroundColor: primaryColor,
-                                        padding:
-                                            EdgeInsets.all(paddingMD * 0.8)),
+                                        padding: EdgeInsets.all(spaceLG * 0.8)),
                                     onPressed: () {
                                       Get.back();
                                     },
                                     child: Text(
                                       "Cancel".tr,
                                       style: TextStyle(
-                                        color: whitebg,
+                                        color: whiteColor,
                                       ),
                                     ),
                                   )
@@ -145,6 +143,7 @@ class StateAddPost extends State<AddPost> {
     return WillPopScope(
         onWillPop: () {
           getDiscard();
+          return null;
         },
         child: Scaffold(
           body: Column(
@@ -154,14 +153,14 @@ class StateAddPost extends State<AddPost> {
                 const SetImageContent(),
                 Container(
                   transform: Matrix4.translationValues(
-                      fullWidth * 0.03, fullHeight * 0.05, 0.0),
+                      spaceXMD, fullHeight * 0.05, 0.0),
                   decoration: BoxDecoration(
                     color: primaryColor,
-                    borderRadius: const BorderRadius.all(Radius.circular(100)),
+                    borderRadius:
+                        BorderRadius.all(Radius.circular(roundedCircle)),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color.fromARGB(255, 67, 67, 67)
-                            .withOpacity(0.3),
+                        color: darkColor.withOpacity(0.35),
                         blurRadius: 10.0,
                         spreadRadius: 0.0,
                         offset: const Offset(
@@ -173,7 +172,7 @@ class StateAddPost extends State<AddPost> {
                   ),
                   child: IconButton(
                     icon: Icon(Icons.arrow_back, size: iconLG),
-                    color: whitebg,
+                    color: whiteColor,
                     onPressed: () async {
                       getDiscard();
                     },
@@ -182,66 +181,66 @@ class StateAddPost extends State<AddPost> {
               ]),
               Expanded(
                   child: Container(
-                padding: EdgeInsets.only(top: paddingMD),
+                padding: EdgeInsets.only(top: spaceLG),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(roundedLG2),
-                  color: whitebg,
+                  borderRadius: BorderRadius.circular(roundedMD),
+                  color: whiteColor,
                 ),
                 child: ListView(
-                    padding: EdgeInsets.only(bottom: paddingLg),
+                    padding: EdgeInsets.only(bottom: spaceJumbo),
                     children: [
                       Container(
-                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                        padding: EdgeInsets.fromLTRB(spaceLG, 0, spaceLG, 0),
                         child: getSubTitleMedium(
-                            "Title".tr, blackbg, TextAlign.start),
+                            "Title".tr, darkColor, TextAlign.start),
                       ),
                       Container(
-                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                        padding: EdgeInsets.fromLTRB(spaceLG, 0, spaceLG, 0),
                         child: getInputText(75, contentTitleCtrl, false),
                       ),
                       Container(
-                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                        padding: EdgeInsets.fromLTRB(spaceLG, 0, spaceLG, 0),
                         child: getSubTitleMedium(
-                            "Description".tr, blackbg, TextAlign.start),
+                            "Description".tr, darkColor, TextAlign.start),
                       ),
                       Container(
-                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                        padding: EdgeInsets.fromLTRB(spaceLG, 0, spaceLG, 0),
                         child: getInputDesc(10000, 5, contentDescCtrl, false),
                       ),
+                      Padding(
+                          padding: EdgeInsets.symmetric(vertical: spaceMD),
+                          child: Divider(
+                              thickness: 1,
+                              indent: spaceLG,
+                              endIndent: spaceLG)),
                       Container(
-                          margin: EdgeInsets.only(left: paddingMD),
-                          padding: EdgeInsets.only(top: paddingXSM),
+                          margin: EdgeInsets.only(left: spaceLG),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text("Event Tag".tr,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontFamily: 'Poppins',
-                                    color: blackbg,
-                                    fontWeight: FontWeight.w500,
-                                  )),
+                              getSubTitleMedium(
+                                  "Event Tag".tr, darkColor, TextAlign.start),
                               const ChooseTag(),
                             ],
                           )),
+                      Padding(
+                          padding: EdgeInsets.symmetric(vertical: spaceMD),
+                          child: Divider(
+                              thickness: 1,
+                              indent: spaceLG,
+                              endIndent: spaceLG)),
                       Container(
-                          padding: EdgeInsets.fromLTRB(20, paddingMD, 20, 0),
+                          padding: EdgeInsets.fromLTRB(spaceLG, 0, spaceLG, 0),
                           child: Row(
                             children: [
                               Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("Event Reminder".tr,
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontFamily: 'Poppins',
-                                          color: blackbg,
-                                          fontWeight: FontWeight.w500,
-                                        )),
+                                    getSubTitleMedium("Event Reminder".tr,
+                                        darkColor, TextAlign.start),
                                     Container(
-                                        padding:
-                                            EdgeInsets.only(left: paddingXSM),
+                                        padding: EdgeInsets.only(left: spaceSM),
                                         child: getDropDownMain(
                                             slctReminderType, reminderTypeOpt,
                                             (String newValue) {
@@ -250,34 +249,30 @@ class StateAddPost extends State<AddPost> {
                                           });
                                         }, true, "reminder_")),
                                   ]),
-                              SizedBox(width: paddingMD),
+                              SizedBox(width: spaceLG),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Event Location".tr,
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontFamily: 'Poppins',
-                                        color: blackbg,
-                                        fontWeight: FontWeight.w500,
-                                      )),
+                                  getSubTitleMedium("Event Location".tr,
+                                      darkColor, TextAlign.start),
                                   SetLocation(locDetailCtrl: locDetailCtrl),
                                 ],
                               )
                             ],
                           )),
+                      Padding(
+                          padding: EdgeInsets.symmetric(vertical: spaceMD),
+                          child: Divider(
+                              thickness: 1,
+                              indent: spaceLG,
+                              endIndent: spaceLG)),
                       Container(
-                          padding: EdgeInsets.fromLTRB(20, paddingMD, 20, 0),
+                          padding: EdgeInsets.fromLTRB(spaceLG, 0, spaceLG, 0),
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Event Period".tr,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontFamily: 'Poppins',
-                                      color: blackbg,
-                                      fontWeight: FontWeight.w500,
-                                    )),
+                                getSubTitleMedium("Event Period".tr, darkColor,
+                                    TextAlign.start),
                                 Row(children: [
                                   getDatePicker(dateStartCtrl, () {
                                     final now = DateTime.now();
@@ -294,7 +289,7 @@ class StateAddPost extends State<AddPost> {
                                       });
                                     }, currentTime: now, locale: LocaleType.en);
                                   }, "Start", "datetime"),
-                                  const Spacer(),
+                                  SizedBox(width: spaceSM),
                                   getDatePicker(dateEndCtrl, () {
                                     final now = DateTime.now();
 
@@ -314,22 +309,29 @@ class StateAddPost extends State<AddPost> {
                                   }, "End", "datetime"),
                                 ])
                               ])),
+                      Padding(
+                          padding: EdgeInsets.symmetric(vertical: spaceMD),
+                          child: Divider(
+                              thickness: 1,
+                              indent: spaceLG,
+                              endIndent: spaceLG)),
                       Container(
-                          padding: EdgeInsets.fromLTRB(20, paddingMD, 20, 0),
+                          padding: EdgeInsets.fromLTRB(spaceLG, 0, spaceLG, 0),
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Event Attachment".tr,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontFamily: 'Poppins',
-                                      color: blackbg,
-                                      fontWeight: FontWeight.w500,
-                                    )),
+                                getSubTitleMedium("Event Attachment".tr,
+                                    darkColor, TextAlign.start),
                                 const SetFileAttachment()
                               ])),
+                      Padding(
+                          padding: EdgeInsets.symmetric(vertical: spaceMD),
+                          child: Divider(
+                              thickness: 1,
+                              indent: spaceLG,
+                              endIndent: spaceLG)),
                       Container(
-                          padding: EdgeInsets.fromLTRB(20, paddingMD, 20, 0),
+                          padding: EdgeInsets.fromLTRB(spaceLG, 0, spaceLG, 0),
                           child: const GetInfoBox(
                             page: "homepage",
                             location: "add_event",
@@ -354,8 +356,14 @@ class StateAddPost extends State<AddPost> {
                           reminder: slctReminderType,
                           dateStart: getDBDateFormat("date", dateStartCtrl),
                           dateEnd: getDBDateFormat("date", dateEndCtrl),
-                          timeStart: getDBDateFormat("time", dateStartCtrl),
-                          timeEnd: getDBDateFormat("time", dateEndCtrl),
+                          timeStart: getDBDateFormat(
+                              "time",
+                              dateStartCtrl.add(
+                                  Duration(hours: getUTCHourOffset() * -1))),
+                          timeEnd: getDBDateFormat(
+                              "time",
+                              dateEndCtrl.add(
+                                  Duration(hours: getUTCHourOffset() * -1))),
                           isDraft: 0,
                         );
 
@@ -363,7 +371,7 @@ class StateAddPost extends State<AddPost> {
                           if (content.contentTitle.isNotEmpty &&
                               content.contentDesc.isNotEmpty) {
                             apiCommand.postContent(content).then((response) {
-                              setState(() => isLoading = false);
+                              setState(() => {});
                               var status = response[0]['message'];
                               var body = response[0]['body'];
 
@@ -373,51 +381,42 @@ class StateAddPost extends State<AddPost> {
                                 locCoordinateCtrl = null;
                                 contentAttImage = null;
                                 listAttachment = [];
-                                Get.offAll(() => const BottomBar());
+                                Get.offNamed(CollectionRoute.bar,
+                                    preventDuplicates: false);
 
-                                showDialog<String>(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        SuccessDialog(text: body));
+                                Get.dialog(SuccessDialog(text: body));
                               } else {
-                                showDialog<String>(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        FailedDialog(
-                                            text: body, type: "addevent"));
+                                Get.dialog(
+                                    FailedDialog(text: body, type: "addevent"));
                               }
                             });
                           } else {
-                            showDialog<String>(
-                                context: context,
-                                builder: (BuildContext context) =>
-                                    const FailedDialog(
-                                        text:
-                                            "Create event failed, field can't be empty",
-                                        type: "addevent"));
+                            Get.dialog(FailedDialog(
+                                text:
+                                    "Create event failed, field can't be empty"
+                                        .tr,
+                                type: "addevent"));
                           }
                         } else {
-                          showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) => const FailedDialog(
-                                  text:
-                                      "Create event failed, tag must be selected",
-                                  type: "addevent"));
+                          Get.dialog(FailedDialog(
+                              text: "Create event failed, tag must be selected"
+                                  .tr,
+                              type: "addevent"));
                         }
                       } else {
-                        showDialog<String>(
-                            context: context,
-                            builder: (BuildContext context) => const FailedDialog(
-                                text:
-                                    "Create event failed, date period must be selected",
-                                type: "addevent"));
+                        Get.dialog(FailedDialog(
+                            text:
+                                "Create event failed, date period must be selected"
+                                    .tr,
+                            type: "addevent"));
                       }
                     },
                     style: ButtonStyle(
                       backgroundColor:
-                          MaterialStatePropertyAll<Color>(successbg),
+                          MaterialStatePropertyAll<Color>(successBG),
                     ),
-                    child: Text('Save Event'.tr),
+                    child: Text('Publish Event'.tr,
+                        style: TextStyle(fontSize: textXMD)),
                   ))
             ],
           ),

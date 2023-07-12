@@ -58,7 +58,7 @@ class StateGetAllHelpType extends State<GetAllHelpType> {
         itemBuilder: (context, index) {
           return Card(
             shape: RoundedRectangleBorder(
-              side: BorderSide(color: mainbg, width: 1),
+              side: BorderSide(color: hoverBG, width: 1),
               borderRadius: BorderRadius.circular(6),
             ),
             child: ExpansionTile(
@@ -68,8 +68,10 @@ class StateGetAllHelpType extends State<GetAllHelpType> {
               expandedCrossAxisAlignment: CrossAxisAlignment.start,
               expandedAlignment: Alignment.topLeft,
               title: Text(ucFirst(contents[index].helpType),
-                  style: const TextStyle(fontWeight: FontWeight.w500)),
-              subtitle: Text('Lorem ipsum', style: TextStyle(color: greybg)),
+                  style:
+                      TextStyle(fontWeight: FontWeight.w500, fontSize: textMD)),
+              subtitle: Text('Lorem ipsum',
+                  style: TextStyle(color: shadowColor, fontSize: textMD)),
               children: [GetHelpByType(passType: contents[index].helpType)],
             ),
           );

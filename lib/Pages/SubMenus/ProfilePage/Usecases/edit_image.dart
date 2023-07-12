@@ -1,16 +1,18 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:full_screen_menu/full_screen_menu.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mi_fik/Components/Bars/bottom_bar.dart';
+import 'package:mi_fik/Components/Cameras/captures.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
+import 'package:mi_fik/Components/Dialogs/loading_dialog.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
 import 'package:mi_fik/Modules/Firebases/Storages/User/add_image.dart';
 import 'package:mi_fik/Modules/Firebases/Storages/User/remove_image.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/SubMenus/ProfilePage/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EditImage extends StatefulWidget {
@@ -20,11 +22,13 @@ class EditImage extends StatefulWidget {
   State<EditImage> createState() => _EditImageState();
 }
 
-class _EditImageState extends State<EditImage> {
+class _EditImageState extends State<EditImage>
+    with SingleTickerProviderStateMixin {
   UserCommandsService commandService;
   PostImage fireServicePost;
   DeleteImage fireServiceDelete;
   XFile file;
+  AnimationController lottieController;
 
   @override
   void initState() {
@@ -32,6 +36,13 @@ class _EditImageState extends State<EditImage> {
     commandService = UserCommandsService();
     fireServicePost = PostImage();
     fireServiceDelete = DeleteImage();
+    lottieController = AnimationController(vsync: this);
+  }
+
+  @override
+  void dispose() {
+    lottieController.dispose();
+    super.dispose();
   }
 
   Future<XFile> getImage() async {
@@ -41,7 +52,6 @@ class _EditImageState extends State<EditImage> {
   @override
   Widget build(BuildContext context) {
     double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading;
 
     Future<UserProfileLeftBar> getToken() async {
       final prefs = await SharedPreferences.getInstance();
@@ -58,38 +68,43 @@ class _EditImageState extends State<EditImage> {
             Widget getResetImageProfile(String exist) {
               if (exist != null && exist != "null") {
                 return FSMenuItem(
-                    icon: Icon(Icons.refresh, color: whitebg),
-                    text: Text('Reset', style: TextStyle(fontSize: textMD)),
+                    icon: Icon(Icons.refresh, color: whiteColor),
+                    text: Text('Reset', style: TextStyle(fontSize: textXMD)),
                     gradient: redGradient,
                     onTap: () async {
+                      FullScreenMenu.hide();
+                      Get.dialog(LoadingDialog(
+                          url: "assets/json/loading-att.json",
+                          ctrl: lottieController));
+
                       await fireServiceDelete.deleteImageUser().then((value) {
                         if (value == true) {
                           EditUserImageModel data =
                               EditUserImageModel(imageUrl: null);
 
                           commandService.putProfileImage(data).then((response) {
-                            setState(() => isLoading = false);
+                            setState(() {});
                             var status = response[0]['message'];
                             var body = response[0]['body'];
 
                             if (status == "success") {
-                              FullScreenMenu.hide();
-                              Get.to(() => const BottomBar());
+                              lottieController.reset();
+                              Get.offNamed(CollectionRoute.profile,
+                                  preventDuplicates: false);
                             } else {
-                              FullScreenMenu.hide();
-                              showDialog<String>(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      FailedDialog(text: body));
+                              Get.back();
+
+                              lottieController.reset();
+                              Get.dialog(FailedDialog(text: body));
                             }
                           });
                         } else {
-                          FullScreenMenu.hide();
-                          showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  const FailedDialog(
-                                      text: "Failed to reset image"));
+                          Get.back();
+
+                          lottieController.reset();
+                          Get.dialog(
+                            FailedDialog(text: "Failed to reset image".tr),
+                          );
                         }
                       });
                     });
@@ -101,67 +116,82 @@ class _EditImageState extends State<EditImage> {
             return WillPopScope(
                 onWillPop: () {
                   FullScreenMenu.hide();
+                  return null;
                 },
                 child: Positioned(
                     top: 110,
                     left: 120,
                     child: InkWell(
                         onTap: () {
-                          FullScreenMenu.show(
-                            context,
-                            items: [
-                              FSMenuItem(
-                                  icon: Icon(Icons.camera, color: whitebg),
-                                  text: Text('Camera'.tr,
-                                      style: TextStyle(fontSize: textMD)),
+                          FullScreenMenu.show(context,
+                              items: [
+                                FSMenuItem(
+                                    icon: Icon(Icons.camera, color: whiteColor),
+                                    text: Text('Camera'.tr,
+                                        style: TextStyle(fontSize: textXMD)),
+                                    gradient: orangeGradient,
+                                    onTap: () async {
+                                      WidgetsFlutterBinding.ensureInitialized();
+                                      final cameras = await availableCameras();
+                                      FullScreenMenu.hide();
+
+                                      Get.to(() => CameraPage(
+                                            camera: cameras.first,
+                                            from: "profile",
+                                            loadingCtrl: lottieController,
+                                          ));
+                                    }),
+                                FSMenuItem(
+                                  icon: Icon(Icons.folder, color: whiteColor),
                                   gradient: orangeGradient,
-                                  onTap: () {}),
-                              FSMenuItem(
-                                icon: Icon(Icons.folder, color: whitebg),
-                                gradient: orangeGradient,
-                                text: Text('File Picker'.tr,
-                                    style: TextStyle(fontSize: textMD)),
-                                onTap: () async {
-                                  var file = await getImage();
+                                  text: Text('File Picker'.tr,
+                                      style: TextStyle(fontSize: textXMD)),
+                                  onTap: () async {
+                                    var file = await getImage();
 
-                                  if (file != null) {
-                                    await fireServicePost
-                                        .sendImageUser(file)
-                                        .then((value) {
-                                      EditUserImageModel data =
-                                          EditUserImageModel(imageUrl: value);
+                                    FullScreenMenu.hide();
+                                    if (file != null) {
+                                      Get.dialog(LoadingDialog(
+                                          url: "assets/json/loading-att.json",
+                                          ctrl: lottieController));
 
-                                      commandService
-                                          .putProfileImage(data)
-                                          .then((response) {
-                                        setState(() => isLoading = false);
-                                        var status = response[0]['message'];
-                                        var body = response[0]['body'];
+                                      await fireServicePost
+                                          .sendImageUser(file)
+                                          .then((value) {
+                                        EditUserImageModel data =
+                                            EditUserImageModel(imageUrl: value);
 
-                                        if (status == "success") {
-                                          FullScreenMenu.hide();
-                                          Get.to(() => const ProfilePage());
-                                        } else {
-                                          FullScreenMenu.hide();
-                                          showDialog<String>(
-                                              context: context,
-                                              builder: (BuildContext context) =>
-                                                  FailedDialog(text: body));
-                                        }
+                                        commandService
+                                            .putProfileImage(data)
+                                            .then((response) {
+                                          setState(() {});
+                                          var status = response[0]['message'];
+                                          var body = response[0]['body'];
+
+                                          if (status == "success") {
+                                            lottieController.reset();
+                                            Get.offNamed(
+                                                CollectionRoute.profile,
+                                                preventDuplicates: false);
+                                          } else {
+                                            Get.back();
+                                            Get.dialog(
+                                                FailedDialog(text: body));
+                                          }
+                                        });
                                       });
-                                    });
-                                  }
-                                },
-                              ),
-                              getResetImageProfile(image)
-                            ],
-                          );
+                                    }
+                                  },
+                                ),
+                                getResetImageProfile(image)
+                              ],
+                              backgroundColor: primaryLightBG);
                         },
                         child: Container(
-                            padding: EdgeInsets.all(paddingXSM * 0.8),
+                            padding: EdgeInsets.all(spaceSM * 0.8),
                             decoration: BoxDecoration(
-                                border: Border.all(width: 3, color: whitebg),
-                                color: infoColor,
+                                border: Border.all(width: 3, color: whiteColor),
+                                color: infoBG,
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(25))),
                             child: ClipRRect(

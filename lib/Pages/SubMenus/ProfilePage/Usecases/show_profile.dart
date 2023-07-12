@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/ProfilePage/Usecases/edit_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,9 +20,9 @@ class ShowProfile extends StatelessWidget {
       return UserProfileLeftBar(
           username: username, image: image, roleGeneral: role);
     } else {
-      Get.offAll(() => const LoginPage());
+      Get.offNamed(CollectionRoute.landing, preventDuplicates: false);
       Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
-          backgroundColor: whitebg);
+          backgroundColor: whiteColor);
       return null;
     }
   }
@@ -43,35 +43,35 @@ class ShowProfile extends StatelessWidget {
 
             return Container(
               width: fullWidth,
-              padding: const EdgeInsets.only(top: 10, right: 10, left: 10),
+              padding: EdgeInsets.fromLTRB(spaceSM, spaceSM, spaceSM, 0),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Stack(alignment: Alignment.center, children: [
                       Container(
-                          margin: const EdgeInsets.all(20),
+                          margin: EdgeInsets.all(spaceLG),
                           child: getProfileImageSideBar(fullWidth, 0.3, image)),
                       const EditImage(),
                     ]),
-                    Text(username,
+                    Text("@$username",
                         style: TextStyle(
-                            color: whitebg,
-                            fontSize: textLG,
+                            color: whiteColor,
+                            fontSize: textXMD + 2,
                             fontWeight: FontWeight.w500)),
                     Container(
-                        margin:
-                            const EdgeInsets.only(top: 5, left: 5, right: 5),
+                        margin: EdgeInsets.only(
+                            top: spaceMini, left: spaceMini, right: spaceMini),
                         padding: EdgeInsets.symmetric(
-                            vertical: paddingXSM / 2, horizontal: paddingSM),
+                            vertical: spaceSM / 2, horizontal: spaceXMD),
                         decoration: BoxDecoration(
-                            color: whitebg,
+                            color: whiteColor,
                             borderRadius:
-                                const BorderRadius.all(Radius.circular(10))),
+                                BorderRadius.all(Radius.circular(roundedSM))),
                         child: Text(role,
                             style: TextStyle(
                                 color: primaryColor,
-                                fontSize: textMD,
+                                fontSize: textXMD + 2,
                                 fontWeight: FontWeight.w500)))
                   ]),
             );

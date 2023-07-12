@@ -1,0 +1,4 @@
+flutter_native_splash:
+  color: "#F2F2F2"
+  image: assets/icon/mifik_logo.png
+  icon_background_color: "#FADFB9"

@@ -1,12 +1,16 @@
 import 'package:chewie/chewie.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_fik/Components/Container/content.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/Firebases/Storages/Content/remove_image.dart';
+import 'package:mi_fik/Modules/Helpers/widget.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/get_pdf.dart';
+// ignore: depend_on_referenced_packages
 import 'package:video_player/video_player.dart';
 
 class GetFileAttachment extends StatefulWidget {
@@ -30,7 +34,6 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading;
     int i = 0;
 
     resetItem(int idx) async {
@@ -43,14 +46,14 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
               listAttachment.removeAt(idx);
             });
             Get.snackbar("Alert".tr, "Attachment removed".tr,
-                backgroundColor: whitebg);
+                backgroundColor: whiteColor);
           } else {
             setState(() {
               listAttachment.removeAt(idx);
             });
             Get.snackbar("Alert".tr,
                 "Attachment removed. Can't located uploaded file".tr,
-                backgroundColor: whitebg);
+                backgroundColor: whiteColor);
           }
         });
       } else {
@@ -58,7 +61,7 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
           listAttachment.removeAt(idx);
         });
         Get.snackbar("Alert".tr, "Attachment removed".tr,
-            backgroundColor: whitebg);
+            backgroundColor: whiteColor);
       }
     }
 
@@ -75,11 +78,9 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
               id: e['id'],
               item: Container(
                   alignment: Alignment.center,
-                  margin: EdgeInsets.symmetric(vertical: paddingMD),
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: Image.network(e['attach_url'],
-                          width: fullWidth * 0.5))));
+                  margin: EdgeInsets.symmetric(vertical: spaceLG),
+                  child: getContentImageHeader(e['attach_url'], fullWidth * 0.5,
+                      null, false, BorderRadius.circular(roundedMD))));
         } else if (e['attach_type'] == "attachment_video") {
           return GetAttachmentContainer(
               data: e,
@@ -90,13 +91,38 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
               },
               item: Container(
                   alignment: Alignment.center,
-                  margin: EdgeInsets.symmetric(vertical: paddingMD),
-                  child: Chewie(
-                    controller: ChewieController(
-                      videoPlayerController:
-                          VideoPlayerController.network(e['attach_url']),
-                      autoPlay: false,
-                      looping: false,
+                  margin: EdgeInsets.symmetric(vertical: spaceLG),
+                  child: getContentVideo(e['attach_url'], fullWidth, 220)));
+        } else if (e['attach_type'] == "attachment_doc") {
+          return GetAttachmentContainer(
+              data: e,
+              others: null,
+              id: e['id'],
+              action: () async {
+                resetItem(i);
+              },
+              item: Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.symmetric(vertical: spaceLG),
+                  child: RichText(
+                    text: TextSpan(
+                      children: [
+                        WidgetSpan(
+                          child: Icon(Icons.picture_as_pdf,
+                              size: iconLG, color: primaryColor),
+                        ),
+                        TextSpan(
+                            text: " PDF",
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Get.to(AttachmentDocPage(
+                                    url: e['attach_url'].toString()));
+                              },
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                color: darkColor,
+                                fontSize: textSM + 2)),
+                      ],
                     ),
                   )));
         } else if (e['attach_type'] == "attachment_url") {
@@ -109,13 +135,13 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
                   listAttachment.removeAt(i);
                 });
                 Get.snackbar("Alert".tr, "Attachment removed".tr,
-                    backgroundColor: whitebg);
+                    backgroundColor: whiteColor);
               },
               others: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   getSubTitleMedium(
-                      "Attachment URL".tr, blackbg, TextAlign.start),
+                      "Attachment URL".tr, darkColor, TextAlign.start),
                   getInputTextAtt(75, e['id'], 'attach_url'),
                 ],
               ));

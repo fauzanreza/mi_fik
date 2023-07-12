@@ -4,16 +4,16 @@ import 'package:mi_fik/Modules/Variables/style.dart';
 
 Widget getInputRate(var action) {
   return Container(
-    margin: EdgeInsets.all(paddingSM),
+    margin: EdgeInsets.all(spaceXMD),
     child: RatingBar.builder(
       minRating: 1,
       direction: Axis.horizontal,
       allowHalfRating: false,
       itemCount: 5,
-      itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+      itemPadding: EdgeInsets.symmetric(horizontal: spaceMini),
       itemBuilder: (context, _) => Icon(
         Icons.star,
-        color: successbg,
+        color: successBG,
       ),
       onRatingUpdate: action,
     ),

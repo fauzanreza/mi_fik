@@ -30,18 +30,19 @@ class StateMaintenancePage extends State<MaintenancePage> {
                   children: [
                     Container(
                       padding: EdgeInsets.symmetric(
-                          vertical: paddingXSM, horizontal: paddingMD),
-                      margin: EdgeInsets.all(paddingMD * 2.5),
+                          vertical: spaceSM, horizontal: spaceLG),
+                      margin: EdgeInsets.all(spaceLG * 2.5),
                       decoration: BoxDecoration(
-                        color: whitebg,
-                        borderRadius: BorderRadius.all(roundedLG),
+                        color: whiteColor,
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(roundedLG)),
                       ),
                       child: ClipRRect(
                         child: Image.asset('assets/icon/maintenance.png'),
                       ),
                     ),
-                    getTitleJumbo("Mi-FIK is under maintenance", whitebg),
-                    getTitleJumbo("We'll be back soon", whitebg)
+                    getTitleJumbo("Mi-FIK is under maintenance", whiteColor),
+                    getTitleJumbo("We'll be back soon", whiteColor)
                   ],
                 ))));
   }

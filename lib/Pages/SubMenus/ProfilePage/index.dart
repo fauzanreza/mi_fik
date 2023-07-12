@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_fik/Components/Backgrounds/custom.dart';
-import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Bars/top_bar.dart';
 import 'package:mi_fik/Components/Button/navigation.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/AboutPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/HistoryPage/index.dart';
@@ -24,63 +24,67 @@ class StateProfilePage extends State<ProfilePage> {
       GlobalKey<RefreshIndicatorState>();
 
   Future<void> refreshData() async {
-    Get.offAll(() => const ProfilePage());
+    Get.offNamed(CollectionRoute.profile, preventDuplicates: false);
   }
 
   @override
   Widget build(BuildContext context) {
     double fullHeight = MediaQuery.of(context).size.height;
     //double fullWidth = MediaQuery.of(context).size.width;
+    String versionText = "Version".tr;
 
-    return Scaffold(
-        appBar: getAppbar("Profile".tr, () {
-          Get.to(() => const BottomBar());
-        }),
-        body: CustomPaint(
-            painter: CirclePainter(),
-            child: RefreshIndicator(
-                key: _refreshIndicatorKey,
-                onRefresh: refreshData,
-                child: ListView(
-                    padding: EdgeInsets.only(top: fullHeight * 0.04),
-                    children: [
-                      const ShowProfile(),
-                      const GetEditProfile(),
-                      Container(
-                          height: fullHeight * 0.7,
-                          margin: const EdgeInsets.only(top: 10.0),
-                          padding: EdgeInsets.only(
-                              top: paddingMD,
-                              left: paddingSM,
-                              right: paddingSM),
-                          decoration: BoxDecoration(
-                            color: mainbg,
-                            borderRadius: BorderRadius.only(
-                                topLeft: roundedLG, topRight: roundedLG),
-                          ),
-                          child: Column(
-                            children: [
-                              const ShowRole(),
-                              getProfileButton(() {
-                                Get.to(() => const MyFAQPage());
-                              }, Icons.question_answer, "My Question".tr,
-                                  Icons.keyboard_arrow_right),
-                              getProfileButton(() {
-                                Get.to(() => const HistoryPage());
-                              }, Icons.history, "History".tr,
-                                  Icons.keyboard_arrow_right),
-                              getProfileButton(() {
-                                Get.to(() => const AboutPage());
-                              }, Icons.info, "About Us".tr,
-                                  Icons.keyboard_arrow_right),
-                              Container(
-                                margin: EdgeInsets.only(top: paddingMD * 2),
-                                child: Text("Version 1.0",
-                                    style: TextStyle(fontSize: textSM)),
+    return WillPopScope(
+        onWillPop: () {
+          Get.toNamed(CollectionRoute.bar);
+          return null;
+        },
+        child: Scaffold(
+            appBar: getAppbar("Profile".tr, () {
+              Get.toNamed(CollectionRoute.bar);
+            }),
+            body: CustomPaint(
+                painter: CirclePainter(),
+                child: RefreshIndicator(
+                    key: _refreshIndicatorKey,
+                    onRefresh: refreshData,
+                    child: ListView(
+                        padding: EdgeInsets.only(top: fullHeight * 0.04),
+                        children: [
+                          const ShowProfile(),
+                          const GetEditProfile(),
+                          Container(
+                              margin: EdgeInsets.only(top: spaceSM),
+                              padding: EdgeInsets.fromLTRB(
+                                  spaceXMD, spaceLG, spaceXMD, spaceJumbo),
+                              decoration: BoxDecoration(
+                                color: hoverBG,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(roundedLG),
+                                    topRight: Radius.circular(roundedLG)),
                               ),
-                              getSignOutButtonWide(context)
-                            ],
-                          )),
-                    ]))));
+                              child: Column(
+                                children: [
+                                  const ShowRole(),
+                                  getProfileButton(() {
+                                    Get.to(() => const MyFAQPage());
+                                  }, Icons.question_answer, "My Question".tr,
+                                      Icons.keyboard_arrow_right),
+                                  getProfileButton(() {
+                                    Get.to(() => const HistoryPage());
+                                  }, Icons.history, "History".tr,
+                                      Icons.keyboard_arrow_right),
+                                  getProfileButton(() {
+                                    Get.to(() => const AboutPage());
+                                  }, Icons.info, "About Us".tr,
+                                      Icons.keyboard_arrow_right),
+                                  Container(
+                                    margin: EdgeInsets.only(top: spaceLG * 2),
+                                    child: Text("$versionText 1.0",
+                                        style: TextStyle(fontSize: textSM)),
+                                  ),
+                                  getSignOutButtonWide(context)
+                                ],
+                              )),
+                        ])))));
   }
 }

@@ -2,8 +2,8 @@ import 'package:get/get.dart';
 // ignore: depend_on_referenced_packages
 import 'package:http/http.dart' show Client;
 import 'package:mi_fik/Modules/APIs/UserApi/Models/queries.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserQueriesService {
@@ -26,9 +26,9 @@ class UserQueriesService {
     } else if (response.statusCode == 401) {
       await prefs.clear();
 
-      Get.offAll(() => const LoginPage());
+      Get.offNamed(CollectionRoute.landing, preventDuplicates: false);
       Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
-          backgroundColor: whitebg);
+          backgroundColor: whiteColor);
       return null;
     } else {
       return null;
@@ -51,9 +51,9 @@ class UserQueriesService {
       if (isLogged) {
         await prefs.clear();
 
-        Get.offAll(() => const LoginPage());
+        Get.offNamed(CollectionRoute.landing, preventDuplicates: false);
         Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
-            backgroundColor: whitebg);
+            backgroundColor: whiteColor);
       }
 
       return null;
