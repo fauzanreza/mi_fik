@@ -1,5 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
+import 'package:mi_fik/Modules/APIs/AuthApi/Models/commands.dart';
+import 'package:mi_fik/Modules/APIs/AuthApi/Services/commands.dart';
+import 'package:mi_fik/Modules/APIs/UserApi/Validators/commands.dart';
 import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -19,24 +25,107 @@ class ForgetPage extends StatefulWidget {
 class StateForgetPage extends State<ForgetPage> {
   Widget materialButton;
 
+  final passCtrl = TextEditingController();
+  final emailCtrl = TextEditingController();
+  final usernameCtrl = TextEditingController();
+  final tokenCtrl = TextEditingController();
+  AuthCommandsService apiService;
+
   @override
   void initState() {
     super.initState();
+    isWaitingLoad = true;
+    apiService = AuthCommandsService();
     materialButton = _skipButton();
   }
+
+  Timer timer;
+  bool isOut = false;
+  int remainingTimer = 0;
+  Color timerColor = primaryColor;
 
   String passMsg = "";
   String tokenMsg = "";
   String unameMsg = "";
   String emailMsg = "";
 
+  void startTimer() {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        if (remainingTimer > 180) {
+          remainingTimer--;
+        } else if (remainingTimer > 0) {
+          timerColor = warningBG;
+          remainingTimer--;
+        } else {
+          isOut = true;
+        }
+      });
+    });
+  }
+
+  void refresh() {
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    if (timer != null && timer.isActive) {
+      timer.cancel();
+    }
+    super.dispose();
+  }
+
   Widget _skipButton({void Function(int) setIndex, double height}) {
     return InkWell(
         borderRadius: defaultSkipButtonBorderRadius,
-        onTap: () async {
-          setState(() {
-            setIndex(indexForget++);
-          });
+        onTap: () {
+          if (indexForget == 0) {
+            if (checkAvaiabilityForget) {
+              setState(() {
+                if (isWaitingLoad) {
+                  isWaitingLoad = false;
+                  remainingTimer = 900;
+                  startTimer();
+                }
+
+                setIndex(indexForget++);
+              });
+              setState(() {});
+            } else {
+              Get.dialog(const FailedDialog(
+                  text: "Please validate your account first", type: "forget"));
+            }
+          } else if (indexForget == 1) {
+            EditPassModel data = EditPassModel(
+              username: usernameCtrl.text.trim(),
+              password: passCtrl.text.trim(),
+              token: tokenCtrl.text.trim(),
+            );
+
+            Map<String, dynamic> valid = UserValidator.validateEditPass(data);
+            if (valid['status']) {
+              apiService.editPass(data).then((response) {
+                var status = response[0]['message'];
+                var body = response[0]['body'];
+
+                if (status == "success") {
+                  isFillForm = true;
+                  setIndex(indexForget++);
+                  setState(() {});
+                  Get.snackbar("Success", body, backgroundColor: whiteColor);
+                } else {
+                  setState(() {
+                    passMsg = body['password'];
+                  });
+                  Get.dialog(FailedDialog(text: body, type: "forget"));
+                }
+              });
+              tokenCtrl.clear();
+            } else {
+              Get.dialog(FailedDialog(text: valid['message'], type: "forget"));
+            }
+          }
         },
         child: Container(
           padding: EdgeInsets.all(spaceXSM),
@@ -126,7 +215,16 @@ class StateForgetPage extends State<ForgetPage> {
                     )),
                     backgroundColor: MaterialStatePropertyAll<Color>(warningBG),
                   ),
-                  onPressed: () async {
+                  onPressed: () {
+                    usernameCtrl.clear();
+                    emailCtrl.clear();
+                    tokenCtrl.clear();
+                    passCtrl.clear();
+                    if (timer != null && timer.isActive) {
+                      timer.cancel();
+                    }
+
+                    checkAvaiabilityForget = false;
                     Get.offNamed(CollectionRoute.landing,
                         preventDuplicates: false);
                   },
@@ -164,7 +262,16 @@ class StateForgetPage extends State<ForgetPage> {
 
   Widget finishBtn() {
     return InkWell(
-        onTap: () async {},
+        onTap: () async {
+          usernameCtrl.clear();
+          emailCtrl.clear();
+          tokenCtrl.clear();
+          passCtrl.clear();
+
+          checkAvaiabilityForget = false;
+
+          Get.offAllNamed(CollectionRoute.landing);
+        },
         child: Container(
           padding: EdgeInsets.all(spaceXSM),
           decoration: BoxDecoration(
@@ -216,7 +323,12 @@ class StateForgetPage extends State<ForgetPage> {
                   color: Colors.transparent,
                 ),
               ),
-              child: GetRecovery(emailMsg: emailMsg, unameMsg: unameMsg))),
+              child: GetRecovery(
+                emailMsg: emailMsg,
+                unameMsg: unameMsg,
+                emailCtrl: emailCtrl,
+                usernameCtrl: usernameCtrl,
+              ))),
       PageModel(
         widget: DecoratedBox(
             decoration: BoxDecoration(
@@ -225,7 +337,25 @@ class StateForgetPage extends State<ForgetPage> {
                 color: Colors.transparent,
               ),
             ),
-            child: GetValidate(passMsg: passMsg, tokenMsg: tokenMsg)),
+            child: GetValidate(
+              passMsg: passMsg,
+              tokenMsg: tokenMsg,
+              isOut: isOut,
+              remainingTimer: remainingTimer,
+              timerColor: timerColor,
+              fun: () {
+                isOut = false;
+                timerColor = primaryColor;
+                timer.cancel;
+                remainingTimer = 900;
+                startTimer();
+              },
+              passCtrl: passCtrl,
+              emailCtrl: emailCtrl,
+              usernameCtrl: usernameCtrl,
+              tokenCtrl: tokenCtrl,
+              timerCtrl: timer,
+            )),
       ),
       PageModel(
         widget: DecoratedBox(

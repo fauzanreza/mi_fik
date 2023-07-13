@@ -1,3 +1,4 @@
+import 'package:mi_fik/Modules/APIs/AuthApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Models/commands.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
 
@@ -63,6 +64,19 @@ class UserValidator {
         "status": false,
         "message": "First name should below $fnameLength character",
         "loc": "last_name"
+      };
+    }
+    return {"status": true, "message": "Validation success"};
+  }
+
+  static Map<String, dynamic> validateEditPass(EditPassModel data) {
+    if (data.password.length < passwordMinLength ||
+        data.password.length > passwordLength) {
+      return {
+        "status": false,
+        "message":
+            "Password should be around $passwordMinLength up to $passwordLength character",
+        "loc": "password"
       };
     }
     return {"status": true, "message": "Validation success"};

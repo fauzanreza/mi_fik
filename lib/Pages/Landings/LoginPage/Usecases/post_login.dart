@@ -12,6 +12,7 @@ import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/Landings/ForgetPassPage/index.dart';
 import 'package:mi_fik/Pages/Landings/RegisterPage/index.dart';
 
 class PostLogin extends StatefulWidget {
@@ -78,8 +79,22 @@ class StatePostLogin extends State<PostLogin> {
             getInputWarning(passMsg),
             getInputText(passwordLength, passCtrl, true),
             getInputWarning(allMsg),
+            TextButton(
+              style: TextButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 0),
+                foregroundColor: darkColor,
+              ),
+              onPressed: () {
+                indexForget = 0;
+                Get.to(() => const ForgetPage(
+                      isLogged: false,
+                    ));
+              },
+              child: Text('Forget Password'.tr,
+                  style: TextStyle(fontSize: textMD)),
+            ),
             Container(
-                margin: EdgeInsets.only(top: spaceXMD),
+                margin: EdgeInsets.only(top: spaceSM),
                 padding: EdgeInsets.zero,
                 width: fullWidth,
                 height: 45,

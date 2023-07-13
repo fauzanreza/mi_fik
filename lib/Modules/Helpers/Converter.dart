@@ -306,6 +306,13 @@ String getMessageResponseFromObject(val, type) {
           res += "${username.join('\n')}";
         }
       }
+    } else if (type == "forget") {
+      if (val.containsKey('validation_token')) {
+        var token = val['validation_token'];
+        if (token != null) {
+          res += "${token.join('\n')}";
+        }
+      }
     }
 
     return res;

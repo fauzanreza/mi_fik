@@ -27,6 +27,10 @@ String selectedArchiveSlug;
 
 // Forget password
 int indexForget = 0;
+bool checkAvaiabilityForget = false;
+bool isWaitingLoad = true;
+bool isInvalidToken = false;
+bool tokenValidated = false;
 
 //Regis only
 int indexRegis = 0;
@@ -41,7 +45,6 @@ bool successValidateAnimation = false;
 
 String usernameAvaiabilityCheck = "";
 String emailAvaiabilityCheck = "";
-String tokenAvaiabilityCheck = "";
 
 String passRegisCtrl = "";
 int validRegisCtrl;
