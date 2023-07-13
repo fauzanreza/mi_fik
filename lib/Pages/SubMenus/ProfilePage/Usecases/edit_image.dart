@@ -136,10 +136,8 @@ class _EditImageState extends State<EditImage>
                                       FullScreenMenu.hide();
 
                                       Get.to(() => CameraPage(
-                                            camera: cameras.first,
-                                            from: "profile",
-                                            loadingCtrl: lottieController,
-                                          ));
+                                          camera: cameras.first,
+                                          from: "profile"));
                                     }),
                                 FSMenuItem(
                                   icon: Icon(Icons.folder, color: whiteColor),

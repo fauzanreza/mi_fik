@@ -7,6 +7,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   geolocator_windows
   pdfx
   permission_handler_windows
+  smart_auth
   url_launcher_windows
 )
 

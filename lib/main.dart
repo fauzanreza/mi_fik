@@ -225,7 +225,9 @@ class StateMyApp extends State<MyApp> {
             if (widget.finishRegis) {
               return getItem(const BottomBar());
             } else {
+              indexRegis = 5;
               return getItem(const RegisterPage(isLogged: true));
+              // return getItem(const WaitingPage());
             }
           } else {
             return const CircularProgressIndicator();

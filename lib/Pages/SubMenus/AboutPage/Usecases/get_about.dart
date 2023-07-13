@@ -4,6 +4,7 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:mi_fik/Modules/APIs/HelpApi/Models/queries.dart';
 import 'package:mi_fik/Modules/APIs/HelpApi/Services/queries.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:skeletons/skeletons.dart';
 
 class GetAbout extends StatefulWidget {
   const GetAbout({Key key}) : super(key: key);
@@ -23,6 +24,8 @@ class StateGetAbout extends State<GetAbout> {
 
   @override
   Widget build(BuildContext context) {
+    double fullWidth = MediaQuery.of(context).size.width;
+
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
@@ -38,9 +41,14 @@ class StateGetAbout extends State<GetAbout> {
             List<HelpBodyModel> contents = snapshot.data;
             return _buildListView(contents);
           } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return Container(
+                margin: EdgeInsets.all(spaceMD),
+                width: fullWidth,
+                child: SkeletonParagraph(
+                    style: SkeletonParagraphStyle(
+                        lines: 10,
+                        lineStyle: SkeletonLineStyle(
+                            randomLength: true, minLength: fullWidth * 0.7))));
           }
         },
       ),

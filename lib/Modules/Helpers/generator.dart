@@ -11,6 +11,7 @@ import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 getToday(String type) {
   if (type == "date") {
@@ -366,4 +367,18 @@ int getUTCHourOffset() {
   DateTime now = DateTime.now();
   Duration offset = now.timeZoneOffset;
   return offset.inHours;
+}
+
+Future<Role> getRoleSess(bool isLogged) async {
+  final prefs = await SharedPreferences.getInstance();
+  final roles = prefs.getString('role_list_key');
+
+  if (roles != null) {
+    return Role(role: roles);
+  } else {
+    if (isLogged) {
+      await getDestroyTrace(false);
+    }
+    return null;
+  }
 }

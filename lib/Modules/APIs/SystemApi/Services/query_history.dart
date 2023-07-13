@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 // ignore: depend_on_referenced_packages
 import 'package:http/http.dart' show Client;
 import 'package:mi_fik/Modules/APIs/SystemApi/Models/query_history.dart';
-import 'package:mi_fik/Modules/Routes/collection.dart';
+import 'package:mi_fik/Modules/Helpers/template.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -47,11 +47,7 @@ class HistoryQueriesService {
         prefs.setString("myhistory-$page-sess", response.body);
         return historyJsonWPaginate(response.body);
       } else if (response.statusCode == 401) {
-        await prefs.clear();
-
-        Get.offNamed(CollectionRoute.landing, preventDuplicates: false);
-        Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
-            backgroundColor: whiteColor);
+        await getDestroyTrace(false);
         return null;
       } else {
         return null;

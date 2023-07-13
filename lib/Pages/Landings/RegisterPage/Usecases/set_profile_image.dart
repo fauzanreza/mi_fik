@@ -169,11 +169,8 @@ class StateSetProfileImage extends State<SetProfileImage>
                                                     await availableCameras();
                                                 FullScreenMenu.hide();
                                                 Get.to(() => CameraPage(
-                                                      camera: cameras.first,
-                                                      from: "register",
-                                                      loadingCtrl:
-                                                          lottieController,
-                                                    ));
+                                                    camera: cameras.first,
+                                                    from: "register"));
                                               }),
                                           FSMenuItem(
                                             icon: Icon(Icons.folder,

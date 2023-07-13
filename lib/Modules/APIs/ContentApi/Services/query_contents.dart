@@ -4,7 +4,7 @@ import 'package:http/http.dart' show Client;
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
-import 'package:mi_fik/Modules/Routes/collection.dart';
+import 'package:mi_fik/Modules/Helpers/template.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -54,11 +54,7 @@ class ContentQueriesService {
         prefs.setString("content-sess", response.body);
         return contentHeaderModelFromJsonWPaginate(response.body);
       } else if (response.statusCode == 401) {
-        await prefs.clear();
-
-        Get.offNamed(CollectionRoute.landing, preventDuplicates: false);
-        Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
-            backgroundColor: whiteColor);
+        await getDestroyTrace(false);
         return null;
       } else {
         return null;
@@ -101,11 +97,7 @@ class ContentQueriesService {
         prefs.setString("content-detail-$slug-sess", response.body);
         return contentDetailModelFromJson(response.body);
       } else if (response.statusCode == 401) {
-        await prefs.clear();
-
-        Get.offNamed(CollectionRoute.landing, preventDuplicates: false);
-        Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
-            backgroundColor: whiteColor);
+        await getDestroyTrace(false);
         return null;
       } else {
         return null;
@@ -150,11 +142,7 @@ class ContentQueriesService {
         prefs.setString("schedule-$dateStr-sess", response.body);
         return scheduleModelFromJsonWPaginate(response.body);
       } else if (response.statusCode == 401) {
-        await prefs.clear();
-
-        Get.offNamed(CollectionRoute.landing, preventDuplicates: false);
-        Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
-            backgroundColor: whiteColor);
+        await getDestroyTrace(false);
         return null;
       } else {
         return null;
@@ -199,9 +187,7 @@ class ContentQueriesService {
         prefs.setString("scheduletotal-$dateStr-sess", response.body);
         return scheduleTotalModelFromJson(response.body);
       } else if (response.statusCode == 401) {
-        Get.offNamed(CollectionRoute.landing, preventDuplicates: false);
-        Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
-            backgroundColor: whiteColor);
+        await getDestroyTrace(false);
         return null;
       } else {
         return null;

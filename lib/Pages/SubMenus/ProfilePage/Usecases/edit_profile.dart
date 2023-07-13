@@ -11,6 +11,7 @@ import 'package:mi_fik/Modules/APIs/UserApi/Services/queries.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:skeletons/skeletons.dart';
 
 class GetEditProfile extends StatefulWidget {
   const GetEditProfile({Key key}) : super(key: key);
@@ -60,8 +61,20 @@ class _GetEditProfileState extends State<GetEditProfile> {
 
             return _buildListView(contents);
           } else {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return Center(
+              child: Container(
+                  margin: EdgeInsets.all(spaceMini),
+                  padding: EdgeInsets.only(right: spaceMD),
+                  child:
+                      Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                    SkeletonLine(
+                      style: SkeletonLineStyle(
+                          height: 60,
+                          width: 60,
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(roundedMD))),
+                    )
+                  ])),
             );
           }
         },

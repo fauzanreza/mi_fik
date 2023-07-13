@@ -12,7 +12,6 @@ import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/dummy.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SetControl extends StatefulWidget {
   const SetControl({Key key, this.titleCtrl}) : super(key: key);
@@ -23,24 +22,10 @@ class SetControl extends StatefulWidget {
 }
 
 class StateSetControl extends State<SetControl> {
-  Future<Role> getToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    final roles = prefs.getString('role_list_key');
-
-    if (roles != null) {
-      return Role(role: roles);
-    } else {
-      Get.offNamed(CollectionRoute.landing, preventDuplicates: false);
-      Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
-          backgroundColor: whiteColor);
-      return null;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Role>(
-        future: getToken(),
+        future: getRoleSess(true),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done &&
               snapshot.hasData) {

@@ -69,7 +69,7 @@ class LeftBar extends StatelessWidget {
                                                 color: whiteColor,
                                                 fontSize: textXMD + 2,
                                                 fontWeight: FontWeight.w500)),
-                                        Text(role,
+                                        Text("$role ",
                                             style: TextStyle(
                                                 color: whiteColor,
                                                 fontSize: textXMD + 2,

@@ -11,6 +11,7 @@ import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:skeletons/skeletons.dart';
 
 class ShowRole extends StatefulWidget {
   const ShowRole({Key key}) : super(key: key);
@@ -32,6 +33,8 @@ class StateShowRole extends State<ShowRole> {
 
   @override
   Widget build(BuildContext context) {
+    double fullWidth = MediaQuery.of(context).size.width;
+
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
@@ -47,8 +50,16 @@ class StateShowRole extends State<ShowRole> {
             List<MyTagModel> contents = snapshot.data;
             return _buildListView(contents);
           } else {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return Center(
+              child: Container(
+                  margin: EdgeInsets.all(spaceMini),
+                  child: SkeletonLine(
+                    style: SkeletonLineStyle(
+                        height: 60,
+                        width: fullWidth,
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(roundedMini))),
+                  )),
             );
           }
         },

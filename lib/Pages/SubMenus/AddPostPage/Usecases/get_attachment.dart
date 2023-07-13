@@ -1,4 +1,3 @@
-import 'package:chewie/chewie.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,7 +10,6 @@ import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/get_pdf.dart';
 // ignore: depend_on_referenced_packages
-import 'package:video_player/video_player.dart';
 
 class GetFileAttachment extends StatefulWidget {
   const GetFileAttachment({Key key}) : super(key: key);
@@ -79,8 +77,8 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
               item: Container(
                   alignment: Alignment.center,
                   margin: EdgeInsets.symmetric(vertical: spaceLG),
-                  child: getContentImageHeader(e['attach_url'], fullWidth * 0.5,
-                      null, false, BorderRadius.circular(roundedMD))));
+                  child: getContentImageHeader(e['attach_url'], null, null,
+                      false, BorderRadius.circular(roundedMD))));
         } else if (e['attach_type'] == "attachment_video") {
           return GetAttachmentContainer(
               data: e,

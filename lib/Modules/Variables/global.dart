@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
@@ -11,6 +12,7 @@ List listAttachment = [];
 List<Map<String, dynamic>> listArchiveCheck = [];
 TabController tabController;
 bool isOffline = false;
+FlashMode flashMode = FlashMode.off;
 
 //Schedule Page
 String archiveNameMsg = "";
@@ -22,6 +24,13 @@ String selectedArchiveName;
 String selectedArchiveDesc;
 String locCoordinateCtrl;
 String selectedArchiveSlug;
+
+// Forget password
+int indexForget = 0;
+bool checkAvaiabilityForget = false;
+bool isWaitingLoad = true;
+bool isInvalidToken = false;
+bool tokenValidated = false;
 
 //Regis only
 int indexRegis = 0;
