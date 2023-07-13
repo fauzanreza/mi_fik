@@ -23,6 +23,7 @@ getDestroyTrace(bool isSignOut) async {
   Get.offAllNamed(
     CollectionRoute.landing,
   );
+  Get.clearRouteTree();
 
   if (!isSignOut) {
     Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,

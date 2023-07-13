@@ -1,5 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
@@ -30,6 +31,7 @@ class StatePostLogin extends State<PostLogin> {
   String usernameMsg = "";
   String passMsg = "";
   String allMsg = "";
+  bool isHide = true;
 
   @override
   void dispose() {
@@ -77,7 +79,32 @@ class StatePostLogin extends State<PostLogin> {
             Text("Password",
                 style: TextStyle(color: darkColor, fontSize: textXMD)),
             getInputWarning(passMsg),
-            getInputText(passwordLength, passCtrl, true),
+            Stack(
+              children: [
+                getInputText(passwordLength, passCtrl, isHide),
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: IconButton(
+                    iconSize: iconMD,
+                    icon: FaIcon(
+                        isHide == false
+                            ? FontAwesomeIcons.eye
+                            : FontAwesomeIcons.eyeSlash,
+                        color: darkColor),
+                    onPressed: () {
+                      setState(() {
+                        if (isHide) {
+                          isHide = false;
+                        } else {
+                          isHide = true;
+                        }
+                      });
+                    },
+                  ),
+                )
+              ],
+            ),
             getInputWarning(allMsg),
             TextButton(
               style: TextButton.styleFrom(
