@@ -390,100 +390,67 @@ Widget getContentHour(dateStart, dateEnd) {
   }
 }
 
-Widget getPeriodDateWidget(dateStart, dateEnd) {
-  //Initial variable.
-  final now = DateTime.now();
-  dateStart = DateTime.parse(dateStart);
-  dateEnd = DateTime.parse(dateEnd);
+Widget getEventStatus(dateStart, dateEnd) {
+  DateTime cStart = DateTime.parse(dateStart);
+  DateTime cEnd = DateTime.parse(dateEnd);
+  int offsetHours = getUTCHourOffset();
+  Color clr;
+  String ctx;
 
-  bool hasDatePassed(DateTime date) {
-    final now = DateTime.now();
-    return date.isBefore(now);
-  }
+  cStart = cStart.add(Duration(hours: offsetHours));
+  cEnd = cEnd.add(Duration(hours: offsetHours));
 
-  final ds = DateTime(dateStart.year, dateStart.month, dateStart.day,
-      dateStart.hour, dateStart.minute);
-  final de = DateTime(
-      dateEnd.year, dateEnd.month, dateEnd.day, dateEnd.hour, dateEnd.minute);
+  DateTime now = DateTime.now();
 
-  final isTodayStart =
-      now.year == ds.year && now.month == ds.month && now.day == ds.day;
-  final isTodayEnd =
-      now.year == de.year && now.month == de.month && now.day == de.day;
+  int msDiffStart = cStart.difference(now).inMilliseconds;
+  int msDiffEnd = cEnd.difference(now).inMilliseconds;
 
-  if (hasDatePassed(ds) && !hasDatePassed(de)) {
-    if (now.difference(ds).inMinutes < 60 && isTodayStart) {
-      return Container(
-          margin: EdgeInsets.only(left: spaceXLG * 0.8),
-          child: RichText(
-            text: TextSpan(
-              children: [
-                WidgetSpan(
-                  child: Icon(Icons.circle, size: 14, color: primaryColor),
-                ),
-                TextSpan(
-                    text: " About to start",
-                    style: TextStyle(
-                        color: primaryColor,
-                        fontSize: textXMD,
-                        fontWeight: FontWeight.w500)),
-              ],
-            ),
-          ));
-    } else if (de.difference(now).inMinutes < 30 && isTodayEnd) {
-      return Container(
-          margin: EdgeInsets.only(left: spaceXLG * 0.8),
-          child: RichText(
-            text: TextSpan(
-              children: [
-                WidgetSpan(
-                  child: Icon(Icons.circle, size: 14, color: warningBG),
-                ),
-                TextSpan(
-                    text: " About to end",
-                    style: TextStyle(
-                        color: warningBG,
-                        fontSize: textXMD,
-                        fontWeight: FontWeight.w500)),
-              ],
-            ),
-          ));
+  int hourDiffStart = (msDiffStart / (1000 * 60)).round();
+  int hourDiffEnd = (msDiffEnd / (1000 * 60)).round();
+
+  if (cStart.isAfter(now) &&
+      cEnd.isAfter(now) &&
+      hourDiffStart >= 0 &&
+      hourDiffStart <= 15) {
+    clr = primaryColor;
+    ctx = " About to start";
+  } else if (cStart.isBefore(now) && cEnd.isAfter(now)) {
+    clr = warningBG;
+    if (hourDiffEnd > 1 && hourDiffStart > -15) {
+      ctx = " Just Started";
+    } else if (hourDiffEnd > 15) {
+      ctx = " Live";
     } else {
-      return Container(
-          margin: EdgeInsets.only(left: spaceXLG * 0.8),
-          child: RichText(
-            text: TextSpan(
-              children: [
-                WidgetSpan(
-                  child: Icon(Icons.circle, size: 14, color: warningBG),
-                ),
-                TextSpan(
-                    text: "Live".tr,
-                    style: TextStyle(
-                        color: warningBG,
-                        fontSize: textXMD,
-                        fontWeight: FontWeight.w500)),
-              ],
-            ),
-          ));
+      ctx = " About to end";
     }
-  } else if (hasDatePassed(ds) && hasDatePassed(de)) {
-    return Container(
-        margin: EdgeInsets.only(left: spaceXLG * 0.8),
-        child: RichText(
-          text: TextSpan(
-            children: [
-              WidgetSpan(
-                child: Icon(Icons.circle, size: 14, color: successBG),
-              ),
-              TextSpan(
-                  text: " Just Ended",
-                  style:
-                      TextStyle(color: successBG, fontWeight: FontWeight.w500)),
-            ],
-          ),
-        ));
+  } else if (cStart.isBefore(now) &&
+      cEnd.isBefore(now) &&
+      hourDiffEnd <= 0 &&
+      hourDiffEnd >= -15) {
+    clr = successBG;
+    ctx = " Just ended";
+  } else if (cStart.isBefore(now) && cEnd.isBefore(now) && hourDiffEnd <= -15) {
+    clr = successBG;
+    ctx = " Finished";
   } else {
     return const SizedBox();
   }
+
+  return Container(
+      margin: EdgeInsets.only(left: spaceXLG * 0.8),
+      child: RichText(
+        text: TextSpan(
+          children: [
+            WidgetSpan(
+              child: Icon(Icons.circle, size: 14, color: clr),
+            ),
+            TextSpan(
+                text: ctx,
+                style: TextStyle(
+                    color: clr,
+                    fontSize: textXMD,
+                    fontWeight: FontWeight.w500)),
+          ],
+        ),
+      ));
 }

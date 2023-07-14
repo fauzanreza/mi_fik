@@ -95,7 +95,7 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               getViewWidget(widget.content.totalViews),
-                              getPeriodDateWidget(widget.content.dateStart,
+                              getEventStatus(widget.content.dateStart,
                                   widget.content.dateEnd),
                               const Spacer(),
                               getUploadDateWidget(
