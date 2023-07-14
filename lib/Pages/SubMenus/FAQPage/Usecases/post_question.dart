@@ -117,10 +117,10 @@ class StatePostQuestion extends State<PostQuestion> {
 
                         if (status == "success") {
                           if (widget.from == "myfaq") {
-                            Get.offNamed(CollectionRoute.myfaq,
+                            Get.toNamed(CollectionRoute.myfaq,
                                 preventDuplicates: false);
                           } else {
-                            Get.offNamed(CollectionRoute.faq,
+                            Get.toNamed(CollectionRoute.faq,
                                 preventDuplicates: false);
                           }
 

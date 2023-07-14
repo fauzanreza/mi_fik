@@ -42,9 +42,11 @@ class StateShowRole extends State<ShowRole> {
         builder:
             (BuildContext context, AsyncSnapshot<List<MyTagModel>> snapshot) {
           if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                  "Something wrong with message: ${snapshot.error.toString()}"),
+            Get.dialog(const FailedDialog(
+                text: "Unknown error, please contact the admin",
+                type: "error"));
+            return const Center(
+              child: Text("Something wrong"),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
             List<MyTagModel> contents = snapshot.data;
@@ -161,14 +163,12 @@ class StateShowRole extends State<ShowRole> {
                                             var body = response[0]['body'];
 
                                             if (status == "success") {
-                                              Get.offNamed(
-                                                  CollectionRoute.profile,
+                                              Get.to(CollectionRoute.profile,
                                                   preventDuplicates: false);
                                               Get.dialog(
                                                   SuccessDialog(text: body));
                                             } else {
-                                              Get.offNamed(
-                                                  CollectionRoute.profile,
+                                              Get.to(CollectionRoute.profile,
                                                   preventDuplicates: false);
 
                                               Get.dialog(FailedDialog(

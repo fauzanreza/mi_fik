@@ -102,9 +102,7 @@ class StateHomePage extends State<HomePage> {
     //double fullWidth = MediaQuery.of(context).size.width;
 
     return WillPopScope(
-        onWillPop: () {
-          return SystemNavigator.pop();
-        },
+        onWillPop: () => SystemNavigator.pop(),
         child: Scaffold(
           key: scaffoldKey,
           drawer: const LeftBar(),

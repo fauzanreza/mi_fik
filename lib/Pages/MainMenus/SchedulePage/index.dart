@@ -28,6 +28,7 @@ class StateSchedulePage extends State<SchedulePage>
     with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   LangCtrl langctrl = Get.put(LangCtrl());
+  bool isSpeedDialOpen = false;
 
   getStartIndex(String slug) {
     if (slug == null) {
@@ -86,7 +87,8 @@ class StateSchedulePage extends State<SchedulePage>
     return WillPopScope(
         onWillPop: () {
           selectedIndex = 0;
-          Get.offNamed(CollectionRoute.bar, preventDuplicates: false);
+          Get.toNamed(CollectionRoute.bar, preventDuplicates: false);
+
           return null;
         },
         child: Scaffold(
@@ -128,6 +130,8 @@ class StateSchedulePage extends State<SchedulePage>
                 backgroundColor: primaryColor,
                 overlayColor: primaryColor,
                 overlayOpacity: 0.4,
+                onOpen: () => isSpeedDialOpen = true,
+                onClose: () => isSpeedDialOpen = false,
                 children: [
                   getSpeeDialChild("New Task".tr, context, const PostTask(),
                       Icons.note_add_outlined),

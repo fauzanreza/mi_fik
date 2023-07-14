@@ -103,7 +103,8 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
                             ])),
                   ],
                 )),
-            Container(
+            Expanded(
+                child: Container(
               padding: EdgeInsets.symmetric(horizontal: spaceSM),
               margin: EdgeInsets.symmetric(vertical: spaceSM),
               child: Column(
@@ -137,9 +138,10 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
                             ))
                       ],
                     ),
+                    SizedBox(height: spaceXSM),
                     getDescHeaderWidget(widget.content.contentDesc, darkColor)
                   ]),
-            ),
+            )),
             Container(
               padding: EdgeInsets.symmetric(horizontal: spaceSM),
               margin: EdgeInsets.symmetric(vertical: spaceSM),
@@ -205,8 +207,10 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
 class GetScheduleContainer extends StatelessWidget {
   final double width;
   final ScheduleModel content;
+  final bool isConverted;
 
-  const GetScheduleContainer({Key key, this.width, this.content})
+  const GetScheduleContainer(
+      {Key key, this.width, this.content, this.isConverted})
       : super(key: key);
 
   //Get icon based on event or task
@@ -216,10 +220,14 @@ class GetScheduleContainer extends StatelessWidget {
       return FaIcon(
         FontAwesomeIcons.calendarDay,
         color: getColor(
-            DateTime.parse(dateStart)
-                .subtract(Duration(hours: getUTCHourOffset() * -1)),
-            DateTime.parse(dateEnd)
-                .subtract(Duration(hours: getUTCHourOffset() * -1))),
+            isConverted == true
+                ? DateTime.parse(dateStart)
+                : DateTime.parse(dateStart)
+                    .subtract(Duration(hours: getUTCHourOffset() * -1)),
+            isConverted == true
+                ? DateTime.parse(dateEnd)
+                : DateTime.parse(dateEnd)
+                    .subtract(Duration(hours: getUTCHourOffset() * -1))),
         size: iconLG + 5,
       );
     } else if (type == 2) {
@@ -227,10 +235,14 @@ class GetScheduleContainer extends StatelessWidget {
       return Icon(
         Icons.task,
         color: getColor(
-            DateTime.parse(dateStart)
-                .subtract(Duration(hours: getUTCHourOffset() * -1)),
-            DateTime.parse(dateEnd)
-                .subtract(Duration(hours: getUTCHourOffset() * -1))),
+            isConverted == true
+                ? DateTime.parse(dateStart)
+                : DateTime.parse(dateStart)
+                    .subtract(Duration(hours: getUTCHourOffset() * -1)),
+            isConverted == true
+                ? DateTime.parse(dateEnd)
+                : DateTime.parse(dateEnd)
+                    .subtract(Duration(hours: getUTCHourOffset() * -1))),
         size: iconLG + 7,
       );
     } else {
@@ -258,10 +270,14 @@ class GetScheduleContainer extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: getBgColor(
-            DateTime.parse(content.dateStart)
-                .subtract(Duration(hours: getUTCHourOffset() * -1)),
-            DateTime.parse(content.dateEnd)
-                .subtract(Duration(hours: getUTCHourOffset() * -1))),
+            isConverted == true
+                ? DateTime.parse(content.dateStart)
+                : DateTime.parse(content.dateStart)
+                    .subtract(Duration(hours: getUTCHourOffset() * -1)),
+            isConverted == true
+                ? DateTime.parse(content.dateEnd)
+                : DateTime.parse(content.dateEnd)
+                    .subtract(Duration(hours: getUTCHourOffset() * -1))),
         boxShadow: [
           BoxShadow(
             color: shadowColor.withOpacity(0.35),
@@ -289,23 +305,33 @@ class GetScheduleContainer extends StatelessWidget {
                     maxLines: 1,
                     style: TextStyle(
                       color: getColor(
-                          DateTime.parse(content.dateStart)
-                              .add(Duration(hours: getUTCHourOffset())),
-                          DateTime.parse(content.dateEnd)
-                              .add(Duration(hours: getUTCHourOffset()))),
+                          isConverted == true
+                              ? DateTime.parse(content.dateStart)
+                              : DateTime.parse(content.dateStart)
+                                  .add(Duration(hours: getUTCHourOffset())),
+                          isConverted == true
+                              ? DateTime.parse(content.dateEnd)
+                              : DateTime.parse(content.dateEnd)
+                                  .add(Duration(hours: getUTCHourOffset()))),
                       fontSize: textSM,
                       fontWeight: FontWeight.bold,
                     ),
                   )),
                   Text(
-                    DateFormat("HH:mm").format(DateTime.parse(content.dateStart)
-                        .add(Duration(hours: getUTCHourOffset()))),
+                    DateFormat("HH:mm").format(isConverted == true
+                        ? DateTime.parse(content.dateStart)
+                        : DateTime.parse(content.dateStart)
+                            .add(Duration(hours: getUTCHourOffset()))),
                     style: TextStyle(
                       color: getColor(
-                          DateTime.parse(content.dateStart)
-                              .add(Duration(hours: getUTCHourOffset())),
-                          DateTime.parse(content.dateEnd)
-                              .add(Duration(hours: getUTCHourOffset()))),
+                          isConverted == true
+                              ? DateTime.parse(content.dateStart)
+                              : DateTime.parse(content.dateStart)
+                                  .add(Duration(hours: getUTCHourOffset())),
+                          isConverted == true
+                              ? DateTime.parse(content.dateEnd)
+                              : DateTime.parse(content.dateEnd)
+                                  .add(Duration(hours: getUTCHourOffset()))),
                       fontWeight: FontWeight.w500,
                       fontSize: textMD,
                     ),
@@ -313,24 +339,32 @@ class GetScheduleContainer extends StatelessWidget {
                 ],
               ),
               getOngoingDesc(
-                  DateTime.parse(content.dateStart)
-                      .add(Duration(hours: getUTCHourOffset())),
-                  DateTime.parse(content.dateEnd)
-                      .add(Duration(hours: getUTCHourOffset())),
+                  isConverted == true
+                      ? DateTime.parse(content.dateStart)
+                      : DateTime.parse(content.dateStart)
+                          .add(Duration(hours: getUTCHourOffset())),
+                  isConverted == true
+                      ? DateTime.parse(content.dateEnd)
+                      : DateTime.parse(content.dateEnd)
+                          .add(Duration(hours: getUTCHourOffset())),
                   content.contentDesc),
               Container(
                   margin: EdgeInsets.symmetric(vertical: spaceXMD),
-                  child: getTagShow(
-                      content.contentTag, content.dateStart, content.dateEnd)),
+                  child: getTagShow(content.contentTag, content.dateStart,
+                      content.dateEnd, isConverted)),
               Container(
                 margin: EdgeInsets.symmetric(horizontal: spaceSM),
                 child: getLocation(
                     content.contentLoc,
                     getColor(
-                        DateTime.parse(content.dateStart)
-                            .add(Duration(hours: getUTCHourOffset())),
-                        DateTime.parse(content.dateEnd)
-                            .add(Duration(hours: getUTCHourOffset())))),
+                        isConverted == true
+                            ? DateTime.parse(content.dateStart)
+                            : DateTime.parse(content.dateStart)
+                                .add(Duration(hours: getUTCHourOffset())),
+                        isConverted == true
+                            ? DateTime.parse(content.dateEnd)
+                            : DateTime.parse(content.dateEnd)
+                                .add(Duration(hours: getUTCHourOffset())))),
               ),
             ]),
             Positioned(

@@ -381,7 +381,7 @@ class StateAddPost extends State<AddPost> {
                                 locCoordinateCtrl = null;
                                 contentAttImage = null;
                                 listAttachment = [];
-                                Get.offNamed(CollectionRoute.bar,
+                                Get.toNamed(CollectionRoute.bar,
                                     preventDuplicates: false);
 
                                 Get.dialog(SuccessDialog(text: body));

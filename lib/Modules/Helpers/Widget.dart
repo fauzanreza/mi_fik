@@ -208,8 +208,7 @@ getImageUser(url) {
 
 Widget getDescHeaderWidget(String desc, Color clr) {
   if (desc != null && desc.trim() != "" && desc != "null") {
-    return Container(
-        margin: EdgeInsets.only(top: spaceSM),
+    return Expanded(
         child: Text(ucFirst(removeHtmlTags(desc).trim()),
             maxLines: 3,
             softWrap: true,

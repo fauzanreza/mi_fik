@@ -146,7 +146,7 @@ class StateSheetFilter extends State<SheetFilter> {
                           color: whiteColor,
                           onPressed: () {
                             searchingContent = "";
-                            Get.offNamed(CollectionRoute.bar,
+                            Get.toNamed(CollectionRoute.bar,
                                 preventDuplicates: false);
                           },
                         ),
@@ -209,7 +209,7 @@ class StateSheetFilter extends State<SheetFilter> {
                             onPressed: () {
                               filterDateStart = null;
                               filterDateEnd = null;
-                              Get.offNamed(CollectionRoute.bar,
+                              Get.toNamed(CollectionRoute.bar,
                                   preventDuplicates: false);
                             },
                           ),
@@ -255,7 +255,7 @@ class StateSheetFilter extends State<SheetFilter> {
                     const Spacer(),
                     outlinedButtonCustom(() {
                       selectedTagFilterContent.clear();
-                      Get.offNamed(CollectionRoute.bar,
+                      Get.toNamed(CollectionRoute.bar,
                           preventDuplicates: false);
                     }, "Clear All".tr, Icons.delete)
                   ],
@@ -308,7 +308,7 @@ class StateSheetFilter extends State<SheetFilter> {
                   child: ElevatedButton(
                     onPressed: () {
                       searchingContent = widget.title.text.trim();
-                      Get.offNamed(CollectionRoute.bar,
+                      Get.toNamed(CollectionRoute.bar,
                           preventDuplicates: false);
                     },
                     style: ButtonStyle(

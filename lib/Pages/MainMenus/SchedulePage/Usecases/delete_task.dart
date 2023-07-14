@@ -55,7 +55,7 @@ class StateDeleteTask extends State<DeleteTask> {
                         var body = response[0]['body'];
 
                         if (status == "success") {
-                          Get.offNamed(CollectionRoute.bar,
+                          Get.toNamed(CollectionRoute.bar,
                               preventDuplicates: false);
                           Get.dialog(SuccessDialog(text: body));
                         } else {

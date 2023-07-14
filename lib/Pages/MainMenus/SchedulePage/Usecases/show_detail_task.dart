@@ -101,9 +101,7 @@ class StateDetailTask extends State<DetailTask> {
               runSpacing: -spaceWrap,
               spacing: spaceWrap,
               children: [
-                getDatePicker(
-                    dateStartCtrl.subtract(
-                        Duration(hours: getUTCHourOffset() * -1)), () {
+                getDatePicker(dateStartCtrl, () {
                   final now = DateTime.now();
 
                   DatePicker.showDateTimePicker(context,
@@ -113,17 +111,11 @@ class StateDetailTask extends State<DetailTask> {
                       maxTime: DateTime(now.year + 1, now.month, now.day),
                       onConfirm: (date) {
                     setState(() {
-                      dateStartCtrl =
-                          date.add(Duration(hours: getUTCHourOffset() * -1));
+                      dateStartCtrl = date;
                     });
-                  },
-                      currentTime: dateStartCtrl
-                          .subtract(Duration(hours: getUTCHourOffset() * -1)),
-                      locale: LocaleType.en);
+                  }, currentTime: dateStartCtrl, locale: LocaleType.en);
                 }, "Start", "datetime"),
-                getDatePicker(
-                    dateEndCtrl.subtract(
-                        Duration(hours: getUTCHourOffset() * -1)), () {
+                getDatePicker(dateEndCtrl, () {
                   final now = DateTime.now();
 
                   DatePicker.showDateTimePicker(context,
@@ -133,13 +125,9 @@ class StateDetailTask extends State<DetailTask> {
                       maxTime: DateTime(now.year + 1, now.month, now.day),
                       onConfirm: (date) {
                     setState(() {
-                      dateEndCtrl =
-                          date.add(Duration(hours: getUTCHourOffset() * -1));
+                      dateEndCtrl = date;
                     });
-                  },
-                      currentTime: dateEndCtrl
-                          .subtract(Duration(hours: getUTCHourOffset() * -1)),
-                      locale: LocaleType.en);
+                  }, currentTime: dateEndCtrl, locale: LocaleType.en);
                 }, "End", "datetime"),
                 Wrap(children: <Widget>[
                   TextButton(
@@ -198,8 +186,10 @@ class StateDetailTask extends State<DetailTask> {
                         AddTaskModel task = AddTaskModel(
                             taskTitle: taskTitleCtrl.text.trim(),
                             taskDesc: taskDescCtrl.text.trim(),
-                            dateStart: validateDatetime(dateStartCtrl),
-                            dateEnd: validateDatetime(dateEndCtrl),
+                            dateStart: validateDatetime(dateStartCtrl
+                                .add(Duration(hours: getUTCHourOffset() * -1))),
+                            dateEnd: validateDatetime(dateEndCtrl
+                                .add(Duration(hours: getUTCHourOffset() * -1))),
                             reminder: slctReminderType);
 
                         //Validator
@@ -212,7 +202,7 @@ class StateDetailTask extends State<DetailTask> {
                             var body = response[0]['body'];
 
                             if (status == "success") {
-                              Get.offNamed(CollectionRoute.bar,
+                              Get.toNamed(CollectionRoute.bar,
                                   preventDuplicates: false);
 
                               Get.dialog(SuccessDialog(text: body));

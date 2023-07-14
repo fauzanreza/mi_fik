@@ -60,9 +60,11 @@ class StateSavedContent extends State<SavedContent>
         builder: (BuildContext context,
             AsyncSnapshot<List<ScheduleModel>> snapshot) {
           if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                  "Something wrong with message: ${snapshot.error.toString()}"),
+            Get.dialog(const FailedDialog(
+                text: "Unknown error, please contact the admin",
+                type: "error"));
+            return const Center(
+              child: Text("Something wrong"),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
             List<ScheduleModel> contents = snapshot.data;
@@ -91,7 +93,7 @@ class StateSavedContent extends State<SavedContent>
                   outlinedButtonCustom(() {
                     selectedArchiveSlug = null;
                     selectedArchiveName = null;
-                    Get.offNamed(CollectionRoute.bar, preventDuplicates: false);
+                    Get.toNamed(CollectionRoute.bar, preventDuplicates: false);
                   }, "Back to Archive".tr, Icons.arrow_back),
                   const Spacer(),
                   DeleteArchive(slug: widget.slug, name: widget.name),
@@ -192,7 +194,9 @@ class StateSavedContent extends State<SavedContent>
                               }
                             },
                             child: GetScheduleContainer(
-                                width: fullWidth, content: content))
+                                width: fullWidth,
+                                content: content,
+                                isConverted: false))
                       ])));
                 }
               }).toList())
@@ -207,7 +211,7 @@ class StateSavedContent extends State<SavedContent>
               outlinedButtonCustom(() {
                 selectedArchiveSlug = null;
                 selectedArchiveName = null;
-                Get.offNamed(CollectionRoute.bar, preventDuplicates: false);
+                Get.toNamed(CollectionRoute.bar, preventDuplicates: false);
               }, "Back to Archive".tr, Icons.arrow_back),
               const Spacer(),
               DeleteArchive(slug: selectedArchiveSlug),

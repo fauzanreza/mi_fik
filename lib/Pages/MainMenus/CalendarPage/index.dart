@@ -57,7 +57,7 @@ class StateCalendarPageState extends State<CalendarPage> {
     return WillPopScope(
       onWillPop: () {
         selectedIndex = 0;
-        Get.offNamed(CollectionRoute.bar, preventDuplicates: false);
+        Get.toNamed(CollectionRoute.bar, preventDuplicates: false);
         return null;
       },
       child: Scaffold(

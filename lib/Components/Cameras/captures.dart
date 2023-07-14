@@ -49,7 +49,7 @@ class StateCameraPageState extends State<CameraPage>
   }
 
   void navigateToShowImage(XFile imageFile) {
-    Get.offAll(() => ShowImage(path: imageFile.path, from: widget.from));
+    Get.to(() => ShowImage(path: imageFile.path, from: widget.from));
   }
 
   @override

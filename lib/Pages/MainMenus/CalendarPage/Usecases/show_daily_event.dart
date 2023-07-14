@@ -43,9 +43,11 @@ class StateDayEvent extends State<DayEvent> with TickerProviderStateMixin {
         builder: (BuildContext context,
             AsyncSnapshot<List<ScheduleModel>> snapshot) {
           if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                  "Something wrong with message: ${snapshot.error.toString()}"),
+            Get.dialog(const FailedDialog(
+                text: "Unknown error, please contact the admin",
+                type: "error"));
+            return const Center(
+              child: Text("Something wrong"),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
             List<ScheduleModel> contents = snapshot.data;
@@ -133,7 +135,9 @@ class StateDayEvent extends State<DayEvent> with TickerProviderStateMixin {
                           }
                         },
                         child: GetScheduleContainer(
-                            width: fullWidth, content: content))
+                            width: fullWidth,
+                            content: content,
+                            isConverted: true))
                   ])))
             ]);
           }).toList()));
