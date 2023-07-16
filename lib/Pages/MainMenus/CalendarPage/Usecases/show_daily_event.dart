@@ -104,6 +104,7 @@ class StateDayEvent extends State<DayEvent> with TickerProviderStateMixin {
                                                 Radius.circular(roundedLG))),
                                         content: DetailTask(
                                           data: content,
+                                          isModeled: true,
                                         ));
                                   });
                                 });

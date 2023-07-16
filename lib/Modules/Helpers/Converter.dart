@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:intl/intl.dart';
+import 'package:mi_fik/Modules/Helpers/generator.dart';
 
 Future<String> getFind(check) async {
   if (check == null || check.trim() == "") {
@@ -17,7 +18,7 @@ String getSeparatedAfter(String divider, String value) {
 
 String ucFirst(String val) {
   String res = "";
-  if (val != null) {
+  if (val != null && val.trim() != "") {
     res = val[0].toUpperCase() + val.substring(1);
   }
   return res;
@@ -116,6 +117,21 @@ getItemTimeString(date) {
     return result;
   } else {
     return "-";
+  }
+}
+
+String getReminderTimeRemain(String ds) {
+  DateTime now = DateTime.now();
+  DateTime date = DateTime.parse(ds).add(Duration(hours: getUTCHourOffset()));
+  Duration difference = date.difference(now);
+
+  int days = difference.inDays;
+  int hours = difference.inHours.remainder(24);
+
+  if (days == 0) {
+    return "$hours hours";
+  } else {
+    return "$days days and $hours hours";
   }
 }
 

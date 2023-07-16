@@ -7,7 +7,6 @@ import 'package:mi_fik/Components/Forms/date_picker.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/command_tasks.dart';
-import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_tasks.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
@@ -20,8 +19,9 @@ import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/get_saved_status.dart'
 import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/post_archive_rel.dart';
 
 class DetailTask extends StatefulWidget {
-  const DetailTask({Key key, this.data}) : super(key: key);
-  final ScheduleModel data;
+  const DetailTask({Key key, this.data, this.isModeled}) : super(key: key);
+  final dynamic data;
+  final bool isModeled;
 
   @override
   StateDetailTask createState() => StateDetailTask();
@@ -48,11 +48,19 @@ class StateDetailTask extends State<DetailTask> {
     double fullWidth = MediaQuery.of(context).size.width;
 
     //Assign value to controller
-    taskTitleCtrl.text = widget.data.contentTitle;
-    taskDescCtrl.text = widget.data.contentDesc;
+    taskTitleCtrl.text = widget.isModeled == true
+        ? widget.data.contentTitle
+        : widget.data[0]['content_title'];
+    taskDescCtrl.text = widget.isModeled == true
+        ? widget.data.contentDesc
+        : widget.data[0]['content_desc'];
 
-    dateStartCtrl ??= DateTime.parse(widget.data.dateStart);
-    dateEndCtrl ??= DateTime.parse(widget.data.dateEnd);
+    dateStartCtrl ??= DateTime.parse(widget.isModeled == true
+        ? widget.data.dateStart
+        : widget.data[0]['content_date_start']);
+    dateEndCtrl ??= DateTime.parse(widget.isModeled == true
+        ? widget.data.dateEnd
+        : widget.data[0]['content_date_end']);
 
     return SizedBox(
         height: 630,
@@ -63,7 +71,10 @@ class StateDetailTask extends State<DetailTask> {
               Container(
                   margin: EdgeInsets.only(left: spaceSM),
                   child: GetSavedStatus(
-                      passSlug: widget.data.slugName, ctx: "Task")),
+                      passSlug: widget.isModeled == true
+                          ? widget.data.slugName
+                          : widget.data[0]['slug_name'],
+                      ctx: "Task")),
               const Spacer(),
               Container(
                 alignment: Alignment.topRight,
@@ -140,9 +151,11 @@ class StateDetailTask extends State<DetailTask> {
                   ),
                   Container(
                       padding: EdgeInsets.only(left: spaceSM),
-                      child:
-                          getDropDownMain(widget.data.reminder, reminderTypeOpt,
-                              (String newValue) {
+                      child: getDropDownMain(
+                          widget.isModeled == true
+                              ? widget.data.reminder
+                              : widget.data[0]['content_reminder'],
+                          reminderTypeOpt, (String newValue) {
                         setState(() {
                           slctReminderType = newValue;
                         });
@@ -169,8 +182,12 @@ class StateDetailTask extends State<DetailTask> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(roundedLG))),
                                   content: DeleteTask(
-                                    id: widget.data.id,
-                                    name: widget.data.contentTitle,
+                                    id: widget.isModeled == true
+                                        ? widget.data.id
+                                        : widget.data[0]['id'],
+                                    name: widget.isModeled == true
+                                        ? widget.data.contentTitle
+                                        : widget.data[0]['content_title'],
                                   ));
                             });
                           });
@@ -195,7 +212,11 @@ class StateDetailTask extends State<DetailTask> {
                         //Validator
                         if (task.taskTitle.isNotEmpty) {
                           taskService
-                              .updateTask(task, widget.data.id)
+                              .updateTask(
+                                  task,
+                                  widget.isModeled == true
+                                      ? widget.data.id
+                                      : widget.data[0]['id'])
                               .then((response) {
                             setState(() => {});
                             var status = response[0]['message'];
@@ -228,20 +249,23 @@ class StateDetailTask extends State<DetailTask> {
                   height: spaceLG,
                 ),
                 PostArchiveRelation(
-                    passSlug: widget.data.slugName, ctx: "Task"),
+                    passSlug: widget.isModeled == true
+                        ? widget.data.slugName
+                        : widget.data[0]['slug_name'],
+                    ctx: "Task"),
               ],
             ),
           ),
           Container(
               padding: EdgeInsets.fromLTRB(spaceLG, spaceXMD, 0, 0),
               child: getSubTitleMedium(
-                  "Created At : ${getItemTimeString(widget.data.createdAt)}",
+                  "Created At : ${getItemTimeString(widget.isModeled == true ? widget.data.createdAt : widget.data[0]['created_at'])}",
                   shadowColor,
                   TextAlign.left)),
           Container(
               padding: EdgeInsets.fromLTRB(spaceLG, spaceSM, 0, 0),
               child: getSubTitleMedium(
-                  "Last Updated : ${getItemTimeString(widget.data.updatedAt)}",
+                  "Last Updated : ${getItemTimeString(widget.isModeled == true ? widget.data.updatedAt : widget.data[0]['updated_at'])}",
                   shadowColor,
                   TextAlign.left))
         ]));

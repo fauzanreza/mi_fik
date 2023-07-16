@@ -188,6 +188,7 @@ class StateSavedContent extends State<SavedContent>
                                                         roundedLG))),
                                             content: DetailTask(
                                               data: content,
+                                              isModeled: true,
                                             ));
                                       });
                                     });

@@ -149,6 +149,7 @@ class StateMySchedulePage extends State<MySchedulePage> {
                                                         roundedLG))),
                                             content: DetailTask(
                                               data: content,
+                                              isModeled: true,
                                             ));
                                       });
                                     });

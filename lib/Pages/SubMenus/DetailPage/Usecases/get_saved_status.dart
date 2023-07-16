@@ -39,7 +39,8 @@ class StateGetSavedStatus extends State<GetSavedStatus> {
             return const Center(
               child: Text("Something wrong"),
             );
-          } else if (snapshot.connectionState == ConnectionState.done) {
+          } else if (snapshot.connectionState == ConnectionState.done &&
+              snapshot.data != null) {
             List<ArchiveModel> archieves = snapshot.data;
 
             for (var e in archieves) {

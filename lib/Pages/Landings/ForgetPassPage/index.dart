@@ -346,7 +346,7 @@ class StateForgetPage extends State<ForgetPage> {
               fun: () {
                 isOut = false;
                 timerColor = primaryColor;
-                timer.cancel;
+                timer.cancel();
                 remainingTimer = 900;
                 startTimer();
               },

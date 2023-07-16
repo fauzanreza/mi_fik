@@ -173,7 +173,8 @@ class Dictionaries extends Translations {
           "Failed to load video": "Failed to load video",
           "You have picked all role": "You have picked all role",
           "Choose Your Role": "Choose Your Role",
-          "Forget Password": "Forget Password"
+          "Forget Password": "Forget Password",
+          "About to start in": "About to start in"
         },
         'id_ID': {
           'Good Morning': 'Selamat Pagi',
@@ -345,7 +346,8 @@ class Dictionaries extends Translations {
           "Failed to load video": "Gagal menampilkan video",
           "You have picked all role": "Anda telah memilih semua role",
           "Choose Your Role": "Pilih role Anda",
-          "Forget Password": "Lupa password"
+          "Forget Password": "Lupa password",
+          "About to start in": "Akan mulai"
         },
       };
 }

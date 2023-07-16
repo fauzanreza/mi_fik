@@ -98,6 +98,7 @@ class StateCameraPageState extends State<CameraPage>
           margin: EdgeInsets.only(bottom: spaceLG),
           child: Column(children: [
             FloatingActionButton(
+              heroTag: 1,
               backgroundColor: primaryColor,
               onPressed: () async {
                 try {
@@ -115,6 +116,7 @@ class StateCameraPageState extends State<CameraPage>
             ),
             SizedBox(height: spaceLG),
             FloatingActionButton(
+              heroTag: 2,
               backgroundColor: infoBG,
               onPressed: () {
                 setState(() {
