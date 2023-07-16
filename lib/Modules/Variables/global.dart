@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:mi_fik/Modules/Variables/style.dart';
 
 // Navigation
 String passSlugContent;
@@ -135,4 +136,19 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
   'High Importance Notifications',
   description: 'This channel is used for important notifications.',
   importance: Importance.high,
+);
+
+NotificationDetails fcmConfig = NotificationDetails(
+  android: AndroidNotificationDetails(
+    "${channel.id}2",
+    channel.name,
+    channelDescription: channel.description,
+    color: primaryColor,
+    enableLights: true,
+    icon: "@mipmap/ic_launcher",
+    priority: Priority.max,
+    playSound: true,
+    importance: Importance.max,
+    sound: const RawResourceAndroidNotificationSound('notif_1'),
+  ),
 );

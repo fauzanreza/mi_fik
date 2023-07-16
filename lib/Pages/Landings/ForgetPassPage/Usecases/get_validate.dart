@@ -124,6 +124,14 @@ class StateGetValidate extends State<GetValidate>
                   enabled: !widget.isOut && !tokenValidated,
                   length: 6,
                   controller: widget.tokenCtrl,
+                  disabledPinTheme: PinTheme(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                          color: greyColor.withOpacity(0.5),
+                          border: Border.all(color: darkColor, width: 1),
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(roundedCircle)))),
                   keyboardType: TextInputType.text,
                   defaultPinTheme: PinTheme(
                     width: 40,
@@ -136,7 +144,7 @@ class StateGetValidate extends State<GetValidate>
                       border: Border.all(
                           color:
                               isInvalidToken == false ? darkColor : warningBG),
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(roundedXLG),
                     ),
                   ),
                   onCompleted: (pin) {
@@ -223,7 +231,7 @@ class StateGetValidate extends State<GetValidate>
                                           username:
                                               widget.usernameCtrl.text.trim(),
                                           email: widget.emailCtrl.text.trim(),
-                                          token: widget.tokenCtrl.text.trim(),
+                                          token: "AAA123",
                                           type: "try_again");
 
                                   Map<String, dynamic> valid =

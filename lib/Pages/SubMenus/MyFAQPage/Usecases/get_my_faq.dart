@@ -120,7 +120,7 @@ class StateGetMyFAQ extends State<GetMyFAQ> {
 
     Widget getDateChip() {
       var dt = content.createdAt;
-      var date = DateTime.parse(dt);
+      var date = DateTime.parse(dt).add(Duration(hours: getUTCHourOffset()));
 
       String check = ("${date.year}${date.month}${date.day}");
       if (dateChipBefore != check) {

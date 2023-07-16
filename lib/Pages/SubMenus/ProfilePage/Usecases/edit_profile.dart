@@ -52,9 +52,11 @@ class _GetEditProfileState extends State<GetEditProfile> {
         builder: (BuildContext context,
             AsyncSnapshot<List<UserProfileModel>> snapshot) {
           if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                  "Something wrong with message: ${snapshot.error.toString()}"),
+            Get.dialog(const FailedDialog(
+                text: "Unknown error, please contact the admin",
+                type: "error"));
+            return const Center(
+              child: Text("Something wrong"),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
             List<UserProfileModel> contents = snapshot.data;

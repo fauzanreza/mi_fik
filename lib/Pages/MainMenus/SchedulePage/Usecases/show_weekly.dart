@@ -52,7 +52,7 @@ class GetWeeklyNavigator extends StatelessWidget {
                       }
                       slctSchedule = DateTime.now();
 
-                      Get.offNamed(CollectionRoute.bar,
+                      Get.toNamed(CollectionRoute.bar,
                           preventDuplicates: false);
                     },
                     child: Container(

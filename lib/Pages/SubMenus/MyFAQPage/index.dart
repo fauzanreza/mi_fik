@@ -21,7 +21,7 @@ class StateMyFAQPage extends State<MyFAQPage> {
 
     return WillPopScope(
         onWillPop: () {
-          Get.toNamed(CollectionRoute.profile);
+          Get.toNamed(CollectionRoute.profile, preventDuplicates: false);
           return null;
         },
         child: Scaffold(

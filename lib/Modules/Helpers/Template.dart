@@ -3,6 +3,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 getDBDateFormat(type, date) {
@@ -19,11 +20,20 @@ getDestroyTrace(bool isSignOut) async {
 
   await prefs.clear();
   await box.erase();
+  final cacheDir = await getTemporaryDirectory();
+  final appDir = await getApplicationSupportDirectory();
 
-  Get.offAllNamed(
-    CollectionRoute.landing,
-  );
+  if (appDir.existsSync()) {
+    appDir.deleteSync(recursive: true);
+  }
+
+  if (cacheDir.existsSync()) {
+    cacheDir.deleteSync(recursive: true);
+  }
+
+  Get.reset();
   Get.clearRouteTree();
+  Get.offAllNamed(CollectionRoute.landing);
 
   if (!isSignOut) {
     Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,

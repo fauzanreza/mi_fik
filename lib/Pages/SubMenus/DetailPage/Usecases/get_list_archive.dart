@@ -180,10 +180,12 @@ class StateListArchive extends State<ListArchive> {
 
                           if (status == "success") {
                             if (widget.type == "Event") {
-                              Get.offAll(
-                                  () => DetailPage(passSlug: widget.passSlug));
+                              Get.to(
+                                  () => DetailPage(passSlug: widget.passSlug),
+                                  preventDuplicates: false);
+                              Get.back();
                             } else {
-                              Get.offNamed(CollectionRoute.bar,
+                              Get.toNamed(CollectionRoute.bar,
                                   preventDuplicates: false);
                             }
 

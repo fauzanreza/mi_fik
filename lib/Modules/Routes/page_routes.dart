@@ -12,6 +12,7 @@ import 'package:mi_fik/Pages/SubMenus/AboutPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/AddPostPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/FAQPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/HelpPage/index.dart';
+import 'package:mi_fik/Pages/SubMenus/HistoryPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/ManageRolePage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/MyFAQPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/ProfilePage/index.dart';
@@ -33,6 +34,10 @@ class PageRoutes {
     GetPage(
         name: CollectionRoute.faq,
         page: () => const FAQPage(),
+        middlewares: [RouteGuard()]),
+    GetPage(
+        name: CollectionRoute.history,
+        page: () => const HistoryPage(),
         middlewares: [RouteGuard()]),
     GetPage(
         name: CollectionRoute.about,

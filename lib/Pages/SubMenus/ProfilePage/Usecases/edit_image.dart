@@ -89,7 +89,7 @@ class _EditImageState extends State<EditImage>
 
                             if (status == "success") {
                               lottieController.reset();
-                              Get.offNamed(CollectionRoute.profile,
+                              Get.to(CollectionRoute.profile,
                                   preventDuplicates: false);
                             } else {
                               Get.back();
@@ -168,8 +168,7 @@ class _EditImageState extends State<EditImage>
 
                                           if (status == "success") {
                                             lottieController.reset();
-                                            Get.offNamed(
-                                                CollectionRoute.profile,
+                                            Get.to(CollectionRoute.profile,
                                                 preventDuplicates: false);
                                           } else {
                                             Get.back();
