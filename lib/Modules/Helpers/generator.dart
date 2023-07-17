@@ -223,7 +223,7 @@ Widget getLocation(loc, textColor) {
   }
 }
 
-Widget getHourChipLine(String dateStart, double width) {
+Widget getHourChipLine(String dateStart, String dateEnd, double width) {
   DateTime date = DateTime.parse(dateStart);
 
   getLiveText(DateTime dt) {
@@ -254,13 +254,27 @@ Widget getHourChipLine(String dateStart, double width) {
     }
   }
 
+  getDateText() {
+    var dStart = DateTime.parse(dateStart);
+    var now = DateTime.now();
+
+    DateTime checkStart = DateTime(dStart.year, dStart.month, dStart.day);
+    DateTime today = DateTime(now.year, now.month, now.day);
+
+    if (checkStart.isBefore(today)) {
+      return "${DateFormat('dd MMM yyyy').format(checkStart)} ";
+    } else {
+      return "";
+    }
+  }
+
   return Container(
       margin: EdgeInsets.only(top: spaceSM),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '${date.hour}:00',
+            '${getDateText()}${date.hour}:00',
             style: TextStyle(
               color: shadowColor,
               fontSize: textSM,

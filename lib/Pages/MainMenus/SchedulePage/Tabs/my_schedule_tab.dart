@@ -1,7 +1,6 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Container/content.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
@@ -58,6 +57,8 @@ class StateMySchedulePage extends State<MySchedulePage> {
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
             List<ScheduleModel> contents = snapshot.data;
+            contents.sort((a, b) => a.dateStart.compareTo(b.dateStart));
+
             return _buildListView(contents);
           } else {
             return const ContentSkeleton2();
@@ -71,34 +72,57 @@ class StateMySchedulePage extends State<MySchedulePage> {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
     String hourChipBefore = "";
-    String dateChipBefore = "";
+    String statusChipBefore = "";
 
-    Widget getDateChip(ds) {
-      var date = DateTime.parse(ds);
+    Widget getDateChip(ds, de) {
+      var dStart = DateTime.parse(ds);
+      var dEnd = DateTime.parse(de);
+      var now = DateTime.now();
+      String dateContext;
+      Color clr;
 
-      String check = ("${date.year}${date.month}${date.day}");
-      if (dateChipBefore != check) {
-        dateChipBefore = check;
-        var dateContext = DateFormat("dd MMM yyyy").format(date);
-        var yesterdayContext =
-            DateFormat("dd MMM yyyy").format(date.add(const Duration(days: 1)));
+      DateTime checkStart = DateTime(dStart.year, dStart.month, dStart.day);
+      DateTime checkEnd = DateTime(dEnd.year, dEnd.month, dEnd.day);
+      DateTime today = DateTime(now.year, now.month, now.day);
 
-        if (getToday("date") == dateContext) {
-          dateContext = "Today".tr;
-        } else if (getToday("date") == yesterdayContext) {
-          dateContext = "Yesterday".tr;
+      if (checkStart.isBefore(today) || checkStart == today) {
+        if ((checkStart.isBefore(today) && checkEnd.isAfter(today)) ||
+            // ignore: unrelated_type_equality_checks
+            (checkStart == today && checkStart.hour == 0 && checkEnd == 24)) {
+          dateContext = "All Day".tr;
+          clr = warningBG;
+        } else if (checkStart.isBefore(today) && checkEnd == today) {
+          dateContext = "Ends Today".tr;
+          clr = warningBG;
+        } else {
+          dateContext = "Just Started Today".tr;
+          clr = successBG;
         }
 
-        return Container(
-            margin: EdgeInsets.symmetric(vertical: spaceMD),
-            alignment: Alignment.center,
-            padding: EdgeInsets.symmetric(vertical: spaceSM - 2),
-            width: 135,
-            decoration: const BoxDecoration(
-                color: Color(0xFFFADFB9),
-                borderRadius: BorderRadius.all(Radius.circular(10))),
-            child:
-                Text("From $dateContext", style: TextStyle(fontSize: textSM)));
+        if (statusChipBefore == "" || statusChipBefore != dateContext) {
+          statusChipBefore = dateContext;
+
+          return Container(
+              margin: EdgeInsets.only(top: spaceMD),
+              alignment: Alignment.centerLeft,
+              child: RichText(
+                text: TextSpan(
+                  children: [
+                    WidgetSpan(
+                      child: Icon(Icons.circle, size: 14, color: clr),
+                    ),
+                    TextSpan(
+                        text: " $dateContext",
+                        style: TextStyle(
+                            color: clr,
+                            fontSize: textXMD,
+                            fontWeight: FontWeight.w500)),
+                  ],
+                ),
+              ));
+        } else {
+          return const SizedBox();
+        }
       } else {
         return const SizedBox();
       }
@@ -111,20 +135,20 @@ class StateMySchedulePage extends State<MySchedulePage> {
           child: ListView(
               padding: EdgeInsets.only(bottom: spaceJumbo, left: spaceXMD),
               children: contents.map((content) {
-                getChipHour(String ds) {
+                getChipHour(String ds, String de) {
                   String now = DateTime.parse(ds).hour.toString();
 
                   if (hourChipBefore == "" || hourChipBefore != now) {
                     hourChipBefore = now;
-                    return getHourChipLine(content.dateStart, fullWidth);
+                    return getHourChipLine(ds, de, fullWidth);
                   } else {
                     return const SizedBox();
                   }
                 }
 
                 return Column(children: [
-                  getDateChip(content.dateStart),
-                  getChipHour(content.dateStart),
+                  getDateChip(content.dateStart, content.dateEnd),
+                  getChipHour(content.dateStart, content.dateEnd),
                   SizedBox(
                       width: fullWidth,
                       child: IntrinsicHeight(

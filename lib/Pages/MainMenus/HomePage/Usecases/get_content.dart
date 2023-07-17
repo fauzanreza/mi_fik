@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/Container/content.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
+import 'package:mi_fik/Components/Skeletons/content_1.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_contents.dart';
@@ -13,8 +14,10 @@ import 'package:mi_fik/Pages/MainMenus/HomePage/Usecases/set_control.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/index.dart';
 
 class GetContent extends StatefulWidget {
-  const GetContent({Key key, this.scrollCtrl, this.item}) : super(key: key);
+  const GetContent({Key key, this.scrollCtrl, this.item, this.isEmpty})
+      : super(key: key);
   final ScrollController scrollCtrl;
+  final bool isEmpty;
   final List item;
 
   @override
@@ -94,6 +97,7 @@ class StateGetContent extends State<GetContent> {
               fontWeight: FontWeight.w500));
     }
 
+    int i = 0;
     return Container(
         margin: EdgeInsets.only(top: spaceLG),
         constraints: BoxConstraints(minHeight: fullHeight * 0.8),
@@ -120,7 +124,21 @@ class StateGetContent extends State<GetContent> {
           ),
           Column(
               children: widget.item.map<Widget>((e) {
-            return _buildContentItem(e);
+            if (i < widget.item.length - 1) {
+              i++;
+              return _buildContentItem(e);
+            } else if (!widget.isEmpty) {
+              i++;
+              return Column(
+                children: [_buildContentItem(e), const SkeletonContentHeader()],
+              );
+            } else {
+              return Container(
+                  margin: EdgeInsets.symmetric(vertical: spaceLG),
+                  child: Text("No more item to show",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: textMD)));
+            }
           }).toList())
         ]));
   }

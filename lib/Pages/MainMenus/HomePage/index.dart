@@ -35,6 +35,7 @@ class StateHomePage extends State<HomePage> {
   int page = 1;
   List<ContentHeaderModel> contents = [];
   bool isLoading = false;
+  bool isEmpty = false;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
@@ -80,8 +81,11 @@ class StateHomePage extends State<HomePage> {
               getWhereDateFilter(filterDateStart, filterDateEnd),
               getFindFilter(searchingContent),
               page++);
+
       if (newHistory != null) {
         contents.addAll(newHistory);
+      } else {
+        isEmpty = true;
       }
 
       setState(() {
@@ -149,7 +153,9 @@ class StateHomePage extends State<HomePage> {
                                   topRight: Radius.circular(roundedLG)),
                             ),
                             child: GetContent(
-                                scrollCtrl: scrollCtrl, item: contents),
+                                scrollCtrl: scrollCtrl,
+                                item: contents,
+                                isEmpty: isEmpty),
                           )
                         ]);
                       }))),

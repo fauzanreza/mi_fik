@@ -156,7 +156,7 @@ Widget getContentVideo(String url, double width, double heigth) {
             child: Chewie(
               controller: ChewieController(
                   autoInitialize: true,
-                  //aspectRatio: 16 / 9,
+                  aspectRatio: 16 / 9,
                   zoomAndPan: true,
                   fullScreenByDefault: false,
                   materialProgressColors: ChewieProgressColors(

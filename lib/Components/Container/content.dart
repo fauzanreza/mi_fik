@@ -262,6 +262,29 @@ class GetScheduleContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     //double fullWidth = MediaQuery.of(context).size.width;
 
+    Widget getTimeEnd(DateTime dateEnd) {
+      var dEnd = dateEnd;
+      var now = DateTime.now();
+
+      DateTime checkEnd = DateTime(dEnd.year, dEnd.month, dEnd.day);
+      DateTime today = DateTime(now.year, now.month, now.day);
+
+      if (checkEnd == today) {
+        return Container(
+            margin: EdgeInsets.only(top: spaceMini),
+            padding:
+                EdgeInsets.symmetric(vertical: spaceMini, horizontal: spaceSM),
+            decoration: BoxDecoration(
+                border: Border.all(color: whiteColor, width: 1.25),
+                borderRadius: BorderRadius.all(Radius.circular(roundedSM)),
+                color: warningBG),
+            child: Text("End at ${DateFormat('HH:mm').format(dateEnd)}",
+                style: TextStyle(color: whiteColor, fontSize: textSM)));
+      } else {
+        return const SizedBox();
+      }
+    }
+
     return Container(
       width: width * 0.82,
       padding: EdgeInsets.symmetric(horizontal: spaceSM, vertical: spaceSM),
@@ -317,6 +340,7 @@ class GetScheduleContainer extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   )),
+                  SizedBox(width: spaceSM),
                   Text(
                     DateFormat("HH:mm").format(isConverted == true
                         ? DateTime.parse(content.dateStart)
@@ -338,6 +362,11 @@ class GetScheduleContainer extends StatelessWidget {
                   ),
                 ],
               ),
+              getTimeEnd(isConverted == true
+                  ? DateTime.parse(content.dateEnd)
+                  : DateTime.parse(content.dateEnd)
+                      .add(Duration(hours: getUTCHourOffset()))),
+              SizedBox(height: spaceMD),
               getOngoingDesc(
                   isConverted == true
                       ? DateTime.parse(content.dateStart)

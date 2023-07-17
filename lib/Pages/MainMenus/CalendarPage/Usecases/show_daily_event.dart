@@ -63,6 +63,61 @@ class StateDayEvent extends State<DayEvent> with TickerProviderStateMixin {
   Widget _buildListView(List<ScheduleModel> contents) {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
+    String statusChipBefore = "";
+
+    Widget getDateChip(ds, de) {
+      var dStart = DateTime.parse(ds);
+      var dEnd = DateTime.parse(de);
+      var now = DateTime.now();
+      String dateContext;
+      Color clr;
+
+      DateTime checkStart = DateTime(dStart.year, dStart.month, dStart.day);
+      DateTime checkEnd = DateTime(dEnd.year, dEnd.month, dEnd.day);
+      DateTime today = DateTime(now.year, now.month, now.day);
+
+      if (checkStart.isBefore(today) || checkStart == today) {
+        if ((checkStart.isBefore(today) && checkEnd.isAfter(today)) ||
+            // ignore: unrelated_type_equality_checks
+            (checkStart == today && checkStart.hour == 0 && checkEnd == 24)) {
+          dateContext = "All Day".tr;
+          clr = warningBG;
+        } else if (checkStart.isBefore(today) && checkEnd == today) {
+          dateContext = "Ends Today".tr;
+          clr = warningBG;
+        } else {
+          dateContext = "Just Started Today".tr;
+          clr = successBG;
+        }
+
+        if (statusChipBefore == "" || statusChipBefore != dateContext) {
+          statusChipBefore = dateContext;
+
+          return Container(
+              margin: EdgeInsets.only(top: spaceMD),
+              alignment: Alignment.centerLeft,
+              child: RichText(
+                text: TextSpan(
+                  children: [
+                    WidgetSpan(
+                      child: Icon(Icons.circle, size: 14, color: clr),
+                    ),
+                    TextSpan(
+                        text: " $dateContext",
+                        style: TextStyle(
+                            color: clr,
+                            fontSize: textXMD,
+                            fontWeight: FontWeight.w500)),
+                  ],
+                ),
+              ));
+        } else {
+          return const SizedBox();
+        }
+      } else {
+        return const SizedBox();
+      }
+    }
 
     if (contents != null) {
       return Container(
@@ -70,19 +125,20 @@ class StateDayEvent extends State<DayEvent> with TickerProviderStateMixin {
           padding: EdgeInsets.only(bottom: spaceXMD),
           child: Column(
               children: contents.map((content) {
-            getChipHour(String ds) {
+            getChipHour(String ds, String de) {
               String now = DateTime.parse(ds).hour.toString();
 
               if (hourChipBefore == "" || hourChipBefore != now) {
                 hourChipBefore = now;
-                return getHourChipLine(content.dateStart, fullWidth);
+                return getHourChipLine(ds, de, fullWidth);
               } else {
                 return const SizedBox();
               }
             }
 
             return Column(children: [
-              getChipHour(content.dateStart),
+              getDateChip(content.dateStart, content.dateEnd),
+              getChipHour(content.dateStart, content.dateEnd),
               SizedBox(
                   width: fullWidth,
                   child: IntrinsicHeight(
