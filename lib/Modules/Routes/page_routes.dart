@@ -17,6 +17,7 @@ import 'package:mi_fik/Pages/SubMenus/ManageRolePage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/MyFAQPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/ProfilePage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/SettingPage/index.dart';
+import 'package:mi_fik/Pages/SubMenus/TrashPage/index.dart';
 
 class PageRoutes {
   static final pages = [
@@ -70,6 +71,10 @@ class PageRoutes {
     GetPage(
         name: CollectionRoute.schedule,
         page: () => const SchedulePage(),
+        middlewares: [RouteGuard()]),
+    GetPage(
+        name: CollectionRoute.trash,
+        page: () => const TrashPage(),
         middlewares: [RouteGuard()]),
     GetPage(
         name: CollectionRoute.bar,

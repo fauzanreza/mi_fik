@@ -5,6 +5,8 @@ import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+// ignore: depend_on_referenced_packages
+import 'package:http/http.dart' show Client;
 
 getDBDateFormat(type, date) {
   if (type == "date" && type != null && date != null) {
@@ -14,9 +16,14 @@ getDBDateFormat(type, date) {
   }
 }
 
-getDestroyTrace(bool isSignOut) async {
+Future<void> getDestroyTrace(bool isSignOut) async {
   final prefs = await SharedPreferences.getInstance();
   GetStorage box = GetStorage();
+  Client client = Client();
+
+  client.close();
+  await Future.delayed(const Duration(milliseconds: 100));
+  Get.offAllNamed(CollectionRoute.landing);
 
   await prefs.clear();
   await box.erase();
@@ -31,9 +38,8 @@ getDestroyTrace(bool isSignOut) async {
     cacheDir.deleteSync(recursive: true);
   }
 
-  Get.reset();
-  Get.clearRouteTree();
-  Get.offAllNamed(CollectionRoute.landing);
+  // Get.reset();
+  // Get.clearRouteTree();
 
   if (!isSignOut) {
     Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,

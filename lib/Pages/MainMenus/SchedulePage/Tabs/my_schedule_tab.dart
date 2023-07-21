@@ -57,7 +57,9 @@ class StateMySchedulePage extends State<MySchedulePage> {
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
             List<ScheduleModel> contents = snapshot.data;
-            contents.sort((a, b) => a.dateStart.compareTo(b.dateStart));
+            if (contents != null) {
+              contents.sort((a, b) => a.dateStart.compareTo(b.dateStart));
+            }
 
             return _buildListView(contents);
           } else {

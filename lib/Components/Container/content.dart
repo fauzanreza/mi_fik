@@ -95,11 +95,9 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               getViewWidget(widget.content.totalViews),
-                              getEventStatus(widget.content.dateStart,
-                                  widget.content.dateEnd),
                               const Spacer(),
-                              getUploadDateWidget(
-                                  DateTime.parse(widget.content.createdAt))
+                              getEventStatus(widget.content.dateStart,
+                                  widget.content.dateEnd)
                             ])),
                   ],
                 )),
@@ -145,13 +143,11 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
             Container(
               padding: EdgeInsets.symmetric(horizontal: spaceSM),
               margin: EdgeInsets.symmetric(vertical: spaceSM),
-              child: Wrap(
-                  runSpacing: -spaceWrap,
-                  spacing: spaceWrap,
-                  children: [
-                    getContentLoc(widget.content.contentLoc),
-                    getTotalTag(widget.content.contentTag)
-                  ]),
+              child: Wrap(runSpacing: spaceWrap, spacing: spaceWrap, children: [
+                getContentLoc(widget.content.contentLoc),
+                getTotalTag(widget.content.contentTag),
+                getEventDate(widget.content.dateStart, widget.content.dateEnd)
+              ]),
             ),
 
             //Open content w/ button.
@@ -278,7 +274,7 @@ class GetScheduleContainer extends StatelessWidget {
                 border: Border.all(color: whiteColor, width: 1.25),
                 borderRadius: BorderRadius.all(Radius.circular(roundedSM)),
                 color: warningBG),
-            child: Text("End at ${DateFormat('HH:mm').format(dateEnd)}",
+            child: Text("${"End at".tr} ${DateFormat('HH:mm').format(dateEnd)}",
                 style: TextStyle(color: whiteColor, fontSize: textSM)));
       } else {
         return const SizedBox();
@@ -406,8 +402,8 @@ class GetScheduleContainer extends StatelessWidget {
   }
 }
 
-class GetAttachmentContainer extends StatefulWidget {
-  const GetAttachmentContainer(
+class GetAttachmentInput extends StatefulWidget {
+  const GetAttachmentInput(
       {Key key,
       this.data,
       this.item,
@@ -424,10 +420,10 @@ class GetAttachmentContainer extends StatefulWidget {
   final VoidCallback action;
 
   @override
-  StateGetAttachmentContainer createState() => StateGetAttachmentContainer();
+  StateGetAttachmentInput createState() => StateGetAttachmentInput();
 }
 
-class StateGetAttachmentContainer extends State<GetAttachmentContainer> {
+class StateGetAttachmentInput extends State<GetAttachmentInput> {
   var attachmentNameCtrl = TextEditingController();
   var attachmentURLCtrl = TextEditingController();
 

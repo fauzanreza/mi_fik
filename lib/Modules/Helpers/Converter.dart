@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
 
@@ -139,7 +140,7 @@ String getWhereDateFilter(DateTime ds, DateTime de) {
   if (ds != null && de != null) {
     return "${DateFormat("yyyy-MM-dd").format(ds)}_${DateFormat("yyyy-MM-dd").format(de)}";
   } else {
-    return "all";
+    return "all".tr;
   }
 }
 

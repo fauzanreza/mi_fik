@@ -115,8 +115,8 @@ Widget getTagShow(tag, dateStart, dateEnd, isConverted) {
                       text: TextSpan(
                         children: [
                           WidgetSpan(
-                            child: Icon(Icons.circle,
-                                size: textSM, color: Colors.blue), //for now.
+                            child:
+                                Icon(Icons.circle, size: textSM, color: infoBG),
                           ),
                           TextSpan(
                             text: " ${content['tag_name']}",
@@ -409,4 +409,27 @@ Future<Role> getRoleSess(bool isLogged) async {
     }
     return null;
   }
+}
+
+String getDateMonth(DateTime date) {
+  final List<String> month = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ];
+
+  return "${date.day.toString().padLeft(2, '0')} ${month[date.month - 1].substring(0, 3)}";
+}
+
+String getHourMinute(DateTime date) {
+  return "${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}";
 }

@@ -8,6 +8,7 @@ import 'package:mi_fik/Modules/APIs/UserApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Models/queries.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/queries.dart';
+import 'package:mi_fik/Modules/Helpers/info.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -134,6 +135,12 @@ class _GetEditProfileState extends State<GetEditProfile> {
                     child: getSubTitleMedium(
                         "Last Name".tr, whiteColor, TextAlign.start)),
                 getInputText(lnameLength, lNameCtrl, false),
+                Container(
+                    padding: EdgeInsets.fromLTRB(0, spaceLG, 0, 0),
+                    child: const GetInfoBox(
+                      page: "profile",
+                      location: "delete_role_mobile",
+                    )),
                 InkWell(
                   onTap: () async {
                     EditUserProfileModel data = EditUserProfileModel(
@@ -165,7 +172,7 @@ class _GetEditProfileState extends State<GetEditProfile> {
                     }
                   },
                   child: Container(
-                    width: 110,
+                    width: 100,
                     margin: EdgeInsets.only(top: spaceSM),
                     padding: EdgeInsets.symmetric(
                         vertical: spaceSM, horizontal: spaceSM + 3),

@@ -32,6 +32,7 @@ class StatePostLogin extends State<PostLogin> {
   String passMsg = "";
   String allMsg = "";
   bool isHide = true;
+  bool isLoadLogin = false;
 
   @override
   void dispose() {
@@ -122,11 +123,16 @@ class StatePostLogin extends State<PostLogin> {
             ),
             Container(
                 margin: EdgeInsets.only(top: spaceSM),
-                padding: EdgeInsets.zero,
+                padding: isLoadLogin == false
+                    ? EdgeInsets.zero
+                    : EdgeInsets.all(spaceMini),
                 width: fullWidth,
                 height: 45,
                 child: ElevatedButton(
                   onPressed: () async {
+                    setState(() {
+                      isLoadLogin = true;
+                    });
                     String token = await FirebaseMessaging.instance.getToken();
                     usernameMsg = "";
                     passMsg = "";
@@ -149,6 +155,9 @@ class StatePostLogin extends State<PostLogin> {
                         if (status == "success") {
                           usernameKey = data.username;
                           if (acc) {
+                            setState(() {
+                              isLoadLogin = false;
+                            });
                             Get.to(() => const BottomBar());
                             userService.putFirebase(token);
                           } else {
@@ -157,7 +166,7 @@ class StatePostLogin extends State<PostLogin> {
                             passRegisCtrl = body['password'];
                             fnameRegisCtrl = body['first_name'];
                             lnameRegisCtrl = body['last_name'];
-                            validRegisCtrl = int.parse(body['valid_until']);
+                            validRegisCtrl = int.parse(body['batch_year']);
 
                             Get.to(() => const RegisterPage(
                                   isLogged: true,
@@ -196,6 +205,9 @@ class StatePostLogin extends State<PostLogin> {
                       Get.dialog(
                           FailedDialog(text: valid['message'], type: "login"));
                     }
+                    setState(() {
+                      isLoadLogin = false;
+                    });
                   },
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -204,7 +216,10 @@ class StatePostLogin extends State<PostLogin> {
                     )),
                     backgroundColor: MaterialStatePropertyAll<Color>(successBG),
                   ),
-                  child: Text('Sign In'.tr, style: TextStyle(fontSize: textMD)),
+                  child: isLoadLogin == false
+                      ? Text('Sign In'.tr, style: TextStyle(fontSize: textMD))
+                      : Center(
+                          child: CircularProgressIndicator(color: whiteColor)),
                 )),
             Container(
                 alignment: Alignment.center,

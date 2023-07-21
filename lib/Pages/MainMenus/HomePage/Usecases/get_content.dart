@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/Container/content.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
-import 'package:mi_fik/Components/Skeletons/content_1.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_contents.dart';
@@ -97,7 +96,7 @@ class StateGetContent extends State<GetContent> {
               fontWeight: FontWeight.w500));
     }
 
-    int i = 0;
+    int page = 1;
     return Container(
         margin: EdgeInsets.only(top: spaceLG),
         constraints: BoxConstraints(minHeight: fullHeight * 0.8),
@@ -124,18 +123,13 @@ class StateGetContent extends State<GetContent> {
           ),
           Column(
               children: widget.item.map<Widget>((e) {
-            if (i < widget.item.length - 1) {
-              i++;
+            if (page < widget.item.length) {
+              page++;
               return _buildContentItem(e);
-            } else if (!widget.isEmpty) {
-              i++;
-              return Column(
-                children: [_buildContentItem(e), const SkeletonContentHeader()],
-              );
             } else {
               return Container(
                   margin: EdgeInsets.symmetric(vertical: spaceLG),
-                  child: Text("No more item to show",
+                  child: Text("No more item to show".tr,
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: textMD)));
             }
@@ -157,8 +151,6 @@ class StateGetContent extends State<GetContent> {
                 width: 2.5,
                 color: primaryColor,
               ),
-
-              // Open content w/ full container
               GestureDetector(
                   onTap: () async {
                     final connectivityResult =

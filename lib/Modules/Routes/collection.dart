@@ -14,6 +14,7 @@ abstract class CollectionRoute {
   static const help = '/help';
   static const setting = '/setting';
   static const addpost = '/addpost';
+  static const trash = '/trash';
 
   // Mainmenu group
   static const homepage = '/homepage';

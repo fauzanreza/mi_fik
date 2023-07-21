@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 
 import 'package:mi_fik/Modules/APIs/HelpApi/Models/queries.dart';
@@ -56,29 +57,34 @@ class StateGetAllHelpType extends State<GetAllHelpType> {
     // double fullHeight = MediaQuery.of(context).size.height;
     // double fullWidth = MediaQuery.of(context).size.width;
 
-    return ListView.builder(
-        itemCount: contents.length,
-        padding: const EdgeInsets.all(10),
-        itemBuilder: (context, index) {
-          return Card(
-            shape: RoundedRectangleBorder(
-              side: BorderSide(color: hoverBG, width: 1),
-              borderRadius: BorderRadius.circular(6),
-            ),
-            child: ExpansionTile(
-              initiallyExpanded: false,
-              iconColor: primaryColor,
-              textColor: primaryColor,
-              expandedCrossAxisAlignment: CrossAxisAlignment.start,
-              expandedAlignment: Alignment.topLeft,
-              title: Text(ucFirst(contents[index].helpType),
-                  style:
-                      TextStyle(fontWeight: FontWeight.w500, fontSize: textMD)),
-              subtitle: Text('Lorem ipsum',
-                  style: TextStyle(color: shadowColor, fontSize: textMD)),
-              children: [GetHelpByType(passType: contents[index].helpType)],
-            ),
-          );
-        });
+    if (contents != null) {
+      return ListView.builder(
+          itemCount: contents.length,
+          padding: const EdgeInsets.all(10),
+          itemBuilder: (context, index) {
+            return Card(
+              shape: RoundedRectangleBorder(
+                side: BorderSide(color: hoverBG, width: 1),
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: ExpansionTile(
+                initiallyExpanded: false,
+                iconColor: primaryColor,
+                textColor: primaryColor,
+                expandedCrossAxisAlignment: CrossAxisAlignment.start,
+                expandedAlignment: Alignment.topLeft,
+                title: Text(ucFirst(contents[index].helpType),
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500, fontSize: textMD)),
+                subtitle: Text('Lorem ipsum',
+                    style: TextStyle(color: shadowColor, fontSize: textMD)),
+                children: [GetHelpByType(passType: contents[index].helpType)],
+              ),
+            );
+          });
+    } else {
+      return getMessageImageNoData("assets/icon/empty.png",
+          "Unknown error, please contact the admin".tr, 200);
+    }
   }
 }

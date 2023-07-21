@@ -67,7 +67,7 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: listAttachment.map((e) {
         if (e['attach_type'] == "attachment_image") {
-          return GetAttachmentContainer(
+          return GetAttachmentInput(
               data: e,
               others: null,
               action: () async {
@@ -80,7 +80,7 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
                   child: getContentImageHeader(e['attach_url'], null, null,
                       false, BorderRadius.circular(roundedMD))));
         } else if (e['attach_type'] == "attachment_video") {
-          return GetAttachmentContainer(
+          return GetAttachmentInput(
               data: e,
               others: null,
               id: e['id'],
@@ -92,7 +92,7 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
                   margin: EdgeInsets.symmetric(vertical: spaceLG),
                   child: getContentVideo(e['attach_url'], fullWidth, 220)));
         } else if (e['attach_type'] == "attachment_doc") {
-          return GetAttachmentContainer(
+          return GetAttachmentInput(
               data: e,
               others: null,
               id: e['id'],
@@ -124,7 +124,7 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
                     ),
                   )));
         } else if (e['attach_type'] == "attachment_url") {
-          return GetAttachmentContainer(
+          return GetAttachmentInput(
               data: e,
               item: const SizedBox(),
               id: e['id'],

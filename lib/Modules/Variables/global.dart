@@ -80,7 +80,7 @@ LangList slctLang;
 int selectedIndex = 0;
 
 // Starting Variables
-String sortingHomepageContent = "Desc";
+String sortingHomepageContent = "Asc";
 String filteringTag = "all";
 String searchingContent = "";
 String contentAttImage;

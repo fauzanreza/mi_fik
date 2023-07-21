@@ -74,9 +74,8 @@ class StateGetInfoBox extends State<GetInfoBox> {
           future: apiQuery.getInfo(widget.page, widget.location),
           builder: (BuildContext context, AsyncSnapshot<InfoModel> snapshot) {
             if (snapshot.hasError) {
-              return Center(
-                child: Text(
-                    "Something wrong with message: ${snapshot.error.toString()}"),
+              return const Center(
+                child: Text("Something wrong"),
               );
             } else if (snapshot.connectionState == ConnectionState.done) {
               InfoModel contents = snapshot.data;

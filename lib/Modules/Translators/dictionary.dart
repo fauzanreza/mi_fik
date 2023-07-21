@@ -101,7 +101,7 @@ class Dictionaries extends Translations {
           'Version': 'Version',
           'First Name': 'First Name',
           'Last Name': 'Last Name',
-          'Valid Until': 'Valid Until',
+          'Batch Year': 'Batch Year',
           'Frequently Asked Question': 'Frequently Asked Question',
           "You haven't selected any tag yet":
               "You haven't selected any tag yet",
@@ -174,7 +174,23 @@ class Dictionaries extends Translations {
           "You have picked all role": "You have picked all role",
           "Choose Your Role": "Choose Your Role",
           "Forget Password": "Forget Password",
-          "About to start in": "About to start in"
+          "About to start in": "About to start in",
+          "Trash": "Trash",
+          'Failed to get roles': 'Failed to get roles',
+          'All Day': "All Day",
+          'Ends Today': "Ends Today",
+          'Just Started Today': 'Just Started Today',
+          'all': 'all',
+          'Save': 'Save',
+          'End at': 'End at',
+          ' Live': ' Live',
+          ' About to start': ' About to start',
+          ' About to end': ' About to end',
+          ' Just ended': ' Just ended',
+          ' Just started': ' Just started',
+          ' Finished': ' Finished',
+          'Let us know, what do you think about this App?':
+              'Let us know, what do you think about this App?'
         },
         'id_ID': {
           'Good Morning': 'Selamat Pagi',
@@ -274,7 +290,7 @@ class Dictionaries extends Translations {
           'Version': 'Versi',
           'First Name': 'Nama Depan',
           'Last Name': 'Nama Belakang',
-          'Valid Until': 'Valid Hingga',
+          'Batch Year': 'Tahun Angkatan',
           'Frequently Asked Question': 'Pertanyaan Populer',
           "You haven't selected any tag yet":
               "Anda belum memilih tag sama sekali",
@@ -347,7 +363,23 @@ class Dictionaries extends Translations {
           "You have picked all role": "Anda telah memilih semua role",
           "Choose Your Role": "Pilih role Anda",
           "Forget Password": "Lupa password",
-          "About to start in": "Akan mulai"
+          "About to start in": "Akan mulai",
+          "Trash": "Keranjang Sampah",
+          'Failed to get roles': 'Gagal mendapatkan role',
+          'All Day': "Seharian",
+          'Ends Today': "Berakhir hari ini",
+          'Just Started Today': 'Baru mulai hari ini',
+          'all': 'semua',
+          'Save': 'Simpan',
+          'End at': 'Berakhir pada',
+          ' Live': ' Berlangsung',
+          ' About to start': ' Akan berlangsung',
+          ' About to end': ' Akan berakhir',
+          ' Just ended': ' Baru berakhir',
+          ' Just started': ' Baru mulai',
+          ' Finished': ' Berakhir',
+          'Let us know, what do you think about this App?':
+              'Beritahu kami, bagaimana tanggapan Anda mengenai aplikasi kami?'
         },
       };
 }

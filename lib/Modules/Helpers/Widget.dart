@@ -1,6 +1,7 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
@@ -245,7 +246,7 @@ Widget getContentLoc(loc) {
       text: TextSpan(
         children: [
           WidgetSpan(
-            child: Icon(Icons.location_on, color: primaryColor, size: iconSM),
+            child: Icon(Icons.location_on, color: primaryColor, size: iconMD),
           ),
           TextSpan(
               text: getLocationName(loc),
@@ -266,10 +267,10 @@ Widget getTotalTag(tag) {
       text: TextSpan(
         children: [
           WidgetSpan(
-            child: Icon(Icons.tag, color: primaryColor, size: iconSM),
+            child: Icon(Icons.tag, color: primaryColor, size: iconMD - 2),
           ),
           TextSpan(
-              text: total.toString(),
+              text: "${total.toString()} ",
               style: TextStyle(color: primaryColor, fontSize: textMD)),
         ],
       ),
@@ -298,7 +299,7 @@ Widget getTag(tag, height, ctx) {
               icon: Icon(
                 Icons.circle,
                 size: textSM,
-                color: Colors.green,
+                color: successBG,
               ),
               label: Text(content['tag_name'],
                   style: TextStyle(fontSize: textXSM)),
@@ -336,7 +337,7 @@ Widget getTag(tag, height, ctx) {
                                   icon: Icon(
                                     Icons.circle,
                                     size: textSM,
-                                    color: Colors.green,
+                                    color: successBG,
                                   ),
                                   label: Text(content['tag_name'],
                                       style: TextStyle(fontSize: textXSM)),
@@ -413,44 +414,97 @@ Widget getEventStatus(dateStart, dateEnd) {
       hourDiffStart >= 0 &&
       hourDiffStart <= 15) {
     clr = primaryColor;
-    ctx = " About to start";
+    ctx = " About to start".tr;
   } else if (cStart.isBefore(now) && cEnd.isAfter(now)) {
     clr = warningBG;
     if (hourDiffEnd > 1 && hourDiffStart > -15) {
-      ctx = " Just Started";
+      ctx = " Just started".tr;
     } else if (hourDiffEnd > 15) {
-      ctx = " Live";
+      ctx = " Live".tr;
     } else {
-      ctx = " About to end";
+      ctx = " About to end".tr;
     }
   } else if (cStart.isBefore(now) &&
       cEnd.isBefore(now) &&
       hourDiffEnd <= 0 &&
       hourDiffEnd >= -15) {
     clr = successBG;
-    ctx = " Just ended";
+    ctx = " Just ended".tr;
   } else if (cStart.isBefore(now) && cEnd.isBefore(now) && hourDiffEnd <= -15) {
     clr = successBG;
-    ctx = " Finished";
+    ctx = " Finished".tr;
   } else {
     return const SizedBox();
   }
 
   return Container(
       margin: EdgeInsets.only(left: spaceXLG * 0.8),
+      padding: EdgeInsets.symmetric(horizontal: spaceSM, vertical: spaceMini),
+      decoration: BoxDecoration(
+          color: clr,
+          borderRadius: BorderRadius.all(Radius.circular(roundedSM))),
       child: RichText(
         text: TextSpan(
           children: [
             WidgetSpan(
-              child: Icon(Icons.circle, size: 14, color: clr),
+              child: Container(
+                  margin: EdgeInsets.only(bottom: spaceMini - 1),
+                  child:
+                      Icon(Icons.circle, size: iconSM - 2, color: whiteColor)),
             ),
             TextSpan(
                 text: ctx,
                 style: TextStyle(
-                    color: clr,
+                    color: whiteColor,
                     fontSize: textXMD,
                     fontWeight: FontWeight.w500)),
           ],
         ),
       ));
+}
+
+Widget getEventDate(String dateStart, String dateEnd) {
+  if (dateStart != null && dateEnd != null) {
+    DateTime ds = DateTime.parse(dateStart);
+    DateTime de = DateTime.parse(dateEnd);
+    Duration offset = Duration(hours: getUTCHourOffset());
+    String res = "";
+    ds = ds.add(offset);
+    de = de.add(offset);
+
+    if (ds.year != de.year) {
+      // Event year not the same
+      res =
+          "${getDateMonth(ds)} ${ds.year} ${getHourMinute(ds)} - ${getDateMonth(de)} ${de.year} ${getHourMinute(de)}";
+    } else if (ds.month != de.month) {
+      // If month not the same
+      res =
+          "${getDateMonth(ds)} ${ds.year} ${getHourMinute(ds)} - ${getDateMonth(de)} ${getHourMinute(de)}";
+    } else if (ds.day != de.day) {
+      // If date not the same
+      res =
+          "${getDateMonth(ds)} ${getHourMinute(ds)} - ${getDateMonth(de)} ${de.day.toString().padLeft(2, '0')} ${getHourMinute(de)}";
+    } else if (ds.day == de.day) {
+      res = "${getDateMonth(ds)} ${getHourMinute(ds)} - ${getHourMinute(de)}";
+    }
+
+    return RichText(
+      text: TextSpan(
+        children: [
+          WidgetSpan(
+            child: Icon(
+              FontAwesomeIcons.clock,
+              size: iconMD - 2,
+              color: primaryColor,
+            ),
+          ),
+          TextSpan(
+              text: " $res",
+              style: TextStyle(color: primaryColor, fontSize: textMD)),
+        ],
+      ),
+    );
+  } else {
+    return const SizedBox();
+  }
 }

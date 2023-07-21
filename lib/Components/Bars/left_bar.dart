@@ -94,6 +94,10 @@ class LeftBar extends StatelessWidget {
                                     () {
                                   Get.toNamed(CollectionRoute.help);
                                 }),
+                                getSideBarTile(
+                                    fullWidth, Icons.delete, "Trash".tr, () {
+                                  Get.toNamed(CollectionRoute.trash);
+                                }),
                               ]),
                         ),
                         getSideBarTile(fullWidth, Icons.settings, "Setting".tr,
