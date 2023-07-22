@@ -218,7 +218,7 @@ Widget getDescHeaderWidget(String desc, Color clr) {
   } else {
     return Container(
         margin: EdgeInsets.only(top: spaceSM),
-        child: Text("No description provided",
+        child: Text("No description provided".tr,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
                 color: clr, fontSize: textSM, fontStyle: FontStyle.italic)));

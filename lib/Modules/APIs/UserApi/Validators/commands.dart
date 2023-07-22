@@ -1,13 +1,15 @@
+import 'package:get/get.dart';
 import 'package:mi_fik/Modules/APIs/AuthApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Models/commands.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
 
 class UserValidator {
   static Map<String, dynamic> validateRegis(RegisterModel data) {
     if (data.username.isEmpty) {
       return {
         "status": false,
-        "message": "Username can't be empty",
+        "message": "Username $emptyInputMsg",
         "loc": "username"
       };
     }
@@ -23,7 +25,7 @@ class UserValidator {
     if (data.email.isEmpty) {
       return {
         "status": false,
-        "message": "Email can't be empty",
+        "message": "Email $emptyInputMsg",
         "loc": "email"
       };
     }
@@ -39,7 +41,7 @@ class UserValidator {
     if (data.password.isEmpty) {
       return {
         "status": false,
-        "message": "Password can't be empty",
+        "message": "Password $emptyInputMsg",
         "loc": "password"
       };
     }
@@ -55,7 +57,7 @@ class UserValidator {
     if (data.firstName.isEmpty) {
       return {
         "status": false,
-        "message": "First name can't be empty",
+        "message": "First name $emptyInputMsg",
         "loc": "last_name"
       };
     }
@@ -66,7 +68,7 @@ class UserValidator {
         "loc": "last_name"
       };
     }
-    return {"status": true, "message": "Validation success"};
+    return {"status": true, "message": "Validation success".tr};
   }
 
   static Map<String, dynamic> validateEditPass(EditPassModel data) {
@@ -79,6 +81,6 @@ class UserValidator {
         "loc": "password"
       };
     }
-    return {"status": true, "message": "Validation success"};
+    return {"status": true, "message": "Validation success".tr};
   }
 }

@@ -37,7 +37,7 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
       username = "@$u1";
     } else if (u2 != null) {
       if (u2 == usernameKey) {
-        username = "You";
+        username = "You".tr;
       } else {
         username = "@$u2";
       }

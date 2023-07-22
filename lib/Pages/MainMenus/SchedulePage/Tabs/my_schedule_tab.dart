@@ -23,14 +23,24 @@ class MySchedulePage extends StatefulWidget {
 }
 
 class StateMySchedulePage extends State<MySchedulePage> {
-  ContentQueriesService queryService;
-  ContentCommandsService commandService;
-
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
+  ScrollController scrollCtrl;
+
+  ContentQueriesService queryService;
+  ContentCommandsService commandService;
+  String hourChipBefore = "";
+  String statusChipBefore = "";
+  int page = 1;
+  int totalPage = 1;
+  List<ScheduleModel> contents = [];
+  bool isLoading = false;
+  bool isEmpty = false;
 
   Future<void> refreshData() async {
-    setState(() {});
+    page = 1;
+    contents.clear();
+    loadMoreContent();
   }
 
   @override
@@ -38,43 +48,80 @@ class StateMySchedulePage extends State<MySchedulePage> {
     super.initState();
     queryService = ContentQueriesService();
     commandService = ContentCommandsService();
+    scrollCtrl = ScrollController()
+      ..addListener(() {
+        if (scrollCtrl.offset == scrollCtrl.position.maxScrollExtent) {
+          loadMoreContent();
+        }
+      });
+    loadMoreContent();
+  }
+
+  Future<void> loadMoreContent() async {
+    if (!isLoading) {
+      if (page <= totalPage) {
+        setState(() {
+          isLoading = true;
+        });
+
+        List<ScheduleModel> items =
+            await queryService.getSchedule(slctSchedule, page);
+
+        if (items != null) {
+          contents.addAll(items);
+          for (var element in items) {
+            totalPage = element.totalPage;
+          }
+          page++;
+        } else {
+          isEmpty = true;
+        }
+
+        setState(() {
+          isLoading = false;
+        });
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      key: _refreshIndicatorKey,
       maintainBottomViewPadding: false,
-      child: FutureBuilder(
-        future: queryService.getSchedule(slctSchedule),
-        builder: (BuildContext context,
-            AsyncSnapshot<List<ScheduleModel>> snapshot) {
-          if (snapshot.hasError) {
-            Get.dialog(const FailedDialog(
-                text: "Unknown error, please contact the admin",
-                type: "error"));
-            return const Center(
-              child: Text("Something wrong"),
-            );
-          } else if (snapshot.connectionState == ConnectionState.done) {
-            List<ScheduleModel> contents = snapshot.data;
-            if (contents != null) {
-              contents.sort((a, b) => a.dateStart.compareTo(b.dateStart));
+      child: RefreshIndicator(
+        onRefresh: refreshData,
+        child: ListView.builder(
+          padding: EdgeInsets.fromLTRB(spaceMD, 0, spaceMD, spaceXMD),
+          itemCount: contents.length + 1,
+          controller: scrollCtrl,
+          itemBuilder: (BuildContext context, int index) {
+            if (index < contents.length) {
+              return _buildListView(contents[index]);
+            } else if (isLoading) {
+              return const ContentSkeleton2();
+            } else {
+              return Container(
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.symmetric(vertical: spaceLG),
+                  child: Text("No more item to show".tr,
+                      style: TextStyle(fontSize: textSM)));
             }
-
-            return _buildListView(contents);
-          } else {
-            return const ContentSkeleton2();
-          }
-        },
+          },
+        ),
       ),
     );
   }
 
-  Widget _buildListView(List<ScheduleModel> contents) {
+  @override
+  void dispose() {
+    //scrollCtrl.dispose();
+    super.dispose();
+  }
+
+  Widget _buildListView(ScheduleModel contents) {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    String hourChipBefore = "";
-    String statusChipBefore = "";
 
     Widget getDateChip(ds, de) {
       var dStart = DateTime.parse(ds);
@@ -130,90 +177,76 @@ class StateMySchedulePage extends State<MySchedulePage> {
       }
     }
 
-    if ((contents != null) && (contents.isNotEmpty)) {
-      return RefreshIndicator(
-          key: _refreshIndicatorKey,
-          onRefresh: refreshData,
-          child: ListView(
-              padding: EdgeInsets.only(bottom: spaceJumbo, left: spaceXMD),
-              children: contents.map((content) {
-                getChipHour(String ds, String de) {
-                  String now = DateTime.parse(ds).hour.toString();
+    if (contents != null) {
+      getChipHour(String ds, String de) {
+        String now = DateTime.parse(ds).hour.toString();
 
-                  if (hourChipBefore == "" || hourChipBefore != now) {
-                    hourChipBefore = now;
-                    return getHourChipLine(ds, de, fullWidth);
-                  } else {
-                    return const SizedBox();
-                  }
-                }
+        if (hourChipBefore == "" || hourChipBefore != now) {
+          hourChipBefore = now;
+          return getHourChipLine(ds, de, fullWidth);
+        } else {
+          return const SizedBox();
+        }
+      }
 
-                return Column(children: [
-                  getDateChip(content.dateStart, content.dateEnd),
-                  getChipHour(content.dateStart, content.dateEnd),
-                  SizedBox(
-                      width: fullWidth,
-                      child: IntrinsicHeight(
-                          child: Stack(children: [
-                        GestureDetector(
-                            onTap: () async {
-                              if (content.dataFrom == 2) {
-                                showDialog<String>(
-                                    context: context,
-                                    barrierColor: primaryColor.withOpacity(0.5),
-                                    builder: (BuildContext context) {
-                                      return StatefulBuilder(
-                                          builder: (context, setState) {
-                                        return AlertDialog(
-                                            insetPadding:
-                                                EdgeInsets.all(spaceSM),
-                                            contentPadding:
-                                                EdgeInsets.all(spaceSM),
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(
-                                                        roundedLG))),
-                                            content: DetailTask(
-                                              data: content,
-                                              isModeled: true,
-                                            ));
-                                      });
-                                    });
-                              } else {
-                                final connectivityResult =
-                                    await (Connectivity().checkConnectivity());
-                                if (connectivityResult !=
-                                    ConnectivityResult.none) {
-                                  commandService
-                                      .postContentView(content.slugName)
-                                      .then((response) {
-                                    setState(() => {});
-                                    var status = response[0]['message'];
-                                    var body = response[0]['body'];
+      return Column(children: [
+        getDateChip(contents.dateStart, contents.dateEnd),
+        getChipHour(contents.dateStart, contents.dateEnd),
+        SizedBox(
+            width: fullWidth,
+            child: IntrinsicHeight(
+                child: Stack(children: [
+              GestureDetector(
+                  onTap: () async {
+                    if (contents.dataFrom == 2) {
+                      showDialog<String>(
+                          context: context,
+                          barrierColor: primaryColor.withOpacity(0.5),
+                          builder: (BuildContext context) {
+                            return StatefulBuilder(
+                                builder: (context, setState) {
+                              return AlertDialog(
+                                  insetPadding: EdgeInsets.all(spaceSM),
+                                  contentPadding: EdgeInsets.all(spaceSM),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(roundedLG))),
+                                  content: DetailTask(
+                                    data: contents,
+                                    isModeled: true,
+                                  ));
+                            });
+                          });
+                    } else {
+                      final connectivityResult =
+                          await (Connectivity().checkConnectivity());
+                      if (connectivityResult != ConnectivityResult.none) {
+                        commandService
+                            .postContentView(contents.slugName)
+                            .then((response) {
+                          setState(() => {});
+                          var status = response[0]['message'];
+                          var body = response[0]['body'];
 
-                                    if (status == "success") {
-                                      Get.to(() => DetailPage(
-                                          passSlug: content.slugName));
-                                    } else {
-                                      Get.dialog(FailedDialog(
-                                          text: body, type: "openevent"));
-                                    }
-                                  });
-                                } else {
-                                  Get.to(() =>
-                                      DetailPage(passSlug: content.slugName));
-                                }
+                          if (status == "success") {
+                            Get.to(
+                                () => DetailPage(passSlug: contents.slugName));
+                          } else {
+                            Get.dialog(
+                                FailedDialog(text: body, type: "openevent"));
+                          }
+                        });
+                      } else {
+                        Get.to(() => DetailPage(passSlug: contents.slugName));
+                      }
 
-                                passSlugContent = content.slugName;
-                              }
-                            },
-                            child: GetScheduleContainer(
-                                width: fullWidth,
-                                content: content,
-                                isConverted: true))
-                      ])))
-                ]);
-              }).toList()));
+                      passSlugContent = contents.slugName;
+                    }
+                  },
+                  child: GetScheduleContainer(
+                      width: fullWidth, content: contents, isConverted: true))
+            ])))
+      ]);
     } else {
       if (isOffline) {
         return SizedBox(

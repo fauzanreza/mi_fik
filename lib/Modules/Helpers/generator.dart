@@ -303,13 +303,13 @@ Widget getInputWarning(String text) {
               WidgetSpan(
                 child: Icon(
                   FontAwesomeIcons.triangleExclamation,
-                  size: iconSM - 2,
+                  size: iconSM - 1,
                   color: warningBG,
                 ),
               ),
               TextSpan(
                   text: " $text",
-                  style: TextStyle(color: warningBG, fontSize: textSM)),
+                  style: TextStyle(color: warningBG, fontSize: textMD)),
             ],
           ),
         ));

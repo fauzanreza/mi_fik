@@ -13,9 +13,7 @@ import 'package:mi_fik/Pages/MainMenus/HomePage/Usecases/set_control.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/index.dart';
 
 class GetContent extends StatefulWidget {
-  const GetContent({Key key, this.scrollCtrl, this.item, this.isEmpty})
-      : super(key: key);
-  final ScrollController scrollCtrl;
+  const GetContent({Key key, this.item, this.isEmpty}) : super(key: key);
   final bool isEmpty;
   final List item;
 
@@ -96,7 +94,7 @@ class StateGetContent extends State<GetContent> {
               fontWeight: FontWeight.w500));
     }
 
-    int page = 1;
+    int index = 1;
     return Container(
         margin: EdgeInsets.only(top: spaceLG),
         constraints: BoxConstraints(minHeight: fullHeight * 0.8),
@@ -123,9 +121,21 @@ class StateGetContent extends State<GetContent> {
           ),
           Column(
               children: widget.item.map<Widget>((e) {
-            if (page < widget.item.length) {
-              page++;
-              return _buildContentItem(e);
+            if (index < widget.item.length + 1) {
+              if (index != widget.item.length) {
+                index++;
+                return _buildContentItem(e);
+              } else {
+                index++;
+                return Column(children: [
+                  _buildContentItem(e),
+                  Container(
+                      margin: EdgeInsets.symmetric(vertical: spaceLG),
+                      child: Text("No more item to show".tr,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: textMD)))
+                ]);
+              }
             } else {
               return Container(
                   margin: EdgeInsets.symmetric(vertical: spaceLG),

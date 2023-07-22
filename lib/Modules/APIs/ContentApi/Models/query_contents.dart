@@ -22,7 +22,7 @@ class ContentHeaderModel {
   String acImage;
   String ucImage;
 
-  //Page
+  //Pagination
   int totalPage;
 
   ContentHeaderModel(
@@ -184,6 +184,9 @@ class ScheduleModel {
   String totalViews;
   String reminder;
 
+  //Pagination
+  int totalPage;
+
   ScheduleModel(
       {this.id,
       this.slugName,
@@ -203,37 +206,45 @@ class ScheduleModel {
       this.createdAt,
       this.updatedAt,
       this.imageUrl,
-      this.reminder});
+      this.reminder,
+      this.totalPage});
 
   factory ScheduleModel.fromJson(Map<String, dynamic> map) {
     return ScheduleModel(
-      id: map["id"],
-      slugName: map["slug_name"],
-      contentTitle: map["content_title"],
-      contentDesc: map["content_desc"],
-      contentTag: map["content_tag"],
-      contentLoc: map["content_loc"],
-      contentImage: map["content_image"],
-      dateStart: map["content_date_start"],
-      dateEnd: map["content_date_end"],
-      dataFrom: map["data_from"],
-      acUsername: map["admin_username_created"],
-      ucUsername: map["user_username_created"],
-      acImage: map["admin_image_created"],
-      ucImage: map["user_image_created"],
-      createdAt: map["created_at"],
-      updatedAt: map["updated_at"],
-      totalViews: map["total_views"].toString(),
-      reminder: map["content_reminder"],
-      imageUrl: map["image_url"],
-    );
+        id: map["id"],
+        slugName: map["slug_name"],
+        contentTitle: map["content_title"],
+        contentDesc: map["content_desc"],
+        contentTag: map["content_tag"],
+        contentLoc: map["content_loc"],
+        contentImage: map["content_image"],
+        dateStart: map["content_date_start"],
+        dateEnd: map["content_date_end"],
+        dataFrom: map["data_from"],
+        acUsername: map["admin_username_created"],
+        ucUsername: map["user_username_created"],
+        acImage: map["admin_image_created"],
+        ucImage: map["user_image_created"],
+        createdAt: map["created_at"],
+        updatedAt: map["updated_at"],
+        totalViews: map["total_views"].toString(),
+        reminder: map["content_reminder"],
+        imageUrl: map["image_url"],
+        totalPage: map["last_page"]);
   }
 }
 
 List<ScheduleModel> scheduleModelFromJsonWPaginate(String jsonData) {
   final data = json.decode(jsonData);
-  return List<ScheduleModel>.from(
-      data['data']['data'].map((item) => ScheduleModel.fromJson(item)));
+  int totalPage = data['data']['last_page'];
+  List<ScheduleModel> scheduleModels = List<ScheduleModel>.from(
+    data['data']['data'].map((item) => ScheduleModel.fromJson(item)),
+  );
+
+  for (var model in scheduleModels) {
+    model.totalPage = totalPage;
+  }
+  return scheduleModels;
 }
 
 class ScheduleTotalModel {

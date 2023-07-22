@@ -31,16 +31,17 @@ class HomePage extends StatefulWidget {
 }
 
 class StateHomePage extends State<HomePage> {
-  ContentQueriesService queryService;
-  int page = 1;
-  int totalPage = 1;
-
-  List<ContentHeaderModel> contents = [];
-  bool isLoading = false;
-  bool isEmpty = false;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
+  ScrollController scrollCtrl;
+
+  ContentQueriesService queryService;
+  int page = 1;
+  int totalPage = 1;
+  List<ContentHeaderModel> contents = [];
+  bool isLoading = false;
+  bool isEmpty = false;
 
   Future<Role> getTokenNLoc() async {
     final prefs = await SharedPreferences.getInstance();
@@ -54,8 +55,6 @@ class StateHomePage extends State<HomePage> {
     contents.clear();
     loadMoreContent();
   }
-
-  ScrollController scrollCtrl;
 
   @override
   void initState() {
@@ -160,7 +159,6 @@ class StateHomePage extends State<HomePage> {
                                 topRight: Radius.circular(roundedLG)),
                           ),
                           child: GetContent(
-                            scrollCtrl: scrollCtrl,
                             item: contents,
                             isEmpty: isEmpty,
                           ),

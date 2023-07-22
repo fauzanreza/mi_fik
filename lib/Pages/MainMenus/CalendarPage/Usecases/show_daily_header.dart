@@ -11,8 +11,9 @@ import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/MainMenus/CalendarPage/Usecases/show_daily_event.dart';
 
 class DayHeader extends StatefulWidget {
-  const DayHeader({Key key, this.selectedDay}) : super(key: key);
+  const DayHeader({Key key, this.selectedDay, this.item}) : super(key: key);
   final DateTime selectedDay;
+  final dynamic item;
 
   @override
   StateDayHeader createState() => StateDayHeader();
@@ -119,7 +120,7 @@ class StateDayHeader extends State<DayHeader> with TickerProviderStateMixin {
           ),
         ],
       ),
-      const DayEvent()
+      DayEvent(item: widget.item)
     ]);
   }
 }

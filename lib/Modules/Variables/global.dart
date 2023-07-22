@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 // Navigation
@@ -152,3 +153,7 @@ NotificationDetails fcmConfig = NotificationDetails(
     sound: const RawResourceAndroidNotificationSound('notif_1'),
   ),
 );
+
+// Response
+String emptyInputMsg = "can't be empty".tr;
+String invalidDateMsg = "The date end must after date start".tr;

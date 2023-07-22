@@ -140,7 +140,7 @@ String getWhereDateFilter(DateTime ds, DateTime de) {
   if (ds != null && de != null) {
     return "${DateFormat("yyyy-MM-dd").format(ds)}_${DateFormat("yyyy-MM-dd").format(de)}";
   } else {
-    return "all".tr;
+    return "all";
   }
 }
 

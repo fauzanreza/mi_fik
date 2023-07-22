@@ -206,6 +206,12 @@ class StateMyApp extends State<MyApp> {
   }
 
   getToken() async {
+    if (usernameKey == null) {
+      final prefs = await SharedPreferences.getInstance();
+
+      usernameKey = prefs.getString('username_key');
+    }
+
     await dctService.getDictionaryType("QST-001");
     await dctService.getDictionaryType("FBC-001");
     await dctService.getDictionaryType("ATT-001");

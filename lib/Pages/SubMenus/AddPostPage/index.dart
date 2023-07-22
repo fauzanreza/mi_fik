@@ -32,6 +32,11 @@ class AddPost extends StatefulWidget {
 
 class StateAddPost extends State<AddPost> {
   String result = '';
+  String eventPeriodMsg = '';
+  String eventTagMsg = '';
+  String eventTitleMsg = '';
+  String eventDescMsg = '';
+  String allMsg = '';
 
   ContentCommandsService apiCommand;
 
@@ -190,14 +195,15 @@ class StateAddPost extends State<AddPost> {
                     padding: EdgeInsets.only(bottom: spaceJumbo),
                     children: [
                       Container(
-                        padding: EdgeInsets.fromLTRB(spaceLG, 0, spaceLG, 0),
-                        child: getSubTitleMedium(
-                            "Title".tr, darkColor, TextAlign.start),
-                      ),
-                      Container(
-                        padding: EdgeInsets.fromLTRB(spaceLG, 0, spaceLG, 0),
-                        child: getInputText(75, contentTitleCtrl, false),
-                      ),
+                          padding: EdgeInsets.fromLTRB(spaceLG, 0, spaceLG, 0),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                getSubTitleMedium(
+                                    "Title".tr, darkColor, TextAlign.start),
+                                getInputWarning(eventTitleMsg),
+                                getInputText(75, contentTitleCtrl, false),
+                              ])),
                       Container(
                         padding: EdgeInsets.fromLTRB(spaceLG, 0, spaceLG, 0),
                         child: getSubTitleMedium(
@@ -221,6 +227,7 @@ class StateAddPost extends State<AddPost> {
                             children: [
                               getSubTitleMedium(
                                   "Event Tag".tr, darkColor, TextAlign.start),
+                              getInputWarning(eventTagMsg),
                               const ChooseTag(),
                             ],
                           )),
@@ -307,7 +314,8 @@ class StateAddPost extends State<AddPost> {
                                             getMinEndTime(dateStartCtrl),
                                         locale: LocaleType.en);
                                   }, "End", "datetime"),
-                                ])
+                                ]),
+                                getInputWarning(eventPeriodMsg),
                               ])),
                       Padding(
                           padding: EdgeInsets.symmetric(vertical: spaceMD),
@@ -343,7 +351,40 @@ class StateAddPost extends State<AddPost> {
                   height: btnHeightMD,
                   child: ElevatedButton(
                     onPressed: () async {
-                      if (dateStartCtrl != null || dateEndCtrl != null) {
+                      bool isValid = true;
+                      eventPeriodMsg = '';
+                      eventTagMsg = '';
+                      eventDescMsg = '';
+
+                      if (dateStartCtrl == null || dateEndCtrl == null) {
+                        isValid = false;
+                        eventPeriodMsg = "date period must be selected".tr;
+                        Get.dialog(FailedDialog(
+                            text: eventPeriodMsg, type: "addevent"));
+                      } else {
+                        if (dateStartCtrl.isAfter(dateEndCtrl)) {
+                          isValid = false;
+                          eventPeriodMsg = invalidDateMsg;
+                          Get.dialog(FailedDialog(
+                              text: invalidDateMsg, type: "addevent"));
+                        }
+                      }
+
+                      if (selectedTag == null || selectedTag.isEmpty) {
+                        isValid = false;
+                        eventTagMsg = "Tag must be selected".tr;
+                        Get.dialog(
+                            FailedDialog(text: eventTagMsg, type: "addevent"));
+                      }
+                      if (contentTitleCtrl.text.trim() == null ||
+                          contentTitleCtrl.text.trim() == '') {
+                        isValid = false;
+                        eventTitleMsg = "field can't be empty".tr;
+                        Get.dialog(FailedDialog(
+                            text: "field can't be empty".tr, type: "addevent"));
+                      }
+
+                      if (isValid) {
                         ContentModel content = ContentModel(
                           userId: passIdUser,
                           contentTitle: contentTitleCtrl.text.trim(),
@@ -366,50 +407,52 @@ class StateAddPost extends State<AddPost> {
                                   Duration(hours: getUTCHourOffset() * -1))),
                           isDraft: 0,
                         );
+                        apiCommand.postContent(content).then((response) {
+                          setState(() => {});
+                          var status = response[0]['message'];
+                          var body = response[0]['body'];
 
-                        if (content.contentTag != null) {
-                          if (content.contentTitle.isNotEmpty &&
-                              content.contentDesc.isNotEmpty) {
-                            apiCommand.postContent(content).then((response) {
-                              setState(() => {});
-                              var status = response[0]['message'];
-                              var body = response[0]['body'];
+                          if (status == "success") {
+                            selectedTag.clear();
+                            locDetailCtrl.clear();
+                            locCoordinateCtrl = null;
+                            contentAttImage = null;
+                            listAttachment = [];
+                            Get.toNamed(CollectionRoute.bar,
+                                preventDuplicates: false);
 
-                              if (status == "success") {
-                                selectedTag.clear();
-                                locDetailCtrl.clear();
-                                locCoordinateCtrl = null;
-                                contentAttImage = null;
-                                listAttachment = [];
-                                Get.toNamed(CollectionRoute.bar,
-                                    preventDuplicates: false);
-
-                                Get.dialog(SuccessDialog(text: body));
-                              } else {
-                                Get.dialog(
-                                    FailedDialog(text: body, type: "addevent"));
-                              }
-                            });
+                            Get.dialog(SuccessDialog(text: body));
                           } else {
-                            Get.dialog(FailedDialog(
-                                text:
-                                    "Create event failed, field can't be empty"
-                                        .tr,
-                                type: "addevent"));
+                            if (body is! String) {
+                              if (body['content_title'] != null) {
+                                eventTitleMsg = body['content_title'][0];
+
+                                if (body['content_title'].length > 1) {
+                                  for (String e in body['content_title']) {
+                                    eventTitleMsg += e;
+                                  }
+                                }
+                              }
+
+                              if (body['content_desc'] != null) {
+                                eventDescMsg = body['content_desc'][0];
+
+                                if (body['content_desc'].length > 1) {
+                                  for (String e in body['content_desc']) {
+                                    eventDescMsg += e;
+                                  }
+                                }
+                              }
+                            } else {
+                              allMsg = body;
+                            }
+                            Get.dialog(
+                                FailedDialog(text: body, type: "addevent"));
                           }
-                        } else {
-                          Get.dialog(FailedDialog(
-                              text: "Create event failed, tag must be selected"
-                                  .tr,
-                              type: "addevent"));
-                        }
-                      } else {
-                        Get.dialog(FailedDialog(
-                            text:
-                                "Create event failed, date period must be selected"
-                                    .tr,
-                            type: "addevent"));
+                        });
                       }
+
+                      setState(() {});
                     },
                     style: ButtonStyle(
                       backgroundColor:
