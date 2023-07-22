@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
@@ -42,9 +43,11 @@ class StateDayEvent extends State<DayEvent> with TickerProviderStateMixin {
         builder: (BuildContext context,
             AsyncSnapshot<List<ScheduleModel>> snapshot) {
           if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                  "Something wrong with message: ${snapshot.error.toString()}"),
+            Get.dialog(const FailedDialog(
+                text: "Unknown error, please contact the admin",
+                type: "error"));
+            return const Center(
+              child: Text("Something wrong"),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
             List<ScheduleModel> contents = snapshot.data;
@@ -85,7 +88,7 @@ class StateDayEvent extends State<DayEvent> with TickerProviderStateMixin {
                   child: IntrinsicHeight(
                       child: Stack(children: [
                     GestureDetector(
-                        onTap: () {
+                        onTap: () async {
                           if (content.dataFrom == 2) {
                             showDialog<String>(
                                 context: context,
@@ -101,31 +104,41 @@ class StateDayEvent extends State<DayEvent> with TickerProviderStateMixin {
                                                 Radius.circular(roundedLG))),
                                         content: DetailTask(
                                           data: content,
+                                          isModeled: true,
                                         ));
                                   });
                                 });
                           } else {
-                            commandService
-                                .postContentView(content.slugName)
-                                .then((response) {
-                              setState(() => {});
-                              var status = response[0]['message'];
-                              var body = response[0]['body'];
+                            final connectivityResult =
+                                await (Connectivity().checkConnectivity());
+                            if (connectivityResult != ConnectivityResult.none) {
+                              commandService
+                                  .postContentView(content.slugName)
+                                  .then((response) {
+                                setState(() => {});
+                                var status = response[0]['message'];
+                                var body = response[0]['body'];
 
-                              if (status == "success") {
-                                Get.to(() =>
-                                    DetailPage(passSlug: content.slugName));
-                              } else {
-                                Get.dialog(FailedDialog(
-                                    text: body, type: "openevent"));
-                              }
-                            });
+                                if (status == "success") {
+                                  Get.to(() =>
+                                      DetailPage(passSlug: content.slugName));
+                                } else {
+                                  Get.dialog(FailedDialog(
+                                      text: body, type: "openevent"));
+                                }
+                              });
+                            } else {
+                              Get.to(
+                                  () => DetailPage(passSlug: content.slugName));
+                            }
 
                             passSlugContent = content.slugName;
                           }
                         },
                         child: GetScheduleContainer(
-                            width: fullWidth, content: content))
+                            width: fullWidth,
+                            content: content,
+                            isConverted: true))
                   ])))
             ]);
           }).toList()));

@@ -11,6 +11,7 @@ import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 getToday(String type) {
   if (type == "date") {
@@ -82,7 +83,7 @@ getBgColor(DateTime ds, DateTime de) {
 }
 
 //Get content tag.
-Widget getTagShow(tag, dateStart, dateEnd) {
+Widget getTagShow(tag, dateStart, dateEnd, isConverted) {
   int i = 0;
   int max = 3; //Maximum tag
 
@@ -93,9 +94,14 @@ Widget getTagShow(tag, dateStart, dateEnd) {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: getColor(
-              DateTime.parse(dateStart)
-                  .add(Duration(hours: getUTCHourOffset())),
-              DateTime.parse(dateEnd).add(Duration(hours: getUTCHourOffset()))),
+              isConverted == true
+                  ? DateTime.parse(dateStart)
+                  : DateTime.parse(dateStart)
+                      .add(Duration(hours: getUTCHourOffset())),
+              isConverted == true
+                  ? DateTime.parse(dateEnd)
+                  : DateTime.parse(dateEnd)
+                      .add(Duration(hours: getUTCHourOffset()))),
         ),
         child: Wrap(
             runSpacing: -spaceWrap,
@@ -116,10 +122,15 @@ Widget getTagShow(tag, dateStart, dateEnd) {
                             text: " ${content['tag_name']}",
                             style: TextStyle(
                                 color: getBgColor(
-                                    DateTime.parse(dateStart).add(
-                                        Duration(hours: getUTCHourOffset())),
-                                    DateTime.parse(dateEnd).add(
-                                        Duration(hours: getUTCHourOffset()))),
+                                    isConverted == true
+                                        ? DateTime.parse(dateStart)
+                                        : DateTime.parse(dateStart).add(
+                                            Duration(
+                                                hours: getUTCHourOffset())),
+                                    isConverted == true
+                                        ? DateTime.parse(dateEnd)
+                                        : DateTime.parse(dateEnd).add(Duration(
+                                            hours: getUTCHourOffset()))),
                                 fontSize: textSM),
                           ),
                         ],
@@ -140,10 +151,15 @@ Widget getTagShow(tag, dateStart, dateEnd) {
                             text: " See ${tag.length - max} More",
                             style: TextStyle(
                                 color: getBgColor(
-                                    DateTime.parse(dateStart).add(
-                                        Duration(hours: getUTCHourOffset())),
-                                    DateTime.parse(dateEnd).add(
-                                        Duration(hours: getUTCHourOffset()))),
+                                    isConverted == true
+                                        ? DateTime.parse(dateStart)
+                                        : DateTime.parse(dateStart).add(
+                                            Duration(
+                                                hours: getUTCHourOffset())),
+                                    isConverted == true
+                                        ? DateTime.parse(dateEnd)
+                                        : DateTime.parse(dateEnd).add(Duration(
+                                            hours: getUTCHourOffset()))),
                                 fontSize: textSM),
                           ),
                         ],
@@ -208,8 +224,7 @@ Widget getLocation(loc, textColor) {
 }
 
 Widget getHourChipLine(String dateStart, double width) {
-  DateTime date =
-      DateTime.parse(dateStart).add(Duration(hours: getUTCHourOffset()));
+  DateTime date = DateTime.parse(dateStart);
 
   getLiveText(DateTime dt) {
     if (DateFormat("HH").format(DateTime.now()) ==
@@ -366,4 +381,18 @@ int getUTCHourOffset() {
   DateTime now = DateTime.now();
   Duration offset = now.timeZoneOffset;
   return offset.inHours;
+}
+
+Future<Role> getRoleSess(bool isLogged) async {
+  final prefs = await SharedPreferences.getInstance();
+  final roles = prefs.getString('role_list_key');
+
+  if (roles != null) {
+    return Role(role: roles);
+  } else {
+    if (isLogged) {
+      await getDestroyTrace(false);
+    }
+    return null;
+  }
 }

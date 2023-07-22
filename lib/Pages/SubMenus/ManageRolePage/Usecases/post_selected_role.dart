@@ -46,7 +46,7 @@ class StatePostSelectedRole extends State<PostSelectedRole> {
               if (widget.back == null) {
                 Get.back();
               } else {
-                Get.offNamed(CollectionRoute.role, preventDuplicates: false);
+                Get.toNamed(CollectionRoute.role, preventDuplicates: false);
               }
             },
           ),
@@ -64,7 +64,12 @@ class StatePostSelectedRole extends State<PostSelectedRole> {
                     if (widget.back == null) {
                       Get.back();
                     } else {
-                      Get.offNamed(CollectionRoute.role,
+                      Get.toNamed(CollectionRoute.role,
+                          preventDuplicates: false);
+                    }
+                    if (!widget.isLogged) {
+                      Get.toNamed(CollectionRoute.register,
+                          arguments: {'isLogged': false},
                           preventDuplicates: false);
                     }
                   },
@@ -122,7 +127,7 @@ class StatePostSelectedRole extends State<PostSelectedRole> {
                               uploadedImageRegis = null;
                               isWaiting = false;
                             });
-                            Get.offNamed(CollectionRoute.register,
+                            Get.toNamed(CollectionRoute.register,
                                 preventDuplicates: false);
                             Get.snackbar("Success", "Role request has sended",
                                 backgroundColor: whiteColor);

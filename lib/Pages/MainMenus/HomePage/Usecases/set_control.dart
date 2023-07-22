@@ -12,7 +12,6 @@ import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/dummy.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SetControl extends StatefulWidget {
   const SetControl({Key key, this.titleCtrl}) : super(key: key);
@@ -23,24 +22,10 @@ class SetControl extends StatefulWidget {
 }
 
 class StateSetControl extends State<SetControl> {
-  Future<Role> getToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    final roles = prefs.getString('role_list_key');
-
-    if (roles != null) {
-      return Role(role: roles);
-    } else {
-      Get.offNamed(CollectionRoute.landing, preventDuplicates: false);
-      Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
-          backgroundColor: whiteColor);
-      return null;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Role>(
-        future: getToken(),
+        future: getRoleSess(true),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done &&
               snapshot.hasData) {
@@ -161,7 +146,7 @@ class StateSheetFilter extends State<SheetFilter> {
                           color: whiteColor,
                           onPressed: () {
                             searchingContent = "";
-                            Get.offNamed(CollectionRoute.bar,
+                            Get.toNamed(CollectionRoute.bar,
                                 preventDuplicates: false);
                           },
                         ),
@@ -224,7 +209,7 @@ class StateSheetFilter extends State<SheetFilter> {
                             onPressed: () {
                               filterDateStart = null;
                               filterDateEnd = null;
-                              Get.offNamed(CollectionRoute.bar,
+                              Get.toNamed(CollectionRoute.bar,
                                   preventDuplicates: false);
                             },
                           ),
@@ -270,7 +255,7 @@ class StateSheetFilter extends State<SheetFilter> {
                     const Spacer(),
                     outlinedButtonCustom(() {
                       selectedTagFilterContent.clear();
-                      Get.offNamed(CollectionRoute.bar,
+                      Get.toNamed(CollectionRoute.bar,
                           preventDuplicates: false);
                     }, "Clear All".tr, Icons.delete)
                   ],
@@ -323,7 +308,7 @@ class StateSheetFilter extends State<SheetFilter> {
                   child: ElevatedButton(
                     onPressed: () {
                       searchingContent = widget.title.text.trim();
-                      Get.offNamed(CollectionRoute.bar,
+                      Get.toNamed(CollectionRoute.bar,
                           preventDuplicates: false);
                     },
                     style: ButtonStyle(

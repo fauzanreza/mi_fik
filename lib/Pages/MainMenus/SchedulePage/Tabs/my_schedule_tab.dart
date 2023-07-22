@@ -1,5 +1,7 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Container/content.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
@@ -32,8 +34,6 @@ class StateMySchedulePage extends State<MySchedulePage> {
     setState(() {});
   }
 
-  String hourChipBefore;
-
   @override
   void initState() {
     super.initState();
@@ -50,9 +50,11 @@ class StateMySchedulePage extends State<MySchedulePage> {
         builder: (BuildContext context,
             AsyncSnapshot<List<ScheduleModel>> snapshot) {
           if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                  "Something wrong with message: ${snapshot.error.toString()}"),
+            Get.dialog(const FailedDialog(
+                text: "Unknown error, please contact the admin",
+                type: "error"));
+            return const Center(
+              child: Text("Something wrong"),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
             List<ScheduleModel> contents = snapshot.data;
@@ -68,6 +70,39 @@ class StateMySchedulePage extends State<MySchedulePage> {
   Widget _buildListView(List<ScheduleModel> contents) {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
+    String hourChipBefore = "";
+    String dateChipBefore = "";
+
+    Widget getDateChip(ds) {
+      var date = DateTime.parse(ds);
+
+      String check = ("${date.year}${date.month}${date.day}");
+      if (dateChipBefore != check) {
+        dateChipBefore = check;
+        var dateContext = DateFormat("dd MMM yyyy").format(date);
+        var yesterdayContext =
+            DateFormat("dd MMM yyyy").format(date.add(const Duration(days: 1)));
+
+        if (getToday("date") == dateContext) {
+          dateContext = "Today".tr;
+        } else if (getToday("date") == yesterdayContext) {
+          dateContext = "Yesterday".tr;
+        }
+
+        return Container(
+            margin: EdgeInsets.symmetric(vertical: spaceMD),
+            alignment: Alignment.center,
+            padding: EdgeInsets.symmetric(vertical: spaceSM - 2),
+            width: 135,
+            decoration: const BoxDecoration(
+                color: Color(0xFFFADFB9),
+                borderRadius: BorderRadius.all(Radius.circular(10))),
+            child:
+                Text("From $dateContext", style: TextStyle(fontSize: textSM)));
+      } else {
+        return const SizedBox();
+      }
+    }
 
     if ((contents != null) && (contents.isNotEmpty)) {
       return RefreshIndicator(
@@ -88,13 +123,14 @@ class StateMySchedulePage extends State<MySchedulePage> {
                 }
 
                 return Column(children: [
+                  getDateChip(content.dateStart),
                   getChipHour(content.dateStart),
                   SizedBox(
                       width: fullWidth,
                       child: IntrinsicHeight(
                           child: Stack(children: [
                         GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               if (content.dataFrom == 2) {
                                 showDialog<String>(
                                     context: context,
@@ -113,31 +149,42 @@ class StateMySchedulePage extends State<MySchedulePage> {
                                                         roundedLG))),
                                             content: DetailTask(
                                               data: content,
+                                              isModeled: true,
                                             ));
                                       });
                                     });
                               } else {
-                                commandService
-                                    .postContentView(content.slugName)
-                                    .then((response) {
-                                  setState(() => {});
-                                  var status = response[0]['message'];
-                                  var body = response[0]['body'];
+                                final connectivityResult =
+                                    await (Connectivity().checkConnectivity());
+                                if (connectivityResult !=
+                                    ConnectivityResult.none) {
+                                  commandService
+                                      .postContentView(content.slugName)
+                                      .then((response) {
+                                    setState(() => {});
+                                    var status = response[0]['message'];
+                                    var body = response[0]['body'];
 
-                                  if (status == "success") {
-                                    Get.offAll(() =>
-                                        DetailPage(passSlug: content.slugName));
-                                  } else {
-                                    Get.dialog(FailedDialog(
-                                        text: body, type: "openevent"));
-                                  }
-                                });
+                                    if (status == "success") {
+                                      Get.to(() => DetailPage(
+                                          passSlug: content.slugName));
+                                    } else {
+                                      Get.dialog(FailedDialog(
+                                          text: body, type: "openevent"));
+                                    }
+                                  });
+                                } else {
+                                  Get.to(() =>
+                                      DetailPage(passSlug: content.slugName));
+                                }
 
                                 passSlugContent = content.slugName;
                               }
                             },
                             child: GetScheduleContainer(
-                                width: fullWidth, content: content))
+                                width: fullWidth,
+                                content: content,
+                                isConverted: true))
                       ])))
                 ]);
               }).toList()));

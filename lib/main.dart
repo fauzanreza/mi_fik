@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -8,8 +10,10 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/bg_fcm_dialog.dart';
+import 'package:mi_fik/Components/Dialogs/reminder_dialog.dart';
 import 'package:mi_fik/Modules/APIs/DictionaryApi/Services/queries.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Routes/page_routes.dart';
 import 'package:mi_fik/Modules/Translators/dictionary.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
@@ -17,6 +21,7 @@ import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mi_fik/Pages/Landings/RegisterPage/index.dart';
+import 'package:mi_fik/Pages/SubMenus/DetailPage/index.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -33,13 +38,8 @@ Future<void> fireFCMHandler(RemoteMessage message) async {
   //   await plugin.createNotificationChannel(channel);
   // }
 
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-
-  Get.dialog(BgFcmDialog(
-    title: message.notification.title,
-    body: message.notification.body,
-  ));
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
   //}
 }
 
@@ -99,13 +99,74 @@ Future<void> main() async {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       RemoteNotification notification = message.notification;
       AndroidNotification android = message.notification?.android;
+      FlutterLocalNotificationsPlugin().show(notification.hashCode,
+          notification.title, notification.body, fcmConfig);
+
       if (notification != null && android != null) {
-        Get.dialog(
-          BgFcmDialog(
-              title: message.notification.title,
-              body: message.notification.body,
-              date: message.sentTime),
-        );
+        if (message.data["module"] == "event") {
+          Get.to(() => DetailPage(passSlug: message.data["slug"]));
+        } else if (message.data["module"] == "reminder") {
+          if (message.data["type"] == "event") {
+            Get.to(() => DetailPage(passSlug: message.data["slug"]));
+          } else if (message.data["type"] == "task") {
+            selectedIndex = 1;
+            Get.toNamed(CollectionRoute.bar);
+          }
+          Get.dialog(
+            ReminderDialog(
+              slug: message.data["slug"],
+              title: message.data["content_title"],
+              dateStart: message.data["content_date_start"],
+              isDirect: false,
+              from: message.data["type"],
+              content: jsonDecode(message.data["content"]),
+            ),
+          );
+        } else if (message.data["module"] == "faq") {
+          Get.toNamed(CollectionRoute.myfaq);
+        } else if (message.data["module"] == "announcement") {
+          Get.dialog(
+            BgFcmDialog(
+                title: message.notification.title,
+                body: message.notification.body,
+                date: message.sentTime),
+          );
+        } else if (message.data["module"] == "request") {
+          Get.toNamed(CollectionRoute.role);
+        } else if (message.data["module"] == "user") {
+          Get.toNamed(CollectionRoute.profile);
+        } else if (message.data["module"] == "home") {
+          Get.toNamed(CollectionRoute.bar);
+        }
+      }
+    });
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification notification = message.notification;
+      AndroidNotification android = message.notification?.android;
+      FlutterLocalNotificationsPlugin().show(notification.hashCode,
+          notification.title, notification.body, fcmConfig);
+
+      if (notification != null && android != null) {
+        if (message.data["module"] == "reminder") {
+          Get.dialog(
+            ReminderDialog(
+              slug: message.data["slug"],
+              title: message.data["content_title"],
+              dateStart: message.data["content_date_start"],
+              isDirect: false,
+              from: message.data["type"],
+              content: jsonDecode(message.data["content"]),
+            ),
+          );
+        } else if (message.data["module"] == "announcement") {
+          Get.dialog(
+            BgFcmDialog(
+                title: message.notification.title,
+                body: message.notification.body,
+                date: message.sentTime),
+          );
+        }
       }
     });
 
@@ -141,33 +202,6 @@ class StateMyApp extends State<MyApp> {
         InitializationSettings(android: initializationSettingsAndroid);
     FlutterLocalNotificationsPlugin().initialize(initializationSettings);
 
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      RemoteNotification notification = message.notification;
-      AndroidNotification android = message.notification?.android;
-      if (notification != null && android != null) {
-        FlutterLocalNotificationsPlugin().show(
-            notification.hashCode,
-            notification.title,
-            notification.body,
-            NotificationDetails(
-              android: AndroidNotificationDetails(
-                "${channel.id}2",
-                channel.name,
-                channelDescription: channel.description,
-                color: primaryColor,
-                enableLights: true,
-                icon: "@mipmap/ic_launcher",
-                priority: Priority.max,
-                playSound: true,
-                importance: Importance.max,
-                sound: const RawResourceAndroidNotificationSound('notif_1'),
-              ),
-            ));
-      }
-    });
-
-    // Get dictionary collection
-
     getToken();
   }
 
@@ -177,7 +211,6 @@ class StateMyApp extends State<MyApp> {
     await dctService.getDictionaryType("ATT-001");
     await dctService.getDictionaryType("SLC-001");
     token = await FirebaseMessaging.instance.getToken();
-    //print(token);
   }
 
   @override
@@ -225,7 +258,9 @@ class StateMyApp extends State<MyApp> {
             if (widget.finishRegis) {
               return getItem(const BottomBar());
             } else {
+              indexRegis = 5;
               return getItem(const RegisterPage(isLogged: true));
+              // return getItem(const WaitingPage());
             }
           } else {
             return const CircularProgressIndicator();

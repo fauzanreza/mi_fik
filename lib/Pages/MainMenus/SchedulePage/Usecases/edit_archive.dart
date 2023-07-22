@@ -124,7 +124,7 @@ class StateEditArchive extends State<EditArchive> {
                               if (status == "success") {
                                 selectedArchiveName = archive.archiveName;
                                 selectedArchiveDesc = archive.archiveDesc;
-                                Get.offNamed(CollectionRoute.bar,
+                                Get.toNamed(CollectionRoute.bar,
                                     preventDuplicates: false);
 
                                 Get.dialog(SuccessDialog(text: body));

@@ -102,7 +102,8 @@ class StatePostFeedback extends State<PostFeedback> {
                               rateCtrl == 0;
                               fbBodyCtrl.clear();
 
-                              Get.offNamed(CollectionRoute.about);
+                              Get.toNamed(CollectionRoute.about,
+                                  preventDuplicates: false);
                               Get.dialog(SuccessDialog(text: body));
                             } else {
                               Get.dialog(FailedDialog(

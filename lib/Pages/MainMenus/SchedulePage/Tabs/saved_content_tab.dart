@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
@@ -59,9 +60,11 @@ class StateSavedContent extends State<SavedContent>
         builder: (BuildContext context,
             AsyncSnapshot<List<ScheduleModel>> snapshot) {
           if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                  "Something wrong with message: ${snapshot.error.toString()}"),
+            Get.dialog(const FailedDialog(
+                text: "Unknown error, please contact the admin",
+                type: "error"));
+            return const Center(
+              child: Text("Something wrong"),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
             List<ScheduleModel> contents = snapshot.data;
@@ -90,7 +93,7 @@ class StateSavedContent extends State<SavedContent>
                   outlinedButtonCustom(() {
                     selectedArchiveSlug = null;
                     selectedArchiveName = null;
-                    Get.offNamed(CollectionRoute.bar, preventDuplicates: false);
+                    Get.toNamed(CollectionRoute.bar, preventDuplicates: false);
                   }, "Back to Archive".tr, Icons.arrow_back),
                   const Spacer(),
                   DeleteArchive(slug: widget.slug, name: widget.name),
@@ -117,22 +120,31 @@ class StateSavedContent extends State<SavedContent>
 
                             // Open content w/ full container
                             GestureDetector(
-                                onTap: () {
-                                  commandService
-                                      .postContentView(content.slugName)
-                                      .then((response) {
-                                    setState(() => {});
-                                    var status = response[0]['message'];
-                                    var body = response[0]['body'];
+                                onTap: () async {
+                                  final connectivityResult =
+                                      await (Connectivity()
+                                          .checkConnectivity());
+                                  if (connectivityResult !=
+                                      ConnectivityResult.none) {
+                                    commandService
+                                        .postContentView(content.slugName)
+                                        .then((response) {
+                                      setState(() => {});
+                                      var status = response[0]['message'];
+                                      var body = response[0]['body'];
 
-                                    if (status == "success") {
-                                      Get.to(() => DetailPage(
-                                          passSlug: content.slugName));
-                                    } else {
-                                      Get.dialog(FailedDialog(
-                                          text: body, type: "openevent"));
-                                    }
-                                  });
+                                      if (status == "success") {
+                                        Get.to(() => DetailPage(
+                                            passSlug: content.slugName));
+                                      } else {
+                                        Get.dialog(FailedDialog(
+                                            text: body, type: "openevent"));
+                                      }
+                                    });
+                                  } else {
+                                    Get.to(() =>
+                                        DetailPage(passSlug: content.slugName));
+                                  }
 
                                   passSlugContent = content.slugName;
                                 },
@@ -176,13 +188,16 @@ class StateSavedContent extends State<SavedContent>
                                                         roundedLG))),
                                             content: DetailTask(
                                               data: content,
+                                              isModeled: true,
                                             ));
                                       });
                                     });
                               }
                             },
                             child: GetScheduleContainer(
-                                width: fullWidth, content: content))
+                                width: fullWidth,
+                                content: content,
+                                isConverted: false))
                       ])));
                 }
               }).toList())
@@ -197,7 +212,7 @@ class StateSavedContent extends State<SavedContent>
               outlinedButtonCustom(() {
                 selectedArchiveSlug = null;
                 selectedArchiveName = null;
-                Get.offNamed(CollectionRoute.bar, preventDuplicates: false);
+                Get.toNamed(CollectionRoute.bar, preventDuplicates: false);
               }, "Back to Archive".tr, Icons.arrow_back),
               const Spacer(),
               DeleteArchive(slug: selectedArchiveSlug),

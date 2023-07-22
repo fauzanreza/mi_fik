@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
 import 'package:mi_fik/Modules/APIs/AuthApi/Services/queries.dart';
+import 'package:mi_fik/Modules/Helpers/template.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
-import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class SignOutDialog extends StatefulWidget {
@@ -59,22 +59,21 @@ class StateSignOutDialog extends State<SignOutDialog> {
 
             if (keyExists) {
               apiService.getSignOut().then((response) {
-                setState(() => {});
                 var body = response[0]['body'];
                 var code = response[0]['code'];
 
                 if (body == "Logout success" && code == 200) {
-                  Get.offNamed(CollectionRoute.landing);
+                  getDestroyTrace(true);
                   Get.dialog(SuccessDialog(text: body));
                 } else if (code == 401) {
-                  Get.offNamed(CollectionRoute.landing);
+                  getDestroyTrace(true);
                   Get.dialog(SuccessDialog(text: "Sign out success".tr));
                 } else {
                   Get.dialog(FailedDialog(text: body, type: "signout"));
                 }
               });
             } else {
-              Get.offNamed(CollectionRoute.landing);
+              getDestroyTrace(true);
               Get.dialog(SuccessDialog(text: "Sign out success".tr));
             }
           },

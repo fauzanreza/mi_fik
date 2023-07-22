@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/top_bar.dart';
 import 'package:mi_fik/Components/Cameras/captures.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
+import 'package:mi_fik/Components/Dialogs/loading_dialog.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
 import 'package:mi_fik/Modules/Firebases/Storages/User/add_image.dart';
@@ -15,21 +16,21 @@ import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 class ShowImage extends StatefulWidget {
-  const ShowImage({Key key, this.path, this.from, this.loadingCtrl})
-      : super(key: key);
+  const ShowImage({Key key, this.path, this.from}) : super(key: key);
   final String path;
   final String from;
-  final AnimationController loadingCtrl;
 
   @override
   State<ShowImage> createState() => _ShowImageState();
 }
 
-class _ShowImageState extends State<ShowImage> {
+class _ShowImageState extends State<ShowImage>
+    with SingleTickerProviderStateMixin {
   UserCommandsService commandService;
   PostImage fireServicePost;
   File imageFile;
   bool isLoading = false;
+  AnimationController lottieController;
 
   @override
   void initState() {
@@ -37,10 +38,20 @@ class _ShowImageState extends State<ShowImage> {
     commandService = UserCommandsService();
     fireServicePost = PostImage();
     imageFile = File(widget.path);
+    lottieController = AnimationController(vsync: this);
+  }
+
+  @override
+  void dispose() {
+    lottieController.dispose();
+    super.dispose();
   }
 
   Future<void> uploadImage() async {
     try {
+      Get.dialog(LoadingDialog(
+          url: "assets/json/loading-att.json", ctrl: lottieController));
+
       setState(() {
         isLoading = true;
       });
@@ -55,7 +66,7 @@ class _ShowImageState extends State<ShowImage> {
         } else {
           Get.snackbar("Error".tr, "Failed to upload, file doesnt exist".tr,
               backgroundColor: whiteColor);
-          Get.offNamed(CollectionRoute.profile, preventDuplicates: false);
+          Get.toNamed(CollectionRoute.profile, preventDuplicates: false);
         }
       } else if (widget.from == "addpost") {
         //
@@ -83,7 +94,7 @@ class _ShowImageState extends State<ShowImage> {
         } else {
           Get.snackbar("Error".tr, "Failed to upload, file doesnt exist".tr,
               backgroundColor: whiteColor);
-          Get.offNamed(CollectionRoute.register, preventDuplicates: false);
+          Get.toNamed(CollectionRoute.register, preventDuplicates: false);
         }
       }
 
@@ -96,14 +107,14 @@ class _ShowImageState extends State<ShowImage> {
 
       if (status == "success") {
         if (widget.from == "profile") {
-          widget.loadingCtrl.reset();
-          Get.offNamed(CollectionRoute.profile, preventDuplicates: false);
+          lottieController.reset();
+          Get.toNamed(CollectionRoute.profile, preventDuplicates: false);
         } else if (widget.from == "addpost") {
-          widget.loadingCtrl.reset();
-          Get.offNamed(CollectionRoute.addpost, preventDuplicates: false);
+          lottieController.reset();
+          Get.toNamed(CollectionRoute.addpost, preventDuplicates: false);
         } else if (widget.from == "register") {
-          widget.loadingCtrl.reset();
-          Get.offNamed(CollectionRoute.register, preventDuplicates: false);
+          lottieController.reset();
+          Get.toNamed(CollectionRoute.register, preventDuplicates: false);
         }
       } else {
         Get.dialog(FailedDialog(text: body));
@@ -115,14 +126,17 @@ class _ShowImageState extends State<ShowImage> {
 
       Get.snackbar(
         "Error".tr,
-        "Failed to upload image".tr,
-        backgroundColor: primaryColor,
+        "Failed to upload image $e".tr,
+        backgroundColor: whiteColor,
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    double fullWidth = MediaQuery.of(context).size.width;
+    double fullHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: getAppbar("Preview Image".tr, () async {
         WidgetsFlutterBinding.ensureInitialized();
@@ -133,11 +147,15 @@ class _ShowImageState extends State<ShowImage> {
             ));
       }),
       body: Center(
+          child: SizedBox(
+        width: fullWidth,
+        height: fullHeight,
         child: Image.file(imageFile),
-      ),
+      )),
       floatingActionButton: FloatingActionButton(
         backgroundColor: successBG,
-        onPressed: isLoading ? null : uploadImage, // Disable button if loading
+        onPressed:
+            isLoading == true ? null : uploadImage, // Disable button if loading
         child: const Icon(Icons.save),
       ),
     );

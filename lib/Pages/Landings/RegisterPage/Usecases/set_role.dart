@@ -38,7 +38,12 @@ class StateSetRole extends State<SetRole> {
       } else {
         return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [Expanded(child: GetAllTagCategory())]);
+            children: const [
+              Expanded(
+                  child: GetAllTagCategory(
+                isLogged: false,
+              ))
+            ]);
       }
     }
 

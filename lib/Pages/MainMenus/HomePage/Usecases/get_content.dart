@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -141,20 +142,27 @@ class StateGetContent extends State<GetContent> {
 
               // Open content w/ full container
               GestureDetector(
-                  onTap: () {
-                    commandService
-                        .postContentView(content.slugName)
-                        .then((response) {
-                      setState(() {});
-                      var status = response[0]['message'];
-                      var body = response[0]['body'];
+                  onTap: () async {
+                    final connectivityResult =
+                        await (Connectivity().checkConnectivity());
+                    if (connectivityResult != ConnectivityResult.none) {
+                      commandService
+                          .postContentView(content.slugName)
+                          .then((response) async {
+                        setState(() {});
+                        var status = response[0]['message'];
+                        var body = response[0]['body'];
 
-                      if (status == "success") {
-                        Get.to(() => DetailPage(passSlug: content.slugName));
-                      } else {
-                        Get.dialog(FailedDialog(text: body, type: "openevent"));
-                      }
-                    });
+                        if (status == "success") {
+                          Get.to(() => DetailPage(passSlug: content.slugName));
+                        } else {
+                          Get.dialog(
+                              FailedDialog(text: body, type: "openevent"));
+                        }
+                      });
+                    } else {
+                      Get.to(() => DetailPage(passSlug: content.slugName));
+                    }
 
                     passSlugContent = content.slugName;
                   },

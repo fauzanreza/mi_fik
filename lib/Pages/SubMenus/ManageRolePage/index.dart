@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Bars/top_bar.dart';
+import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/nodata_dialog.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Models/queries.dart';
@@ -39,9 +40,11 @@ class StateRolePage extends State<RolePage> {
         builder: (BuildContext context,
             AsyncSnapshot<List<UserRequestModel>> snapshot) {
           if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                  "Something wrong with message: ${snapshot.error.toString()}"),
+            Get.dialog(const FailedDialog(
+                text: "Unknown error, please contact the admin",
+                type: "error"));
+            return const Center(
+              child: Text("Something wrong"),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
             List<UserRequestModel> contents = snapshot.data;
@@ -68,7 +71,9 @@ class StateRolePage extends State<RolePage> {
         }),
         body: Container(
             margin: EdgeInsets.symmetric(horizontal: spaceXMD),
-            child: const GetAllTagCategory()),
+            child: const GetAllTagCategory(
+              isLogged: true,
+            )),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             if (selectedRole.isEmpty) {

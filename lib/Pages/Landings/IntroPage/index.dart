@@ -361,7 +361,7 @@ class StateIntroPage extends State<IntroPage> {
                                     title: Text('',
                                         style: TextStyle(color: primaryColor)),
                                     content: Column(children: [
-                                      Text("Choose your role",
+                                      Text("Choose Your Role".tr,
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: primaryColor,

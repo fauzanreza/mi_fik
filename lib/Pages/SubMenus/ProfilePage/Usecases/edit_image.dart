@@ -89,7 +89,7 @@ class _EditImageState extends State<EditImage>
 
                             if (status == "success") {
                               lottieController.reset();
-                              Get.offNamed(CollectionRoute.profile,
+                              Get.to(CollectionRoute.profile,
                                   preventDuplicates: false);
                             } else {
                               Get.back();
@@ -136,10 +136,8 @@ class _EditImageState extends State<EditImage>
                                       FullScreenMenu.hide();
 
                                       Get.to(() => CameraPage(
-                                            camera: cameras.first,
-                                            from: "profile",
-                                            loadingCtrl: lottieController,
-                                          ));
+                                          camera: cameras.first,
+                                          from: "profile"));
                                     }),
                                 FSMenuItem(
                                   icon: Icon(Icons.folder, color: whiteColor),
@@ -170,8 +168,7 @@ class _EditImageState extends State<EditImage>
 
                                           if (status == "success") {
                                             lottieController.reset();
-                                            Get.offNamed(
-                                                CollectionRoute.profile,
+                                            Get.to(CollectionRoute.profile,
                                                 preventDuplicates: false);
                                           } else {
                                             Get.back();

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
+import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/query_contents.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
+import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Helpers/widget.dart';
 import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
@@ -46,9 +48,11 @@ class StateDetailPage extends State<DetailPage> {
         builder: (BuildContext context,
             AsyncSnapshot<List<ContentDetailModel>> snapshot) {
           if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                  "Something wrong with message: ${snapshot.error.toString()}"),
+            Get.dialog(const FailedDialog(
+                text: "Unknown error, please contact the admin",
+                type: "error"));
+            return const Center(
+              child: Text("Something wrong"),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
             List<ContentDetailModel> contents = snapshot.data;
@@ -71,8 +75,10 @@ class StateDetailPage extends State<DetailPage> {
       //Convert date.
       Widget getContentDate(dateStart, dateEnd) {
         if (dateStart != null && dateEnd != null) {
-          dateStart = DateTime.parse(dateStart);
-          dateEnd = DateTime.parse(dateEnd);
+          dateStart = DateTime.parse(dateStart)
+              .add(Duration(hours: getUTCHourOffset()));
+          dateEnd =
+              DateTime.parse(dateEnd).add(Duration(hours: getUTCHourOffset()));
 
           //Initial variable.
           var monthStart = DateFormat("MM").format(dateStart).toString();
@@ -160,7 +166,7 @@ class StateDetailPage extends State<DetailPage> {
 
       return WillPopScope(
           onWillPop: () {
-            Get.offNamed(CollectionRoute.bar);
+            Get.toNamed(CollectionRoute.bar);
             return null;
           },
           child: Scaffold(
@@ -319,7 +325,7 @@ class StateDetailPage extends State<DetailPage> {
                     color: whiteColor,
                     onPressed: () {
                       listArchiveCheck = [];
-                      Get.offNamed(CollectionRoute.bar,
+                      Get.toNamed(CollectionRoute.bar,
                           preventDuplicates: false);
                     },
                   ),
@@ -328,7 +334,7 @@ class StateDetailPage extends State<DetailPage> {
     } else {
       return WillPopScope(
           onWillPop: () {
-            return Get.offNamed(CollectionRoute.bar, preventDuplicates: false);
+            return Get.toNamed(CollectionRoute.bar, preventDuplicates: false);
           },
           child: Scaffold(
             body: RefreshIndicator(
@@ -409,7 +415,7 @@ class StateDetailPage extends State<DetailPage> {
                     icon: Icon(Icons.arrow_back, size: iconLG),
                     color: whiteColor,
                     onPressed: () {
-                      Get.offNamed(CollectionRoute.bar,
+                      Get.toNamed(CollectionRoute.bar,
                           preventDuplicates: false);
                     },
                   ),

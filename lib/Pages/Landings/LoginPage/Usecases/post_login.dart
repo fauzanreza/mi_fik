@@ -1,5 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
@@ -12,6 +13,7 @@ import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/Landings/ForgetPassPage/index.dart';
 import 'package:mi_fik/Pages/Landings/RegisterPage/index.dart';
 
 class PostLogin extends StatefulWidget {
@@ -29,6 +31,7 @@ class StatePostLogin extends State<PostLogin> {
   String usernameMsg = "";
   String passMsg = "";
   String allMsg = "";
+  bool isHide = true;
 
   @override
   void dispose() {
@@ -76,10 +79,49 @@ class StatePostLogin extends State<PostLogin> {
             Text("Password",
                 style: TextStyle(color: darkColor, fontSize: textXMD)),
             getInputWarning(passMsg),
-            getInputText(passwordLength, passCtrl, true),
+            Stack(
+              children: [
+                getInputText(passwordLength, passCtrl, isHide),
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: IconButton(
+                    iconSize: iconMD,
+                    icon: FaIcon(
+                        isHide == false
+                            ? FontAwesomeIcons.eye
+                            : FontAwesomeIcons.eyeSlash,
+                        color: darkColor),
+                    onPressed: () {
+                      setState(() {
+                        if (isHide) {
+                          isHide = false;
+                        } else {
+                          isHide = true;
+                        }
+                      });
+                    },
+                  ),
+                )
+              ],
+            ),
             getInputWarning(allMsg),
+            TextButton(
+              style: TextButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 0),
+                foregroundColor: darkColor,
+              ),
+              onPressed: () {
+                indexForget = 0;
+                Get.to(() => const ForgetPage(
+                      isLogged: false,
+                    ));
+              },
+              child: Text('Forget Password'.tr,
+                  style: TextStyle(fontSize: textMD)),
+            ),
             Container(
-                margin: EdgeInsets.only(top: spaceXMD),
+                margin: EdgeInsets.only(top: spaceSM),
                 padding: EdgeInsets.zero,
                 width: fullWidth,
                 height: 45,
@@ -179,6 +221,7 @@ class StatePostLogin extends State<PostLogin> {
                           foregroundColor: primaryColor,
                         ),
                         onPressed: () {
+                          indexRegis = 0;
                           Get.to(() => const RegisterPage(
                                 isLogged: false,
                               ));

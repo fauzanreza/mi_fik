@@ -170,7 +170,11 @@ class Dictionaries extends Translations {
               "Add feedback failed, field can't be empty",
           "Sign out success": "Sign out success",
           "Failed to load document": "Failed to load document",
-          "Failed to load video": "Failed to load video"
+          "Failed to load video": "Failed to load video",
+          "You have picked all role": "You have picked all role",
+          "Choose Your Role": "Choose Your Role",
+          "Forget Password": "Forget Password",
+          "About to start in": "About to start in"
         },
         'id_ID': {
           'Good Morning': 'Selamat Pagi',
@@ -339,7 +343,11 @@ class Dictionaries extends Translations {
               "Gagal membuat event, inputan tidak boleh kosong",
           "Sign out success": "Berhasil keluar akun",
           "Failed to load document": "Gagal menampilkan dokumen",
-          "Failed to load video": "Gagal menampilkan video"
+          "Failed to load video": "Gagal menampilkan video",
+          "You have picked all role": "Anda telah memilih semua role",
+          "Choose Your Role": "Pilih role Anda",
+          "Forget Password": "Lupa password",
+          "About to start in": "Akan mulai"
         },
       };
 }

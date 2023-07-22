@@ -178,4 +178,102 @@ class AuthCommandsService {
       ];
     }
   }
+
+  Future<List<Map<String, dynamic>>> postReqRecover(
+      RegisteredModel data) async {
+    final header = {
+      'Accept': 'application/json',
+      'content-type': 'application/json'
+    };
+
+    final response = await client.post(
+      Uri.parse("$emuUrl/api/v1/check/pass/recover"),
+      headers: header,
+      body: registeredModelToJson(data),
+    );
+
+    var responseData = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      return [
+        {"message": "success", "body": responseData['message']}
+      ];
+    } else if (response.statusCode == 422 || response.statusCode == 401) {
+      return [
+        {"message": "failed", "body": responseData['result']}
+      ];
+    } else {
+      return [
+        {
+          "message": "failed",
+          "body": "Unknown error, please contact the admin".tr
+        }
+      ];
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> postValdRecover(
+      RequestRecoverModel data) async {
+    final header = {
+      'Accept': 'application/json',
+      'content-type': 'application/json'
+    };
+
+    final response = await client.post(
+      Uri.parse("$emuUrl/api/v1/check/pass/validate"),
+      headers: header,
+      body: requestRecoverModelToJson(data),
+    );
+
+    var responseData = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      return [
+        {"message": "success", "body": responseData['message']}
+      ];
+    } else if (response.statusCode == 422 || response.statusCode == 401) {
+      return [
+        {"message": "failed", "body": responseData['result']}
+      ];
+    } else {
+      return [
+        {
+          "message": "failed",
+          "body": "Unknown error, please contact the admin".tr
+        }
+      ];
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> editPass(EditPassModel data) async {
+    final header = {
+      'Accept': 'application/json',
+      'content-type': 'application/json'
+    };
+
+    final response = await client.put(
+      Uri.parse("$emuUrl/api/v1/check/pass/edit"),
+      headers: header,
+      body: editPassModelToJson(data),
+    );
+
+    var responseData = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      return [
+        {"message": "success", "body": responseData['message']}
+      ];
+    } else if (response.statusCode == 422 || response.statusCode == 401) {
+      return [
+        {"message": "failed", "body": responseData['result']}
+      ];
+    } else {
+      return [
+        {
+          "message": "failed",
+          "body": "Unknown error, please contact the admin".tr
+        }
+      ];
+    }
+  }
 }

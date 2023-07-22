@@ -12,7 +12,7 @@ class AuthValidator {
     return {"status": true, "message": "Validation success"};
   }
 
-  static Map<String, dynamic> validateAccount(RegisteredModel data) {
+  static Map<String, dynamic> validateAccount(dynamic data) {
     if (data.username.isEmpty) {
       return {
         "status": false,

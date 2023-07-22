@@ -11,6 +11,7 @@ import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:skeletons/skeletons.dart';
 
 class ShowRole extends StatefulWidget {
   const ShowRole({Key key}) : super(key: key);
@@ -32,6 +33,8 @@ class StateShowRole extends State<ShowRole> {
 
   @override
   Widget build(BuildContext context) {
+    double fullWidth = MediaQuery.of(context).size.width;
+
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
@@ -39,16 +42,26 @@ class StateShowRole extends State<ShowRole> {
         builder:
             (BuildContext context, AsyncSnapshot<List<MyTagModel>> snapshot) {
           if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                  "Something wrong with message: ${snapshot.error.toString()}"),
+            Get.dialog(const FailedDialog(
+                text: "Unknown error, please contact the admin",
+                type: "error"));
+            return const Center(
+              child: Text("Something wrong"),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
             List<MyTagModel> contents = snapshot.data;
             return _buildListView(contents);
           } else {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return Center(
+              child: Container(
+                  margin: EdgeInsets.all(spaceMini),
+                  child: SkeletonLine(
+                    style: SkeletonLineStyle(
+                        height: 60,
+                        width: fullWidth,
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(roundedMini))),
+                  )),
             );
           }
         },
@@ -150,14 +163,12 @@ class StateShowRole extends State<ShowRole> {
                                             var body = response[0]['body'];
 
                                             if (status == "success") {
-                                              Get.offNamed(
-                                                  CollectionRoute.profile,
+                                              Get.to(CollectionRoute.profile,
                                                   preventDuplicates: false);
                                               Get.dialog(
                                                   SuccessDialog(text: body));
                                             } else {
-                                              Get.offNamed(
-                                                  CollectionRoute.profile,
+                                              Get.to(CollectionRoute.profile,
                                                   preventDuplicates: false);
 
                                               Get.dialog(FailedDialog(
