@@ -1,71 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
-import 'package:mi_fik/Modules/APIs/AuthApi/Models/commands.dart';
-import 'package:mi_fik/Modules/APIs/AuthApi/Services/commands.dart';
-import 'package:mi_fik/Modules/APIs/AuthApi/Validators/commands.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 Widget getInputText(int len, var ctrl, bool secure) {
   return Container(
-    padding: EdgeInsets.only(top: paddingXSM * 0.2),
+    padding: EdgeInsets.only(top: spaceSM * 0.2),
     child: TextField(
-      cursorColor: blackbg,
+      cursorColor: darkColor,
       maxLength: len,
       autofocus: false,
       controller: ctrl,
       obscureText: secure,
+      style: TextStyle(fontSize: textXMD),
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-        fillColor: mainbg,
+        fillColor: whiteColor,
         filled: true,
-        border: InputBorder.none,
+        border: OutlineInputBorder(borderSide: BorderSide(color: greyColor)),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(roundedSM),
+          borderSide: BorderSide(color: greyColor),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(roundedSM),
+          borderSide: BorderSide(color: greyColor),
         ),
       ),
     ),
   );
 }
 
-Widget getInputTextRegis(int len, String type, var ctx, AuthCommandsService api,
-    var refresh, String hint, bool check) {
-  void checkAccount() async {
-    RegisteredModel data = RegisteredModel(
-      username: usernameAvaiabilityCheck.trim(),
-      email: emailAvaiabilityCheck.trim(),
-    );
-
-    Map<String, dynamic> valid = AuthValidator.validateAccount(data);
-    if (valid['status']) {
-      api.postCheckUser(data).then((response) {
-        var status = response[0]['message'];
-        var body = response[0]['body'];
-
-        if (status == "success") {
-          checkAvaiabilityRegis = true;
-          refreshPage(refresh);
-          Get.snackbar("Success", "Username and Email is available",
-              backgroundColor: whitebg);
-        } else {
-          checkAvaiabilityRegis = false;
-          refreshPage(refresh);
-          showDialog<String>(
-              context: ctx,
-              builder: (BuildContext context) =>
-                  FailedDialog(text: body, type: "login"));
-        }
-      });
-    }
-  }
-
+Widget getInputTextRegis(
+    int len, String type, var ctrl, var refresh, String hint, bool check) {
   bool getEnabledEditing(bool check) {
     if (check) {
       return false;
@@ -74,19 +41,28 @@ Widget getInputTextRegis(int len, String type, var ctx, AuthCommandsService api,
     }
   }
 
+  bool getObscure(type) {
+    if (type == "pass") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   return Container(
-    padding: EdgeInsets.only(top: paddingXSM * 0.2),
+    padding: EdgeInsets.only(top: spaceSM * 0.2),
     child: TextField(
-      cursorColor: blackbg,
+      cursorColor: darkColor,
       maxLength: len,
       autofocus: false,
-      onSubmitted: (val) {
+      obscureText: getObscure(type),
+      controller: ctrl,
+      style: TextStyle(fontSize: textXMD),
+      onChanged: (val) {
         if (type == "username") {
           usernameAvaiabilityCheck = val;
-          checkAccount();
         } else if (type == "email") {
           emailAvaiabilityCheck = val;
-          checkAccount();
         } else if (type == "pass") {
           passRegisCtrl = val;
         } else if (type == "lname") {
@@ -97,18 +73,23 @@ Widget getInputTextRegis(int len, String type, var ctx, AuthCommandsService api,
       },
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-        fillColor: mainbg,
+        fillColor:
+            getEnabledEditing(check) ? whiteColor : greyColor.withOpacity(0.5),
         filled: true,
         enabled: getEnabledEditing(check),
         hintText: hint,
-        border: InputBorder.none,
+        border: OutlineInputBorder(borderSide: BorderSide(color: greyColor)),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(roundedSM),
+          borderSide: BorderSide(color: greyColor),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(roundedSM),
+          borderSide: BorderSide(color: greyColor),
+        ),
+        disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(roundedSM),
+          borderSide: BorderSide(color: greyColor),
         ),
       ),
     ),
@@ -121,27 +102,28 @@ void refreshPage(Function refreshCallback) {
 
 Widget getInputTextAtt(int len, String id, String obj) {
   return Container(
-    padding: EdgeInsets.only(top: paddingXSM * 0.2),
+    padding: EdgeInsets.only(top: spaceSM * 0.2),
     child: TextField(
-      cursorColor: blackbg,
+      cursorColor: darkColor,
       maxLength: len,
       autofocus: false,
+      style: TextStyle(fontSize: textXMD),
       onChanged: (value) {
         int idx = listAttachment.indexWhere((e) => e['id'] == id);
         listAttachment[idx][obj] = value.trim();
       },
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-        fillColor: mainbg,
+        fillColor: whiteColor,
         filled: true,
-        border: InputBorder.none,
+        border: OutlineInputBorder(borderSide: BorderSide(color: greyColor)),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(roundedSM),
+          borderSide: BorderSide(color: greyColor),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(roundedSM),
+          borderSide: BorderSide(color: greyColor),
         ),
       ),
     ),
@@ -150,26 +132,27 @@ Widget getInputTextAtt(int len, String id, String obj) {
 
 Widget getInputDesc(int len, int lines, var ctrl, bool secure) {
   return Container(
-    padding: EdgeInsets.only(top: paddingXSM * 0.2),
+    padding: EdgeInsets.only(top: spaceSM * 0.2),
     child: TextField(
-      cursorColor: blackbg,
+      cursorColor: darkColor,
       maxLength: len,
       autofocus: false,
       controller: ctrl,
       obscureText: secure,
       maxLines: lines,
       minLines: lines,
+      style: TextStyle(fontSize: textXMD),
       decoration: InputDecoration(
-        fillColor: mainbg,
+        fillColor: whiteColor,
         filled: true,
-        border: InputBorder.none,
+        border: OutlineInputBorder(borderSide: BorderSide(color: greyColor)),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(roundedSM),
+          borderSide: BorderSide(color: greyColor),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(roundedSM),
+          borderSide: BorderSide(color: greyColor),
         ),
       ),
     ),
@@ -179,15 +162,15 @@ Widget getInputDesc(int len, int lines, var ctrl, bool secure) {
 Widget getDropDownMain(String slct, List<String> opt,
     Function(String) onChanged, bool separate, String divider) {
   return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: EdgeInsets.symmetric(horizontal: spaceSM),
       height: 40,
-      margin: const EdgeInsets.only(top: 8),
+      margin: EdgeInsets.only(top: spaceXSM),
       decoration: BoxDecoration(
         border: Border.all(
           color: primaryColor,
           width: 1.0,
         ),
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(roundedSM),
       ),
       child: DropdownButton(
         value: slct,
@@ -195,7 +178,7 @@ Widget getDropDownMain(String slct, List<String> opt,
           height: 1.0,
           decoration: const BoxDecoration(border: null),
         ),
-        style: TextStyle(fontSize: textMD, color: primaryColor),
+        style: TextStyle(fontSize: textXMD, color: primaryColor),
         items: opt.map((String item) {
           if (separate) {
             return DropdownMenuItem<String>(

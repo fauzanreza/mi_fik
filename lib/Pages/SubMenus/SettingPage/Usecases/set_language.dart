@@ -33,16 +33,16 @@ class StateSetLanguage extends State<SetLanguage> {
     //double fullWidth = MediaQuery.of(context).size.width;
 
     return Container(
-      padding: EdgeInsets.all(paddingMD),
-      margin: EdgeInsets.all(paddingSM),
+      padding: EdgeInsets.all(spaceLG),
+      margin: EdgeInsets.all(spaceXMD),
       decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(10)),
-          color: whitebg),
+          color: whiteColor),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        getSubTitleMedium("Language".tr, blackbg, TextAlign.start),
+        getSubTitleMedium("Language".tr, darkColor, TextAlign.start),
         ListTile(
           contentPadding: EdgeInsets.zero,
-          title: const Text('English'),
+          title: Text('English', style: TextStyle(fontSize: textMD)),
           leading: Radio<LangList>(
             value: LangList.en,
             groupValue: slctLang,
@@ -53,17 +53,15 @@ class StateSetLanguage extends State<SetLanguage> {
               setState(() {
                 slctLang = value;
                 langctrl.switchLang('en', 'US');
+                Get.dialog(
+                    const SuccessDialog(text: "Language changed to English"));
               });
-              showDialog<String>(
-                  context: context,
-                  builder: (BuildContext context) =>
-                      const SuccessDialog(text: "Language changed to English"));
             },
           ),
         ),
         ListTile(
           contentPadding: EdgeInsets.zero,
-          title: const Text('Bahasa Indonesia'),
+          title: Text('Bahasa Indonesia', style: TextStyle(fontSize: textMD)),
           leading: Radio<LangList>(
             value: LangList.id,
             groupValue: slctLang,
@@ -74,11 +72,9 @@ class StateSetLanguage extends State<SetLanguage> {
               setState(() {
                 slctLang = value;
                 langctrl.switchLang('id', 'ID');
+                Get.dialog(const SuccessDialog(
+                    text: "Bahasa diganti ke bahasa Indonesia"));
               });
-              showDialog<String>(
-                  context: context,
-                  builder: (BuildContext context) => const SuccessDialog(
-                      text: "Bahasa diganti ke bahasa Indonesia"));
             },
           ),
         ),

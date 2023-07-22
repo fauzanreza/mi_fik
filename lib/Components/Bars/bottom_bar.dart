@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/MainMenus/CalendarPage/index.dart';
@@ -26,8 +27,8 @@ class BottomBarState extends State<BottomBar> {
         body: _widgetOptions.elementAt(selectedIndex),
         bottomNavigationBar: ClipRRect(
           borderRadius: BorderRadius.only(
-            topRight: roundedLG,
-            topLeft: roundedLG,
+            topRight: Radius.circular(roundedLG),
+            topLeft: Radius.circular(roundedLG),
           ),
           child: BottomNavigationBar(
             currentIndex: selectedIndex,
@@ -46,10 +47,11 @@ class BottomBarState extends State<BottomBar> {
                 label: 'Calendar'.tr,
               ),
             ],
-            backgroundColor: whitebg,
-            selectedLabelStyle: const TextStyle(fontSize: 14),
+            backgroundColor: whiteColor,
+            unselectedLabelStyle: GoogleFonts.poppins(),
+            selectedLabelStyle: GoogleFonts.poppins(fontSize: 14),
             selectedItemColor: primaryColor,
-            unselectedItemColor: greybg,
+            unselectedItemColor: shadowColor,
             onTap: (index) {
               setState(() {
                 selectedIndex = index;

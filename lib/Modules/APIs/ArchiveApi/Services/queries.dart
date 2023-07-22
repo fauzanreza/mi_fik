@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' show Client;
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Models/queries.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
+import 'package:mi_fik/Modules/Helpers/template.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ArchiveQueriesService {
@@ -23,7 +23,7 @@ class ArchiveQueriesService {
         if (!isOffline) {
           Get.snackbar(
               "Warning".tr, "Lost connection, all data shown are local".tr,
-              backgroundColor: whitebg);
+              backgroundColor: whiteColor);
           isOffline = true;
         }
         return archiveModelFromJson(
@@ -34,7 +34,7 @@ class ArchiveQueriesService {
     } else {
       if (isOffline) {
         Get.snackbar("Warning".tr, "Welcome back, all data are now realtime".tr,
-            backgroundColor: whitebg);
+            backgroundColor: whiteColor);
         isOffline = false;
       }
       final token = prefs.getString('token_key');
@@ -50,10 +50,7 @@ class ArchiveQueriesService {
         prefs.setString("archive-sess-$find-$type", response.body);
         return archiveModelFromJson(response.body);
       } else if (response.statusCode == 401) {
-        await prefs.clear();
-        Get.offAll(() => const LoginPage());
-        Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
-            backgroundColor: whitebg);
+        await getDestroyTrace(false);
         return null;
       } else {
         return null;
@@ -69,7 +66,7 @@ class ArchiveQueriesService {
         if (!isOffline) {
           Get.snackbar(
               "Warning".tr, "Lost connection, all data shown are local".tr,
-              backgroundColor: whitebg);
+              backgroundColor: whiteColor);
           isOffline = true;
         }
         return scheduleModelFromJsonWPaginate(
@@ -80,7 +77,7 @@ class ArchiveQueriesService {
     } else {
       if (isOffline) {
         Get.snackbar("Warning".tr, "Welcome back, all data are now realtime".tr,
-            backgroundColor: whitebg);
+            backgroundColor: whiteColor);
         isOffline = false;
       }
 
@@ -96,9 +93,7 @@ class ArchiveQueriesService {
         prefs.setString("archivecontent-$slug-sess", response.body);
         return scheduleModelFromJsonWPaginate(response.body);
       } else if (response.statusCode == 401) {
-        Get.offAll(() => const LoginPage());
-        Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
-            backgroundColor: whitebg);
+        await getDestroyTrace(false);
         return null;
       } else {
         return null;

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
-import 'package:mi_fik/Components/Bars/bottom_bar.dart';
+import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Skeletons/archive_1.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Models/queries.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Services/queries.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
@@ -40,9 +41,11 @@ class StateArchivePage extends State<ArchivePage> {
         builder:
             (BuildContext context, AsyncSnapshot<List<ArchiveModel>> snapshot) {
           if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                  "Something wrong with message: ${snapshot.error.toString()}"),
+            Get.dialog(const FailedDialog(
+                text: "Unknown error, please contact the admin",
+                type: "error"));
+            return const Center(
+              child: Text("Something wrong"),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
             List<ArchiveModel> archives = snapshot.data;
@@ -65,7 +68,7 @@ class StateArchivePage extends State<ArchivePage> {
             key: _refreshIndicatorKey,
             onRefresh: refreshData,
             child: ListView(
-                padding: EdgeInsets.only(bottom: paddingLg),
+                padding: EdgeInsets.only(bottom: spaceJumbo),
                 children: contents.map((archive) {
                   return SizedBox(
                       width: fullWidth,
@@ -86,23 +89,25 @@ class StateArchivePage extends State<ArchivePage> {
                                 selectedArchiveDesc = archive.archiveDesc;
                                 selectedArchiveSlug = archive.slug;
                               });
-                              Get.offAll(const BottomBar());
+                              Get.toNamed(CollectionRoute.bar,
+                                  preventDuplicates: false);
                             },
                             child: Container(
                                 width: fullWidth * 0.7,
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: paddingSM, vertical: paddingMD),
-                                margin: EdgeInsets.only(top: marginMT),
+                                    horizontal: spaceXMD, vertical: spaceLG),
+                                margin: EdgeInsets.only(top: spaceMD),
                                 transform:
                                     Matrix4.translationValues(55.0, 5.0, 0.0),
                                 decoration: BoxDecoration(
-                                  color: whitebg,
-                                  borderRadius: BorderRadius.all(roundedMd),
+                                  color: whiteColor,
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(roundedSM)),
                                   boxShadow: [
                                     BoxShadow(
                                       color: const Color.fromARGB(
                                               255, 128, 128, 128)
-                                          .withOpacity(0.3),
+                                          .withOpacity(0.35),
                                       blurRadius: 10.0,
                                       spreadRadius: 0.0,
                                       offset: const Offset(
@@ -120,15 +125,15 @@ class StateArchivePage extends State<ArchivePage> {
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
-                                              color: blackbg,
+                                              color: darkColor,
                                               fontSize: textSM,
                                               fontWeight: FontWeight.w500)),
-                                      SizedBox(height: paddingXSM),
+                                      SizedBox(height: spaceSM),
                                       Text(
                                           getTotalArchive(archive.totalEvent,
                                               archive.totalTask),
                                           style: TextStyle(
-                                            color: blackbg,
+                                            color: darkColor,
                                             fontSize: textXSM,
                                           )),
                                     ])))

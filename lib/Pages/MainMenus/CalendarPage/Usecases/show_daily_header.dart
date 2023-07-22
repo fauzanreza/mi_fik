@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/query_contents.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
@@ -36,9 +36,11 @@ class StateDayHeader extends State<DayHeader> with TickerProviderStateMixin {
         builder: (BuildContext context,
             AsyncSnapshot<List<ScheduleTotalModel>> snapshot) {
           if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                  "Something wrong with message: ${snapshot.error.toString()}"),
+            Get.dialog(const FailedDialog(
+                text: "Unknown error, please contact the admin",
+                type: "error"));
+            return const Center(
+              child: Text("Something wrong"),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
             List<ScheduleTotalModel> contents = snapshot.data;
@@ -71,20 +73,20 @@ class StateDayHeader extends State<DayHeader> with TickerProviderStateMixin {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
-            margin: const EdgeInsets.only(left: 15),
+            margin: EdgeInsets.only(left: spaceXMD),
             child: Column(
               children: [
                 Text(
                   DateFormat("EEE").format(widget.selectedDay),
-                  style: GoogleFonts.poppins(
+                  style: TextStyle(
                     color: primaryColor,
-                    fontSize: textMD,
+                    fontSize: textLG,
                     //fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
                   DateFormat("d").format(widget.selectedDay),
-                  style: GoogleFonts.poppins(
+                  style: TextStyle(
                     color: primaryColor,
                     fontSize: textLG,
                     fontWeight: FontWeight.bold,
@@ -94,24 +96,22 @@ class StateDayHeader extends State<DayHeader> with TickerProviderStateMixin {
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(left: 15),
+            margin: EdgeInsets.only(left: spaceXMD),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   getTodayCalendarHeader(widget.selectedDay),
-                  style: GoogleFonts.poppins(
-                    color: Colors.grey,
-                    fontSize: textLG,
-                    //fontWeight: FontWeight.bold,
+                  style: TextStyle(
+                    color: shadowColor,
+                    fontSize: textXLG,
                   ),
                 ),
                 Text(
                   getTotalContext(contents),
-                  style: GoogleFonts.poppins(
-                    color: Colors.grey,
-                    fontSize: textSM,
-                    //fontWeight: FontWeight.bold,
+                  style: TextStyle(
+                    color: shadowColor,
+                    fontSize: textXMD,
                   ),
                 ),
               ],

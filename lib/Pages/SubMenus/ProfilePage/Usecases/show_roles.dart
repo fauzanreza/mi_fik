@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
-import 'package:mi_fik/Components/Skeletons/content_1.dart';
 import 'package:mi_fik/Modules/APIs/TagApi/Models/queries.dart';
 import 'package:mi_fik/Modules/APIs/TagApi/Services/queries.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
-import 'package:mi_fik/Modules/Helpers/converter.dart';
+import 'package:mi_fik/Modules/Helpers/info.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/SubMenus/ProfilePage/index.dart';
+import 'package:skeletons/skeletons.dart';
 
 class ShowRole extends StatefulWidget {
   const ShowRole({Key key}) : super(key: key);
@@ -33,6 +33,8 @@ class StateShowRole extends State<ShowRole> {
 
   @override
   Widget build(BuildContext context) {
+    double fullWidth = MediaQuery.of(context).size.width;
+
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
@@ -40,49 +42,58 @@ class StateShowRole extends State<ShowRole> {
         builder:
             (BuildContext context, AsyncSnapshot<List<MyTagModel>> snapshot) {
           if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                  "Something wrong with message: ${snapshot.error.toString()}"),
+            Get.dialog(const FailedDialog(
+                text: "Unknown error, please contact the admin",
+                type: "error"));
+            return const Center(
+              child: Text("Something wrong"),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
             List<MyTagModel> contents = snapshot.data;
             return _buildListView(contents);
           } else {
-            return const ContentSkeleton1();
+            return Center(
+              child: Container(
+                  margin: EdgeInsets.all(spaceMini),
+                  child: SkeletonLine(
+                    style: SkeletonLineStyle(
+                        height: 60,
+                        width: fullWidth,
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(roundedMini))),
+                  )),
+            );
           }
         },
       ),
     );
   }
 
-  @override
   Widget _buildListView(List<MyTagModel> contents) {
     //double fullHeight = MediaQuery.of(context).size.height;
-    bool isLoading = false;
     double fullWidth = MediaQuery.of(context).size.width;
 
     return Card(
         shape: RoundedRectangleBorder(
-          side: BorderSide(color: mainbg, width: 1),
+          side: BorderSide(color: hoverBG, width: 1),
           borderRadius: BorderRadius.circular(6),
         ),
         child: ExpansionTile(
             tilePadding: EdgeInsets.symmetric(
-                vertical: paddingXSM / 2, horizontal: paddingSM),
+                vertical: spaceSM / 2, horizontal: spaceXMD),
             childrenPadding: EdgeInsets.only(
-                left: paddingSM, bottom: paddingSM, right: paddingSM),
+                left: spaceXMD, bottom: spaceXMD, right: spaceXMD),
             initiallyExpanded: false,
             iconColor: primaryColor,
-            textColor: blackbg,
+            textColor: darkColor,
             leading: Icon(Icons.tag, size: iconLG),
             expandedCrossAxisAlignment: CrossAxisAlignment.start,
             expandedAlignment: Alignment.topLeft,
-            title: Text(ucFirst("My Roles".tr),
-                style: TextStyle(fontSize: textMD - 1)),
+            title: Text("My Roles".tr, style: TextStyle(fontSize: textXMD)),
             children: [
               Wrap(
-                  runSpacing: -5,
-                  spacing: 5,
+                  runSpacing: -spaceMini,
+                  spacing: spaceMini,
                   children: contents.map<Widget>((tag) {
                     return ElevatedButton.icon(
                       onPressed: () {
@@ -95,8 +106,9 @@ class StateShowRole extends State<ShowRole> {
                                   tag.slug != "student" &&
                                   tag.slug != "staff") {
                                 return AlertDialog(
-                                  contentPadding: const EdgeInsets.all(10),
-                                  title: const Text('Warning'),
+                                  contentPadding: EdgeInsets.all(spaceSM),
+                                  title: Text('Warning'.tr,
+                                      style: TextStyle(fontSize: textXMD)),
                                   content: SizedBox(
                                     width: fullWidth,
                                     height: 80,
@@ -107,15 +119,14 @@ class StateShowRole extends State<ShowRole> {
                                             MainAxisAlignment.center,
                                         children: [
                                           Container(
-                                              margin:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 10),
+                                              margin: EdgeInsets.symmetric(
+                                                  vertical: spaceSM),
                                               child: Text(
                                                   "$removeText ${tag.tagName}?",
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
-                                                      color: greybg,
-                                                      fontSize: textMD)))
+                                                      color: shadowColor,
+                                                      fontSize: textXMD)))
                                         ]),
                                   ),
                                   actions: <Widget>[
@@ -125,11 +136,11 @@ class StateShowRole extends State<ShowRole> {
                                                 RoundedRectangleBorder>(
                                             RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(roundedMd2),
+                                              BorderRadius.circular(roundedSM),
                                         )),
                                         backgroundColor:
                                             MaterialStatePropertyAll<Color>(
-                                                dangerColor),
+                                                warningBG),
                                       ),
                                       onPressed: () async {
                                         selectedRole.add({
@@ -147,48 +158,38 @@ class StateShowRole extends State<ShowRole> {
                                           commandService
                                               .postUserReq(data)
                                               .then((response) {
-                                            setState(() => isLoading = false);
+                                            setState(() => {});
                                             var status = response[0]['message'];
                                             var body = response[0]['body'];
 
                                             if (status == "success") {
-                                              Get.offAll(
-                                                  () => const ProfilePage());
-                                              showDialog<String>(
-                                                  context: context,
-                                                  builder:
-                                                      (BuildContext context) =>
-                                                          SuccessDialog(
-                                                              text: body));
+                                              Get.to(CollectionRoute.profile,
+                                                  preventDuplicates: false);
+                                              Get.dialog(
+                                                  SuccessDialog(text: body));
                                             } else {
-                                              Get.offAll(
-                                                  () => const ProfilePage());
+                                              Get.to(CollectionRoute.profile,
+                                                  preventDuplicates: false);
 
-                                              showDialog<String>(
-                                                  context: context,
-                                                  builder:
-                                                      (BuildContext context) =>
-                                                          FailedDialog(
-                                                              text: body,
-                                                              type: "req"));
+                                              Get.dialog(FailedDialog(
+                                                  text: body, type: "req"));
                                             }
                                             setState(() {
                                               selectedRole.clear();
                                             });
                                           });
                                         } else {
-                                          showDialog<String>(
-                                              context: context,
-                                              builder: (BuildContext context) =>
-                                                  FailedDialog(
-                                                      text:
-                                                          "Request failed, you haven't chosen any tag yet"
-                                                              .tr,
-                                                      type: "req"));
+                                          Get.dialog(FailedDialog(
+                                              text:
+                                                  "Request failed, you haven't selected any tag yet"
+                                                      .tr,
+                                              type: "req"));
                                         }
                                       },
                                       child: Text("Yes".tr,
-                                          style: TextStyle(color: whitebg)),
+                                          style: TextStyle(
+                                              color: whiteColor,
+                                              fontSize: textMD)),
                                     )
                                   ],
                                 );
@@ -212,13 +213,19 @@ class StateShowRole extends State<ShowRole> {
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(roundedLG2),
+                          borderRadius: BorderRadius.circular(roundedSM),
                         )),
                         backgroundColor:
                             MaterialStatePropertyAll<Color>(primaryColor),
                       ),
                     );
                   }).toList()),
+              Container(
+                  padding: EdgeInsets.fromLTRB(0, spaceLG, 0, 0),
+                  child: const GetInfoBox(
+                    page: "profile",
+                    location: "delete_role_mobile",
+                  )),
               const Divider(thickness: 1.5)
             ]));
   }

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
@@ -17,7 +17,7 @@ class GetWeeklyNavigator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(left: 10),
+      padding: EdgeInsets.only(left: spaceSM),
       height: 70,
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
@@ -28,15 +28,15 @@ class GetWeeklyNavigator extends StatelessWidget {
               if (i == 0) {
                 return primaryColor;
               } else {
-                return whitebg;
+                return whiteColor;
               }
             }
 
             getcolor(i) {
               if (i == 0) {
-                return whitebg;
+                return whiteColor;
               } else {
-                return blackbg;
+                return darkColor;
               }
             }
 
@@ -52,16 +52,17 @@ class GetWeeklyNavigator extends StatelessWidget {
                       }
                       slctSchedule = DateTime.now();
 
-                      Get.offAll(() => const BottomBar());
+                      Get.toNamed(CollectionRoute.bar,
+                          preventDuplicates: false);
                     },
                     child: Container(
-                      width: 60,
                       height: 60,
-                      margin: const EdgeInsets.only(right: 10, bottom: 10),
-                      padding: EdgeInsets.symmetric(horizontal: paddingXSM),
+                      margin: EdgeInsets.only(right: spaceSM, bottom: spaceSM),
+                      padding: EdgeInsets.symmetric(horizontal: spaceSM),
                       decoration: BoxDecoration(
-                        color: dangerColor,
-                        borderRadius: BorderRadius.all(roundedMd),
+                        color: warningBG,
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(roundedSM)),
                         boxShadow: [getShadow("med")],
                       ),
                       child: Column(
@@ -75,11 +76,11 @@ class GetWeeklyNavigator extends StatelessWidget {
                                     fontWeight: FontWeight.w500)),
                             const SizedBox(height: 5),
                             Container(
-                                padding: const EdgeInsets.only(left: 3.5),
+                                padding: EdgeInsets.only(left: spaceMini - 0.5),
                                 child: FaIcon(
                                   FontAwesomeIcons.rotateLeft,
-                                  color: whitebg,
-                                  size: iconMD * 1.25,
+                                  color: whiteColor,
+                                  size: iconMD,
                                 ))
                           ]),
                     )),
@@ -88,11 +89,12 @@ class GetWeeklyNavigator extends StatelessWidget {
                     child: Container(
                       width: 60,
                       height: 60,
-                      margin: const EdgeInsets.only(right: 10, bottom: 10),
-                      padding: EdgeInsets.symmetric(horizontal: paddingXSM),
+                      margin: EdgeInsets.only(right: spaceSM, bottom: spaceSM),
+                      padding: EdgeInsets.symmetric(horizontal: spaceSM),
                       decoration: BoxDecoration(
                         color: getBgcolor(index),
-                        borderRadius: BorderRadius.all(roundedMd),
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(roundedSM)),
                         boxShadow: [getShadow("med")],
                       ),
                       child: Column(
@@ -111,7 +113,7 @@ class GetWeeklyNavigator extends StatelessWidget {
                                     .toString(),
                                 style: TextStyle(
                                     color: getcolor(index),
-                                    fontSize: textXLG,
+                                    fontSize: textLG,
                                     fontWeight: FontWeight.w500))
                           ]),
                     ))
@@ -122,11 +124,12 @@ class GetWeeklyNavigator extends StatelessWidget {
                   child: Container(
                     width: 60,
                     height: 60,
-                    margin: const EdgeInsets.only(right: 10, bottom: 10),
-                    padding: EdgeInsets.symmetric(horizontal: paddingXSM),
+                    margin: EdgeInsets.only(right: spaceSM, bottom: spaceSM),
+                    padding: EdgeInsets.symmetric(horizontal: spaceSM),
                     decoration: BoxDecoration(
                       color: getBgcolor(index),
-                      borderRadius: BorderRadius.all(roundedMd),
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(roundedSM)),
                       boxShadow: [getShadow("med")],
                     ),
                     child: Column(
@@ -145,7 +148,7 @@ class GetWeeklyNavigator extends StatelessWidget {
                                   .toString(),
                               style: TextStyle(
                                   color: getcolor(index),
-                                  fontSize: textXLG,
+                                  fontSize: textLG,
                                   fontWeight: FontWeight.w500))
                         ]),
                   ));

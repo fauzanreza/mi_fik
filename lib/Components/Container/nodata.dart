@@ -7,13 +7,13 @@ Widget getNoDataContainer(String title, double size) {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ClipRRect(
-          borderRadius: roundedErrImage,
+          borderRadius: BorderRadius.circular(roundedJumbo + roundedJumbo),
           child: Image.asset('assets/icon/sorry.png', width: size),
         ),
         Container(
-            margin: const EdgeInsets.symmetric(vertical: 10),
+            margin: EdgeInsets.symmetric(vertical: spaceSM),
             child: Text(title,
                 textAlign: TextAlign.center,
-                style: TextStyle(color: greybg, fontSize: textMD)))
+                style: TextStyle(color: shadowColor, fontSize: textXMD)))
       ]);
 }

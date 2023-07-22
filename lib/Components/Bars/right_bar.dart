@@ -16,7 +16,7 @@ class RightBar extends StatelessWidget {
             padding: EdgeInsets.only(top: fullWidth * 0.15),
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [primaryColor, semiblackbg],
+                colors: [primaryColor, semidarkColor],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
               ),
@@ -26,10 +26,10 @@ class RightBar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                    margin: EdgeInsets.only(left: marginMD),
+                    margin: EdgeInsets.only(left: spaceXLG),
                     child: Text("Notification".tr,
                         style: TextStyle(
-                            color: whitebg,
+                            color: whiteColor,
                             fontSize: textLG,
                             fontWeight: FontWeight.w500))),
                 const Expanded(

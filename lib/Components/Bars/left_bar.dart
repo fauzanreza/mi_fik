@@ -4,19 +4,15 @@ import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Button/navigation.dart';
 import 'package:mi_fik/Components/Dialogs/sign_out_dialog.dart';
 import 'package:mi_fik/Components/Skeletons/drawer.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/SubMenus/FAQPage/index.dart';
-import 'package:mi_fik/Pages/SubMenus/HelpPage/index.dart';
-import 'package:mi_fik/Pages/SubMenus/ManageRolePage/index.dart';
-import 'package:mi_fik/Pages/SubMenus/ProfilePage/index.dart';
-import 'package:mi_fik/Pages/SubMenus/SettingPage/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LeftBar extends StatelessWidget {
   const LeftBar({Key key}) : super(key: key);
 
-  Future<UserProfileLeftBar> getToken() async {
+  Future<UserProfileLeftBar> getMiniProfile() async {
     final prefs = await SharedPreferences.getInstance();
     final username = prefs.getString('username_key');
     final image = prefs.getString('image_key');
@@ -31,7 +27,7 @@ class LeftBar extends StatelessWidget {
     double fullWidth = MediaQuery.of(context).size.width;
 
     return FutureBuilder<UserProfileLeftBar>(
-        future: getToken(),
+        future: getMiniProfile(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             String username = snapshot.data.username;
@@ -42,7 +38,7 @@ class LeftBar extends StatelessWidget {
                 child: Container(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [primaryColor, semiblackbg],
+                        colors: [primaryColor, semidarkColor],
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                       ),
@@ -59,7 +55,7 @@ class LeftBar extends StatelessWidget {
                               children: [
                                 Container(
                                   width: fullWidth,
-                                  padding: const EdgeInsets.all(20),
+                                  padding: EdgeInsets.all(spaceLG),
                                   child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
@@ -68,66 +64,63 @@ class LeftBar extends StatelessWidget {
                                       children: [
                                         getProfileImageSideBar(
                                             fullWidth, 0.15, image),
-                                        Text(username,
+                                        Text("@$username",
                                             style: TextStyle(
-                                                color: whitebg,
-                                                fontSize: textMD,
+                                                color: whiteColor,
+                                                fontSize: textXMD + 2,
                                                 fontWeight: FontWeight.w500)),
-                                        Text(role,
+                                        Text("$role ",
                                             style: TextStyle(
-                                                color: whitebg,
-                                                fontSize: textMD,
+                                                color: whiteColor,
+                                                fontSize: textXMD + 2,
                                                 fontWeight: FontWeight.w500))
                                       ]),
                                 ),
                                 getSideBarTile(
                                     fullWidth, Icons.person, "Profile".tr, () {
-                                  Get.to(() => const ProfilePage());
+                                  Get.toNamed(CollectionRoute.profile);
                                 }),
                                 getSideBarTile(fullWidth, Icons.tag, "Role",
                                     () {
                                   selectedRole.clear();
-                                  Get.to(() => const RolePage());
+                                  Get.toNamed(CollectionRoute.role);
                                 }),
                                 getSideBarTile(fullWidth,
                                     Icons.question_answer_outlined, "FAQ", () {
-                                  Get.to(() => const FAQPage());
+                                  Get.toNamed(CollectionRoute.faq);
                                 }),
                                 getSideBarTile(
                                     fullWidth, Icons.help_center, "Help".tr,
                                     () {
-                                  Get.to(() => const HelpPage());
+                                  Get.toNamed(CollectionRoute.help);
                                 }),
                               ]),
                         ),
                         getSideBarTile(fullWidth, Icons.settings, "Setting".tr,
                             () {
-                          Get.to(() => const SettingPage());
+                          Get.toNamed(CollectionRoute.setting);
                         }),
                         Container(
                           width: fullWidth,
                           margin: EdgeInsets.only(
-                              bottom: paddingXSM * 2,
-                              left: paddingXSM,
-                              right: paddingXSM),
+                              bottom: spaceSM * 2,
+                              left: spaceSM,
+                              right: spaceSM),
                           alignment: Alignment.centerLeft,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.all(
-                                Radius.circular(roundedMd2),
+                                Radius.circular(roundedSM),
                               ),
-                              color: dangerColor),
+                              color: warningBG),
                           child: TextButton.icon(
                             onPressed: () {
-                              showDialog<String>(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      const SignOutDialog());
+                              Get.dialog(const SignOutDialog());
                             },
                             icon: Icon(Icons.logout,
-                                size: textXLG, color: whitebg),
+                                size: textLG, color: whiteColor),
                             label: Text("Log-Out".tr,
                                 style: TextStyle(
-                                    color: whitebg, fontSize: textMD)),
+                                    color: whiteColor, fontSize: textXMD)),
                             style: ElevatedButton.styleFrom(),
                           ),
                         )

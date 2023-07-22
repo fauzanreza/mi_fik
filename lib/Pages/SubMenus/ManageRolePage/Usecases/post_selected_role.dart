@@ -7,14 +7,14 @@ import 'package:mi_fik/Components/Forms/tag_picker.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/Landings/RegisterPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/ManageRolePage/index.dart';
 
 class PostSelectedRole extends StatefulWidget {
   const PostSelectedRole({Key key, this.back, this.isLogged}) : super(key: key);
-  final back;
+  final Widget back;
   final bool isLogged;
 
   @override
@@ -34,7 +34,6 @@ class StatePostSelectedRole extends State<PostSelectedRole> {
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
     //double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading = false;
 
     return ListView(
       children: <Widget>[
@@ -47,16 +46,16 @@ class StatePostSelectedRole extends State<PostSelectedRole> {
               if (widget.back == null) {
                 Get.back();
               } else {
-                Get.offAll(() => const RolePage());
+                Get.toNamed(CollectionRoute.role, preventDuplicates: false);
               }
             },
           ),
         ),
         Padding(
-            padding: EdgeInsets.only(left: paddingSM),
+            padding: EdgeInsets.only(left: spaceXMD),
             child: TagSelectedArea(tag: selectedRole, type: "role")),
         Padding(
-            padding: EdgeInsets.symmetric(horizontal: paddingSM),
+            padding: EdgeInsets.symmetric(horizontal: spaceXMD),
             child: Row(
               children: [
                 InkWell(
@@ -65,28 +64,35 @@ class StatePostSelectedRole extends State<PostSelectedRole> {
                     if (widget.back == null) {
                       Get.back();
                     } else {
-                      Get.offAll(() => const RolePage());
+                      Get.toNamed(CollectionRoute.role,
+                          preventDuplicates: false);
+                    }
+                    if (!widget.isLogged) {
+                      Get.toNamed(CollectionRoute.register,
+                          arguments: {'isLogged': false},
+                          preventDuplicates: false);
                     }
                   },
                   child: Container(
                     width: 105,
-                    margin: EdgeInsets.only(top: paddingXSM),
+                    margin: EdgeInsets.only(top: spaceSM),
                     padding: EdgeInsets.symmetric(
-                        vertical: paddingXSM, horizontal: paddingXSM + 3),
+                        vertical: spaceSM, horizontal: spaceSM + 3),
                     decoration: BoxDecoration(
-                        border: Border.all(color: whitebg, width: 2),
-                        color: dangerColor,
+                        border: Border.all(color: whiteColor, width: 2),
+                        color: warningBG,
                         borderRadius:
                             const BorderRadius.all(Radius.circular(10))),
                     child: Row(
                       children: [
-                        Icon(Icons.restore, size: iconSM + 3, color: whitebg),
+                        Icon(Icons.restore,
+                            size: iconSM + 3, color: whiteColor),
                         const Spacer(),
                         Text("Reset",
                             style: TextStyle(
-                                fontSize: textMD,
+                                fontSize: textXMD,
                                 fontWeight: FontWeight.w500,
-                                color: whitebg))
+                                color: whiteColor))
                       ],
                     ),
                   ),
@@ -102,31 +108,32 @@ class StatePostSelectedRole extends State<PostSelectedRole> {
                     //Validator
                     if (data.userRole.isNotEmpty) {
                       apiService.postUserReq(data).then((response) {
-                        setState(() => isLoading = false);
+                        setState(() => {});
                         var status = response[0]['message'];
                         var body = response[0]['body'];
 
                         if (status == "success") {
                           if (widget.isLogged) {
                             Get.to(() => const BottomBar());
-                            showDialog<String>(
-                                context: context,
-                                builder: (BuildContext context) =>
-                                    SuccessDialog(text: body));
+                            Get.dialog(SuccessDialog(text: body));
                           } else {
                             setState(() {
                               indexRegis = 5;
                               isFinishedRegis = true;
+                              isCheckedRegister = false;
+                              isFillForm = false;
+                              isChooseRole = false;
+                              checkAvaiabilityRegis = false;
+                              uploadedImageRegis = null;
+                              isWaiting = false;
                             });
-                            Get.offAll(() => const RegisterPage());
+                            Get.toNamed(CollectionRoute.register,
+                                preventDuplicates: false);
                             Get.snackbar("Success", "Role request has sended",
-                                backgroundColor: whitebg);
+                                backgroundColor: whiteColor);
                           }
                         } else {
-                          showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  FailedDialog(text: body, type: "req"));
+                          Get.dialog(FailedDialog(text: body, type: "req"));
 
                           setState(() {
                             selectedRole.clear();
@@ -135,34 +142,32 @@ class StatePostSelectedRole extends State<PostSelectedRole> {
                         }
                       });
                     } else {
-                      showDialog<String>(
-                          context: context,
-                          builder: (BuildContext context) => FailedDialog(
-                              text:
-                                  "Request failed, you haven't chosen any tag yet"
-                                      .tr,
-                              type: "req"));
+                      Get.dialog(FailedDialog(
+                          text:
+                              "Request failed, you haven't selected any tag yet"
+                                  .tr,
+                          type: "req"));
                     }
                   },
                   child: Container(
                     width: 110,
-                    margin: EdgeInsets.only(top: paddingXSM),
+                    margin: EdgeInsets.only(top: spaceSM),
                     padding: EdgeInsets.symmetric(
-                        vertical: paddingXSM, horizontal: paddingXSM + 3),
+                        vertical: spaceSM, horizontal: spaceSM + 3),
                     decoration: BoxDecoration(
-                        border: Border.all(color: whitebg, width: 2),
-                        color: successbg,
+                        border: Border.all(color: whiteColor, width: 2),
+                        color: successBG,
                         borderRadius:
                             const BorderRadius.all(Radius.circular(10))),
                     child: Row(
                       children: [
-                        Icon(Icons.send, size: iconSM + 3, color: whitebg),
+                        Icon(Icons.send, size: iconSM + 3, color: whiteColor),
                         const Spacer(),
                         Text("Submit".tr,
                             style: TextStyle(
-                                fontSize: textMD,
+                                fontSize: textXMD,
                                 fontWeight: FontWeight.w500,
-                                color: whitebg))
+                                color: whiteColor))
                       ],
                     ),
                   ),

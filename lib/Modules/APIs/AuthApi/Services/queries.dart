@@ -25,14 +25,11 @@ class AuthQueriesService {
 
     if (response.statusCode == 200) {
       var respondeDecode = jsonDecode(response.body);
-      await prefs.clear();
-
       return [
         {"message": "success", "body": respondeDecode["message"], "code": 200}
       ];
     } else if (response.statusCode == 401) {
       var respondeDecode = jsonDecode(response.body);
-
       return [
         {"message": "failed", "body": respondeDecode["message"], "code": 401}
       ];

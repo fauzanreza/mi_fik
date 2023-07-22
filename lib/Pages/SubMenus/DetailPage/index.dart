@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
-import 'package:mi_fik/Components/Bars/bottom_bar.dart';
+import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/query_contents.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
+import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Helpers/widget.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/get_attachment.dart';
@@ -47,9 +48,11 @@ class StateDetailPage extends State<DetailPage> {
         builder: (BuildContext context,
             AsyncSnapshot<List<ContentDetailModel>> snapshot) {
           if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                  "Something wrong with message: ${snapshot.error.toString()}"),
+            Get.dialog(const FailedDialog(
+                text: "Unknown error, please contact the admin",
+                type: "error"));
+            return const Center(
+              child: Text("Something wrong"),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
             List<ContentDetailModel> contents = snapshot.data;
@@ -72,8 +75,10 @@ class StateDetailPage extends State<DetailPage> {
       //Convert date.
       Widget getContentDate(dateStart, dateEnd) {
         if (dateStart != null && dateEnd != null) {
-          dateStart = DateTime.parse(dateStart);
-          dateEnd = DateTime.parse(dateEnd);
+          dateStart = DateTime.parse(dateStart)
+              .add(Duration(hours: getUTCHourOffset()));
+          dateEnd =
+              DateTime.parse(dateEnd).add(Duration(hours: getUTCHourOffset()));
 
           //Initial variable.
           var monthStart = DateFormat("MM").format(dateStart).toString();
@@ -105,11 +110,11 @@ class StateDetailPage extends State<DetailPage> {
             text: TextSpan(
               children: [
                 WidgetSpan(
-                  child: Icon(Icons.calendar_month, size: 20, color: blackbg),
+                  child: Icon(Icons.calendar_month, size: 20, color: darkColor),
                 ),
                 TextSpan(
                     text: " $result",
-                    style: TextStyle(color: blackbg, fontSize: textMD))
+                    style: TextStyle(color: darkColor, fontSize: textXMD))
               ],
             ),
           );
@@ -128,19 +133,44 @@ class StateDetailPage extends State<DetailPage> {
       }
 
       //Get attachment file or link.
-      Widget getAttach(attach) {
-        if (attach != null) {
-          return AttachButton(passAttach: attach);
+      Widget getAttach(attach, width) {
+        if (attach != null && attach.isNotEmpty) {
+          var listUrl = [];
+          var listImage = [];
+          var listVideo = [];
+          var listDoc = [];
+
+          attach.forEach((e) {
+            if (e['attach_type'] == 'attachment_url') {
+              listUrl.add(e);
+            } else if (e['attach_type'] == 'attachment_image') {
+              listImage.add(e);
+            } else if (e['attach_type'] == 'attachment_video') {
+              listVideo.add(e);
+            } else if (e['attach_type'] == 'attachment_doc') {
+              listDoc.add(e);
+            }
+          });
+
+          var attachSorted = [...listUrl, ...listVideo, ...listDoc];
+
+          return AttachButton(passAttach: attachSorted, passImage: listImage);
         } else {
-          return const SizedBox();
+          return Container(
+              alignment: Alignment.center,
+              margin: EdgeInsets.symmetric(horizontal: spaceXMD),
+              child: getMessageImageNoData("assets/icon/attachment.png",
+                  "This Event doesn't have attachment".tr, width));
         }
       }
 
       return WillPopScope(
           onWillPop: () {
-            Get.offAll(() => const BottomBar());
+            Get.toNamed(CollectionRoute.bar);
+            return null;
           },
           child: Scaffold(
+            backgroundColor: whiteColor,
             body: RefreshIndicator(
                 key: _refreshIndicatorKey,
                 onRefresh: refreshData,
@@ -151,36 +181,32 @@ class StateDetailPage extends State<DetailPage> {
                       children: [
                         Stack(children: [
                           GestureDetector(
-                            onTap: () => showDialog<String>(
-                              context: context,
-                              barrierColor: primaryColor.withOpacity(0.5),
-                              builder: (BuildContext context) => AlertDialog(
+                            onTap: () => Get.dialog(
+                              AlertDialog(
                                   contentPadding: EdgeInsets.zero,
                                   elevation: 0,
                                   backgroundColor: Colors.transparent,
-                                  content: Container(
-                                    height: fullHeight * 0.45,
-                                    width: fullWidth,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: getImageHeader(
-                                            contents[0].contentImage),
-                                        fit: BoxFit.cover,
-                                      ),
-                                      borderRadius:
-                                          BorderRadius.circular(roundedLG2),
-                                    ),
-                                  )),
+                                  content: SizedBox(
+                                      height: fullHeight * 0.45,
+                                      width: fullWidth,
+                                      child: getContentImageHeader(
+                                        contents[0].contentImage,
+                                        fullWidth,
+                                        fullHeight * 0.3,
+                                        false,
+                                        BorderRadius.all(
+                                            Radius.circular(roundedMD)),
+                                      ))),
+                              barrierColor: primaryColor.withOpacity(0.5),
                             ),
-                            child: Container(
+                            child: SizedBox(
                               height: fullHeight * 0.3,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image:
-                                      getImageHeader(contents[0].contentImage),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
+                              child: getContentImageHeader(
+                                  contents[0].contentImage,
+                                  fullWidth,
+                                  fullHeight * 0.3,
+                                  false,
+                                  BorderRadius.zero),
                             ),
                           ),
                           Positioned(
@@ -192,53 +218,67 @@ class StateDetailPage extends State<DetailPage> {
                         Container(
                             transform:
                                 Matrix4.translationValues(0.0, -20.0, 0.0),
-                            padding: EdgeInsets.symmetric(vertical: paddingMD),
-                            decoration: const BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.only(
+                            padding: EdgeInsets.symmetric(vertical: spaceLG),
+                            alignment: Alignment.topCenter,
+                            constraints: BoxConstraints(
+                              minHeight: fullHeight * 0.75,
+                            ),
+                            decoration: BoxDecoration(
+                                color: whiteColor,
+                                borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(20),
                                   topRight: Radius.circular(20),
                                 )),
                             child: Column(children: [
                               Container(
                                 margin:
-                                    const EdgeInsets.symmetric(horizontal: 20),
-                                padding: const EdgeInsets.only(bottom: 5),
+                                    EdgeInsets.symmetric(horizontal: spaceSM),
+                                padding: EdgeInsets.only(bottom: spaceMini),
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    getImageProfileContent(
+                                    getProfileImage(
                                         contents[0].adminUsernameCreated,
                                         contents[0].userUsernameCreated,
                                         contents[0].adminImageCreated,
                                         contents[0].userImageCreated),
-                                    Column(
+                                    Expanded(
+                                        child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(contents[0].contentTitle,
+                                        Text(ucAll(contents[0].contentTitle),
                                             style: TextStyle(
-                                                fontSize: textMD,
+                                                fontSize: textXMD,
+                                                color: primaryColor,
                                                 fontWeight: FontWeight.bold)),
-                                        //Check this...
-                                        //getSubtitle(contents[0].contentSubtitle),
                                       ],
-                                    )
+                                    ))
                                   ],
                                 ),
                               ),
                               const SizedBox(height: 20),
-                              Container(
-                                  alignment: Alignment.centerLeft,
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal: paddingSM),
-                                  child: HtmlWidget(contents[0].contentDesc)),
-                              const SizedBox(height: 20),
-                              getAttach(contents[0].contentAttach),
+                              getDescDetailWidget(
+                                  contents[0].contentDesc, fullWidth),
+                              Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(vertical: spaceXMD),
+                                  child: Divider(
+                                      thickness: 1,
+                                      indent: spaceLG,
+                                      endIndent: spaceLG)),
+                              getAttach(contents[0].contentAttach, fullWidth),
+                              Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(vertical: spaceXMD),
+                                  child: Divider(
+                                      thickness: 1,
+                                      indent: spaceLG,
+                                      endIndent: spaceLG)),
                               Container(
                                 alignment: Alignment.centerLeft,
                                 margin: EdgeInsets.fromLTRB(
-                                    paddingSM, paddingMD, paddingSM, 0),
+                                    spaceXMD, spaceXXSM, spaceXMD, 0),
                                 child: getTag(contents[0].contentTag,
                                     fullHeight, contents),
                               ),
@@ -246,16 +286,18 @@ class StateDetailPage extends State<DetailPage> {
                               Container(
                                 alignment: Alignment.centerLeft,
                                 margin:
-                                    EdgeInsets.symmetric(horizontal: paddingSM),
-                                child:
-                                    Wrap(runSpacing: 5, spacing: 10, children: [
-                                  getLocation(contents[0].contentLoc,
-                                      contents[0].slugName),
-                                  getContentDate(contents[0].dateStart,
-                                      contents[0].dateEnd),
-                                  getContentHour(contents[0].dateStart,
-                                      contents[0].dateEnd)
-                                ]),
+                                    EdgeInsets.symmetric(horizontal: spaceXMD),
+                                child: Wrap(
+                                    runSpacing: spaceMini,
+                                    spacing: spaceSM,
+                                    children: [
+                                      getLocation(contents[0].contentLoc,
+                                          contents[0].slugName),
+                                      getContentDate(contents[0].dateStart,
+                                          contents[0].dateEnd),
+                                      getContentHour(contents[0].dateStart,
+                                          contents[0].dateEnd)
+                                    ]),
                               ),
                             ])),
                       ]),
@@ -264,23 +306,27 @@ class StateDetailPage extends State<DetailPage> {
                     child: PostArchiveRelation(
                       passSlug: contents[0].slugName,
                       margin: EdgeInsets.symmetric(
-                          horizontal: paddingSM, vertical: paddingXSM),
+                          horizontal: spaceXMD, vertical: spaceSM),
                       ctx: "Event",
                     ),
                   ),
                 ])),
             floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
             floatingActionButton: Container(
-                margin: EdgeInsets.only(top: paddingMD),
+                margin: EdgeInsets.only(top: spaceLG),
+                decoration: BoxDecoration(
+                    borderRadius:
+                        BorderRadius.all(Radius.circular(roundedCircle))),
                 child: FloatingActionButton(
                   backgroundColor: primaryColor,
                   onPressed: () {},
                   child: IconButton(
                     icon: Icon(Icons.arrow_back, size: iconLG),
-                    color: whitebg,
+                    color: whiteColor,
                     onPressed: () {
                       listArchiveCheck = [];
-                      Get.offAll(() => const BottomBar());
+                      Get.toNamed(CollectionRoute.bar,
+                          preventDuplicates: false);
                     },
                   ),
                 )),
@@ -288,7 +334,7 @@ class StateDetailPage extends State<DetailPage> {
     } else {
       return WillPopScope(
           onWillPop: () {
-            Get.offAll(() => const BottomBar());
+            return Get.toNamed(CollectionRoute.bar, preventDuplicates: false);
           },
           child: Scaffold(
             body: RefreshIndicator(
@@ -318,7 +364,7 @@ class StateDetailPage extends State<DetailPage> {
                                         fit: BoxFit.cover,
                                       ),
                                       borderRadius:
-                                          BorderRadius.circular(roundedLG2),
+                                          BorderRadius.circular(roundedSM),
                                     ),
                                   )),
                             ),
@@ -342,7 +388,7 @@ class StateDetailPage extends State<DetailPage> {
                         Container(
                             transform:
                                 Matrix4.translationValues(0.0, -20.0, 0.0),
-                            padding: EdgeInsets.symmetric(vertical: paddingMD),
+                            padding: EdgeInsets.symmetric(vertical: spaceLG),
                             decoration: const BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.only(
@@ -358,15 +404,19 @@ class StateDetailPage extends State<DetailPage> {
                 ])),
             floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
             floatingActionButton: Container(
-                margin: EdgeInsets.only(top: paddingMD),
+                margin: EdgeInsets.only(top: spaceLG),
+                decoration: BoxDecoration(
+                    borderRadius:
+                        BorderRadius.all(Radius.circular(roundedCircle))),
                 child: FloatingActionButton(
                   backgroundColor: primaryColor,
                   onPressed: () {},
                   child: IconButton(
                     icon: Icon(Icons.arrow_back, size: iconLG),
-                    color: whitebg,
+                    color: whiteColor,
                     onPressed: () {
-                      Get.offAll(() => const BottomBar());
+                      Get.toNamed(CollectionRoute.bar,
+                          preventDuplicates: false);
                     },
                   ),
                 )),

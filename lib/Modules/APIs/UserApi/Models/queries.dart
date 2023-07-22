@@ -49,8 +49,8 @@ class UserRequestModel {
   factory UserRequestModel.fromJson(Map<String, dynamic> map) {
     return UserRequestModel(
         tagSlugName: map["tag_slug_name"],
-        createdAt: map["request_type"],
-        type: map["created_at"]);
+        type: map["request_type"],
+        createdAt: map["created_at"]);
   }
 }
 

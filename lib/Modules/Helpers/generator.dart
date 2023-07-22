@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Helpers/template.dart';
@@ -12,6 +11,7 @@ import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 getToday(String type) {
   if (type == "date") {
@@ -26,7 +26,7 @@ getToday(String type) {
 getShadow(String type) {
   if (type == "high") {
     return BoxShadow(
-      color: const Color.fromARGB(255, 128, 128, 128).withOpacity(0.4),
+      color: shadowColor.withOpacity(0.4),
       blurRadius: 14.0,
       spreadRadius: 2.0,
       offset: const Offset(
@@ -36,7 +36,7 @@ getShadow(String type) {
     );
   } else if (type == "med") {
     return BoxShadow(
-      color: const Color.fromARGB(255, 128, 128, 128).withOpacity(0.3),
+      color: shadowColor.withOpacity(0.35),
       blurRadius: 10.0,
       spreadRadius: 0.0,
       offset: const Offset(
@@ -68,7 +68,7 @@ getTodayCalendarHeader(DateTime val) {
 
 getColor(DateTime ds, DateTime de) {
   if (isPassedDate(ds, de)) {
-    return whitebg;
+    return whiteColor;
   } else {
     return primaryColor;
   }
@@ -78,64 +78,93 @@ getBgColor(DateTime ds, DateTime de) {
   if (isPassedDate(ds, de)) {
     return primaryColor;
   } else {
-    return whitebg;
+    return whiteColor;
   }
 }
 
 //Get content tag.
-Widget getTagShow(tag, dateStart, dateEnd) {
+Widget getTagShow(tag, dateStart, dateEnd, isConverted) {
   int i = 0;
   int max = 3; //Maximum tag
 
   if (tag != null) {
     return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        padding:
+            EdgeInsets.symmetric(horizontal: spaceSM, vertical: spaceMini + 1),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: getColor(DateTime.parse(dateStart), DateTime.parse(dateEnd)),
+          color: getColor(
+              isConverted == true
+                  ? DateTime.parse(dateStart)
+                  : DateTime.parse(dateStart)
+                      .add(Duration(hours: getUTCHourOffset())),
+              isConverted == true
+                  ? DateTime.parse(dateEnd)
+                  : DateTime.parse(dateEnd)
+                      .add(Duration(hours: getUTCHourOffset()))),
         ),
         child: Wrap(
-            runSpacing: -5,
-            spacing: 5,
+            runSpacing: -spaceWrap,
+            spacing: spaceWrap,
             children: tag.map<Widget>((content) {
               if (i < max) {
                 i++;
-                return RichText(
-                  text: TextSpan(
-                    children: [
-                      WidgetSpan(
-                        child: Icon(Icons.circle,
-                            size: textSM, color: Colors.blue), //for now.
+                return Container(
+                    margin: EdgeInsets.only(bottom: spaceMini),
+                    child: RichText(
+                      text: TextSpan(
+                        children: [
+                          WidgetSpan(
+                            child: Icon(Icons.circle,
+                                size: textSM, color: Colors.blue), //for now.
+                          ),
+                          TextSpan(
+                            text: " ${content['tag_name']}",
+                            style: TextStyle(
+                                color: getBgColor(
+                                    isConverted == true
+                                        ? DateTime.parse(dateStart)
+                                        : DateTime.parse(dateStart).add(
+                                            Duration(
+                                                hours: getUTCHourOffset())),
+                                    isConverted == true
+                                        ? DateTime.parse(dateEnd)
+                                        : DateTime.parse(dateEnd).add(Duration(
+                                            hours: getUTCHourOffset()))),
+                                fontSize: textSM),
+                          ),
+                        ],
                       ),
-                      TextSpan(
-                        text: " ${content['tag_name']}",
-                        style: GoogleFonts.poppins(
-                            color: getBgColor(DateTime.parse(dateStart),
-                                DateTime.parse(dateEnd)),
-                            fontSize: textSM),
-                      ),
-                    ],
-                  ),
-                );
+                    ));
               } else if (i == max) {
                 i++;
-                return RichText(
-                  text: TextSpan(
-                    children: [
-                      WidgetSpan(
-                        child: Icon(Icons.more,
-                            size: textSM, color: Colors.blue), //for now.
+                return Container(
+                    margin: EdgeInsets.only(bottom: spaceMini),
+                    child: RichText(
+                      text: TextSpan(
+                        children: [
+                          WidgetSpan(
+                            child: Icon(Icons.more,
+                                size: textSM, color: Colors.blue), //for now.
+                          ),
+                          TextSpan(
+                            text: " See ${tag.length - max} More",
+                            style: TextStyle(
+                                color: getBgColor(
+                                    isConverted == true
+                                        ? DateTime.parse(dateStart)
+                                        : DateTime.parse(dateStart).add(
+                                            Duration(
+                                                hours: getUTCHourOffset())),
+                                    isConverted == true
+                                        ? DateTime.parse(dateEnd)
+                                        : DateTime.parse(dateEnd).add(Duration(
+                                            hours: getUTCHourOffset()))),
+                                fontSize: textSM),
+                          ),
+                        ],
                       ),
-                      TextSpan(
-                        text: " See ${tag.length - max} More",
-                        style: GoogleFonts.poppins(
-                            color: getBgColor(DateTime.parse(dateStart),
-                                DateTime.parse(dateEnd)),
-                            fontSize: textSM),
-                      ),
-                    ],
-                  ),
-                );
+                    ));
               } else {
                 return const SizedBox();
               }
@@ -163,22 +192,34 @@ getDateText(DateTime date, String type, String view) {
 
 Widget getLocation(loc, textColor) {
   if (loc != null) {
-    var location = loc[0]['detail'];
+    String location = "";
+    if (loc[0]['detail'] != null) {
+      location = loc[0]['detail'];
+    } else {
+      location = loc[1]['detail'];
+    }
 
-    return RichText(
-      text: TextSpan(
-        children: [
-          WidgetSpan(
-            child: Icon(Icons.location_on_outlined, color: textColor, size: 18),
+    return Container(
+        margin: EdgeInsets.only(bottom: spaceSM),
+        child: RichText(
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          text: TextSpan(
+            children: [
+              WidgetSpan(
+                child: Icon(Icons.location_on_outlined,
+                    color: textColor, size: 18),
+              ),
+              TextSpan(
+                  text: " ${ucFirst(location)}",
+                  style:
+                      TextStyle(fontWeight: FontWeight.w500, color: textColor)),
+            ],
           ),
-          TextSpan(
-              text: " ${ucFirst(location)}",
-              style: TextStyle(fontWeight: FontWeight.w500, color: textColor)),
-        ],
-      ),
-    );
+        ));
   } else {
-    return const SizedBox();
+    return Container(
+        margin: EdgeInsets.only(bottom: spaceLG), child: const SizedBox());
   }
 }
 
@@ -191,17 +232,19 @@ Widget getHourChipLine(String dateStart, double width) {
         DateFormat("dd").format(DateTime.now()) ==
             DateFormat("dd").format(dt)) {
       return Row(children: [
-        SizedBox(width: paddingSM),
+        SizedBox(width: spaceXMD),
         RichText(
           text: TextSpan(
             children: [
               WidgetSpan(
-                child: Icon(Icons.circle, size: 14, color: dangerColor),
+                child: Icon(Icons.circle, size: 14, color: warningBG),
               ),
               TextSpan(
                   text: " Just Started",
                   style: TextStyle(
-                      color: dangerColor, fontWeight: FontWeight.w500)),
+                      color: warningBG,
+                      fontSize: textMD,
+                      fontWeight: FontWeight.w500)),
             ],
           ),
         )
@@ -212,14 +255,14 @@ Widget getHourChipLine(String dateStart, double width) {
   }
 
   return Container(
-      margin: const EdgeInsets.only(top: 10),
+      margin: EdgeInsets.only(top: spaceSM),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             '${date.hour}:00',
-            style: GoogleFonts.poppins(
-              color: greybg,
+            style: TextStyle(
+              color: shadowColor,
               fontSize: textSM,
               fontWeight: FontWeight.w500,
             ),
@@ -227,7 +270,7 @@ Widget getHourChipLine(String dateStart, double width) {
           getLiveText(date),
           Expanded(
               child: Container(
-            margin: EdgeInsets.fromLTRB(paddingSM, paddingXSM, paddingSM, 0),
+            margin: EdgeInsets.fromLTRB(spaceXMD, spaceSM, spaceXMD, 0),
             color: primaryColor,
             height: 2,
             width: width,
@@ -239,7 +282,7 @@ Widget getHourChipLine(String dateStart, double width) {
 Widget getInputWarning(String text) {
   if (text.trim() != "") {
     return Container(
-        margin: EdgeInsets.symmetric(vertical: paddingXSM / 2),
+        margin: EdgeInsets.symmetric(vertical: spaceMini),
         child: RichText(
           text: TextSpan(
             children: [
@@ -247,12 +290,12 @@ Widget getInputWarning(String text) {
                 child: Icon(
                   FontAwesomeIcons.triangleExclamation,
                   size: iconSM - 2,
-                  color: dangerColor,
+                  color: warningBG,
                 ),
               ),
               TextSpan(
                   text: " $text",
-                  style: TextStyle(color: dangerColor, fontSize: textSM)),
+                  style: TextStyle(color: warningBG, fontSize: textSM)),
             ],
           ),
         ));
@@ -265,7 +308,9 @@ Widget getHourText(String date, var margin, var align) {
   return Container(
       margin: margin,
       alignment: align,
-      child: Text(getDBDateFormat("time", DateTime.parse(date)),
+      child: Text(
+          getDBDateFormat("time",
+              DateTime.parse(date).add(Duration(hours: getUTCHourOffset()))),
           style: TextStyle(fontSize: textSM)));
 }
 
@@ -314,7 +359,8 @@ Future<void> getCurrentLocationDetails() async {
       locName = locationName;
       // print(locName);
     } else {
-      Get.snackbar("Alert", "No Placemark is found", backgroundColor: whitebg);
+      Get.snackbar("Alert", "No Placemark is found",
+          backgroundColor: whiteColor);
       locName = 'Invalid Location';
     }
   } catch (e) {
@@ -328,5 +374,25 @@ DateTime getMinEndTime(DateTime ds) {
     return DateTime(ds.year, ds.month, ds.day, ds.hour, ds.minute + 1);
   } else {
     return DateTime(now.year, now.month, now.day);
+  }
+}
+
+int getUTCHourOffset() {
+  DateTime now = DateTime.now();
+  Duration offset = now.timeZoneOffset;
+  return offset.inHours;
+}
+
+Future<Role> getRoleSess(bool isLogged) async {
+  final prefs = await SharedPreferences.getInstance();
+  final roles = prefs.getString('role_list_key');
+
+  if (roles != null) {
+    return Role(role: roles);
+  } else {
+    if (isLogged) {
+      await getDestroyTrace(false);
+    }
+    return null;
   }
 }

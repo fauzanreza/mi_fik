@@ -25,7 +25,7 @@ class StateHelpPage extends State<HelpPage> {
       body: const GetAllHelpType(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        backgroundColor: successbg,
+        backgroundColor: successBG,
         tooltip: "Ask a question".tr,
         child: const Icon(Icons.headset_mic),
       ),

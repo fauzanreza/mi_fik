@@ -1,7 +1,7 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
-import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Button/navigation.dart';
 import 'package:mi_fik/Components/Container/content.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
@@ -9,6 +9,7 @@ import 'package:mi_fik/Components/Skeletons/content_1.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Services/queries.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_contents.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/show_detail_task.dart';
@@ -59,9 +60,11 @@ class StateSavedContent extends State<SavedContent>
         builder: (BuildContext context,
             AsyncSnapshot<List<ScheduleModel>> snapshot) {
           if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                  "Something wrong with message: ${snapshot.error.toString()}"),
+            Get.dialog(const FailedDialog(
+                text: "Unknown error, please contact the admin",
+                type: "error"));
+            return const Center(
+              child: Text("Something wrong"),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
             List<ScheduleModel> contents = snapshot.data;
@@ -77,21 +80,20 @@ class StateSavedContent extends State<SavedContent>
   Widget _buildListView(List<ScheduleModel> contents) {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading;
 
     if (contents != null) {
       return RefreshIndicator(
           key: _refreshIndicatorKey,
           onRefresh: refreshData,
           child: ListView(
-            padding: EdgeInsets.only(bottom: paddingLg),
+            padding: EdgeInsets.only(bottom: spaceJumbo),
             children: [
               Row(
                 children: [
                   outlinedButtonCustom(() {
                     selectedArchiveSlug = null;
                     selectedArchiveName = null;
-                    Get.offAll(() => const BottomBar());
+                    Get.toNamed(CollectionRoute.bar, preventDuplicates: false);
                   }, "Back to Archive".tr, Icons.arrow_back),
                   const Spacer(),
                   DeleteArchive(slug: widget.slug, name: widget.name),
@@ -118,26 +120,31 @@ class StateSavedContent extends State<SavedContent>
 
                             // Open content w/ full container
                             GestureDetector(
-                                onTap: () {
-                                  commandService
-                                      .postContentView(content.slugName)
-                                      .then((response) {
-                                    setState(() => isLoading = false);
-                                    var status = response[0]['message'];
-                                    var body = response[0]['body'];
+                                onTap: () async {
+                                  final connectivityResult =
+                                      await (Connectivity()
+                                          .checkConnectivity());
+                                  if (connectivityResult !=
+                                      ConnectivityResult.none) {
+                                    commandService
+                                        .postContentView(content.slugName)
+                                        .then((response) {
+                                      setState(() => {});
+                                      var status = response[0]['message'];
+                                      var body = response[0]['body'];
 
-                                    if (status == "success") {
-                                      Get.to(() => DetailPage(
-                                          passSlug: content.slugName));
-                                    } else {
-                                      showDialog<String>(
-                                          context: context,
-                                          builder: (BuildContext context) =>
-                                              FailedDialog(
-                                                  text: body,
-                                                  type: "openevent"));
-                                    }
-                                  });
+                                      if (status == "success") {
+                                        Get.to(() => DetailPage(
+                                            passSlug: content.slugName));
+                                      } else {
+                                        Get.dialog(FailedDialog(
+                                            text: body, type: "openevent"));
+                                      }
+                                    });
+                                  } else {
+                                    Get.to(() =>
+                                        DetailPage(passSlug: content.slugName));
+                                  }
 
                                   passSlugContent = content.slugName;
                                 },
@@ -172,21 +179,25 @@ class StateSavedContent extends State<SavedContent>
                                           builder: (context, setState) {
                                         return AlertDialog(
                                             insetPadding:
-                                                EdgeInsets.all(paddingXSM),
+                                                EdgeInsets.all(spaceSM),
                                             contentPadding:
-                                                EdgeInsets.all(paddingXSM),
+                                                EdgeInsets.all(spaceSM),
                                             shape: RoundedRectangleBorder(
                                                 borderRadius: BorderRadius.all(
-                                                    roundedLG)),
+                                                    Radius.circular(
+                                                        roundedLG))),
                                             content: DetailTask(
                                               data: content,
+                                              isModeled: true,
                                             ));
                                       });
                                     });
                               }
                             },
                             child: GetScheduleContainer(
-                                width: fullWidth, content: content))
+                                width: fullWidth,
+                                content: content,
+                                isConverted: false))
                       ])));
                 }
               }).toList())
@@ -201,7 +212,7 @@ class StateSavedContent extends State<SavedContent>
               outlinedButtonCustom(() {
                 selectedArchiveSlug = null;
                 selectedArchiveName = null;
-                Get.offAll(() => const BottomBar());
+                Get.toNamed(CollectionRoute.bar, preventDuplicates: false);
               }, "Back to Archive".tr, Icons.arrow_back),
               const Spacer(),
               DeleteArchive(slug: selectedArchiveSlug),

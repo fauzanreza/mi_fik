@@ -1,5 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
@@ -12,6 +13,7 @@ import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/Landings/ForgetPassPage/index.dart';
 import 'package:mi_fik/Pages/Landings/RegisterPage/index.dart';
 
 class PostLogin extends StatefulWidget {
@@ -29,6 +31,7 @@ class StatePostLogin extends State<PostLogin> {
   String usernameMsg = "";
   String passMsg = "";
   String allMsg = "";
+  bool isHide = true;
 
   @override
   void dispose() {
@@ -48,37 +51,77 @@ class StatePostLogin extends State<PostLogin> {
   Widget build(BuildContext context) {
     double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading = false;
 
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 30, horizontal: paddingSM),
-      margin: EdgeInsets.symmetric(horizontal: 20, vertical: fullHeight * 0.1),
+      padding: EdgeInsets.symmetric(
+          vertical: spaceJumbo - spaceMini, horizontal: spaceXMD),
+      margin: EdgeInsets.symmetric(
+          horizontal: spaceLG, vertical: fullHeight * 0.075),
       decoration: BoxDecoration(
-        color: whitebg,
-        borderRadius: BorderRadius.all(roundedLG),
+        color: whiteColor,
+        borderRadius: BorderRadius.all(Radius.circular(roundedLG)),
       ),
       child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              margin: const EdgeInsets.only(bottom: 20),
+              margin: EdgeInsets.only(bottom: spaceLG),
               alignment: Alignment.center,
               child: ClipRRect(
                 child: Image.asset('assets/icon/mifik_logo.png', width: 300),
               ),
             ),
             Text("Username",
-                style: TextStyle(color: blackbg, fontSize: textMD)),
+                style: TextStyle(color: darkColor, fontSize: textXMD)),
             getInputWarning(usernameMsg),
             getInputText(lnameLength, usernameCtrl, false),
             Text("Password",
-                style: TextStyle(color: blackbg, fontSize: textMD)),
+                style: TextStyle(color: darkColor, fontSize: textXMD)),
             getInputWarning(passMsg),
-            getInputText(passwordLength, passCtrl, true),
+            Stack(
+              children: [
+                getInputText(passwordLength, passCtrl, isHide),
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: IconButton(
+                    iconSize: iconMD,
+                    icon: FaIcon(
+                        isHide == false
+                            ? FontAwesomeIcons.eye
+                            : FontAwesomeIcons.eyeSlash,
+                        color: darkColor),
+                    onPressed: () {
+                      setState(() {
+                        if (isHide) {
+                          isHide = false;
+                        } else {
+                          isHide = true;
+                        }
+                      });
+                    },
+                  ),
+                )
+              ],
+            ),
             getInputWarning(allMsg),
+            TextButton(
+              style: TextButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 0),
+                foregroundColor: darkColor,
+              ),
+              onPressed: () {
+                indexForget = 0;
+                Get.to(() => const ForgetPage(
+                      isLogged: false,
+                    ));
+              },
+              child: Text('Forget Password'.tr,
+                  style: TextStyle(fontSize: textMD)),
+            ),
             Container(
-                margin: EdgeInsets.only(top: paddingSM),
+                margin: EdgeInsets.only(top: spaceSM),
                 padding: EdgeInsets.zero,
                 width: fullWidth,
                 height: 45,
@@ -98,12 +141,13 @@ class StatePostLogin extends State<PostLogin> {
                         AuthValidator.validateLogin(data);
                     if (valid['status']) {
                       apiService.postLogin(data, false).then((response) {
-                        setState(() => isLoading = false);
+                        setState(() => {});
                         var status = response[0]['message'];
                         var body = response[0]['body'];
                         var acc = response[0]['access'];
 
                         if (status == "success") {
+                          usernameKey = data.username;
                           if (acc) {
                             Get.to(() => const BottomBar());
                             userService.putFirebase(token);
@@ -121,10 +165,7 @@ class StatePostLogin extends State<PostLogin> {
                             userService.putFirebase(token);
                           }
                         } else {
-                          showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  FailedDialog(text: body, type: "login"));
+                          Get.dialog(FailedDialog(text: body, type: "login"));
 
                           if (body is! String) {
                             if (body['username'] != null) {
@@ -152,44 +193,43 @@ class StatePostLogin extends State<PostLogin> {
                         }
                       });
                     } else {
-                      showDialog<String>(
-                          context: context,
-                          builder: (BuildContext context) => FailedDialog(
-                              text: valid['message'], type: "login"));
+                      Get.dialog(
+                          FailedDialog(text: valid['message'], type: "login"));
                     }
                   },
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(roundedLG2),
+                      borderRadius: BorderRadius.circular(roundedMD),
                     )),
-                    backgroundColor: MaterialStatePropertyAll<Color>(successbg),
+                    backgroundColor: MaterialStatePropertyAll<Color>(successBG),
                   ),
-                  child: const Text('Sign In'),
+                  child: Text('Sign In'.tr, style: TextStyle(fontSize: textMD)),
                 )),
             Container(
                 alignment: Alignment.center,
-                margin: EdgeInsets.only(top: paddingSM * 2),
-                child: Wrap(runSpacing: 5, spacing: 5, children: [
-                  Container(
-                      padding: EdgeInsets.symmetric(vertical: paddingMD),
-                      child: const Text("already have an account?")),
-                  SizedBox(
-                    width: paddingMD,
-                  ),
-                  TextButton(
-                    style: TextButton.styleFrom(
-                        foregroundColor: primaryColor,
-                        padding: EdgeInsets.symmetric(
-                            vertical: paddingMD, horizontal: paddingSM)),
-                    onPressed: () {
-                      Get.to(() => const RegisterPage(
-                            isLogged: false,
-                          ));
-                    },
-                    child: const Text('Register now'),
-                  ),
-                ]))
+                margin: EdgeInsets.only(top: spaceXMD),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                          padding: EdgeInsets.symmetric(vertical: spaceSM),
+                          child: Text("don't have an account?".tr,
+                              style: TextStyle(fontSize: textMD))),
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          foregroundColor: primaryColor,
+                        ),
+                        onPressed: () {
+                          indexRegis = 0;
+                          Get.to(() => const RegisterPage(
+                                isLogged: false,
+                              ));
+                        },
+                        child: Text('Register now'.tr,
+                            style: TextStyle(fontSize: textMD)),
+                      ),
+                    ]))
           ]),
     );
   }

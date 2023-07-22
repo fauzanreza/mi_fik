@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Models/queries.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Services/queries.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -32,11 +33,14 @@ class StateGetSavedStatus extends State<GetSavedStatus> {
         builder:
             (BuildContext context, AsyncSnapshot<List<ArchiveModel>> snapshot) {
           if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                  "Something wrong with message: ${snapshot.error.toString()}"),
+            Get.dialog(const FailedDialog(
+                text: "Unknown error, please contact the admin",
+                type: "error"));
+            return const Center(
+              child: Text("Something wrong"),
             );
-          } else if (snapshot.connectionState == ConnectionState.done) {
+          } else if (snapshot.connectionState == ConnectionState.done &&
+              snapshot.data != null) {
             List<ArchiveModel> archieves = snapshot.data;
 
             for (var e in archieves) {
@@ -63,13 +67,11 @@ class StateGetSavedStatus extends State<GetSavedStatus> {
 
     if (found) {
       return Container(
-        padding:
-            EdgeInsets.symmetric(vertical: paddingXSM, horizontal: paddingSM),
+        padding: EdgeInsets.symmetric(vertical: spaceSM, horizontal: spaceXMD),
         decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color:
-                    const Color.fromARGB(255, 128, 128, 128).withOpacity(0.3),
+                color: shadowColor.withOpacity(0.35),
                 blurRadius: 10.0,
                 spreadRadius: 0.0,
                 offset: const Offset(
@@ -78,18 +80,18 @@ class StateGetSavedStatus extends State<GetSavedStatus> {
                 ),
               )
             ],
-            color: successbg,
+            color: successBG,
             borderRadius: const BorderRadius.all(Radius.circular(10))),
         child: RichText(
             text: TextSpan(
           children: [
             WidgetSpan(
-              child: Icon(Icons.check, color: whitebg, size: iconMD),
+              child: Icon(Icons.check, color: whiteColor, size: iconMD),
             ),
             TextSpan(
                 text: " Saved".tr,
                 style: TextStyle(
-                    color: whitebg,
+                    color: whiteColor,
                     fontWeight: FontWeight.w500,
                     fontSize: textSM + 1)),
           ],

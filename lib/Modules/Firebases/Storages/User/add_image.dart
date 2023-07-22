@@ -1,10 +1,9 @@
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PostImage {
-  Future<String> sendImageUser(XFile imageFile) async {
+  Future<String> sendImageUser(var imageFile) async {
     final prefs = await SharedPreferences.getInstance();
     final id = prefs.getString('id_key');
     String url;

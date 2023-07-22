@@ -125,7 +125,56 @@ class Dictionaries extends Translations {
           "Request failed, you haven't chosen any tag yet":
               "Request failed, you haven't chosen any tag yet",
           "Request failed, you can't remove general role":
-              "Request failed, you can't remove general role"
+              "Request failed, you can't remove general role",
+          "Are you sure want to close the registration?":
+              "Are you sure want to close the registration?",
+          "Failed to capture image": "Failed to capture image",
+          "Preview Image": "Preview Image",
+          "No more item to show": "No more item to show",
+          "Failed to upload, file doesnt exist":
+              "Failed to upload, file doesnt exist",
+          "Failed to reset image": "Failed to reset image",
+          "Nothing has changed": "Nothing has changed",
+          "Event posted": "Event posted",
+          "Task saved": "Task saved",
+          "Archive Created": "Archive Created",
+          "Answer": "Answer",
+          "This Event doesn't have description":
+              "This Event doesn't have description",
+          "Publish Event": "Publish Event",
+          "This Event doesn't have attachment":
+              "This Event doesn't have attachment",
+          "don't have an account?": "don't have an account?",
+          "Register now": "Register now",
+          "Insert Attachment": "Insert Attachment",
+          "Are you sure want to sign out?": "Are you sure want to sign out?",
+          "Information": "Information",
+          "Sign Out": "Sign Out",
+          "Welcoming": "Welcoming",
+          "You haven't accept the terms & condition":
+              "You haven't accept the terms & condition",
+          "All Tag": "All Tag",
+          "Attachment": "Attachment",
+          "Sign In": "Sign In",
+          "Create archive failed, field can't be empty":
+              "Create archive failed, field can't be empty",
+          "Are you sure want to leave? All changes will not be saved":
+              "Are you sure want to leave? All changes will not be saved",
+          "Create event failed, field can't be empty":
+              "Create event failed, field can't be empty",
+          "Create event failed, tag must be selected":
+              "Create event failed, tag must be selected",
+          "Create event failed, date period must be selected":
+              "Create event failed, date period must be selected",
+          "Add feedback failed, field can't be empty":
+              "Add feedback failed, field can't be empty",
+          "Sign out success": "Sign out success",
+          "Failed to load document": "Failed to load document",
+          "Failed to load video": "Failed to load video",
+          "You have picked all role": "You have picked all role",
+          "Choose Your Role": "Choose Your Role",
+          "Forget Password": "Forget Password",
+          "About to start in": "About to start in"
         },
         'id_ID': {
           'Good Morning': 'Selamat Pagi',
@@ -249,7 +298,56 @@ class Dictionaries extends Translations {
           "Request failed, you haven't chosen any tag yet":
               "Permintaan role gagal, Anda sama sekali belum memilih",
           "Request failed, you can't remove general role":
-              "Permintaan role gagal, role utama tidak boleh diubah"
+              "Permintaan role gagal, role utama tidak boleh diubah",
+          "Are you sure want to close the registration?":
+              "Apakah Anda yakin ingin membatalkan pendaftaran?",
+          "Failed to capture image": "Gagal mengambil gambar",
+          "Preview Image": "Hasil Gambar",
+          "No more item to show": "Semua item telah ditampilkan",
+          "Failed to upload, file doesnt exist":
+              "Gagal mengunggah, file tidak ditemukan",
+          "Failed to reset image": "Gagal menghapus gambar",
+          "Nothing has changed": "Tidak ada yang diubah",
+          "Event posted": "Event berhasil diposting",
+          "Task saved": "Tugas disimpan",
+          "Archive Created": "Arsip dibuat",
+          "Answer": "Jawaban",
+          "This Event doesn't have description":
+              "Event ini tidak memiliki deskripsi",
+          "Publish Event": "Simpan Event",
+          "This Event doesn't have attachment":
+              "Event ini tidak memiliki tautan",
+          "don't have an account?": "belum punya akun?",
+          "Register now": "Daftar sekarang",
+          "Insert Attachment": "Tambah Tautan",
+          "Are you sure want to sign out?": "Apakah Anda yakin ingin keluar?",
+          "Information": "Informasi",
+          "Sign Out": "Keluar",
+          "Welcoming": "Selamat Datang",
+          "You haven't accept the terms & condition":
+              "Anda belum menyetujui Syarat & Ketentuan",
+          "All Tag": "Semua tag",
+          "Attachment": "Tautan",
+          "Sign In": "Masuk",
+          "Create archive failed, field can't be empty":
+              "Gagal membuat arsip, kolom tidak boleh kosong",
+          "Are you sure want to leave? All changes will not be saved":
+              "Apakah Anda yakin ingin keluar? Semua perubahan tidak akan tersimpan",
+          "Create event failed, field can't be empty":
+              "Gagal membuat event, inputan tidak boleh kosong",
+          "Create event failed, tag must be selected":
+              "Gagal membuat event, tag harus dipilih",
+          "Create event failed, date period must be selected":
+              "Gagal membuat event, periode tanggal harus dipilih",
+          "Add feedback failed, field can't be empty":
+              "Gagal membuat event, inputan tidak boleh kosong",
+          "Sign out success": "Berhasil keluar akun",
+          "Failed to load document": "Gagal menampilkan dokumen",
+          "Failed to load video": "Gagal menampilkan video",
+          "You have picked all role": "Anda telah memilih semua role",
+          "Choose Your Role": "Pilih role Anda",
+          "Forget Password": "Lupa password",
+          "About to start in": "Akan mulai"
         },
       };
 }

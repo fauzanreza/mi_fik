@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
 import 'package:mi_fik/Components/Forms/input.dart';
+import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/ArchiveApi/Services/commands.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
@@ -41,7 +42,6 @@ class StatePostArchive extends State<PostArchive> {
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading = false;
 
     return Padding(
       padding: MediaQuery.of(context).viewInsets,
@@ -62,35 +62,32 @@ class StatePostArchive extends State<PostArchive> {
             ),
           ),
           Container(
-              padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
-              child: Text("New Archive".tr,
-                  style: TextStyle(
-                      color: primaryColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: textLG))),
+              padding: EdgeInsets.fromLTRB(spaceXMD, spaceSM, spaceXMD, 0),
+              alignment: Alignment.centerLeft,
+              child: getTitleLarge("New Archive".tr, primaryColor)),
           Container(
-              padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
+              padding: EdgeInsets.fromLTRB(spaceXMD, spaceSM, spaceXMD, 0),
               child: Text("Archive Name".tr,
-                  style: TextStyle(color: blackbg, fontSize: textMD))),
+                  style: TextStyle(color: darkColor, fontSize: textXMD))),
           Container(
-              padding: EdgeInsets.fromLTRB(paddingSM, 0, paddingSM, 0),
+              padding: EdgeInsets.fromLTRB(spaceXMD, 0, spaceXMD, 0),
               child: getInputWarning(archiveNameMsg)),
           Container(
-              padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
+              padding: EdgeInsets.fromLTRB(spaceXMD, spaceSM, spaceXMD, 0),
               child: getInputText(75, archiveNameCtrl, false)),
           Container(
-              padding: EdgeInsets.fromLTRB(paddingSM, 0, paddingSM, 0),
+              padding: EdgeInsets.fromLTRB(spaceXMD, 0, spaceXMD, 0),
               child: getInputWarning(archiveDescMsg)),
           Container(
-              padding: EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, 0),
+              padding: EdgeInsets.fromLTRB(spaceXMD, spaceSM, spaceXMD, 0),
               child: Text("Description (optional)".tr,
-                  style: TextStyle(color: blackbg, fontSize: textMD))),
+                  style: TextStyle(color: darkColor, fontSize: textXMD))),
           Container(
               padding:
-                  EdgeInsets.fromLTRB(paddingSM, 10, paddingSM, paddingMD * 2),
+                  EdgeInsets.fromLTRB(spaceXMD, spaceSM, spaceXMD, spaceLG * 2),
               child: getInputDesc(255, 3, archiveDescCtrl, false)),
           Container(
-              padding: EdgeInsets.fromLTRB(paddingSM, 0, paddingSM, 0),
+              padding: EdgeInsets.fromLTRB(spaceXMD, 0, spaceXMD, 0),
               child: getInputWarning(allArchiveMsg)),
           SizedBox(
               // transform: Matrix4.translationValues(
@@ -106,26 +103,22 @@ class StatePostArchive extends State<PostArchive> {
                   //Validator
                   if (archive.archiveName.isNotEmpty) {
                     archiveService.addArchive(archive).then((response) {
-                      setState(() => isLoading = false);
+                      setState(() => {});
                       var status = response[0]['message'];
                       var body = response[0]['body'];
 
                       if (status == "success") {
-                        Get.offAll(() => const BottomBar());
-                        showDialog<String>(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                SuccessDialog(text: body));
+                        Get.toNamed(CollectionRoute.bar,
+                            preventDuplicates: false);
+                        Get.dialog(SuccessDialog(text: body));
                       } else {
                         archiveNameMsg = "";
                         archiveDescMsg = "";
                         allArchiveMsg = "";
 
                         Get.back();
-                        showDialog<String>(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                FailedDialog(text: body, type: "addarchive"));
+                        Get.dialog(
+                            FailedDialog(text: body, type: "addarchive"));
                         setState(() {
                           if (body is! String) {
                             if (body['archive_name'] != null) {
@@ -155,19 +148,17 @@ class StatePostArchive extends State<PostArchive> {
                     });
                   } else {
                     Get.back();
-                    showDialog<String>(
-                        context: context,
-                        builder: (BuildContext context) => const FailedDialog(
-                            text: "Create archive failed, field can't be empty",
-                            type: "addarchive"));
+                    Get.dialog(const FailedDialog(
+                        text: "Create archive failed, field can't be empty",
+                        type: "addarchive"));
                     allArchiveMsg =
                         "Create archive failed, field can't be empty";
                   }
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll<Color>(successbg),
+                  backgroundColor: MaterialStatePropertyAll<Color>(successBG),
                 ),
-                child: Text('Done'.tr),
+                child: Text('Done'.tr, style: TextStyle(fontSize: textXMD)),
               ))
         ],
       ),

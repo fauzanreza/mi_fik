@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
 import 'package:mi_fik/Modules/APIs/AuthApi/Services/queries.dart';
+import 'package:mi_fik/Modules/Helpers/template.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
 
 class SignOutDialog extends StatefulWidget {
   const SignOutDialog({Key key}) : super(key: key);
@@ -27,11 +27,10 @@ class StateSignOutDialog extends State<SignOutDialog> {
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
-    bool isLoading = false;
 
     return AlertDialog(
-      contentPadding: const EdgeInsets.all(10),
-      title: const Text('Warning'),
+      contentPadding: EdgeInsets.all(spaceSM),
+      title: Text('Warning'.tr, style: TextStyle(fontSize: textXMD)),
       content: SizedBox(
         width: fullWidth,
         height: 50,
@@ -40,10 +39,10 @@ class StateSignOutDialog extends State<SignOutDialog> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                  margin: const EdgeInsets.symmetric(vertical: 10),
-                  child: Text("Are you sure want to sign out?",
+                  margin: EdgeInsets.symmetric(vertical: spaceSM),
+                  child: Text("Are you sure want to sign out?".tr,
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: greybg, fontSize: textMD)))
+                      style: TextStyle(color: shadowColor, fontSize: textXMD)))
             ]),
       ),
       actions: <Widget>[
@@ -51,50 +50,35 @@ class StateSignOutDialog extends State<SignOutDialog> {
           style: ButtonStyle(
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(roundedMd2),
+              borderRadius: BorderRadius.circular(roundedSM),
             )),
-            backgroundColor: MaterialStatePropertyAll<Color>(dangerColor),
+            backgroundColor: MaterialStatePropertyAll<Color>(warningBG),
           ),
           onPressed: () async {
             bool keyExists = await keyExist('token_key');
 
             if (keyExists) {
               apiService.getSignOut().then((response) {
-                setState(() => isLoading = false);
                 var body = response[0]['body'];
                 var code = response[0]['code'];
 
                 if (body == "Logout success" && code == 200) {
-                  Get.off(() => const LoginPage());
-
-                  showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context) =>
-                          SuccessDialog(text: body));
+                  getDestroyTrace(true);
+                  Get.dialog(SuccessDialog(text: body));
                 } else if (code == 401) {
-                  Get.off(() => const LoginPage());
-
-                  showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context) =>
-                          const SuccessDialog(text: "Sign out success"));
+                  getDestroyTrace(true);
+                  Get.dialog(SuccessDialog(text: "Sign out success".tr));
                 } else {
-                  showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context) =>
-                          FailedDialog(text: body, type: "signout"));
+                  Get.dialog(FailedDialog(text: body, type: "signout"));
                 }
               });
             } else {
-              Get.off(() => const LoginPage());
-
-              showDialog<String>(
-                  context: context,
-                  builder: (BuildContext context) =>
-                      const SuccessDialog(text: "Sign out success"));
+              getDestroyTrace(true);
+              Get.dialog(SuccessDialog(text: "Sign out success".tr));
             }
           },
-          child: Text("Sign Out", style: TextStyle(color: whitebg)),
+          child: Text("Sign Out".tr,
+              style: TextStyle(color: whiteColor, fontSize: textXMD)),
         )
       ],
     );

@@ -1,15 +1,19 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:mi_fik/Modules/Variables/style.dart';
 
 // Navigation
 String passSlugContent;
 
 // Others
 String locName;
+String usernameKey;
 List listAttachment = [];
 List<Map<String, dynamic>> listArchiveCheck = [];
 TabController tabController;
 bool isOffline = false;
+FlashMode flashMode = FlashMode.off;
 
 //Schedule Page
 String archiveNameMsg = "";
@@ -22,6 +26,13 @@ String selectedArchiveDesc;
 String locCoordinateCtrl;
 String selectedArchiveSlug;
 
+// Forget password
+int indexForget = 0;
+bool checkAvaiabilityForget = false;
+bool isWaitingLoad = true;
+bool isInvalidToken = false;
+bool tokenValidated = false;
+
 //Regis only
 int indexRegis = 0;
 bool isCheckedRegister = false;
@@ -31,8 +42,7 @@ String uploadedImageRegis;
 bool checkAvaiabilityRegis = false;
 bool isFinishedRegis = false;
 bool isWaiting = false;
-
-String checkMsg = "";
+bool successValidateAnimation = false;
 
 String usernameAvaiabilityCheck = "";
 String emailAvaiabilityCheck = "";
@@ -42,18 +52,27 @@ int validRegisCtrl;
 String fnameRegisCtrl = "";
 String lnameRegisCtrl = "";
 
+// Array selection
 var selectedRole = [];
-
 final selectedTag = [];
+
+// Initial Dropdown
 var slctQuestionType = "event";
 var slctFeedbackType = "feedback_design";
 var slctAttachmentType = "image";
 var slctReminderType = "reminder_3_hour_before";
 var slctValidUntil = "2023";
+
+// Inital calendar and schedule page
+DateTime slctSchedule = DateTime.now();
+DateTime slctCalendar = DateTime.now();
+
+// File upload max size
 int maxImage = 4;
 int maxVideo = 20;
 int maxDoc = 15;
 
+// Language
 enum LangList { en, id }
 
 LangList slctLang;
@@ -69,15 +88,12 @@ DateTime filterDateStart;
 DateTime filterDateEnd;
 var selectedTagFilterContent = [];
 
-DateTime slctSchedule = DateTime.now();
-DateTime slctCalendar = DateTime.now();
-
 // Filled by API dictionary
 List<String> questionTypeOpt = [];
 List<String> feedbackTypeOpt = [];
 List<String> attachmentTypeOpt = [];
 List<String> reminderTypeOpt = [];
-List<String> validUntil = ["2019", "2020", "2021", "2022", "2023"];
+List<String> validUntil = ["2023"];
 
 // Class and object
 class UserProfileLeftBar {
@@ -113,7 +129,6 @@ class Role {
 
 // Firebase FCM
 bool shouldUseFirestoreEmulator = false;
-
 String token;
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
@@ -121,4 +136,19 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
   'High Importance Notifications',
   description: 'This channel is used for important notifications.',
   importance: Importance.high,
+);
+
+NotificationDetails fcmConfig = NotificationDetails(
+  android: AndroidNotificationDetails(
+    "${channel.id}2",
+    channel.name,
+    channelDescription: channel.description,
+    color: primaryColor,
+    enableLights: true,
+    icon: "@mipmap/ic_launcher",
+    priority: Priority.max,
+    playSound: true,
+    importance: Importance.max,
+    sound: const RawResourceAndroidNotificationSound('notif_1'),
+  ),
 );

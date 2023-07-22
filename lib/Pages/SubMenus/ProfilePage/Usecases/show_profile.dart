@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
+import 'package:mi_fik/Modules/Helpers/template.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/ProfilePage/Usecases/edit_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:skeletons/skeletons.dart';
 
 class ShowProfile extends StatelessWidget {
   const ShowProfile({Key key}) : super(key: key);
@@ -20,16 +20,14 @@ class ShowProfile extends StatelessWidget {
       return UserProfileLeftBar(
           username: username, image: image, roleGeneral: role);
     } else {
-      Get.offAll(() => const LoginPage());
-      Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
-          backgroundColor: whitebg);
+      await getDestroyTrace(false);
       return null;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    //double fullHeight = MediaQuery.of(context).size.height;
+    double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
     return FutureBuilder<UserProfileLeftBar>(
@@ -43,41 +41,76 @@ class ShowProfile extends StatelessWidget {
 
             return Container(
               width: fullWidth,
-              padding:
-                  EdgeInsets.fromLTRB(paddingXSM, paddingXSM, paddingXSM, 0),
+              padding: EdgeInsets.fromLTRB(spaceSM, spaceSM, spaceSM, 0),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Stack(alignment: Alignment.center, children: [
                       Container(
-                          margin: const EdgeInsets.all(20),
+                          margin: EdgeInsets.all(spaceLG),
                           child: getProfileImageSideBar(fullWidth, 0.3, image)),
                       const EditImage(),
                     ]),
-                    Text(username,
+                    Text("@$username",
                         style: TextStyle(
-                            color: whitebg,
-                            fontSize: textLG,
+                            color: whiteColor,
+                            fontSize: textXMD + 2,
                             fontWeight: FontWeight.w500)),
                     Container(
-                        margin:
-                            const EdgeInsets.only(top: 5, left: 5, right: 5),
+                        margin: EdgeInsets.only(
+                            top: spaceMini, left: spaceMini, right: spaceMini),
                         padding: EdgeInsets.symmetric(
-                            vertical: paddingXSM / 2, horizontal: paddingSM),
+                            vertical: spaceSM / 2, horizontal: spaceXMD),
                         decoration: BoxDecoration(
-                            color: whitebg,
+                            color: whiteColor,
                             borderRadius:
-                                const BorderRadius.all(Radius.circular(10))),
+                                BorderRadius.all(Radius.circular(roundedSM))),
                         child: Text(role,
                             style: TextStyle(
                                 color: primaryColor,
-                                fontSize: textMD,
+                                fontSize: textXMD + 2,
                                 fontWeight: FontWeight.w500)))
                   ]),
             );
           } else {
-            return const SizedBox();
+            return Container(
+                width: fullWidth,
+                padding: EdgeInsets.fromLTRB(spaceSM, spaceXMD, spaceSM, 0),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                          margin: EdgeInsets.only(left: fullWidth * 0.35),
+                          child: SkeletonLine(
+                            style: SkeletonLineStyle(
+                                height: fullHeight * 0.15,
+                                width: fullHeight * 0.15,
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(roundedCircle))),
+                          )),
+                      Container(
+                          margin: EdgeInsets.only(
+                              left: fullWidth * 0.325, top: spaceXMD),
+                          child: SkeletonLine(
+                            style: SkeletonLineStyle(
+                                height: 35,
+                                width: fullHeight * 0.175,
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(roundedMD))),
+                          )),
+                      Container(
+                          margin: EdgeInsets.only(
+                              left: fullWidth * 0.325, top: spaceXSM),
+                          child: SkeletonLine(
+                            style: SkeletonLineStyle(
+                                height: 35,
+                                width: fullHeight * 0.175,
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(roundedMD))),
+                          ))
+                    ]));
           }
         });
   }

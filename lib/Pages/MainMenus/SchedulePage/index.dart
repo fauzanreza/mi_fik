@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/Usecases/show_side_bar.dart';
@@ -7,6 +6,7 @@ import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Bars/left_bar.dart';
 import 'package:mi_fik/Components/Bars/right_bar.dart';
 import 'package:mi_fik/Components/Button/navigation.dart';
+import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Translators/service.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -28,6 +28,7 @@ class StateSchedulePage extends State<SchedulePage>
     with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   LangCtrl langctrl = Get.put(LangCtrl());
+  bool isSpeedDialOpen = false;
 
   getStartIndex(String slug) {
     if (slug == null) {
@@ -85,7 +86,10 @@ class StateSchedulePage extends State<SchedulePage>
 
     return WillPopScope(
         onWillPop: () {
-          return SystemNavigator.pop();
+          selectedIndex = 0;
+          Get.toNamed(CollectionRoute.bar, preventDuplicates: false);
+
+          return null;
         },
         child: Scaffold(
             key: scaffoldKey,
@@ -97,30 +101,18 @@ class StateSchedulePage extends State<SchedulePage>
                     EdgeInsets.only(top: fullHeight * 0.04), //Check this!!!
                 children: [
                   showSideBar(scaffoldKey, primaryColor),
-                  // Container(
-                  //   padding: const EdgeInsets.all(10),
-                  //   child: Row(
-                  //       crossAxisAlignment: CrossAxisAlignment.end,
-                  //       children: [
-                  //         getGreeting(getToday("part"), primaryColor),
-                  //         const Spacer(),
-                  //         getSubTitleMedium(
-                  //             getToday("date"), blackbg, TextAlign.start)
-                  //       ]),
-                  // ),
                   GetWeeklyNavigator(active: slctSchedule, action: navigateDay),
                   TabBar(
                       controller: tabController,
-                      labelColor: greybg,
+                      labelColor: shadowColor,
                       indicatorColor: primaryColor,
                       labelStyle: TextStyle(
-                          fontSize: textMD, fontWeight: FontWeight.w500),
+                          fontSize: textXMD, fontWeight: FontWeight.w500),
                       indicatorPadding:
                           EdgeInsets.symmetric(horizontal: fullWidth * 0.1),
                       tabs: List.generate(tabColSchedule.length, (index) {
                         return Tab(text: tabColSchedule[index]['title']);
                       })),
-
                   SizedBox(
                     height: fullHeight * 0.7,
                     child: TabBarView(
@@ -134,12 +126,14 @@ class StateSchedulePage extends State<SchedulePage>
             floatingActionButton: SpeedDial(
                 activeIcon: Icons.close,
                 icon: Icons.add,
-                iconTheme: IconThemeData(color: whitebg),
+                iconTheme: IconThemeData(color: whiteColor),
                 backgroundColor: primaryColor,
                 overlayColor: primaryColor,
                 overlayOpacity: 0.4,
+                onOpen: () => isSpeedDialOpen = true,
+                onClose: () => isSpeedDialOpen = false,
                 children: [
-                  getSpeeDialChild("New Task".tr, context, PostTask(),
+                  getSpeeDialChild("New Task".tr, context, const PostTask(),
                       Icons.note_add_outlined),
                   getSpeeDialChild("New Archive".tr, context,
                       const PostArchive(), Icons.folder)

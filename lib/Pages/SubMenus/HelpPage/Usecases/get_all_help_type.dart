@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 
 import 'package:mi_fik/Modules/APIs/HelpApi/Models/queries.dart';
 import 'package:mi_fik/Modules/APIs/HelpApi/Services/queries.dart';
@@ -31,9 +33,11 @@ class StateGetAllHelpType extends State<GetAllHelpType> {
         builder: (BuildContext context,
             AsyncSnapshot<List<HelpTypeModel>> snapshot) {
           if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                  "Something wrong with message: ${snapshot.error.toString()}"),
+            Get.dialog(const FailedDialog(
+                text: "Unknown error, please contact the admin",
+                type: "error"));
+            return const Center(
+              child: Text("Something wrong"),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
             List<HelpTypeModel> contents = snapshot.data;
@@ -58,7 +62,7 @@ class StateGetAllHelpType extends State<GetAllHelpType> {
         itemBuilder: (context, index) {
           return Card(
             shape: RoundedRectangleBorder(
-              side: BorderSide(color: mainbg, width: 1),
+              side: BorderSide(color: hoverBG, width: 1),
               borderRadius: BorderRadius.circular(6),
             ),
             child: ExpansionTile(
@@ -68,8 +72,10 @@ class StateGetAllHelpType extends State<GetAllHelpType> {
               expandedCrossAxisAlignment: CrossAxisAlignment.start,
               expandedAlignment: Alignment.topLeft,
               title: Text(ucFirst(contents[index].helpType),
-                  style: const TextStyle(fontWeight: FontWeight.w500)),
-              subtitle: Text('Lorem ipsum', style: TextStyle(color: greybg)),
+                  style:
+                      TextStyle(fontWeight: FontWeight.w500, fontSize: textMD)),
+              subtitle: Text('Lorem ipsum',
+                  style: TextStyle(color: shadowColor, fontSize: textMD)),
               children: [GetHelpByType(passType: contents[index].helpType)],
             ),
           );
