@@ -57,7 +57,8 @@ class StateSchedulePage extends State<SchedulePage>
           length: 2, vsync: this, initialIndex: getStartIndex(null));
       slctSchedule = slctSchedule.add(Duration(days: newValue));
     });
-    Get.to(() => const BottomBar());
+    Get.to(() => const BottomBar(),
+        preventDuplicates: false, transition: Transition.noTransition);
   }
 
   getArchiveView(slctd) {

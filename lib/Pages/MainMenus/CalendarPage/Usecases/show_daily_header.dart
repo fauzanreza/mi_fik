@@ -8,7 +8,7 @@ import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/MainMenus/CalendarPage/Usecases/show_daily_event.dart';
+import 'package:skeletons/skeletons.dart';
 
 class DayHeader extends StatefulWidget {
   const DayHeader({Key key, this.selectedDay, this.item}) : super(key: key);
@@ -30,6 +30,8 @@ class StateDayHeader extends State<DayHeader> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    double fullWidth = MediaQuery.of(context).size.width;
+
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
@@ -47,7 +49,14 @@ class StateDayHeader extends State<DayHeader> with TickerProviderStateMixin {
             List<ScheduleTotalModel> contents = snapshot.data;
             return _buildListView(contents);
           } else {
-            return const SizedBox();
+            return Container(
+                margin: EdgeInsets.symmetric(horizontal: spaceMD),
+                child: SkeletonLine(
+                  style: SkeletonLineStyle(
+                      height: 70,
+                      width: fullWidth,
+                      borderRadius: BorderRadius.circular(8)),
+                ));
           }
         },
       ),
@@ -82,7 +91,6 @@ class StateDayHeader extends State<DayHeader> with TickerProviderStateMixin {
                   style: TextStyle(
                     color: primaryColor,
                     fontSize: textLG,
-                    //fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
@@ -120,7 +128,6 @@ class StateDayHeader extends State<DayHeader> with TickerProviderStateMixin {
           ),
         ],
       ),
-      DayEvent(item: widget.item)
     ]);
   }
 }

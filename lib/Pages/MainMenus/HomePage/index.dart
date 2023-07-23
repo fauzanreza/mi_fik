@@ -159,9 +159,9 @@ class StateHomePage extends State<HomePage> {
                                 topRight: Radius.circular(roundedLG)),
                           ),
                           child: GetContent(
-                            item: contents,
-                            isEmpty: isEmpty,
-                          ),
+                              item: contents,
+                              isEmpty: isEmpty,
+                              isLoad: isLoading),
                         )
                       ]);
                     },

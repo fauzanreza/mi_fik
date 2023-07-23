@@ -90,7 +90,8 @@ class _GetFileAttachmentState extends State<GetFileAttachment> {
               item: Container(
                   alignment: Alignment.center,
                   margin: EdgeInsets.symmetric(vertical: spaceLG),
-                  child: getContentVideo(e['attach_url'], fullWidth, 220)));
+                  child: GetContentVideo(
+                      url: e['attach_url'], width: fullWidth, height: 220)));
         } else if (e['attach_type'] == "attachment_doc") {
           return GetAttachmentInput(
               data: e,

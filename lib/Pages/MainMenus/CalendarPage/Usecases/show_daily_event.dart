@@ -26,33 +26,55 @@ class StateDayEvent extends State<DayEvent> with TickerProviderStateMixin {
   String statusChipBefore = "";
 
   @override
+  void initState() {
+    super.initState();
+    commandService = ContentCommandsService();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    double fullHeight = MediaQuery.of(context).size.height;
+    double fullWidth = MediaQuery.of(context).size.width;
+
     int index = 1;
-    return Column(
-        children: widget.item.map<Widget>((e) {
-      if (index < widget.item.length + 1) {
-        if (index != widget.item.length) {
-          index++;
-          return _buildContentItem(e);
-        } else {
-          index++;
-          return Column(children: [
-            _buildContentItem(e),
-            Container(
-                margin: EdgeInsets.symmetric(vertical: spaceLG),
-                child: Text("No more item to show".tr,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: textMD)))
-          ]);
-        }
-      } else {
-        return Container(
-            margin: EdgeInsets.symmetric(vertical: spaceLG),
-            child: Text("No more item to show".tr,
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: textMD)));
-      }
-    }).toList());
+
+    if (isOffline) {
+      return SizedBox(
+          height: fullHeight * 0.7,
+          child: getMessageImageNoData(
+              "assets/icon/badnet.png", "Failed to load data".tr, fullWidth));
+    } else {
+      return widget.item.isNotEmpty
+          ? Column(
+              children: widget.item.map<Widget>((e) {
+              if (index < widget.item.length + 1) {
+                if (index != widget.item.length) {
+                  index++;
+                  return _buildContentItem(e);
+                } else {
+                  index++;
+                  return Column(children: [
+                    _buildContentItem(e),
+                    Container(
+                        margin: EdgeInsets.symmetric(vertical: spaceLG),
+                        child: Text("No more item to show".tr,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: textMD)))
+                  ]);
+                }
+              } else {
+                return Container(
+                    margin: EdgeInsets.symmetric(vertical: spaceLG),
+                    child: Text("No more item to show".tr,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: textMD)));
+              }
+            }).toList())
+          : SizedBox(
+              height: fullHeight * 0.7,
+              child: getMessageImageNoData("assets/icon/empty.png",
+                  "No event / task for today, have a good rest".tr, fullWidth));
+    }
   }
 
   Widget getDateChip(ds, de) {
@@ -110,96 +132,79 @@ class StateDayEvent extends State<DayEvent> with TickerProviderStateMixin {
   }
 
   Widget _buildContentItem(ScheduleModel contents) {
-    double fullHeight = MediaQuery.of(context).size.height;
+    // double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
-    if (contents != null) {
-      getChipHour(String ds, String de) {
-        String now = DateTime.parse(ds).hour.toString();
+    getChipHour(String ds, String de) {
+      String now = DateTime.parse(ds).hour.toString();
 
-        if (hourChipBefore == "" || hourChipBefore != now) {
-          hourChipBefore = now;
-          return getHourChipLine(ds, de, fullWidth);
-        } else {
-          return const SizedBox();
-        }
-      }
-
-      return Container(
-          padding: EdgeInsets.symmetric(horizontal: spaceMD),
-          child: Column(children: [
-            getDateChip(contents.dateStart, contents.dateEnd),
-            getChipHour(contents.dateStart, contents.dateEnd),
-            SizedBox(
-                width: fullWidth,
-                child: IntrinsicHeight(
-                    child: Stack(children: [
-                  GestureDetector(
-                      onTap: () async {
-                        if (contents.dataFrom == 2) {
-                          showDialog<String>(
-                              context: context,
-                              barrierColor: primaryColor.withOpacity(0.5),
-                              builder: (BuildContext context) {
-                                return StatefulBuilder(
-                                    builder: (context, setState) {
-                                  return AlertDialog(
-                                      insetPadding: EdgeInsets.all(spaceSM),
-                                      contentPadding: EdgeInsets.all(spaceSM),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(roundedLG))),
-                                      content: DetailTask(
-                                        data: contents,
-                                        isModeled: true,
-                                      ));
-                                });
-                              });
-                        } else {
-                          final connectivityResult =
-                              await (Connectivity().checkConnectivity());
-                          if (connectivityResult != ConnectivityResult.none) {
-                            commandService
-                                .postContentView(contents.slugName)
-                                .then((response) {
-                              setState(() => {});
-                              var status = response[0]['message'];
-                              var body = response[0]['body'];
-
-                              if (status == "success") {
-                                Get.to(() =>
-                                    DetailPage(passSlug: contents.slugName));
-                              } else {
-                                Get.dialog(FailedDialog(
-                                    text: body, type: "openevent"));
-                              }
-                            });
-                          } else {
-                            Get.to(
-                                () => DetailPage(passSlug: contents.slugName));
-                          }
-
-                          passSlugContent = contents.slugName;
-                        }
-                      },
-                      child: GetScheduleContainer(
-                          width: fullWidth,
-                          content: contents,
-                          isConverted: true))
-                ])))
-          ]));
-    } else {
-      if (isOffline) {
-        return SizedBox(
-            height: fullHeight * 0.7,
-            child: getMessageImageNoData(
-                "assets/icon/badnet.png", "Failed to load data".tr, fullWidth));
+      if (hourChipBefore == "" || hourChipBefore != now) {
+        hourChipBefore = now;
+        return getHourChipLine(ds, de, fullWidth);
       } else {
-        return SizedBox(
-            height: fullHeight * 0.7,
-            child: getMessageImageNoData("assets/icon/empty.png",
-                "No event / task for today, have a good rest".tr, fullWidth));
+        return const SizedBox();
       }
     }
+
+    return Container(
+        padding: EdgeInsets.symmetric(horizontal: spaceMD),
+        child: Column(children: [
+          getDateChip(contents.dateStart, contents.dateEnd),
+          getChipHour(contents.dateStart, contents.dateEnd),
+          SizedBox(
+              width: fullWidth,
+              child: IntrinsicHeight(
+                  child: Stack(children: [
+                GestureDetector(
+                    onTap: () async {
+                      if (contents.dataFrom == 2) {
+                        showDialog<String>(
+                            context: context,
+                            barrierColor: primaryColor.withOpacity(0.5),
+                            builder: (BuildContext context) {
+                              return StatefulBuilder(
+                                  builder: (context, setState) {
+                                return AlertDialog(
+                                    insetPadding: EdgeInsets.all(spaceSM),
+                                    contentPadding: EdgeInsets.all(spaceSM),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(roundedLG))),
+                                    content: DetailTask(
+                                      data: contents,
+                                      isModeled: true,
+                                    ));
+                              });
+                            });
+                      } else {
+                        final connectivityResult =
+                            await (Connectivity().checkConnectivity());
+                        if (connectivityResult != ConnectivityResult.none) {
+                          commandService
+                              .postContentView(contents.slugName)
+                              .then((response) {
+                            setState(() => {});
+                            var status = response[0]['message'];
+                            var body = response[0]['body'];
+
+                            if (status == "success") {
+                              Get.to(() =>
+                                  DetailPage(passSlug: contents.slugName));
+                            } else {
+                              Get.dialog(
+                                  FailedDialog(text: body, type: "openevent"));
+                            }
+                          });
+                        } else {
+                          Get.to(() => DetailPage(passSlug: contents.slugName));
+                        }
+
+                        passSlugContent = contents.slugName;
+                      }
+                    },
+                    child: GetScheduleContainer(
+                        width: fullWidth, content: contents, isConverted: true))
+              ])))
+        ]));
   }
 }

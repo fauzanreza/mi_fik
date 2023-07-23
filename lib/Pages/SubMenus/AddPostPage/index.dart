@@ -37,6 +37,7 @@ class StateAddPost extends State<AddPost> {
   String eventTitleMsg = '';
   String eventDescMsg = '';
   String allMsg = '';
+  bool isLoadPost = false;
 
   ContentCommandsService apiCommand;
 
@@ -351,115 +352,127 @@ class StateAddPost extends State<AddPost> {
                   height: btnHeightMD,
                   child: ElevatedButton(
                     onPressed: () async {
-                      bool isValid = true;
-                      eventPeriodMsg = '';
-                      eventTagMsg = '';
-                      eventDescMsg = '';
+                      if (isLoadPost == false) {
+                        setState(() {
+                          isLoadPost = true;
+                        });
+                        bool isValid = true;
+                        eventPeriodMsg = '';
+                        eventTagMsg = '';
+                        eventDescMsg = '';
 
-                      if (dateStartCtrl == null || dateEndCtrl == null) {
-                        isValid = false;
-                        eventPeriodMsg = "date period must be selected".tr;
-                        Get.dialog(FailedDialog(
-                            text: eventPeriodMsg, type: "addevent"));
-                      } else {
-                        if (dateStartCtrl.isAfter(dateEndCtrl)) {
+                        if (dateStartCtrl == null || dateEndCtrl == null) {
                           isValid = false;
-                          eventPeriodMsg = invalidDateMsg;
+                          eventPeriodMsg = "date period must be selected".tr;
                           Get.dialog(FailedDialog(
-                              text: invalidDateMsg, type: "addevent"));
-                        }
-                      }
-
-                      if (selectedTag == null || selectedTag.isEmpty) {
-                        isValid = false;
-                        eventTagMsg = "Tag must be selected".tr;
-                        Get.dialog(
-                            FailedDialog(text: eventTagMsg, type: "addevent"));
-                      }
-                      if (contentTitleCtrl.text.trim() == null ||
-                          contentTitleCtrl.text.trim() == '') {
-                        isValid = false;
-                        eventTitleMsg = "field can't be empty".tr;
-                        Get.dialog(FailedDialog(
-                            text: "field can't be empty".tr, type: "addevent"));
-                      }
-
-                      if (isValid) {
-                        ContentModel content = ContentModel(
-                          userId: passIdUser,
-                          contentTitle: contentTitleCtrl.text.trim(),
-                          contentDesc: contentDescCtrl.text.trim(),
-                          contentTag: validateNullJSON(selectedTag),
-                          contentLoc: getContentLocObj(
-                              locDetailCtrl.text, locCoordinateCtrl),
-                          contentAttach: validateNullJSON(listAttachment),
-                          contentImage: validateNull(contentAttImage),
-                          reminder: slctReminderType,
-                          dateStart: getDBDateFormat("date", dateStartCtrl),
-                          dateEnd: getDBDateFormat("date", dateEndCtrl),
-                          timeStart: getDBDateFormat(
-                              "time",
-                              dateStartCtrl.add(
-                                  Duration(hours: getUTCHourOffset() * -1))),
-                          timeEnd: getDBDateFormat(
-                              "time",
-                              dateEndCtrl.add(
-                                  Duration(hours: getUTCHourOffset() * -1))),
-                          isDraft: 0,
-                        );
-                        apiCommand.postContent(content).then((response) {
-                          setState(() => {});
-                          var status = response[0]['message'];
-                          var body = response[0]['body'];
-
-                          if (status == "success") {
-                            selectedTag.clear();
-                            locDetailCtrl.clear();
-                            locCoordinateCtrl = null;
-                            contentAttImage = null;
-                            listAttachment = [];
-                            Get.toNamed(CollectionRoute.bar,
-                                preventDuplicates: false);
-
-                            Get.dialog(SuccessDialog(text: body));
-                          } else {
-                            if (body is! String) {
-                              if (body['content_title'] != null) {
-                                eventTitleMsg = body['content_title'][0];
-
-                                if (body['content_title'].length > 1) {
-                                  for (String e in body['content_title']) {
-                                    eventTitleMsg += e;
-                                  }
-                                }
-                              }
-
-                              if (body['content_desc'] != null) {
-                                eventDescMsg = body['content_desc'][0];
-
-                                if (body['content_desc'].length > 1) {
-                                  for (String e in body['content_desc']) {
-                                    eventDescMsg += e;
-                                  }
-                                }
-                              }
-                            } else {
-                              allMsg = body;
-                            }
-                            Get.dialog(
-                                FailedDialog(text: body, type: "addevent"));
+                              text: eventPeriodMsg, type: "addevent"));
+                        } else {
+                          if (dateStartCtrl.isAfter(dateEndCtrl)) {
+                            isValid = false;
+                            eventPeriodMsg = invalidDateMsg;
+                            Get.dialog(FailedDialog(
+                                text: invalidDateMsg, type: "addevent"));
                           }
+                        }
+
+                        if (selectedTag == null || selectedTag.isEmpty) {
+                          isValid = false;
+                          eventTagMsg = "Tag must be selected".tr;
+                          Get.dialog(FailedDialog(
+                              text: eventTagMsg, type: "addevent"));
+                        }
+                        if (contentTitleCtrl.text.trim() == null ||
+                            contentTitleCtrl.text.trim() == '') {
+                          isValid = false;
+                          eventTitleMsg = "field can't be empty".tr;
+                          Get.dialog(FailedDialog(
+                              text: "field can't be empty".tr,
+                              type: "addevent"));
+                        }
+
+                        if (isValid) {
+                          ContentModel content = ContentModel(
+                            userId: passIdUser,
+                            contentTitle: contentTitleCtrl.text.trim(),
+                            contentDesc: contentDescCtrl.text.trim(),
+                            contentTag: validateNullJSON(selectedTag),
+                            contentLoc: getContentLocObj(
+                                locDetailCtrl.text, locCoordinateCtrl),
+                            contentAttach: validateNullJSON(listAttachment),
+                            contentImage: validateNull(contentAttImage),
+                            reminder: slctReminderType,
+                            dateStart: getDBDateFormat("date", dateStartCtrl),
+                            dateEnd: getDBDateFormat("date", dateEndCtrl),
+                            timeStart: getDBDateFormat(
+                                "time",
+                                dateStartCtrl.add(
+                                    Duration(hours: getUTCHourOffset() * -1))),
+                            timeEnd: getDBDateFormat(
+                                "time",
+                                dateEndCtrl.add(
+                                    Duration(hours: getUTCHourOffset() * -1))),
+                            isDraft: 0,
+                          );
+                          apiCommand.postContent(content).then((response) {
+                            setState(() => {});
+                            var status = response[0]['message'];
+                            var body = response[0]['body'];
+
+                            if (status == "success") {
+                              selectedTag.clear();
+                              locDetailCtrl.clear();
+                              locCoordinateCtrl = null;
+                              contentAttImage = null;
+                              listAttachment = [];
+                              Get.toNamed(CollectionRoute.bar,
+                                  preventDuplicates: false);
+
+                              Get.dialog(SuccessDialog(text: body));
+                            } else {
+                              if (body is! String) {
+                                if (body['content_title'] != null) {
+                                  eventTitleMsg = body['content_title'][0];
+
+                                  if (body['content_title'].length > 1) {
+                                    for (String e in body['content_title']) {
+                                      eventTitleMsg += e;
+                                    }
+                                  }
+                                }
+
+                                if (body['content_desc'] != null) {
+                                  eventDescMsg = body['content_desc'][0];
+
+                                  if (body['content_desc'].length > 1) {
+                                    for (String e in body['content_desc']) {
+                                      eventDescMsg += e;
+                                    }
+                                  }
+                                }
+                              } else {
+                                allMsg = body;
+                              }
+                              Get.dialog(
+                                  FailedDialog(text: body, type: "addevent"));
+                            }
+                          });
+                        }
+
+                        setState(() {
+                          isLoadPost = false;
                         });
                       }
-
-                      setState(() {});
                     },
                     style: ButtonStyle(
                       backgroundColor:
                           MaterialStatePropertyAll<Color>(successBG),
                     ),
-                    child: Text('Publish Event'.tr,
-                        style: TextStyle(fontSize: textXMD)),
+                    child: isLoadPost == false
+                        ? Text('Publish Event'.tr,
+                            style: TextStyle(fontSize: textXMD))
+                        : Center(
+                            child:
+                                CircularProgressIndicator(color: whiteColor)),
                   ))
             ],
           ),

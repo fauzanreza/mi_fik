@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
 

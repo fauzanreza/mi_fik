@@ -15,6 +15,7 @@ List<Map<String, dynamic>> listArchiveCheck = [];
 TabController tabController;
 bool isOffline = false;
 FlashMode flashMode = FlashMode.off;
+bool isShownLostSessPop = false;
 
 //Schedule Page
 String archiveNameMsg = "";

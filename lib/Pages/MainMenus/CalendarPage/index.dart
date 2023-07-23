@@ -3,13 +3,14 @@ import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/Usecases/show_side_bar.dart';
 import 'package:mi_fik/Components/Bars/left_bar.dart';
 import 'package:mi_fik/Components/Bars/right_bar.dart';
+import 'package:mi_fik/Components/Skeletons/content_2.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
-import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/query_contents.dart';
 import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/MainMenus/CalendarPage/Usecases/show_calendar.dart';
+import 'package:mi_fik/Pages/MainMenus/CalendarPage/Usecases/show_daily_event.dart';
 import 'package:mi_fik/Pages/MainMenus/CalendarPage/Usecases/show_daily_header.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -27,7 +28,6 @@ class StateCalendarPageState extends State<CalendarPage> {
   ScrollController scrollCtrl;
 
   ContentQueriesService queryService;
-  ContentCommandsService commandService;
   CalendarFormat format = CalendarFormat.month;
   DateTime selectedDay = slctCalendar;
   DateTime focusedDay = slctCalendar;
@@ -44,6 +44,7 @@ class StateCalendarPageState extends State<CalendarPage> {
         focusedDay = newFocusDay;
         slctCalendar = newSelectDay;
         selectedIndex = 2;
+        refreshData();
       },
     );
   }
@@ -66,7 +67,6 @@ class StateCalendarPageState extends State<CalendarPage> {
   void initState() {
     super.initState();
     queryService = ContentQueriesService();
-    commandService = ContentCommandsService();
     scrollCtrl = ScrollController()
       ..addListener(() {
         if (scrollCtrl.offset == scrollCtrl.position.maxScrollExtent) {
@@ -84,7 +84,7 @@ class StateCalendarPageState extends State<CalendarPage> {
         });
 
         List<ScheduleModel> items =
-            await queryService.getSchedule(slctSchedule, page);
+            await queryService.getSchedule(selectedDay, page);
 
         if (items != null) {
           contents.addAll(items);
@@ -144,6 +144,9 @@ class StateCalendarPageState extends State<CalendarPage> {
                           setActionformat: updateFormat,
                         ),
                         DayHeader(selectedDay: selectedDay, item: contents),
+                        isLoading == false
+                            ? DayEvent(item: contents)
+                            : const ContentSkeleton2()
                       ],
                     );
                   }))),

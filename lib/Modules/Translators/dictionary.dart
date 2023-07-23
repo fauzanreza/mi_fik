@@ -193,7 +193,10 @@ class Dictionaries extends Translations {
           "The date end must after date start":
               "The date end must after date start",
           "No description provided": "No description provided",
-          "You": "You"
+          "You": "You",
+          "Please register your account first":
+              "Please register your account first",
+          "Publish Task": "Publish Task"
         },
         'id_ID': {
           'Good Morning': 'Selamat Pagi',
@@ -385,7 +388,10 @@ class Dictionaries extends Translations {
           "The date end must after date start":
               "Tanggal berakhir harus sebelum tanggal mulai",
           "No description provided": "Tidak ada deskripsi",
-          "You": "Anda"
+          "You": "Anda",
+          "Please register your account first":
+              "Daftarkan akun Anda terlebih dahulu",
+          "Publish Task": "Simpan Tugas"
         },
       };
 }

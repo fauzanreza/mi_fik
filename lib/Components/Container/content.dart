@@ -94,7 +94,10 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
                         child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              getViewWidget(widget.content.totalViews),
+                              getViewWidget(
+                                  widget.content.totalViews,
+                                  widget.content.acUsername,
+                                  widget.content.ucUsername),
                               const Spacer(),
                               getEventStatus(widget.content.dateStart,
                                   widget.content.dateEnd)
@@ -149,8 +152,6 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
                 getEventDate(widget.content.dateStart, widget.content.dateEnd)
               ]),
             ),
-
-            //Open content w/ button.
             Container(
                 transform: Matrix4.translationValues(0.0, 5.0, 0.0),
                 padding: EdgeInsets.zero,
@@ -193,7 +194,7 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
                     backgroundColor:
                         MaterialStatePropertyAll<Color>(primaryColor),
                   ),
-                  child: const Text('Detail'),
+                  child: Text('Detail', style: TextStyle(fontSize: textMD)),
                 )),
           ],
         ));
@@ -317,7 +318,6 @@ class GetScheduleContainer extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Expanded(
-                      // constraints: BoxConstraints(maxWidth: fullWidth * 0.6),
                       child: Text(
                     ucAll(content.contentTitle),
                     overflow: TextOverflow.ellipsis,

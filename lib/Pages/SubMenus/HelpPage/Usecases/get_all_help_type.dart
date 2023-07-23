@@ -76,8 +76,6 @@ class StateGetAllHelpType extends State<GetAllHelpType> {
                 title: Text(ucFirst(contents[index].helpType),
                     style: TextStyle(
                         fontWeight: FontWeight.w500, fontSize: textMD)),
-                subtitle: Text('Lorem ipsum',
-                    style: TextStyle(color: shadowColor, fontSize: textMD)),
                 children: [GetHelpByType(passType: contents[index].helpType)],
               ),
             );

@@ -8,6 +8,7 @@ import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Modules/Firebases/Storages/validator.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:skeletons/skeletons.dart';
 // ignore: depend_on_referenced_packages
@@ -54,17 +55,21 @@ Widget getUploadDateWidget(DateTime date) {
       ));
 }
 
-Widget getViewWidget(total) {
-  return RichText(
-    text: TextSpan(
-      children: [
-        WidgetSpan(
-          child: Icon(Icons.remove_red_eye, size: 14, color: whiteColor),
-        ),
-        TextSpan(text: " $total", style: TextStyle(color: whiteColor)),
-      ],
-    ),
-  );
+Widget getViewWidget(total, u1, u2) {
+  if (u1 == usernameKey || u2 == usernameKey) {
+    return RichText(
+      text: TextSpan(
+        children: [
+          WidgetSpan(
+            child: Icon(Icons.remove_red_eye, size: 14, color: whiteColor),
+          ),
+          TextSpan(text: " $total", style: TextStyle(color: whiteColor)),
+        ],
+      ),
+    );
+  } else {
+    return const SizedBox();
+  }
 }
 
 getImageHeader(url) {
@@ -140,63 +145,104 @@ Widget getContentImageHeader(
           : getChild());
 }
 
-Widget getContentVideo(String url, double width, double heigth) {
-  return FutureBuilder<bool>(
-    future: isLoadable(url),
-    builder: (context, snapshot) {
-      if (snapshot.connectionState == ConnectionState.waiting) {
-        return SkeletonAvatar(
-          style: SkeletonAvatarStyle(
-              width: width,
-              height: heigth,
-              borderRadius: BorderRadius.all(Radius.circular(roundedSM))),
-        );
-      } else if (snapshot.hasData && snapshot.data == true) {
-        return AspectRatio(
-            aspectRatio: 16 / 9,
-            child: Chewie(
-              controller: ChewieController(
-                  autoInitialize: true,
-                  aspectRatio: 16 / 9,
-                  zoomAndPan: true,
-                  fullScreenByDefault: false,
-                  materialProgressColors: ChewieProgressColors(
-                      playedColor: primaryColor,
-                      handleColor: infoBG,
-                      bufferedColor: primaryLightBG),
-                  videoPlayerController: VideoPlayerController.network(
-                    url.toString(),
-                  ),
-                  errorBuilder: (context, errorMessage) {
-                    return Center(
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                          ClipRRect(
-                            child: Image.asset('assets/icon/Failed.png',
-                                height: 75),
-                          ),
-                          Text(
-                            errorMessage,
-                            style:
-                                TextStyle(color: whiteColor, fontSize: textMD),
-                          )
-                        ]));
-                  },
-                  autoPlay: false,
-                  looping: false,
-                  allowFullScreen: false),
-            ));
-      } else {
-        return Container(
-            alignment: Alignment.center,
-            height: heigth,
-            child: getMessageImageNoData(
-                "assets/icon/Failed.png", "Failed to load video".tr, heigth));
-      }
-    },
-  );
+class GetContentVideo extends StatefulWidget {
+  const GetContentVideo({Key key, this.url, this.width, this.height})
+      : super(key: key);
+  final String url;
+  final double width;
+  final double height;
+
+  @override
+  StateGetContentVideo createState() => StateGetContentVideo();
+}
+
+class StateGetContentVideo extends State<GetContentVideo> {
+  VideoPlayerController controller;
+  bool initialized = false;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = VideoPlayerController.network(widget.url.toString())
+      ..initialize().then((_) {
+        setState(() {
+          initialized = true;
+        });
+      });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return initialized
+        ? FutureBuilder<bool>(
+            future: isLoadable(widget.url.toString()),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return SkeletonAvatar(
+                  style: SkeletonAvatarStyle(
+                      width: widget.width,
+                      height: widget.height,
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(roundedSM))),
+                );
+              } else if (snapshot.hasData && snapshot.data == true) {
+                return AspectRatio(
+                    aspectRatio: controller.value.aspectRatio,
+                    child: Chewie(
+                      controller: ChewieController(
+                          autoInitialize: true,
+                          aspectRatio: controller.value.aspectRatio,
+                          zoomAndPan: true,
+                          fullScreenByDefault: false,
+                          materialProgressColors: ChewieProgressColors(
+                              playedColor: primaryColor,
+                              handleColor: infoBG,
+                              bufferedColor: primaryLightBG),
+                          videoPlayerController: controller,
+                          errorBuilder: (context, errorMessage) {
+                            return Center(
+                                child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                  ClipRRect(
+                                    child: Image.asset('assets/icon/Failed.png',
+                                        height: 75),
+                                  ),
+                                  Text(
+                                    errorMessage,
+                                    style: TextStyle(
+                                        color: whiteColor, fontSize: textMD),
+                                  )
+                                ]));
+                          },
+                          autoPlay: false,
+                          looping: false,
+                          allowFullScreen: false),
+                    ));
+              } else {
+                return Container(
+                    alignment: Alignment.center,
+                    height: widget.height,
+                    child: getMessageImageNoData("assets/icon/Failed.png",
+                        "Failed to load video".tr, widget.height));
+              }
+            },
+          )
+        : SkeletonAvatar(
+            style: SkeletonAvatarStyle(
+                width: widget.width,
+                height: widget.height,
+                borderRadius: BorderRadius.all(Radius.circular(roundedSM))),
+          );
+  }
 }
 
 getImageUser(url) {

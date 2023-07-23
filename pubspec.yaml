@@ -75,7 +75,7 @@ dependencies:
 
   # Firebase.
   firebase_core: ^1.19.1
-  cloud_firestore: ^3.2.1 
+  #cloud_firestore: ^3.2.1 
   firebase_storage: ^10.3.4
   shared_preferences: ^2.1.0
   flutter_widget_from_html: ^0.10.0
@@ -131,7 +131,6 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   assets:
-    - assets/content/
     - assets/icon/
     - assets/json/
     - assets/sound/

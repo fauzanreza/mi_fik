@@ -130,84 +130,88 @@ class StatePostLogin extends State<PostLogin> {
                 height: 45,
                 child: ElevatedButton(
                   onPressed: () async {
-                    setState(() {
-                      isLoadLogin = true;
-                    });
-                    String token = await FirebaseMessaging.instance.getToken();
-                    usernameMsg = "";
-                    passMsg = "";
-                    allMsg = "";
-
-                    LoginModel data = LoginModel(
-                      username: usernameCtrl.text.trim(),
-                      password: passCtrl.text.trim(),
-                    );
-
-                    Map<String, dynamic> valid =
-                        AuthValidator.validateLogin(data);
-                    if (valid['status']) {
-                      apiService.postLogin(data, false).then((response) {
-                        setState(() => {});
-                        var status = response[0]['message'];
-                        var body = response[0]['body'];
-                        var acc = response[0]['access'];
-
-                        if (status == "success") {
-                          usernameKey = data.username;
-                          if (acc) {
-                            setState(() {
-                              isLoadLogin = false;
-                            });
-                            Get.to(() => const BottomBar());
-                            userService.putFirebase(token);
-                          } else {
-                            usernameAvaiabilityCheck = body['username'];
-                            emailAvaiabilityCheck = body['email'];
-                            passRegisCtrl = body['password'];
-                            fnameRegisCtrl = body['first_name'];
-                            lnameRegisCtrl = body['last_name'];
-                            validRegisCtrl = int.parse(body['batch_year']);
-
-                            Get.to(() => const RegisterPage(
-                                  isLogged: true,
-                                ));
-                            userService.putFirebase(token);
-                          }
-                        } else {
-                          Get.dialog(FailedDialog(text: body, type: "login"));
-
-                          if (body is! String) {
-                            if (body['username'] != null) {
-                              usernameMsg = body['username'][0];
-
-                              if (body['username'].length > 1) {
-                                for (String e in body['username']) {
-                                  usernameMsg += e;
-                                }
-                              }
-                            }
-
-                            if (body['password'] != null) {
-                              passMsg = body['password'][0];
-
-                              if (body['password'].length > 1) {
-                                for (String e in body['password']) {
-                                  passMsg += e;
-                                }
-                              }
-                            }
-                          } else {
-                            allMsg = body;
-                          }
-                        }
+                    if (isLoadLogin == false) {
+                      setState(() {
+                        isLoadLogin = true;
                       });
-                    } else {
-                      Get.dialog(
-                          FailedDialog(text: valid['message'], type: "login"));
+                      String token =
+                          await FirebaseMessaging.instance.getToken();
+                      usernameMsg = "";
+                      passMsg = "";
+                      allMsg = "";
+
+                      LoginModel data = LoginModel(
+                        username: usernameCtrl.text.trim(),
+                        password: passCtrl.text.trim(),
+                      );
+
+                      Map<String, dynamic> valid =
+                          AuthValidator.validateLogin(data);
+                      if (valid['status']) {
+                        apiService.postLogin(data, false).then((response) {
+                          setState(() => {});
+                          var status = response[0]['message'];
+                          var body = response[0]['body'];
+                          var acc = response[0]['access'];
+
+                          if (status == "success") {
+                            usernameKey = data.username;
+                            if (acc) {
+                              setState(() {
+                                isLoadLogin = false;
+                                isShownLostSessPop = false;
+                              });
+                              Get.to(() => const BottomBar());
+                              userService.putFirebase(token);
+                            } else {
+                              usernameAvaiabilityCheck = body['username'];
+                              emailAvaiabilityCheck = body['email'];
+                              passRegisCtrl = body['password'];
+                              fnameRegisCtrl = body['first_name'];
+                              lnameRegisCtrl = body['last_name'];
+                              validRegisCtrl = int.parse(body['batch_year']);
+
+                              Get.to(() => const RegisterPage(
+                                    isLogged: true,
+                                  ));
+                              userService.putFirebase(token);
+                            }
+                          } else {
+                            Get.dialog(FailedDialog(text: body, type: "login"));
+
+                            if (body is! String) {
+                              if (body['username'] != null) {
+                                usernameMsg = body['username'][0];
+
+                                if (body['username'].length > 1) {
+                                  for (String e in body['username']) {
+                                    usernameMsg += e;
+                                  }
+                                }
+                              }
+
+                              if (body['password'] != null) {
+                                passMsg = body['password'][0];
+
+                                if (body['password'].length > 1) {
+                                  for (String e in body['password']) {
+                                    passMsg += e;
+                                  }
+                                }
+                              }
+                            } else {
+                              allMsg = body;
+                            }
+                          }
+                        });
+                      } else {
+                        Get.dialog(FailedDialog(
+                            text: valid['message'], type: "login"));
+                      }
+                      setState(() {
+                        isLoadLogin = false;
+                      });
                     }
-                    setState(() {
-                      isLoadLogin = false;
-                    });
                   },
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(

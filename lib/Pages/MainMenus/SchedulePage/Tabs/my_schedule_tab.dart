@@ -86,31 +86,49 @@ class StateMySchedulePage extends State<MySchedulePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      key: _refreshIndicatorKey,
-      maintainBottomViewPadding: false,
-      child: RefreshIndicator(
-        onRefresh: refreshData,
-        child: ListView.builder(
-          padding: EdgeInsets.fromLTRB(spaceMD, 0, spaceMD, spaceXMD),
-          itemCount: contents.length + 1,
-          controller: scrollCtrl,
-          itemBuilder: (BuildContext context, int index) {
-            if (index < contents.length) {
-              return _buildListView(contents[index]);
-            } else if (isLoading) {
-              return const ContentSkeleton2();
-            } else {
-              return Container(
+    double fullHeight = MediaQuery.of(context).size.height;
+    double fullWidth = MediaQuery.of(context).size.width;
+
+    if (isOffline) {
+      return SizedBox(
+          height: fullHeight * 0.7,
+          child: getMessageImageNoData(
+              "assets/icon/badnet.png", "Failed to load data".tr, fullWidth));
+    } else {
+      return SafeArea(
+        key: _refreshIndicatorKey,
+        maintainBottomViewPadding: false,
+        child: RefreshIndicator(
+          onRefresh: refreshData,
+          child: contents.isNotEmpty
+              ? ListView.builder(
+                  padding: EdgeInsets.fromLTRB(spaceMD, 0, spaceMD, spaceXMD),
+                  itemCount: contents.length + 1,
+                  controller: scrollCtrl,
+                  itemBuilder: (BuildContext context, int index) {
+                    if (index < contents.length) {
+                      return _buildListView(contents[index]);
+                    } else if (isLoading) {
+                      return const ContentSkeleton2();
+                    } else {
+                      return Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.symmetric(vertical: spaceLG),
+                          child: Text("No more item to show".tr,
+                              style: TextStyle(fontSize: textSM)));
+                    }
+                  },
+                )
+              : Container(
                   alignment: Alignment.center,
-                  padding: EdgeInsets.symmetric(vertical: spaceLG),
-                  child: Text("No more item to show".tr,
-                      style: TextStyle(fontSize: textSM)));
-            }
-          },
+                  height: fullHeight * 0.7,
+                  child: getMessageImageNoData(
+                      "assets/icon/empty.png",
+                      "No event / task for today, have a good rest".tr,
+                      fullWidth)),
         ),
-      ),
-    );
+      );
+    }
   }
 
   @override

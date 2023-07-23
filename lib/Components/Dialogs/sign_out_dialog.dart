@@ -58,22 +58,22 @@ class StateSignOutDialog extends State<SignOutDialog> {
             bool keyExists = await keyExist('token_key');
 
             if (keyExists) {
-              apiService.getSignOut().then((response) {
+              await apiService.getSignOut().then((response) async {
                 var body = response[0]['body'];
                 var code = response[0]['code'];
 
                 if (body == "Logout success" && code == 200) {
-                  getDestroyTrace(true);
+                  await getDestroyTrace(true);
                   Get.dialog(SuccessDialog(text: body));
                 } else if (code == 401) {
-                  getDestroyTrace(true);
+                  await getDestroyTrace(true);
                   Get.dialog(SuccessDialog(text: "Sign out success".tr));
                 } else {
                   Get.dialog(FailedDialog(text: body, type: "signout"));
                 }
               });
             } else {
-              getDestroyTrace(true);
+              await getDestroyTrace(true);
               Get.dialog(SuccessDialog(text: "Sign out success".tr));
             }
           },
