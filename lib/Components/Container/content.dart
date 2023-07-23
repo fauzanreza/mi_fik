@@ -37,7 +37,7 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
       username = "@$u1";
     } else if (u2 != null) {
       if (u2 == usernameKey) {
-        username = "You";
+        username = "You".tr;
       } else {
         username = "@$u2";
       }
@@ -94,12 +94,13 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
                         child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              getViewWidget(widget.content.totalViews),
-                              getEventStatus(widget.content.dateStart,
-                                  widget.content.dateEnd),
+                              getViewWidget(
+                                  widget.content.totalViews,
+                                  widget.content.acUsername,
+                                  widget.content.ucUsername),
                               const Spacer(),
-                              getUploadDateWidget(
-                                  DateTime.parse(widget.content.createdAt))
+                              getEventStatus(widget.content.dateStart,
+                                  widget.content.dateEnd)
                             ])),
                   ],
                 )),
@@ -145,16 +146,12 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
             Container(
               padding: EdgeInsets.symmetric(horizontal: spaceSM),
               margin: EdgeInsets.symmetric(vertical: spaceSM),
-              child: Wrap(
-                  runSpacing: -spaceWrap,
-                  spacing: spaceWrap,
-                  children: [
-                    getContentLoc(widget.content.contentLoc),
-                    getTotalTag(widget.content.contentTag)
-                  ]),
+              child: Wrap(runSpacing: spaceWrap, spacing: spaceWrap, children: [
+                getContentLoc(widget.content.contentLoc),
+                getTotalTag(widget.content.contentTag),
+                getEventDate(widget.content.dateStart, widget.content.dateEnd)
+              ]),
             ),
-
-            //Open content w/ button.
             Container(
                 transform: Matrix4.translationValues(0.0, 5.0, 0.0),
                 padding: EdgeInsets.zero,
@@ -197,7 +194,7 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
                     backgroundColor:
                         MaterialStatePropertyAll<Color>(primaryColor),
                   ),
-                  child: const Text('Detail'),
+                  child: Text('Detail', style: TextStyle(fontSize: textMD)),
                 )),
           ],
         ));
@@ -262,6 +259,29 @@ class GetScheduleContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     //double fullWidth = MediaQuery.of(context).size.width;
 
+    Widget getTimeEnd(DateTime dateEnd) {
+      var dEnd = dateEnd;
+      var now = DateTime.now();
+
+      DateTime checkEnd = DateTime(dEnd.year, dEnd.month, dEnd.day);
+      DateTime today = DateTime(now.year, now.month, now.day);
+
+      if (checkEnd == today) {
+        return Container(
+            margin: EdgeInsets.only(top: spaceMini),
+            padding:
+                EdgeInsets.symmetric(vertical: spaceMini, horizontal: spaceSM),
+            decoration: BoxDecoration(
+                border: Border.all(color: whiteColor, width: 1.25),
+                borderRadius: BorderRadius.all(Radius.circular(roundedSM)),
+                color: warningBG),
+            child: Text("${"End at".tr} ${DateFormat('HH:mm').format(dateEnd)}",
+                style: TextStyle(color: whiteColor, fontSize: textSM)));
+      } else {
+        return const SizedBox();
+      }
+    }
+
     return Container(
       width: width * 0.82,
       padding: EdgeInsets.symmetric(horizontal: spaceSM, vertical: spaceSM),
@@ -298,7 +318,6 @@ class GetScheduleContainer extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Expanded(
-                      // constraints: BoxConstraints(maxWidth: fullWidth * 0.6),
                       child: Text(
                     ucAll(content.contentTitle),
                     overflow: TextOverflow.ellipsis,
@@ -317,6 +336,7 @@ class GetScheduleContainer extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   )),
+                  SizedBox(width: spaceSM),
                   Text(
                     DateFormat("HH:mm").format(isConverted == true
                         ? DateTime.parse(content.dateStart)
@@ -338,6 +358,11 @@ class GetScheduleContainer extends StatelessWidget {
                   ),
                 ],
               ),
+              getTimeEnd(isConverted == true
+                  ? DateTime.parse(content.dateEnd)
+                  : DateTime.parse(content.dateEnd)
+                      .add(Duration(hours: getUTCHourOffset()))),
+              SizedBox(height: spaceMD),
               getOngoingDesc(
                   isConverted == true
                       ? DateTime.parse(content.dateStart)
@@ -377,8 +402,8 @@ class GetScheduleContainer extends StatelessWidget {
   }
 }
 
-class GetAttachmentContainer extends StatefulWidget {
-  const GetAttachmentContainer(
+class GetAttachmentInput extends StatefulWidget {
+  const GetAttachmentInput(
       {Key key,
       this.data,
       this.item,
@@ -395,10 +420,10 @@ class GetAttachmentContainer extends StatefulWidget {
   final VoidCallback action;
 
   @override
-  StateGetAttachmentContainer createState() => StateGetAttachmentContainer();
+  StateGetAttachmentInput createState() => StateGetAttachmentInput();
 }
 
-class StateGetAttachmentContainer extends State<GetAttachmentContainer> {
+class StateGetAttachmentInput extends State<GetAttachmentInput> {
   var attachmentNameCtrl = TextEditingController();
   var attachmentURLCtrl = TextEditingController();
 

@@ -1,22 +1,24 @@
+import 'package:get/get.dart';
 import 'package:mi_fik/Modules/APIs/AuthApi/Models/commands.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
 
 class AuthValidator {
   static Map<String, dynamic> validateLogin(LoginModel data) {
     if (data.username.isEmpty) {
-      return {"status": false, "message": "Username can't be empty"};
+      return {"status": false, "message": "Username $emptyInputMsg"};
     }
     if (data.password.isEmpty) {
-      return {"status": false, "message": "Password can't be empty"};
+      return {"status": false, "message": "Password $emptyInputMsg"};
     }
-    return {"status": true, "message": "Validation success"};
+    return {"status": true, "message": "Validation success".tr};
   }
 
   static Map<String, dynamic> validateAccount(dynamic data) {
     if (data.username.isEmpty) {
       return {
         "status": false,
-        "message": "Username can't be empty",
+        "message": "Username $emptyInputMsg",
         "loc": "username"
       };
     }
@@ -31,7 +33,7 @@ class AuthValidator {
     if (data.email.isEmpty) {
       return {
         "status": false,
-        "message": "Email can't be empty",
+        "message": "Email $emptyInputMsg",
         "loc": "email"
       };
     }
@@ -43,6 +45,6 @@ class AuthValidator {
             "Email should be around $emailMinLength up to $emailMaxLength character"
       };
     }
-    return {"status": true, "message": "Validation success"};
+    return {"status": true, "message": "Validation success".tr};
   }
 }

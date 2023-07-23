@@ -225,8 +225,8 @@ class StateRegisterPage extends State<RegisterPage> {
                   });
                 }
 
-                Get.dialog(const FailedDialog(
-                    text: "Please register your account first",
+                Get.dialog(FailedDialog(
+                    text: "Please register your account first".tr,
                     type: "register"));
               }
             }
@@ -406,19 +406,19 @@ class StateRegisterPage extends State<RegisterPage> {
           isWaiting = false;
 
           if (keyExists) {
-            authQueryService.getSignOut().then((response) {
+            authQueryService.getSignOut().then((response) async {
               var body = response[0]['body'];
               var code = response[0]['code'];
 
               if (body == "Logout success" && code == 200) {
-                getDestroyTrace(true);
+                await getDestroyTrace(true);
                 Get.dialog(SuccessDialog(text: body));
               } else if (code == 401) {
-                getDestroyTrace(true);
+                await getDestroyTrace(true);
               }
             });
           } else {
-            getDestroyTrace(true);
+            await getDestroyTrace(true);
             Get.dialog(SuccessDialog(text: "Sign out success".tr));
           }
         },
@@ -537,64 +537,62 @@ class StateRegisterPage extends State<RegisterPage> {
           return false;
         },
         child: Scaffold(
-            resizeToAvoidBottomInset: false,
+            // resizeToAvoidBottomInset: false,
             body: Onboarding(
-              pages: onboardingPagesList,
-              onPageChange: (int pageIndex) {
-                setState(() {
-                  indexRegis = pageIndex;
-                });
-              },
-              startPageIndex: indexRegis,
-              footerBuilder: (context, dragDistance, pagesLength, setIndex) {
-                return DecoratedBox(
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 0.0, color: Colors.transparent),
-                  ),
-                  child: ColoredBox(
-                    color: Colors.transparent,
-                    child: Padding(
-                      padding: EdgeInsets.all(spaceLG),
-                      child: Row(
-                        children: [
-                          indexRegis == 0
+          pages: onboardingPagesList,
+          onPageChange: (int pageIndex) {
+            setState(() {
+              indexRegis = pageIndex;
+            });
+          },
+          startPageIndex: indexRegis,
+          footerBuilder: (context, dragDistance, pagesLength, setIndex) {
+            return DecoratedBox(
+              decoration: BoxDecoration(
+                border: Border.all(width: 0.0, color: Colors.transparent),
+              ),
+              child: ColoredBox(
+                color: Colors.transparent,
+                child: Padding(
+                  padding: EdgeInsets.all(spaceMD),
+                  child: Row(
+                    children: [
+                      indexRegis == 0
+                          ? _backButton(
+                              setIndex: setIndex,
+                              isFirst: true,
+                              width: fullWidth)
+                          : indexRegis != 0 && indexRegis != pagesLength - 1
                               ? _backButton(
                                   setIndex: setIndex,
-                                  isFirst: true,
+                                  isFirst: false,
                                   width: fullWidth)
-                              : indexRegis != 0 && indexRegis != pagesLength - 1
-                                  ? _backButton(
-                                      setIndex: setIndex,
-                                      isFirst: false,
-                                      width: fullWidth)
-                                  : const SizedBox(),
-                          SizedBox(width: spaceLG + spaceMini),
-                          CustomIndicator(
-                            netDragPercent: dragDistance,
-                            pagesLength: pagesLength,
-                            indicator: Indicator(
-                              closedIndicator:
-                                  ClosedIndicator(color: primaryColor),
-                              activeIndicator: ActiveIndicator(
-                                  color: shadowColor.withOpacity(0.25)),
-                              indicatorDesign: IndicatorDesign.polygon(
-                                polygonDesign: PolygonDesign(
-                                  polygon: DesignType.polygon_circle,
-                                ),
-                              ),
+                              : const SizedBox(),
+                      SizedBox(width: spaceLG + spaceMini),
+                      CustomIndicator(
+                        netDragPercent: dragDistance,
+                        pagesLength: pagesLength,
+                        indicator: Indicator(
+                          closedIndicator: ClosedIndicator(color: primaryColor),
+                          activeIndicator: ActiveIndicator(
+                              color: shadowColor.withOpacity(0.25)),
+                          indicatorDesign: IndicatorDesign.polygon(
+                            polygonDesign: PolygonDesign(
+                              polygon: DesignType.polygon_circle,
                             ),
                           ),
-                          const Spacer(),
-                          indexRegis == pagesLength - 1
-                              ? finishBtn()
-                              : _skipButton(
-                                  setIndex: setIndex, height: fullHeight)
-                        ],
+                        ),
                       ),
-                    ),
+                      const Spacer(),
+                      indexRegis == pagesLength - 1
+                          ? finishBtn()
+                          : _skipButton(setIndex: setIndex, height: fullHeight)
+                    ],
                   ),
-                );
-              },
-            )));
+                ),
+              ),
+            );
+          },
+        )));
   }
 }

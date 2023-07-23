@@ -41,9 +41,8 @@ class StateGetAllQuestion extends State<GetAllQuestion> {
             builder: (BuildContext context,
                 AsyncSnapshot<List<QuestionBodyModel>> snapshot) {
               if (snapshot.hasError) {
-                return Center(
-                  child: Text(
-                      "Something wrong with message: ${snapshot.error.toString()}"),
+                return const Center(
+                  child: Text("Something wrong"),
                 );
               } else if (snapshot.connectionState == ConnectionState.done) {
                 List<QuestionBodyModel> contents = snapshot.data;

@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -78,9 +77,9 @@ Future<void> main() async {
     return true;
   };
 
-  if (shouldUseFirestoreEmulator) {
-    FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
-  }
+  // if (shouldUseFirestoreEmulator) {
+  //   FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
+  // }
 
   final prefs = await SharedPreferences.getInstance();
   String langKey = "en";
@@ -206,6 +205,12 @@ class StateMyApp extends State<MyApp> {
   }
 
   getToken() async {
+    if (usernameKey == null) {
+      final prefs = await SharedPreferences.getInstance();
+
+      usernameKey = prefs.getString('username_key');
+    }
+
     await dctService.getDictionaryType("QST-001");
     await dctService.getDictionaryType("FBC-001");
     await dctService.getDictionaryType("ATT-001");
@@ -256,6 +261,7 @@ class StateMyApp extends State<MyApp> {
             userService.putFirebase(tokens);
 
             if (widget.finishRegis) {
+              isShownLostSessPop = false;
               return getItem(const BottomBar());
             } else {
               indexRegis = 5;

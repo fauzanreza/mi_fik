@@ -20,60 +20,82 @@ import 'package:mi_fik/Pages/SubMenus/SettingPage/index.dart';
 
 class PageRoutes {
   static final pages = [
-    GetPage(name: CollectionRoute.landing, page: () => const LoginPage()),
-    GetPage(name: CollectionRoute.register, page: () => const RegisterPage()),
-    GetPage(name: CollectionRoute.forget, page: () => const ForgetPage()),
+    GetPage(
+        name: CollectionRoute.landing,
+        page: () => const LoginPage(),
+        transition: Transition.noTransition),
+    GetPage(
+        name: CollectionRoute.register,
+        page: () => const RegisterPage(),
+        transition: Transition.noTransition),
+    GetPage(
+        name: CollectionRoute.forget,
+        page: () => const ForgetPage(),
+        transition: Transition.noTransition),
     GetPage(
         name: CollectionRoute.profile,
         page: () => const ProfilePage(),
-        middlewares: [RouteGuard()]),
+        middlewares: [RouteGuard()],
+        transition: Transition.noTransition),
     GetPage(
         name: CollectionRoute.myfaq,
         page: () => const MyFAQPage(),
-        middlewares: [RouteGuard()]),
+        middlewares: [RouteGuard()],
+        transition: Transition.noTransition),
     GetPage(
         name: CollectionRoute.faq,
         page: () => const FAQPage(),
-        middlewares: [RouteGuard()]),
+        middlewares: [RouteGuard()],
+        transition: Transition.noTransition),
     GetPage(
         name: CollectionRoute.history,
         page: () => const HistoryPage(),
-        middlewares: [RouteGuard()]),
+        middlewares: [RouteGuard()],
+        transition: Transition.noTransition),
     GetPage(
         name: CollectionRoute.about,
         page: () => const AboutPage(),
-        middlewares: [RouteGuard()]),
+        middlewares: [RouteGuard()],
+        transition: Transition.noTransition),
     GetPage(
         name: CollectionRoute.role,
         page: () => const RolePage(),
-        middlewares: [RouteGuard()]),
+        middlewares: [RouteGuard()],
+        transition: Transition.noTransition),
     GetPage(
         name: CollectionRoute.help,
         page: () => const HelpPage(),
-        middlewares: [RouteGuard()]),
+        middlewares: [RouteGuard()],
+        transition: Transition.noTransition),
     GetPage(
         name: CollectionRoute.setting,
         page: () => const SettingPage(),
-        middlewares: [RouteGuard()]),
+        middlewares: [RouteGuard()],
+        transition: Transition.noTransition),
     GetPage(
         name: CollectionRoute.addpost,
         page: () => const AddPost(),
-        middlewares: [RouteGuard()]),
+        middlewares: [RouteGuard()],
+        transition: Transition.noTransition),
     GetPage(
         name: CollectionRoute.homepage,
         page: () => const HomePage(),
-        middlewares: [RouteGuard()]),
+        middlewares: [RouteGuard()],
+        transition: Transition.noTransition),
     GetPage(
         name: CollectionRoute.calendar,
         page: () => const CalendarPage(),
-        middlewares: [RouteGuard()]),
+        middlewares: [RouteGuard()],
+        transition: Transition.noTransition),
     GetPage(
         name: CollectionRoute.schedule,
         page: () => const SchedulePage(),
-        middlewares: [RouteGuard()]),
+        middlewares: [RouteGuard()],
+        transition: Transition.noTransition),
     GetPage(
         name: CollectionRoute.bar,
         page: () => const BottomBar(),
-        middlewares: [RouteGuard()]),
+        middlewares: [RouteGuard()],
+        transition: Transition.noTransition),
   ];
 }

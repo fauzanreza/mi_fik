@@ -1,12 +1,14 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Modules/Firebases/Storages/validator.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:skeletons/skeletons.dart';
 // ignore: depend_on_referenced_packages
@@ -53,17 +55,21 @@ Widget getUploadDateWidget(DateTime date) {
       ));
 }
 
-Widget getViewWidget(total) {
-  return RichText(
-    text: TextSpan(
-      children: [
-        WidgetSpan(
-          child: Icon(Icons.remove_red_eye, size: 14, color: whiteColor),
-        ),
-        TextSpan(text: " $total", style: TextStyle(color: whiteColor)),
-      ],
-    ),
-  );
+Widget getViewWidget(total, u1, u2) {
+  if (u1 == usernameKey || u2 == usernameKey) {
+    return RichText(
+      text: TextSpan(
+        children: [
+          WidgetSpan(
+            child: Icon(Icons.remove_red_eye, size: 14, color: whiteColor),
+          ),
+          TextSpan(text: " $total", style: TextStyle(color: whiteColor)),
+        ],
+      ),
+    );
+  } else {
+    return const SizedBox();
+  }
 }
 
 getImageHeader(url) {
@@ -139,63 +145,104 @@ Widget getContentImageHeader(
           : getChild());
 }
 
-Widget getContentVideo(String url, double width, double heigth) {
-  return FutureBuilder<bool>(
-    future: isLoadable(url),
-    builder: (context, snapshot) {
-      if (snapshot.connectionState == ConnectionState.waiting) {
-        return SkeletonAvatar(
-          style: SkeletonAvatarStyle(
-              width: width,
-              height: heigth,
-              borderRadius: BorderRadius.all(Radius.circular(roundedSM))),
-        );
-      } else if (snapshot.hasData && snapshot.data == true) {
-        return AspectRatio(
-            aspectRatio: 16 / 9,
-            child: Chewie(
-              controller: ChewieController(
-                  autoInitialize: true,
-                  //aspectRatio: 16 / 9,
-                  zoomAndPan: true,
-                  fullScreenByDefault: false,
-                  materialProgressColors: ChewieProgressColors(
-                      playedColor: primaryColor,
-                      handleColor: infoBG,
-                      bufferedColor: primaryLightBG),
-                  videoPlayerController: VideoPlayerController.network(
-                    url.toString(),
-                  ),
-                  errorBuilder: (context, errorMessage) {
-                    return Center(
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                          ClipRRect(
-                            child: Image.asset('assets/icon/Failed.png',
-                                height: 75),
-                          ),
-                          Text(
-                            errorMessage,
-                            style:
-                                TextStyle(color: whiteColor, fontSize: textMD),
-                          )
-                        ]));
-                  },
-                  autoPlay: false,
-                  looping: false,
-                  allowFullScreen: false),
-            ));
-      } else {
-        return Container(
-            alignment: Alignment.center,
-            height: heigth,
-            child: getMessageImageNoData(
-                "assets/icon/Failed.png", "Failed to load video".tr, heigth));
-      }
-    },
-  );
+class GetContentVideo extends StatefulWidget {
+  const GetContentVideo({Key key, this.url, this.width, this.height})
+      : super(key: key);
+  final String url;
+  final double width;
+  final double height;
+
+  @override
+  StateGetContentVideo createState() => StateGetContentVideo();
+}
+
+class StateGetContentVideo extends State<GetContentVideo> {
+  VideoPlayerController controller;
+  bool initialized = false;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = VideoPlayerController.network(widget.url.toString())
+      ..initialize().then((_) {
+        setState(() {
+          initialized = true;
+        });
+      });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return initialized
+        ? FutureBuilder<bool>(
+            future: isLoadable(widget.url.toString()),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return SkeletonAvatar(
+                  style: SkeletonAvatarStyle(
+                      width: widget.width,
+                      height: widget.height,
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(roundedSM))),
+                );
+              } else if (snapshot.hasData && snapshot.data == true) {
+                return AspectRatio(
+                    aspectRatio: controller.value.aspectRatio,
+                    child: Chewie(
+                      controller: ChewieController(
+                          autoInitialize: true,
+                          aspectRatio: controller.value.aspectRatio,
+                          zoomAndPan: true,
+                          fullScreenByDefault: false,
+                          materialProgressColors: ChewieProgressColors(
+                              playedColor: primaryColor,
+                              handleColor: infoBG,
+                              bufferedColor: primaryLightBG),
+                          videoPlayerController: controller,
+                          errorBuilder: (context, errorMessage) {
+                            return Center(
+                                child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                  ClipRRect(
+                                    child: Image.asset('assets/icon/Failed.png',
+                                        height: 75),
+                                  ),
+                                  Text(
+                                    errorMessage,
+                                    style: TextStyle(
+                                        color: whiteColor, fontSize: textMD),
+                                  )
+                                ]));
+                          },
+                          autoPlay: false,
+                          looping: false,
+                          allowFullScreen: false),
+                    ));
+              } else {
+                return Container(
+                    alignment: Alignment.center,
+                    height: widget.height,
+                    child: getMessageImageNoData("assets/icon/Failed.png",
+                        "Failed to load video".tr, widget.height));
+              }
+            },
+          )
+        : SkeletonAvatar(
+            style: SkeletonAvatarStyle(
+                width: widget.width,
+                height: widget.height,
+                borderRadius: BorderRadius.all(Radius.circular(roundedSM))),
+          );
+  }
 }
 
 getImageUser(url) {
@@ -217,7 +264,7 @@ Widget getDescHeaderWidget(String desc, Color clr) {
   } else {
     return Container(
         margin: EdgeInsets.only(top: spaceSM),
-        child: Text("No description provided",
+        child: Text("No description provided".tr,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
                 color: clr, fontSize: textSM, fontStyle: FontStyle.italic)));
@@ -245,7 +292,7 @@ Widget getContentLoc(loc) {
       text: TextSpan(
         children: [
           WidgetSpan(
-            child: Icon(Icons.location_on, color: primaryColor, size: iconSM),
+            child: Icon(Icons.location_on, color: primaryColor, size: iconMD),
           ),
           TextSpan(
               text: getLocationName(loc),
@@ -266,10 +313,10 @@ Widget getTotalTag(tag) {
       text: TextSpan(
         children: [
           WidgetSpan(
-            child: Icon(Icons.tag, color: primaryColor, size: iconSM),
+            child: Icon(Icons.tag, color: primaryColor, size: iconMD - 2),
           ),
           TextSpan(
-              text: total.toString(),
+              text: "${total.toString()} ",
               style: TextStyle(color: primaryColor, fontSize: textMD)),
         ],
       ),
@@ -298,7 +345,7 @@ Widget getTag(tag, height, ctx) {
               icon: Icon(
                 Icons.circle,
                 size: textSM,
-                color: Colors.green,
+                color: successBG,
               ),
               label: Text(content['tag_name'],
                   style: TextStyle(fontSize: textXSM)),
@@ -336,7 +383,7 @@ Widget getTag(tag, height, ctx) {
                                   icon: Icon(
                                     Icons.circle,
                                     size: textSM,
-                                    color: Colors.green,
+                                    color: successBG,
                                   ),
                                   label: Text(content['tag_name'],
                                       style: TextStyle(fontSize: textXSM)),
@@ -413,44 +460,97 @@ Widget getEventStatus(dateStart, dateEnd) {
       hourDiffStart >= 0 &&
       hourDiffStart <= 15) {
     clr = primaryColor;
-    ctx = " About to start";
+    ctx = " About to start".tr;
   } else if (cStart.isBefore(now) && cEnd.isAfter(now)) {
     clr = warningBG;
     if (hourDiffEnd > 1 && hourDiffStart > -15) {
-      ctx = " Just Started";
+      ctx = " Just started".tr;
     } else if (hourDiffEnd > 15) {
-      ctx = " Live";
+      ctx = " Live".tr;
     } else {
-      ctx = " About to end";
+      ctx = " About to end".tr;
     }
   } else if (cStart.isBefore(now) &&
       cEnd.isBefore(now) &&
       hourDiffEnd <= 0 &&
       hourDiffEnd >= -15) {
     clr = successBG;
-    ctx = " Just ended";
+    ctx = " Just ended".tr;
   } else if (cStart.isBefore(now) && cEnd.isBefore(now) && hourDiffEnd <= -15) {
     clr = successBG;
-    ctx = " Finished";
+    ctx = " Finished".tr;
   } else {
     return const SizedBox();
   }
 
   return Container(
       margin: EdgeInsets.only(left: spaceXLG * 0.8),
+      padding: EdgeInsets.symmetric(horizontal: spaceSM, vertical: spaceMini),
+      decoration: BoxDecoration(
+          color: clr,
+          borderRadius: BorderRadius.all(Radius.circular(roundedSM))),
       child: RichText(
         text: TextSpan(
           children: [
             WidgetSpan(
-              child: Icon(Icons.circle, size: 14, color: clr),
+              child: Container(
+                  margin: EdgeInsets.only(bottom: spaceMini - 1),
+                  child:
+                      Icon(Icons.circle, size: iconSM - 2, color: whiteColor)),
             ),
             TextSpan(
                 text: ctx,
                 style: TextStyle(
-                    color: clr,
+                    color: whiteColor,
                     fontSize: textXMD,
                     fontWeight: FontWeight.w500)),
           ],
         ),
       ));
+}
+
+Widget getEventDate(String dateStart, String dateEnd) {
+  if (dateStart != null && dateEnd != null) {
+    DateTime ds = DateTime.parse(dateStart);
+    DateTime de = DateTime.parse(dateEnd);
+    Duration offset = Duration(hours: getUTCHourOffset());
+    String res = "";
+    ds = ds.add(offset);
+    de = de.add(offset);
+
+    if (ds.year != de.year) {
+      // Event year not the same
+      res =
+          "${getDateMonth(ds)} ${ds.year} ${getHourMinute(ds)} - ${getDateMonth(de)} ${de.year} ${getHourMinute(de)}";
+    } else if (ds.month != de.month) {
+      // If month not the same
+      res =
+          "${getDateMonth(ds)} ${ds.year} ${getHourMinute(ds)} - ${getDateMonth(de)} ${getHourMinute(de)}";
+    } else if (ds.day != de.day) {
+      // If date not the same
+      res =
+          "${getDateMonth(ds)} ${getHourMinute(ds)} - ${getDateMonth(de)} ${de.day.toString().padLeft(2, '0')} ${getHourMinute(de)}";
+    } else if (ds.day == de.day) {
+      res = "${getDateMonth(ds)} ${getHourMinute(ds)} - ${getHourMinute(de)}";
+    }
+
+    return RichText(
+      text: TextSpan(
+        children: [
+          WidgetSpan(
+            child: Icon(
+              FontAwesomeIcons.clock,
+              size: iconMD - 2,
+              color: primaryColor,
+            ),
+          ),
+          TextSpan(
+              text: " $res",
+              style: TextStyle(color: primaryColor, fontSize: textMD)),
+        ],
+      ),
+    );
+  } else {
+    return const SizedBox();
+  }
 }

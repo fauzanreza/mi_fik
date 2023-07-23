@@ -44,7 +44,7 @@ class StateGetTerms extends State<GetTerms> {
             style: TextStyle(fontSize: textXMD - 2)),
         Row(children: [
           Checkbox(
-            checkColor: Colors.white,
+            checkColor: whiteColor,
             fillColor: MaterialStateProperty.resolveWith(getColor),
             value: isCheckedRegister,
             onChanged: (bool value) {

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
 import 'package:mi_fik/Modules/APIs/TagApi/Models/queries.dart';
 import 'package:mi_fik/Modules/APIs/TagApi/Services/queries.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/UserApi/Services/commands.dart';
-import 'package:mi_fik/Modules/Helpers/info.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
@@ -91,141 +91,144 @@ class StateShowRole extends State<ShowRole> {
             expandedAlignment: Alignment.topLeft,
             title: Text("My Roles".tr, style: TextStyle(fontSize: textXMD)),
             children: [
-              Wrap(
-                  runSpacing: -spaceMini,
-                  spacing: spaceMini,
-                  children: contents.map<Widget>((tag) {
-                    return ElevatedButton.icon(
-                      onPressed: () {
-                        String removeText =
-                            "Are you sure want to request remove".tr;
-                        return showDialog<void>(
-                            context: context,
-                            builder: (BuildContext context) {
-                              if (tag.slug != "lecturer" &&
-                                  tag.slug != "student" &&
-                                  tag.slug != "staff") {
-                                return AlertDialog(
-                                  contentPadding: EdgeInsets.all(spaceSM),
-                                  title: Text('Warning'.tr,
-                                      style: TextStyle(fontSize: textXMD)),
-                                  content: SizedBox(
-                                    width: fullWidth,
-                                    height: 80,
-                                    child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                              margin: EdgeInsets.symmetric(
-                                                  vertical: spaceSM),
-                                              child: Text(
-                                                  "$removeText ${tag.tagName}?",
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                      color: shadowColor,
-                                                      fontSize: textXMD)))
-                                        ]),
-                                  ),
-                                  actions: <Widget>[
-                                    ElevatedButton(
-                                      style: ButtonStyle(
-                                        shape: MaterialStateProperty.all<
-                                                RoundedRectangleBorder>(
-                                            RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(roundedSM),
-                                        )),
-                                        backgroundColor:
-                                            MaterialStatePropertyAll<Color>(
-                                                warningBG),
+              contents != null
+                  ? Wrap(
+                      runSpacing: -spaceMini,
+                      spacing: spaceMini,
+                      children: contents.map<Widget>((tag) {
+                        return ElevatedButton.icon(
+                          onPressed: () {
+                            String removeText =
+                                "Are you sure want to request remove".tr;
+                            return showDialog<void>(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  if (tag.slug != "lecturer" &&
+                                      tag.slug != "student" &&
+                                      tag.slug != "staff") {
+                                    return AlertDialog(
+                                      contentPadding: EdgeInsets.all(spaceSM),
+                                      title: Text('Warning'.tr,
+                                          style: TextStyle(fontSize: textXMD)),
+                                      content: SizedBox(
+                                        width: fullWidth,
+                                        height: 80,
+                                        child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                  margin: EdgeInsets.symmetric(
+                                                      vertical: spaceSM),
+                                                  child: Text(
+                                                      "$removeText ${tag.tagName}?",
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: TextStyle(
+                                                          color: shadowColor,
+                                                          fontSize: textXMD)))
+                                            ]),
                                       ),
-                                      onPressed: () async {
-                                        selectedRole.add({
-                                          "slug_name": tag.slug,
-                                          "tag_name": tag.tagName
-                                        });
-                                        AddNewReqModel data = AddNewReqModel(
-                                          reqType: "remove",
-                                          userRole:
-                                              validateNullJSON(selectedRole),
-                                        );
-
-                                        //Validator
-                                        if (data.userRole.isNotEmpty) {
-                                          commandService
-                                              .postUserReq(data)
-                                              .then((response) {
-                                            setState(() => {});
-                                            var status = response[0]['message'];
-                                            var body = response[0]['body'];
-
-                                            if (status == "success") {
-                                              Get.to(CollectionRoute.profile,
-                                                  preventDuplicates: false);
-                                              Get.dialog(
-                                                  SuccessDialog(text: body));
-                                            } else {
-                                              Get.to(CollectionRoute.profile,
-                                                  preventDuplicates: false);
-
-                                              Get.dialog(FailedDialog(
-                                                  text: body, type: "req"));
-                                            }
-                                            setState(() {
-                                              selectedRole.clear();
+                                      actions: <Widget>[
+                                        ElevatedButton(
+                                          style: ButtonStyle(
+                                            shape: MaterialStateProperty.all<
+                                                    RoundedRectangleBorder>(
+                                                RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      roundedSM),
+                                            )),
+                                            backgroundColor:
+                                                MaterialStatePropertyAll<Color>(
+                                                    warningBG),
+                                          ),
+                                          onPressed: () async {
+                                            selectedRole.add({
+                                              "slug_name": tag.slug,
+                                              "tag_name": tag.tagName
                                             });
-                                          });
-                                        } else {
-                                          Get.dialog(FailedDialog(
-                                              text:
-                                                  "Request failed, you haven't selected any tag yet"
-                                                      .tr,
-                                              type: "req"));
-                                        }
-                                      },
-                                      child: Text("Yes".tr,
-                                          style: TextStyle(
-                                              color: whiteColor,
-                                              fontSize: textMD)),
-                                    )
-                                  ],
-                                );
-                              } else {
-                                return FailedDialog(
-                                    text:
-                                        "Request failed, you can't remove general role"
-                                            .tr,
-                                    type: "req");
-                              }
-                            });
-                      },
-                      icon: Icon(
-                        Icons.circle,
-                        size: textSM,
-                        color: Colors.green,
-                      ),
-                      label: Text(tag.tagName,
-                          style: TextStyle(fontSize: textXSM)),
-                      style: ButtonStyle(
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(roundedSM),
-                        )),
-                        backgroundColor:
-                            MaterialStatePropertyAll<Color>(primaryColor),
-                      ),
-                    );
-                  }).toList()),
-              Container(
-                  padding: EdgeInsets.fromLTRB(0, spaceLG, 0, 0),
-                  child: const GetInfoBox(
-                    page: "profile",
-                    location: "delete_role_mobile",
-                  )),
+                                            AddNewReqModel data =
+                                                AddNewReqModel(
+                                              reqType: "remove",
+                                              userRole: validateNullJSON(
+                                                  selectedRole),
+                                            );
+
+                                            //Validator
+                                            if (data.userRole.isNotEmpty) {
+                                              commandService
+                                                  .postUserReq(data)
+                                                  .then((response) {
+                                                setState(() => {});
+                                                var status =
+                                                    response[0]['message'];
+                                                var body = response[0]['body'];
+
+                                                if (status == "success") {
+                                                  Get.to(
+                                                      CollectionRoute.profile,
+                                                      preventDuplicates: false);
+                                                  Get.dialog(SuccessDialog(
+                                                      text: body));
+                                                } else {
+                                                  Get.to(
+                                                      CollectionRoute.profile,
+                                                      preventDuplicates: false);
+
+                                                  Get.dialog(FailedDialog(
+                                                      text: body, type: "req"));
+                                                }
+                                                setState(() {
+                                                  selectedRole.clear();
+                                                });
+                                              });
+                                            } else {
+                                              Get.dialog(FailedDialog(
+                                                  text:
+                                                      "Request failed, you haven't selected any tag yet"
+                                                          .tr,
+                                                  type: "req"));
+                                            }
+                                          },
+                                          child: Text("Yes".tr,
+                                              style: TextStyle(
+                                                  color: whiteColor,
+                                                  fontSize: textMD)),
+                                        )
+                                      ],
+                                    );
+                                  } else {
+                                    return FailedDialog(
+                                        text:
+                                            "Request failed, you can't remove general role"
+                                                .tr,
+                                        type: "req");
+                                  }
+                                });
+                          },
+                          icon: Icon(
+                            Icons.circle,
+                            size: textSM,
+                            color: successBG,
+                          ),
+                          label: Text(tag.tagName,
+                              style: TextStyle(fontSize: textXSM)),
+                          style: ButtonStyle(
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(roundedSM),
+                            )),
+                            backgroundColor:
+                                MaterialStatePropertyAll<Color>(primaryColor),
+                          ),
+                        );
+                      }).toList())
+                  : Center(
+                      child: getMessageImageNoData("assets/icon/nodata.png",
+                          "Failed to get roles".tr, fullWidth)),
               const Divider(thickness: 1.5)
             ]));
   }

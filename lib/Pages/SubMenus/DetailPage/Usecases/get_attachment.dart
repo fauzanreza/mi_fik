@@ -142,9 +142,10 @@ class StateAttachButton extends State<AttachButton> {
               ),
             );
           } else if (attach['attach_type'] == "attachment_video") {
-            // return Transform(
-            //     transform: Matrix4.translationValues(-spaceSM, 0.0, 0.0),
-            //     child: getContentVideo(attach['attach_url'], fullWidth, 220));
+            return Transform(
+                transform: Matrix4.translationValues(-spaceSM, 0.0, 0.0),
+                child: GetContentVideo(
+                    url: attach['attach_url'], width: fullWidth, height: 220));
           } else if (attach['attach_type'] == "attachment_doc") {
             return RichText(
               text: TextSpan(

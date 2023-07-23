@@ -85,8 +85,7 @@ class StatePostSelectedRole extends State<PostSelectedRole> {
                             const BorderRadius.all(Radius.circular(10))),
                     child: Row(
                       children: [
-                        Icon(Icons.restore,
-                            size: iconSM + 3, color: whiteColor),
+                        Icon(Icons.restore, size: iconMD, color: whiteColor),
                         const Spacer(),
                         Text("Reset",
                             style: TextStyle(
