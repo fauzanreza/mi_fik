@@ -117,7 +117,7 @@ class StateGetRecovery extends State<GetRecovery>
                 widget.unameMsg, isFillForm),
             getSubTitleMedium("Email", darkColor, TextAlign.left),
             getInputWarning(widget.emailMsg),
-            getInputTextRegis(30, "email", widget.emailCtrl, refresh,
+            getInputTextRegis(75, "email", widget.emailCtrl, refresh,
                 widget.emailMsg, isFillForm),
             Align(
                 alignment: Alignment.center,

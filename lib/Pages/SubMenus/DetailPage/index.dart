@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
+import 'package:mi_fik/Components/Backgrounds/loading.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/query_contents.dart';
@@ -58,9 +59,7 @@ class StateDetailPage extends State<DetailPage> {
             List<ContentDetailModel> contents = snapshot.data;
             return _buildListView(contents);
           } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const LoadingScreen();
           }
         },
       ),

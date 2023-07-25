@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:mi_fik/Components/Backgrounds/loading.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Dialogs/bg_fcm_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/reminder_dialog.dart';
@@ -269,7 +270,7 @@ class StateMyApp extends State<MyApp> {
               // return getItem(const WaitingPage());
             }
           } else {
-            return const CircularProgressIndicator();
+            return const LoadingScreen();
           }
         },
       );

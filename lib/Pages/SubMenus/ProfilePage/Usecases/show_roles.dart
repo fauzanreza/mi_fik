@@ -168,13 +168,13 @@ class StateShowRole extends State<ShowRole> {
                                                 var body = response[0]['body'];
 
                                                 if (status == "success") {
-                                                  Get.to(
+                                                  Get.toNamed(
                                                       CollectionRoute.profile,
                                                       preventDuplicates: false);
                                                   Get.dialog(SuccessDialog(
                                                       text: body));
                                                 } else {
-                                                  Get.to(
+                                                  Get.toNamed(
                                                       CollectionRoute.profile,
                                                       preventDuplicates: false);
 

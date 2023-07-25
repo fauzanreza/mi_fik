@@ -23,6 +23,7 @@ class StateGetMyFAQ extends State<GetMyFAQ> {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
   String dateChipBefore = "";
+  String checkNext = "";
   ScrollController scrollCtrl;
 
   @override
@@ -78,7 +79,12 @@ class StateGetMyFAQ extends State<GetMyFAQ> {
           reverse: true,
           itemBuilder: (BuildContext context, int index) {
             if (index < contents.length) {
-              return _buildFAQItem(contents[index]);
+              if (index == contents.length - 1) {
+                return _buildFAQItem(contents[index], null);
+              } else {
+                return _buildFAQItem(
+                    contents[index], contents[index + 1].createdAt);
+              }
             } else if (isLoading) {
               return const FAQSkeleton();
             } else {
@@ -94,7 +100,7 @@ class StateGetMyFAQ extends State<GetMyFAQ> {
     );
   }
 
-  Widget _buildFAQItem(MyQuestionModel content) {
+  Widget _buildFAQItem(MyQuestionModel content, String dateNext) {
     // double fullHeight = MediaQuery.of(context).size.height;
     double fullWidth = MediaQuery.of(context).size.width;
 
@@ -118,12 +124,18 @@ class StateGetMyFAQ extends State<GetMyFAQ> {
       }
     }
 
-    Widget getDateChip() {
-      var dt = content.createdAt;
+    Widget getDateChip(dt, dn) {
       var date = DateTime.parse(dt).add(Duration(hours: getUTCHourOffset()));
 
+      if (dn != "" && dn != null) {
+        var dateN = DateTime.parse(dn).add(Duration(hours: getUTCHourOffset()));
+        checkNext = ("${dateN.year}${dateN.month}${dateN.day}");
+      }
+
       String check = ("${date.year}${date.month}${date.day}");
-      if (dateChipBefore != check) {
+
+      if ((dateChipBefore != check && check != checkNext) ||
+          (dateChipBefore == check && check != checkNext)) {
         dateChipBefore = check;
         var dateContext = DateFormat("dd MMM yyyy").format(date);
         var yesterdayContext =
@@ -145,13 +157,14 @@ class StateGetMyFAQ extends State<GetMyFAQ> {
                 borderRadius: BorderRadius.all(Radius.circular(10))),
             child: Text(dateContext, style: TextStyle(fontSize: textSM)));
       } else {
+        dateChipBefore = check;
         return const SizedBox();
       }
     }
 
     if (content.questionFrom == "me") {
       return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-        getDateChip(),
+        getDateChip(content.createdAt, dateNext),
         Container(
             alignment: Alignment.topLeft,
             width: fullWidth,
@@ -165,11 +178,11 @@ class StateGetMyFAQ extends State<GetMyFAQ> {
         getHourText(
             content.createdAt,
             EdgeInsets.only(right: spaceXMD, top: spaceSM / 2),
-            Alignment.centerRight)
+            Alignment.centerRight),
       ]);
     } else {
       return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-        getDateChip(),
+        getDateChip(content.createdAt, dateNext),
         Container(
             width: fullWidth,
             padding: EdgeInsets.all(spaceXMD - 2),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:mi_fik/Components/Backgrounds/image.dart';
+import 'package:mi_fik/Components/Backgrounds/loading.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Bars/top_bar.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
@@ -50,9 +51,7 @@ class StateRolePage extends State<RolePage> {
             List<UserRequestModel> contents = snapshot.data;
             return _buildListView(contents);
           } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const LoadingScreen();
           }
         },
       ),

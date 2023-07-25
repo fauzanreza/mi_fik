@@ -2,6 +2,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Container/content.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Skeletons/content_1.dart';
@@ -39,7 +40,7 @@ class StateGetContent extends State<GetContent> {
   @override
   Widget build(BuildContext context) {
     double fullHeight = MediaQuery.of(context).size.height;
-    //double fullWidth = MediaQuery.of(context).size.width;
+    double fullWidth = MediaQuery.of(context).size.width;
 
     Widget getActiveFilterText() {
       String order = "";
@@ -122,38 +123,45 @@ class StateGetContent extends State<GetContent> {
               ],
             ),
           ),
-          widget.isLoad == false
-              ? Column(
-                  children: widget.item.map<Widget>((e) {
-                  if (index < widget.item.length + 1) {
-                    if (index != widget.item.length) {
-                      index++;
-                      return _buildContentItem(e);
-                    } else {
-                      index++;
-                      return Column(children: [
-                        _buildContentItem(e),
-                        Container(
+          widget.isEmpty == true
+              ? SizedBox(
+                  height: fullHeight * 0.7,
+                  child: getMessageImageNoData(
+                      "assets/icon/empty.png",
+                      "No event / task for today, have a good rest".tr,
+                      fullWidth))
+              : widget.isLoad == false
+                  ? Column(
+                      children: widget.item.map<Widget>((e) {
+                      if (index < widget.item.length + 1) {
+                        if (index != widget.item.length) {
+                          index++;
+                          return _buildContentItem(e);
+                        } else {
+                          index++;
+                          return Column(children: [
+                            _buildContentItem(e),
+                            Container(
+                                margin: EdgeInsets.symmetric(vertical: spaceLG),
+                                child: Text("No more item to show".tr,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(fontSize: textMD)))
+                          ]);
+                        }
+                      } else {
+                        return Container(
                             margin: EdgeInsets.symmetric(vertical: spaceLG),
                             child: Text("No more item to show".tr,
                                 textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: textMD)))
-                      ]);
-                    }
-                  } else {
-                    return Container(
-                        margin: EdgeInsets.symmetric(vertical: spaceLG),
-                        child: Text("No more item to show".tr,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: textMD)));
-                  }
-                }).toList())
-              : Column(
-                  children: const [
-                    SkeletonContentHeader(),
-                    SkeletonContentHeader()
-                  ],
-                )
+                                style: TextStyle(fontSize: textMD)));
+                      }
+                    }).toList())
+                  : Column(
+                      children: const [
+                        SkeletonContentHeader(),
+                        SkeletonContentHeader()
+                      ],
+                    )
         ]));
   }
 

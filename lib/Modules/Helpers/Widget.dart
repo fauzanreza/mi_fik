@@ -11,6 +11,7 @@ import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:skeletons/skeletons.dart';
+import 'package:url_launcher/url_launcher.dart';
 // ignore: depend_on_referenced_packages
 import 'package:video_player/video_player.dart';
 
@@ -276,7 +277,59 @@ Widget getDescDetailWidget(String desc, double width) {
     return Container(
         alignment: Alignment.centerLeft,
         margin: EdgeInsets.symmetric(horizontal: spaceXMD),
-        child: HtmlWidget(desc));
+        child: HtmlWidget(
+          desc,
+          onTapUrl: (p0) {
+            return launchUrl(Uri.parse(p0.toString()));
+          },
+          onTapImage: (url) {
+            Get.dialog(
+              AlertDialog(
+                  contentPadding: EdgeInsets.zero,
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
+                  content: SizedBox(
+                    width: Get.width,
+                    child: getContentImageHeader(
+                        url.sources.first.url.toString(),
+                        null,
+                        null,
+                        false,
+                        BorderRadius.circular(roundedSM)),
+                  )),
+              barrierColor: primaryColor.withOpacity(0.5),
+            );
+            return null;
+          },
+          textStyle: const TextStyle(letterSpacing: 0.75),
+          onLoadingBuilder: (context, element, loadingProgress) =>
+              SkeletonParagraph(
+            style: SkeletonParagraphStyle(
+                lines: 6,
+                spacing: spaceWrap,
+                lineStyle: SkeletonLineStyle(
+                  randomLength: true,
+                  height: textSM,
+                  borderRadius: BorderRadius.circular(8),
+                  minLength: Get.width * 0.5,
+                )),
+          ),
+          customStylesBuilder: (e) {
+            if (e.localName == 'strong' || e.localName == 'a') {
+              return {'color': '#F78A00', 'text-decoration': 'none'};
+            }
+
+            return null;
+          },
+          onErrorBuilder: (context, element, error) {
+            return Container(
+                margin: EdgeInsets.only(top: spaceSM),
+                child: Text("Something wrong with description".tr,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        fontSize: textSM, fontStyle: FontStyle.italic)));
+          },
+        ));
   } else {
     return Container(
         alignment: Alignment.center,

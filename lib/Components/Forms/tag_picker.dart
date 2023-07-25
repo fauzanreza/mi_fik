@@ -70,6 +70,8 @@ class StateTagSelectedArea extends State<TagSelectedArea> {
                           style:
                               TextStyle(fontSize: textSM, color: primaryColor)),
                       style: ButtonStyle(
+                        padding: MaterialStateProperty.all(
+                            EdgeInsets.symmetric(horizontal: spaceSM)),
                         side: MaterialStateProperty.all(BorderSide(
                             color: primaryColor,
                             width: 1.5,

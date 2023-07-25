@@ -196,7 +196,8 @@ class Dictionaries extends Translations {
           "You": "You",
           "Please register your account first":
               "Please register your account first",
-          "Publish Task": "Publish Task"
+          "Publish Task": "Publish Task",
+          "Something wrong with description": "Something wrong with description"
         },
         'id_ID': {
           'Good Morning': 'Selamat Pagi',
@@ -391,7 +392,8 @@ class Dictionaries extends Translations {
           "You": "Anda",
           "Please register your account first":
               "Daftarkan akun Anda terlebih dahulu",
-          "Publish Task": "Simpan Tugas"
+          "Publish Task": "Simpan Tugas",
+          "Something wrong with description": "Terjadi kesalahan pada deskripsi"
         },
       };
 }

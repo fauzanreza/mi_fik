@@ -41,7 +41,7 @@ class DictionaryQueryService {
         for (var e in arrSlcType) {
           reminderTypeOpt.add(e.slug);
         }
-        slctReminderType = reminderTypeOpt.first;
+        //slctReminderType = reminderTypeOpt.first;
       }
     } else {
       return null;

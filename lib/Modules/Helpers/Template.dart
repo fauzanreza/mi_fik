@@ -23,6 +23,8 @@ Future<void> getDestroyTrace(bool isSignOut) async {
   // await Future.delayed(const Duration(seconds: 1));
   // client.close();
 
+  Get.toNamed(CollectionRoute.landing);
+
   await prefs.clear();
   await box.erase();
   final cacheDir = await getTemporaryDirectory();
@@ -36,7 +38,6 @@ Future<void> getDestroyTrace(bool isSignOut) async {
     cacheDir.deleteSync(recursive: true);
   }
 
-  Get.toNamed(CollectionRoute.landing);
   // Get.reset();
   // Get.clearRouteTree();
 
