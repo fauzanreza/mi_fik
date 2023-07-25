@@ -15,7 +15,9 @@ List<Map<String, dynamic>> listArchiveCheck = [];
 TabController tabController;
 bool isOffline = false;
 FlashMode flashMode = FlashMode.off;
+
 bool isShownLostSessPop = false;
+bool isShownOffLocationPop = false;
 
 //Schedule Page
 String archiveNameMsg = "";
@@ -62,7 +64,7 @@ final selectedTag = [];
 var slctQuestionType = "event";
 var slctFeedbackType = "feedback_design";
 var slctAttachmentType = "image";
-var slctReminderType = "reminder_3_hour_before";
+var slctReminderType = "reminder_none";
 var slctValidUntil = "2023";
 
 // Inital calendar and schedule page

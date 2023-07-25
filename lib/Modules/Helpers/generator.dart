@@ -433,3 +433,9 @@ String getDateMonth(DateTime date) {
 String getHourMinute(DateTime date) {
   return "${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}";
 }
+
+int getMinutesDifference(DateTime ds, DateTime de) {
+  Duration difference = ds.difference(de);
+  int minutes = difference.inMinutes;
+  return minutes;
+}

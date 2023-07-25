@@ -47,11 +47,13 @@ class StateAddPost extends State<AddPost> {
   final locDetailCtrl = TextEditingController();
   DateTime dateStartCtrl;
   DateTime dateEndCtrl;
+  List<String> localeReminder;
 
   @override
   void initState() {
     super.initState();
     apiCommand = ContentCommandsService();
+    localeReminder = reminderTypeOpt;
   }
 
   @override
@@ -143,6 +145,24 @@ class StateAddPost extends State<AddPost> {
             });
       } else {
         Get.back();
+      }
+    }
+
+    getReminderBasedPeriod(int remain) {
+      localeReminder.clear();
+      localeReminder.add("reminder_none");
+
+      if (remain > 0) {
+        localeReminder.add("reminder_1_hour_before");
+      }
+      if (remain > 180) {
+        localeReminder.add("reminder_3_hour_before");
+      }
+      if (remain > 1440) {
+        localeReminder.add("reminder_1_day_before");
+      }
+      if (remain > 4320) {
+        localeReminder.add("reminder_3_day_before");
       }
     }
 
@@ -250,7 +270,7 @@ class StateAddPost extends State<AddPost> {
                                     Container(
                                         padding: EdgeInsets.only(left: spaceSM),
                                         child: getDropDownMain(
-                                            slctReminderType, reminderTypeOpt,
+                                            slctReminderType, localeReminder,
                                             (String newValue) {
                                           setState(() {
                                             slctReminderType = newValue;
@@ -287,15 +307,20 @@ class StateAddPost extends State<AddPost> {
 
                                     DatePicker.showDateTimePicker(context,
                                         showTitleActions: true,
-                                        minTime: DateTime(now.year, now.month,
-                                            now.day), //Tomorrow
+                                        minTime: DateTime(
+                                            now.year, now.month, now.day),
                                         maxTime: DateTime(
                                             now.year + 1, now.month, now.day),
                                         onConfirm: (date) {
                                       setState(() {
+                                        int remain = getMinutesDifference(
+                                            date, DateTime.now());
+                                        getReminderBasedPeriod(remain);
                                         dateStartCtrl = date;
                                       });
-                                    }, currentTime: now, locale: LocaleType.en);
+                                    },
+                                        currentTime: dateStartCtrl ?? now,
+                                        locale: LocaleType.en);
                                   }, "Start", "datetime"),
                                   SizedBox(width: spaceSM),
                                   getDatePicker(dateEndCtrl, () {
@@ -311,7 +336,7 @@ class StateAddPost extends State<AddPost> {
                                         dateEndCtrl = date;
                                       });
                                     },
-                                        currentTime:
+                                        currentTime: dateStartCtrl ??
                                             getMinEndTime(dateStartCtrl),
                                         locale: LocaleType.en);
                                   }, "End", "datetime"),
