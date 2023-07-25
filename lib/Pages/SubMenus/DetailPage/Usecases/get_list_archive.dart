@@ -138,7 +138,7 @@ class StateListArchive extends State<ListArchive> {
                                             )),
                                       ]),
                                   Checkbox(
-                                    checkColor: Colors.white,
+                                    checkColor: whiteColor,
                                     fillColor:
                                         MaterialStateProperty.all(primaryColor),
                                     value: getBoolByInt(

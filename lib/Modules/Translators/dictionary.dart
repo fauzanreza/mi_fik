@@ -101,7 +101,7 @@ class Dictionaries extends Translations {
           'Version': 'Version',
           'First Name': 'First Name',
           'Last Name': 'Last Name',
-          'Valid Until': 'Valid Until',
+          'Batch Year': 'Batch Year',
           'Frequently Asked Question': 'Frequently Asked Question',
           "You haven't selected any tag yet":
               "You haven't selected any tag yet",
@@ -160,12 +160,9 @@ class Dictionaries extends Translations {
               "Create archive failed, field can't be empty",
           "Are you sure want to leave? All changes will not be saved":
               "Are you sure want to leave? All changes will not be saved",
-          "Create event failed, field can't be empty":
-              "Create event failed, field can't be empty",
-          "Create event failed, tag must be selected":
-              "Create event failed, tag must be selected",
-          "Create event failed, date period must be selected":
-              "Create event failed, date period must be selected",
+          "Field can't be empty": "Field can't be empty",
+          "Tag must be selected": "Tag must be selected",
+          "Date period must be selected": "Date period must be selected",
           "Add feedback failed, field can't be empty":
               "Add feedback failed, field can't be empty",
           "Sign out success": "Sign out success",
@@ -174,7 +171,33 @@ class Dictionaries extends Translations {
           "You have picked all role": "You have picked all role",
           "Choose Your Role": "Choose Your Role",
           "Forget Password": "Forget Password",
-          "About to start in": "About to start in"
+          "About to start in": "About to start in",
+          "Trash": "Trash",
+          'Failed to get roles': 'Failed to get roles',
+          'All Day': "All Day",
+          'Ends Today': "Ends Today",
+          'Just Started Today': 'Just Started Today',
+          'all': 'all',
+          'Save': 'Save',
+          'End at': 'End at',
+          ' Live': ' Live',
+          ' About to start': ' About to start',
+          ' About to end': ' About to end',
+          ' Just ended': ' Just ended',
+          ' Just started': ' Just started',
+          ' Finished': ' Finished',
+          'Let us know, what do you think about this App?':
+              'Let us know, what do you think about this App?',
+          "Can't be empty": "Can't be empty",
+          "Validation success": "Validation success",
+          "The date end must after date start":
+              "The date end must after date start",
+          "No description provided": "No description provided",
+          "You": "You",
+          "Please register your account first":
+              "Please register your account first",
+          "Publish Task": "Publish Task",
+          "Something wrong with description": "Something wrong with description"
         },
         'id_ID': {
           'Good Morning': 'Selamat Pagi',
@@ -274,7 +297,7 @@ class Dictionaries extends Translations {
           'Version': 'Versi',
           'First Name': 'Nama Depan',
           'Last Name': 'Nama Belakang',
-          'Valid Until': 'Valid Hingga',
+          'Batch Year': 'Tahun Angkatan',
           'Frequently Asked Question': 'Pertanyaan Populer',
           "You haven't selected any tag yet":
               "Anda belum memilih tag sama sekali",
@@ -333,12 +356,9 @@ class Dictionaries extends Translations {
               "Gagal membuat arsip, kolom tidak boleh kosong",
           "Are you sure want to leave? All changes will not be saved":
               "Apakah Anda yakin ingin keluar? Semua perubahan tidak akan tersimpan",
-          "Create event failed, field can't be empty":
-              "Gagal membuat event, inputan tidak boleh kosong",
-          "Create event failed, tag must be selected":
-              "Gagal membuat event, tag harus dipilih",
-          "Create event failed, date period must be selected":
-              "Gagal membuat event, periode tanggal harus dipilih",
+          "Field can't be empty": "Inputan tidak boleh kosong",
+          "Tag must be selected": "Tag harus dipilih",
+          "Date period must be selected": "Periode tanggal harus dipilih",
           "Add feedback failed, field can't be empty":
               "Gagal membuat event, inputan tidak boleh kosong",
           "Sign out success": "Berhasil keluar akun",
@@ -347,7 +367,33 @@ class Dictionaries extends Translations {
           "You have picked all role": "Anda telah memilih semua role",
           "Choose Your Role": "Pilih role Anda",
           "Forget Password": "Lupa password",
-          "About to start in": "Akan mulai"
+          "About to start in": "Akan mulai",
+          "Trash": "Keranjang Sampah",
+          'Failed to get roles': 'Gagal mendapatkan role',
+          'All Day': "Seharian",
+          'Ends Today': "Berakhir hari ini",
+          'Just Started Today': 'Baru mulai hari ini',
+          'all': 'semua',
+          'Save': 'Simpan',
+          'End at': 'Berakhir pada',
+          ' Live': ' Berlangsung',
+          ' About to start': ' Akan berlangsung',
+          ' About to end': ' Akan berakhir',
+          ' Just ended': ' Baru berakhir',
+          ' Just started': ' Baru mulai',
+          ' Finished': ' Berakhir',
+          'Let us know, what do you think about this App?':
+              'Beritahu kami, bagaimana tanggapan Anda mengenai aplikasi kami?',
+          "Can't be empty": "Tidak boleh kosong",
+          "Validation success": "Validasi sukses",
+          "The date end must after date start":
+              "Tanggal berakhir harus sebelum tanggal mulai",
+          "No description provided": "Tidak ada deskripsi",
+          "You": "Anda",
+          "Please register your account first":
+              "Daftarkan akun Anda terlebih dahulu",
+          "Publish Task": "Simpan Tugas",
+          "Something wrong with description": "Terjadi kesalahan pada deskripsi"
         },
       };
 }

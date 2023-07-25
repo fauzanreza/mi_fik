@@ -115,8 +115,8 @@ Widget getTagShow(tag, dateStart, dateEnd, isConverted) {
                       text: TextSpan(
                         children: [
                           WidgetSpan(
-                            child: Icon(Icons.circle,
-                                size: textSM, color: Colors.blue), //for now.
+                            child:
+                                Icon(Icons.circle, size: textSM, color: infoBG),
                           ),
                           TextSpan(
                             text: " ${content['tag_name']}",
@@ -223,7 +223,7 @@ Widget getLocation(loc, textColor) {
   }
 }
 
-Widget getHourChipLine(String dateStart, double width) {
+Widget getHourChipLine(String dateStart, String dateEnd, double width) {
   DateTime date = DateTime.parse(dateStart);
 
   getLiveText(DateTime dt) {
@@ -254,13 +254,27 @@ Widget getHourChipLine(String dateStart, double width) {
     }
   }
 
+  getDateText() {
+    var dStart = DateTime.parse(dateStart);
+    var now = DateTime.now();
+
+    DateTime checkStart = DateTime(dStart.year, dStart.month, dStart.day);
+    DateTime today = DateTime(now.year, now.month, now.day);
+
+    if (checkStart.isBefore(today)) {
+      return "${DateFormat('dd MMM yyyy').format(checkStart)} ";
+    } else {
+      return "";
+    }
+  }
+
   return Container(
       margin: EdgeInsets.only(top: spaceSM),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '${date.hour}:00',
+            '${getDateText()}${date.hour}:00',
             style: TextStyle(
               color: shadowColor,
               fontSize: textSM,
@@ -289,13 +303,13 @@ Widget getInputWarning(String text) {
               WidgetSpan(
                 child: Icon(
                   FontAwesomeIcons.triangleExclamation,
-                  size: iconSM - 2,
+                  size: iconSM - 1,
                   color: warningBG,
                 ),
               ),
               TextSpan(
                   text: " $text",
-                  style: TextStyle(color: warningBG, fontSize: textSM)),
+                  style: TextStyle(color: warningBG, fontSize: textMD)),
             ],
           ),
         ));
@@ -395,4 +409,33 @@ Future<Role> getRoleSess(bool isLogged) async {
     }
     return null;
   }
+}
+
+String getDateMonth(DateTime date) {
+  final List<String> month = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ];
+
+  return "${date.day.toString().padLeft(2, '0')} ${month[date.month - 1].substring(0, 3)}";
+}
+
+String getHourMinute(DateTime date) {
+  return "${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}";
+}
+
+int getMinutesDifference(DateTime ds, DateTime de) {
+  Duration difference = ds.difference(de);
+  int minutes = difference.inMinutes;
+  return minutes;
 }

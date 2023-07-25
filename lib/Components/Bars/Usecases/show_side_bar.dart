@@ -7,7 +7,7 @@ Widget showSideBar(var scaffoldKey, var clr) {
       IconButton(
         padding: EdgeInsets.zero,
         icon: Icon(Icons.menu, size: 32, color: clr),
-        tooltip: '...',
+        tooltip: 'Others',
         onPressed: () => scaffoldKey.currentState.openDrawer(),
       ),
       const Spacer(),

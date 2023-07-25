@@ -69,8 +69,11 @@ class StateSetLocation extends State<SetLocation>
       }
     } else {
       if (permission == LocationPermission.denied) {
-        Get.snackbar(
-            "Alert", "GPS Service is not enabled, turn on GPS location");
+        if (!isShownOffLocationPop) {
+          Get.snackbar(
+              "Alert", "GPS Service is not enabled, turn on GPS location");
+          isShownOffLocationPop = true;
+        }
       }
     }
 

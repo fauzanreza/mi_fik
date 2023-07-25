@@ -372,65 +372,61 @@ class StateForgetPage extends State<ForgetPage> {
           return false;
         },
         child: Scaffold(
-            resizeToAvoidBottomInset: false,
             body: Onboarding(
-              pages: onboardingPagesList,
-              onPageChange: (int pageIndex) {
-                setState(() {
-                  indexForget = pageIndex;
-                });
-              },
-              startPageIndex: indexForget,
-              footerBuilder: (context, dragDistance, pagesLength, setIndex) {
-                return DecoratedBox(
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 0.0, color: Colors.transparent),
-                  ),
-                  child: ColoredBox(
-                    color: Colors.transparent,
-                    child: Padding(
-                      padding: EdgeInsets.all(spaceLG),
-                      child: Row(
-                        children: [
-                          indexForget == 0
+          pages: onboardingPagesList,
+          onPageChange: (int pageIndex) {
+            setState(() {
+              indexForget = pageIndex;
+            });
+          },
+          startPageIndex: indexForget,
+          footerBuilder: (context, dragDistance, pagesLength, setIndex) {
+            return DecoratedBox(
+              decoration: BoxDecoration(
+                border: Border.all(width: 0.0, color: Colors.transparent),
+              ),
+              child: ColoredBox(
+                color: Colors.transparent,
+                child: Padding(
+                  padding: EdgeInsets.all(spaceLG),
+                  child: Row(
+                    children: [
+                      indexForget == 0
+                          ? _backButton(
+                              setIndex: setIndex,
+                              isFirst: true,
+                              width: fullWidth)
+                          : indexForget != 0 && indexForget != pagesLength - 1
                               ? _backButton(
                                   setIndex: setIndex,
-                                  isFirst: true,
+                                  isFirst: false,
                                   width: fullWidth)
-                              : indexForget != 0 &&
-                                      indexForget != pagesLength - 1
-                                  ? _backButton(
-                                      setIndex: setIndex,
-                                      isFirst: false,
-                                      width: fullWidth)
-                                  : const SizedBox(),
-                          SizedBox(width: spaceLG + spaceMini),
-                          CustomIndicator(
-                            netDragPercent: dragDistance,
-                            pagesLength: pagesLength,
-                            indicator: Indicator(
-                              closedIndicator:
-                                  ClosedIndicator(color: primaryColor),
-                              activeIndicator: ActiveIndicator(
-                                  color: shadowColor.withOpacity(0.25)),
-                              indicatorDesign: IndicatorDesign.polygon(
-                                polygonDesign: PolygonDesign(
-                                  polygon: DesignType.polygon_circle,
-                                ),
-                              ),
+                              : const SizedBox(),
+                      SizedBox(width: spaceLG + spaceMini),
+                      CustomIndicator(
+                        netDragPercent: dragDistance,
+                        pagesLength: pagesLength,
+                        indicator: Indicator(
+                          closedIndicator: ClosedIndicator(color: primaryColor),
+                          activeIndicator: ActiveIndicator(
+                              color: shadowColor.withOpacity(0.25)),
+                          indicatorDesign: IndicatorDesign.polygon(
+                            polygonDesign: PolygonDesign(
+                              polygon: DesignType.polygon_circle,
                             ),
                           ),
-                          const Spacer(),
-                          indexForget == pagesLength - 1
-                              ? finishBtn()
-                              : _skipButton(
-                                  setIndex: setIndex, height: fullHeight)
-                        ],
+                        ),
                       ),
-                    ),
+                      const Spacer(),
+                      indexForget == pagesLength - 1
+                          ? finishBtn()
+                          : _skipButton(setIndex: setIndex, height: fullHeight)
+                    ],
                   ),
-                );
-              },
-            )));
+                ),
+              ),
+            );
+          },
+        )));
   }
 }

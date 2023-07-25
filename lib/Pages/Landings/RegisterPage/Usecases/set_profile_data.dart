@@ -126,7 +126,7 @@ class StateSetProfileData extends State<SetProfileData>
             getInputWarning(widget.lnameMsg),
             getInputTextRegis(
                 35, "lname", null, refresh, lnameRegisCtrl, isFillForm),
-            getSubTitleMedium("Valid Until".tr, darkColor, TextAlign.left),
+            getSubTitleMedium("Batch Year".tr, darkColor, TextAlign.left),
             getDropDownMain(slctValidUntil, validUntil, (String newValue) {
               setState(() {
                 slctValidUntil = newValue;
@@ -171,7 +171,7 @@ class StateSetProfileData extends State<SetProfileData>
                 usernameAvaiabilityCheck, isFillForm),
             getSubTitleMedium("Email", darkColor, TextAlign.left),
             getInputWarning(widget.emailMsg),
-            getInputTextRegis(30, "email", emailCtrl, refresh,
+            getInputTextRegis(75, "email", emailCtrl, refresh,
                 emailAvaiabilityCheck, isFillForm),
             Align(
                 alignment: Alignment.center,
