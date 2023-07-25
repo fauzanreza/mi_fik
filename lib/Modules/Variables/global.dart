@@ -23,6 +23,7 @@ bool isShownOffLocationPop = false;
 String archiveNameMsg = "";
 String archiveDescMsg = "";
 String allArchiveMsg = "";
+bool isBackFromArchive = false;
 
 // Selected
 String selectedArchiveName;

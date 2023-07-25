@@ -44,7 +44,9 @@ class StateSchedulePage extends State<SchedulePage>
     tabController = TabController(
         length: 2,
         vsync: this,
-        initialIndex: getStartIndex(selectedArchiveSlug));
+        initialIndex:
+            isBackFromArchive == true ? 1 : getStartIndex(selectedArchiveSlug));
+    isBackFromArchive = false;
   }
 
   void navigateDay(int newValue) {

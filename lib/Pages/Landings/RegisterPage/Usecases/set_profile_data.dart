@@ -171,7 +171,7 @@ class StateSetProfileData extends State<SetProfileData>
                 usernameAvaiabilityCheck, isFillForm),
             getSubTitleMedium("Email", darkColor, TextAlign.left),
             getInputWarning(widget.emailMsg),
-            getInputTextRegis(30, "email", emailCtrl, refresh,
+            getInputTextRegis(75, "email", emailCtrl, refresh,
                 emailAvaiabilityCheck, isFillForm),
             Align(
                 alignment: Alignment.center,

@@ -80,6 +80,7 @@ class StateDeleteArchive extends State<DeleteArchive> {
                                           selectedArchiveSlug = null;
                                           selectedArchiveName = null;
                                           selectedArchiveDesc = null;
+                                          isBackFromArchive = true;
                                           Get.toNamed(CollectionRoute.bar,
                                               preventDuplicates: false);
                                           Get.dialog(SuccessDialog(text: body));
