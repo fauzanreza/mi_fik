@@ -147,8 +147,8 @@ class StateGetAllTagByCategory extends State<GetAllTagByCategory> {
                 return Center(child: Text("No role available".tr));
               }
             } else {
-              return const Center(
-                child: CircularProgressIndicator(),
+              return Center(
+                child: CircularProgressIndicator(color: primaryColor),
               );
             }
           },

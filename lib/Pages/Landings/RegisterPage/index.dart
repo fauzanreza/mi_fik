@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mi_fik/Components/Backgrounds/loading.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/nodata_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
@@ -389,6 +390,7 @@ class StateRegisterPage extends State<RegisterPage> {
   Widget finishBtn() {
     return InkWell(
         onTap: () async {
+          Get.to(const LoadingScreen(), preventDuplicates: false);
           bool keyExists = await keyExist('token_key');
           indexRegis = 0;
           usernameAvaiabilityCheck = "";
@@ -406,21 +408,23 @@ class StateRegisterPage extends State<RegisterPage> {
           isWaiting = false;
 
           if (keyExists) {
-            authQueryService.getSignOut().then((response) async {
+            await authQueryService.getSignOut().then((response) {
               var body = response[0]['body'];
               var code = response[0]['code'];
 
-              if (body == "Logout success" && code == 200) {
-                await getDestroyTrace(true);
-                Get.dialog(SuccessDialog(text: body));
-              } else if (code == 401) {
-                await getDestroyTrace(true);
+              if (body != "Logout success" && (code == 200 || code == 401)) {
+                //Get.dialog(SuccessDialog(text: body));
+
+                Get.dialog(FailedDialog(text: body, type: "signout"));
               }
             });
-          } else {
-            await getDestroyTrace(true);
-            Get.dialog(SuccessDialog(text: "Sign out success".tr));
           }
+          Future.delayed(const Duration(seconds: 2), () {
+            getDestroyTrace(true);
+          });
+          Future.delayed(const Duration(seconds: 3), () {
+            Get.dialog(SuccessDialog(text: "Sign out success".tr));
+          });
         },
         child: Container(
           padding: EdgeInsets.all(spaceXSM),

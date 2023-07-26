@@ -254,11 +254,11 @@ getImageUser(url) {
   }
 }
 
-Widget getDescHeaderWidget(String desc, Color clr) {
+Widget getDescHeaderWidget(String desc, Color clr, int maxLines) {
   if (desc != null && desc.trim() != "" && desc != "null") {
     return Expanded(
         child: Text(ucFirst(removeHtmlTags(desc).trim()),
-            maxLines: 3,
+            maxLines: maxLines,
             softWrap: true,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(color: clr, fontSize: textSM)));

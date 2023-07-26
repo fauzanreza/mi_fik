@@ -137,8 +137,8 @@ class StateGetAllTagCategory extends State<GetAllTagCategory> {
               box.write("tag-cat", jsonEncode(lst));
               return _buildListView(contents);
             } else {
-              return const Center(
-                child: CircularProgressIndicator(),
+              return Center(
+                child: CircularProgressIndicator(color: primaryColor),
               );
             }
           },

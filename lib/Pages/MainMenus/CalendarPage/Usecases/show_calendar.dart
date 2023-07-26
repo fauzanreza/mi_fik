@@ -40,7 +40,7 @@ class ShowCalendar extends StatelessWidget {
           //To style the Calendar
           calendarStyle: CalendarStyle(
             tableBorder: TableBorder.all(
-                color: darkColor.withOpacity(0.75),
+                color: darkColor.withOpacity(0.65),
                 borderRadius: BorderRadius.all(Radius.circular(roundedMD))),
             isTodayHighlighted: true,
             selectedDecoration: BoxDecoration(

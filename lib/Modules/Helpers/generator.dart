@@ -200,6 +200,7 @@ Widget getLocation(loc, textColor) {
     }
 
     return Container(
+        constraints: BoxConstraints(maxWidth: Get.width * 0.65),
         margin: EdgeInsets.only(bottom: spaceSM),
         child: RichText(
           maxLines: 1,
@@ -208,12 +209,14 @@ Widget getLocation(loc, textColor) {
             children: [
               WidgetSpan(
                 child: Icon(Icons.location_on_outlined,
-                    color: textColor, size: 18),
+                    color: textColor, size: iconMD),
               ),
               TextSpan(
                   text: " ${ucFirst(location)}",
-                  style:
-                      TextStyle(fontWeight: FontWeight.w500, color: textColor)),
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: textColor,
+                      fontSize: textMD)),
             ],
           ),
         ));

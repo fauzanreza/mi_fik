@@ -197,7 +197,14 @@ class Dictionaries extends Translations {
           "Please register your account first":
               "Please register your account first",
           "Publish Task": "Publish Task",
-          "Something wrong with description": "Something wrong with description"
+          "Something wrong with description":
+              "Something wrong with description",
+          "Collection of event or task you want to save even when the period is end":
+              "Collection of event or task you want to save even when the period is end",
+          "Manage and remind daily tasks that have been created":
+              "Manage and remind daily tasks that have been created",
+          "Event is an information about some public activity that will be held in the future":
+              "Event is an information about some public activity that will be held in the future"
         },
         'id_ID': {
           'Good Morning': 'Selamat Pagi',
@@ -393,7 +400,14 @@ class Dictionaries extends Translations {
           "Please register your account first":
               "Daftarkan akun Anda terlebih dahulu",
           "Publish Task": "Simpan Tugas",
-          "Something wrong with description": "Terjadi kesalahan pada deskripsi"
+          "Something wrong with description":
+              "Terjadi kesalahan pada deskripsi",
+          "Collection of event or task you want to save even when the period is end":
+              "Koleksi event atau tugas yang ingin Anda simpan bahkan jika periodenya telah usai",
+          "Manage and remind daily tasks that have been created":
+              "Mengatur tugas harian yang telah dibuat",
+          "Event is an information about some public activity that will be held in the future":
+              "Event adalah sebuah informasi mengenai aktivitas publik yang akan diselengarakan"
         },
       };
 }

@@ -198,7 +198,8 @@ class _EditImageState extends State<EditImage>
                                   width: fullWidth * 0.085),
                             )))));
           } else {
-            return const Center(child: CircularProgressIndicator());
+            return Center(
+                child: CircularProgressIndicator(color: primaryColor));
           }
         });
   }

@@ -29,6 +29,7 @@ class StateRolePage extends State<RolePage> {
   @override
   void initState() {
     super.initState();
+    selectedRole.clear();
     apiQuery = UserQueriesService();
   }
 

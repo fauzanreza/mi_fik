@@ -5,13 +5,7 @@ Widget getAppbar(String title, var action) {
   return AppBar(
     leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: action),
     flexibleSpace: Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [primaryColor, semidarkColor],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
+      decoration: BoxDecoration(color: primaryColor),
     ),
     title: Text(title, style: TextStyle(fontSize: textLG)),
   );

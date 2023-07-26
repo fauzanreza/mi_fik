@@ -51,8 +51,8 @@ class StatePostArchiveRelation extends State<PostArchiveRelation> {
             }
             return _buildListView(archieves);
           } else {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return Center(
+              child: CircularProgressIndicator(color: primaryColor),
             );
           }
         },

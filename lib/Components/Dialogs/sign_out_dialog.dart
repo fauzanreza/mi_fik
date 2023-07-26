@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mi_fik/Components/Backgrounds/loading.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
 import 'package:mi_fik/Modules/APIs/AuthApi/Services/queries.dart';
@@ -55,27 +56,27 @@ class StateSignOutDialog extends State<SignOutDialog> {
             backgroundColor: MaterialStatePropertyAll<Color>(warningBG),
           ),
           onPressed: () async {
+            Get.to(const LoadingScreen(), preventDuplicates: false);
             bool keyExists = await keyExist('token_key');
 
             if (keyExists) {
-              apiService.getSignOut().then((response) {
+              await apiService.getSignOut().then((response) {
                 var body = response[0]['body'];
                 var code = response[0]['code'];
 
-                if (body == "Logout success" && code == 200) {
-                  getDestroyTrace(true);
-                  Get.dialog(SuccessDialog(text: body));
-                } else if (code == 401) {
-                  getDestroyTrace(true);
-                  Get.dialog(SuccessDialog(text: "Sign out success".tr));
-                } else {
+                if (body != "Logout success" && (code == 200 || code == 401)) {
+                  //Get.dialog(SuccessDialog(text: body));
+
                   Get.dialog(FailedDialog(text: body, type: "signout"));
                 }
               });
-            } else {
-              getDestroyTrace(true);
-              Get.dialog(SuccessDialog(text: "Sign out success".tr));
             }
+            Future.delayed(const Duration(seconds: 2), () {
+              getDestroyTrace(true);
+            });
+            Future.delayed(const Duration(seconds: 3), () {
+              Get.dialog(SuccessDialog(text: "Sign out success".tr));
+            });
           },
           child: Text("Sign Out".tr,
               style: TextStyle(color: whiteColor, fontSize: textXMD)),

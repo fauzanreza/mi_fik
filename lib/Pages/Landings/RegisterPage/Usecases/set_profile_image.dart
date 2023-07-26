@@ -251,7 +251,8 @@ class StateSetProfileImage extends State<SetProfileImage>
                       )),
                 ]);
           } else {
-            return const Center(child: CircularProgressIndicator());
+            return Center(
+                child: CircularProgressIndicator(color: primaryColor));
           }
         });
   }
