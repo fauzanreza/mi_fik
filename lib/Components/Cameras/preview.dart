@@ -129,6 +129,14 @@ class _ShowImageState extends State<ShowImage>
         "Failed to upload image $e".tr,
         backgroundColor: whiteColor,
       );
+
+      Future.delayed(const Duration(seconds: 2), () {
+        if (widget.from == "profile") {
+          Get.toNamed(CollectionRoute.profile, preventDuplicates: false);
+        } else {
+          Get.toNamed(CollectionRoute.register, preventDuplicates: false);
+        }
+      });
     }
   }
 

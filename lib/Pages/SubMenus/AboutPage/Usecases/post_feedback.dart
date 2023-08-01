@@ -48,8 +48,10 @@ class StatePostFeedback extends State<PostFeedback> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            getSubTitleMedium("Let us know, what do you think about this App?",
-                darkColor, TextAlign.start),
+            getSubTitleMedium(
+                "Let us know, what do you think about this App?".tr,
+                darkColor,
+                TextAlign.start),
             getInputRate((double rate) {
               setState(() {
                 rateCtrl = rate.toInt();

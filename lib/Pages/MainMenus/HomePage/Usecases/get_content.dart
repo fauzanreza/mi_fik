@@ -2,8 +2,10 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mi_fik/Components/Backgrounds/image.dart';
 import 'package:mi_fik/Components/Container/content.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
+import 'package:mi_fik/Components/Skeletons/content_1.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Models/query_contents.dart';
 import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_contents.dart';
@@ -13,9 +15,11 @@ import 'package:mi_fik/Pages/MainMenus/HomePage/Usecases/set_control.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/index.dart';
 
 class GetContent extends StatefulWidget {
-  const GetContent({Key key, this.scrollCtrl, this.item}) : super(key: key);
-  final ScrollController scrollCtrl;
+  const GetContent({Key key, this.item, this.isEmpty, this.isLoad})
+      : super(key: key);
+  final bool isEmpty;
   final List item;
+  final bool isLoad;
 
   @override
   StateGetContent createState() => StateGetContent();
@@ -36,7 +40,7 @@ class StateGetContent extends State<GetContent> {
   @override
   Widget build(BuildContext context) {
     double fullHeight = MediaQuery.of(context).size.height;
-    //double fullWidth = MediaQuery.of(context).size.width;
+    double fullWidth = MediaQuery.of(context).size.width;
 
     Widget getActiveFilterText() {
       String order = "";
@@ -94,6 +98,7 @@ class StateGetContent extends State<GetContent> {
               fontWeight: FontWeight.w500));
     }
 
+    int index = 1;
     return Container(
         margin: EdgeInsets.only(top: spaceLG),
         constraints: BoxConstraints(minHeight: fullHeight * 0.8),
@@ -118,10 +123,45 @@ class StateGetContent extends State<GetContent> {
               ],
             ),
           ),
-          Column(
-              children: widget.item.map<Widget>((e) {
-            return _buildContentItem(e);
-          }).toList())
+          widget.isEmpty == true
+              ? SizedBox(
+                  height: fullHeight * 0.7,
+                  child: getMessageImageNoData(
+                      "assets/icon/empty.png",
+                      "No event / task for today, have a good rest".tr,
+                      fullWidth))
+              : widget.isLoad == false
+                  ? Column(
+                      children: widget.item.map<Widget>((e) {
+                      if (index < widget.item.length + 1) {
+                        if (index != widget.item.length) {
+                          index++;
+                          return _buildContentItem(e);
+                        } else {
+                          index++;
+                          return Column(children: [
+                            _buildContentItem(e),
+                            Container(
+                                margin: EdgeInsets.symmetric(vertical: spaceLG),
+                                child: Text("No more item to show".tr,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(fontSize: textMD)))
+                          ]);
+                        }
+                      } else {
+                        return Container(
+                            margin: EdgeInsets.symmetric(vertical: spaceLG),
+                            child: Text("No more item to show".tr,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: textMD)));
+                      }
+                    }).toList())
+                  : Column(
+                      children: const [
+                        SkeletonContentHeader(),
+                        SkeletonContentHeader()
+                      ],
+                    )
         ]));
   }
 
@@ -139,8 +179,6 @@ class StateGetContent extends State<GetContent> {
                 width: 2.5,
                 color: primaryColor,
               ),
-
-              // Open content w/ full container
               GestureDetector(
                   onTap: () async {
                     final connectivityResult =

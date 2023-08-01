@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
 // Navigation
@@ -15,10 +16,14 @@ TabController tabController;
 bool isOffline = false;
 FlashMode flashMode = FlashMode.off;
 
+bool isShownLostSessPop = false;
+bool isShownOffLocationPop = false;
+
 //Schedule Page
 String archiveNameMsg = "";
 String archiveDescMsg = "";
 String allArchiveMsg = "";
+bool isBackFromArchive = false;
 
 // Selected
 String selectedArchiveName;
@@ -60,7 +65,7 @@ final selectedTag = [];
 var slctQuestionType = "event";
 var slctFeedbackType = "feedback_design";
 var slctAttachmentType = "image";
-var slctReminderType = "reminder_3_hour_before";
+var slctReminderType = "reminder_none";
 var slctValidUntil = "2023";
 
 // Inital calendar and schedule page
@@ -80,7 +85,7 @@ LangList slctLang;
 int selectedIndex = 0;
 
 // Starting Variables
-String sortingHomepageContent = "Desc";
+String sortingHomepageContent = "Asc";
 String filteringTag = "all";
 String searchingContent = "";
 String contentAttImage;
@@ -152,3 +157,7 @@ NotificationDetails fcmConfig = NotificationDetails(
     sound: const RawResourceAndroidNotificationSound('notif_1'),
   ),
 );
+
+// Response
+String emptyInputMsg = "can't be empty".tr;
+String invalidDateMsg = "The date end must after date start".tr;

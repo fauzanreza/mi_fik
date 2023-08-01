@@ -107,7 +107,7 @@ class ContentQueriesService {
     }
   }
 
-  Future<List<ScheduleModel>> getSchedule(DateTime date) async {
+  Future<List<ScheduleModel>> getSchedule(DateTime date, int page) async {
     final prefs = await SharedPreferences.getInstance();
     String dateStr = DateFormat("yyyy-MM-dd").format(date);
 
@@ -139,7 +139,7 @@ class ContentQueriesService {
       int utc = getUTCHourOffset();
 
       final response = await client.get(
-          Uri.parse("$emuUrl/api/v1/content/date/$dateStr/$utc"),
+          Uri.parse("$emuUrl/api/v1/content/date/$dateStr/$utc?page=$page"),
           headers: header);
       if (response.statusCode == 200) {
         prefs.setString("schedule-$dateStr-sess", response.body);

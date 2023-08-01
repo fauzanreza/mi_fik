@@ -31,13 +31,17 @@ class HomePage extends StatefulWidget {
 }
 
 class StateHomePage extends State<HomePage> {
-  ContentQueriesService queryService;
-  int page = 1;
-  List<ContentHeaderModel> contents = [];
-  bool isLoading = false;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
+  ScrollController scrollCtrl;
+
+  ContentQueriesService queryService;
+  int page = 1;
+  int totalPage = 1;
+  List<ContentHeaderModel> contents = [];
+  bool isLoading = false;
+  bool isEmpty = false;
 
   Future<Role> getTokenNLoc() async {
     final prefs = await SharedPreferences.getInstance();
@@ -51,8 +55,6 @@ class StateHomePage extends State<HomePage> {
     contents.clear();
     loadMoreContent();
   }
-
-  ScrollController scrollCtrl;
 
   @override
   void initState() {
@@ -69,24 +71,32 @@ class StateHomePage extends State<HomePage> {
 
   Future<void> loadMoreContent() async {
     if (!isLoading) {
-      setState(() {
-        isLoading = true;
-      });
+      if (page <= totalPage) {
+        setState(() {
+          isLoading = true;
+        });
 
-      List<ContentHeaderModel> newHistory =
-          await queryService.getAllContentHeader(
-              getTagFilterContent(selectedTagFilterContent),
-              sortingHomepageContent,
-              getWhereDateFilter(filterDateStart, filterDateEnd),
-              getFindFilter(searchingContent),
-              page++);
-      if (newHistory != null) {
-        contents.addAll(newHistory);
+        List<ContentHeaderModel> items = await queryService.getAllContentHeader(
+            getTagFilterContent(selectedTagFilterContent),
+            sortingHomepageContent,
+            getWhereDateFilter(filterDateStart, filterDateEnd),
+            getFindFilter(searchingContent),
+            page);
+
+        if (items != null) {
+          contents.addAll(items);
+          for (var element in items) {
+            totalPage = element.totalPage;
+          }
+          page++;
+        } else {
+          isEmpty = true;
+        }
+
+        setState(() {
+          isLoading = false;
+        });
       }
-
-      setState(() {
-        isLoading = false;
-      });
     }
   }
 
@@ -114,45 +124,48 @@ class StateHomePage extends State<HomePage> {
                   key: _refreshIndicatorKey,
                   onRefresh: refreshData,
                   child: ListView.builder(
-                      padding: EdgeInsets.only(top: fullHeight * 0.04),
-                      itemCount: 1,
-                      controller: scrollCtrl,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Column(children: [
-                          showSideBar(scaffoldKey, whiteColor),
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: spaceXMD),
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  getGreeting(getToday("part"), whiteColor),
-                                  getTitleJumbo(getToday("clock"), whiteColor),
-                                  SizedBox(height: fullHeight * 0.03),
-                                  Row(
-                                    children: [
-                                      getSubTitleMedium(getToday("date"),
-                                          whiteColor, TextAlign.start),
-                                      const Spacer(),
-                                      const GetLocation()
-                                    ],
-                                  )
-                                ]),
+                    padding: EdgeInsets.only(top: fullHeight * 0.04),
+                    itemCount: 1,
+                    controller: scrollCtrl,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Column(children: [
+                        showSideBar(scaffoldKey, whiteColor),
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: spaceXMD),
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                getGreeting(getToday("part"), whiteColor),
+                                getTitleJumbo(getToday("clock"), whiteColor),
+                                SizedBox(height: fullHeight * 0.03),
+                                Row(
+                                  children: [
+                                    getSubTitleMedium(getToday("date"),
+                                        whiteColor, TextAlign.start),
+                                    const Spacer(),
+                                    const GetLocation()
+                                  ],
+                                )
+                              ]),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: spaceSM),
+                          padding: EdgeInsets.symmetric(horizontal: spaceSM),
+                          decoration: BoxDecoration(
+                            color: hoverBG,
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(roundedLG),
+                                topRight: Radius.circular(roundedLG)),
                           ),
-                          Container(
-                            margin: EdgeInsets.only(top: spaceSM),
-                            padding: EdgeInsets.symmetric(horizontal: spaceSM),
-                            decoration: BoxDecoration(
-                              color: hoverBG,
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(roundedLG),
-                                  topRight: Radius.circular(roundedLG)),
-                            ),
-                            child: GetContent(
-                                scrollCtrl: scrollCtrl, item: contents),
-                          )
-                        ]);
-                      }))),
+                          child: GetContent(
+                              item: contents,
+                              isEmpty: isEmpty,
+                              isLoad: isLoading),
+                        )
+                      ]);
+                    },
+                  ))),
           floatingActionButton: const GetRoleFeature(),
         ));
   }
@@ -206,15 +219,14 @@ class StateGetRole extends State<GetRoleFeature> {
         isLoading = true;
       });
 
-      List<ContentHeaderModel> newHistory =
-          await queryService.getAllContentHeader(
-              getTagFilterContent(selectedTagFilterContent),
-              sortingHomepageContent,
-              getWhereDateFilter(filterDateStart, filterDateEnd),
-              getFindFilter(searchingContent),
-              page++);
-      if (newHistory != null) {
-        contents.addAll(newHistory);
+      List<ContentHeaderModel> items = await queryService.getAllContentHeader(
+          getTagFilterContent(selectedTagFilterContent),
+          sortingHomepageContent,
+          getWhereDateFilter(filterDateStart, filterDateEnd),
+          getFindFilter(searchingContent),
+          page++);
+      if (items != null) {
+        contents.addAll(items);
       }
 
       setState(() {

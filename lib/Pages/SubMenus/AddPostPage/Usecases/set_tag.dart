@@ -58,7 +58,7 @@ class StateChooseTag extends State<ChooseTag> {
                           icon: Icon(
                             Icons.circle,
                             size: textSM,
-                            color: Colors.green,
+                            color: successBG,
                           ),
                           label: Text(tag['tag_name'],
                               style: TextStyle(fontSize: textXSM)),

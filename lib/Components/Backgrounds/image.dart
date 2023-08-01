@@ -107,7 +107,7 @@ Widget getProfileImage(u1, u2, i1, i2) {
 Widget getProfileImageContent(var url) {
   if (url != null && url != "null") {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: spaceSM),
+      margin: EdgeInsets.only(left: spaceMini, right: spaceSM),
       width: iconJumbo,
       height: iconJumbo,
       decoration: BoxDecoration(
@@ -167,7 +167,7 @@ Widget getProfileImageContent(var url) {
     );
   } else {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: spaceSM),
+      margin: EdgeInsets.only(left: spaceMini, right: spaceSM),
       width: iconJumbo,
       height: iconJumbo,
       decoration: BoxDecoration(

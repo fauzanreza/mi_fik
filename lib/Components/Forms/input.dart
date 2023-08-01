@@ -174,6 +174,7 @@ Widget getDropDownMain(String slct, List<String> opt,
       ),
       child: DropdownButton(
         value: slct,
+        borderRadius: BorderRadius.all(Radius.circular(roundedMD)),
         underline: Container(
           height: 1.0,
           decoration: const BoxDecoration(border: null),

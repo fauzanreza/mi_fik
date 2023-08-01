@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -83,8 +84,11 @@ Future checkGps(var func) async {
       func;
     }
   } else {
-    Get.snackbar("Alert", 'GPS Service is not enabled, turn on GPS location',
-        backgroundColor: whiteColor);
+    if (!isShownOffLocationPop) {
+      Get.snackbar("Alert", 'GPS Service is not enabled, turn on GPS location',
+          backgroundColor: whiteColor);
+      isShownOffLocationPop = true;
+    }
   }
 }
 

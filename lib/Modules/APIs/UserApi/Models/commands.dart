@@ -44,7 +44,7 @@ class RegisterModel {
       "password": password,
       "first_name": firstName,
       "last_name": lastName,
-      "valid_until": validUntil,
+      "batch_year": validUntil,
     };
   }
 }

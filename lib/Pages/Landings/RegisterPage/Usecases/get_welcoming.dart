@@ -21,12 +21,25 @@ class StateGetWelcoming extends State<GetWelcoming> {
           EdgeInsets.fromLTRB(spaceLG, spaceJumbo + spaceMD, spaceLG, spaceLG),
       children: [
         getTitleLarge("Welcoming".tr, primaryColor),
+        Text("Faculty of Creative Industries Information Management (MI-FIK)",
+            style: TextStyle(fontSize: textLG, fontWeight: FontWeight.bold)),
+        SizedBox(height: spaceLG),
         Text(
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquet nec ullamcorper sit amet risus nullam eget felis. Nibh tellus molestie nunc non blandit massa enim. Dolor magna eget est lorem ipsum dolor sit amet. Maecenas ultricies mi eget mauris pharetra et ultrices. Purus sit amet volutpat consequat mauris nunc congue. Sed cras ornare arcu dui vivamus arcu felis bibendum ut. Mi ipsum faucibus vitae aliquet. Viverra justo nec ultrices dui sapien eget mi proin sed. Enim nulla aliquet porttitor lacus.",
+            "Welcome to the Faculty of Creative Industries Information Management Application (MI-FIK), an innovative solution to improve the efficiency and accessibility of information for the entire community at the Faculty of Creative Industries Telkom University.",
             style: TextStyle(fontSize: textXMD - 2)),
         SizedBox(height: spaceLG),
         Text(
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquet nec ullamcorper sit amet risus nullam eget felis. Nibh tellus molestie nunc non blandit massa enim. Dolor magna eget est lorem ipsum dolor sit amet. Maecenas ultricies mi eget mauris pharetra et ultrices. Purus sit amet volutpat consequat mauris nunc congue. Sed cras ornare arcu dui vivamus arcu felis bibendum ut. Mi ipsum faucibus vitae aliquet. Viverra justo nec ultrices dui sapien eget mi proin sed. Enim nulla aliquet porttitor lacus.",
+            "Telkom University's Faculty of Creative Industries (FIK) has six leading and most comprehensive study programs in the creative field, namely, Bachelor of Visual Communication Design (S.Ds), Bachelor of Interior Design (S.Ds), Bachelor of Product Design (S.Ds), Bachelor of Crafts (S.Sn) and Bachelor of Fine Arts (S.Sn). In 2020, the Faculty of Creative Industries presented one new study program, the Master of Design (M.Ds) program. ",
+            style: TextStyle(fontSize: textXMD - 2)),
+        SizedBox(height: spaceLG),
+        Text("MI-FIK can be use by :",
+            style: TextStyle(fontSize: textXMD, fontWeight: FontWeight.bold)),
+        Text("- Faculty Staff", style: TextStyle(fontSize: textXMD - 2)),
+        Text("- Lecturer", style: TextStyle(fontSize: textXMD - 2)),
+        Text("- Student", style: TextStyle(fontSize: textXMD - 2)),
+        SizedBox(height: spaceLG),
+        Text(
+            "MI-FIK is specifically designed to meet the needs of communication problems in the FIK community in managing and sharing information effectively. With advanced features and an intuitive interface, this application will be a helpful tool for lecturers, staff, and students in disseminating information.",
             style: TextStyle(fontSize: textXMD - 2)),
       ],
     );

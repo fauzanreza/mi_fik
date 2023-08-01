@@ -96,7 +96,7 @@ class StateGetMyHistory extends State<GetMyHistory> {
       margin: EdgeInsets.fromLTRB(spaceXMD, spaceXMD, spaceXMD, 0),
       padding: EdgeInsets.all(spaceXMD),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: whiteColor,
         borderRadius: const BorderRadius.all(Radius.circular(10)),
         boxShadow: [
           BoxShadow(
