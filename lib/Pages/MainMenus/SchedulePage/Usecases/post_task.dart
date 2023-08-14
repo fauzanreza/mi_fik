@@ -63,10 +63,12 @@ class StatePostTask extends State<PostTask> {
                 InkWell(
                   onTap: () => Get.back(),
                   child: Container(
+                    height: 50,
+                    width: 50,
                     transform: Matrix4.translationValues(
                         spaceXMD, fullHeight * 0.01, 0.0),
                     decoration: BoxDecoration(
-                      color: primaryColor,
+                      color: warningBG,
                       borderRadius:
                           BorderRadius.all(Radius.circular(roundedCircle)),
                       boxShadow: [

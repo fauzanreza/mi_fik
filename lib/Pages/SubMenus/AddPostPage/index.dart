@@ -178,10 +178,12 @@ class StateAddPost extends State<AddPost> {
               Stack(children: [
                 const SetImageContent(),
                 Container(
+                  height: 50,
+                  width: 50,
                   transform: Matrix4.translationValues(
                       spaceXMD, fullHeight * 0.05, 0.0),
                   decoration: BoxDecoration(
-                    color: primaryColor,
+                    color: warningBG,
                     borderRadius:
                         BorderRadius.all(Radius.circular(roundedCircle)),
                     boxShadow: [

@@ -76,10 +76,6 @@ class StateProfilePage extends State<ProfilePage> {
                                   }, Icons.history, "History".tr,
                                       Icons.keyboard_arrow_right),
                                   getProfileButton(() {
-                                    Get.toNamed(CollectionRoute.about);
-                                  }, Icons.info, "About Us".tr,
-                                      Icons.keyboard_arrow_right),
-                                  getProfileButton(() {
                                     Get.toNamed(CollectionRoute.forget);
                                   }, Icons.key, "Forget Password".tr,
                                       Icons.keyboard_arrow_right),

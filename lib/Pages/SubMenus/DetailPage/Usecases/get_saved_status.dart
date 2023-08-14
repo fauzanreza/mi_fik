@@ -52,8 +52,8 @@ class StateGetSavedStatus extends State<GetSavedStatus> {
 
             return _buildListView(archieves);
           } else {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return Center(
+              child: CircularProgressIndicator(color: primaryColor),
             );
           }
         },

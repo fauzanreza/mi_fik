@@ -126,7 +126,7 @@ class StateArchivePage extends State<ArchivePage> {
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
                                               color: darkColor,
-                                              fontSize: textSM,
+                                              fontSize: textMD,
                                               fontWeight: FontWeight.w500)),
                                       SizedBox(height: spaceSM),
                                       Text(

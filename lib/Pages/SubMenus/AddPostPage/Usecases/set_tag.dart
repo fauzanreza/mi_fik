@@ -80,7 +80,8 @@ class StateChooseTag extends State<ChooseTag> {
                       tag: selectedTag, type: "tag", action: updateTags)
                 ]);
           } else {
-            return const Center(child: CircularProgressIndicator());
+            return Center(
+                child: CircularProgressIndicator(color: primaryColor));
           }
         });
   }

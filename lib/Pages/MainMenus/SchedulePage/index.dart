@@ -130,16 +130,27 @@ class StateSchedulePage extends State<SchedulePage>
                 activeIcon: Icons.close,
                 icon: Icons.add,
                 iconTheme: IconThemeData(color: whiteColor),
-                backgroundColor: primaryColor,
+                backgroundColor: successBG,
+                activeBackgroundColor: warningBG,
                 overlayColor: primaryColor,
-                overlayOpacity: 0.4,
+                overlayOpacity: 0.25,
                 onOpen: () => isSpeedDialOpen = true,
                 onClose: () => isSpeedDialOpen = false,
                 children: [
-                  getSpeeDialChild("New Task".tr, context, const PostTask(),
-                      Icons.note_add_outlined),
-                  getSpeeDialChild("New Archive".tr, context,
-                      const PostArchive(), Icons.folder)
+                  getSpeeDialChild(
+                      "New Task".tr,
+                      context,
+                      const PostTask(),
+                      Icons.note_add_outlined,
+                      "Manage and remind daily tasks that have been created"
+                          .tr),
+                  getSpeeDialChild(
+                      "New Archive".tr,
+                      context,
+                      const PostArchive(),
+                      Icons.folder,
+                      "Collection of event or task you want to save even when the period is end"
+                          .tr)
                 ])));
   }
 }

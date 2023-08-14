@@ -312,12 +312,15 @@ class StateDetailPage extends State<DetailPage> {
                 ])),
             floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
             floatingActionButton: Container(
+                height: 50,
+                width: 50,
                 margin: EdgeInsets.only(top: spaceLG),
                 decoration: BoxDecoration(
+                    color: warningBG,
                     borderRadius:
                         BorderRadius.all(Radius.circular(roundedCircle))),
                 child: FloatingActionButton(
-                  backgroundColor: primaryColor,
+                  backgroundColor: warningBG,
                   onPressed: () {},
                   child: IconButton(
                     icon: Icon(Icons.arrow_back, size: iconLG),
@@ -403,12 +406,15 @@ class StateDetailPage extends State<DetailPage> {
                 ])),
             floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
             floatingActionButton: Container(
+                height: 50,
+                width: 50,
                 margin: EdgeInsets.only(top: spaceLG),
                 decoration: BoxDecoration(
+                    color: warningBG,
                     borderRadius:
                         BorderRadius.all(Radius.circular(roundedCircle))),
                 child: FloatingActionButton(
-                  backgroundColor: primaryColor,
+                  backgroundColor: warningBG,
                   onPressed: () {},
                   child: IconButton(
                     icon: Icon(Icons.arrow_back, size: iconLG),

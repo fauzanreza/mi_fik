@@ -140,7 +140,8 @@ class StateGetHomePageEventContainer extends State<GetHomePageEventContainer> {
                       ],
                     ),
                     SizedBox(height: spaceXSM),
-                    getDescHeaderWidget(widget.content.contentDesc, darkColor)
+                    getDescHeaderWidget(
+                        widget.content.contentDesc, darkColor, 3)
                   ]),
             )),
             Container(
@@ -249,7 +250,7 @@ class GetScheduleContainer extends StatelessWidget {
 
   Widget getOngoingDesc(DateTime ds, DateTime de, String desc) {
     if (isPassedDate(ds, de)) {
-      return getDescHeaderWidget(desc, whiteColor);
+      return getDescHeaderWidget(desc, whiteColor, 2);
     } else {
       return const SizedBox();
     }

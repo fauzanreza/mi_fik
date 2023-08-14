@@ -48,8 +48,8 @@ class StateGetAllQuestion extends State<GetAllQuestion> {
                 List<QuestionBodyModel> contents = snapshot.data;
                 return _buildListView(contents);
               } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
+                return Center(
+                  child: CircularProgressIndicator(color: primaryColor),
                 );
               }
             },

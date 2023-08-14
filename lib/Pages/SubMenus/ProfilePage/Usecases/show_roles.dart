@@ -146,6 +146,7 @@ class StateShowRole extends State<ShowRole> {
                                                     warningBG),
                                           ),
                                           onPressed: () async {
+                                            selectedRole.clear();
                                             selectedRole.add({
                                               "slug_name": tag.slug,
                                               "tag_name": tag.tagName

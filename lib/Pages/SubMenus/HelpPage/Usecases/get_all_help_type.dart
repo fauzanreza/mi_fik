@@ -44,8 +44,8 @@ class StateGetAllHelpType extends State<GetAllHelpType> {
             List<HelpTypeModel> contents = snapshot.data;
             return _buildListView(contents);
           } else {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return Center(
+              child: CircularProgressIndicator(color: primaryColor),
             );
           }
         },
