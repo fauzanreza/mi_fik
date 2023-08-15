@@ -53,7 +53,7 @@ class SuccessDialog extends StatelessWidget {
                         color: successBG,
                         borderRadius:
                             BorderRadius.all(Radius.circular(roundedMD))),
-                    child: Text("Continue".tr,
+                    child: Text("OK".tr,
                         style: TextStyle(
                             color: whiteColor, fontWeight: FontWeight.w500)),
                   ))

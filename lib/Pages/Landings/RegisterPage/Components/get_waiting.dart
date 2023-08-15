@@ -26,13 +26,14 @@ class StateGetWaiting extends State<GetWaiting> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                getTitleLarge("Your account has registered", primaryColor),
+                getTitleLarge("Your account has registered".tr, primaryColor),
                 ClipRRect(
                   child: Image.asset('assets/icon/usermanage.png',
                       width: fullHeight * 0.3),
                 ),
                 getSubTitleMedium(
-                    "Please wait until your account has been approved by admin",
+                    "Please wait until your account has been approved by admin"
+                        .tr,
                     darkColor,
                     TextAlign.center),
                 Center(
@@ -40,8 +41,9 @@ class StateGetWaiting extends State<GetWaiting> {
                   onTap: () async {
                     final Email email = Email(
                       body:
-                          'Hey, I want to regist to Mi-Fik, please accept my request',
-                      subject: 'Account Register',
+                          'Hey, I want to regist to MI-FIK, please accept my request'
+                              .tr,
+                      subject: 'Account Register'.tr,
                       recipients: ['hello@mifik.id'],
                       // cc: ['cc@example.com'],
                       // bcc: ['bcc@example.com'],

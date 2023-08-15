@@ -41,7 +41,7 @@ class HelpQueriesService {
       };
 
       final response =
-          await client.get(Uri.parse("$baseUrl/api/v1/help"), headers: header);
+          await client.get(Uri.parse("$emuUrl/api/v1/help"), headers: header);
       if (response.statusCode == 200) {
         prefs.setString("help-type-sess", response.body);
 
@@ -79,7 +79,7 @@ class HelpQueriesService {
         'Accept': 'application/json',
       };
 
-      final response = await client.get(Uri.parse("$baseUrl/api/v1/help/$type"),
+      final response = await client.get(Uri.parse("$emuUrl/api/v1/help/$type"),
           headers: header);
       if (response.statusCode == 200) {
         prefs.setString("help-type-$type-sess", response.body);
@@ -117,7 +117,7 @@ class HelpQueriesService {
         'Accept': 'application/json',
       };
 
-      final response = await client.get(Uri.parse("$baseUrl/api/v1/help/about"),
+      final response = await client.get(Uri.parse("$emuUrl/api/v1/help/about"),
           headers: header);
       if (response.statusCode == 200) {
         prefs.setString("help-about-sess", response.body);

@@ -123,7 +123,7 @@ class StateSetProfileImage extends State<SetProfileImage>
                 children: [
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: getTitleLarge("Profile Picture", primaryColor),
+                    child: getTitleLarge("Profile Picture".tr, primaryColor),
                   ),
                   Stack(
                     children: [
@@ -205,6 +205,7 @@ class StateSetProfileImage extends State<SetProfileImage>
                                                         response[0]['body'];
 
                                                     if (status == "success") {
+                                                      Get.back();
                                                       lottieController.reset();
                                                       setState(() {
                                                         uploadedImageRegis =
@@ -212,7 +213,6 @@ class StateSetProfileImage extends State<SetProfileImage>
                                                       });
                                                     } else {
                                                       Get.back();
-
                                                       lottieController.reset();
                                                       Get.dialog(FailedDialog(
                                                           text: body));

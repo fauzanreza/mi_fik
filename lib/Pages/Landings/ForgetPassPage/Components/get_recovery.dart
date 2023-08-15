@@ -128,7 +128,7 @@ class StateGetRecovery extends State<GetRecovery>
             Align(
                 alignment: Alignment.center,
                 child: Text(
-                  "Please tell us your email and username",
+                  "Please tell us your email and username".tr,
                   style: TextStyle(fontSize: textMD),
                 )),
             Container(
@@ -136,6 +136,11 @@ class StateGetRecovery extends State<GetRecovery>
                 alignment: Alignment.center,
                 child: ElevatedButton.icon(
                   onPressed: () {
+                    setState(() {
+                      widget.usernameCtrl.text =
+                          widget.usernameCtrl.text.replaceAll(' ', '').trim();
+                    });
+
                     RegisteredModel data = RegisteredModel(
                       username: widget.usernameCtrl.text.trim(),
                       email: widget.emailCtrl.text.trim(),
@@ -202,7 +207,7 @@ class StateGetRecovery extends State<GetRecovery>
         padding: EdgeInsets.fromLTRB(
             spaceLG, spaceJumbo + spaceXMD, spaceLG, spaceLG),
         children: [
-          getTitleLarge("Validate your account", primaryColor),
+          getTitleLarge("Validate your account".tr, primaryColor),
           getDataDetailForm(checkAvaiabilityForget),
         ]);
   }

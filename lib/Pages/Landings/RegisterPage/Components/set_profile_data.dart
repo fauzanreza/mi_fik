@@ -8,6 +8,7 @@ import 'package:mi_fik/Modules/APIs/AuthApi/Models/commands.dart';
 import 'package:mi_fik/Modules/APIs/AuthApi/Services/commands.dart';
 import 'package:mi_fik/Modules/APIs/AuthApi/Validators/commands.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
+import 'package:mi_fik/Modules/Helpers/info.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 
@@ -59,7 +60,7 @@ class StateSetProfileData extends State<SetProfileData>
 
   @override
   Widget build(BuildContext context) {
-    double fullHeight = MediaQuery.of(context).size.height;
+    //double fullHeight = MediaQuery.of(context).size.height;
 
     Widget getDataDetailForm(bool status) {
       if (status && !successValidateAnimation) {
@@ -91,7 +92,7 @@ class StateSetProfileData extends State<SetProfileData>
                       emailAvaiabilityCheck = "";
                       checkAvaiabilityRegis = false;
                       refreshPage(refresh);
-                      Get.snackbar("Success", "Username and Email is reset",
+                      Get.snackbar("Success", "Username and Email is reset".tr,
                           backgroundColor: whiteColor);
                     },
                     child: Container(
@@ -133,6 +134,12 @@ class StateSetProfileData extends State<SetProfileData>
               });
             }, false, null),
             getInputWarning(widget.allMsg),
+            Container(
+                padding: EdgeInsets.fromLTRB(0, spaceLG, 0, 0),
+                child: const GetInfoBox(
+                  page: "register",
+                  location: "validate_profile",
+                )),
           ],
         );
       } else if (status && successValidateAnimation) {
@@ -147,6 +154,12 @@ class StateSetProfileData extends State<SetProfileData>
             getInputWarning(widget.emailMsg),
             getInputTextRegis(30, "email", emailCtrl, refresh,
                 emailAvaiabilityCheck, isFillForm),
+            Container(
+                padding: EdgeInsets.fromLTRB(0, spaceLG, 0, 0),
+                child: const GetInfoBox(
+                  page: "register",
+                  location: "validate_account",
+                )),
             Align(
               alignment: Alignment.center,
               child: Lottie.asset(
@@ -173,14 +186,15 @@ class StateSetProfileData extends State<SetProfileData>
             getInputWarning(widget.emailMsg),
             getInputTextRegis(75, "email", emailCtrl, refresh,
                 emailAvaiabilityCheck, isFillForm),
-            Align(
-                alignment: Alignment.center,
-                child: ClipRRect(
-                  child: Image.asset('assets/icon/check_user.png',
-                      width: fullHeight * 0.25),
+            Container(
+                padding: EdgeInsets.fromLTRB(0, spaceSM, 0, spaceLG),
+                child: const GetInfoBox(
+                  page: "register",
+                  location: "validate_account",
                 )),
-            const Text(
-              "Before you can fill the other form. We must validate your username and email first",
+            Text(
+              "Before you can fill the other form. We must validate your username and email first"
+                  .tr,
               textAlign: TextAlign.center,
             ),
             Container(
@@ -188,6 +202,11 @@ class StateSetProfileData extends State<SetProfileData>
                 alignment: Alignment.center,
                 child: ElevatedButton.icon(
                   onPressed: () {
+                    setState(() {
+                      usernameCtrl.text =
+                          usernameCtrl.text.replaceAll(' ', '').trim();
+                    });
+
                     RegisteredModel data = RegisteredModel(
                       username: usernameAvaiabilityCheck.trim(),
                       email: emailAvaiabilityCheck.trim(),
@@ -212,7 +231,7 @@ class StateSetProfileData extends State<SetProfileData>
                             successValidateAnimation = false;
                             refreshPage(refresh);
                             Get.snackbar(
-                                "Success", "Username and Email is available",
+                                "Success", "Username and Email is available".tr,
                                 backgroundColor: whiteColor);
                           });
                         } else {

@@ -23,7 +23,7 @@ class UserCommandsService {
     };
 
     final response = await client.put(
-      Uri.parse("$baseUrl/api/v1/user/update/data"),
+      Uri.parse("$emuUrl/api/v1/user/update/data"),
       headers: header,
       body: editUserProfileModelToJson(data),
     );
@@ -38,7 +38,6 @@ class UserCommandsService {
         }
       ];
     } else if (response.statusCode == 422 || response.statusCode == 401) {
-      // Validation failed
       return [
         {"message": "failed", "body": responseData['result']}
       ];
@@ -63,7 +62,7 @@ class UserCommandsService {
     };
 
     final response = await client.post(
-      Uri.parse("$baseUrl/api/v1/user/request/role"),
+      Uri.parse("$emuUrl/api/v1/user/request/role"),
       headers: header,
       body: addNewReqModelToJson(data),
     );
@@ -78,7 +77,6 @@ class UserCommandsService {
         }
       ];
     } else if (response.statusCode == 422 || response.statusCode == 401) {
-      // Validation failed
       return [
         {"message": "failed", "body": responseData['result']}
       ];
@@ -103,7 +101,7 @@ class UserCommandsService {
     };
 
     final response = await client.put(
-      Uri.parse("$baseUrl/api/v1/user/update/token/$key"),
+      Uri.parse("$emuUrl/api/v1/user/update/token/$key"),
       headers: header,
     );
 
@@ -117,7 +115,6 @@ class UserCommandsService {
         }
       ];
     } else if (response.statusCode == 422 || response.statusCode == 401) {
-      // Validation failed
       return [
         {"message": "failed", "body": responseData['result']}
       ];
@@ -143,7 +140,7 @@ class UserCommandsService {
     };
 
     final response = await client.put(
-      Uri.parse("$baseUrl/api/v1/user/update/image"),
+      Uri.parse("$emuUrl/api/v1/user/update/image"),
       headers: header,
       body: editUserProfileImageModelToJson(data),
     );
@@ -158,7 +155,6 @@ class UserCommandsService {
         }
       ];
     } else if (response.statusCode == 422 || response.statusCode == 401) {
-      // Validation failed
       return [
         {"message": "failed", "body": responseData['result']}
       ];
@@ -179,7 +175,7 @@ class UserCommandsService {
     };
 
     final response = await client.post(
-      Uri.parse("$baseUrl/api/v1/register"),
+      Uri.parse("$emuUrl/api/v1/register"),
       headers: header,
       body: registerModelToJson(data),
     );
@@ -194,7 +190,6 @@ class UserCommandsService {
         }
       ];
     } else if (response.statusCode == 422 || response.statusCode == 401) {
-      // Validation failed
       return [
         {"message": "failed", "body": responseData['result']}
       ];

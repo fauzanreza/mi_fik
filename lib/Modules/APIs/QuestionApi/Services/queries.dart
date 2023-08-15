@@ -41,7 +41,7 @@ class QuestionQueriesService {
       };
 
       final response = await client.get(
-          Uri.parse("$baseUrl/api/v1/faq/question/active/10"),
+          Uri.parse("$emuUrl/api/v1/faq/question/active/10"),
           headers: header);
       if (response.statusCode == 200) {
         prefs.setString("active-faq-sess", response.body);
@@ -83,7 +83,7 @@ class QuestionQueriesService {
       };
 
       final response = await client.get(
-          Uri.parse("$baseUrl/api/v1/faq/question?page=$page"),
+          Uri.parse("$emuUrl/api/v1/faq/question?page=$page"),
           headers: header);
       if (response.statusCode == 200) {
         prefs.setString("myfaq-$page-sess", response.body);

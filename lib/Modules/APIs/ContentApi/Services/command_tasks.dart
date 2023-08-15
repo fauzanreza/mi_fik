@@ -22,7 +22,7 @@ class TaskCommandsService {
     };
 
     final response = await client.post(
-      Uri.parse("$baseUrl/api/v1/task/create"),
+      Uri.parse("$emuUrl/api/v1/task/create"),
       headers: header,
       body: addTaskModelToJson(data),
     );
@@ -63,7 +63,7 @@ class TaskCommandsService {
     };
 
     final response = await client.put(
-      Uri.parse("$baseUrl/api/v1/task/update/$id"),
+      Uri.parse("$emuUrl/api/v1/task/update/$id"),
       headers: header,
       body: addTaskModelToJson(data), // Same request as add task
     );
@@ -103,7 +103,7 @@ class TaskCommandsService {
     };
 
     final response = await client.delete(
-      Uri.parse("$baseUrl/api/v1/task/delete/$id"),
+      Uri.parse("$emuUrl/api/v1/task/delete/$id"),
       headers: header,
     );
 

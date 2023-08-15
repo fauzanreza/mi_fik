@@ -50,7 +50,7 @@ class ContentQueriesService {
 
       final response = await client.get(
           Uri.parse(
-              "$baseUrl/api/v1/content/slug/$tag/order/$order/date/$date/$utc/find/$finds?page=$page"),
+              "$emuUrl/api/v1/content/slug/$tag/order/$order/date/$date/$utc/find/$finds?page=$page"),
           headers: header);
       if (response.statusCode == 200) {
         prefs.setString("content-sess", response.body);
@@ -93,9 +93,8 @@ class ContentQueriesService {
         'Authorization': "Bearer $token",
       };
 
-      final response = await client.get(
-          Uri.parse("$baseUrl/api/v1/content/slug/$slug"),
-          headers: header);
+      final response = await client
+          .get(Uri.parse("$emuUrl/api/v1/content/slug/$slug"), headers: header);
       if (response.statusCode == 200) {
         prefs.setString("content-detail-$slug-sess", response.body);
         return contentDetailModelFromJson(response.body);
@@ -140,7 +139,7 @@ class ContentQueriesService {
       int utc = getUTCHourOffset();
 
       final response = await client.get(
-          Uri.parse("$baseUrl/api/v1/content/date/$dateStr/$utc?page=$page"),
+          Uri.parse("$emuUrl/api/v1/content/date/$dateStr/$utc?page=$page"),
           headers: header);
       if (response.statusCode == 200) {
         prefs.setString("schedule-$dateStr-sess", response.body);
@@ -186,7 +185,7 @@ class ContentQueriesService {
       int utc = getUTCHourOffset();
 
       final response = await client.get(
-          Uri.parse("$baseUrl/api/v1/content/date/$dateStr/$utc"),
+          Uri.parse("$emuUrl/api/v1/content/date/$dateStr/$utc"),
           headers: header);
       if (response.statusCode == 200) {
         prefs.setString("scheduletotal-$dateStr-sess", response.body);

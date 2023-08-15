@@ -93,8 +93,9 @@ class StateForgetPage extends State<ForgetPage> {
               });
               setState(() {});
             } else {
-              Get.dialog(const FailedDialog(
-                  text: "Please validate your account first", type: "forget"));
+              Get.dialog(FailedDialog(
+                  text: "Please validate your account first".tr,
+                  type: "forget"));
             }
           } else if (indexForget == 1) {
             EditPassModel data = EditPassModel(
@@ -154,7 +155,7 @@ class StateForgetPage extends State<ForgetPage> {
               width: spaceXXSM,
             ),
             Text(
-              'Next',
+              'Next'.tr,
               style: TextStyle(
                   fontSize: textXMD,
                   color: successBG,

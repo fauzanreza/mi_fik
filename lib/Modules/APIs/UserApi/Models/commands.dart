@@ -4,14 +4,12 @@ import 'dart:convert';
 class EditUserProfileModel {
   String firstName;
   String lastName;
+  String email;
 
-  EditUserProfileModel({this.firstName, this.lastName});
+  EditUserProfileModel({this.firstName, this.lastName, this.email});
 
   Map<String, dynamic> toJson() {
-    return {
-      "first_name": firstName,
-      "last_name": lastName,
-    };
+    return {"first_name": firstName, "last_name": lastName, "email": email};
   }
 }
 

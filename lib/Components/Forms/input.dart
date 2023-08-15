@@ -60,15 +60,15 @@ Widget getInputTextRegis(
       style: TextStyle(fontSize: textXMD),
       onChanged: (val) {
         if (type == "username") {
-          usernameAvaiabilityCheck = val;
+          usernameAvaiabilityCheck = val.replaceAll(' ', '').trim();
         } else if (type == "email") {
-          emailAvaiabilityCheck = val;
+          emailAvaiabilityCheck = val.trim();
         } else if (type == "pass") {
-          passRegisCtrl = val;
+          passRegisCtrl = val.trim();
         } else if (type == "lname") {
           lnameRegisCtrl = val;
         } else if (type == "fname") {
-          fnameRegisCtrl = val;
+          fnameRegisCtrl = val.trim();
         }
       },
       decoration: InputDecoration(

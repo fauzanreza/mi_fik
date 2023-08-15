@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
@@ -33,7 +34,7 @@ class StateTagSelectedArea extends State<TagSelectedArea> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text("Selected ${ucFirst(widget.type)}",
+                Text("Selected ${ucFirst(widget.type)}".tr,
                     style: TextStyle(
                         color: darkColor, fontWeight: FontWeight.w500)),
                 Wrap(

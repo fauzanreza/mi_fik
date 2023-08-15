@@ -39,7 +39,7 @@ class InfoQueriesService {
       };
 
       final response = await client.get(
-          Uri.parse("$baseUrl/api/v1/info/page/$page/location/$loc"),
+          Uri.parse("$emuUrl/api/v1/info/page/$page/location/$loc"),
           headers: header);
       if (response.statusCode == 200) {
         prefs.setString("info-$page-$loc-sess", response.body);

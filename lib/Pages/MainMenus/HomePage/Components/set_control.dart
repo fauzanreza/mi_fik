@@ -9,7 +9,6 @@ import 'package:mi_fik/Components/Forms/tag_picker.dart';
 import 'package:mi_fik/Components/Typography/title.dart';
 import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Routes/collection.dart';
-import 'package:mi_fik/Modules/Variables/dummy.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 

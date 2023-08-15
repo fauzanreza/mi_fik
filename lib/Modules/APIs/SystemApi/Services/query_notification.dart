@@ -41,7 +41,7 @@ class NotificationQueriesService {
       };
 
       final response = await client.get(
-          Uri.parse("$baseUrl/api/v1/notification/my?page=$page"),
+          Uri.parse("$emuUrl/api/v1/notification/my?page=$page"),
           headers: header);
       if (response.statusCode == 200) {
         prefs.setString("notif-$page-sess", response.body);

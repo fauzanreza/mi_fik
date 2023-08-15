@@ -22,7 +22,7 @@ class ContentCommandsService {
     };
 
     final response = await client.post(
-      Uri.parse("$baseUrl/api/v1/content/create"),
+      Uri.parse("$emuUrl/api/v1/content/create"),
       headers: header,
       body: contentModelToJson(data),
     );
@@ -59,7 +59,7 @@ class ContentCommandsService {
     };
 
     final response = await client.post(
-      Uri.parse("$baseUrl/api/v1/content/open/$slug"),
+      Uri.parse("$emuUrl/api/v1/content/open/$slug"),
       headers: header,
     );
 

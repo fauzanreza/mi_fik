@@ -14,7 +14,6 @@ import 'package:mi_fik/Modules/Helpers/template.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Routes/collection.dart';
 
-import 'package:mi_fik/Modules/Variables/dummy.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -433,7 +432,6 @@ class StateAddPost extends State<AddPost> {
                           }
                           if (isValidNow) {
                             ContentModel content = ContentModel(
-                              userId: passIdUser,
                               contentTitle: contentTitleCtrl.text.trim(),
                               contentDesc: contentDescCtrl.text.trim(),
                               contentTag: validateNullJSON(selectedTag),

@@ -44,7 +44,7 @@ class StateCameraPageState extends State<CameraPage>
       final imageFile = await cameraCtrl.takePicture();
       return imageFile;
     } catch (e) {
-      throw Exception("Failed to capture image");
+      throw Exception("Failed to capture image".tr);
     }
   }
 
@@ -104,12 +104,14 @@ class StateCameraPageState extends State<CameraPage>
                 try {
                   final imageFile = await captureImage();
                   navigateToShowImage(imageFile);
+                  FlashMode.off;
                 } catch (e) {
                   Get.snackbar(
                     "Error".tr,
                     "Failed to capture image".tr,
                     backgroundColor: primaryColor,
                   );
+                  FlashMode.off;
                 }
               },
               child: const Icon(Icons.camera_alt),

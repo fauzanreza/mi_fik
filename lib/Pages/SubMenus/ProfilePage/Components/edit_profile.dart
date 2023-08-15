@@ -35,13 +35,13 @@ class _GetEditProfileState extends State<GetEditProfile> {
 
   var fNameCtrl = TextEditingController();
   var lNameCtrl = TextEditingController();
-  var passCtrl = TextEditingController();
+  var emailCtrl = TextEditingController();
 
   @override
   void dispose() {
     fNameCtrl.dispose();
     lNameCtrl.dispose();
-    passCtrl.dispose();
+    emailCtrl.dispose();
     super.dispose();
   }
 
@@ -90,7 +90,7 @@ class _GetEditProfileState extends State<GetEditProfile> {
     if (contents != null) {
       fNameCtrl.text = contents[0].firstName;
       lNameCtrl.text = contents[0].lastName;
-      passCtrl.text = contents[0].password;
+      emailCtrl.text = contents[0].email;
 
       return Theme(
           data: Theme.of(context).copyWith(
@@ -136,6 +136,11 @@ class _GetEditProfileState extends State<GetEditProfile> {
                     child: getSubTitleMedium(
                         "Last Name".tr, whiteColor, TextAlign.start)),
                 getInputText(lnameLength, lNameCtrl, false),
+                Align(
+                    alignment: Alignment.centerLeft,
+                    child: getSubTitleMedium(
+                        "Email".tr, whiteColor, TextAlign.start)),
+                getInputText(emailLength, emailCtrl, false),
                 Container(
                     padding: EdgeInsets.fromLTRB(0, spaceLG, 0, 0),
                     child: const GetInfoBox(
@@ -146,13 +151,14 @@ class _GetEditProfileState extends State<GetEditProfile> {
                   onTap: () async {
                     EditUserProfileModel data = EditUserProfileModel(
                         lastName: lNameCtrl.text.trim(),
-                        firstName: fNameCtrl.text.trim());
+                        firstName: fNameCtrl.text.trim(),
+                        email: emailCtrl.text.trim());
 
-                    //Validator
                     if (data.firstName.isNotEmpty &&
                         data.lastName.isNotEmpty &&
-                        data.firstName.length <= 35 &&
-                        data.lastName.length <= 35) {
+                        data.firstName.length <= fnameLength &&
+                        data.lastName.length <= lnameLength &&
+                        data.email.length <= emailLength) {
                       apiCommand.putProfileData(data).then((response) {
                         setState(() => {});
                         var status = response[0]['message'];

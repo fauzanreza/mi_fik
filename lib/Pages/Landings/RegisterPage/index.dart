@@ -67,7 +67,6 @@ class StateRegisterPage extends State<RegisterPage> {
     DateTime now = DateTime.now();
     var yearColl = [];
     for (int i = 1; i <= 5; i++) {
-      yearColl.add(now.year + i);
       yearColl.add(now.year - i);
     }
     yearColl.add(2023);
@@ -136,7 +135,7 @@ class StateRegisterPage extends State<RegisterPage> {
                         isFillForm = true;
                       });
 
-                      Get.snackbar("Success", "Account has been registered",
+                      Get.snackbar("Success", "Account has been registered".tr,
                           backgroundColor: whiteColor);
                     });
                   } else {
@@ -196,33 +195,34 @@ class StateRegisterPage extends State<RegisterPage> {
                   unameMsg = "";
                   emailMsg = "";
                   if (fnameRegisCtrl.trim() == "") {
-                    fnameMsg = "First Name can't be empty";
+                    fnameMsg = "First Name can't be empty".tr;
                   } else {
                     fnameMsg = "";
                   }
                   if (passRegisCtrl.trim() == "") {
-                    passMsg = "Password can't be empty";
+                    passMsg = "Password can't be empty".tr;
                   } else {
                     passMsg = "";
                   }
                 });
-                Get.dialog(const FailedDialog(
-                    text: "Please fill the remaining field", type: "register"));
+                Get.dialog(FailedDialog(
+                    text: "Please fill the remaining field".tr,
+                    type: "register"));
               } else {
                 if (usernameAvaiabilityCheck.trim() == "" ||
                     emailAvaiabilityCheck.trim() == "") {
                   setState(() {
                     if (usernameAvaiabilityCheck.trim() == "") {
-                      unameMsg = "Username can't be empty";
+                      unameMsg = "Username can't be empty".tr;
                     }
                     if (emailAvaiabilityCheck.trim() == "") {
-                      emailMsg = "Email can't be empty";
+                      emailMsg = "Email can't be empty".tr;
                     }
                   });
                 } else {
                   setState(() {
-                    unameMsg = "Username is invalid";
-                    emailMsg = "Email is invalid";
+                    unameMsg = "Username is invalid".tr;
+                    emailMsg = "Email is invalid".tr;
                   });
                 }
 
@@ -274,7 +274,7 @@ class StateRegisterPage extends State<RegisterPage> {
               width: spaceXXSM,
             ),
             Text(
-              'Next',
+              'Next'.tr,
               style: TextStyle(
                   fontSize: textXMD,
                   color: successBG,
@@ -453,7 +453,7 @@ class StateRegisterPage extends State<RegisterPage> {
               width: spaceXXSM,
             ),
             Text(
-              'To login',
+              'To login'.tr,
               style: TextStyle(
                   fontSize: textXMD,
                   color: successBG,
