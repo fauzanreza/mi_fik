@@ -23,7 +23,7 @@ class UserCommandsService {
     };
 
     final response = await client.put(
-      Uri.parse("$emuUrl/api/v1/user/update/data"),
+      Uri.parse("$baseUrl/api/v1/user/update/data"),
       headers: header,
       body: editUserProfileModelToJson(data),
     );
@@ -63,7 +63,7 @@ class UserCommandsService {
     };
 
     final response = await client.post(
-      Uri.parse("$emuUrl/api/v1/user/request/role"),
+      Uri.parse("$baseUrl/api/v1/user/request/role"),
       headers: header,
       body: addNewReqModelToJson(data),
     );
@@ -103,7 +103,7 @@ class UserCommandsService {
     };
 
     final response = await client.put(
-      Uri.parse("$emuUrl/api/v1/user/update/token/$key"),
+      Uri.parse("$baseUrl/api/v1/user/update/token/$key"),
       headers: header,
     );
 
@@ -143,7 +143,7 @@ class UserCommandsService {
     };
 
     final response = await client.put(
-      Uri.parse("$emuUrl/api/v1/user/update/image"),
+      Uri.parse("$baseUrl/api/v1/user/update/image"),
       headers: header,
       body: editUserProfileImageModelToJson(data),
     );
@@ -179,7 +179,7 @@ class UserCommandsService {
     };
 
     final response = await client.post(
-      Uri.parse("$emuUrl/api/v1/register"),
+      Uri.parse("$baseUrl/api/v1/register"),
       headers: header,
       body: registerModelToJson(data),
     );

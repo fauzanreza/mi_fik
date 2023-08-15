@@ -12,10 +12,10 @@ import 'package:mi_fik/Modules/APIs/ContentApi/Services/command_contents.dart';
 import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/show_detail_task.dart';
+import 'package:mi_fik/Pages/MainMenus/SchedulePage/Components/show_detail_task.dart';
 import 'package:mi_fik/Pages/SubMenus/DetailPage/index.dart';
-import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/delete_archive.dart';
-import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/edit_archive.dart';
+import 'package:mi_fik/Pages/MainMenus/SchedulePage/Components/delete_archive.dart';
+import 'package:mi_fik/Pages/MainMenus/SchedulePage/Components/edit_archive.dart';
 
 class SavedContent extends StatefulWidget {
   const SavedContent({Key key, this.slug, this.name, this.desc})

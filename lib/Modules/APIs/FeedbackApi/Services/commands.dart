@@ -22,7 +22,7 @@ class FeedbackCommandsService {
     };
 
     final response = await client.post(
-      Uri.parse("$emuUrl/api/v1/feedback/create"),
+      Uri.parse("$baseUrl/api/v1/feedback/create"),
       headers: header,
       body: feedbackModelToJson(data),
     );

@@ -9,9 +9,9 @@ import 'package:mi_fik/Modules/APIs/UserApi/Validators/commands.dart';
 import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/Landings/ForgetPassPage/Usecases/get_finish.dart';
-import 'package:mi_fik/Pages/Landings/ForgetPassPage/Usecases/get_recovery.dart';
-import 'package:mi_fik/Pages/Landings/ForgetPassPage/Usecases/get_validate.dart';
+import 'package:mi_fik/Pages/Landings/ForgetPassPage/Components/get_finish.dart';
+import 'package:mi_fik/Pages/Landings/ForgetPassPage/Components/get_recovery.dart';
+import 'package:mi_fik/Pages/Landings/ForgetPassPage/Components/get_validate.dart';
 import 'package:onboarding/onboarding.dart';
 
 class ForgetPage extends StatefulWidget {

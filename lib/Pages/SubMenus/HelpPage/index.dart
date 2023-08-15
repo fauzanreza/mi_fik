@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Bars/top_bar.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/SubMenus/HelpPage/Usecases/get_all_help_type.dart';
+import 'package:mi_fik/Pages/SubMenus/HelpPage/Components/get_all_help_type.dart';
 
 class HelpPage extends StatefulWidget {
   const HelpPage({Key key}) : super(key: key);

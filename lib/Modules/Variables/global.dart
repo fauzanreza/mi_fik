@@ -6,6 +6,7 @@ import 'package:mi_fik/Modules/Variables/style.dart';
 
 // Navigation
 String passSlugContent;
+bool forceSignOut = false;
 
 // Others
 String locName;
@@ -161,3 +162,4 @@ NotificationDetails fcmConfig = NotificationDetails(
 // Response
 String emptyInputMsg = "can't be empty".tr;
 String invalidDateMsg = "The date end must after date start".tr;
+String invalidDateToNowMsg = "Unable to set content date to a past date".tr;

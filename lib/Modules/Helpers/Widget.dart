@@ -391,17 +391,8 @@ Widget getTag(tag, height, ctx) {
         children: tag.map<Widget>((content) {
           if (i < max) {
             i++;
-            return ElevatedButton.icon(
-              onPressed: () {
-                // Respond to button press
-              },
-              icon: Icon(
-                Icons.circle,
-                size: textSM,
-                color: successBG,
-              ),
-              label: Text(content['tag_name'],
-                  style: TextStyle(fontSize: textXSM)),
+            return ElevatedButton(
+              onPressed: () {},
               style: ButtonStyle(
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
@@ -409,6 +400,8 @@ Widget getTag(tag, height, ctx) {
                 )),
                 backgroundColor: MaterialStatePropertyAll<Color>(primaryColor),
               ),
+              child: Text(content['tag_name'],
+                  style: TextStyle(fontSize: textXSM)),
             );
           } else if (i == max) {
             i++;
@@ -429,17 +422,10 @@ Widget getTag(tag, height, ctx) {
                               runSpacing: -spaceWrap,
                               spacing: spaceWrap,
                               children: tag.map<Widget>((content) {
-                                return ElevatedButton.icon(
+                                return ElevatedButton(
                                   onPressed: () {
                                     // Respond to button press
                                   },
-                                  icon: Icon(
-                                    Icons.circle,
-                                    size: textSM,
-                                    color: successBG,
-                                  ),
-                                  label: Text(content['tag_name'],
-                                      style: TextStyle(fontSize: textXSM)),
                                   style: ButtonStyle(
                                     shape: MaterialStateProperty.all<
                                             RoundedRectangleBorder>(
@@ -451,6 +437,8 @@ Widget getTag(tag, height, ctx) {
                                         MaterialStatePropertyAll<Color>(
                                             primaryColor),
                                   ),
+                                  child: Text(content['tag_name'],
+                                      style: TextStyle(fontSize: textXSM)),
                                 );
                               }).toList())),
                     ),

@@ -12,10 +12,10 @@ import 'package:mi_fik/Modules/Helpers/widget.dart';
 import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/get_attachment.dart';
-import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/get_location.dart';
-import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/get_saved_status.dart';
-import 'package:mi_fik/Pages/SubMenus/DetailPage/Usecases/post_archive_rel.dart';
+import 'package:mi_fik/Pages/SubMenus/DetailPage/Components/get_attachment.dart';
+import 'package:mi_fik/Pages/SubMenus/DetailPage/Components/get_location.dart';
+import 'package:mi_fik/Pages/SubMenus/DetailPage/Components/get_saved_status.dart';
+import 'package:mi_fik/Pages/SubMenus/DetailPage/Components/post_archive_rel.dart';
 
 class DetailPage extends StatefulWidget {
   const DetailPage({Key key, this.passSlug}) : super(key: key);

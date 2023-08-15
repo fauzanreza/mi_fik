@@ -23,7 +23,7 @@ class QuestionCommandsService {
     };
 
     final response = await client.post(
-      Uri.parse("$emuUrl/api/v1/faq/question"),
+      Uri.parse("$baseUrl/api/v1/faq/question"),
       headers: header,
       body: addQuestionModelToJson(data),
     );

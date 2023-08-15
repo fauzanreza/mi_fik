@@ -44,7 +44,7 @@ class ArchiveQueriesService {
       };
 
       final response = await client.get(
-          Uri.parse("$emuUrl/api/v1/archive/$find/type/$type"),
+          Uri.parse("$baseUrl/api/v1/archive/$find/type/$type"),
           headers: header);
       if (response.statusCode == 200) {
         prefs.setString("archive-sess-$find-$type", response.body);
@@ -88,7 +88,7 @@ class ArchiveQueriesService {
       };
 
       final response = await client
-          .get(Uri.parse("$emuUrl/api/v1/archive/by/$slug"), headers: header);
+          .get(Uri.parse("$baseUrl/api/v1/archive/by/$slug"), headers: header);
       if (response.statusCode == 200) {
         prefs.setString("archivecontent-$slug-sess", response.body);
         return scheduleModelFromJsonWPaginate(response.body);

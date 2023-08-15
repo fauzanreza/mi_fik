@@ -23,7 +23,7 @@ class AuthCommandsService {
     GetStorage box = GetStorage();
 
     final response = await client.post(
-      Uri.parse("$emuUrl/api/v1/login"),
+      Uri.parse("$baseUrl/api/v1/login/mobile"),
       headers: header,
       body: loginModelToJson(data),
     );
@@ -91,7 +91,7 @@ class AuthCommandsService {
 
           if (!isRegis) {
             final resReq = await client.get(
-                Uri.parse("$emuUrl/api/v1/user/request/my"),
+                Uri.parse("$baseUrl/api/v1/user/request/my"),
                 headers: header);
             if (resReq.statusCode == 200) {
               isWaiting = true;
@@ -154,7 +154,7 @@ class AuthCommandsService {
     };
 
     final response = await client.post(
-      Uri.parse("$emuUrl/api/v1/check/user"),
+      Uri.parse("$baseUrl/api/v1/check/user"),
       headers: header,
       body: registeredModelToJson(data),
     );
@@ -187,7 +187,7 @@ class AuthCommandsService {
     };
 
     final response = await client.post(
-      Uri.parse("$emuUrl/api/v1/check/pass/recover"),
+      Uri.parse("$baseUrl/api/v1/check/pass/recover"),
       headers: header,
       body: registeredModelToJson(data),
     );
@@ -220,7 +220,7 @@ class AuthCommandsService {
     };
 
     final response = await client.post(
-      Uri.parse("$emuUrl/api/v1/check/pass/validate"),
+      Uri.parse("$baseUrl/api/v1/check/pass/validate"),
       headers: header,
       body: requestRecoverModelToJson(data),
     );
@@ -252,7 +252,7 @@ class AuthCommandsService {
     };
 
     final response = await client.put(
-      Uri.parse("$emuUrl/api/v1/check/pass/edit"),
+      Uri.parse("$baseUrl/api/v1/check/pass/edit"),
       headers: header,
       body: editPassModelToJson(data),
     );

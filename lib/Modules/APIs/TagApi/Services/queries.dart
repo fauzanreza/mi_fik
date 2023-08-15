@@ -21,7 +21,7 @@ class TagQueriesService {
     };
 
     final response = await client.get(
-        Uri.parse("$emuUrl/api/v1/dictionaries/type/TAG-001"),
+        Uri.parse("$baseUrl/api/v1/dictionaries/type/TAG-001"),
         headers: header);
     if (response.statusCode == 200) {
       return tagCategoryModelFromJson(response.body);
@@ -36,7 +36,7 @@ class TagQueriesService {
     };
 
     final response = await client.get(
-        Uri.parse("$emuUrl/api/v1/tag/cat/$cat/20?page=1"),
+        Uri.parse("$baseUrl/api/v1/tag/cat/$cat/20?page=1"),
         headers: header);
     if (response.statusCode == 200) {
       return tagAllModelFromJson(response.body);
@@ -77,7 +77,7 @@ class TagQueriesService {
       };
 
       final response = await client.get(
-          Uri.parse("$emuUrl/api/v1/user/$username/role"),
+          Uri.parse("$baseUrl/api/v1/user/$username/role"),
           headers: header);
       var responseData = jsonDecode(response.body);
 

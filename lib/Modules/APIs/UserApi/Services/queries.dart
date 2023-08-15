@@ -18,7 +18,7 @@ class UserQueriesService {
     };
 
     final response =
-        await client.get(Uri.parse("$emuUrl/api/v1/user/"), headers: header);
+        await client.get(Uri.parse("$baseUrl/api/v1/user/"), headers: header);
     if (response.statusCode == 200) {
       return userProfileModelFromJson(response.body);
     } else if (response.statusCode == 401) {
@@ -38,7 +38,7 @@ class UserQueriesService {
     };
 
     final response = await client
-        .get(Uri.parse("$emuUrl/api/v1/user/request/my"), headers: header);
+        .get(Uri.parse("$baseUrl/api/v1/user/request/my"), headers: header);
     if (response.statusCode == 200) {
       return userRequestModelFromJson(response.body);
     } else if (response.statusCode == 401) {

@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/bottom_bar.dart';
 import 'package:mi_fik/Components/Bars/top_bar.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/SubMenus/FAQPage/Usecases/get_question.dart';
-import 'package:mi_fik/Pages/SubMenus/FAQPage/Usecases/post_question.dart';
+import 'package:mi_fik/Pages/SubMenus/FAQPage/Components/get_question.dart';
+import 'package:mi_fik/Pages/SubMenus/FAQPage/Components/post_question.dart';
 
 class FAQPage extends StatefulWidget {
   const FAQPage({Key key}) : super(key: key);

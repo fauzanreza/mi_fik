@@ -13,8 +13,8 @@ import 'package:mi_fik/Modules/APIs/UserApi/Services/queries.dart';
 import 'package:mi_fik/Modules/Helpers/converter.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/SubMenus/ManageRolePage/Usecases/get_tag_category.dart';
-import 'package:mi_fik/Pages/SubMenus/ManageRolePage/Usecases/post_selected_role.dart';
+import 'package:mi_fik/Pages/SubMenus/ManageRolePage/Components/get_tag_category.dart';
+import 'package:mi_fik/Pages/SubMenus/ManageRolePage/Components/post_selected_role.dart';
 
 class RolePage extends StatefulWidget {
   const RolePage({Key key}) : super(key: key);
@@ -105,6 +105,8 @@ class StateRolePage extends State<RolePage> {
         ),
       );
     } else {
+      String reqPending = "You has requested to".tr;
+
       return Scaffold(
         appBar: getAppbar("Manage Role".tr, () {
           Get.back();
@@ -168,10 +170,8 @@ class StateRolePage extends State<RolePage> {
                               thickness: 1,
                               indent: spaceLG,
                               endIndent: spaceLG)),
-                      getSubTitleMedium(
-                          "You has requested to ${contents[0].type} tag",
-                          darkColor,
-                          TextAlign.center),
+                      getSubTitleMedium("$reqPending ${contents[0].type} tag",
+                          darkColor, TextAlign.center),
                       Wrap(
                           runSpacing: -spaceWrap,
                           spacing: spaceWrap,

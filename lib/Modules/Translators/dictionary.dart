@@ -55,7 +55,6 @@ class Dictionaries extends Translations {
           'Event Location': 'Event Location',
           'Event Reminder': 'Event Reminder',
           'Event Period': 'Event Period',
-          'Event Attachment': 'Event Attachment',
           'Previous': 'Previous',
           'More': 'More',
           'Attachment Name': 'Attachment Name',
@@ -156,15 +155,11 @@ class Dictionaries extends Translations {
           "All Tag": "All Tag",
           "Attachment": "Attachment",
           "Sign In": "Sign In",
-          "Create archive failed, field can't be empty":
-              "Create archive failed, field can't be empty",
           "Are you sure want to leave? All changes will not be saved":
               "Are you sure want to leave? All changes will not be saved",
           "Field can't be empty": "Field can't be empty",
           "Tag must be selected": "Tag must be selected",
           "Date period must be selected": "Date period must be selected",
-          "Add feedback failed, field can't be empty":
-              "Add feedback failed, field can't be empty",
           "Sign out success": "Sign out success",
           "Failed to load document": "Failed to load document",
           "Failed to load video": "Failed to load video",
@@ -204,7 +199,52 @@ class Dictionaries extends Translations {
           "Manage and remind daily tasks that have been created":
               "Manage and remind daily tasks that have been created",
           "Event is an information about some public activity that will be held in the future":
-              "Event is an information about some public activity that will be held in the future"
+              "Event is an information about some public activity that will be held in the future",
+          " Not found": " Not found",
+          "Continue": "Continue",
+          "Success": "Success",
+          "Set Date": "Set Date",
+          "Start": "Start",
+          "End": "End",
+          "and": "and",
+          "Edit Task": "Edit Task",
+          "Delete Task": "Delete Task",
+          "Created at": "Created at",
+          "Last updated": "Last updated",
+          "Navigate": "Navigate",
+          "You has requested to": "You has requested to",
+          "MI-FIK Apps": "MI-FIK Apps",
+          "Welcome to the Faculty of Creative Industries Information Management Application (MI-FIK), an innovative solution to improve the efficiency and accessibility of information for the entire community at the Faculty of Creative Industries Telkom University.":
+              "Welcome to the Faculty of Creative Industries Information Management Application (MI-FIK), an innovative solution to improve the efficiency and accessibility of information for the entire community at the Faculty of Creative Industries Telkom University.",
+          "Telkom University's Faculty of Creative Industries (FIK) has six leading and most comprehensive study programs in the creative field, namely, Bachelor of Visual Communication Design (S.Ds), Bachelor of Interior Design (S.Ds), Bachelor of Product Design (S.Ds), Bachelor of Crafts (S.Sn) and Bachelor of Fine Arts (S.Sn). In 2020, the Faculty of Creative Industries presented one new study program, the Master of Design (M.Ds) program. ":
+              "Telkom University's Faculty of Creative Industries (FIK) has six leading and most comprehensive study programs in the creative field, namely, Bachelor of Visual Communication Design (S.Ds), Bachelor of Interior Design (S.Ds), Bachelor of Product Design (S.Ds), Bachelor of Crafts (S.Sn) and Bachelor of Fine Arts (S.Sn). In 2020, the Faculty of Creative Industries presented one new study program, the Master of Design (M.Ds) program. ",
+          "MI-FIK can be use by :": "MI-FIK can be use by :",
+          "- Faculty Staff": "- Faculty Staff",
+          "- Lecturer": "- Lecturer",
+          "- Student": "- Student",
+          "MI-FIK is specifically designed to meet the needs of communication problems in the FIK community in managing and sharing information effectively. With advanced features and an intuitive interface, this application will be a helpful tool for lecturers, staff, and students in disseminating information.":
+              "MI-FIK is specifically designed to meet the needs of communication problems in the FIK community in managing and sharing information effectively. With advanced features and an intuitive interface, this application will be a helpful tool for lecturers, staff, and students in disseminating information.",
+          "Terms & Condition": "Terms & Condition",
+          "Profile Data": "Profile Data",
+          "Validate": "Validate",
+          "January": "January",
+          "February": "February",
+          "March": "March",
+          "April": "April",
+          "May": "May",
+          "June": "June",
+          "July": "July",
+          "August": "August",
+          "September": "September",
+          "October": "October",
+          "November": "November",
+          "December": "December",
+          "No Placemark is found": "No Placemark is found",
+          "Invalid Location": "Invalid Location",
+          "Set Location": "Set My Location",
+          "Try Again": "Try Again",
+          "Unable to set content date to a past date":
+              "Unable to set content date to a past date"
         },
         'id_ID': {
           'Good Morning': 'Selamat Pagi',
@@ -222,7 +262,7 @@ class Dictionaries extends Translations {
           'Submit Changes': 'Kirim Perubahan',
           'Manage Role': 'Ubah Role',
           'Done': 'Selesai',
-          'Home': 'Home',
+          'Home': 'Beranda',
           'Schedule': 'Jadwal',
           'Calendar': 'Kalendar',
           'Today': 'Hari ini',
@@ -258,11 +298,10 @@ class Dictionaries extends Translations {
           'Event Location': 'Lokasi Event',
           'Event Reminder': 'Pengingat Event',
           'Event Period': 'Periode Event',
-          'Event Attachment': 'Sisipkan pada Event',
           'Previous': 'Sebelumnya',
           'More': 'Selanjutnya',
-          'Attachment Name': 'Nama Sisipan',
-          'Attachment URL': 'URL Sisipan',
+          'Attachment Name': 'Nama Lampiran',
+          'Attachment URL': 'URL Lampiran',
           'Back to Archive': 'Kembali ke Arsip',
           'Edit Archive': 'Ubah Arsip',
           'Search by title': 'Cari berdasarkan judul',
@@ -282,9 +321,9 @@ class Dictionaries extends Translations {
           'Session lost, please sign in again':
               'Waktu sesi habis, silahkan masuk kembali',
           'Alert': 'Perhatian',
-          'Attachment removed': 'Tautan dihapus',
+          'Attachment removed': 'Lampiran dihapus',
           "Attachment removed. Can't located uploaded file":
-              "Tautan dihapus. Tidak dapat mendeteksi file unggahan",
+              "Lampiran dihapus. Tidak dapat mendeteksi file unggahan",
           'Yes, Delete task': 'Ya, Hapus tugas',
           'What do you think the improvment should be':
               'Menurut mu, apa yang perlu ditingkatkan',
@@ -346,10 +385,10 @@ class Dictionaries extends Translations {
               "Event ini tidak memiliki deskripsi",
           "Publish Event": "Simpan Event",
           "This Event doesn't have attachment":
-              "Event ini tidak memiliki tautan",
+              "Event ini tidak memiliki lampiran",
           "don't have an account?": "belum punya akun?",
           "Register now": "Daftar sekarang",
-          "Insert Attachment": "Tambah Tautan",
+          "Insert Attachment": "Tambah Lampiran",
           "Are you sure want to sign out?": "Apakah Anda yakin ingin keluar?",
           "Information": "Informasi",
           "Sign Out": "Keluar",
@@ -357,17 +396,13 @@ class Dictionaries extends Translations {
           "You haven't accept the terms & condition":
               "Anda belum menyetujui Syarat & Ketentuan",
           "All Tag": "Semua tag",
-          "Attachment": "Tautan",
+          "Attachment": "Lampiran",
           "Sign In": "Masuk",
-          "Create archive failed, field can't be empty":
-              "Gagal membuat arsip, kolom tidak boleh kosong",
           "Are you sure want to leave? All changes will not be saved":
               "Apakah Anda yakin ingin keluar? Semua perubahan tidak akan tersimpan",
           "Field can't be empty": "Inputan tidak boleh kosong",
           "Tag must be selected": "Tag harus dipilih",
           "Date period must be selected": "Periode tanggal harus dipilih",
-          "Add feedback failed, field can't be empty":
-              "Gagal membuat event, inputan tidak boleh kosong",
           "Sign out success": "Berhasil keluar akun",
           "Failed to load document": "Gagal menampilkan dokumen",
           "Failed to load video": "Gagal menampilkan video",
@@ -394,7 +429,7 @@ class Dictionaries extends Translations {
           "Can't be empty": "Tidak boleh kosong",
           "Validation success": "Validasi sukses",
           "The date end must after date start":
-              "Tanggal berakhir harus sebelum tanggal mulai",
+              "Tanggal berakhir harus sesudah tanggal mulai",
           "No description provided": "Tidak ada deskripsi",
           "You": "Anda",
           "Please register your account first":
@@ -407,7 +442,52 @@ class Dictionaries extends Translations {
           "Manage and remind daily tasks that have been created":
               "Mengatur tugas harian yang telah dibuat",
           "Event is an information about some public activity that will be held in the future":
-              "Event adalah sebuah informasi mengenai aktivitas publik yang akan diselengarakan"
+              "Event adalah sebuah informasi mengenai aktivitas publik yang akan diselengarakan",
+          " Not found": " Tidak ditemukan",
+          "Continue": "Lanjutkan",
+          "Success": "Sukses",
+          "Set Date": "Pilih Waktu",
+          "Start": "Mulai",
+          "End": "Akhir",
+          "and": "dan",
+          "Edit Task": "Edit Tugas",
+          "Delete Task": "Hapus Tugas",
+          "Created at": "Dibuat pada",
+          "Last updated": "Terakhir diubah",
+          "Navigate": "Navigasi",
+          "You has requested to": "Kamu telah meminta",
+          "MI-FIK Apps": "APLIKASI MI-FIK",
+          "Welcome to the Faculty of Creative Industries Information Management Application (MI-FIK), an innovative solution to improve the efficiency and accessibility of information for the entire community at the Faculty of Creative Industries Telkom University.":
+              "Selamat datang di Aplikasi Manajemen Informasi Fakultas Industri Kreatif (MI-FIK), sebuah solusi inovatif untuk meningkatkan efisiensi dan aksesibilitas informasi bagi seluruh masyarakat di Fakultas Industri Kreatif Universitas Telkom.",
+          "Telkom University's Faculty of Creative Industries (FIK) has six leading and most comprehensive study programs in the creative field, namely, Bachelor of Visual Communication Design (S.Ds), Bachelor of Interior Design (S.Ds), Bachelor of Product Design (S.Ds), Bachelor of Crafts (S.Sn) and Bachelor of Fine Arts (S.Sn). In 2020, the Faculty of Creative Industries presented one new study program, the Master of Design (M.Ds) program. ":
+              "Fakultas Industri Kreatif (FIK) Telkom University memiliki enam program studi unggulan dan terlengkap di bidang kreatif yaitu, Sarjana Desain Komunikasi Visual (S.Ds), Sarjana Desain Interior (S.Ds), Sarjana Desain Produk ( S.Ds), Sarjana Kriya (S.Sn) dan Sarjana Seni Rupa (S.Sn). Pada tahun 2020, Fakultas Industri Kreatif menghadirkan satu program studi baru yaitu program Magister Desain (M.Ds).",
+          "MI-FIK can be use by :": "Aplikasi MI-FIK dapat digunakan oleh :",
+          "- Faculty Staff": "- Staf Fakultas",
+          "- Lecturer": "- Dosen",
+          "- Student": "- Mahasiswa",
+          "MI-FIK is specifically designed to meet the needs of communication problems in the FIK community in managing and sharing information effectively. With advanced features and an intuitive interface, this application will be a helpful tool for lecturers, staff, and students in disseminating information.":
+              "MI-FIK dirancang khusus untuk memenuhi kebutuhan permasalahan komunikasi di komunitas FIK dalam mengelola dan berbagi informasi secara efektif. Dengan fitur-fitur canggih dan antarmuka yang intuitif, aplikasi ini akan menjadi sarana yang sangat membantu bagi dosen, karyawan, dan mahasiswa dalam menyebarluaskan informasi.",
+          "Terms & Condition": "Syarat & Ketentuan",
+          "Profile Data": "Data Profil",
+          "Validate": "Validasi",
+          "January": "Januari",
+          "February": "Februari",
+          "March": "Maret",
+          "April": "April",
+          "May": "Mei",
+          "June": "Juni",
+          "July": "Juli",
+          "August": "Agustus",
+          "September": "September",
+          "October": "Oktober",
+          "November": "November",
+          "December": "Desember",
+          "No Placemark is found": "Tidak ada tempat yang ditemukan",
+          "Invalid Location": "Lokasi tidak valid",
+          "Set Location": "Pilih Lokasi",
+          "Try Again": "Coba lagi",
+          "Unable to set content date to a past date":
+              "Gagal memilih tanggal konten untuk tanggal yang sudah lewat"
         },
       };
 }

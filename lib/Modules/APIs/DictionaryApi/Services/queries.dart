@@ -14,7 +14,7 @@ class DictionaryQueryService {
     };
 
     final response = await client.get(
-        Uri.parse("$emuUrl/api/v1/dictionaries/type/$type"),
+        Uri.parse("$baseUrl/api/v1/dictionaries/type/$type"),
         headers: header);
     if (response.statusCode == 200) {
       var arrQtyType = dictionaryTypeModelFromJson(response.body);

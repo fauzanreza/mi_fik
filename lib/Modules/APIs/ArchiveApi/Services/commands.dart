@@ -22,7 +22,7 @@ class ArchiveCommandsService {
     };
 
     final response = await client.post(
-      Uri.parse("$emuUrl/api/v1/archive/create"),
+      Uri.parse("$baseUrl/api/v1/archive/create"),
       headers: header,
       body: addArchiveModelToJson(data),
     );
@@ -63,7 +63,7 @@ class ArchiveCommandsService {
     };
 
     final response = await client.put(
-      Uri.parse("$emuUrl/api/v1/archive/edit/$slug"),
+      Uri.parse("$baseUrl/api/v1/archive/edit/$slug"),
       headers: header,
       body: editArchiveModelToJson(data),
     );
@@ -104,7 +104,7 @@ class ArchiveCommandsService {
     };
 
     final response = await client.delete(
-      Uri.parse("$emuUrl/api/v1/archive/delete/$slug"),
+      Uri.parse("$baseUrl/api/v1/archive/delete/$slug"),
       headers: header,
       body: deleteArchiveModelToJson(data),
     );
@@ -145,7 +145,7 @@ class ArchiveCommandsService {
     };
 
     final response = await client.post(
-      Uri.parse("$emuUrl/api/v1/archive/multirel/$slug/$type"),
+      Uri.parse("$baseUrl/api/v1/archive/multirel/$slug/$type"),
       headers: header,
       body: multiActionArchiveModelToJson(data),
     );

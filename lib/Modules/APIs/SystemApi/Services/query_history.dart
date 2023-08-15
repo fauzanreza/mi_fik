@@ -41,7 +41,7 @@ class HistoryQueriesService {
       };
 
       final response = await client.get(
-          Uri.parse("$emuUrl/api/v1/history/my?page=$page"),
+          Uri.parse("$baseUrl/api/v1/history/my?page=$page"),
           headers: header);
       if (response.statusCode == 200) {
         prefs.setString("myhistory-$page-sess", response.body);

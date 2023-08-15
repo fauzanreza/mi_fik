@@ -6,9 +6,9 @@ import 'package:mi_fik/Components/Bars/top_bar.dart';
 import 'package:mi_fik/Components/Button/navigation.dart';
 import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/SubMenus/ProfilePage/Usecases/edit_profile.dart';
-import 'package:mi_fik/Pages/SubMenus/ProfilePage/Usecases/show_profile.dart';
-import 'package:mi_fik/Pages/SubMenus/ProfilePage/Usecases/show_roles.dart';
+import 'package:mi_fik/Pages/SubMenus/ProfilePage/Components/edit_profile.dart';
+import 'package:mi_fik/Pages/SubMenus/ProfilePage/Components/show_profile.dart';
+import 'package:mi_fik/Pages/SubMenus/ProfilePage/Components/show_roles.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key key}) : super(key: key);

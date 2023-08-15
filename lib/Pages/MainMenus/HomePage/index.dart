@@ -14,10 +14,10 @@ import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/MainMenus/HomePage/Usecases/get_content.dart';
-import 'package:mi_fik/Pages/MainMenus/HomePage/Usecases/get_location.dart';
+import 'package:mi_fik/Pages/MainMenus/HomePage/Components/get_content.dart';
+import 'package:mi_fik/Pages/MainMenus/HomePage/Components/get_location.dart';
 import 'package:mi_fik/Components/Typography/show_greeting.dart';
-import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/post_task.dart';
+import 'package:mi_fik/Pages/MainMenus/SchedulePage/Components/post_task.dart';
 import 'package:mi_fik/Pages/SubMenus/AddPostPage/index.dart';
 
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';

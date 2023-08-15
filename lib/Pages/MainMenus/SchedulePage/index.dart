@@ -13,9 +13,9 @@ import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/MainMenus/SchedulePage/Tabs/archive_tab.dart';
 import 'package:mi_fik/Pages/MainMenus/SchedulePage/Tabs/my_schedule_tab.dart';
 import 'package:mi_fik/Pages/MainMenus/SchedulePage/Tabs/saved_content_tab.dart';
-import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/post_archive.dart';
-import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/post_task.dart';
-import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/show_weekly.dart';
+import 'package:mi_fik/Pages/MainMenus/SchedulePage/Components/post_archive.dart';
+import 'package:mi_fik/Pages/MainMenus/SchedulePage/Components/post_task.dart';
+import 'package:mi_fik/Pages/MainMenus/SchedulePage/Components/show_weekly.dart';
 
 class SchedulePage extends StatefulWidget {
   const SchedulePage({Key key}) : super(key: key);

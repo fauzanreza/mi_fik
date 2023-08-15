@@ -13,10 +13,10 @@ class SuccessDialog extends StatelessWidget {
 
     return AlertDialog(
       contentPadding: EdgeInsets.all(spaceSM),
-      title: Text('Information'.tr, style: TextStyle(fontSize: textXMD)),
+      title: null,
       content: SizedBox(
         width: fullWidth,
-        height: 180,
+        height: 320,
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -26,21 +26,39 @@ class SuccessDialog extends StatelessWidget {
                     BorderRadius.circular(roundedJumbo + roundedJumbo),
                 child: Image.asset('assets/icon/Success.png', width: 120),
               ),
+              SizedBox(height: spaceLG),
+              Text("Success".tr,
+                  style: TextStyle(
+                      color: darkColor,
+                      fontSize: textLG,
+                      fontWeight: FontWeight.bold)),
               Container(
-                  margin: EdgeInsets.symmetric(vertical: spaceSM),
+                  margin: EdgeInsets.fromLTRB(0, spaceMini, 0, spaceSM),
                   child: Text(text,
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                           color: shadowColor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500)))
+                          fontSize: textXMD,
+                          fontWeight: FontWeight.w500))),
+              Divider(
+                height: spaceMD,
+                color: greyColor,
+              ),
+              InkWell(
+                  onTap: () => Navigator.pop(context, 'OK'),
+                  child: Container(
+                    padding: EdgeInsets.all(spaceMD),
+                    margin: EdgeInsets.only(top: spaceMD),
+                    decoration: BoxDecoration(
+                        color: successBG,
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(roundedMD))),
+                    child: Text("Continue".tr,
+                        style: TextStyle(
+                            color: whiteColor, fontWeight: FontWeight.w500)),
+                  ))
             ]),
       ),
-      actions: <Widget>[
-        TextButton(
-          onPressed: () => Navigator.pop(context, 'OK'),
-          child: Text('OK', style: TextStyle(fontSize: textXMD)),
-        ),
-      ],
     );
   }
 }
