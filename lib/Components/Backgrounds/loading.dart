@@ -11,19 +11,24 @@ class LoadingScreen extends StatelessWidget {
     double fullHeight = Get.height;
     double fullWidth = Get.width;
 
-    return Container(
-        height: fullHeight,
-        width: fullWidth,
-        decoration: BoxDecoration(color: whiteColor),
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ClipRRect(
-                child: Image.asset('assets/icon/mifik_logo.png', height: 75),
-              ),
-              const SizedBox(height: 40),
-              CircularProgressIndicator(color: primaryColor)
-            ]));
+    return WillPopScope(
+        onWillPop: () async {
+          return Future.value(false);
+        },
+        child: Container(
+            height: fullHeight,
+            width: fullWidth,
+            decoration: BoxDecoration(color: whiteColor),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ClipRRect(
+                    child:
+                        Image.asset('assets/icon/mifik_logo.png', height: 75),
+                  ),
+                  const SizedBox(height: 40),
+                  CircularProgressIndicator(color: primaryColor)
+                ])));
   }
 }

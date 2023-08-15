@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mi_fik/Components/Backgrounds/loading.dart';
 import 'package:mi_fik/Components/Dialogs/failed_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/nodata_dialog.dart';
 import 'package:mi_fik/Components/Dialogs/success_dialog.dart';
@@ -15,13 +16,13 @@ import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/Landings/RegisterPage/Usecases/get_terms.dart';
-import 'package:mi_fik/Pages/Landings/RegisterPage/Usecases/get_waiting.dart';
-import 'package:mi_fik/Pages/Landings/RegisterPage/Usecases/get_welcoming.dart';
-import 'package:mi_fik/Pages/Landings/RegisterPage/Usecases/set_profile_data.dart';
-import 'package:mi_fik/Pages/Landings/RegisterPage/Usecases/set_profile_image.dart';
-import 'package:mi_fik/Pages/Landings/RegisterPage/Usecases/set_role.dart';
-import 'package:mi_fik/Pages/SubMenus/ManageRolePage/Usecases/post_selected_role.dart';
+import 'package:mi_fik/Pages/Landings/RegisterPage/Components/get_terms.dart';
+import 'package:mi_fik/Pages/Landings/RegisterPage/Components/get_waiting.dart';
+import 'package:mi_fik/Pages/Landings/RegisterPage/Components/get_welcoming.dart';
+import 'package:mi_fik/Pages/Landings/RegisterPage/Components/set_profile_data.dart';
+import 'package:mi_fik/Pages/Landings/RegisterPage/Components/set_profile_image.dart';
+import 'package:mi_fik/Pages/Landings/RegisterPage/Components/set_role.dart';
+import 'package:mi_fik/Pages/SubMenus/ManageRolePage/Components/post_selected_role.dart';
 import 'package:onboarding/onboarding.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -66,7 +67,6 @@ class StateRegisterPage extends State<RegisterPage> {
     DateTime now = DateTime.now();
     var yearColl = [];
     for (int i = 1; i <= 5; i++) {
-      yearColl.add(now.year + i);
       yearColl.add(now.year - i);
     }
     yearColl.add(2023);
@@ -135,7 +135,7 @@ class StateRegisterPage extends State<RegisterPage> {
                         isFillForm = true;
                       });
 
-                      Get.snackbar("Success", "Account has been registered",
+                      Get.snackbar("Success", "Account has been registered".tr,
                           backgroundColor: whiteColor);
                     });
                   } else {
@@ -195,33 +195,34 @@ class StateRegisterPage extends State<RegisterPage> {
                   unameMsg = "";
                   emailMsg = "";
                   if (fnameRegisCtrl.trim() == "") {
-                    fnameMsg = "First Name can't be empty";
+                    fnameMsg = "First Name can't be empty".tr;
                   } else {
                     fnameMsg = "";
                   }
                   if (passRegisCtrl.trim() == "") {
-                    passMsg = "Password can't be empty";
+                    passMsg = "Password can't be empty".tr;
                   } else {
                     passMsg = "";
                   }
                 });
-                Get.dialog(const FailedDialog(
-                    text: "Please fill the remaining field", type: "register"));
+                Get.dialog(FailedDialog(
+                    text: "Please fill the remaining field".tr,
+                    type: "register"));
               } else {
                 if (usernameAvaiabilityCheck.trim() == "" ||
                     emailAvaiabilityCheck.trim() == "") {
                   setState(() {
                     if (usernameAvaiabilityCheck.trim() == "") {
-                      unameMsg = "Username can't be empty";
+                      unameMsg = "Username can't be empty".tr;
                     }
                     if (emailAvaiabilityCheck.trim() == "") {
-                      emailMsg = "Email can't be empty";
+                      emailMsg = "Email can't be empty".tr;
                     }
                   });
                 } else {
                   setState(() {
-                    unameMsg = "Username is invalid";
-                    emailMsg = "Email is invalid";
+                    unameMsg = "Username is invalid".tr;
+                    emailMsg = "Email is invalid".tr;
                   });
                 }
 
@@ -273,7 +274,7 @@ class StateRegisterPage extends State<RegisterPage> {
               width: spaceXXSM,
             ),
             Text(
-              'Next',
+              'Next'.tr,
               style: TextStyle(
                   fontSize: textXMD,
                   color: successBG,
@@ -389,6 +390,7 @@ class StateRegisterPage extends State<RegisterPage> {
   Widget finishBtn() {
     return InkWell(
         onTap: () async {
+          Get.to(const LoadingScreen(), preventDuplicates: false);
           bool keyExists = await keyExist('token_key');
           indexRegis = 0;
           usernameAvaiabilityCheck = "";
@@ -406,21 +408,23 @@ class StateRegisterPage extends State<RegisterPage> {
           isWaiting = false;
 
           if (keyExists) {
-            authQueryService.getSignOut().then((response) async {
+            await authQueryService.getSignOut().then((response) {
               var body = response[0]['body'];
               var code = response[0]['code'];
 
-              if (body == "Logout success" && code == 200) {
-                await getDestroyTrace(true);
-                Get.dialog(SuccessDialog(text: body));
-              } else if (code == 401) {
-                await getDestroyTrace(true);
+              if (body != "Logout success" && (code == 200 || code == 401)) {
+                //Get.dialog(SuccessDialog(text: body));
+
+                Get.dialog(FailedDialog(text: body, type: "signout"));
               }
             });
-          } else {
-            await getDestroyTrace(true);
-            Get.dialog(SuccessDialog(text: "Sign out success".tr));
           }
+          Future.delayed(const Duration(seconds: 2), () {
+            getDestroyTrace(true);
+          });
+          Future.delayed(const Duration(seconds: 3), () {
+            Get.dialog(SuccessDialog(text: "Sign out success".tr));
+          });
         },
         child: Container(
           padding: EdgeInsets.all(spaceXSM),
@@ -449,7 +453,7 @@ class StateRegisterPage extends State<RegisterPage> {
               width: spaceXXSM,
             ),
             Text(
-              'To login',
+              'To login'.tr,
               style: TextStyle(
                   fontSize: textXMD,
                   color: successBG,

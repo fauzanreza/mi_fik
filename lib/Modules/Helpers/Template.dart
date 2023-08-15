@@ -1,9 +1,10 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
-import 'package:mi_fik/Modules/Routes/collection.dart';
+import 'package:mi_fik/Components/Backgrounds/loading.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
+import 'package:mi_fik/Pages/Landings/LoginPage/index.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,6 +17,12 @@ getDBDateFormat(type, date) {
 }
 
 Future<void> getDestroyTrace(bool isSignOut) async {
+  if (!isSignOut) {
+    if (!isShownLostSessPop) {
+      Get.to(const LoadingScreen(), preventDuplicates: false);
+    }
+  }
+
   final prefs = await SharedPreferences.getInstance();
   GetStorage box = GetStorage();
   // Client client = Client();
@@ -23,8 +30,9 @@ Future<void> getDestroyTrace(bool isSignOut) async {
   // await Future.delayed(const Duration(seconds: 1));
   // client.close();
 
-  Get.toNamed(CollectionRoute.landing);
-
+  if (isSignOut) {
+    Get.to(() => const LoginPage());
+  }
   await prefs.clear();
   await box.erase();
   final cacheDir = await getTemporaryDirectory();
@@ -43,6 +51,9 @@ Future<void> getDestroyTrace(bool isSignOut) async {
 
   if (!isSignOut) {
     if (!isShownLostSessPop) {
+      Future.delayed(const Duration(seconds: 2), () {
+        Get.to(() => const LoginPage());
+      });
       isShownLostSessPop = true;
       Get.snackbar("Alert".tr, "Session lost, please sign in again".tr,
           backgroundColor: whiteColor);

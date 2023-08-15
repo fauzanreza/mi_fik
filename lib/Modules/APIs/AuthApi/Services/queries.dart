@@ -19,7 +19,7 @@ class AuthQueriesService {
     };
 
     final response = await client.get(
-      Uri.parse("$emuUrl/api/v1/logout"),
+      Uri.parse("$emuUrl/api/v1/logout/mobile"),
       headers: header,
     );
 

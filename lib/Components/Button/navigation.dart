@@ -30,12 +30,54 @@ Widget getSignOutButtonWide(var ctx) {
       ));
 }
 
-getSpeeDialChild(String title, var ctx, var cls, var icon) {
+getSpeeDialChild(String title, var ctx, var cls, IconData icon, String desc) {
   return SpeedDialChild(
       child: Icon(icon),
-      label: title,
-      labelStyle: TextStyle(fontSize: textXMD),
-      backgroundColor: primaryColor,
+      // label: title,
+      // labelStyle: TextStyle(fontSize: textXMD, color: whiteColor),
+      // labelBackgroundColor: primaryColor,
+      labelWidget: Container(
+        constraints: const BoxConstraints(maxWidth: 300),
+        width: Get.width * 0.8,
+        margin: EdgeInsets.only(right: spaceSM, top: spaceSM),
+        decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: shadowColor.withOpacity(0.35),
+                blurRadius: 10.0,
+                spreadRadius: 0.0,
+                offset: const Offset(
+                  5.0,
+                  5.0,
+                ),
+              )
+            ],
+            color: successBG,
+            border: Border.all(color: whiteColor, width: 1.5),
+            borderRadius: BorderRadius.all(Radius.circular(roundedMD))),
+        padding: EdgeInsets.symmetric(vertical: spaceXSM, horizontal: spaceMD),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+          Text(
+            title,
+            style: TextStyle(
+                fontSize: textMD,
+                color: whiteColor,
+                letterSpacing: 0.75,
+                fontWeight: FontWeight.bold),
+            textAlign: TextAlign.end,
+          ),
+          SizedBox(height: spaceMini),
+          Text(
+            desc,
+            style: TextStyle(
+                fontSize: textSM,
+                color: whiteColor,
+                fontWeight: FontWeight.w500),
+            textAlign: TextAlign.end,
+          )
+        ]),
+      ),
+      backgroundColor: successBG,
       foregroundColor: whiteColor,
       onTap: () => showModalBottomSheet(
             context: ctx,

@@ -83,7 +83,7 @@ Future<void> main() async {
   // }
 
   final prefs = await SharedPreferences.getInstance();
-  String langKey = "en";
+  String langKey = "id";
   if (prefs.containsKey("lang_key")) {
     langKey = prefs.getString("lang_key");
   }
@@ -227,14 +227,14 @@ class StateMyApp extends State<MyApp> {
       DeviceOrientation.portraitDown,
     ]);
 
-    String langCode = "en";
-    slctLang = LangList.en;
-    String countryCode = "US";
+    String langCode = "id";
+    slctLang = LangList.id;
+    String countryCode = "ID";
 
-    if (widget.lang == "id") {
-      langCode = "id";
-      countryCode = "ID";
-      slctLang = LangList.id;
+    if (widget.lang == "en") {
+      langCode = "en";
+      countryCode = "US";
+      slctLang = LangList.en;
     }
 
     Widget getItem(Widget destination) {
@@ -243,7 +243,7 @@ class StateMyApp extends State<MyApp> {
         locale: Locale(langCode, countryCode),
         fallbackLocale: Locale(langCode, countryCode),
         debugShowCheckedModeBanner: false,
-        title: 'Mi-FIK',
+        title: 'MI-FIK',
         theme: ThemeData(
           primarySwatch: Colors.blue,
           textTheme: textTheme,

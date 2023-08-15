@@ -38,7 +38,6 @@ class UserCommandsService {
         }
       ];
     } else if (response.statusCode == 422 || response.statusCode == 401) {
-      // Validation failed
       return [
         {"message": "failed", "body": responseData['result']}
       ];
@@ -78,7 +77,6 @@ class UserCommandsService {
         }
       ];
     } else if (response.statusCode == 422 || response.statusCode == 401) {
-      // Validation failed
       return [
         {"message": "failed", "body": responseData['result']}
       ];
@@ -117,7 +115,6 @@ class UserCommandsService {
         }
       ];
     } else if (response.statusCode == 422 || response.statusCode == 401) {
-      // Validation failed
       return [
         {"message": "failed", "body": responseData['result']}
       ];
@@ -158,7 +155,6 @@ class UserCommandsService {
         }
       ];
     } else if (response.statusCode == 422 || response.statusCode == 401) {
-      // Validation failed
       return [
         {"message": "failed", "body": responseData['result']}
       ];
@@ -194,7 +190,6 @@ class UserCommandsService {
         }
       ];
     } else if (response.statusCode == 422 || response.statusCode == 401) {
-      // Validation failed
       return [
         {"message": "failed", "body": responseData['result']}
       ];

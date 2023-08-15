@@ -23,7 +23,7 @@ class AuthCommandsService {
     GetStorage box = GetStorage();
 
     final response = await client.post(
-      Uri.parse("$emuUrl/api/v1/login"),
+      Uri.parse("$emuUrl/api/v1/login/mobile"),
       headers: header,
       body: loginModelToJson(data),
     );

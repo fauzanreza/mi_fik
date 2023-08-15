@@ -6,6 +6,7 @@ import 'package:mi_fik/Modules/Variables/style.dart';
 
 // Navigation
 String passSlugContent;
+bool forceSignOut = false;
 
 // Others
 String locName;
@@ -19,7 +20,7 @@ FlashMode flashMode = FlashMode.off;
 bool isShownLostSessPop = false;
 bool isShownOffLocationPop = false;
 
-//Schedule Page
+// Schedule Page
 String archiveNameMsg = "";
 String archiveDescMsg = "";
 String allArchiveMsg = "";
@@ -38,7 +39,7 @@ bool isWaitingLoad = true;
 bool isInvalidToken = false;
 bool tokenValidated = false;
 
-//Regis only
+// Regis only
 int indexRegis = 0;
 bool isCheckedRegister = false;
 bool isFillForm = false;
@@ -161,3 +162,6 @@ NotificationDetails fcmConfig = NotificationDetails(
 // Response
 String emptyInputMsg = "can't be empty".tr;
 String invalidDateMsg = "The date end must after date start".tr;
+String invalidDateToNowMsg = "Unable to set content date to a past date".tr;
+
+List<String> sortingOpt = ["Desc", "Asc"];

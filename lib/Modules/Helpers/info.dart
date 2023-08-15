@@ -86,8 +86,8 @@ class StateGetInfoBox extends State<GetInfoBox> {
                   "${widget.page}-${widget.location}-body", contents.infoBody);
               return _buildListView(contents);
             } else {
-              return const Center(
-                child: CircularProgressIndicator(),
+              return Center(
+                child: CircularProgressIndicator(color: primaryColor),
               );
             }
           },

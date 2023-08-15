@@ -55,7 +55,6 @@ class Dictionaries extends Translations {
           'Event Location': 'Event Location',
           'Event Reminder': 'Event Reminder',
           'Event Period': 'Event Period',
-          'Event Attachment': 'Event Attachment',
           'Previous': 'Previous',
           'More': 'More',
           'Attachment Name': 'Attachment Name',
@@ -103,8 +102,7 @@ class Dictionaries extends Translations {
           'Last Name': 'Last Name',
           'Batch Year': 'Batch Year',
           'Frequently Asked Question': 'Frequently Asked Question',
-          "You haven't selected any tag yet":
-              "You haven't selected any tag yet",
+          "You haven't selected any tag yet": "You haven't any tag yet",
           'No role available': 'No role available',
           'Active filters': 'Active filters',
           'Lost connection, all data shown are local':
@@ -156,15 +154,11 @@ class Dictionaries extends Translations {
           "All Tag": "All Tag",
           "Attachment": "Attachment",
           "Sign In": "Sign In",
-          "Create archive failed, field can't be empty":
-              "Create archive failed, field can't be empty",
           "Are you sure want to leave? All changes will not be saved":
               "Are you sure want to leave? All changes will not be saved",
           "Field can't be empty": "Field can't be empty",
           "Tag must be selected": "Tag must be selected",
           "Date period must be selected": "Date period must be selected",
-          "Add feedback failed, field can't be empty":
-              "Add feedback failed, field can't be empty",
           "Sign out success": "Sign out success",
           "Failed to load document": "Failed to load document",
           "Failed to load video": "Failed to load video",
@@ -197,7 +191,121 @@ class Dictionaries extends Translations {
           "Please register your account first":
               "Please register your account first",
           "Publish Task": "Publish Task",
-          "Something wrong with description": "Something wrong with description"
+          "Something wrong with description":
+              "Something wrong with description",
+          "Collection of event or task you want to save even when the period is end":
+              "Collection of event or task you want to save even when the period is end",
+          "Manage and remind daily tasks that have been created":
+              "Manage and remind daily tasks that have been created",
+          "Event is an information about some public activity that will be held in the future":
+              "Event is an information about some public activity that will be held in the future",
+          " Not found": " Not found",
+          "OK": "OK",
+          "Success": "Success",
+          "Set Date": "Set Date",
+          "Start": "Start",
+          "End": "End",
+          "and": "and",
+          "Edit Task": "Edit Task",
+          "Delete Task": "Delete Task",
+          "Created at": "Created at",
+          "Last updated": "Last updated",
+          "Navigate": "Navigate",
+          "You has requested to": "You has requested to",
+          "MI-FIK Apps": "MI-FIK Apps",
+          "Welcome to the Faculty of Creative Industries Information Management Application (MI-FIK), an innovative solution to improve the efficiency and accessibility of information for the entire community at the Faculty of Creative Industries Telkom University.":
+              "Welcome to the Faculty of Creative Industries Information Management Application (MI-FIK), an innovative solution to improve the efficiency and accessibility of information for the entire community at the Faculty of Creative Industries Telkom University.",
+          "Telkom University's Faculty of Creative Industries (FIK) has six leading and most comprehensive study programs in the creative field, namely, Bachelor of Visual Communication Design (S.Ds), Bachelor of Interior Design (S.Ds), Bachelor of Product Design (S.Ds), Bachelor of Crafts (S.Sn) and Bachelor of Fine Arts (S.Sn). In 2020, the Faculty of Creative Industries presented one new study program, the Master of Design (M.Ds) program. ":
+              "Telkom University's Faculty of Creative Industries (FIK) has six leading and most comprehensive study programs in the creative field, namely, Bachelor of Visual Communication Design (S.Ds), Bachelor of Interior Design (S.Ds), Bachelor of Product Design (S.Ds), Bachelor of Crafts (S.Sn) and Bachelor of Fine Arts (S.Sn). In 2020, the Faculty of Creative Industries presented one new study program, the Master of Design (M.Ds) program. ",
+          "MI-FIK can be use by :": "MI-FIK can be use by :",
+          "- Faculty Staff": "- Faculty Staff",
+          "- Lecturer": "- Lecturer",
+          "- Student": "- Student",
+          "MI-FIK is specifically designed to meet the needs of communication problems in the FIK community in managing and sharing information effectively. With advanced features and an intuitive interface, this application will be a helpful tool for lecturers, staff, and students in disseminating information.":
+              "MI-FIK is specifically designed to meet the needs of communication problems in the FIK community in managing and sharing information effectively. With advanced features and an intuitive interface, this application will be a helpful tool for lecturers, staff, and students in disseminating information.",
+          "Terms & Condition": "Terms & Condition",
+          "Profile Data": "Profile Data",
+          "Validate": "Validate",
+          "January": "January",
+          "February": "February",
+          "March": "March",
+          "April": "April",
+          "May": "May",
+          "June": "June",
+          "July": "July",
+          "August": "August",
+          "September": "September",
+          "October": "October",
+          "November": "November",
+          "December": "December",
+          "No Placemark is found": "No Placemark is found",
+          "Invalid Location": "Invalid Location",
+          "Set Location": "Set My Location",
+          "Try Again": "Try Again",
+          "Unable to set content date to a past date":
+              "Unable to set content date to a past date",
+          "Before you can fill the other form. We must validate your username and email first":
+              "Before you can fill the other form. We must validate your username and email first",
+          "Username and Email is available": "Username and Email is available",
+          "Next": "Next",
+          "Failed": "Failed",
+          "Please tell us your email and username":
+              "Please tell us your email and username",
+          "Validate your account": "Validate your account",
+          "Please validate your account first":
+              "Please validate your account first",
+          "Profile Picture": "Profile Picture",
+          "Selected Role": "Selected Role",
+          "Selected Tag": "Selected Tag",
+          "Username can't be empty": "Username can't be empty",
+          "Email can't be empty": "Email can't be empty",
+          "Username is invalid": "Username is invalid",
+          "Email is invalid": "Email is invalid",
+          "First Name can't be empty": "First Name can't be empty",
+          "Please fill the remaining field": "Please fill the remaining field",
+          "Account has been registered": "Account has been registered",
+          "Username and Email is reset": "Username and Email is reset",
+          " Reset Username and Email": " Reset Username and Email",
+          "To login": "To login",
+          "Your account has registered": "Your account has registered",
+          "Please wait until your account has been approved by admin":
+              "Please wait until your account has been approved by admin",
+          "Hey, I want to regist to MI-FIK, please accept my request":
+              "Hey, I want to regist to MI-FIK, please accept my request",
+          "Account Register": "Account Register",
+          "Send Email": "Send Email",
+          "Welcome to the Faculty of Creative Industries Information Management Application (MI-FIK). Before using this application, please read and understand carefully the following terms and conditions of use:":
+              "Welcome to the Faculty of Creative Industries Information Management Application (MI-FIK). Before using this application, please read and understand carefully the following terms and conditions of use:",
+          "Legal Compliance:": "Legal Compliance:",
+          "1. By Using this application, you agree to comply with all applicable laws and regulations in your jurisdiction related to the use of this application":
+              "1. By Using this application, you agree to comply with all applicable laws and regulations in your jurisdiction related to the use of this application",
+          "2. Take full responsibility for any activities conducted through your account in this app":
+              "2. Take full responsibility for any activities conducted through your account in this app",
+          "Privacy and Security:": "Privacy and Security:",
+          "1. We respect your privacy and are committed to protecting the personal data you provide":
+              "1. We respect your privacy and are committed to protecting the personal data you provide",
+          "2. You are responsible for maintaining the confidentiality and security of your account. Do not provide your login information to other parties and be sure to log out of your account when finished using the application":
+              "2. You are responsible for maintaining the confidentiality and security of your account. Do not provide your login information to other parties and be sure to log out of your account when finished using the application",
+          "User Content:": "User Content:",
+          "1. When using this app, you agree not to upload, share, or distribute content that is unlawful, infringes intellectual property rights, or violates the privacy of others":
+              "1. When using this app, you agree not to upload, share, or distribute content that is unlawful, infringes intellectual property rights, or violates the privacy of others",
+          "2. You are solely responsible for the content you share through this app. We are not responsible for inappropriate user content":
+              "2. You are solely responsible for the content you share through this app. We are not responsible for inappropriate user content",
+          "Changes and Updates:": "Changes and Updates:",
+          "1. We reserve the right to change or update these terms and conditions from time to time without prior notice. Please be sure to check this page periodically to keep up to date with the latest information":
+              "1. We reserve the right to change or update these terms and conditions from time to time without prior notice. Please be sure to check this page periodically to keep up to date with the latest information",
+          "2. In case of important changes, we will provide notice to users through appropriate communication channels":
+              "2. In case of important changes, we will provide notice to users through appropriate communication channels",
+          "Limitation of Liability:": "Limitation of Liability:",
+          '1. This app is provided "as is" and we do not make any warranties or representations regarding the accuracy, reliability, or availability of this app':
+              '1. This app is provided "as is" and we do not make any warranties or representations regarding the accuracy, reliability, or availability of this app',
+          "2. We are not liable for any loss or damage arising from the use of this app or the inability to use it":
+              "2. We are not liable for any loss or damage arising from the use of this app or the inability to use it",
+          "By agreeing to the terms and conditions in using the MI-FIK application, you agree and accept all the terms and conditions listed above. If you do not agree with these terms and conditions, please stop using this application. If you have any questions or concerns, please feel free to contact our support team.":
+              "By agreeing to the terms and conditions in using the MI-FIK application, you agree and accept all the terms and conditions listed above. If you do not agree with these terms and conditions, please stop using this application. If you have any questions or concerns, please feel free to contact our support team.",
+          "I agree to the terms and condition on this app, Thank you for your understanding and cooperation":
+              "I agree to the terms and condition on this app, Thank you for your understanding and cooperation",
+          "Yes": "Yes"
         },
         'id_ID': {
           'Good Morning': 'Selamat Pagi',
@@ -215,7 +323,7 @@ class Dictionaries extends Translations {
           'Submit Changes': 'Kirim Perubahan',
           'Manage Role': 'Ubah Role',
           'Done': 'Selesai',
-          'Home': 'Home',
+          'Home': 'Beranda',
           'Schedule': 'Jadwal',
           'Calendar': 'Kalendar',
           'Today': 'Hari ini',
@@ -251,11 +359,10 @@ class Dictionaries extends Translations {
           'Event Location': 'Lokasi Event',
           'Event Reminder': 'Pengingat Event',
           'Event Period': 'Periode Event',
-          'Event Attachment': 'Sisipkan pada Event',
           'Previous': 'Sebelumnya',
           'More': 'Selanjutnya',
-          'Attachment Name': 'Nama Sisipan',
-          'Attachment URL': 'URL Sisipan',
+          'Attachment Name': 'Nama Lampiran',
+          'Attachment URL': 'URL Lampiran',
           'Back to Archive': 'Kembali ke Arsip',
           'Edit Archive': 'Ubah Arsip',
           'Search by title': 'Cari berdasarkan judul',
@@ -275,9 +382,9 @@ class Dictionaries extends Translations {
           'Session lost, please sign in again':
               'Waktu sesi habis, silahkan masuk kembali',
           'Alert': 'Perhatian',
-          'Attachment removed': 'Tautan dihapus',
+          'Attachment removed': 'Lampiran dihapus',
           "Attachment removed. Can't located uploaded file":
-              "Tautan dihapus. Tidak dapat mendeteksi file unggahan",
+              "Lampiran dihapus. Tidak dapat mendeteksi file unggahan",
           'Yes, Delete task': 'Ya, Hapus tugas',
           'What do you think the improvment should be':
               'Menurut mu, apa yang perlu ditingkatkan',
@@ -339,10 +446,10 @@ class Dictionaries extends Translations {
               "Event ini tidak memiliki deskripsi",
           "Publish Event": "Simpan Event",
           "This Event doesn't have attachment":
-              "Event ini tidak memiliki tautan",
+              "Event ini tidak memiliki lampiran",
           "don't have an account?": "belum punya akun?",
           "Register now": "Daftar sekarang",
-          "Insert Attachment": "Tambah Tautan",
+          "Insert Attachment": "Tambah Lampiran",
           "Are you sure want to sign out?": "Apakah Anda yakin ingin keluar?",
           "Information": "Informasi",
           "Sign Out": "Keluar",
@@ -350,17 +457,13 @@ class Dictionaries extends Translations {
           "You haven't accept the terms & condition":
               "Anda belum menyetujui Syarat & Ketentuan",
           "All Tag": "Semua tag",
-          "Attachment": "Tautan",
+          "Attachment": "Lampiran",
           "Sign In": "Masuk",
-          "Create archive failed, field can't be empty":
-              "Gagal membuat arsip, kolom tidak boleh kosong",
           "Are you sure want to leave? All changes will not be saved":
               "Apakah Anda yakin ingin keluar? Semua perubahan tidak akan tersimpan",
           "Field can't be empty": "Inputan tidak boleh kosong",
           "Tag must be selected": "Tag harus dipilih",
           "Date period must be selected": "Periode tanggal harus dipilih",
-          "Add feedback failed, field can't be empty":
-              "Gagal membuat event, inputan tidak boleh kosong",
           "Sign out success": "Berhasil keluar akun",
           "Failed to load document": "Gagal menampilkan dokumen",
           "Failed to load video": "Gagal menampilkan video",
@@ -387,13 +490,127 @@ class Dictionaries extends Translations {
           "Can't be empty": "Tidak boleh kosong",
           "Validation success": "Validasi sukses",
           "The date end must after date start":
-              "Tanggal berakhir harus sebelum tanggal mulai",
+              "Tanggal berakhir harus sesudah tanggal mulai",
           "No description provided": "Tidak ada deskripsi",
           "You": "Anda",
           "Please register your account first":
               "Daftarkan akun Anda terlebih dahulu",
           "Publish Task": "Simpan Tugas",
-          "Something wrong with description": "Terjadi kesalahan pada deskripsi"
+          "Something wrong with description":
+              "Terjadi kesalahan pada deskripsi",
+          "Collection of event or task you want to save even when the period is end":
+              "Koleksi event atau tugas yang ingin Anda simpan bahkan jika periodenya telah usai",
+          "Manage and remind daily tasks that have been created":
+              "Mengatur tugas harian yang telah dibuat",
+          "Event is an information about some public activity that will be held in the future":
+              "Event adalah sebuah informasi mengenai aktivitas publik yang akan diselengarakan",
+          " Not found": " Tidak ditemukan",
+          "OK": "Oke",
+          "Success": "Sukses",
+          "Set Date": "Pilih Waktu",
+          "Start": "Mulai",
+          "End": "Akhir",
+          "and": "dan",
+          "Edit Task": "Edit Tugas",
+          "Delete Task": "Hapus Tugas",
+          "Created at": "Dibuat pada",
+          "Last updated": "Terakhir diubah",
+          "Navigate": "Navigasi",
+          "You has requested to": "Kamu telah meminta",
+          "MI-FIK Apps": "APLIKASI MI-FIK",
+          "Welcome to the Faculty of Creative Industries Information Management Application (MI-FIK), an innovative solution to improve the efficiency and accessibility of information for the entire community at the Faculty of Creative Industries Telkom University.":
+              "Selamat datang di Aplikasi Manajemen Informasi Fakultas Industri Kreatif (MI-FIK), sebuah solusi inovatif untuk meningkatkan efisiensi dan aksesibilitas informasi bagi seluruh masyarakat di Fakultas Industri Kreatif Universitas Telkom.",
+          "Telkom University's Faculty of Creative Industries (FIK) has six leading and most comprehensive study programs in the creative field, namely, Bachelor of Visual Communication Design (S.Ds), Bachelor of Interior Design (S.Ds), Bachelor of Product Design (S.Ds), Bachelor of Crafts (S.Sn) and Bachelor of Fine Arts (S.Sn). In 2020, the Faculty of Creative Industries presented one new study program, the Master of Design (M.Ds) program. ":
+              "Fakultas Industri Kreatif (FIK) Telkom University memiliki enam program studi unggulan dan terlengkap di bidang kreatif yaitu, Sarjana Desain Komunikasi Visual (S.Ds), Sarjana Desain Interior (S.Ds), Sarjana Desain Produk ( S.Ds), Sarjana Kriya (S.Sn) dan Sarjana Seni Rupa (S.Sn). Pada tahun 2020, Fakultas Industri Kreatif menghadirkan satu program studi baru yaitu program Magister Desain (M.Ds).",
+          "MI-FIK can be use by :": "Aplikasi MI-FIK dapat digunakan oleh :",
+          "- Faculty Staff": "- Staf Fakultas",
+          "- Lecturer": "- Dosen",
+          "- Student": "- Mahasiswa",
+          "MI-FIK is specifically designed to meet the needs of communication problems in the FIK community in managing and sharing information effectively. With advanced features and an intuitive interface, this application will be a helpful tool for lecturers, staff, and students in disseminating information.":
+              "MI-FIK dirancang khusus untuk memenuhi kebutuhan permasalahan komunikasi di komunitas FIK dalam mengelola dan berbagi informasi secara efektif. Dengan fitur-fitur canggih dan antarmuka yang intuitif, aplikasi ini akan menjadi sarana yang sangat membantu bagi dosen, karyawan, dan mahasiswa dalam menyebarluaskan informasi.",
+          "Terms & Condition": "Syarat & Ketentuan",
+          "Profile Data": "Data Profil",
+          "Validate": "Validasi",
+          "January": "Januari",
+          "February": "Februari",
+          "March": "Maret",
+          "April": "April",
+          "May": "Mei",
+          "June": "Juni",
+          "July": "Juli",
+          "August": "Agustus",
+          "September": "September",
+          "October": "Oktober",
+          "November": "November",
+          "December": "Desember",
+          "No Placemark is found": "Tidak ada tempat yang ditemukan",
+          "Invalid Location": "Lokasi tidak valid",
+          "Set Location": "Pilih Lokasi",
+          "Try Again": "Coba lagi",
+          "Unable to set content date to a past date":
+              "Gagal memilih tanggal konten untuk tanggal yang sudah lewat",
+          "Before you can fill the other form. We must validate your username and email first":
+              "Sebelum Anda dapat mengisi form keseluruhan. Kami harus memvalidasi username dan email Anda terlebih dahulu",
+          "Username and Email is available": "Username dan Email tersedia",
+          "Next": "Selanjutnya",
+          "Failed": "Gagal",
+          "Please tell us your email and username":
+              "Mohon isikan email dan username",
+          "Validate your account": "Validasi akun",
+          "Please validate your account first":
+              "Mohon validasi akun Anda terlebih dahulu",
+          "Profile Picture": "Foto Profil",
+          "Selected Role": "Role Terpilih",
+          "Selected Tag": "Tag Terpilih",
+          "Username can't be empty": "Username tidak boleh kosong",
+          "Email can't be empty": "Email tidak boleh kosong",
+          "Username is invalid": "Username tidak valid",
+          "Email is invalid": "Email tidak valid",
+          "First Name can't be empty": "Nama depan tidak boleh kosong",
+          "Please fill the remaining field": "Mohon isi tiap kolom",
+          "Account has been registered": "Akun berhasil terdaftar",
+          "Username and Email is reset": "Username dan Email di reset",
+          " Reset Username and Email": " Reset Username dan Email",
+          "To login": "Menuju login",
+          "Your account has registered": "Akun Anda telah didaftar",
+          "Please wait until your account has been approved by admin":
+              "Mohon tunggu hingga akun Anda telah disetujui oleh Admin",
+          "Hey, I want to regist to MI-FIK, please accept my request":
+              "Hei, Saya ingin mendaftar MI-FIK, mohon setujui permintaan saya",
+          "Account Register": "Registrasi Akun",
+          "Send Email": "Kirim Email",
+          "Welcome to the Faculty of Creative Industries Information Management Application (MI-FIK). Before using this application, please read and understand carefully the following terms and conditions of use:":
+              "Selamat datang di Aplikasi Manajemen Informasi Fakultas Industri Kreatif (MI-FIK). Sebelum menggunakan aplikasi ini, mohon baca dan pahami dengan seksama syarat dan ketentuan penggunaan berikut ini:",
+          "Legal Compliance:": "Kepatuhan Hukum:",
+          "1. By Using this application, you agree to comply with all applicable laws and regulations in your jurisdiction related to the use of this application":
+              "1. Dengan menggunakan aplikasi ini, Anda setuju untuk mematuhi semua hukum dan peraturan yang berlaku di yurisdiksi Anda yang terkait dengan penggunaan aplikasi ini",
+          "2. Take full responsibility for any activities conducted through your account in this app":
+              "2. Bertanggung jawab penuh atas segala aktivitas yang dilakukan melalui akun Anda dalam aplikasi ini",
+          "Privacy and Security:": "Privasi dan Keamanan:",
+          "1. We respect your privacy and are committed to protecting the personal data you provide":
+              "1. Kami menghormati privasi Anda dan berkomitmen untuk melindungi data pribadi yang Anda berikan",
+          "2. You are responsible for maintaining the confidentiality and security of your account. Do not provide your login information to other parties and be sure to log out of your account when finished using the application":
+              "2. Anda bertanggung jawab untuk menjaga kerahasiaan dan keamanan akun Anda. Jangan memberikan informasi login Anda kepada pihak lain dan pastikan untuk keluar dari akun Anda setelah selesai menggunakan aplikasi",
+          "User Content:": "Konten Pengguna:",
+          "1. When using this app, you agree not to upload, share, or distribute content that is unlawful, infringes intellectual property rights, or violates the privacy of others":
+              "1. Saat menggunakan aplikasi ini, Anda setuju untuk tidak mengunggah, membagikan, atau mendistribusikan konten yang melanggar hukum, melanggar hak kekayaan intelektual, atau melanggar privasi orang lain",
+          "2. You are solely responsible for the content you share through this app. We are not responsible for inappropriate user content":
+              "2. Anda bertanggung jawab penuh atas konten yang Anda bagikan melalui aplikasi ini. Kami tidak bertanggung jawab atas konten pengguna yang tidak pantas",
+          "Changes and Updates:": "Perubahan dan Pembaruan:",
+          "1. We reserve the right to change or update these terms and conditions from time to time without prior notice. Please be sure to check this page periodically to keep up to date with the latest information":
+              "1. Kami berhak untuk mengubah atau memperbarui syarat dan ketentuan ini dari waktu ke waktu tanpa pemberitahuan sebelumnya. Pastikan untuk memeriksa halaman ini secara berkala untuk mendapatkan informasi terbaru",
+          "2. In case of important changes, we will provide notice to users through appropriate communication channels":
+              "2. Jika ada perubahan penting, kami akan memberikan pemberitahuan kepada pengguna melalui saluran komunikasi yang sesuai",
+          "Limitation of Liability:": "Batasan Tanggung Jawab:",
+          '1. This app is provided "as is" and we do not make any warranties or representations regarding the accuracy, reliability, or availability of this app':
+              '1. Aplikasi ini disediakan "sebagaimana adanya" dan kami tidak memberikan jaminan atau pernyataan apa pun terkait keakuratan, keandalan, atau ketersediaan aplikasi ini',
+          "2. We are not liable for any loss or damage arising from the use of this app or the inability to use it":
+              "2. Kami tidak bertanggung jawab atas kerugian atau kerusakan yang timbul dari penggunaan aplikasi ini atau ketidakmampuan untuk menggunakannya",
+          "By agreeing to the terms and conditions in using the MI-FIK application, you agree and accept all the terms and conditions listed above. If you do not agree with these terms and conditions, please stop using this application. If you have any questions or concerns, please feel free to contact our support team.":
+              "Dengan menyetujui syarat dan ketentuan dalam menggunakan aplikasi MI-FIK, Anda menyetujui dan menerima semua syarat dan ketentuan yang tercantum di atas. Jika Anda tidak setuju dengan syarat dan ketentuan ini, silakan berhenti menggunakan aplikasi ini. Jika Anda memiliki pertanyaan atau masalah, jangan ragu untuk menghubungi tim dukungan kami.",
+          "I agree to the terms and condition on this app, Thank you for your understanding and cooperation":
+              "Saya menyetujui syarat dan ketentuan pada aplikasi ini, Terima kasih atas pengertian dan kerjasamanya",
+          "Yes": "Ya"
         },
       };
 }

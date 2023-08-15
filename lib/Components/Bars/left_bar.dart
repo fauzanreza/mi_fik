@@ -93,6 +93,10 @@ class LeftBar extends StatelessWidget {
                                     fullWidth, Icons.help_center, "Help".tr,
                                     () {
                                   Get.toNamed(CollectionRoute.help);
+                                }),
+                                getSideBarTile(
+                                    fullWidth, Icons.info, "About Us".tr, () {
+                                  Get.toNamed(CollectionRoute.about);
                                 })
                               ]),
                         ),

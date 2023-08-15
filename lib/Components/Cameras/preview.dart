@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:full_screen_menu/full_screen_menu.dart';
 import 'package:get/get.dart';
 import 'package:mi_fik/Components/Bars/top_bar.dart';
 import 'package:mi_fik/Components/Cameras/captures.dart';
@@ -57,45 +56,28 @@ class _ShowImageState extends State<ShowImage>
       });
       List response;
 
-      if (widget.from == "profile") {
+      if (widget.from == "profile" || widget.from == "register") {
         if (imageFile != null) {
           final imageUrl = await fireServicePost.sendImageUser(imageFile);
 
           final data = EditUserImageModel(imageUrl: imageUrl);
           response = await commandService.putProfileImage(data);
+          if (widget.from == "register") {
+            setState(() {
+              uploadedImageRegis = imageUrl;
+            });
+          }
         } else {
           Get.snackbar("Error".tr, "Failed to upload, file doesnt exist".tr,
               backgroundColor: whiteColor);
-          Get.toNamed(CollectionRoute.profile, preventDuplicates: false);
+          if (widget.from == "profile") {
+            Get.toNamed(CollectionRoute.profile, preventDuplicates: false);
+          } else if (widget.from == "register") {
+            Get.toNamed(CollectionRoute.register, preventDuplicates: false);
+          }
         }
       } else if (widget.from == "addpost") {
         //
-      } else if (widget.from == "register") {
-        if (imageFile != null) {
-          await fireServicePost.sendImageUser(imageFile).then((value) {
-            EditUserImageModel data = EditUserImageModel(imageUrl: value);
-
-            commandService.putProfileImage(data).then((response) {
-              setState(() => isLoading = false);
-              var status = response[0]['message'];
-              var body = response[0]['body'];
-
-              if (status == "success") {
-                setState(() {
-                  uploadedImageRegis = value;
-                });
-                FullScreenMenu.hide();
-              } else {
-                FullScreenMenu.hide();
-                Get.dialog(FailedDialog(text: body));
-              }
-            });
-          });
-        } else {
-          Get.snackbar("Error".tr, "Failed to upload, file doesnt exist".tr,
-              backgroundColor: whiteColor);
-          Get.toNamed(CollectionRoute.register, preventDuplicates: false);
-        }
       }
 
       setState(() {

@@ -6,9 +6,9 @@ import 'package:mi_fik/Components/Bars/top_bar.dart';
 import 'package:mi_fik/Components/Button/navigation.dart';
 import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/SubMenus/ProfilePage/Usecases/edit_profile.dart';
-import 'package:mi_fik/Pages/SubMenus/ProfilePage/Usecases/show_profile.dart';
-import 'package:mi_fik/Pages/SubMenus/ProfilePage/Usecases/show_roles.dart';
+import 'package:mi_fik/Pages/SubMenus/ProfilePage/Components/edit_profile.dart';
+import 'package:mi_fik/Pages/SubMenus/ProfilePage/Components/show_profile.dart';
+import 'package:mi_fik/Pages/SubMenus/ProfilePage/Components/show_roles.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key key}) : super(key: key);
@@ -74,10 +74,6 @@ class StateProfilePage extends State<ProfilePage> {
                                   getProfileButton(() {
                                     Get.toNamed(CollectionRoute.history);
                                   }, Icons.history, "History".tr,
-                                      Icons.keyboard_arrow_right),
-                                  getProfileButton(() {
-                                    Get.toNamed(CollectionRoute.about);
-                                  }, Icons.info, "About Us".tr,
                                       Icons.keyboard_arrow_right),
                                   getProfileButton(() {
                                     Get.toNamed(CollectionRoute.forget);

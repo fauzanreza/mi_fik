@@ -50,7 +50,7 @@ class ContentQueriesService {
 
       final response = await client.get(
           Uri.parse(
-              "$emuUrl/api/v2/content/slug/$tag/order/$order/date/$date/$utc/find/$finds?page=$page"),
+              "$emuUrl/api/v1/content/slug/$tag/order/$order/date/$date/$utc/find/$finds?page=$page"),
           headers: header);
       if (response.statusCode == 200) {
         prefs.setString("content-sess", response.body);

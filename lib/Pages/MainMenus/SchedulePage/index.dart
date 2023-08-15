@@ -13,9 +13,9 @@ import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:mi_fik/Pages/MainMenus/SchedulePage/Tabs/archive_tab.dart';
 import 'package:mi_fik/Pages/MainMenus/SchedulePage/Tabs/my_schedule_tab.dart';
 import 'package:mi_fik/Pages/MainMenus/SchedulePage/Tabs/saved_content_tab.dart';
-import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/post_archive.dart';
-import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/post_task.dart';
-import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/show_weekly.dart';
+import 'package:mi_fik/Pages/MainMenus/SchedulePage/Components/post_archive.dart';
+import 'package:mi_fik/Pages/MainMenus/SchedulePage/Components/post_task.dart';
+import 'package:mi_fik/Pages/MainMenus/SchedulePage/Components/show_weekly.dart';
 
 class SchedulePage extends StatefulWidget {
   const SchedulePage({Key key}) : super(key: key);
@@ -130,16 +130,27 @@ class StateSchedulePage extends State<SchedulePage>
                 activeIcon: Icons.close,
                 icon: Icons.add,
                 iconTheme: IconThemeData(color: whiteColor),
-                backgroundColor: primaryColor,
+                backgroundColor: successBG,
+                activeBackgroundColor: warningBG,
                 overlayColor: primaryColor,
-                overlayOpacity: 0.4,
+                overlayOpacity: 0.25,
                 onOpen: () => isSpeedDialOpen = true,
                 onClose: () => isSpeedDialOpen = false,
                 children: [
-                  getSpeeDialChild("New Task".tr, context, const PostTask(),
-                      Icons.note_add_outlined),
-                  getSpeeDialChild("New Archive".tr, context,
-                      const PostArchive(), Icons.folder)
+                  getSpeeDialChild(
+                      "New Task".tr,
+                      context,
+                      const PostTask(),
+                      Icons.note_add_outlined,
+                      "Manage and remind daily tasks that have been created"
+                          .tr),
+                  getSpeeDialChild(
+                      "New Archive".tr,
+                      context,
+                      const PostArchive(),
+                      Icons.folder,
+                      "Collection of event or task you want to save even when the period is end"
+                          .tr)
                 ])));
   }
 }

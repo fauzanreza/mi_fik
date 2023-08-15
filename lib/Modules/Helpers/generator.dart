@@ -175,17 +175,18 @@ Widget getTagShow(tag, dateStart, dateEnd, isConverted) {
 }
 
 getDateText(DateTime date, String type, String view) {
+  String setDate = "Set Date".tr;
   if (view == "datetime") {
     if (date != null) {
       return DateFormat("dd-MM-yy HH:mm").format(date).toString();
     } else {
-      return "Set Date $type";
+      return "$setDate ${type.tr}";
     }
   } else if (view == "date") {
     if (date != null) {
       return DateFormat("dd-MM-yy").format(date).toString();
     } else {
-      return "Set Date $type";
+      return "$setDate ${type.tr}";
     }
   }
 }
@@ -200,6 +201,7 @@ Widget getLocation(loc, textColor) {
     }
 
     return Container(
+        constraints: BoxConstraints(maxWidth: Get.width * 0.65),
         margin: EdgeInsets.only(bottom: spaceSM),
         child: RichText(
           maxLines: 1,
@@ -208,12 +210,14 @@ Widget getLocation(loc, textColor) {
             children: [
               WidgetSpan(
                 child: Icon(Icons.location_on_outlined,
-                    color: textColor, size: 18),
+                    color: textColor, size: iconMD),
               ),
               TextSpan(
                   text: " ${ucFirst(location)}",
-                  style:
-                      TextStyle(fontWeight: FontWeight.w500, color: textColor)),
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: textColor,
+                      fontSize: textMD)),
             ],
           ),
         ));
@@ -373,9 +377,9 @@ Future<void> getCurrentLocationDetails() async {
       locName = locationName;
       // print(locName);
     } else {
-      Get.snackbar("Alert", "No Placemark is found",
+      Get.snackbar("Alert".tr, "No Placemark is found".tr,
           backgroundColor: whiteColor);
-      locName = 'Invalid Location';
+      locName = 'Invalid Location'.tr;
     }
   } catch (e) {
     return e;
@@ -413,18 +417,18 @@ Future<Role> getRoleSess(bool isLogged) async {
 
 String getDateMonth(DateTime date) {
   final List<String> month = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December"
+    "January".tr,
+    "February".tr,
+    "March".tr,
+    "April".tr,
+    "May".tr,
+    "June".tr,
+    "July".tr,
+    "August".tr,
+    "September".tr,
+    "October".tr,
+    "November".tr,
+    "December".tr
   ];
 
   return "${date.day.toString().padLeft(2, '0')} ${month[date.month - 1].substring(0, 3)}";

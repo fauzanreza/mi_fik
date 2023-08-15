@@ -14,14 +14,13 @@ import 'package:mi_fik/Modules/Helpers/template.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Routes/collection.dart';
 
-import 'package:mi_fik/Modules/Variables/dummy.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:mi_fik/Pages/SubMenus/AddPostPage/Usecases/set_attachment.dart';
-import 'package:mi_fik/Pages/SubMenus/AddPostPage/Usecases/set_image.dart';
-import 'package:mi_fik/Pages/SubMenus/AddPostPage/Usecases/set_location.dart';
-import 'package:mi_fik/Pages/SubMenus/AddPostPage/Usecases/set_tag.dart';
+import 'package:mi_fik/Pages/SubMenus/AddPostPage/Components/set_attachment.dart';
+import 'package:mi_fik/Pages/SubMenus/AddPostPage/Components/set_image.dart';
+import 'package:mi_fik/Pages/SubMenus/AddPostPage/Components/set_location.dart';
+import 'package:mi_fik/Pages/SubMenus/AddPostPage/Components/set_tag.dart';
 
 class AddPost extends StatefulWidget {
   const AddPost({Key key}) : super(key: key);
@@ -178,10 +177,12 @@ class StateAddPost extends State<AddPost> {
               Stack(children: [
                 const SetImageContent(),
                 Container(
+                  height: 50,
+                  width: 50,
                   transform: Matrix4.translationValues(
                       spaceXMD, fullHeight * 0.05, 0.0),
                   decoration: BoxDecoration(
-                    color: primaryColor,
+                    color: warningBG,
                     borderRadius:
                         BorderRadius.all(Radius.circular(roundedCircle)),
                     boxShadow: [
@@ -354,8 +355,8 @@ class StateAddPost extends State<AddPost> {
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                getSubTitleMedium("Event Attachment".tr,
-                                    darkColor, TextAlign.start),
+                                getSubTitleMedium("Attachment".tr, darkColor,
+                                    TextAlign.start),
                                 const SetFileAttachment()
                               ])),
                       Padding(
@@ -382,6 +383,7 @@ class StateAddPost extends State<AddPost> {
                           isLoadPost = true;
                         });
                         bool isValid = true;
+                        bool isValidNow = true;
                         eventPeriodMsg = '';
                         eventTagMsg = '';
                         eventDescMsg = '';
@@ -409,78 +411,91 @@ class StateAddPost extends State<AddPost> {
                         if (contentTitleCtrl.text.trim() == null ||
                             contentTitleCtrl.text.trim() == '') {
                           isValid = false;
-                          eventTitleMsg = "field can't be empty".tr;
+                          eventTitleMsg = "Field can't be empty".tr;
                           Get.dialog(FailedDialog(
-                              text: "field can't be empty".tr,
+                              text: "Field can't be empty".tr,
                               type: "addevent"));
                         }
 
                         if (isValid) {
-                          ContentModel content = ContentModel(
-                            userId: passIdUser,
-                            contentTitle: contentTitleCtrl.text.trim(),
-                            contentDesc: contentDescCtrl.text.trim(),
-                            contentTag: validateNullJSON(selectedTag),
-                            contentLoc: getContentLocObj(
-                                locDetailCtrl.text, locCoordinateCtrl),
-                            contentAttach: validateNullJSON(listAttachment),
-                            contentImage: validateNull(contentAttImage),
-                            reminder: slctReminderType,
-                            dateStart: getDBDateFormat("date", dateStartCtrl),
-                            dateEnd: getDBDateFormat("date", dateEndCtrl),
-                            timeStart: getDBDateFormat(
-                                "time",
-                                dateStartCtrl.add(
-                                    Duration(hours: getUTCHourOffset() * -1))),
-                            timeEnd: getDBDateFormat(
-                                "time",
-                                dateEndCtrl.add(
-                                    Duration(hours: getUTCHourOffset() * -1))),
-                            isDraft: 0,
-                          );
-                          apiCommand.postContent(content).then((response) {
-                            setState(() => {});
-                            var status = response[0]['message'];
-                            var body = response[0]['body'];
+                          if (DateTime.now().isAfter(dateStartCtrl)) {
+                            isValidNow = false;
+                            eventPeriodMsg = invalidDateToNowMsg;
+                            Get.dialog(FailedDialog(
+                                text: invalidDateToNowMsg, type: "addevent"));
+                          }
+                          if (DateTime.now().isAfter(dateEndCtrl)) {
+                            isValidNow = false;
+                            eventPeriodMsg = invalidDateToNowMsg;
+                            Get.dialog(FailedDialog(
+                                text: invalidDateToNowMsg, type: "addevent"));
+                          }
+                          if (isValidNow) {
+                            ContentModel content = ContentModel(
+                              contentTitle: contentTitleCtrl.text.trim(),
+                              contentDesc: contentDescCtrl.text.trim(),
+                              contentTag: validateNullJSON(selectedTag),
+                              contentLoc: getContentLocObj(
+                                  locDetailCtrl.text, locCoordinateCtrl),
+                              contentAttach: validateNullJSON(listAttachment),
+                              contentImage: validateNull(contentAttImage),
+                              reminder: slctReminderType,
+                              dateStart: getDBDateFormat("date", dateStartCtrl),
+                              dateEnd: getDBDateFormat("date", dateEndCtrl),
+                              timeStart: getDBDateFormat(
+                                  "time",
+                                  dateStartCtrl.add(Duration(
+                                      hours: getUTCHourOffset() * -1))),
+                              timeEnd: getDBDateFormat(
+                                  "time",
+                                  dateEndCtrl.add(Duration(
+                                      hours: getUTCHourOffset() * -1))),
+                              isDraft: 0,
+                            );
+                            apiCommand.postContent(content).then((response) {
+                              setState(() => {});
+                              var status = response[0]['message'];
+                              var body = response[0]['body'];
 
-                            if (status == "success") {
-                              selectedTag.clear();
-                              locDetailCtrl.clear();
-                              locCoordinateCtrl = null;
-                              contentAttImage = null;
-                              listAttachment = [];
-                              Get.toNamed(CollectionRoute.bar,
-                                  preventDuplicates: false);
+                              if (status == "success") {
+                                selectedTag.clear();
+                                locDetailCtrl.clear();
+                                locCoordinateCtrl = null;
+                                contentAttImage = null;
+                                listAttachment = [];
+                                Get.toNamed(CollectionRoute.bar,
+                                    preventDuplicates: false);
 
-                              Get.dialog(SuccessDialog(text: body));
-                            } else {
-                              if (body is! String) {
-                                if (body['content_title'] != null) {
-                                  eventTitleMsg = body['content_title'][0];
-
-                                  if (body['content_title'].length > 1) {
-                                    for (String e in body['content_title']) {
-                                      eventTitleMsg += e;
-                                    }
-                                  }
-                                }
-
-                                if (body['content_desc'] != null) {
-                                  eventDescMsg = body['content_desc'][0];
-
-                                  if (body['content_desc'].length > 1) {
-                                    for (String e in body['content_desc']) {
-                                      eventDescMsg += e;
-                                    }
-                                  }
-                                }
+                                Get.dialog(SuccessDialog(text: body));
                               } else {
-                                allMsg = body;
+                                if (body is! String) {
+                                  if (body['content_title'] != null) {
+                                    eventTitleMsg = body['content_title'][0];
+
+                                    if (body['content_title'].length > 1) {
+                                      for (String e in body['content_title']) {
+                                        eventTitleMsg += e;
+                                      }
+                                    }
+                                  }
+
+                                  if (body['content_desc'] != null) {
+                                    eventDescMsg = body['content_desc'][0];
+
+                                    if (body['content_desc'].length > 1) {
+                                      for (String e in body['content_desc']) {
+                                        eventDescMsg += e;
+                                      }
+                                    }
+                                  }
+                                } else {
+                                  allMsg = body;
+                                }
+                                Get.dialog(
+                                    FailedDialog(text: body, type: "addevent"));
                               }
-                              Get.dialog(
-                                  FailedDialog(text: body, type: "addevent"));
-                            }
-                          });
+                            });
+                          }
                         }
 
                         setState(() {

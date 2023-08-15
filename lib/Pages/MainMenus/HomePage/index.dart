@@ -14,10 +14,10 @@ import 'package:mi_fik/Modules/Helpers/generator.dart';
 import 'package:mi_fik/Modules/Helpers/validation.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/MainMenus/HomePage/Usecases/get_content.dart';
-import 'package:mi_fik/Pages/MainMenus/HomePage/Usecases/get_location.dart';
+import 'package:mi_fik/Pages/MainMenus/HomePage/Components/get_content.dart';
+import 'package:mi_fik/Pages/MainMenus/HomePage/Components/get_location.dart';
 import 'package:mi_fik/Components/Typography/show_greeting.dart';
-import 'package:mi_fik/Pages/MainMenus/SchedulePage/Usecases/post_task.dart';
+import 'package:mi_fik/Pages/MainMenus/SchedulePage/Components/post_task.dart';
 import 'package:mi_fik/Pages/SubMenus/AddPostPage/index.dart';
 
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -192,55 +192,6 @@ class StateGetRole extends State<GetRoleFeature> {
     return Role(role: role);
   }
 
-  Future<void> refreshData() async {
-    page = 1;
-    contents.clear();
-    loadMoreContent();
-  }
-
-  ScrollController scrollCtrl;
-
-  @override
-  void initState() {
-    super.initState();
-    queryService = ContentQueriesService();
-    scrollCtrl = ScrollController()
-      ..addListener(() {
-        if (scrollCtrl.offset == scrollCtrl.position.maxScrollExtent) {
-          loadMoreContent();
-        }
-      });
-    loadMoreContent();
-  }
-
-  Future<void> loadMoreContent() async {
-    if (!isLoading) {
-      setState(() {
-        isLoading = true;
-      });
-
-      List<ContentHeaderModel> items = await queryService.getAllContentHeader(
-          getTagFilterContent(selectedTagFilterContent),
-          sortingHomepageContent,
-          getWhereDateFilter(filterDateStart, filterDateEnd),
-          getFindFilter(searchingContent),
-          page++);
-      if (items != null) {
-        contents.addAll(items);
-      }
-
-      setState(() {
-        isLoading = false;
-      });
-    }
-  }
-
-  @override
-  void dispose() {
-    //scrollCtrl.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     //double fullHeight = MediaQuery.of(context).size.height;
@@ -254,26 +205,43 @@ class StateGetRole extends State<GetRoleFeature> {
               return SpeedDial(
                   activeIcon: Icons.close,
                   icon: Icons.add,
-                  backgroundColor: primaryColor,
+                  backgroundColor: successBG,
+                  activeBackgroundColor: warningBG,
                   overlayColor: primaryColor,
-                  overlayOpacity: 0.4,
+                  overlayOpacity: 0.25,
                   children: [
-                    getSpeeDialChild("New Task".tr, context, const PostTask(),
-                        Icons.note_add_outlined),
-                    getSpeeDialChild("New Post".tr, context, const AddPost(),
-                        Icons.post_add_outlined),
+                    getSpeeDialChild(
+                        "New Task".tr,
+                        context,
+                        const PostTask(),
+                        Icons.note_add_outlined,
+                        "Manage and remind daily tasks that have been created"
+                            .tr),
+                    getSpeeDialChild(
+                        "New Post".tr,
+                        context,
+                        const AddPost(),
+                        Icons.post_add_outlined,
+                        "Event is an information about some public activity that will be held in the future"
+                            .tr),
                   ],
                   child: Icon(Icons.add, size: iconLG));
             } else {
               return SpeedDial(
                   activeIcon: Icons.close,
                   icon: Icons.add,
-                  backgroundColor: primaryColor,
+                  backgroundColor: successBG,
+                  activeBackgroundColor: warningBG,
                   overlayColor: primaryColor,
-                  overlayOpacity: 0.4,
+                  overlayOpacity: 0.25,
                   children: [
-                    getSpeeDialChild("New Task".tr, context, const PostTask(),
-                        Icons.note_add_outlined),
+                    getSpeeDialChild(
+                        "New Task".tr,
+                        context,
+                        const PostTask(),
+                        Icons.note_add_outlined,
+                        "Manage and remind daily tasks that have been created"
+                            .tr),
                   ],
                   child: Icon(Icons.add, size: iconLG));
             }
