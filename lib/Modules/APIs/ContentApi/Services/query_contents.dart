@@ -12,7 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 class ContentQueriesService {
-  final String baseUrl = "https://mifik.id";
+  final String baseUrl = "https://mifik.leonardhors.site";
   final String emuUrl = "http://10.0.2.2:8000";
   Client client = Client();
 

@@ -80,6 +80,16 @@ class LeftBar extends StatelessWidget {
                                     fullWidth, Icons.person, "Profile".tr, () {
                                   Get.toNamed(CollectionRoute.profile);
                                 }),
+                                getSideBarTile(
+                                    fullWidth,
+                                    Icons.person_pin_circle_rounded,
+                                    "Attendance".tr, () {
+                                  Get.toNamed(CollectionRoute.attendance);
+                                }),
+                                getSideBarTile(
+                                    fullWidth, Icons.draw, "Gallery".tr, () {
+                                  Get.toNamed(CollectionRoute.attendance);
+                                }),
                                 getSideBarTile(fullWidth, Icons.tag, "Role",
                                     () {
                                   selectedRole.clear();

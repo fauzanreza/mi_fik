@@ -4,7 +4,7 @@ import 'package:mi_fik/Modules/APIs/DictionaryApi/Models/queries.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 
 class DictionaryQueryService {
-  final String baseUrl = "https://mifik.id";
+  final String baseUrl = "https://mifik.leonardhors.site";
   final String emuUrl = "http://10.0.2.2:8000";
   Client client = Client();
 

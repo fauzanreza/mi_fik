@@ -6,6 +6,8 @@ abstract class CollectionRoute {
 
   // Submenu group
   static const profile = '/profile';
+  static const attendance = '/attendance';
+  static const gallery = '/gallery';
   static const myfaq = '/myfaq';
   static const faq = '/faq';
   static const about = '/about';

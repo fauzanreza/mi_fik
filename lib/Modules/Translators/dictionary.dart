@@ -305,7 +305,9 @@ class Dictionaries extends Translations {
               "By agreeing to the terms and conditions in using the MI-FIK application, you agree and accept all the terms and conditions listed above. If you do not agree with these terms and conditions, please stop using this application. If you have any questions or concerns, please feel free to contact our support team.",
           "I agree to the terms and condition on this app, Thank you for your understanding and cooperation":
               "I agree to the terms and condition on this app, Thank you for your understanding and cooperation",
-          "Yes": "Yes"
+          "Yes": "Yes",
+          "Attendance": "Attendance",
+          "Gallery": "Gallery"
         },
         'id_ID': {
           'Good Morning': 'Selamat Pagi',
@@ -610,7 +612,9 @@ class Dictionaries extends Translations {
               "Dengan menyetujui syarat dan ketentuan dalam menggunakan aplikasi MI-FIK, Anda menyetujui dan menerima semua syarat dan ketentuan yang tercantum di atas. Jika Anda tidak setuju dengan syarat dan ketentuan ini, silakan berhenti menggunakan aplikasi ini. Jika Anda memiliki pertanyaan atau masalah, jangan ragu untuk menghubungi tim dukungan kami.",
           "I agree to the terms and condition on this app, Thank you for your understanding and cooperation":
               "Saya menyetujui syarat dan ketentuan pada aplikasi ini, Terima kasih atas pengertian dan kerjasamanya",
-          "Yes": "Ya"
+          "Yes": "Ya",
+          "Attendance": "Kehadiran",
+          "Gallery": "Galeri"
         },
       };
 }

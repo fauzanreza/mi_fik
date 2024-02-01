@@ -9,7 +9,7 @@ import 'package:mi_fik/Modules/Variables/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationQueriesService {
-  final String baseUrl = "https://mifik.id";
+  final String baseUrl = "https://mifik.leonardhors.site";
   final String emuUrl = "http://10.0.2.2:8000";
   Client client = Client();
 

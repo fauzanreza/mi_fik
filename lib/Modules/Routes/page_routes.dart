@@ -10,7 +10,9 @@ import 'package:mi_fik/Pages/MainMenus/HomePage/index.dart';
 import 'package:mi_fik/Pages/MainMenus/SchedulePage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/AboutPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/AddPostPage/index.dart';
+import 'package:mi_fik/Pages/SubMenus/AttendancePage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/FAQPage/index.dart';
+import 'package:mi_fik/Pages/SubMenus/GalleryPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/HelpPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/HistoryPage/index.dart';
 import 'package:mi_fik/Pages/SubMenus/ManageRolePage/index.dart';
@@ -35,6 +37,16 @@ class PageRoutes {
     GetPage(
         name: CollectionRoute.profile,
         page: () => const ProfilePage(),
+        middlewares: [RouteGuard()],
+        transition: Transition.noTransition),
+    GetPage(
+        name: CollectionRoute.attendance,
+        page: () => const AttendancePage(),
+        middlewares: [RouteGuard()],
+        transition: Transition.noTransition),
+    GetPage(
+        name: CollectionRoute.gallery,
+        page: () => const GalleryPage(),
         middlewares: [RouteGuard()],
         transition: Transition.noTransition),
     GetPage(

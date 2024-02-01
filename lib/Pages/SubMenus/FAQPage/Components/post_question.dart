@@ -110,7 +110,7 @@ class StatePostQuestion extends State<PostQuestion> {
 
                     //Validator
                     if (data.quType.isNotEmpty && data.quType.isNotEmpty) {
-                      apiService.postUserReq(data).then((response) {
+                      apiService.postFAQ(data).then((response) {
                         setState(() => {});
                         var status = response[0]['message'];
                         var body = response[0]['body'];

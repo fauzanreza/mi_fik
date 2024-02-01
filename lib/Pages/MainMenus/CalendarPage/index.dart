@@ -9,7 +9,7 @@ import 'package:mi_fik/Modules/APIs/ContentApi/Services/query_contents.dart';
 import 'package:mi_fik/Modules/Routes/collection.dart';
 import 'package:mi_fik/Modules/Variables/global.dart';
 import 'package:mi_fik/Modules/Variables/style.dart';
-import 'package:mi_fik/Pages/MainMenus/CalendarPage/Components/show_calendar.dart';
+import 'package:mi_fik/Components/Charts/show_calendar.dart';
 import 'package:mi_fik/Pages/MainMenus/CalendarPage/Components/show_daily_event.dart';
 import 'package:mi_fik/Pages/MainMenus/CalendarPage/Components/show_daily_header.dart';
 import 'package:table_calendar/table_calendar.dart';

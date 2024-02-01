@@ -358,6 +358,25 @@ Widget getContentLoc(loc) {
   }
 }
 
+Widget getTotalAttendance(int total, bool isShow) {
+  if (isShow) {
+    return RichText(
+      text: TextSpan(
+        children: [
+          WidgetSpan(
+            child: Icon(Icons.person, color: primaryColor, size: iconMD),
+          ),
+          TextSpan(
+              text: total.toString(),
+              style: TextStyle(color: primaryColor, fontSize: textMD)),
+        ],
+      ),
+    );
+  } else {
+    return const SizedBox();
+  }
+}
+
 Widget getTotalTag(tag) {
   if (tag != null) {
     int total = tag.length;

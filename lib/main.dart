@@ -84,7 +84,7 @@ Future<void> main() async {
 
   final prefs = await SharedPreferences.getInstance();
   String langKey = "id";
-  if (prefs.containsKey("lang_key")) {
+  if (prefs.containsKey("lanflg_key")) {
     langKey = prefs.getString("lang_key");
   }
 
